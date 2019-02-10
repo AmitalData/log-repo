@@ -174,7 +174,7 @@ namespace WebFreight.Web.Helpers
                         {
                             DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
                             var fieldName =   (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) +"." + filter.Code;
-                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName , filter.OperationCode, filter.TextValue.ToString(), Tenant);
+                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName , filter.OperationCode, filter.TextValue.ToString(), Tenant) + " " + AndOr + " ";
      
                         }
 
@@ -231,7 +231,7 @@ namespace WebFreight.Web.Helpers
 
         private bool GetIfFiltersHaveValues(List<DWObjectFieldsDetails> FiltersList)
         {
-            return FiltersList.Where(a => a.TextValue != null).Count() > 0;
+            return FiltersList.Where(a => a.TextValue != null && !string.IsNullOrEmpty(a.TextValue.ToString())).Count() > 0;
         }
 
         public string GetQuerySQL(DWQueryData DWQueryParam)
@@ -311,10 +311,15 @@ namespace WebFreight.Web.Helpers
 
             }
             var OrderByString = "" + Fact + ".Id_Number";
+            
             //var HasAggregate = false;
             if (DWQueryParam.Columns.Where(a => a.IsMeasurement).Count() > 0)
             {
                 OrderByString = "max(" + Fact + ".Id_Number)";
+            }
+            if (!string.IsNullOrEmpty(DWQueryParam.ColumnsSort))
+            {
+                OrderByString = DWQueryParam.ColumnsSort;
             }
             string PagingString = " ORDER BY " + OrderByString + " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
             string FinalQuery = "";
@@ -327,22 +332,32 @@ namespace WebFreight.Web.Helpers
                 FinalQuery = FinalSelectStmt + (HasMeasurement && FinalGroupByStmt != " group by" ? FinalGroupByStmt : "");
 
             }
-
+            string TenantWhere = ".[Parent Tenant] = ";
+            var DWSettings = new DWHSettingRepository(Tenant);
+            var temp = DWSettings.GetSingleDWHSetting(Tenant);
+            if (temp != null &&  temp.Tenant != temp.ParentTenant)
+            {
+                TenantWhere = ".[Source Tenant] = ";
+            }
             if (FinalQuery.Contains("where"))
             {
-                FinalQuery = FinalQuery.Replace("where", "where " + Fact + ".[Parent Tenant] = " + Tenant + " and");
+                FinalQuery = FinalQuery.Replace("where", "where " + Fact + TenantWhere + Tenant + " and");
             }
             else if (FinalQuery.Contains("group by"))
             {
-                FinalQuery = FinalQuery.Replace("group by", "where " + Fact + ".[Parent Tenant] = " + Tenant + " group by");
+                FinalQuery = FinalQuery.Replace("group by", "where " + Fact + TenantWhere + Tenant + " group by");
             }
             else
             {
-                FinalQuery = FinalQuery + " where " + Fact + ".[Parent Tenant] = " + Tenant;
+                FinalQuery = FinalQuery + " where " + Fact + TenantWhere + Tenant;
             }
             if (DWQueryParam.PageSize != 0)
             {
                 FinalQuery = FinalQuery + PagingString;
+            }
+            else
+            {
+                FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
             }
             
             return FinalQuery;

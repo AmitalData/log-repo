@@ -622,7 +622,7 @@
   </MenuButtons>
   <DataContracts>
     <DataContract Name="&quot;Quote&quot;" Version="&quot;ApiV1&quot;">
-      <DCField DCFieldName="&quot;Id&quot;" FieldName="&quot;Id&quot;" IsKey="true" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
+      <DCField DCFieldName="&quot;Id&quot;" FieldName="&quot;Id&quot;" IsKey="true" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;AcceptedDate&quot;" FieldName="&quot;AcceptedDate&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;DateTime&quot;" IsNullable="true" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;AgentReference1&quot;" FieldName="&quot;AgentReference1&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;AgentReference2&quot;" FieldName="&quot;AgentReference2&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />

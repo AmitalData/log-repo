@@ -1,14 +1,19 @@
-import {Component, OnInit}  from '@angular/core';
+declare var window: any;
+import { Component, OnInit } from '@angular/core';
 
 import {AppTool, DateTool} from '../Tools';
 import { SessionLocator } from '../Utilities/SessionLocator';
 import { BaseComponent } from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { DWObjectFieldExtendedPMService } from '../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 
 export class DWQueryBuilderHelper   {
 
-    
-    constructor() {
+    public FactFields: any[];
+    public  _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
 
+    constructor() {
+        window.FactFields = [];
+        this.FactFields = [];
         //this.CurrentEntityPM = currentEntityPM;
         //this.AddEditAutomationsViewModel = addEditAutomationsViewModel;
         //this.ViewModel = viewModel;
@@ -22,13 +27,37 @@ export class DWQueryBuilderHelper   {
         return MyFilter;
     }
 
+    public FillAllFactFields(FactTableCode: string) {
+        this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
+        if (window.FactFields.length == 0)
+            this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(FactTableCode).subscribe(Result => {
+            if (!Result.HasError) {
+                Result.Result.forEach((field) => {
+                    if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) { 
+                        this.FactFields.push(field);
+                    }
+                });
+                window.FactFields = this.FactFields;
+                //return this.FactFields
+                //this.DataSource = this.ObsList;
+                //this.AllFieldsWithChildrenDataSource = this.ObsList;
+            }
+
+        });
+    }
     private GetRestoreFilters(BaseFilter: DWObjectFieldsDetails, MyFilter: DWObjectFieldsDetails) {
 
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field);
             if (field.FilterItems.length == 0) {
                 if (field.DWObjectTableCode.indexOf("DIM_") != -1) {
-                    view.ParentDataTypeCode = "LookUp";
+                    if (view.Code == '[Full Date]') {
+                        view.ParentDataTypeCode = "DateTime";
+                    }
+                    else {
+                        view.ParentDataTypeCode = "LookUp";
+                    }
+                    //view.ParentDataTypeCode = "LookUp";
                     view.ParentDimTabelName = field.DWObjectTableCode;
                 }
                 else {
@@ -109,7 +138,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
-            this.DisplayName = DWObjectField.Code;
+            this.DisplayName = (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
@@ -220,7 +249,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                 if (MyTable && MyTable.length > 0) {
                     this.Code = MyTable[0].DefaultFilterBy;
                     this.DWObjectTableCode = MyTable[0].Code;
-                    this.DisplayName = this.DWObjectTableCode + this.Code;
+                    this.DisplayName = (AppTool.IsNullOrEmpty(this.DisplayName)) ? (this.DWObjectTableCode + ' ' + this.Code) : (this.DisplayName);
                     this.ParentDimTabelName = this.DimensionTableCode;
                 }
             }
@@ -526,7 +555,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
         this.DataTypeCode = DWObjectField.DataTypeCode;
         this.DimensionTableCode = DWObjectField.DimensionTableCode;
-        this.DisplayName = DWObjectField.Code;
+        this.DisplayName = (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
         this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
         this.IsMeasurement = DWObjectField.IsMeasurement;
         this.AggregationTypeCode = DWObjectField.AggregationTypeCode;

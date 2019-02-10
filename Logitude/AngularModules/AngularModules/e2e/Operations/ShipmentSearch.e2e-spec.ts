@@ -10,7 +10,7 @@ describe('Shipment search', () => {
 
  
   it('Shipment search', function () {
-    page.QuickSearch();
+    // page.QuickSearch();
 
   });
 });

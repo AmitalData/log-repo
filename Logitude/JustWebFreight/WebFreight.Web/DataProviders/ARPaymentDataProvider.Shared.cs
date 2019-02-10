@@ -64,6 +64,8 @@ namespace WebFreight.Web.DataProviders
         public string BankAccountEnglishName { get; set; }
         public string PaymentMethodRef { get; set; }
 
+
+
         public string BillToAddress { get; set; }
         public string PaymentExchangeRate { get; set; }
         public string DepositBankName { get; set; }
@@ -117,6 +119,17 @@ namespace WebFreight.Web.DataProviders
             public decimal TipoCambio { get; set; }
             public string MetodoPagoCode { get; set; }
             public string Serie { get; set; }
+
+            public string ARInvoiceField1 { get; set; }
+            public string ARInvoiceField2 { get; set; }
+            public string ARInvoiceField3 { get; set; }
+            public string ARInvoiceField4 { get; set; }
+            public string ARInvoiceField5 { get; set; }
+            public string ARInvoiceField6 { get; set; }
+            public string ARInvoiceField7 { get; set; }
+            public string ARInvoiceField8 { get; set; }
+            public string ARInvoiceField9 { get; set; }
+            public string ARInvoiceField10 { get; set; }
 
             public DateTime? InvocieDate { get; set; }
         }

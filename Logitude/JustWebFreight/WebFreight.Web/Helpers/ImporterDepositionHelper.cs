@@ -203,14 +203,16 @@ namespace WebFreight.Web.Helpers
             {
                 if (customsShipperPM.ValidityStartDate != validityStartDate || customsShipperPM.ValidityEndDate != validityEndDate)
                 {
-                    DateTime currentDate = DateTime.Now.Date;
-                    if (currentDate >= validityStartDate.Value.Date && currentDate < validityEndDate.Value.Date)
-                    {
-                        customsShipperPM.ValidityStartDate = validityStartDate;
-                        customsShipperPM.ValidityEndDate = validityEndDate;
-                        customsShipperPM.IsChange = true;
-                    }
-                  
+                    customsShipperPM.ValidityStartDate = validityStartDate;
+                    customsShipperPM.ValidityEndDate = validityEndDate;
+                    customsShipperPM.IsChange = true;
+
+                    //DateTime currentDate = DateTime.Now.Date;
+                    //if (currentDate >= validityStartDate.Value.Date && currentDate < validityEndDate.Value.Date)
+                    //{
+
+                    //}
+
                 }
             }
         }
@@ -234,16 +236,21 @@ namespace WebFreight.Web.Helpers
                 ExpirationDate = DateTime.Now.AddDays(90),
                 Status = "I",
                 Tenant = tenant,
-                Subject = "Importer Deposition Send to cloud"
-
+                Subject = "Importer Deposition",
+                Refrence = importerDepositionAM.DepositionNumber,
             };
+
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(importerDepositionAM.CustomerTenant);
+            string partnerName =  hybridPartnerQuery.GetPartnerNameByPartnerTenant(importerDepositionAM.CustomerTenant);
+            LogPM.PartnerName = partnerName;
+
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
             apiLogsService.Create(LogPM);
 
 
             var msg = "Importer Deposition Send to cloud";
-            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
+            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
             return LogPM.Id;
             
 

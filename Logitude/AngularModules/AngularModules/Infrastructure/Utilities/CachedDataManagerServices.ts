@@ -53,8 +53,8 @@ import {UserListService} from '../../Common/Services/StandardLists/UserListServi
 import {VatTypeListService} from '../../Common/Services/StandardLists/VatTypeListService';
 import {VesselListService} from '../../Common/Services/StandardLists/VesselListService';
 import {WarehouseListService} from '../../Common/Services/StandardLists/WarehouseListService';
-import {JournalActionTypeListService} from '../../Accounting/Services/StandardLists/JournalActionTypeListService'; 
-
+import { JournalActionTypeListService } from '../../Accounting/Services/StandardLists/JournalActionTypeListService';
+import { BluesnapContractTypeListService } from '../Services/StandardLists/BluesnapContractTypeListService';
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
 import {CustomDocumentTypeListService} from '../../Customs/Services/StandardLists/CustomDocumentTypeListService'; 
@@ -176,6 +176,7 @@ export class CachedDataManagerServices {
             case "TenantManagmentPrivateLabelsListService": { myResult = new TenantManagmentPrivateLabelsListService(); break; }
             case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
             case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
+            case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
 
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");

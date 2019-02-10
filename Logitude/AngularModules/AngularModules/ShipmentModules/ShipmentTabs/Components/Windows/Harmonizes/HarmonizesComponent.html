@@ -42,10 +42,16 @@
                                 <table>
                                     <tr>
                                         <td style="width: 100px; min-width: 100px; max-width: 100px;">Code</td>
+
+                                        <td>
+                                            Description
+                                        </td>
+
                                         <td style="width: 100px; min-width: 100px; max-width: 100px;">Chapter Code</td>
+                                        
                                         <td style="width: 130px; min-width: 130px; max-width: 130px;">Sub-Chapter Code</td>
 
-                                        <td class="LastChild">
+                                        <td style="width: 17px; min-width: 17px; max-width: 17px;" class="LastChild">
                                             <div></div>
                                         </td>
                                     </tr>
@@ -53,11 +59,17 @@
                             </div>
 
                             <div class="SimpleGridViewBody">
-
                                 <table>
                                     <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="Selecting(item)">
+
                                         <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
                                             {{item.Code}}
+                                        </td>
+
+                                        <td class="GridViewCell">
+                                            <div class="MediaFill" style="line-height: 25px;">
+                                                {{item.Description}}
+                                            </div>
                                         </td>
 
                                         <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
@@ -67,14 +79,10 @@
                                         <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
                                             {{item.SubChapterCode}}
                                         </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="3">
+                                        <td colspan="4">
                                             <div></div>
                                         </td>
                                     </tr>

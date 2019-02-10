@@ -50,7 +50,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }).FirstOrDefault();
         }
 
@@ -77,7 +78,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }
                   );
         }
@@ -104,7 +106,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }
                   );
         }
@@ -112,7 +115,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(int tenant, string dwotCode)
         {
             var TempList = (from a in repository.webFreightContext.DWObjectFields
-                            where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
+                            where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && a.DisplayInQueryBuilder == true
                             select new DWObjectFieldPM()
                             {
                                 Id = a.Id,
@@ -132,7 +135,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 DisplayName = a.Name,
                                 //Category1 = a.Category1,
                                 //Category2 = a.Category2,
-                                LOVAdditionalColumns = a.LOVAdditionalColumns
+                                LOVAdditionalColumns = a.LOVAdditionalColumns,
+                                HideTree = a.HideTree,
 
                             }
                   );
@@ -141,7 +145,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             foreach (var item in Parents)
             {
                 var TempInnerList = (from a in repository.webFreightContext.DWObjectFields
-                                     where a.Tenant == tenant && a.DWObjectTableCode == item.DimensionTableCode
+                                     where a.Tenant == tenant && a.DWObjectTableCode == item.DimensionTableCode && a.DisplayInQueryBuilder == true
                                      select new DWObjectFieldPM()
                                      {
                                          Id = a.Id,
@@ -158,10 +162,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          IsMeasurement = a.IsMeasurement,
                                          AggregationTypeCode = a.AggregationTypeCode,
                                          DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                                         DisplayName = a.DWObjectTableCode.Replace("DIM_","") + "." + a.Name,
+                                         DisplayName = item.Name + " " + a.Name,
                                          //Category1 = a.Category1,
                                          //Category2 = a.Category2,
-                                         LOVAdditionalColumns = a.LOVAdditionalColumns
+                                         LOVAdditionalColumns = a.LOVAdditionalColumns,
+                                         HideTree = a.HideTree,
                                      }
                   ).ToList();
                 FinalList = FinalList.Concat(TempInnerList).ToList();
@@ -189,7 +194,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }).FirstOrDefault();
         }
 
@@ -215,7 +221,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     });
         }
 
@@ -239,7 +246,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                                                        //Category1 = a.Category1,
                                                        //Category2 = a.Category2,
-                                                       LOVAdditionalColumns = a.LOVAdditionalColumns
+                                                       LOVAdditionalColumns = a.LOVAdditionalColumns,
+                                                       HideTree = a.HideTree,
                                                    };
 
             return result;
@@ -274,7 +282,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }).FirstOrDefault();
         }
 
@@ -305,8 +314,41 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }).FirstOrDefault();
+        }
+
+        public IQueryable<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(int tenant, string dwotCode)
+        {
+            return (from aa in repository.webFreightContext.DWObjectFieldCategories
+                    join a in repository.webFreightContext.DWObjectFields on aa.DWObjectFieldCode equals a.Code
+                    join b in repository.webFreightContext.DWCategories on aa.DWCategoryCode equals b.Code
+                    where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
+                    select new DWObjectFieldPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        Name = a.Name,
+                        Code = a.Code,
+                        DimensionTableCode = a.DimensionTableCode,
+                        DataTypeCode = a.DataTypeCode,
+                        DWObjectTableCode = a.DWObjectTableCode,
+                        IsRequiered = a.IsRequired,
+                        MaxLength = a.MaxLength,
+                        MinLength = a.MinLength,
+                        IsPrimaryKey = a.IsPrimaryKey,
+                        IsMeasurement = a.IsMeasurement,
+                        AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        //Category1 = a.Category1,
+                        //Category2 = a.Category2,
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        Category = aa.DWCategoryCode,
+                        CategoryIndex = b.Index,
+                        HideTree = a.HideTree,
+                    }
+                  );
         }
 
     }

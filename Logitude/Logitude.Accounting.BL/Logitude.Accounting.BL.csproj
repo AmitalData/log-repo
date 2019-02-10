@@ -103,6 +103,7 @@
     <Compile Include="APIDataContract\GLAccount.Generated.cs" />
     <Compile Include="APIDataContract\GLAccountType.Generated.cs" />
     <Compile Include="APIDataContract\Journal.Generated.cs" />
+    <Compile Include="APIDataContract\JournalLine.Generated.cs" />
     <Compile Include="APIDataContract\JournalStatusType.Generated.cs" />
     <Compile Include="APIDataContract\JournalType.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\AccountingEntityQueryService.Generated.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="APIDataContract\QueryService\GLAccountQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\JournalLineQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\JournalQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\JournalQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalStatusTypeQueryService.cs" />
@@ -352,6 +354,7 @@
     <Compile Include="EntityDataMappings\LedgerTransactionDataMapping.cs" />
     <Compile Include="EntityDataMappings\OpenFormatReportDataMapping.cs" />
     <Compile Include="EntityDataMappings\OpenFormatReportStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentChequeCustomDataMapping.cs" />
     <Compile Include="EntityDataMappings\PaymentChequeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PaymentChequeLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\PaymentChequeStatusDataMapping.cs" />
@@ -510,6 +513,8 @@
     <Compile Include="EntityUpdateServices\JournalReconcileUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OpenFormatReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PaymentChequeLineUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\PaymentChequeOnCreatingService.cs" />
+    <Compile Include="EntityUpdateServices\PaymentChequeOnUpdatingService.cs" />
     <Compile Include="EntityUpdateServices\PaymentChequeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ReconcileExternalPageLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ReconcileExternalPageUpdateService.cs" />

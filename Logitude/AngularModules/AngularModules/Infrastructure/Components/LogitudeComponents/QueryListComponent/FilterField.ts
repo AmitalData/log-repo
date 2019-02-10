@@ -23,6 +23,9 @@ export class FilterField extends BaseComponent {
     public IsFilterDeleteButtonVisible: boolean = false;
     public BooleanFiltersEnabled: boolean = false;
     public TextFiltersEnabled: boolean = false;
+    public LOVFiltersEnabled: boolean = false;
+    public DateFiltersEnabled: boolean = false;
+    public PickFiltersEnabled: boolean = false;
 
     constructor(objectField: any, queryId: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
@@ -93,16 +96,45 @@ export class FilterField extends BaseComponent {
             }
         }
 
-        if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
+        if (currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
+            if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                if (this.ObjectField) {
+                    this.TextFiltersEnabled = true;
+                    this.LOVFiltersEnabled = true;
+                    this.DateFiltersEnabled = true;
+                    this.PickFiltersEnabled = true;
+
+                    if (this.ObjectField.DataTypeCode != "Constant") {
+                        this.IsFilterDeleteButtonVisible = true;
+                    }
+
+                    if (!this.IsCustomFilter) {
+                        this.BooleanFiltersEnabled = true;
+                    }                    
+                }
+            }
+        }
+
+        else {
             this.TextFiltersEnabled = true;
+            this.IsFilterDeleteButtonVisible = true;
+            this.BooleanFiltersEnabled = true;
+            this.LOVFiltersEnabled = true;
+            this.DateFiltersEnabled = true;
+            this.PickFiltersEnabled = true;
+        }
 
-            if (this.ObjectField.DataTypeCode != "Constant") {
-                this.IsFilterDeleteButtonVisible = true;
-            }
+        if (this.ObjectField.DataTypeCode == "Text" || this.ObjectField.DataTypeCode == "nText" || this.ObjectField.DataTypeCode == "Integer" || this.ObjectField.DataTypeCode == "Double" || this.ObjectField.DataTypeCode == "Decimal") {
+            this.UIProperties.SetEnabled("TextValue", null, this.TextFiltersEnabled);
+        }
 
-            if (!this.IsCustomFilter) {
-                this.BooleanFiltersEnabled = true;
-            }
+        else if (this.ObjectField.DataTypeCode == "LookUp") {
+            this.UIProperties.SetEnabled("TextValue", this.ObjectTable.Name, this.LOVFiltersEnabled);
+        }
+
+        else if (this.ObjectField.DataTypeCode == "PickList") {
+            this.UIProperties.SetEnabled(this.ObjectField.FieldName, this.ObjectTable.Name, this.PickFiltersEnabled);
         }
     }
     

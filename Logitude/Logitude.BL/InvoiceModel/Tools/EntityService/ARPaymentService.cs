@@ -980,7 +980,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
             journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
             journalLine.Reference1 = theEntityPm.PaymentNo;
-            journalLine.Reference2 = arPaymentcheque.ChequeNumber;
+            if (theEntityPm.AccountingPaymentMethodCode == "BT")
+            {
+                journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
+            }
+            else
+            {
+                journalLine.Reference2 = arPaymentcheque.ChequeNumber;
+            }
             journalLine.Notes = theEntityPm.InternalNotes;
             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
             journal.JournalLines.Add(journalLine);
@@ -1025,7 +1032,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
                 journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                 journalLine.Reference1 = theEntityPm.PaymentNo;
-                journalLine.Reference2 = arPaymentcheque.ChequeNumber;
+                journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
                 journalLine.DebitAccountId = this.getGLAccountByPaymentMethodCode(theEntityPm);
                 journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                 journalLine.ChangeSetOp = ChangeSetOperation.Insert;

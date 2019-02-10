@@ -19,6 +19,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using System.Web;
 using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -86,8 +87,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         private ContactPM GetLoggedContact(int tenant)
         {
-            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
-            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
     }

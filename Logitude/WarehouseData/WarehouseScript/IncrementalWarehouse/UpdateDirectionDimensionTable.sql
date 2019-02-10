@@ -24,7 +24,7 @@
 	BEGIN
 
 	set @Key = (select Code from DIM_Directions where Code = @Code)
-	if(@Key is  null) begin insert into DIM_Directions values(@Code,@Name); end
+	if(@Key is  null) begin insert into DIM_Directions (Code,Name) values(@Code,@Name); end
 	else begin update   DIM_Directions set Name =@Name Where Code = @Code; end
 		
 	FETCH NEXT FROM DirectionsCursor INTO @Code , @Name

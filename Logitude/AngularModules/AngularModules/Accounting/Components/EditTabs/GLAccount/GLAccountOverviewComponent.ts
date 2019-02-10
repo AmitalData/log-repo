@@ -1,3 +1,6 @@
+import { CardList } from './../../../../Common/EntityLists/CardList';
+import { CardListService } from './../../../../Common/Services/StandardLists/CardListService';
+import { CreditLimitSettingPM } from './../../../../Common/EntityPMs/CreditLimitSettingPM';
 import { AccountingNotePMService } from './../../../Services/StandardPMs/AccountingNotePMService';
 import { AccountingNotePM } from './../../../EntityPMs/AccountingNotePM';
 import { MessageWindow } from './../../../../Controls/Windows/MessageWindow';
@@ -50,6 +53,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public AccountPM: GLAccountPM = null;
     public GLAccountMoreData: GLAccountMoreDataList = null;
     public isRTL: boolean = false;
+    public showLocal: boolean = false;
     public isUsedOutside: boolean = false; // when view tab inside customer ..
 
     //Services
@@ -59,10 +63,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
     _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
+    _CardListService: CardListService = new CardListService();
 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        if (SessionLocator.LoggedUserPM) this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
         //Resources
         this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
@@ -128,6 +134,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.GetAccountingNotes();
         this.LoadChartData();
         this.SetUIProperties();
+        this.LoadCreditDetailsData();
 
     }
 
@@ -139,7 +146,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //    }
     //}
     //#endregion
-
+    TenantCurrency:string;
+    accountCardlist: CardList;
     GetDefaultValues() {
 
         // Get GLAccountMoreData
@@ -151,6 +159,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.GLAccountMoreData = mm.Result;
+                this.LoadCreditDetailsData();
+
             }
             else {
             }
@@ -168,6 +178,25 @@ export class GLAccountOverviewComponent extends BaseComponent {
             }
         });
 
+        // Get connect card
+        this._CardListService.getSingle(this.AccountPM.CardId).subscribe(myResult => {
+            console.log("_CardListService.getSingle", myResult);
+            var result: ServiceResponse = myResult;
+            if (!result.HasError)
+            {
+                this.accountCardlist = result.Result;
+                this.LoadCreditDetailsData();
+
+            }
+            else {
+                console.log("[!] cannot get glaccount card");
+
+            }
+        });
+
+
+        // Get tenant currency
+        this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
 
     }
 
@@ -568,6 +597,49 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     //#endregion
 
+    //#region Credit limit
+    creditPercentage:number = 0;
+    LoadCreditDetailsData(){
+
+
+        console.log("LoadCreditDetailsData");
+
+        // Calculate credit percentage
+        var percentage = 0;
+        if (this.GLAccountMoreData && this.accountCardlist)
+        {
+            percentage =
+                (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
+            +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
+            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
+            //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
+
+            if(this.accountCardlist.CreditLimitAmount && this.accountCardlist.CreditLimitAmount != 0)
+                percentage = percentage / (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0);
+            else
+                percentage = 0;
+        }
+
+        if (!percentage) percentage = 0;
+        if (percentage < 0) percentage = 0;
+
+        percentage = percentage * 100;
+
+        this.creditPercentage = percentage;
+
+
+    }
+
+    DisplayChequelistClicked(){
+
+    }
+    CardIndexClicked(){
+        this.DisplayTransactionsLinkClicked();
+    }
+    //
+
+    //#endregion
+
     //#region Aging Details
     chartId: string = "";
 
@@ -726,8 +798,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
             this.barChartData[0].data[i] = value.toString();
 
             // Labels
-            var label = element.PeriodName.replace("b4", "Before"); // replace 'b4' with 'Before'
-            label = label.startsWith("Before") ? label.replace("/20", "/") : label; // minimize year in 'Before' Column
+            var label = element.PeriodName.replace("b4", this.showLocal ? "עד" : "Before"); // replace 'b4' with 'Before'
+            label = label.replace("/20", "/"); // minimize year in 'Before' Column
             this.barChartLabels[i] = label;
 
             // Data

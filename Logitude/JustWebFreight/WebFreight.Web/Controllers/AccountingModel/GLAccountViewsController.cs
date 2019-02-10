@@ -343,7 +343,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                     FutureOpenChequesBatch FutureOpenChequesBatch = new FutureOpenChequesBatch();
-                    FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency(authToken.Tenant);
+                    FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency();
 
                     return Request.CreateResponse(HttpStatusCode.OK, "OK");
                 }

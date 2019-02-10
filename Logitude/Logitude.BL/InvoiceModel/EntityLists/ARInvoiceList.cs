@@ -131,6 +131,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public Decimal? TotalVAT { get; set; }
         public DateTime? SATApprovalDate { get; set; }
 
+        public bool IsFullAccounting { get; set; }
 
         #region Ayman: it is a very bad code to add properties this way
         //public bool IsDueDateColorRed

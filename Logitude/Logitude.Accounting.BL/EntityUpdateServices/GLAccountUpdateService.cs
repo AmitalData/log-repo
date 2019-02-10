@@ -31,6 +31,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.Security;
 using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -340,6 +341,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+
+            entityPM.IsControlAccount = entityPM.IsControlAccount ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)
+            entityPM.IsMultiCurrency = entityPM.IsMultiCurrency ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)
+
             if (entityPM.AccountTypeCode == "5") // File
             {
                 string application = "";
@@ -1080,8 +1085,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 return OverrideGetLoggedContactFunc(tenant);
             }
 
-            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
-            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
 

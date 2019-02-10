@@ -28,10 +28,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.Technology)
                 .HasMaxLength(5)
-                .IsUnicode(false);
+                .IsUnicode(false);          
             
-
-
             this.Property(t => t.Id)
                 .IsRequired()
                 .HasMaxLength(15)
@@ -48,12 +46,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
                  .HasMaxLength(20)
                  .IsUnicode(false);
 
-
             this.Property(d => d.FreelancerId).HasMaxLength(15).IsUnicode(false);
             this.Property(d => d.BusinessUnitId).HasMaxLength(50).IsUnicode(false);
-
             this.Property(t => t.LicencedUser).IsRequired();
-
             this.Property(t => t.IsProductRestricted).IsRequired();
 
             this.Property(t => t.ProductTypeCode)
@@ -73,6 +68,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                .IsUnicode(false);
 
             this.Property(t => t.ShowLogBoxToolTip).IsRequired();
+            this.Property(t => t.UserRoles).HasMaxLength(400).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Users");
@@ -101,6 +97,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.DocumentFilingInbox).HasColumnName("DocumentFilingInbox");
             this.Property(t => t.ShowLogBoxToolTip).HasColumnName("ShowLogBoxToolTip");
             this.Property(t => t.ShowLocalNameInLOV).HasColumnName("ShowLocalNameInLOV");
+            this.Property(t => t.UserRoles).HasColumnName("UserRoles");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

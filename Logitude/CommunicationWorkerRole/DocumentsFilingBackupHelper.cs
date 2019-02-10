@@ -20,9 +20,10 @@ namespace CommunicationWorkerRole
 {
     public class DocumentsFilingBackupHelper
     {
-        public static void UploadDocumentToFTP(string DocumentFilingId, int tenant)
+        public static void UploadDocumentToFTP(string DocumentFilingId, int tenant, out string p_message)
         {
-            ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+		    p_message = "";
+			ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(commoncontext);
             DocumentRepository documentRepository = new DocumentRepository(commoncontext);
             DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(commoncontext);
@@ -61,13 +62,13 @@ namespace CommunicationWorkerRole
 					if (!ftpDetail.UseSFTP)
 					{
 						FTPService ftpService = new FTPService(ftpHostIP, ftpUserName, ftpPassword);
-						ftpService.Upload(fileName, ftpFolderName, filedata, true, true);
+						ftpService.Upload(fileName, ftpFolderName, filedata,out p_message, true, true);
 					}
 					else
 					{
 						ftpHostIP = ftpDetail.Host;
 						string p_status = "";
-						string p_message = "";
+						
 						SFTPService sftpService = new SFTPService();
 						sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
 						if (p_status == "0")
@@ -76,10 +77,10 @@ namespace CommunicationWorkerRole
 							sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
 
 							if (p_status == "-1")
-								throw new Exception("SFTP upload file failed: " + p_message);
+								throw new FTPServiceException("SFTP upload file failed: " + p_message);
 						}
 						else
-							throw new Exception("SFTP Login failed: " + p_message);
+							throw new FTPServiceException("SFTP Login failed: " + p_message);
 					}
 
                     documentFilingPOCO.BackedupExternally = true;

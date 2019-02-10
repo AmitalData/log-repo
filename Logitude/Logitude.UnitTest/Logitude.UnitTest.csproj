@@ -99,6 +99,9 @@
     <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.CheckVoid.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.cs" />
+    <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeDataMappingUnitTest.cs" />
+    <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnCreatingServiceUnitTest.cs" />
+    <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnUpdatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\Report\LedgerTransactionBalanceServiceUnderTest.cs" />
     <Compile Include="Accounting\UniTests\CashBookOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\CashBookOnUpdatingServiceUnitTest.cs" />
@@ -133,7 +136,6 @@
     <Compile Include="Utils\CacheUtil.cs" />
     <Compile Include="Utils\FakeFactory.cs" />
     <Compile Include="Utils\LogitudeServerToolsFactory.cs" />
-    <Compile Include="Utils\MockLoggedContactUtil.cs" />
     <Compile Include="Utils\TestsUtil.cs" />
   </ItemGroup>
   <ItemGroup>

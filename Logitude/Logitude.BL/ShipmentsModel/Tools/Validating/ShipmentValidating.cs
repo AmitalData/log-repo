@@ -46,6 +46,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidateDomesticShipment(entityPM);
             }
 
+            if (entityPM.Ratio > 10 || entityPM.Ratio < 1)
+            {
+                throw new ApplicationException("Ratio must be between 1-10");
+            }
+
             ValidateFromPort(entityPM, loggedTenant);
             ValidateToPort(entityPM, loggedTenant);
             ValidateCarrierPrefix(entityPM);
