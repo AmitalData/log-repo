@@ -72,36 +72,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 String theJournalLineCurrencyId = "";
-                if (glPM.ReconcileMethodCode == ((int)Logitude.Accounting.Def.EntityPMs.ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString())
-                {
-                    if (glPM.IsMultiCurrency.GetValueOrDefault())
-                    {
-                        theJournalLineCurrencyId = glPM.CurrencyId;//ohad: ACCOUNT -MULT I CURRENCY + RECONCILE = 0 (LOCAL )  ==>> JOURNAL CURRENCY == NIS  
-                    }
-                    else if (!String.IsNullOrWhiteSpace(glPM.CurrencyId))
-                    {
-                        theJournalLineCurrencyId = glPM.CurrencyId;//ohad : ACCOUNT -CURRENCY = NISS + RECONCILE = 0 (LOCAL )  ==>> JOURNAL CURRENCY == NIS
 
-                    }
-                    else
-                    {
-                        theJournalLineCurrencyId = accountingCurrencyId;
-                    }
+                if (!String.IsNullOrWhiteSpace(glPM.CurrencyId))
+                {
+                    theJournalLineCurrencyId = glPM.CurrencyId;//ohad : ACCOUNT -CURRENCY = NISS + RECONCILE = 0 (LOCAL )  ==>> JOURNAL CURRENCY == NIS
+
                 }
                 else
                 {
-                    
-                    if (!String.IsNullOrWhiteSpace(glPM.CurrencyId))
-                    {
-                        theJournalLineCurrencyId = glPM.CurrencyId;//ohad : ACCOUNT -CURRENCY = NISS + RECONCILE = 0 (LOCAL )  ==>> JOURNAL CURRENCY == NIS
-
-                    }
-                    else
-                    {
-                        theJournalLineCurrencyId = accountingCurrencyId;
-                    }
-
+                    theJournalLineCurrencyId = accountingCurrencyId;
                 }
+
                 theCurrencyId = theJournalLineCurrencyId;
                 RatesTablePM rate = null;
                 rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,
