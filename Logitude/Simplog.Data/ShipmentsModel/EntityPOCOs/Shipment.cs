@@ -338,6 +338,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
         public string OnCarriageVesselId { get; set; }
+
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Origin { get; set; }
+        public string LastFinalDestination { get; set; }
+
         #endregion
 
         #region Booking
@@ -720,8 +726,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string OnCarriageAdditionalTransportModeCode { get; set; }
         public virtual PickUpDeliveryTransportMode OnCarriageAdditionalTransportMode { get; set; }
-
-        public string LastFinalDestination { get; set; }
+                
         public DateTime? FirstPickupETD { get; set; }
         public DateTime? FirstPickupETA { get; set; }
         public bool SplitOnCarriage { get; set; }

@@ -74,7 +74,7 @@ namespace WebFreight.Web
 
 
             AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-            byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);
+            byte[] messageBytes = Encoding.UTF8.GetBytes(xmlfileText);
 
             analyzeQueue = new AnalyzeQueue()
             {

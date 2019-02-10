@@ -34,7 +34,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    if (authToken == null)
+					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+					if (authToken == null)
                     {
                         throw new AutenticationException("Sorry! this user is not authorized!");
                     }

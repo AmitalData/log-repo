@@ -36,6 +36,8 @@ using Logitude.BL.Helpers;
 using Microsoft.Practices.Unity;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Resolvers;
 
 namespace CommunicationWorkerRole
 {
@@ -162,8 +164,11 @@ namespace CommunicationWorkerRole
             ContainerAccessor.InitContainer();
             ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
             ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
-            LoggedContactResolver.RegisterLoggedContactUtil();
 
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            DateTimeUtilResolver.RegisterDateTimeUtil();
+            TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
+            IdCounterUtilResolver.RegisterIdCounterUtil();
 
 
             AccountingRegistrations.Register();
