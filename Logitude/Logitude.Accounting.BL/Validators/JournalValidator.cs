@@ -444,7 +444,9 @@ namespace Logitude.Accounting.BL.Validators
                     if (myJournalPM.TypeCode == regular.Code) //AddClosedTables.AddJournalType(new JournalTypeDetails() { JournalTypeID = "0", EnglishName = "Regular", LocalName = "רגיל" }, journalTypeRepository);
             {
                 var creditCardWithTheSameReference1 =
-                    (from jl in myJournalPM.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
+                    (from jl in myJournalPM.JournalLines
+                     .Where(r => !string.IsNullOrWhiteSpace(r.Reference1))
+                     .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
                      group jl by new { jl.CreditAccountId, jl.Reference1 } into jlGroup
                      select new { jlGroup.Key, c = jlGroup.Count() });
                 var creditCardWithTheSameReference1example = creditCardWithTheSameReference1.FirstOrDefault(r => r.c > 1);
@@ -456,7 +458,9 @@ namespace Logitude.Accounting.BL.Validators
 
 
                 var debitCardWithTheSameReference1 =
-                    (from jl in myJournalPM.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit)
+                    (from jl in myJournalPM.JournalLines
+                     .Where(r => !string.IsNullOrWhiteSpace(r.Reference1))
+                     .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit)
                      group jl by new { jl.CreditAccountId, jl.Reference1 } into jlGroup
                      select new { jlGroup.Key, c = jlGroup.Count() });
                 var debitCardWithTheSameReference1example = debitCardWithTheSameReference1.FirstOrDefault(r => r.c > 1);

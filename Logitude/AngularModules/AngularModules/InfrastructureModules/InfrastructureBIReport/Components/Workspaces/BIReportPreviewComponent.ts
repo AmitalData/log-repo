@@ -129,7 +129,7 @@ export class BIReportPreviewComponent implements OnInit {
                             sortable: true,
                             width: columns[i].Width,
                             resizable: true,
-                            cellRenderer: this.DateCellRenderer,
+                            //cellRenderer: this.DateCellRenderer,
                             cellClass: columns[i].DataTypeCode,
                             //filter: 'agTextColumnFilter',
                             pivotIndex: columns[i].Index,
