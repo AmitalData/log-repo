@@ -43,7 +43,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                DirectQueryService Service = new DirectQueryService(tenant);
+				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+				DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetDirectById(id, tenant);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
@@ -63,7 +64,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                DirectQueryService Service = new DirectQueryService(tenant);
+				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+				DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetDirectByShipmentNumber(number, tenant);
                 //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
@@ -87,8 +89,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                        ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+						ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                         string computingPartnerCode = "";
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
