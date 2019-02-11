@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, ChangeDetectorRef, OnDestroy, Directive, Output, EventEmitter } from '@angular/core';
-import { DWObjectFieldsDetails } from '../../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent'; 
+import { DWObjectFieldsDetails } from '../../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 import { DWObjectTablePMService } from '../../../../Infrastructure/Services/StandardPMs/DWObjectTablePMService';
 import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
-import { DWQueryBuilderService } from '../../../../Infrastructure/Services/ExtendedPMs/DWQueryBuilderService'; 
+import { DWQueryBuilderService } from '../../../../Infrastructure/Services/ExtendedPMs/DWQueryBuilderService';
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
@@ -12,10 +12,10 @@ import { AppTool } from '../../../../Infrastructure/Tools';
     selector: 'DWAskUserFiltersComponent',
     moduleId: module.id,
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'ShowRunButton','RunReportCommand','IsDateFilter']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand']
 })
 
-export class DWAskUserFiltersComponent implements OnInit{
+export class DWAskUserFiltersComponent implements OnInit {
 
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
     AllFieldsWithChildrenDataSource: DWObjectFieldsDetails[];
@@ -27,12 +27,14 @@ export class DWAskUserFiltersComponent implements OnInit{
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     public RunReportCommand: EventEmitter<any>;
     @Output() RunReportComplete = new EventEmitter();
+    @Output() ComputeFiltersComplete = new EventEmitter();
     public _DWQueryBuilderService: DWQueryBuilderService;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper;
     public _DWSubQueryPMService: DWSubQueryPMService;
     ValidationErrorsList: any[];
     public DWQueryData: DWQueryData;
     IsDateFilter: boolean = false;
+    public ComputeFiltersCommand: EventEmitter<any>;
 
     constructor() {
         this._DWQueryBuilderService = new DWQueryBuilderService();
@@ -51,6 +53,15 @@ export class DWAskUserFiltersComponent implements OnInit{
                 this.RunReport(QueryId);
             });
         }
+        if (this.ComputeFiltersCommand) {
+            this.ComputeFiltersCommand.subscribe((QueryId) => {
+                this.ComputeFilters();
+            });
+        }
+    }
+
+    ComputeFilters() {
+        this.ComputeFiltersComplete.emit(this.DWQueryData);
     }
 
     RunReport(MyDWQueryData) {
@@ -61,11 +72,11 @@ export class DWAskUserFiltersComponent implements OnInit{
         }
         else {
             this.DWQueryData = MyDWQueryData;
-        } 
-        
+        }
+
         //this.DWQueryData.Filters = this.SelectedFiltersDataSource;
         //if (this.DWQueryData.Filters) {
-            this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
+        this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
         if (this.ValidationErrorsList.length == 0) {
             var QueryData = new DWQueryData();
             QueryData.Columns = this.DWQueryData.Columns;
@@ -95,15 +106,15 @@ export class DWAskUserFiltersComponent implements OnInit{
             }
             else {
                 this.RunReportComplete.emit("ValidationError");
-            } 
+            }
         }
         //} 
-        
+
     }
 
     AddFilterToGroup(item) {
         var DWObjectField = new DWObjectFieldsDetails(null, item.MyParentClass);
-        DWObjectField.IndexOrder = this.SelectedFiltersDataSource.length; 
+        DWObjectField.IndexOrder = this.SelectedFiltersDataSource.length;
         var tempData = item.FilterItems;
         tempData.push(DWObjectField);
         item.FilterItems = tempData;
@@ -151,24 +162,24 @@ export class DWAskUserFiltersComponent implements OnInit{
     }
 
     FieldValueChanged(DWObjectField: DWObjectFieldsDetails) {
-        
+
     }
 
-    Msg : string = "";
+    Msg: string = "";
     CheckFiltersValidationsFilters(MyFilter: DWObjectFieldsDetails) {
         if (!MyFilter) {
             return;
         }
         MyFilter.FilterItems.forEach((field) => {
-          
+
             if (field.FilterItems.length == 0) {
                 if (field.IsMandatoryFilter == true && AppTool.IsNullOrEmpty(field.TextValue)) {
                     this.ValidationErrorsList.push(field.Name + " filter is required");
-                } 
-            } 
-            else { 
+                }
+            }
+            else {
                 this.CheckFiltersValidationsFilters(field);
-               
+
             }
 
 
@@ -194,13 +205,13 @@ export class DWAskUserFiltersComponent implements OnInit{
 
 
         this.list = [];
-      
-            this.list.push(this.beforeOp);
-            this.list.push(this.afterOp);
-            this.list.push(this.previousOp);
-            this.list.push(this.currentOp);
-            this.list.push(this.nextOp);
-  
+
+        this.list.push(this.beforeOp);
+        this.list.push(this.afterOp);
+        this.list.push(this.previousOp);
+        this.list.push(this.currentOp);
+        this.list.push(this.nextOp);
+
         return this.list;
     }
 
