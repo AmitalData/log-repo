@@ -36,6 +36,7 @@ using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.EntityMapping;
 using Logitude.TimeManagement.Data.EntityMapping;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace Logitude.OracleDatabaseMigration.LogitudeModel
 {
@@ -3333,6 +3334,13 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         }
         #endregion
 
+
+        public IDbSet<SharedLogisticsSetting> SharedLogisticsSettings
+        {
+            get;
+            set;
+
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -78,6 +78,14 @@
     <Compile Include="Migrations\201901200943267_missingGlobalMigraions.Designer.cs">
       <DependentUpon>201901200943267_missingGlobalMigraions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902111347455_missingglobalmigrations.cs" />
+    <Compile Include="Migrations\201902111347455_missingglobalmigrations.Designer.cs">
+      <DependentUpon>201902111347455_missingglobalmigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902111352099_missingmasterdb.cs" />
+    <Compile Include="Migrations\201902111352099_missingmasterdb.Designer.cs">
+      <DependentUpon>201902111352099_missingmasterdb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,6 +106,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901200943267_missingGlobalMigraions.resx">
       <DependentUpon>201901200943267_missingGlobalMigraions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111347455_missingglobalmigrations.resx">
+      <DependentUpon>201902111347455_missingglobalmigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111352099_missingmasterdb.resx">
+      <DependentUpon>201902111352099_missingmasterdb.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
