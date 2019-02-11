@@ -86,6 +86,7 @@ export class BIReportPreviewComponent implements OnInit {
                     this.EntityPM = result.BIReportPM;
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                     this.BuildColumns(result);
+                    this.BuildRows(result);
                 }
             });
         }
@@ -117,6 +118,7 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public BuildColumns(arg: BIReportXMLData) {
         this.columnDefs = [];
+        this.agGrid.api.setColumnDefs(this.columnDefs);
         var columns = arg.BITabularViewSettings.Columns.sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 });
         if (columns != null) {
             for (var i = 0; i < columns.length; i++) {
@@ -151,10 +153,10 @@ export class BIReportPreviewComponent implements OnInit {
                         });
                     }
                 }
+
             }
+            this.agGrid.api.setColumnDefs(this.columnDefs);
         }
-       
-        this.BuildRows(arg);
     }
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
@@ -467,11 +469,15 @@ export class BIReportPreviewComponent implements OnInit {
     RunReportButtonClicked() {
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
+    public  HasValidationError = false; 
     OnRunReportComplete(MyData) {
         if (MyData == "ValidationError") {
+            this.HasValidationError = true;
+
             this.StopBusyIndicator();
         }
         else {
+            this.HasValidationError = false;
             this.rowData = MyData;
             this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
             this.StopBusyIndicator();
