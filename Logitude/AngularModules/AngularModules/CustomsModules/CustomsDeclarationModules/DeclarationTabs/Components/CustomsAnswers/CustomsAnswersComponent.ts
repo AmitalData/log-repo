@@ -34,7 +34,6 @@ import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsAnswersComponent.html',
@@ -132,6 +131,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         if (this.IsDisplayOnly) {
             this.SetScreenFieldsEditability();
         }
+
+        
 
     }
 
@@ -1030,51 +1031,6 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         return title;
     }
 
-    DepositionStatusbuttonclicked(event) {
-
-        //if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && this.EntityPM.DepositionStatusCode != "L") {
-            this.EntityPM.DepositionStatusCode = "L";
-            this.SaveEntityChanges(null);
-            event.stopPropagation();
-            return;
-        //}
-    }
-    SaveEntityChanges(args: any): any {
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-            this.declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-
-                if (myResponse.HasError) {
-                    //this.ValidationErrorsList = myResponse.ErrorsArray;
-                }
-
-                else {
-                    this.EntityPM = myResponse.Result;
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-
-                        var myErrors: string[] = [];
-                        myErrors.push("this.EntityPM.Id is null");
-                        //this.ValidationErrorsList = myErrors;
-                    }
-                    else {
-                        if (args == null) {
-                            //this.CancelButtonClicked();
-                        } else {
-                            
-                            //this.SendButtonClicked();
-                        }
-
-                    }
-                }
-
-            
-            });
-
-        }
-    }
-
-
     //#endregion
 
     //#region constraint paging - client
@@ -1109,6 +1065,52 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         }
 
     }
+
+
+    DepositionStatusbuttonclicked(event) {
+
+        //if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && this.EntityPM.DepositionStatusCode != "L") {
+        this.EntityPM.DepositionStatusCode = "L";
+        this.SaveEntityChanges(null);
+        event.stopPropagation();
+        return;
+        //}
+    }
+    SaveEntityChanges(args: any): any {
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+            this.declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                if (myResponse.HasError) {
+                    //this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+
+                else {
+                    this.EntityPM = myResponse.Result;
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+
+                        var myErrors: string[] = [];
+                        myErrors.push("this.EntityPM.Id is null");
+                        //this.ValidationErrorsList = myErrors;
+                    }
+                    else {
+                        if (args == null) {
+                            //this.CancelButtonClicked();
+                        } else {
+
+                            //this.SendButtonClicked();
+                        }
+
+                    }
+                }
+
+
+            });
+
+        }
+    }
+
 
     private GetDepositionDefaults(CustomerCode: string) {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
@@ -1611,7 +1613,6 @@ export class ConstraintLineModel extends BaseComponent {
         }
 
     }
-
 }
 
 
