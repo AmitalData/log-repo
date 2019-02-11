@@ -60,7 +60,7 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_ILOVS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                ResponseViaAnalayzeQ=true
+                ResponseCode=InterfaceName_ECOVSTHR_Response
 
             }
 
@@ -132,7 +132,8 @@ namespace Logitude.Customs.BL.CloseTables
                 Name = "פעולות מיוחדות לאוברסיז",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_ILOVS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+                 ResponseCode =InterfaceName_ECOVSSPCL_RESPONE
             }
              ,
              new InterfaceDetails()
@@ -254,7 +255,7 @@ namespace Logitude.Customs.BL.CloseTables
                 case AnalyzeQueueServiceEnum.OVSHAWBService:
                     return new CourierOVSHAWBQService(@interface);
                 case AnalyzeQueueServiceEnum.OVSSpecialActionService:
-                    return new CourierOVSHAWBQService(@interface);
+                    return new CourierOVSSpecialActionQService(@interface);
 
                 default:
 
@@ -314,7 +315,7 @@ namespace Logitude.Customs.BL.CloseTables
         public AnalyzeQueueServiceEnum AnalyzeQueueService { get; internal set; }
         public string Subject { get; internal set; }
         public bool ServerInternalDef { get; set; }
-        public bool ResponseViaAnalayzeQ { get; internal set; }
+        public string ResponseCode { get; set; }
     }
 
 

@@ -97,12 +97,12 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
-                
+
 
 
                 var myClass = this.GetType().Name;
 
-                
+
 
 
             }
@@ -163,7 +163,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                         break;
                     }
 
-                    
+
                     ProccessReceivedMessage();
                     scope.Complete();
                 }
@@ -183,15 +183,15 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             LogMessagingUtil.Instance
                 .AppendLine("ProccessReceivedMessage()")
-                .AppendLine("QUEUEMessageId:"+_ReceivedBrokeredMessage.MessageId)
+                .AppendLine("QUEUEMessageId:" + _ReceivedBrokeredMessage.MessageId)
                 .AppendLine("RetryNumber:" + _ReceivedBrokeredMessage.RetryNumber)
-                .AppendLine("CommunicationLogId:"+_CommunicationLogId)
-                .AppendLine(",Tenant"+_Tenant);
+                .AppendLine("CommunicationLogId:" + _CommunicationLogId)
+                .AppendLine(",Tenant" + _Tenant);
 
             _Context = CommonDataContext.GetContext(_Tenant);
             _CommunicationLogRep = new CommunicationLogRepository(_Context);
-            
-            
+
+
             _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
             if (_WaitingCommLog == null)
             {
@@ -202,15 +202,15 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 return;
             }
 
-            
-            
+
+
             try
             {
                 if (_ReceivedBrokeredMessage.RetryNumber < 5)
                 {
 
                     LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
-                    
+
                     PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception
 
                     _IQueueService.Complete();
@@ -225,9 +225,9 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
                 _CommunicationLogRep.Update(_WaitingCommLog);
                 _CommunicationLogRep.SubmitChanges();
-                                
 
-                
+
+
             }
             catch (Exception exc)
             {
@@ -246,9 +246,9 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
         }
 
-       
 
-        private bool PostWebAPIAnalyzeAndSaveCommDone( )
+
+        private bool PostWebAPIAnalyzeAndSaveCommDone()
         {
             try
             {
@@ -301,11 +301,11 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 IWebAPIMessage2MamanAnalyzer analyzer = null;
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
 
-                
+
                 var @intrface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == courier2MamanCommSettings.MessageCode);
-                if (@intrface.ResponseViaAnalayzeQ)
+                if (!string.IsNullOrWhiteSpace(@intrface.ResponseCode))
                 {
-                    courier2MamanCommSettings.RequestQMessage = dataJson;
+                    courier2MamanCommSettings.RqstCommLogID = _WaitingCommLog.Id;
                     analyzer = new SetInAnalyzeQResponseService();
                 }
                 else
@@ -329,14 +329,14 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
             catch (Exception e)
             {
-               
+
 
                 throw;
             }
             return true;
         }
 
-       
+
 
 
     }
@@ -360,7 +360,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             string access_token = "";
             string token_type = "";
-            
+
             try
             {
 
@@ -446,7 +446,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
         }
 
-        
+
     }
 
 }

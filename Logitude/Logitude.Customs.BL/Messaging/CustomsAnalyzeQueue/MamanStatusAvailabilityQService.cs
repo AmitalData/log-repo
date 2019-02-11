@@ -178,8 +178,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 throw new BusinessErrorException("EventQty > totPackageQuantity  ???");
             }
             _DeclarationPM.AcceptanceStatusCode = AcceptanceStatusCode;
+            
             var customContext = CustomContext.GetContext(_CommunicationLog.Tenant);
             var declarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
+            _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             declarationUpdateService.Update(_DeclarationPM, true);
 
 
