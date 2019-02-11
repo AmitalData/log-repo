@@ -6,7 +6,7 @@ declare var dragger: any;
 export class LogitudeWindow {
     public Width: number = 750;
     public Height: number = 500;
-    //public Title: string = null;
+    public Title: string = null;
     public TitleIcon: string = null;
     public CustomTitleIcon: string = null;
     public WindowIndex: number = null;
