@@ -384,13 +384,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (user.Code != null)
                     {
-                        if (user.Code.Length > 8) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append( user.Code.PadLeft(9, ' '));
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
                     }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
+
                     else
                     {
                         myStringBuilder.Append(' ', 9);
                     }
+
                 }
 
 
