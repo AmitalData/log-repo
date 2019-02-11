@@ -467,7 +467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable GatepassReturnCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.GatepassReturnCode" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> GatepassReturnCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.GatepassReturnCode").ToList();   
 
-			   TextCode GatepassReturnCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", DefaultText = "GatepassReturnCodeQuery",LocalDefaultText = "Gatepass Return Code Query", ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode GatepassReturnCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", DefaultText = "GatepassReturnCodeQuery",LocalDefaultText = "תשובה בבקשת העברה", ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature GatepassReturnCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GatepassReturnCode.Features.GatepassReturnCode", NameTextCodeDefaultText = "GatepassReturnCode", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
