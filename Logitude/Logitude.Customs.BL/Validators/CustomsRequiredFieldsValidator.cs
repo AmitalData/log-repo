@@ -1140,13 +1140,13 @@ namespace Logitude.Customs.BL.Validators
 
                     }
 
-                    //if (info.Name == "IncotermCode")
-                    //{
-                    //    if (info.GetValue(supplierInvoice) == null)
-                    //    {
-                    //        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = supplierInvoice.InvoiceNumber, FieldName = info.Name, TableName = "Customs.SupplierInvoice" });
-                    //    }
-                    //}
+                    if (info.Name == "IncotermCode")
+                    {
+                        if (info.GetValue(supplierInvoice) == null)
+                        {
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = supplierInvoice.InvoiceNumber, FieldName = info.Name, TableName = "Customs.SupplierInvoice" });
+                        }
+                    }
 
                 }
                 
