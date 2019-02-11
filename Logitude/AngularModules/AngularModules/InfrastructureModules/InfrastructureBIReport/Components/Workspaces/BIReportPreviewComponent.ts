@@ -126,7 +126,7 @@ export class BIReportPreviewComponent implements OnInit {
                     if (columns[i].DataTypeCode == "DateTime") {
                         this.columnDefs.push({
                             colId: columns[i].Code,
-                            headerName: columns[i].Name,
+                            headerName: columns[i].Code,
                             field: columns[i].Code,
                             sortable: true,
                             width: columns[i].Width,
@@ -141,7 +141,7 @@ export class BIReportPreviewComponent implements OnInit {
                     else {
                         this.columnDefs.push({
                             colId: columns[i].Code,
-                            headerName: columns[i].Name,
+                            headerName: columns[i].Code,
                             field: columns[i].Code,
                             sortable: true,
                             filter: true,
@@ -444,8 +444,16 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                if (s != null  ||( d != null && d != "cancel")) {
-                    this.LoadBIReportData();
+                if (s != null || (d != null && d != "cancel")) {
+                    this.DWQueryData = s.DWQueryData;
+                    if (this.DWQueryData.Filters) {
+                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
+                        var temp = [];
+                        temp.push(MyFilter);
+                        this.SelectedFiltersDataSource = temp;
+                        this.LoadBIReportData();
+                    }
+                   
                 }
             });
         });
@@ -484,6 +492,9 @@ export class BIReportPreviewComponent implements OnInit {
         }
        
         this.StopBusyIndicator();
+    }
+    OnComputeFiltersComplete(MyData) {
+        this.BIReportXMLData.DWQueryData = MyData;
     }
     CountClicked() {
         alert("Count : " + this.agGrid.api.getDisplayedRowCount());

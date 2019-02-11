@@ -372,7 +372,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         if (!isOut)
                         {
                             string msg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, useLocal);
-                            errors += msg.Replace("%FieldName", "Bank Account") + ";";
+                            errors += msg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.BankAccountId", tenant, useLocal)) + ";";
                         }
                     }
 

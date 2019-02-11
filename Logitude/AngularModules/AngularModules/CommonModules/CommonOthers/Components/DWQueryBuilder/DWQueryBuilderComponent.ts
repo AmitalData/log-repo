@@ -1009,7 +1009,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     else {
                         this.SelectedFiltersDataSource = [];
                     }
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    if (SessionLocator.CurrentSession.CurrentWindow) {
+                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    }
                     this.SaveChanges();
                     //////////////////////////////////////////
                 }
