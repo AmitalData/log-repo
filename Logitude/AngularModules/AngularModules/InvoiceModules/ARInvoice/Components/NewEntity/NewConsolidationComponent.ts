@@ -559,11 +559,11 @@ export class NewConsolidationComponent extends BaseComponent {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (AppTool.IsNullOrEmpty(this.BillToPartnerTypeId)) {
-            errors.push(msg.replace("%FieldName", "Partner Type"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.PartnerType")));
         }
 
         if (AppTool.IsNullOrEmpty(this.BillToId)) {
-            errors.push(msg.replace("%FieldName", "Bill to"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.BillToId")));
         }
 
         //if (AppTool.IsNullOrEmpty(this.BillToAddressId)) {
@@ -571,11 +571,11 @@ export class NewConsolidationComponent extends BaseComponent {
         //}
 
         if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-            errors.push(msg.replace("%FieldName", "Currency"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceCurrencyId")));
         }
 
         if (this.InvoiceDate == null) {
-            errors.push(msg.replace("%FieldName", "Invoice Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate")));
         }
 
         else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
@@ -583,21 +583,21 @@ export class NewConsolidationComponent extends BaseComponent {
         }
         
         if (this.DueDate == null) {
-            errors.push(msg.replace("%FieldName", "Due Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.DueDate")));
         }
 
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAR) {
             if (AppTool.IsNullOrEmpty(this.VatNumber)) {
-                errors.push(msg.replace("%FieldName", "Vat Number"));
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.VatNumber")));
             }
         }
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
-                errors.push(msg.replace("%FieldName", "Forma Pago"));
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
           }
           if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
-            errors.push(msg.replace("%FieldName", "Metodo Pago"));
+              errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
           }
 
           if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
