@@ -103,17 +103,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append('0', 9);
             }
 
-            if (openFormatReportPM.ReportNumber != null)
-            {
-                if (openFormatReportPM.ReportNumber.Length > 15) { openFormatReportPM.ReportNumber.Substring(0, 15); }
-                myStringBuilder.Append("a" + openFormatReportPM.ReportNumber.PadLeft(15, '0'));
-            }
-
-            else
-            {
-                myStringBuilder.Append('0', 15);
-            }
-
+            Random Random = new Random();
+            string num = Random.Next().ToString();
+            random = num;
+            if (num.Length > 15) { num = num.Substring(0, 15); }
+            myStringBuilder.Append("a" + num.PadLeft(15, '0'));
 
 
             myStringBuilder.Append("a&OF1.31&");
@@ -258,21 +252,29 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 CurrencyPM currency = currencies.Where(d => d.Id == item.CurrencyId).FirstOrDefault();
 
-
-                if (computingPartnerTranslations != null)
+                if (currency != null)
                 {
-
-                    var partnerCode = computingPartnerTranslations.Where(d => d.ObjectTableName == "Currency" && d.OurCode == item.AccountingEntityCode).FirstOrDefault();
-
-                    if (partnerCode != null)
+                    if (computingPartnerTranslations != null)
                     {
-                        if (partnerCode.PartnerCode.Length > 3) { partnerCode.PartnerCode = partnerCode.PartnerCode.Substring(0, 3); }
-                        myStringBuilder.Append(partnerCode.PartnerCode.PadLeft(3, ' '));
+
+                        var partnerCode = computingPartnerTranslations.Where(d => d.ObjectTableName == "Currency" && d.OurCode == currency.Code).FirstOrDefault();
+
+                        if (partnerCode != null)
+                        {
+                            if (partnerCode.PartnerCode.Length > 3) { partnerCode.PartnerCode = partnerCode.PartnerCode.Substring(0, 3); }
+                            myStringBuilder.Append(partnerCode.PartnerCode.PadLeft(3, ' '));
+                        }
+
+
+                        else
+                        {
+                            myStringBuilder.Append(currency.Code);
+                        }
                     }
 
                     else
                     {
-                        myStringBuilder.Append(' ', 3);
+                        myStringBuilder.Append(currency.Code);
                     }
                 }
 
@@ -3037,11 +3039,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append("a");
                 myStringBuilder.Append('0', 9);
             }
-            Random Random = new Random();
-            string num = Random.Next().ToString();
-            random = num;
-            if (num.Length > 15) { num = num.Substring(0, 15); }
-            myStringBuilder.Append("a" + num.PadLeft(15, '0'));
+       
+         
+            if (random.Length > 15) { random = random.Substring(0, 15); }
+            myStringBuilder.Append("a" + random.PadLeft(15, '0'));
 
             myStringBuilder.Append("&OF1.31&");
 
