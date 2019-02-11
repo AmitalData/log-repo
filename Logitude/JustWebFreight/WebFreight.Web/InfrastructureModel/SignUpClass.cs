@@ -624,7 +624,7 @@ namespace WebFreight.Web.InfrastructureModel
                                         iAccountingSetting.AllowVoidARI = false;
                                         iAccountingSetting.AllowVoidARP = false;
                                         iAccountingSetting.AllowManualInvoiceNumber = false;
-                                        iAccountingSetting.IsChronologicalDates = true;
+                                        iAccountingSetting.IsARInvoiceChronologicalDates = true;
                                         iAccountingSetting.IsVatNumberMandatoryInAP = true;
                                         iAccountingSetting.IsVatNumberMandatoryInAR = true;
                                         accountingSettingsRepository.Update(iAccountingSetting);
@@ -955,7 +955,7 @@ namespace WebFreight.Web.InfrastructureModel
                     AllowVoidAPP = tenantZeroAccoutingSettings.AllowVoidAPP,
                     AllowVoidARI = tenantZeroAccoutingSettings.AllowVoidARI,
                     AllowVoidARP = tenantZeroAccoutingSettings.AllowVoidARP,
-                    IsChronologicalDates = tenantZeroAccoutingSettings.IsChronologicalDates,
+                    IsARInvoiceChronologicalDates = tenantZeroAccoutingSettings.IsARInvoiceChronologicalDates,
                     IsVatNumberMandatoryInAP = tenantZeroAccoutingSettings.IsVatNumberMandatoryInAP,
                     IsVatNumberMandatoryInAR = tenantZeroAccoutingSettings.IsVatNumberMandatoryInAR,
                 };

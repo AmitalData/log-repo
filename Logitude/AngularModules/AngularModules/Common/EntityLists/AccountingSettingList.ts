@@ -15,7 +15,8 @@ export class AccountingSettingList {
 		AllowManualInvoiceNumber: boolean;
 		IsVatNumberMandatoryInAR: boolean;
 		IsVatNumberMandatoryInAP: boolean;
-		IsChronologicalDates: boolean;
+		IsARInvoiceChronologicalDates: boolean;
+		IsARPaymentChronologicalDates: boolean;
 		AccountingSystemCode: string;
 		ReceivableVATableTempCard: string;
 		ReceivableVATExemptTempCard: string;
