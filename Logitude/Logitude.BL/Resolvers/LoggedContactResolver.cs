@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Interfaces;
+using Logitude.BL.Mocks;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.Helpers
+namespace Logitude.BL.Resolvers
 {
     public class LoggedContactResolver
     {

@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.ExternalAPIs
 {
@@ -31,8 +32,8 @@ namespace WebFreight.Web.ExternalAPIs
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                
-                IQuotesContext objectContext = QuotesContext.GetContext(tenant);
+				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+				IQuotesContext objectContext = QuotesContext.GetContext(tenant);
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
 
                 QuoteDocumentVersionRepository versionRepository = new QuoteDocumentVersionRepository(objectContext);

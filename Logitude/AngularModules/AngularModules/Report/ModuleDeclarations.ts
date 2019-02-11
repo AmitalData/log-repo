@@ -69,6 +69,9 @@ import { TasksOfNoProjectsFilterComponent } from './Components/FilterReportCompo
 import { ShipmentDetailsFilterComponent } from './Components/FilterReportComponent/ShipmentDetailsFilterComponent';
 
 
+//VDK Templates
+import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilterComponent';
+
 export const Components =
     [
         MainReportsWorkspace,
@@ -126,6 +129,7 @@ export const Components =
         ShipmentDetailsFilterComponent,
         DetailedShipmentChargesAnalysisComponent,
         VendorChargesAnalysisFilterComponent,
+        VDKFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -189,6 +193,7 @@ export class ModuleDeclarations {
             case "ShipmentDetailsFilterComponent": { myResult = ShipmentDetailsFilterComponent; break; }
             case "DetailedShipmentChargesAnalysisComponent": { myResult = DetailedShipmentChargesAnalysisComponent; break; }
             case "VendorChargesAnalysisFilterComponent": { myResult = VendorChargesAnalysisFilterComponent; break; }
+            case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }                
         }
 
         return myResult;

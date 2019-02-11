@@ -256,6 +256,7 @@
     <Content Include="WarehouseScript\Others\Function Date.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\Others\UpdateDWObjectFieldHideTree.sql" />
     <Content Include="WarehouseScript\Others\UpdateObjectFieldCopyToDW.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -54,7 +54,8 @@ using Logitude.SystemLogs.Repositories;
 using Logitude.SystemLogs.POCOs;
 using Logitude.Server.Tools.Counters;
 using WebFreight.Web.Helpers;
-
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Resolvers;
 
 namespace WebFreight.Web
 {
@@ -178,6 +179,10 @@ namespace WebFreight.Web
             ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
 
             LoggedContactResolver.RegisterLoggedContactUtil();
+            DateTimeUtilResolver.RegisterDateTimeUtil();
+            TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
+            IdCounterUtilResolver.RegisterIdCounterUtil();
+
             MessagingServiceFactoryHelper.InitContainer();
 
 
@@ -240,8 +245,7 @@ namespace WebFreight.Web
             //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
-            json.SerializerSettings.PreserveReferencesHandling =
-                Newtonsoft.Json.PreserveReferencesHandling.Objects;
+			json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
 
 
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.UseXmlSerializer = true;

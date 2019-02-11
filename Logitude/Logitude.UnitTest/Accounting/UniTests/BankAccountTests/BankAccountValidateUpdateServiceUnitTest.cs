@@ -14,6 +14,7 @@ using Logitude.Server.Tools;
 using Logitude.BL.Interfaces;
 using Logitude.BL.Security;
 using Microsoft.Practices.Unity;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 {
@@ -23,7 +24,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void ValidateBankAccountExist_BankAccountExists_ReturnsValidationMessage()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);//GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
             string expectedErrorMessage = "Bank account exist";
             string actualErrorMessage = "";
@@ -54,7 +55,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             };
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+         
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(list);
 
             bankAccountValidateService.CheckBankAccountExists(entityPM);
@@ -65,17 +66,13 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             }
 
             Assert.AreEqual(expectedErrorMessage, actualErrorMessage);
-            //TestsUtil.AssertThrows<Exception>(() =>
-            //{
-            //    bankAccountValidateService.CheckBankAccountExists(entityPM);
-            //}, "Bank account exist");
             
         }
        
         [TestMethod]
         public void ValidateBankAccountExist_BankAccountDoesnotExist_ErrorsCountIsZero()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedLoggedUserId = loggedcontact.Id;
             int actualErrorsCount = 0;
             int expectedErrorsCount = 0;
@@ -95,7 +92,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             };
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+           // A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(null);
             bankAccountValidateService.CheckBankAccountExists(entityPM);
             actualErrorsCount = bankAccountValidateService.ErrorsList.Count;
@@ -123,9 +120,9 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckGLAccountAlreadyConnectedToBankAccountOnInsert_GLAccountConnectedToBankAccount_ReturnsAValidationMessage()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedLoggedUserId = loggedcontact.Id;
-            string expectedErrorMessage = "GLAccountAlreadyConnectedToBankAccount";
+            string expectedErrorMessage = "Accounting.General.O.GLAccountAlreadyConnectedToBankAccount"; //textCodeCode + " " + tenant + " " + getLocalDefaultText
             string actualErrorMessage = "";
 
             BankAccountPM entityPM = new BankAccountPM()
@@ -155,9 +152,9 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             };
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetByGLAccount(entityPM.GLAccountId, entityPM.Tenant)).Returns(list);
-            A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", entityPM.Tenant,A<bool>.Ignored)).Returns("GLAccountAlreadyConnectedToBankAccount");
+            //A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", entityPM.Tenant,A<bool>.Ignored)).Returns("GLAccountAlreadyConnectedToBankAccount");
             bankAccountValidateService.CheckGLAccountAlreadyConnectedToBankAccountOnInsert(entityPM, true);
             if (bankAccountValidateService.ErrorsList.Count > 0)
             {
@@ -175,7 +172,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         //[Row]
         public void CheckGLAccountAlreadyConnectedToBankAccountOnInsert_GLAccountNotConnectedToBankAccount_ErrorsCountIsZero()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedLoggedUserId = loggedcontact.Id;
             int actualErrorsCount = 0;
             int expectedErrorsCount = 0;
@@ -206,9 +203,9 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             };
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetByGLAccount(entityPM.GLAccountId, entityPM.Tenant)).Returns(null);
-            A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", entityPM.Tenant, A<bool>.Ignored)).Returns("GLAccountAlreadyConnectedToBankAccount");
+            //A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", entityPM.Tenant, A<bool>.Ignored)).Returns("GLAccountAlreadyConnectedToBankAccount");
             bankAccountValidateService.CheckGLAccountAlreadyConnectedToBankAccountOnInsert(entityPM, true);
             actualErrorsCount = bankAccountValidateService.ErrorsList.Count;
             Assert.AreEqual(expectedErrorsCount, actualErrorsCount);
@@ -232,7 +229,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckDeferredGLAccountAlreadyConnectedToBankAccountOnInsert_DefferedGLAccountConnectedToBankAccount_ReturnsAValidationMessage()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedLoggedUserId = loggedcontact.Id;
             string expectedErrorMessage = "The Deferred GLAccount is already connected to a Bank Account";
             string actualErrorMessage = "";
@@ -263,7 +260,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             };
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetByGLAccount(entityPM.GLAccountId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetByDeferedGLAccount(entityPM.DeferredGLAccountId, entityPM.Tenant)).Returns(list);
@@ -283,7 +280,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckDeferredGLAccountAlreadyConnectedToBankAccountOnInsert_DefferedGLAccountNotConnectedToBankAccount_ErrorCountIsZero()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedLoggedUserId = loggedcontact.Id;
             int actualErrorsCount = 0;
             int expectedErrorsCount = 0;
@@ -314,7 +311,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             };
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetByDeferedGLAccount(entityPM.DeferredGLAccountId, entityPM.Tenant)).Returns(null);
             bankAccountValidateService.CheckDeferredGLAccountAlreadyConnectedToBankAccountOnInsert(entityPM);
             actualErrorsCount = bankAccountValidateService.ErrorsList.Count;
@@ -338,9 +335,9 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 
         [TestMethod]
         public void CheckGLAccountAlreadyConnectedToBankAccountOnUpdate_GLAccountConnectedToBankAccount_ReturnsAValidationMessage() {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedLoggedUserId = loggedcontact.Id;
-            string expectedErrorMessage = "GLAccountAlreadyConnectedToBankAccount";
+            string expectedErrorMessage = "Accounting.General.O.GLAccountAlreadyConnectedToBankAccount";
             string actualErrorMessage = "";
 
             BankAccountPM entityPM = new BankAccountPM()
@@ -385,9 +382,9 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetByGLAccount(entityPM.GLAccountId, entityPM.Tenant)).Returns(list);
-            A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", entityPM.Tenant, A<bool>.Ignored)).Returns("GLAccountAlreadyConnectedToBankAccount");
+            //A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", entityPM.Tenant, A<bool>.Ignored)).Returns("GLAccountAlreadyConnectedToBankAccount");
             A.CallTo(() => bankAccountValidateService.GetSingleBankAccount(entityPM.Id, entityPM.Tenant)).Returns(poco);
 
             bankAccountValidateService.CheckGLAccountAlreadyConnectedToBankAccountOnUpdate(entityPM, poco, true);
@@ -406,7 +403,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckGLAccountAlreadyConnectedToBankAccountOnUpdate_GLAccountNotConnectedToBankAccount_ErrorsCountIsZero()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedLoggedUserId = loggedcontact.Id;
             int actualErrorsCount = 0;
             int expectedErrorsCount = 0;
@@ -489,9 +486,9 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             foreach(var item in listOfState)
             {
                 var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-                A.CallTo(() => bankAccountValidateService.GetLoggedContact(item.Item1.Tenant)).Returns(loggedcontact);
+                //A.CallTo(() => bankAccountValidateService.GetLoggedContact(item.Item1.Tenant)).Returns(loggedcontact);
                 A.CallTo(() => bankAccountValidateService.GetByGLAccount(item.Item1.GLAccountId, item.Item1.Tenant)).Returns(item.Item2);
-                A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", item.Item1.Tenant, A<bool>.Ignored)).Returns("GLAccountAlreadyConnectedToBankAccount");
+                //A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", item.Item1.Tenant, A<bool>.Ignored)).Returns("GLAccountAlreadyConnectedToBankAccount");
                 A.CallTo(() => bankAccountValidateService.GetSingleBankAccount(item.Item1.Id, item.Item1.Tenant)).Returns(item.Item3);
                 bankAccountValidateService.CheckGLAccountAlreadyConnectedToBankAccountOnUpdate(item.Item1, item.Item3, true);
                 actualErrorsCount = bankAccountValidateService.ErrorsList.Count;
@@ -518,7 +515,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate_DefferedGLAccountConnectedToBankAccount_ReturnsAValidationMessage()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedLoggedUserId = loggedcontact.Id;
             string expectedErrorMessage = "The Deferred GLAccount is already connected to a Bank Account";
             string actualErrorMessage = "";
@@ -565,7 +562,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetByDeferedGLAccount(entityPM.DeferredGLAccountId, entityPM.Tenant)).Returns(list);
             A.CallTo(() => bankAccountValidateService.GetSingleBankAccount(entityPM.Id, entityPM.Tenant)).Returns(poco);
             bankAccountValidateService.CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate(entityPM, poco);
@@ -584,7 +581,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate_DefferedGLAccountNotConnectedToBankAccount_ErrorsCountIsZero()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);//GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
             int actualErrorsCount = 0;
             int expectedErrorsCount = 0;
@@ -669,7 +666,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             {
                 actualErrorsCount = 0;
                 var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-                A.CallTo(() => bankAccountValidateService.GetLoggedContact(item.Item1.Tenant)).Returns(loggedcontact);
+                //A.CallTo(() => bankAccountValidateService.GetLoggedContact(item.Item1.Tenant)).Returns(loggedcontact);
                 A.CallTo(() => bankAccountValidateService.GetByDeferedGLAccount(item.Item1.DeferredGLAccountId, item.Item1.Tenant)).Returns(item.Item2);
                 A.CallTo(() => bankAccountValidateService.GetSingleBankAccount(item.Item1.Id, item.Item1.Tenant)).Returns(item.Item3);
                 bankAccountValidateService.CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate(item.Item1, item.Item3);
@@ -697,9 +694,9 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckGLAccountHasTransactionsOnUpdate_GLAccountHasTransactions_ReturnsAValidationMessage()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);//GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
-            string expectedErrorMessage = "ThereRTransactions4GLAccountCantUpdated";
+            string expectedErrorMessage = "Accounting.O.ThereRTransactions4GLAccountCantUpdated";
             string actualErrorMessage = "";
 
             BankAccountPM entityPM = new BankAccountPM()
@@ -733,8 +730,8 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             };
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
-            A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", entityPM.Tenant, A<bool>.Ignored)).Returns("ThereRTransactions4GLAccountCantUpdated");
+            //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", entityPM.Tenant, A<bool>.Ignored)).Returns("ThereRTransactions4GLAccountCantUpdated");
             A.CallTo(() => bankAccountValidateService.GetLedgerTransactions(A<string>.Ignored, A<int>.Ignored)).Returns(transactions);
             bankAccountValidateService.CheckGLAccountHasTransactionsOnUpdate(entityPM, poco, true);
             if (bankAccountValidateService.ErrorsList.Count > 0)
@@ -752,7 +749,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckGLAccountHasTransactionsOnUpdate_GLAccountDosntHaveTransactions_ErrorsCountIsZero()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);//GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
             int actualErrorsCount = 0;
             int expectedErrorsCount = 0;
@@ -822,8 +819,8 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             {
                 actualErrorsCount = 0;
                 var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-                A.CallTo(() => bankAccountValidateService.GetLoggedContact(item.Item1.Tenant)).Returns(loggedcontact);
-                A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", item.Item1.Tenant, A<bool>.Ignored)).Returns("ThereRTransactions4GLAccountCantUpdated");
+                //A.CallTo(() => bankAccountValidateService.GetLoggedContact(item.Item1.Tenant)).Returns(loggedcontact);
+                //A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", item.Item1.Tenant, A<bool>.Ignored)).Returns("ThereRTransactions4GLAccountCantUpdated");
                 A.CallTo(() => bankAccountValidateService.GetLedgerTransactions(A<string>.Ignored, A<int>.Ignored)).Returns(item.Item3);
                 bankAccountValidateService.CheckGLAccountHasTransactionsOnUpdate(item.Item1, item.Item2, true);
                 actualErrorsCount = bankAccountValidateService.ErrorsList.Count;
@@ -850,10 +847,10 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckDefferedGLAccountTransactionsOnUpdate_DefferedGLAccountHasTransactions_ReturnsAValidationMessage()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);//GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
 
-            string expectedErrorMessage = "ThereRTransactions4GLAccountCantUpdated";
+            string expectedErrorMessage = "Accounting.O.ThereRTransactions4GLAccountCantUpdated";
             string actualErrorMessage = "";
 
             BankAccountPM entityPM = new BankAccountPM()
@@ -887,8 +884,8 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             };
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
-            A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", entityPM.Tenant, A<bool>.Ignored)).Returns("ThereRTransactions4GLAccountCantUpdated");
+            //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", entityPM.Tenant, A<bool>.Ignored)).Returns("ThereRTransactions4GLAccountCantUpdated");
             A.CallTo(() => bankAccountValidateService.GetLedgerTransactions(A<string>.Ignored, A<int>.Ignored)).Returns(transactions);
 
             bankAccountValidateService.CheckDefferedGLAccountTransactionsOnUpdate(entityPM, poco, true);
@@ -907,7 +904,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void CheckDefferedGLAccountTransactionsOnUpdate_DefferedGLAccountDosntHaveTransactions_ErrorsCountIsZero()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);//GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
             int actualErrorsCount = 0;
             int expectedErrorsCount = 0;
@@ -976,8 +973,8 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             {
                 actualErrorsCount = 0;
                 var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-                A.CallTo(() => bankAccountValidateService.GetLoggedContact(item.Item1.Tenant)).Returns(loggedcontact);
-                A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", item.Item1.Tenant, A<bool>.Ignored)).Returns("ThereRTransactions4GLAccountCantUpdated");
+                //A.CallTo(() => bankAccountValidateService.GetLoggedContact(item.Item1.Tenant)).Returns(loggedcontact);
+                //A.CallTo(() => bankAccountValidateService.GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", item.Item1.Tenant, A<bool>.Ignored)).Returns("ThereRTransactions4GLAccountCantUpdated");
                 A.CallTo(() => bankAccountValidateService.GetLedgerTransactions(A<string>.Ignored, A<int>.Ignored)).Returns(item.Item3);
                 bankAccountValidateService.CheckDefferedGLAccountTransactionsOnUpdate(item.Item1, item.Item2, true);
                 actualErrorsCount = bankAccountValidateService.ErrorsList.Count;
@@ -1003,7 +1000,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void Validate_AllChecksHappenOnInsert_Success()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);//GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
             BankAccountPM entityPM = new BankAccountPM()
             {
@@ -1037,7 +1034,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+           // A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetByGLAccount(entityPM.GLAccountId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetByDeferedGLAccount(entityPM.DeferredGLAccountId, entityPM.Tenant)).Returns(null);
@@ -1057,7 +1054,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void Validate_AllChecksHappenOnUpdate_Success()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);//GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
             BankAccountPM entityPM = new BankAccountPM()
             {
@@ -1104,7 +1101,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 
 
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetByGLAccount(entityPM.GLAccountId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(null);
             A.CallTo(() => bankAccountValidateService.GetByDeferedGLAccount(entityPM.DeferredGLAccountId, entityPM.Tenant)).Returns(null);
@@ -1121,21 +1118,6 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             A.CallTo(() => bankAccountValidateService.CheckDefferedGLAccountTransactionsOnUpdate(entityPM, poco, A<bool>.Ignored)).MustHaveHappened();
 
 
-        }
-
-        private ContactPM GetLoggedContactInstance()
-        {
-
-            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "MockLoggedContactUtil", new ParameterOverride("", 1)) as ILoggedContactUtil;
-            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(1);
-            //string expectedLoggedUserId = "myUser";
-            //ContactPM loggedcontact = new ContactPM()
-            //{
-            //    Id = expectedLoggedUserId,
-            //    DontShowLocal = true,
-            //};
-
-            return loggedcontact;
         }
 
     }
