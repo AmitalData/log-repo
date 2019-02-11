@@ -120,6 +120,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 PrimaryNum = _DeclarationPM.CustomFileNo,
                                 Mode = UnifreightEventMode.@new,
                                 StatusCode = "SMG",
+                                 EventDateTime= mySTBMessage.EventTime
                             });
                         }
                         break;
@@ -131,6 +132,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 PrimaryNum = _DeclarationPM.CustomFileNo,
                                 Mode = UnifreightEventMode.@new,
                                 StatusCode = "OMN",
+                                EventDateTime = mySTBMessage.EventTime
                             });
                         }
                         break;
@@ -176,8 +178,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 throw new BusinessErrorException("EventQty > totPackageQuantity  ???");
             }
             _DeclarationPM.AcceptanceStatusCode = AcceptanceStatusCode;
+            
             var customContext = CustomContext.GetContext(_CommunicationLog.Tenant);
             var declarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
+            _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             declarationUpdateService.Update(_DeclarationPM, true);
 
 

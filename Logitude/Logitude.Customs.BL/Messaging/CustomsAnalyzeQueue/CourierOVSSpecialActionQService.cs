@@ -5,6 +5,7 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure.Helpers;
@@ -29,11 +30,11 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             var res = new AnalyzeResultModel();
             try
             {
-                throw new Exception();
-                var courierOVSECTHMessageResponseService = new CourierOVSECTHMessageResponseService();
+                
+                
 
                 var commSetting = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertDeserializeTyped<CourierWEBAPICommSettings>(_CommunicationLog.LogSettings);
-                courierOVSECTHMessageResponseService.AnalyzeQResponse(commSetting, communicationsData);
+                AnalyzeQResponse(commSetting, communicationsData);
                 res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;
 
             }
@@ -46,11 +47,23 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             return res;
         }
 
-        public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
+        public void AnalyzeQResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
         {
 
 
-            var myOVSECSpclRequest =ProxyUtil.JsonConvertDeserializeTyped<OVSECSpclRequest>(settings.RequestQMessage);
+            if (string.IsNullOrWhiteSpace(settings.RqstCommLogID))
+            {
+                throw new Exception("settings.RqstCommLogID is must");
+            }
+            var rqstCommunicationLog = Communications.GetCommunicationLog(settings.Tenant, settings.RqstCommLogID);
+            if (rqstCommunicationLog == null)
+            {
+                throw new Exception($"Cannnot GetCommunicationLog ({settings.RqstCommLogID})");
+            }
+            var communicationsData = Communications.GetData(rqstCommunicationLog); ;
+
+
+            var myOVSECSpclRequest =ProxyUtil.JsonConvertDeserializeTyped<OVSECSpclRequest>(communicationsData);
             
             var responeECSpclMamanData = ProxyUtil.JsonConvertDeserializeTyped<CourierOVSHAWBResponse>(webAPIResultString);
 

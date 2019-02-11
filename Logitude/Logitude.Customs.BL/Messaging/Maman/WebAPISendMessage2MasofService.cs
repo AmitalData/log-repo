@@ -218,7 +218,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
         public string DeclarationId { get; set; }
         public string MessageCode { get;  set; }
         public string LoggedContactId { get;  set; }
-        public string RequestQMessage { get; set; }
+        public string RqstCommLogID { get; set; }
     }
 }
 

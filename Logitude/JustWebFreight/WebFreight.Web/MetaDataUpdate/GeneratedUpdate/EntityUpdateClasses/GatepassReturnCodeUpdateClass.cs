@@ -71,6 +71,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.GatepassReturnCode",
 			      				    IsNew =  true,
 			      				    DBTableName =  "Customs.GatepassReturnCodes",
+			      				    OldDBTableName =  "Customs.GatepassReturnCodes",
 			      				    ObjectTableSingular =  "GatepassReturnCode",
 			      				    ObjectTablePlural =  "GatepassReturnCodes",
 			      				    HasCustomFilter =  false,
@@ -104,7 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג מסר תשובה בבקשת העברה",
 			      				    DefaultText =  "Gatepass Return Code",
-			      				    Code =  "287e",
+			      				    Code =  "293f",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -131,6 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
+					  						OldFieldName =  "Code",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -196,6 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
+					  						OldFieldName =  "LocalName",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -261,6 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -281,6 +285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -322,6 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
+					  						OldFieldName =  "EnglishName",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -343,6 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -386,6 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
+					  						OldFieldName =  "Inactive",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -407,6 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Inactive",
 					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -452,13 +461,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup GatepassReturnCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "287e", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup GatepassReturnCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "293f", Name = " Query Group" }, queryGroupRepository);
 	        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable GatepassReturnCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.GatepassReturnCode" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> GatepassReturnCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.GatepassReturnCode").ToList();   
 
-			   TextCode GatepassReturnCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", DefaultText = "GatepassReturnCodequery",LocalDefaultText = null, ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode GatepassReturnCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", DefaultText = "GatepassReturnCodeQuery",LocalDefaultText = "תשובה בבקשת העברה", ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature GatepassReturnCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GatepassReturnCode.Features.GatepassReturnCode", NameTextCodeDefaultText = "GatepassReturnCode", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

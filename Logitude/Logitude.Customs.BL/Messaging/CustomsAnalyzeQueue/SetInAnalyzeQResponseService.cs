@@ -17,12 +17,17 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
         {
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-            var def = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR_Response);
+            var requestInterface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code ==
+            //CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR_Response
+            settings.MessageCode
+            );
+            var responseInterface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == requestInterface.ResponseCode);
+            
             var commSetting = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
             var analyzeQueueUtil = new AnalyzeQueueUtil();
             var new_analyze = analyzeQueueUtil
                .SaveMessageToAnalyzeQueue("", Encoding.UTF8.GetBytes(webAPIResultString), settings.Tenant,
-               commSetting, def,
+               commSetting, responseInterface,
                new AnalyzeResultModel()
                {
                    EntityID = settings.DeclarationId,

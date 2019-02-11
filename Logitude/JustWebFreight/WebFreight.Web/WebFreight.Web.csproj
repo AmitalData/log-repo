@@ -634,6 +634,7 @@
     <Content Include="images\icons\CellTooltip.png" />
     <Content Include="images\icons\DigitallyNotSigned.png" />
     <Content Include="images\icons\DigitallySigned.png" />
+    <Content Include="images\icons\expand.png" />
     <Content Include="images\LoginScreen\CRM.png" />
     <Content Include="images\LoginScreen\DSV\screen_bg.jpg" />
     <Content Include="images\LoginScreen\DSV\screen_boy.jpg" />
