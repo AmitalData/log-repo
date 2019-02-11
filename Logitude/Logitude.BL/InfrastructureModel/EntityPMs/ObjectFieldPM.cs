@@ -142,6 +142,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string HelpTextFieldTranslationId { get; set; }
         public string Code { get; set; }
         public bool CopyToDW { get; set; }
+        public bool EnableFullscreenTextBox { get; set; }
 
         
     }
