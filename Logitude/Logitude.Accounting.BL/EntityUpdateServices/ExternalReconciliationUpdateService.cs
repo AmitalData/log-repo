@@ -27,6 +27,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 

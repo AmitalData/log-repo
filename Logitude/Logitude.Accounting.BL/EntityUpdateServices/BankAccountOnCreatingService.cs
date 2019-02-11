@@ -5,9 +5,11 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Resolvers;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using System;
@@ -71,10 +73,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        public virtual string IdCounterWrapperGetNumber(int Tenant)
+        public virtual string IdCounterWrapperGetNumber(int tenant)
         {
-            return (new IdCounterWrapper()).GetNumber(
-                    "BankAccount", Tenant);
+            //return (new IdCounterWrapper()).GetNumber(
+            //        "BankAccount", Tenant);
+            return IdCounterUtilResolver.GetNewIdCounter("BankAccount", tenant);
         }
     }
 

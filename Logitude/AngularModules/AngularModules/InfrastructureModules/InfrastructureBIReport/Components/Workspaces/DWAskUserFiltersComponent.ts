@@ -74,6 +74,8 @@ export class DWAskUserFiltersComponent implements OnInit{
             QueryData.PageSize = this.DWQueryData.PageSize;
             QueryData.ColumnsSort = this.DWQueryData.ColumnsSort;
 
+            this.DWQueryData.Filters = this.SelectedFiltersDataSource[0];
+
             this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
                 if (!myResult.HasError) {
                     //this.rowData = myResult.Result;
