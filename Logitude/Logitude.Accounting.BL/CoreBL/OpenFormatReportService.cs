@@ -252,21 +252,29 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 CurrencyPM currency = currencies.Where(d => d.Id == item.CurrencyId).FirstOrDefault();
 
-
-                if (computingPartnerTranslations != null)
+                if (currency != null)
                 {
-
-                    var partnerCode = computingPartnerTranslations.Where(d => d.ObjectTableName == "Currency" && d.OurCode == item.AccountingEntityCode).FirstOrDefault();
-
-                    if (partnerCode != null)
+                    if (computingPartnerTranslations != null)
                     {
-                        if (partnerCode.PartnerCode.Length > 3) { partnerCode.PartnerCode = partnerCode.PartnerCode.Substring(0, 3); }
-                        myStringBuilder.Append(partnerCode.PartnerCode.PadLeft(3, ' '));
+
+                        var partnerCode = computingPartnerTranslations.Where(d => d.ObjectTableName == "Currency" && d.OurCode == currency.Code).FirstOrDefault();
+
+                        if (partnerCode != null)
+                        {
+                            if (partnerCode.PartnerCode.Length > 3) { partnerCode.PartnerCode = partnerCode.PartnerCode.Substring(0, 3); }
+                            myStringBuilder.Append(partnerCode.PartnerCode.PadLeft(3, ' '));
+                        }
+
+
+                        else
+                        {
+                            myStringBuilder.Append(currency.Code);
+                        }
                     }
 
                     else
                     {
-                        myStringBuilder.Append(' ', 3);
+                        myStringBuilder.Append(currency.Code);
                     }
                 }
 
@@ -1419,8 +1427,18 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0', 15);
 
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 15);
+                    if (line.LocalCurrencyAmount != null)
+                    {
+                        string LocalCurrencyAmount = line.LocalCurrencyAmount.ToString();
+                        if (LocalCurrencyAmount.Length > 15) { LocalCurrencyAmount = LocalCurrencyAmount.Substring(0, 15); }
+                        myStringBuilder.Append("a" + LocalCurrencyAmount.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
+
 
 
                     if (line.VatPercentage != null)
@@ -1960,21 +1978,23 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 15);
 
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 17);
-                    //if (line.Quantity != null)
-                    //{
-                    //    string quantity = line.Quantity.ToString();
-                    //    if (quantity.Length > 17) { quantity = quantity.Substring(0, 17); }
-                    //    myStringBuilder.Append("a" + quantity.PadLeft(17, '0'));
-                    //}
-                    //else
-                    //{
-                    //    myStringBuilder.Append("a");
-                    //    myStringBuilder.Append('0', 17);
-                    //}
+                 
+                    myStringBuilder.Append('0', 16);
+                    myStringBuilder.Append("1");
+                    if (line.LocalCurrencyAmount != null)
+                    {
+                        string LocalCurrencyAmount = line.LocalCurrencyAmount.ToString();
+                        if (LocalCurrencyAmount.Length > 15) { LocalCurrencyAmount = LocalCurrencyAmount.Substring(0, 15); }
+                        myStringBuilder.Append("a" + LocalCurrencyAmount.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
 
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 15);
+                    //myStringBuilder.Append("a");
+                    //myStringBuilder.Append('0', 15);
 
                     //if (line.UnitPrice != null)
                     //{
@@ -1992,8 +2012,18 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0', 15);
 
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 15);
+                    if (line.LocalCurrencyAmount != null)
+                    {
+                        string LocalCurrencyAmount = line.LocalCurrencyAmount.ToString();
+                        if (LocalCurrencyAmount.Length > 15) { LocalCurrencyAmount = LocalCurrencyAmount.Substring(0, 15); }
+                        myStringBuilder.Append("a" + LocalCurrencyAmount.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
+
 
 
                     if (line.VatPercentage != null)

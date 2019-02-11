@@ -112,8 +112,8 @@ namespace Logitude.Accounting.BL.CoreBL
             var listallRevenueExpenseCards = allRevenueExpenseCards.ToList();
             CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal,RevenueType, MyJournalActionTypeEnum.Debit);
 
-            //CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Credit);
-            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Debit);
+            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Credit);
+            //CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Debit);
 
 
 
@@ -122,8 +122,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                           .OrderBy(r => r.CurrencyId)
                                           join glAcc in allRevenueExpenseCards.OrderBy(r => r.RevenueExpenseType)
                                           on myCurrencySum.AccountId equals glAcc.Id
-                                          //select GetJournalLine(GetMyEnum( glAcc.RevenueExpenseType), myCurrencySum, journal));
-                                          select GetJournalLine(MyJournalActionTypeEnum.Credit, myCurrencySum, journal, RevenueExpenseGLAccountId));
+                                          select GetJournalLine(GetMyEnum( glAcc.RevenueExpenseType), myCurrencySum, journal, RevenueExpenseGLAccountId));
+                                          //select GetJournalLine(MyJournalActionTypeEnum.Credit, myCurrencySum, journal, RevenueExpenseGLAccountId));
 
             journal.JournalLines.AddRange(journalLinesOfChildAcc);
             
@@ -136,13 +136,15 @@ namespace Logitude.Accounting.BL.CoreBL
             {
 
                 case RevenueType:
-                    return MyJournalActionTypeEnum.Credit;
-                    
+                   // return MyJournalActionTypeEnum.Credit;
+                    return MyJournalActionTypeEnum.Debit;
+
                     break;
 
                 case ExpenseType:
                 default:
-                    return MyJournalActionTypeEnum.Debit;
+                   // return MyJournalActionTypeEnum.Debit;
+                    return MyJournalActionTypeEnum.Credit;
                     break;
 
             }

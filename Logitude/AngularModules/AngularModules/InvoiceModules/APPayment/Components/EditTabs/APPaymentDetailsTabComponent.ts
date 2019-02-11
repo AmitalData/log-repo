@@ -1408,8 +1408,12 @@ export class APPaymentInvoiceArgs extends BaseComponent {
     private isAllowedToConnect: boolean = true;
     public CheckBoxVisibility: boolean = false;
     public NotMatchedVisibility: boolean = false;
+    public ConnectFeature: boolean = false;
+    public DissconectFeature: boolean = false;
+
     public IsAdvancedButtonVisible: boolean = false;
     public CheckBoxEnabled: boolean = true;
+    public NoPermision: string="";
     SetUIProperties() {
         this.isControlEnabled = false;
         this.CheckBoxVisibility = false;
@@ -1417,8 +1421,15 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         this.IsAdvancedButtonVisible = false;
         this.CheckBoxEnabled = true;
 
+
+        
+
+
         this.SetUIProperties_CurrencyMatched();
         this.SetUIProperties_AllowedToConnect();
+
+
+
 
         if (this.isAllowedToConnect) {
             this.isControlEnabled = true;
@@ -1453,6 +1464,37 @@ export class APPaymentInvoiceArgs extends BaseComponent {
 
         this.SetUIProperties_AmountPaidEnabled();
         this.SetLineColors();
+
+
+        if (FeatureLocator.HasFeaturePermession("APPayment", "APPaymentConnectInvoices")) {
+            this.ConnectFeature = true;
+
+        }
+        else {
+            if (this.isConnected) {
+                this.CheckBoxVisibility = true;
+                this.ConnectFeature = true;
+            }
+            else {
+                this.CheckBoxVisibility = false;
+                this.ConnectFeature = false;
+            }
+        }
+
+        if (FeatureLocator.HasFeaturePermession("APPayment", "APPaymentDissconectInvoices")) {
+            this.DissconectFeature = true;
+
+        }
+        else {
+            if (this.isConnected) {
+                this.CheckBoxEnabled = false;
+                this.NoPermision = "You have no permission to disconnect invoices";
+            }
+            else {
+                this.CheckBoxEnabled = true;
+                this.NoPermision = null;
+            }
+        }
     }
     SetUIProperties_CurrencyMatched() {
         this.isCurrencyMatched = false;

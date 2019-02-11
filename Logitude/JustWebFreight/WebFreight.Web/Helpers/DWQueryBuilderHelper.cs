@@ -355,7 +355,7 @@ namespace WebFreight.Web.Helpers
             {
                 FinalQuery = FinalQuery + PagingString;
             }
-            else
+            else if (!string.IsNullOrEmpty(DWQueryParam.ColumnsSort))
             {
                 FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
             }

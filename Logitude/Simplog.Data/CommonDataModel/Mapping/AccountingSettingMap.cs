@@ -33,7 +33,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AllowManualInvoiceNumber).HasColumnName("AllowManualInvoiceNumber");
             this.Property(t => t.IsVatNumberMandatoryInAR).HasColumnName("IsVatNumberMandatoryInAR");
             this.Property(t => t.IsVatNumberMandatoryInAP).HasColumnName("IsVatNumberMandatoryInAP");
-            this.Property(t => t.IsChronologicalDates).HasColumnName("IsChronologicalDates");
+            this.Property(t => t.IsARInvoiceChronologicalDates).HasColumnName("IsARInvoiceChronologicalDates");
+            this.Property(t => t.IsARPaymentChronologicalDates).HasColumnName("IsARPaymentChronologicalDates");
             this.Property(t => t.ReceivableVATableTempCard).HasColumnName("ReceivableVATableTempCard");
             this.Property(t => t.ReceivableVATExemptTempCard).HasColumnName("ReceivableVATExemptTempCard");
             this.Property(t => t.PayableVATableTempCard).HasColumnName("PayableVATableTempCard");
