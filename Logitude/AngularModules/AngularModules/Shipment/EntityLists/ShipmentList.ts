@@ -231,10 +231,8 @@ export class ShipmentList {
 		OrderVolumetricWeight: number;
 		OrderChargeableWeight: number;
 		MainCarriageFromCity: string;
-		MainCarriageFromState: string;
 		MainCarriageFromCountryCode: string;
 		MainCarriageToCity: string;
-		MainCarriageToState: string;
 		MainCarriageToCountryCode: string;
 		ProfitExchangeRate: number;
 		AWBCurrencyCode: string;
@@ -399,6 +397,9 @@ export class ShipmentList {
 		SIHasAttachList: boolean;
 		INTTRAIsFreighted: boolean;
 		INTTRADocumentTypeCode: string;
+		From: string;
+		To: string;
+		Origin: string;
 		LastFinalDestination: string;
 		FirstPickupETD: Date;
 		FirstPickupETA: Date;
@@ -420,5 +421,8 @@ export class ShipmentList {
 		Transshipment1ToPortId: string;
 		Transshipment2ToPortId: string;
 		Transshipment3ToPortId: string;
+		IsDepositionRequired: boolean;
+		ImporterDepositionRequestDetails: string;
+		ForwarderPartnerId: string;
 	
 }

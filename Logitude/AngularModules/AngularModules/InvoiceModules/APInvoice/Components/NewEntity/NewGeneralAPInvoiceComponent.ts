@@ -587,11 +587,11 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
-            errors.push(msg.replace("%FieldName", "Vendor"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VendorId")));
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber)) {
-            errors.push(msg.replace("%FieldName", "Invoice Number"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceNumber")));
         }
 
         if (this.EntityPM.InvoiceExpectedAmount == null) {
@@ -599,12 +599,13 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyId)) {
-            errors.push(msg.replace("%FieldName", "Currency"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceCurrencyId")));
         }
 
         if (this.EntityPM.InvoiceDate == null) {
-            errors.push(msg.replace("%FieldName", "Invoice Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceDate")));
         }
+
 
         else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
             errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
@@ -618,18 +619,22 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", "Payment Term"));
         }
 
+        if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentTermId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.PaymentTermId")));
+        }
+
         if (this.EntityPM.DueDate == null) {
-            errors.push(msg.replace("%FieldName", "Due Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.DueDate")));
         }
 
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.VATNumber)) {
-                errors.push(msg.replace("%FieldName", "Vat Number"));
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VATNumber")));
             }
         }
 
         if (this.IsAccountingActivated && this.AccountingDate == null) {
-            errors.push(msg.replace("%FieldName", "Accounting Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.AccountingDate")));
         }
 
         this.ValidationErrorsList = errors;

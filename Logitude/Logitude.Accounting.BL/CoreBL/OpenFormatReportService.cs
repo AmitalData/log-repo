@@ -3361,7 +3361,7 @@ namespace Logitude.Accounting.BL.CoreBL
             StringBuilder stringBuilder = new StringBuilder();
 
             stringBuilder.Append("A000");
-            stringBuilder.Append(' ', 4);
+            stringBuilder.Append(' ', 5);
 
             if (rowsCount.ToString().Length > 15)
             {
@@ -3409,6 +3409,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             stringBuilder.Append("511262073");
+            stringBuilder.Append(' ', 5);
             stringBuilder.Append("Amital Data LTD");
             stringBuilder.Append("2");
 
@@ -3529,6 +3530,7 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append(CurrenteDateTime);
             stringBuilder.Append("0");
             stringBuilder.Append("1");
+            stringBuilder.Append(' ', 14);
             stringBuilder.Append("WinZip");
             stringBuilder.Append("ILS");
             stringBuilder.Append("0");

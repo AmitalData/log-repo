@@ -401,8 +401,8 @@
     <Compile Include="GlobalModel\Tools\DataMapping\WebhookKeysMapping.cs" />
     <Compile Include="GlobalModel\Tools\EntityService\WebhookKeysService.cs" />
     <Compile Include="Helpers\FullAccountingHelper.cs" />
-    <Compile Include="Helpers\LoggedContactResolver.cs" />
-    <Compile Include="Helpers\MockLoggedContactUtil.cs" />
+    <Compile Include="Resolvers\LoggedContactResolver.cs" />
+    <Compile Include="Mocks\MockLoggedContactUtil.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\ObjectTable.cs" />
     <Compile Include="CommonDataModel\APIDataContract\PackageType.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Port.Generated.cs" />
