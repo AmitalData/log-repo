@@ -258,6 +258,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CasualSupplierName = a.CasualSupplierName,
                                                      MamanErrorXml = a.MamanErrorXml,
                                                      ItemsProcessTypesList = a.ItemsProcessTypesList,
+                                                     DepositionStatusCode = a.DepositionStatusCode,
                                                  });
 
 
