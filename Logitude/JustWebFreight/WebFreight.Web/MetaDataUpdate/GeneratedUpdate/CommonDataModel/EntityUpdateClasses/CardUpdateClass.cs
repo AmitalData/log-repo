@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Card",
-			      				    Code =  "a25c",
+			      				    Code =  "1c78",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -3020,6 +3020,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CalculatedLocalName",
+					  						OldFieldName =  "CalculatedLocalName",
 					  						ObjectTableName =  "Card",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3076,6 +3077,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CalculatedEnglishName",
+					  						OldFieldName =  "CalculatedEnglishName",
 					  						ObjectTableName =  "Card",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,

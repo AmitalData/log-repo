@@ -103,7 +103,8 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("AllowMinusInvoicelines", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AllowPositiveAmountsInTheCreditNote", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("IsChronologicalDates", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("IsARPaymentChronologicalDates", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsARInvoicesTransferEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsARPaymentsTransferEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsSingleTaxPerInvoice", this.ObjectTableName, false);
@@ -120,7 +121,7 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
 
         else {
-            this.UIProperties.SetEnabled("IsChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
+            this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
 
             var isARInvoicesTransferEnabled = false;
             var isAPInvoicesTransferEnabled = false;
@@ -144,7 +145,7 @@ export class AccountingSettingsComponent extends BaseComponent {
                 this.UIProperties.SetEnabled("AllowVoidARP", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("IsVatNumberMandatoryInAR", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false)
-                this.UIProperties.SetEnabled("IsChronologicalDates", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("AllowVoidAPI", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("AllowVoidAPP", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("IsVatNumberMandatoryInAP", this.ObjectTableName, false)
@@ -210,19 +211,27 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.EntityPM.AllowManualInvoiceNumber = value;
 
             if (value) {
-                this.IsChronologicalDates = false;
+                this.IsARInvoiceChronologicalDates = false;
             }
 
-            this.UIProperties.SetEnabled("IsChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
+            this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
         }
     }
 
-    get IsChronologicalDates() { return this.EntityPM.IsChronologicalDates; }
-    set IsChronologicalDates(value: boolean) {
-        if (this.EntityPM.IsChronologicalDates != value) {
-            this.EntityPM.IsChronologicalDates = value;
+    get IsARInvoiceChronologicalDates() { return this.EntityPM.IsARInvoiceChronologicalDates; }
+    set IsARInvoiceChronologicalDates(value: boolean) {
+        if (this.EntityPM.IsARInvoiceChronologicalDates != value) {
+            this.EntityPM.IsARInvoiceChronologicalDates = value;
         }
     }
+
+    get IsARPaymentChronologicalDates() { return this.EntityPM.IsARPaymentChronologicalDates; }
+    set IsARPaymentChronologicalDates(value: boolean) {
+        if (this.EntityPM.IsARPaymentChronologicalDates != value) {
+            this.EntityPM.IsARPaymentChronologicalDates = value;
+        }
+    }
+
 
     get IsARInvoicesTransferEnabled() { return this.EntityPM.IsARInvoicesTransferEnabled; }
     set IsARInvoicesTransferEnabled(value: boolean) {

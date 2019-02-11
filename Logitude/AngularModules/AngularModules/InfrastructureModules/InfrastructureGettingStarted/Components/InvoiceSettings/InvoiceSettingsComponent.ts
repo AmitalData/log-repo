@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -84,7 +84,7 @@ export class InvoiceSettingsComponent extends BaseComponent implements OnInit {
         this.accountingSettings.AllowManualInvoiceNumber = value;
 
         if (value) {
-            this.IsChronologicalDates = false;
+            this.IsARInvoiceChronologicalDates = false;
         }
     }
 
@@ -95,11 +95,11 @@ export class InvoiceSettingsComponent extends BaseComponent implements OnInit {
         this.accountingSettings.IsVatNumberMandatoryInAR = value;
     }
 
-    get IsChronologicalDates() {
-        return this.accountingSettings.IsChronologicalDates;
+    get IsARInvoiceChronologicalDates() {
+        return this.accountingSettings.IsARInvoiceChronologicalDates;
     }
-    set IsChronologicalDates(value: boolean) {
-        this.accountingSettings.IsChronologicalDates = value;
+    set IsARInvoiceChronologicalDates(value: boolean) {
+        this.accountingSettings.IsARInvoiceChronologicalDates = value;
     }
 
     // Commands
