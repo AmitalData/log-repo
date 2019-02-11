@@ -14,7 +14,7 @@ export class AgGridColumnsOperations extends BaseComponent {
     public ItemsSource: any[];
     private father: BIReportPreviewComponent;
     public IsAll = false;
-    private itemSource_Unsaved = null; 
+    private itemSource_Unsaved: Column[] = []; 
 
     constructor() {
         super();
@@ -28,7 +28,10 @@ export class AgGridColumnsOperations extends BaseComponent {
     }
     SetWindowArgs(args: any) {
         this.father = args.father;
-        this.itemSource_Unsaved = args.father.BIReportXMLData.BITabularViewSettings.Columns;
+        this.itemSource_Unsaved = [];
+        this.father.BIReportXMLData.BITabularViewSettings.Columns.forEach(item => {
+            this.itemSource_Unsaved.push(item);
+        });
         this.BuildList();
     }
 
