@@ -4620,6 +4620,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ApprovedDate",
+					  						OldFieldName =  "ApprovedDate",
 					  						ObjectTableName =  "ARPayment",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4640,6 +4641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ApprovedDate",
 					  						ListPropertyPath =  "ApprovedDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4679,6 +4681,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ApprovedByUserId",
+					  						OldFieldName =  "ApprovedByUserId",
 					  						ObjectTableName =  "ARPayment",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -4699,6 +4702,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ApprovedByUserId",
 					  						ListPropertyPath =  "ApprovedByUserId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4735,6 +4739,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "FirstApproveDate",
+					  						OldFieldName =  "FirstApproveDate",
 					  						ObjectTableName =  "ARPayment",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4754,6 +4759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FirstApproveDate",
 					  						ListPropertyPath =  "FirstApproveDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5568,6 +5574,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARPaymentTextCode_ARPaymentMARpaymentValueHigherThanCashbookValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ARpaymentValueHigherThanCashbookValue", DefaultText = "ARpayment Value is higher than Cashbook Value",LocalDefaultText = @"לא ניתן לבטל קבלה - סכום הקבלה גדול מהיתרה בקופה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARPaymentTextCode_ARPaymentMCANTCancelARPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CANTCancelARPayment", DefaultText = "Can’t Cancel this ARPayment because at least one of the cheques is deposited or redeemed, return these cheques to the cashbook and cancel the external reconciliation ",LocalDefaultText = @"לא ניתן לבטל את הקבלה, חלק מההמחאות הופקדו/נפרעו כבר, יש להחזיר את ההמחאות לקופה ולבטל את ההתאמה החיצונית ", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMChronologicalDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ChronologicalDate", DefaultText = "Value Date or Register Date should be bigger or equals to the Last Chronological Date %Date",LocalDefaultText = @"תאריך הקבלה חייב להיות גבוה או שווה לתאריך הקבלה האחרונה %Date", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
