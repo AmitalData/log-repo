@@ -21,7 +21,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.AllowVoidAPP = entityPM.AllowVoidAPP;
             poco.AllowVoidARI = entityPM.AllowVoidARI;
             poco.AllowVoidARP = entityPM.AllowVoidARP;
-            poco.IsChronologicalDates = entityPM.IsChronologicalDates;
+            poco.IsARInvoiceChronologicalDates = entityPM.IsARInvoiceChronologicalDates;
+            poco.IsARPaymentChronologicalDates = entityPM.IsARPaymentChronologicalDates;
             poco.IsVatNumberMandatoryInAP = entityPM.IsVatNumberMandatoryInAP;
             poco.IsVatNumberMandatoryInAR = entityPM.IsVatNumberMandatoryInAR;
             poco.ReceivableVATableTempCard = entityPM.ReceivableVATableTempCard;

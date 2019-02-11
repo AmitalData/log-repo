@@ -70,7 +70,7 @@ export class ReportComponent {
                                 }
 
                                 else if (item.Code == "VDK") {
-                                    if (SessionLocator.Tenant == 1495) {
+                                    if (SessionLocator.Tenant == 1495 || SessionLocator.TenantManagementJS.PackageCode =="DVMT") {
                                         if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                             this.reportList.push(item);
                                         }
