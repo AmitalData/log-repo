@@ -689,6 +689,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
 
                 }
+                if (objectFieldDetails.ObjectTableName == "Address")
+                    return;
                TextCode updatedFullNameTextCode = tenantZeroTextCodes[objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId];
                 if (!updatedFullNameTextCode.IsSpellChecked)
                 {
