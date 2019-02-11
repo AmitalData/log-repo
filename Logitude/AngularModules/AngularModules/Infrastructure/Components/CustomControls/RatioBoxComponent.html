@@ -59,7 +59,7 @@
                         <td style="width: 15px; font-size: 11px; padding-left: 3px;">1:</td>
 
                         <td style="padding-left: 2px;">                            
-                            <LogTextBox [ObjectFieldName]="'Ratio'" [Text]="Ratio" [IsRatioBox]="true" [ObjectTableName]="ObjectTableName" [DataContext]="IDataContext" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'Ratio'" [Text]="Ratio" [IsRatioBox]="true" [ObjectTableName]="ObjectTableName" [DataContext]="IDataContext" [HideColumns]="true" (LostFocus)="OnLostFocus()"></LogTextBox>
                         </td>
 
                         <td style="width: 15px;">

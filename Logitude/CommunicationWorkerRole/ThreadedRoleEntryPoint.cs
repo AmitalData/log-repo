@@ -285,7 +285,7 @@ namespace CommunicationWorkerRole
             var tst = false;
             if (tst)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "SchedularWorkerRole").ToList();
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "BatchTaskExecutionWR").ToList();
             }
             foreach (var Service in BatchServicesDefinitions)
             {
