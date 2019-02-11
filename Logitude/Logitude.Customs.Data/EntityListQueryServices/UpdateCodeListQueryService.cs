@@ -26,13 +26,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 											{
                      
 					                          Code = a.Code,
-					
 					                          LocalName = a.LocalName,
-					
 					                          SearchFields = a.SearchFields,
-					
 					                          EnglishName = a.EnglishName,
-					
 					                          Inactive = a.Inactive,
 					
 		                    	            });
@@ -41,9 +37,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<UpdateCode> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<UpdateCode> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+	}
 
 
 }

@@ -212,6 +212,9 @@ import { DecisionTypeListService } from './Services/StandardLists/DecisionTypeLi
 import { SeizureMethodTypeListService } from './Services/StandardLists/SeizureMethodTypeListService';
 import { SeizureFactorTypeListService } from './Services/StandardLists/SeizureFactorTypeListService';
 import { RefundCustomerActivityTypeListService } from './Services/StandardLists/RefundCustomerActivityTypeListService';
+import { TransferCargoMethodTypeListService } from './Services/StandardLists/TransferCargoMethodTypeListService';
+import { UpdateCodeListService } from './Services/StandardLists/UpdateCodeListService';
+import { GatepassReturnCodeListService } from './Services/StandardLists/GatepassReturnCodeListService';
 
 //#endregion
 
@@ -549,6 +552,9 @@ export class ModuleProviders {
             case "SeizureMethodTypeListService": { myResult = new SeizureMethodTypeListService(); break; }
             case "SeizureFactorTypeListService": { myResult = new SeizureFactorTypeListService(); break; }
             case "RefundCustomerActivityTypeListService": { myResult = new RefundCustomerActivityTypeListService(); break; }
+            case "TransferCargoMethodTypeListService": { myResult = new TransferCargoMethodTypeListService(); break; }
+            case "UpdateCodeListService": { myResult = new UpdateCodeListService(); break; }
+            case "GatepassReturnCodeListService": { myResult = new GatepassReturnCodeListService(); break; }
             //#endregion                
 
             //#region StandardPMs

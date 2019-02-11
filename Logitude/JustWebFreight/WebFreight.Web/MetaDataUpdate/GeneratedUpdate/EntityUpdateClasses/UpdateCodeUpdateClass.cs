@@ -467,7 +467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable UpdateCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.UpdateCode" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> UpdateCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.UpdateCode").ToList();   
 
-			   TextCode UpdateCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UpdateCode.Q.UpdateCode", DefaultText = "UpdateCodeQuery",LocalDefaultText = "Update Code Query", ObjectTableId = UpdateCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode UpdateCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UpdateCode.Q.UpdateCode", DefaultText = "UpdateCodeQuery",LocalDefaultText = "עדכון בקשת העברה", ObjectTableId = UpdateCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature UpdateCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateCode.Q.UpdateCode", ObjectTableId = UpdateCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "UpdateCode.Features.UpdateCode", NameTextCodeDefaultText = "UpdateCode", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
