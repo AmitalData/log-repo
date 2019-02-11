@@ -30,7 +30,7 @@
 	
 	set @Key = (select Id from DIM_Branches where Id = @Id)
 	
-	if(@Key is  null) begin  insert into DIM_Branches values(@Id,@EnglishName,@LocalName,@Code , @SourceTenant,@ParentTenant) end
+	if(@Key is  null) begin  insert into DIM_Branches (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant]) values(@Id,@EnglishName,@LocalName,@Code , @SourceTenant,@ParentTenant) end
 	else begin update   DIM_Branches set Name =@EnglishName,  [Local Name] =@LocalName ,  Code = @Code , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant where Id = @Id; end
 
 	FETCH NEXT FROM BranchesCursor  INTO @Id , @EnglishName, @LocalName, @Code, @SourceTenant , @ParentTenant

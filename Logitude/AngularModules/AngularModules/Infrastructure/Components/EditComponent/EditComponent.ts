@@ -1,27 +1,27 @@
 import { Settings } from './../../Settings';
 declare var window: any;
 import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
-import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
-import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
-import {LocationDirective} from '../../Utilities/LocationDirective';
-import {EntityArgs} from '../../DataContracts/EntityArgs';
-import {AppTool} from '../../Tools';
-import {SessionLocator} from '../../Utilities/SessionLocator';
-import {FeatureLocator} from '../../Utilities/FeatureLocator';
-import {EntityPMService} from '../../Services/EntityPMService';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {EntityLastActivityService} from '../../Services/EntityLastActivityService';
-import {EntityResourceService} from '../../Services/EntityResourceService';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {TotangoService} from '../../Services/WebServices/TotangoService';
+import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
+import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
+import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
+import { LocationDirective } from '../../Utilities/LocationDirective';
+import { EntityArgs } from '../../DataContracts/EntityArgs';
+import { AppTool } from '../../Tools';
+import { SessionLocator } from '../../Utilities/SessionLocator';
+import { FeatureLocator } from '../../Utilities/FeatureLocator';
+import { EntityPMService } from '../../Services/EntityPMService';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { EntityLastActivityService } from '../../Services/EntityLastActivityService';
+import { EntityResourceService } from '../../Services/EntityResourceService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { TotangoService } from '../../Services/WebServices/TotangoService';
 import { CachedDataManager } from '../../Utilities/CachedDataManager';
-import {LastFilterClass} from '../../Utilities/LastFilterClass';
-import {EditTabComponent} from './EditTabComponent';
+import { LastFilterClass } from '../../Utilities/LastFilterClass';
+import { EditTabComponent } from './EditTabComponent';
 import { Subscription, TeardownLogic } from 'rxjs/Subscription';//itzik
-import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
- @Component({
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+@Component({
     moduleId: module.id,
     templateUrl: './EditComponent.html',
     providers: [EntityArgs],
@@ -61,10 +61,10 @@ export class EditComponent implements OnDestroy {
     ShowWindowsOverEditComponent: boolean = false;
 
     LayoutDirection: string = 'ltr';
-   WorkEnvironment: string = 'logitude';
+    WorkEnvironment: string = 'logitude';
 
-     public NavigationIds: string[];
-     public CurrentNavigatedIndex: number;
+    public NavigationIds: string[];
+    public CurrentNavigatedIndex: number;
     @ViewChild('Helper', { read: ViewContainerRef }) HelperViewContainerRef: ViewContainerRef;
     @ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
     @ViewChild('MenuButtons', { read: ViewContainerRef }) MenuButtonsViewContainerRef: ViewContainerRef;
@@ -94,16 +94,16 @@ export class EditComponent implements OnDestroy {
         this.HasHelper = this.ObjectTable.HasHelper;
         this.HasShortTitle = this.ObjectTable.HasShortTitle;
         this.HasMenuButtons = this.ObjectTable.HasMenuButtons;
-      this.NavigationIds = args['NavigationIds'];
-      if (this.NavigationIds) {
-        this.NextPreviousVisible = true;
-      }
-      if (AppTool.IsNullOrEmpty(this.CurrentNavigatedIndex) && this.NavigationIds) {
-        this.CurrentNavigatedIndex = 0;
-        this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
-        //this.PreviousButtonDisabled = true;
-        this.SetNextPreviousButtonsEnablity();
-      }
+        this.NavigationIds = args['NavigationIds'];
+        if (this.NavigationIds) {
+            this.NextPreviousVisible = true;
+        }
+        if (AppTool.IsNullOrEmpty(this.CurrentNavigatedIndex) && this.NavigationIds) {
+            this.CurrentNavigatedIndex = 0;
+            this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
+            //this.PreviousButtonDisabled = true;
+            this.SetNextPreviousButtonsEnablity();
+        }
         if (this.EntityPM != null) {
             this.entityArgs.EntityPM = this.EntityPM;
             this.entityArgs.ObjectTableName = this.ObjectTableName;
@@ -214,9 +214,9 @@ export class EditComponent implements OnDestroy {
                                     }
                                 });
 
-                         // if (this.CurrentNavigatedIndex ==0) {
+                            // if (this.CurrentNavigatedIndex ==0) {
                             this.BuildEditTabs();
-                          //}
+                            //}
                             this.RunComponent();
                             this.StopBusyIndicator();
                         }
@@ -350,17 +350,15 @@ export class EditComponent implements OnDestroy {
         } else if (this.ObjectTableName == "ARInvoice") {
 
             //get f. acc. Settings
-            if (SessionLocator.TenantPM.AccountingActivated)
-            {
-                    var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARInvoice")[0];
-                    var myObjectTableId = myObjectTable.Id;
+            if (SessionLocator.TenantPM.AccountingActivated) {
+                var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARInvoice")[0];
+                var myObjectTableId = myObjectTable.Id;
 
-                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
-                    myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
-                    this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
+                myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
-            else
-            {
+            else {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
@@ -385,92 +383,127 @@ export class EditComponent implements OnDestroy {
             this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
         }
     }
+
+
+    private FindHeaderRetries: number = 0;
+    private FindHeaderTimerToken: any;
+    private RunFindHeaderTimer(HeaderScreen: any, ObjectFields: ObjectFieldPM[]) {
+
+        if (this.FindHeaderTimerToken) {
+            clearTimeout(this.FindHeaderTimerToken);
+        }
+
+        var element = document.getElementById(this.HeaderId);
+        if (element) {
+
+
+            this.GenerateHeaderScreen(HeaderScreen,ObjectFields);
+        }
+
+        else {
+            this.FindHeaderRetries++;
+
+
+
+            if (this.FindHeaderRetries < 3) {
+                this.FindHeaderTimerToken = setTimeout(() => this.RunFindHeaderTimer(HeaderScreen,ObjectFields), 1);
+            }
+        }
+    }
+
     private GenerateHeaderScreen(HeaderScreen: any, ObjectFields: ObjectFieldPM[]) {
-        this.HeaderScreenColumns = [];
 
-        if (HeaderScreen != null) {
+        var element = document.getElementById(this.HeaderId);
+        if (element == null) {
+            this.RunFindHeaderTimer(HeaderScreen,ObjectFields);
+        }
 
-            if (HeaderScreen.NumberOfRows <= 1) {
-                this.HeaderScreenHeight = 40;
-                this.HeaderScreenRowHeight = 25;
-            }
+        else {
+            this.HeaderScreenColumns = [];
 
-            else if (HeaderScreen.NumberOfRows == 2) {
-                this.HeaderScreenHeight = 65;
-                this.HeaderScreenRowHeight = 25;
-            }
+            if (HeaderScreen != null) {
 
-            else if (HeaderScreen.NumberOfRows == 3) {
-                this.HeaderScreenHeight = 75;
-                this.HeaderScreenRowHeight = 20;
-            }
-
-            var myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == SessionLocator.Tenant);
-            if (myScreenFields.length == 0) {
-                myScreenFields = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == 0);
-            }
-
-            var widthOfColumn: number = 0;
-            var element = document.getElementById(this.HeaderId);
-            if (element != null) {
-                var widthOfHeader = element.clientWidth;
-
-                if (widthOfHeader == 0) {
-                    widthOfHeader = this.SavedWidthOfHeader;
+                if (HeaderScreen.NumberOfRows <= 1) {
+                    this.HeaderScreenHeight = 40;
+                    this.HeaderScreenRowHeight = 25;
                 }
 
-                else {
-                    this.SavedWidthOfHeader = widthOfHeader;
+                else if (HeaderScreen.NumberOfRows == 2) {
+                    this.HeaderScreenHeight = 65;
+                    this.HeaderScreenRowHeight = 25;
                 }
 
-                var widthOfSeparator = (HeaderScreen.NumberOfColumns - 1) * 20;
-                widthOfColumn = (widthOfHeader - widthOfSeparator) / HeaderScreen.NumberOfColumns;
-            }
+                else if (HeaderScreen.NumberOfRows == 3) {
+                    this.HeaderScreenHeight = 75;
+                    this.HeaderScreenRowHeight = 20;
+                }
 
-            for (var c = 0; c < HeaderScreen.NumberOfColumns; c++) {
-                var myColumn = new HeaderScreenColumn(false);
-                var myColumnLabelWidth = 0;
+                var myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == SessionLocator.Tenant);
+                if (myScreenFields.length == 0) {
+                    myScreenFields = window.ScreenFields.filter(d => d.ScreenId === HeaderScreen.Id && d.Tenant == 0);
+                }
 
-                for (var r = 0; r < HeaderScreen.NumberOfRows; r++) {
-                    var myRow = new HeaderScreenRow();
+                var widthOfColumn: number = 0;
+                if (element != null) {
+                    var widthOfHeader = element.clientWidth;
 
-                    var myScreenField = myScreenFields.filter(f => f.Column == c && f.Row == r)[0];
-                    if (myScreenField != null) {
-                        var myObjectField = ObjectFields.filter(d => d.Id === myScreenField.ObjectFieldId)[0];
-                        if (myObjectField != null) {
-
-                            myRow.Label = TextCodeTranslator.Translate(myObjectField.FullNameTextCodeCode);
-                            myRow.ObjectField = myObjectField;
-                            //if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "ARPayment") && myObjectField.FieldName == "SATTransferStatusName" && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
-                            //    myRow.HideField = true;
-                            //}
-
-                            if (!AppTool.IsNullOrEmpty(myRow.Label)) {
-                                myRow.Label += ":";
-                            }
-
-                            var widthOfLabel = AppTool.GetTextWidth(myRow.Label);
-
-                            if (widthOfLabel > myColumnLabelWidth) {
-                                myColumnLabelWidth = widthOfLabel;
-                            }
-
-                            if (myColumnLabelWidth > (widthOfColumn / 2)) {
-                                myColumnLabelWidth = widthOfColumn / 2;
-                            }
-
-                            myColumn.LabelWidth = (Math.ceil(myColumnLabelWidth) + 10) + "px";
-                            myColumn.ValueMaxWidth = widthOfColumn - myColumnLabelWidth - 12;
-                        }
+                    if (widthOfHeader == 0) {
+                        widthOfHeader = this.SavedWidthOfHeader;
                     }
 
-                    myColumn.Rows.push(myRow);
+                    else {
+                        this.SavedWidthOfHeader = widthOfHeader;
+                    }
+
+                    var widthOfSeparator = (HeaderScreen.NumberOfColumns - 1) * 20;
+                    widthOfColumn = (widthOfHeader - widthOfSeparator) / HeaderScreen.NumberOfColumns;
                 }
 
-                this.HeaderScreenColumns.push(myColumn);
+                for (var c = 0; c < HeaderScreen.NumberOfColumns; c++) {
+                    var myColumn = new HeaderScreenColumn(false);
+                    var myColumnLabelWidth = 0;
 
-                if (HeaderScreen.NumberOfColumns - c > 1) {
-                    this.HeaderScreenColumns.push(new HeaderScreenColumn(true));
+                    for (var r = 0; r < HeaderScreen.NumberOfRows; r++) {
+                        var myRow = new HeaderScreenRow();
+
+                        var myScreenField = myScreenFields.filter(f => f.Column == c && f.Row == r)[0];
+                        if (myScreenField != null) {
+                            var myObjectField = ObjectFields.filter(d => d.Id === myScreenField.ObjectFieldId)[0];
+                            if (myObjectField != null) {
+
+                                myRow.Label = TextCodeTranslator.Translate(myObjectField.FullNameTextCodeCode);
+                                myRow.ObjectField = myObjectField;
+                                //if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "ARPayment") && myObjectField.FieldName == "SATTransferStatusName" && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
+                                //    myRow.HideField = true;
+                                //}
+
+                                if (!AppTool.IsNullOrEmpty(myRow.Label)) {
+                                    myRow.Label += ":";
+                                }
+
+                                var widthOfLabel = AppTool.GetTextWidth(myRow.Label);
+
+                                if (widthOfLabel > myColumnLabelWidth) {
+                                    myColumnLabelWidth = widthOfLabel;
+                                }
+
+                                if (myColumnLabelWidth > (widthOfColumn / 2)) {
+                                    myColumnLabelWidth = widthOfColumn / 2;
+                                }
+
+                                myColumn.LabelWidth = (Math.ceil(myColumnLabelWidth) + 10) + "px";
+                                myColumn.ValueMaxWidth = widthOfColumn - myColumnLabelWidth - 12;
+                            }
+                        }
+
+                        myColumn.Rows.push(myRow);
+                    }
+
+                    this.HeaderScreenColumns.push(myColumn);
+
+                    if (HeaderScreen.NumberOfColumns - c > 1) {
+                        this.HeaderScreenColumns.push(new HeaderScreenColumn(true));
+                    }
                 }
             }
         }
@@ -734,7 +767,7 @@ export class EditComponent implements OnDestroy {
 
             this.SelectionChanged(selected);
         }
-     }
+    }
 
     SelectionChanged(mySelectedTab: TabItem) {
 
@@ -889,46 +922,46 @@ export class EditComponent implements OnDestroy {
     //}
 
     // Commands
-     BackButtonClicked() {
-         var isNeedingConfirmation = this.NeedCloseConfirmation();
-         if (isNeedingConfirmation) {
-             var confirmWindow = new ConfirmWindow();
-             confirmWindow.Width = 450;
-             confirmWindow.Height = 190;
-             confirmWindow.ShowCancelButton = true;
-             confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
-             confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
-             confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-             confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)));
-             confirmWindow.WindowClosed.subscribe((event: any) => {
-                 if (confirmWindow.Yes) {
-                     this.SaveEntityChanges(true);
-                 }
+    BackButtonClicked() {
+        var isNeedingConfirmation = this.NeedCloseConfirmation();
+        if (isNeedingConfirmation) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 450;
+            confirmWindow.Height = 190;
+            confirmWindow.ShowCancelButton = true;
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.SaveEntityChanges(true);
+                }
 
-                 else if (confirmWindow.No) {
-                     this.Close();
-                 }
-             });
-         }
-         else {
-             this.Close();
-         }
-     }
+                else if (confirmWindow.No) {
+                    this.Close();
+                }
+            });
+        }
+        else {
+            this.Close();
+        }
+    }
 
-     public NeedCloseConfirmation() {
-         var myResult = true; 
-         if (!this.EntityPM) {
-             myResult = false;
-         }
+    public NeedCloseConfirmation() {
+        var myResult = true;
+        if (!this.EntityPM) {
+            myResult = false;
+        }
 
-         else if (!this.EntityPM.IsDirty) {
-             myResult = false;
-         }
-         else if (this.ObjectTableName == "TaxReport" || this.ObjectTableName == "BankDeposit") {
-             myResult = false;
-         }
-         return myResult;
-     }
+        else if (!this.EntityPM.IsDirty) {
+            myResult = false;
+        }
+        else if (this.ObjectTableName == "TaxReport" || this.ObjectTableName == "BankDeposit") {
+            myResult = false;
+        }
+        return myResult;
+    }
     Close() {
         if (this.IsInsideWindow) {
             SessionLocator.CurrentSession.CloseCurrentWindow();
@@ -959,7 +992,7 @@ export class EditComponent implements OnDestroy {
         this.SaveEntityChanges(true);
     }
 
-   private SaveEntityChanges(isClosing: boolean, busyIndicatorText: string = null, loadNextEntity: boolean = false, loadPreviousEntity: boolean = false) {
+    private SaveEntityChanges(isClosing: boolean, busyIndicatorText: string = null, loadNextEntity: boolean = false, loadPreviousEntity: boolean = false) {
         if (this.EntityPM.IsDirty) {
 
             this.ValidationErrorsList = [];
@@ -971,7 +1004,8 @@ export class EditComponent implements OnDestroy {
             else {
                 this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             }
-            if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment" || this.ObjectTableName == "BankDeposit" || this.ObjectTableName == "Journal") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
+            if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment"
+                || this.ObjectTableName == "BankDeposit" || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
                 this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
@@ -1001,22 +1035,22 @@ export class EditComponent implements OnDestroy {
                             else {
                                 this.OnEntityCreated();
                                 this.UpdateComponentMembers();
-                              this.FireSaveCompleted(true);
-                              // this is for navigation
-                              if (loadNextEntity) {
-                                this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
-                                this.LoadNextPreviousEntity();
+                                this.FireSaveCompleted(true);
+                                // this is for navigation
+                                if (loadNextEntity) {
+                                    this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
+                                    this.LoadNextPreviousEntity();
 
-                              }
-                              if (loadPreviousEntity) {
-                                this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
-                                this.LoadNextPreviousEntity();
-                              }
+                                }
+                                if (loadPreviousEntity) {
+                                    this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
+                                    this.LoadNextPreviousEntity();
+                                }
 
-                              if (this.nextPreviousTimerToken) {
-                                clearTimeout(this.nextPreviousTimerToken);
-                              }
-                              this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+                                if (this.nextPreviousTimerToken) {
+                                    clearTimeout(this.nextPreviousTimerToken);
+                                }
+                                this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
                             }
 
                             this.EditComponentController.HaveSaved = true;
@@ -1062,24 +1096,24 @@ export class EditComponent implements OnDestroy {
 
                             else {
                                 this.UpdateComponentMembers();
-                              this.FireSaveCompleted(true);
-                              // this is for navigation
-                              if (loadNextEntity) {
-                                this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
-                                  this.LoadNextPreviousEntity();
-                                  if (this.nextPreviousTimerToken) {
-                                      clearTimeout(this.nextPreviousTimerToken);
-                                  }
-                                  this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
-                              }
-                              if (loadPreviousEntity) {
-                                this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
-                                  this.LoadNextPreviousEntity();
-                                  if (this.nextPreviousTimerToken) {
-                                      clearTimeout(this.nextPreviousTimerToken);
-                                  }
-                                  this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
-                              }
+                                this.FireSaveCompleted(true);
+                                // this is for navigation
+                                if (loadNextEntity) {
+                                    this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
+                                    this.LoadNextPreviousEntity();
+                                    if (this.nextPreviousTimerToken) {
+                                        clearTimeout(this.nextPreviousTimerToken);
+                                    }
+                                    this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+                                }
+                                if (loadPreviousEntity) {
+                                    this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
+                                    this.LoadNextPreviousEntity();
+                                    if (this.nextPreviousTimerToken) {
+                                        clearTimeout(this.nextPreviousTimerToken);
+                                    }
+                                    this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+                                }
 
                             }
                         }
@@ -1188,7 +1222,7 @@ export class EditComponent implements OnDestroy {
     }
     EditComponentController: IEditComponentController;
     GetControllerByTableName(objectTableName: string) {
-        var notDefault = ["Declaration","Vehicle"];
+        var notDefault = ["Declaration", "Vehicle"];
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         if (objectTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
@@ -1343,73 +1377,73 @@ export class EditComponent implements OnDestroy {
     //#endregion
 
 
-   //navigation methods
+    //navigation methods
 
-   public NextPreviousVisible: boolean = false;
-   public PreviousButtonDisabled: boolean = false;
-   public NextButtonDisabled: boolean = false;
-   public DeclarationNavigationMessage: string = "";
-   Next() {
+    public NextPreviousVisible: boolean = false;
+    public PreviousButtonDisabled: boolean = false;
+    public NextButtonDisabled: boolean = false;
+    public DeclarationNavigationMessage: string = "";
+    Next() {
 
-     if (this.EntityPM.IsDirty) {
-       this.SaveEntityChanges(false, null, true);
-     }
-     else {
-       this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
-       this.LoadNextPreviousEntity();
-
-
-       if (this.nextPreviousTimerToken) {
-         clearTimeout(this.nextPreviousTimerToken);
-       }
-       this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
-     }
-   }
-
-   Previous() {
-
-     if (this.EntityPM.IsDirty) {
-       this.SaveEntityChanges(false, null, false, true);
-     }
-     else {
-       this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
-       this.LoadNextPreviousEntity();
+        if (this.EntityPM.IsDirty) {
+            this.SaveEntityChanges(false, null, true);
+        }
+        else {
+            this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
+            this.LoadNextPreviousEntity();
 
 
-       if (this.nextPreviousTimerToken) {
-         clearTimeout(this.nextPreviousTimerToken);
-       }
-       this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
-     }
-   }
+            if (this.nextPreviousTimerToken) {
+                clearTimeout(this.nextPreviousTimerToken);
+            }
+            this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+        }
+    }
 
-   nextPreviousTimerToken: any;
-   LoadNextPreviousEntity() {
+    Previous() {
+
+        if (this.EntityPM.IsDirty) {
+            this.SaveEntityChanges(false, null, false, true);
+        }
+        else {
+            this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
+            this.LoadNextPreviousEntity();
+
+
+            if (this.nextPreviousTimerToken) {
+                clearTimeout(this.nextPreviousTimerToken);
+            }
+            this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+        }
+    }
+
+    nextPreviousTimerToken: any;
+    LoadNextPreviousEntity() {
 
      var selectedTab=this.PreSelectedTabCode;
      this.NextButtonDisabled = true;
      this.PreviousButtonDisabled = true;
      this.cd.detectChanges();
 
-     this.TabsItemsSource = [];
-     this.LoadedTabsList.forEach((tab) => {
-       tab.EditTabComponent.DestroyCurrentTab();
-     });
-     this.LoadedTabsList = [];
+        this.TabsItemsSource = [];
+        this.LoadedTabsList.forEach((tab) => {
+            tab.EditTabComponent.DestroyCurrentTab();
+        });
+        this.LoadedTabsList = [];
 
-     this.TabControlBodyViewContainerRef.clear();
-     if (this.EditComponentController) {
-       this.EditComponentController.OnCloseEditControl();
-     }
+        this.TabControlBodyViewContainerRef.clear();
+        if (this.EditComponentController) {
+            this.EditComponentController.OnCloseEditControl();
+        }
 
-     //if (this.ComponentRef != null) {
-     //  SessionLocator.CurrentSession.RemoveEditComponent(this);
-     //  this.ComponentRef.destroy();
-     //  this.ComponentRef = null;
-     //}
+        //if (this.ComponentRef != null) {
+        //  SessionLocator.CurrentSession.RemoveEditComponent(this);
+        //  this.ComponentRef.destroy();
+        //  this.ComponentRef = null;
+        //}
 
-     SessionLocator.CurrentSession.RemoveEditComponent(this);
-     this.ngOnDestroy();
+        SessionLocator.CurrentSession.RemoveEditComponent(this);
+        this.ngOnDestroy();
 
 
 
@@ -1421,35 +1455,35 @@ export class EditComponent implements OnDestroy {
      args.SelectedTabCode=selectedTab;
      this.Run(args);
 
-   }
+    }
 
-   SetNextPreviousButtonsEnablity() {
-     if (this.CurrentNavigatedIndex == 0) {
-       this.PreviousButtonDisabled = true;
-     }
-     else {
-       this.PreviousButtonDisabled = false;
-     }
+    SetNextPreviousButtonsEnablity() {
+        if (this.CurrentNavigatedIndex == 0) {
+            this.PreviousButtonDisabled = true;
+        }
+        else {
+            this.PreviousButtonDisabled = false;
+        }
 
-     if (this.CurrentNavigatedIndex == this.NavigationIds.length - 1) {
-       this.NextButtonDisabled = true;
-     }
-     else {
-       this.NextButtonDisabled = false;
-     }
+        if (this.CurrentNavigatedIndex == this.NavigationIds.length - 1) {
+            this.NextButtonDisabled = true;
+        }
+        else {
+            this.NextButtonDisabled = false;
+        }
 
-     this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
-   }
+        this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
+    }
 
-     public SetSelectedTabByCode(code: string) {
-         if (this.TabsItemsSource != null) {
-             var selected = this.TabsItemsSource.filter(d => d.Code == code)[0];
+    public SetSelectedTabByCode(code: string) {
+        if (this.TabsItemsSource != null) {
+            var selected = this.TabsItemsSource.filter(d => d.Code == code)[0];
 
-             if (selected != null) {
-                 this.SelectionChanged(selected);
-             }
-         }
-     }
+            if (selected != null) {
+                this.SelectionChanged(selected);
+            }
+        }
+    }
 
 }
 

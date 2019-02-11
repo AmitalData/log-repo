@@ -2042,6 +2042,16 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<SharedUserQuery> SharedUserQueries
         {
             get { throw new NotImplementedException(); }
-        } 
+        }
+
+        public IDbSet<DWCategories> DWCategories
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IDbSet<DWObjectFieldCategories> DWObjectFieldCategories
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

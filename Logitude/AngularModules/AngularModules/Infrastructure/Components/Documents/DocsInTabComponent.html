@@ -1,9 +1,13 @@
-﻿
+
 <style>
     .FormFieldRow {
         height: 25px;
     }
 </style>
+
+
+
+
 
 <div *ngIf="IsStardLoadPage" class="TabHolder">
     <table>
@@ -14,6 +18,18 @@
                         <td style="width: 1px;">{{TabHeaderTextCode | TextCodeTranslationPipe}}</td>
 
                         <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width:1px">
+                            <button *ngIf="DownloadAllVisibile" class="Button" (click)="DownloadAllClick()" [disabled]="!HasDocuments">
+                                <div style="display:inline">
+                                    <span>Download Documents</span>
+                                </div>
+                            </button>
+                        </td>
+
+                        <td style="width: 5px;">
                             <div></div>
                         </td>
 
@@ -254,9 +270,9 @@
 
                             <table>
                                 <tr class="FormFieldRow">
-                                    <td  style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+                                    <td style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
                                         <LogDatePicker *ngIf="item.Received || item.DocumentHasFile" (ValueChanged)="item.EditReceiveDate(item,$event)" [ObjectFieldName]="'ReceivedDate'" [ObjectTableName]="ObjectTableName"
-                                                       [NoObjectField]="true" 
+                                                       [NoObjectField]="true"
                                                        [DataContext]="item" [SelectedDateValue]="item.ReceivedDate" [HideColumns]="true"></LogDatePicker>
 
                                     </td>
@@ -282,7 +298,7 @@
 
                                         <img *ngIf="item.ShowFollowUp || item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup_Black.png" />
                                         <img style="opacity:0.7" *ngIf="!item.ShowFollowUp && !item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup.png" />
-                                     
+
 
                                     </span>
                                 </div>
@@ -345,7 +361,7 @@
 
 
 
-     
+
         </tr>
 
     </table>

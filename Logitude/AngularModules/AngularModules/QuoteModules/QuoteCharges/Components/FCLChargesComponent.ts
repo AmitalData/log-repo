@@ -30,6 +30,7 @@ import {CommonDomainService} from '../../../Common/Services/CommonDomainService'
 import {VatTypePercentagePM} from '../../../Common/EntityPMs/VatTypePercentagePM';
 import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
 
 @Component({
     selector: 'FCLChargesComponent',
@@ -802,9 +803,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
-                this.ItemsSource.Collection.forEach((item) => {
+                this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
                     item.OnQuoteSaleCurrencyChanged();
-                })
+                });
+
+                this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
+                    if (item.IsAllIN) {
+                        item.EntityPM.IsAllIN = false;
+                        item.IsAllIN = true;
+                    }
+                });
 
                 this.ComputeTotals();
             }            
@@ -824,9 +832,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
 
-            this.ItemsSource.Collection.forEach((item) => {
+            this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
                 item.OnQuoteSaleCurrencyChanged();
-            })
+            });
+
+            this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
+                if (item.IsAllIN) {
+                    item.EntityPM.IsAllIN = false;
+                    item.IsAllIN = true;
+                }
+            });
 
             this.ComputeTotals();
         }
@@ -1677,7 +1692,15 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     if (iAmount < this.CostMinAmount) {
                         iAmount = this.CostMinAmount;
                         iVisible = true;
+
                         iTitle = "Amount is due to Charge Min Amount";
+                        iTitle += "\n";
+                        iTitle += "Cost Min Amount: " + DecimalFormatter.format(this.CostMinAmount, 3);
+
+                        if (this.CostMaxAmount != null) {
+                            iTitle += "\n";
+                            iTitle += "Cost Max Amount: " + DecimalFormatter.format(this.CostMaxAmount, 3);
+                        }
                     }
                 }
 
@@ -1685,7 +1708,16 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     if (iAmount > this.CostMaxAmount) {
                         iAmount = this.CostMaxAmount;
                         iVisible = true;
+
                         iTitle = "Amount is due to Charge Max Amount";
+
+                        if (this.CostMinAmount != null) {
+                            iTitle += "\n";
+                            iTitle += "Cost Min Amount: " + DecimalFormatter.format(this.CostMinAmount, 3);
+                        }
+
+                        iTitle += "\n";
+                        iTitle += "Cost Max Amount: " + DecimalFormatter.format(this.CostMaxAmount, 3);
                     }
                 }
             }
@@ -1713,6 +1745,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                         iAmount = this.SaleMinAmount;
                         iVisible = true;
                         iTitle = "Amount is due to Charge Min Amount";
+                        iTitle += "\n";
+                        iTitle += "Sale Min Amount: " + DecimalFormatter.format(this.SaleMinAmount, 3);
+
+                        if (this.SaleMaxAmount != null) {
+                            iTitle += "\n";
+                            iTitle += "Sale Max Amount: " + DecimalFormatter.format(this.SaleMaxAmount, 3);
+                        }
                     }
                 }
 
@@ -1721,6 +1760,14 @@ export class FCLQuoteChargeItem extends BaseComponent {
                         iAmount = this.SaleMaxAmount;
                         iVisible = true;
                         iTitle = "Amount is due to Charge Max Amount";
+
+                        if (this.SaleMinAmount != null) {
+                            iTitle += "\n";
+                            iTitle += "Sale Min Amount: " + DecimalFormatter.format(this.SaleMinAmount, 3);
+                        }
+
+                        iTitle += "\n";
+                        iTitle += "Sale Max Amount: " + DecimalFormatter.format(this.SaleMaxAmount, 3);
                     }
                 }
             }
@@ -2259,6 +2306,11 @@ export class FCLQuoteChargeItem extends BaseComponent {
     set CostExchangeRate(value: number) {
         if (this.EntityPM.CostExchangeRate != value) {
             this.EntityPM.CostExchangeRate = AppTool.Round(value, 5);
+
+            if (this.QuotePM.IsSaleCurrencySameAsCost) {
+                this.SaleExchangeRate = value;
+            }
+
             this.ComputeCostAmounts();
             this.ComputeCostInSalePrice();
             this.ComputeCostInSalePrice1();

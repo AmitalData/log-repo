@@ -319,7 +319,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     public InvoicesList: any[] = [];
     public CreditNotesList: any[] = [];
     BuildSummaryData() {
-        this.OpenReceivablesCount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT").length;
+        this.OpenReceivablesCount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" || f.ShipmentReceivableLineStatusCode == "DRFT").length;
         this.InvoicesList = this.EntityPM.ShipmentARInvoices.filter(f => f.InvoiceTypeCode == "IN" || f.InvoiceTypeCode == "MN" || f.InvoiceTypeCode == "CI");
         this.CreditNotesList = this.EntityPM.ShipmentARInvoices.filter(f => f.InvoiceTypeCode == "CD" || f.InvoiceTypeCode == "CC");
     }
@@ -2103,8 +2103,19 @@ export class ShipmentReceivableItem extends BaseComponent {
                     if (list) {
                         this.CreatedByUserName = list.EnglishName;
                     }
+
+                    else {
+                        this.myUserListService.getSingle(this.EntityPM.CreatedByUserId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: UserList = myResponse.Result;
+                                if (list) {
+                                    this.CreatedByUserName = list.EnglishName;
+                                }
+                            }
+                        });
+                    }
                 }
-            });
+            });            
 
             if (this.EntityPM.UpdateByUserId == this.EntityPM.CreatedByUserId) {
                 this.UpdatedByUserName = this.CreatedByUserName;
@@ -2117,8 +2128,19 @@ export class ShipmentReceivableItem extends BaseComponent {
                         if (list) {
                             this.UpdatedByUserName = list.EnglishName;
                         }
+
+                        else {
+                            this.myUserListService.getSingle(this.EntityPM.UpdateByUserId).subscribe((myResponse: ServiceResponse) => {
+                                if (!myResponse.HasError) {
+                                    var list: UserList = myResponse.Result;
+                                    if (list) {
+                                        this.UpdatedByUserName = list.EnglishName;
+                                    }
+                                }
+                            });
+                        }
                     }
-                });
+                });                
             }
         }
 

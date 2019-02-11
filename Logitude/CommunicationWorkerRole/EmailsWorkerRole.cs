@@ -450,6 +450,24 @@ namespace CommunicationWorkerRole
 
                                                 if (isUsingRestAPI)
                                                 {
+                                                    if (datainByte != null)
+                                                    {
+                                                        int index = 0;
+                                                        while (index < datainByte.Length)
+                                                        {
+                                                            int d = datainByte[index];
+                                                            if (d == 60)
+                                                            {
+                                                                datainByte = datainByte.Skip(index).ToArray();
+                                                                break;
+                                                            }
+
+                                                            index++;
+                                                        }
+
+                                                        xmlfile = Encoding.ASCII.GetString(datainByte);
+                                                    }
+
                                                     SendCommunicationLogToChampAPI(waitingCommLog, xmlfile);
                                                 }
 
@@ -1004,13 +1022,15 @@ namespace CommunicationWorkerRole
 
             // https://stackoverflow.com/questions/25352462/how-to-send-xml-content-with-httpclient-postasync
 
-            string iSendingURL = "https://community.champ.aero:8444/logitude/test/NO_WAIT";
+            //string iSendingURL = "https://community.champ.aero:8444/logitude/test/NO_WAIT";
+            string iSendingURL = "https://community.champ.aero:8443/logitude/prod/NO_WAIT";
 
-            StringContent content = new StringContent(xmlfileText, Encoding.UTF8, "application/xml");
+            StringContent content = new StringContent(xmlfileText, Encoding.ASCII, "application/xml");
 
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("password", "logitudett");
+                //client.DefaultRequestHeaders.Add("password", "logitudett");
+                client.DefaultRequestHeaders.Add("password", "logitudepp");
 
                 //var iResponse = client.PostAsync(iSendingURL, content);
                 //System.Threading.Tasks.Task iResponse = client.PostAsync(iSendingURL, content);

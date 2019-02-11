@@ -12,5 +12,6 @@ export class AgingReportParameters {
     SalesmanId: string;
     IsCustomer: boolean;
     GroupByDate: string;
+    ForceUseMonthMethod: boolean = false;
 }
 

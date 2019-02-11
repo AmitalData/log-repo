@@ -254,9 +254,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.InvoiceLines = new List<APInvoiceLineElement>();
                 List<APInvoiceLine> dueVatLines = new List<APInvoiceLine>();
                 List<APInvoiceLine> lines = allInvoicesLines.Where(d => d.APInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();
-                List<string> payablesIds = allInvoicesLines.Select(s => s.EntityPayableId).ToList();
-                List<ShipmentPayable> payables = shipmentPayableRepository.GetShipmentPayablesFromIdList(payablesIds, tenant);
-
+                
                 int count = 1;
                 foreach (APInvoiceLine myline in lines)
                 {
@@ -311,18 +309,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         }
                     }
 
-                    ShipmentPayable shipmentPayable = payables.Where(d => d.Id == myline.EntityPayableId).FirstOrDefault();
-                    if (shipmentPayable != null)
+                    if (!string.IsNullOrEmpty(myline.PrepaidCollectId))
                     {
-                        if (!string.IsNullOrEmpty(shipmentPayable.PrepaidCollectId))
+                        PrepaidCollect prepaidCollect = prepaidCollectRepository.GetSinglePrepaidCollect(myline.PrepaidCollectId);
+                        if (prepaidCollect != null)
                         {
-                            PrepaidCollect prepaidCollect = prepaidCollectRepository.GetSinglePrepaidCollect(shipmentPayable.PrepaidCollectId);
-                            if (prepaidCollect != null)
-                            {
-                                lineElement.PrepaidCollect = prepaidCollect.Name;
-                            }
+                            lineElement.PrepaidCollect = prepaidCollect.Name;
                         }
-                    }
+                    }                    
 
                     lineElement.Advanced = new LineAdvancedElement();
                     lineElement.Advanced.GLAccount = "";

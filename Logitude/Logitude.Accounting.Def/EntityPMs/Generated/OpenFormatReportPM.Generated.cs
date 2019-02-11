@@ -319,6 +319,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string userLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UserLocalName  
+	   {
+	    
+	     get
+		{
+		   return userLocalName;
+		 }
+		 set
+		 {
+		   if(userLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UserLocalName",OldValue=userLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   userLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string statusLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusLocalName  
+	   {
+	    
+	     get
+		{
+		   return statusLocalName;
+		 }
+		 set
+		 {
+		   if(statusLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusLocalName",OldValue=statusLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statusLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

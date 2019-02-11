@@ -43,6 +43,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                                   StatusName = a.IntegrityCheckStatus.Name,
 
+                                                                  SearchFields = a.SearchFields,
                                                               });
             return query;
 		}

@@ -47,7 +47,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
                 .IsUnicode(true);
 
             this.Property(t => t.EntityReference)
-                .HasMaxLength(15)
+                .HasMaxLength(20)
                 .IsUnicode(false);
 
             this.Property(t => t.ObjectTableName)

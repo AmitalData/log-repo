@@ -11,7 +11,7 @@
 
                 <!-- Name -->
                 <tr class="FormFieldRow">
-                    <td style="width:153px;">
+                    <td style="width:110px;">
                         <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
@@ -62,7 +62,7 @@
                 </tr>
 
                 <!-- DWQueryId -->
-                <tr class="FormFieldRow">
+                <!--<tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
@@ -84,7 +84,7 @@
                     <td>
                         <div></div>
                     </td>
-                </tr>
+                </tr>-->
 
                 <tr>
                     <td colspan="3">
@@ -105,7 +105,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -113,7 +113,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

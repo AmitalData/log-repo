@@ -223,6 +223,7 @@ namespace WebFreight.Web.WebServices
                                 myDataProvider.ShipperAddress_WithName = DataProviders.General.GetAddressWithName(myPartnerAddress);
                                 myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + DataProviders.General.GetAddress(myPartnerAddress);
                                 myDataProvider.ShipperAddress_NoTel = myDataProvider.ShipperAddress_NoTel + DataProviders.General.GetAddress(myPartnerAddress);
+                                myDataProvider.ShipperATTN = myPartnerAddress.ATTN;
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
@@ -342,6 +343,8 @@ namespace WebFreight.Web.WebServices
 
                             if (myPartnerAddress != null)
                             {
+                                myDataProvider.ConsigneeATTN = myPartnerAddress.ATTN;
+
                                 if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
                                 {
                                     myDataProvider.ConsigneeAlways = myPartnerCard.LocalName + Environment.NewLine;
@@ -421,7 +424,7 @@ namespace WebFreight.Web.WebServices
                                 }
 
                                 myDataProvider.NotifyAddress_WithName = DataProviders.General.GetAddressWithName(myPartnerAddress);
-                                myDataProvider.NotifyAddress = myDataProvider.NotifyAddress + DataProviders.General.GetAddress(myPartnerAddress);
+                                myDataProvider.NotifyAddress = myDataProvider.NotifyAddress + DataProviders.General.GetAddress(myPartnerAddress);                                
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
@@ -464,10 +467,24 @@ namespace WebFreight.Web.WebServices
                         }
                     }
                 }
+
+                //Actual
+                if (!string.IsNullOrEmpty(shipment.Notify1Id))
+                {
+                    if (!string.IsNullOrEmpty(shipment.Notify1AddressId))
+                    {
+                        Address myPartnerAddress = addressRepository.GetSingleAddress(shipment.Notify1AddressId, tenant);
+
+                        if (myPartnerAddress != null)
+                        {
+                            myDataProvider.Notify1ATTN = myPartnerAddress.ATTN;
+                        }
+                    }
+                }
                 #endregion
 
                 #region Notify2
-                string myNotify2Id = shipment.Notify2Id;
+                    string myNotify2Id = shipment.Notify2Id;
                 string myNotify2AddressId = shipment.Notify2AddressId;
 
                 if (!string.IsNullOrEmpty(myNotify2Id))
@@ -491,6 +508,7 @@ namespace WebFreight.Web.WebServices
 
                                 myDataProvider.NotifyAddress2_WithName = DataProviders.General.GetAddressWithName(myPartnerAddress);
                                 myDataProvider.Notify2Address = myDataProvider.Notify2Address + DataProviders.General.GetAddress(myPartnerAddress);
+                                myDataProvider.Notify2ATTN = myPartnerAddress.ATTN;
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
@@ -609,6 +627,7 @@ namespace WebFreight.Web.WebServices
 
                             myDataProvider.AgentPhone = myAddress.PhoneNumber;
                             myDataProvider.AgentFax = myAddress.FaxNumber;
+                            myDataProvider.AgentATTN = myAddress.ATTN;
                         }
 
                         if (!string.IsNullOrEmpty(myCard.PrimaryContactId))
@@ -667,6 +686,8 @@ namespace WebFreight.Web.WebServices
 
                         if (myPartnerAddress != null)
                         {
+                            myDataProvider.ConsigneeNotImporterATTN = myPartnerAddress.ATTN;
+
                             if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
                             {
                                 myDataProvider.ConsigneeNotImporterAddress = myPartnerCard.LocalName + Environment.NewLine;
@@ -705,6 +726,8 @@ namespace WebFreight.Web.WebServices
 
                         if (myPartnerAddress != null)
                         {
+                            myDataProvider.ShipperNotExporterATTN = myPartnerAddress.ATTN;
+
                             if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
                             {
                                 myDataProvider.ShipperNotExporterAddress = myPartnerCard.LocalName + Environment.NewLine;

@@ -33,7 +33,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.EntityReference)
-                .HasMaxLength(15)
+                .HasMaxLength(20)
                 .IsUnicode(false);
 
             // Table & Column Mappings

@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -8,65 +8,57 @@
     <tr>
         <td>
             <div class="MediaFill">
-                <div class="SimpleGridView">
-                    <div class="SimpleGridViewHeader">
-                        <table>
-                            <tr>
-                                <td style="width: 250px; min-width: 250px; max-width: 250px;">Status</td>
-                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Event Date</td>
-                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Received date</td>
-                                <td style="width: 80px; min-width: 80px; max-width: 80px;">Location</td>
-                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Departure</td>
-                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Arrival</td>
-                                <td class="LastChild">
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
 
-                    <div class="SimpleGridViewBody">
-                        <table>
-                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                    <!-- Status -->
+                    <log-column [width]="'250'" [header]="'Status'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.StatusName}}
+                        </log-cell-template>
+                    </log-column>
 
-                                <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
-                                    {{item.StatusName}}
-                                </td>
+                    <!-- Location -->
+                    <log-column [width]="'80'" [header]="'Location'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.LocationCode}}
+                        </log-cell-template>
+                    </log-column>
 
-                                <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
-                                    {{item.EventDate | DateTimePipe:'DT'}}
-                                </td>
+                    <!-- Departure -->
+                    <log-column [width]="'250'" [header]="'Departure'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.DepartureDate | DateTimePipe:'DT'}} {{item.DepartureDateInfo}}
+                        </log-cell-template>
+                    </log-column>
 
-                                <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
-                                    {{item.ReceivingDate | DateTimePipe:'DT'}}
-                                </td>
+                    <!-- Arrival -->
+                    <log-column [width]="'250'" [header]="'Arrival'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.ArrivalDate | DateTimePipe:'DT'}} {{item.ArrivalDateInfo}}
+                        </log-cell-template>
+                    </log-column>
 
-                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
-                                    {{item.LocationCode}}
-                                </td>
+                    <!-- Vessel / Voyage -->
+                    <log-column [width]="'250'" [header]="'Vessel / Voyage'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.VesselName}} / {{item.VoyageNumber}}
+                        </log-cell-template>
+                    </log-column>
 
-                                <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
-                                    {{item.DepartureDate | DateTimePipe:'DT'}}
-                                </td>
+                    <!-- Event Date -->
+                    <log-column [width]="'140'" [header]="'Event Date'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.EventDate | DateTimePipe:'DT'}}
+                        </log-cell-template>
+                    </log-column>
 
-                                <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
-                                    {{item.ArrivalDate | DateTimePipe:'DT'}}
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="6">
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
+                    <!-- Received date -->
+                    <log-column [width]="'140'" [header]="'Received date'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.ReceivingDate | DateTimePipe:'DT'}}
+                        </log-cell-template>
+                    </log-column>
+                </logitude-edit-grid>
             </div>
         </td>
     </tr>

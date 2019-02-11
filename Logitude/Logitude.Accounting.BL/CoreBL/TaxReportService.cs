@@ -183,7 +183,11 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
             List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
 
-      
+            List<string> ids = new List<string>();
+            ids = aPInvoices.Select(d => d.Id).ToList();
+            APInvoiceTotalVATQuery myTotalVATQuery = new APInvoiceTotalVATQuery(tenant);
+            List<APInvoiceTotalVATPM> totalvats = new List<APInvoiceTotalVATPM>();
+            totalvats  = myTotalVATQuery.GetTotalVATs(ids, tenant);
 
             foreach (TaxReportData a in ledgerTransactons)
 			{
@@ -191,9 +195,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 
 				if (a.AccountingEntity == "4")
 				{
-				
+
                     aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
-					if (aPInvoice != null)
+                    aPInvoice.TotalVATs = totalvats.Where(d => d.APInvoiceId == aPInvoice.Id).ToList();
+
+                    if (aPInvoice != null)
 					{
 						VatNumber = aPInvoice.VATNumber;
 						   VatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d=> d.LocalVATAmount);
@@ -311,7 +317,7 @@ namespace Logitude.Accounting.BL.CoreBL
 				taxReport.ExemptTaxableOutput = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
 				taxReport.OutputLinesCount = reportLinesList.Where(d => d.OutputOrInput == "O").Count();
 				taxReport.OtherInputsTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
-				taxReport.InputLinesCount = reportLinesList.Where(d => d.OutputOrInput == "I").Count();
+				taxReport.InputLinesCount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1").Count();
                 taxReport.EquipmentInputsTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
             }
 

@@ -318,7 +318,9 @@
     <None Include="EntityFiles\CommonDataModel\Participant.lxml" />
     <None Include="EntityFiles\CommonDataModel\PartnerType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PasswordPolicy.lxml" />
-    <None Include="EntityFiles\CommonDataModel\PaymentTerm.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PaymentTerm.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\CommonDataModel\PaymentTermDateType.lxml" />
     <None Include="EntityFiles\CommonDataModel\ProductPeriod.lxml" />
     <None Include="EntityFiles\CommonDataModel\ProductType.lxml">
@@ -378,6 +380,7 @@
     <None Include="EntityFiles\GlobalModel\AnalyzeQueue.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml" />
     <None Include="EntityFiles\GlobalModel\WebhookKeys.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -414,7 +417,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InfrastructureModel\ChargesGroup.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\CounterDefinition.lxml" />
     <None Include="EntityFiles\InfrastructureModel\Direction.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DWCategories.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\EntityStatus.lxml">
@@ -538,6 +543,7 @@
     <None Include="EntityFiles\ShipmentsModel\AWBChargesCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBCustomsInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBInformation.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\HarmonizeCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStock.lxml">
       <SubType>Designer</SubType>
     </None>

@@ -23,7 +23,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
@@ -38,6 +38,19 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.HasException).HasColumnName("HasException");
 
             this.Property(t => t.DoneDateTimeUTC).HasColumnName("DoneDateTimeUTC");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.SearchFields).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.SearchFields).HasMaxLength(4000);
+			}
+
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsUnicode(true);
         }
     }
 }

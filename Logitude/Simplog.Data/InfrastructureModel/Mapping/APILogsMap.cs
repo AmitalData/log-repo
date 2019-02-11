@@ -49,7 +49,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
            .IsUnicode(false);
 
             this.Property(t => t.Refrence)
-                .HasMaxLength(15)
+                .HasMaxLength(40)
                 .IsUnicode(false);
 
             this.Property(t => t.SearchFields)

@@ -26,10 +26,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.Prefix)
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .IsUnicode(false);
 
-            this.Property(t => t.CounterId)
+			this.Property(t => t.Suffix)
+			   .HasMaxLength(20)
+			   .IsUnicode(false);
+
+			this.Property(t => t.CounterId)
                 .IsRequired()
                 .HasMaxLength(15)
                 .IsUnicode(false);
@@ -44,12 +48,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.UniquePerPrefix).HasColumnName("UniquePerPrefix");
             this.Property(t => t.StartNumber).HasColumnName("StartNumber");
             this.Property(t => t.CounterId).HasColumnName("CounterId");
+			this.Property(t => t.CounterSize).HasColumnName("CounterSize");
+			this.Property(t => t.Suffix).HasColumnName("Suffix");
 
-            // Relationships
-            //this.HasRequired(t => t.Counter)
-            //    .WithMany(t => t.CounterDefinitions)
-            //    .HasForeignKey(d => d.CounterId);
+			// Relationships
+			//this.HasRequired(t => t.Counter)
+			//    .WithMany(t => t.CounterDefinitions)
+			//    .HasForeignKey(d => d.CounterId);
 
-        }
-    }
+		}
+	}
 }

@@ -518,6 +518,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         PackagesCodes_PK = entityPM.PackagesCodes_PK,
                         TrailDaysLeft = entityPM.TrailDaysLeft,
                          TenantManagementLicenses = entityPM.TenantManagementLicenses,
+                         CountryName=entityPM.CountryName,
+                         BluesnapContractQTY=entityPM.BluesnapContractQTY,
+                        BluesnapCRMContractQTY = entityPM.BluesnapCRMContractQTY,
+                        BluesnapEAWBContractQTY = entityPM.BluesnapEAWBContractQTY,
+                        BluesnapEAWBSContractQTY = entityPM.BluesnapEAWBSContractQTY,
+                        BluesnapOneTimeContractQTY = entityPM.BluesnapOneTimeContractQTY,
+                        BluesnapCRMContractId = entityPM.BluesnapCRMContractId,
+                        BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId,
+                        BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId,
+                        BluesnapOneTimeContractId = entityPM.BluesnapOneTimeContractId,
+
                     };
                 }
 
@@ -576,11 +587,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int NumberOfUsers { get; set; }
         public string BluesnapContractId { get; set; }
         public string BluesnapAccount { get; set; }
+        public string BluesnapCRMContractId { get; set; }
+        public string BluesnapEAWBContractId { get; set; }
+        public string BluesnapEAWBSContractId { get; set; }
+        public string BluesnapOneTimeContractId { get; set; }
+        public int BluesnapContractQTY { get; set; }
+        public int BluesnapCRMContractQTY { get; set; }
+        public int BluesnapEAWBContractQTY { get; set; }
+        public int BluesnapEAWBSContractQTY { get; set; }
+        public int BluesnapOneTimeContractQTY { get; set; }
         public bool ManagesRegisteredAgent { get; set; }
         public bool IsMultiPackage { get; set; }
         public bool IsINTTRAOnlyDemo { get; set; }
         public string PackageName { get; set; }
         public string TemporalPackageCode { get; set; }
+        public string CountryName { get; set; }
 
         private List<string> packagesCodes_PK;
         public List<string> PackagesCodes_PK

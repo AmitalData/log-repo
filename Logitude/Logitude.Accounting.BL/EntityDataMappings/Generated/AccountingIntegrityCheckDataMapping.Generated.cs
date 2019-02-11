@@ -29,7 +29,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ParametersXML, 
 	         ResultXML, 
 	         HasException, 
-	         DoneDateTimeUTC,
+	         DoneDateTimeUTC, 
+	         SearchFields,
 	      }
 
 
@@ -44,7 +45,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ResultXML, 
 	         HasException, 
 	         DoneDateTimeUTC, 
-	         StatusName,
+	         StatusName, 
+	         FromMonthInclusive, 
+	         ToMonthInclusive, 
+	         SearchFields,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -87,7 +91,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.DoneDateTimeUTC = entityPM.DoneDateTimeUTC;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
 
 		public void POCOToPM(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO)
         {
@@ -132,6 +143,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.DoneDateTimeUTC = entityPOCO.DoneDateTimeUTC;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
 		}
 
 		public void PMToOldPM(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheckPM oldEntityPM)
@@ -173,6 +189,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.DoneDateTimeUTC = entityPM.DoneDateTimeUTC;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(AccountingIntegrityCheckPM entityPM)
@@ -190,6 +211,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.ResultXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ResultXML));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 
@@ -202,6 +227,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
         {
             CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
         }
 			  
    }

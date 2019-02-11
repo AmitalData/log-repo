@@ -147,7 +147,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -207,7 +209,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  1,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -266,7 +270,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -325,7 +331,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  105,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -384,7 +392,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  75,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -443,7 +453,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  4000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -501,7 +513,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -561,7 +575,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -621,7 +637,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -680,7 +698,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -740,7 +760,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -799,7 +821,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -858,7 +882,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -917,7 +943,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -976,7 +1004,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1035,7 +1065,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1095,7 +1127,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  1,
 					  						MaxLength =  1,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1154,7 +1188,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1213,7 +1249,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  5,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1273,7 +1311,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1332,7 +1372,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1392,7 +1434,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1451,7 +1495,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1510,7 +1556,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1569,7 +1617,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1628,7 +1678,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1681,7 +1733,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1735,7 +1789,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1794,7 +1850,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1853,7 +1911,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  75,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1912,7 +1972,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1971,7 +2033,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  105,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2030,7 +2094,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2089,7 +2155,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2148,7 +2216,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2207,7 +2277,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2266,7 +2338,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2326,7 +2400,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2385,7 +2461,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2444,7 +2522,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2503,7 +2583,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2564,7 +2646,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2624,7 +2708,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2683,7 +2769,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2742,7 +2830,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2801,7 +2891,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2861,7 +2953,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2920,7 +3014,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2980,7 +3076,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3039,7 +3137,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3099,7 +3199,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3158,7 +3260,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3218,7 +3322,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3277,7 +3383,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3337,7 +3445,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3396,7 +3506,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3455,7 +3567,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3514,7 +3628,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  5,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3572,7 +3688,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3630,7 +3748,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3688,7 +3808,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3743,7 +3865,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3798,7 +3922,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3853,7 +3979,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  20,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3911,7 +4039,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -3965,7 +4095,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4019,7 +4151,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4074,7 +4208,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4127,7 +4263,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4188,7 +4326,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4247,7 +4387,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4302,7 +4444,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  200,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4355,7 +4499,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  10,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4408,7 +4554,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4462,7 +4610,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4520,7 +4670,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4574,7 +4726,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  60,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4632,7 +4786,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4686,7 +4842,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4744,7 +4902,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4798,7 +4958,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4851,7 +5013,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4904,7 +5068,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -4962,7 +5128,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5020,7 +5188,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5073,7 +5243,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5126,7 +5298,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5179,7 +5353,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5232,7 +5408,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5285,7 +5463,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5338,7 +5518,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5398,7 +5580,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5453,7 +5637,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5508,7 +5694,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -5544,6 +5732,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TotFutureOpenChequesInLocalCurListLable",
 					  						ListLableDefaultText =  @"Unredeemed Future Cheques",
 					  						ListLocalDefaultText =  @"המחאות עתידיות שלא נפרעו",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CardId",
+					  						OldFieldName =  "CardId",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CardId",
+					  						ListPropertyPath =  "CardId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CardId",
+					  						DefaultText =  @"CardId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -5679,7 +5922,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn VendorAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter VendorAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "3",PredefinedValue2 = null, QueryId = VendorAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter VendorAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "3",PredefinedValue2 = null, QueryId = VendorAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5700,7 +5943,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = AllCustomersQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = AllCustomersQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5723,7 +5966,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn MyCustomersAsCollectorsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = MyCustomersAsCollectorsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = MyCustomersAsCollectorsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5746,10 +5989,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DebetorsCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 7, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter DebetorsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DebetorsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter DebetorsCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DebetorsCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalBalanceInDue" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0,Operator = "LargerThan"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5770,10 +6013,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ActiveCustomersGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5794,10 +6037,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn InactiveCustomersGLAccountQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "ChartOfAccountsTypeName" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5822,10 +6065,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ActiveGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ActiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter ActiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5850,10 +6093,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn InactiveGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InactiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter InactiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5878,10 +6121,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OpenFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "5",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "5",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter OpenFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id, Tenant = 0,Operator = "NotEqual"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5906,10 +6149,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ClosedFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ClosedFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "5",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ClosedFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "5",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter ClosedFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ClosedFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5934,7 +6177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "5",PredefinedValue2 = null, QueryId = AllFilesQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "5",PredefinedValue2 = null, QueryId = AllFilesQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5959,7 +6202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllJobsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllJobsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "4",PredefinedValue2 = null, QueryId = AllJobsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllJobsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "4",PredefinedValue2 = null, QueryId = AllJobsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5980,10 +6223,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ActiveVendorsGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "3",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "3",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -6004,10 +6247,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn InactiveVendorsGLAccountQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 6, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "3",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "3",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -6050,7 +6293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 8, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = AllGLAccountsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = AllGLAccountsQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -6520,10 +6763,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable GLAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccount" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature GLAccountFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECOCILE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reconcile", NameTextCodeDefaultText = "Reconcile", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GLAccountFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECOCILE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reconcile", NameTextCodeDefaultText = "Reconcile", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-			   Feature GLAccountFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCARDINDEX", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.PrintCardIndex", NameTextCodeDefaultText = "Print Card Index", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GLAccountFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCARDINDEX", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.PrintCardIndex", NameTextCodeDefaultText = "Print Card Index", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -6566,7 +6809,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "נוספים",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton GLAccountMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()

@@ -1,4 +1,4 @@
-﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
@@ -51,6 +51,15 @@ export class CounterDefinitionPM {
     private uniquePerPrefix: boolean;
     public get UniquePerPrefix() { return this.uniquePerPrefix; }
     public set UniquePerPrefix(newValue: boolean) { if (this.uniquePerPrefix != newValue) { this.uniquePerPrefix = newValue; this.MarkAsDirty("UniquePerPrefix"); } }
+
+    private counterSize: number;
+    public get CounterSize() { return this.counterSize; }
+    public set CounterSize(newValue: number) { if (this.counterSize != newValue) { this.counterSize = newValue; this.MarkAsDirty("CounterSize"); } }
+
+    private suffix: string;
+    public get Suffix() { return this.suffix; }
+    public set Suffix(newValue: string) { if (this.suffix != newValue) { this.suffix = newValue; this.MarkAsDirty("Suffix"); } }
+
 
     public OldEntityPM: CounterDefinitionPM;
 

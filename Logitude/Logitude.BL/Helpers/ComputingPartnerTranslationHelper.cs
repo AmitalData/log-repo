@@ -49,6 +49,25 @@ namespace Logitude.BL.Helpers
             return partnerCode;
         }
 
+        public List<ComputingPartnerTranslationPM> GetComputingPartnerCodeTranslations( string computingPartner, int tenant)
+        {
+            List<ComputingPartnerTranslationPM> partnerTranslationPMs = null;
+        
+            ComputingPartnerPM partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, tenant);
+            if (partner == null)
+            {
+                partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, 0);
+            }
+
+         
+            if (partner != null )
+            {
+                partnerTranslationPMs = computingPartnerTranslationQuery.GetAllByComputingPartner(partner.Id,  tenant).ToList();
+            }
+
+
+            return partnerTranslationPMs;
+        }
         public string GetLogitudeCodeTranslation(string PartnerCode, string computingPartner, string objectTableName)
         {
             ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);

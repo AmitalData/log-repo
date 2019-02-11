@@ -43,7 +43,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
         public virtual void RunCode() { }
         
 
-        public virtual void ChangeStatus(string statusCode,Exception ex=null)
+        public virtual void ChangeStatus(string statusCode,Exception ex=null,string logStatus=null)
         {
             Logitude.Infrastructure.Data.IInfrastructureContext context = Logitude.Infrastructure.Data.InfrastructureContext.GetContext(this.BatchTaskExecution.Tenant);
             BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), this.BatchTaskExecution.Tenant);
@@ -84,6 +84,10 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
 
                 BatchTaskExecution.ErrorLog = errorMessage;
                 BatchTaskExecution.CallStack = ex.StackTrace;
+            }
+            else if (!string.IsNullOrEmpty(logStatus))
+            {
+                BatchTaskExecution.ErrorLog = logStatus;
             }
             BatchTaskExecution.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             batchTaskExecutionUpdateService.Update(BatchTaskExecution, true);

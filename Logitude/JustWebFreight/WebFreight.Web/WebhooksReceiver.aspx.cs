@@ -46,7 +46,7 @@ namespace WebFreight.Web
                     }
                     string RecivedString = "";
 
-                    using (var reader = new StreamReader(Request.InputStream))
+                    using (var reader = new StreamReader(Request.InputStream,System.Text.Encoding.UTF8))
                     {
                         RecivedString = reader.ReadToEnd();
                     }
@@ -74,7 +74,7 @@ namespace WebFreight.Web
 
 
             AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-            byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);
+            byte[] messageBytes = Encoding.UTF8.GetBytes(xmlfileText);
 
             analyzeQueue = new AnalyzeQueue()
             {
@@ -87,7 +87,8 @@ namespace WebFreight.Web
                 ConnectedToEntity = false,
                 ConnectedToTenant = true,
                 FileSize = xmlfileText.Length,
-                Tenant = MyWebHookKey.Tenant
+                Tenant = MyWebHookKey.Tenant,
+                Subject = MyWebHookKey.Description,
             };
 
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;

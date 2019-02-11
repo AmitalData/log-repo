@@ -118,18 +118,19 @@ using Logitude.Accounting.Data;
 				var MyList = new List<JournalLinePM>();
 				foreach (var item in MyEntity)
 				{
-					   					var temp = new JournalLinePM();
-					if (!string.IsNullOrEmpty(item.JournalId))
+					   
+					var temp = new JournalLinePM();
+										if (!string.IsNullOrEmpty(item.JournalId))
 					{
 						temp = query.GetSinglePMByJournalId(item.JournalId, Tenant);
-					} 
-					if (!string.IsNullOrEmpty(item.Line))
+					} 					if (!string.IsNullOrEmpty(item.Line))
 					{
 						temp = query.GetSinglePMByLine(item.Line, Tenant);
 					} 					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("JournalLine with Line " + item.Line + " doesn't exist");
+						
 					} 
 					temp.JournalId = item.JournalId;
 					temp.Line = item.Line;

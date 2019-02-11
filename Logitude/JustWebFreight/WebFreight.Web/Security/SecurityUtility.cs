@@ -27,6 +27,76 @@ namespace WebFreight.Web.Security
 {
     public class SecurityUtility
     {
+		public static void AuthenticateAPICall(int tenant)
+		{
+			bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
+			if (!exist)
+			{
+				throw new AutenticationException("API is not activated. Please contact your system administrator");
+			}
+		}
+
+		private static bool CheckUserTableFeature(string objectTableName, string featureCode, int tenant, bool forceAPIFeaturesCheck)
+		{
+			bool exists = false;
+
+			if (objectTableName.Contains("Customs."))
+			{
+
+			}
+			//if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+			//{
+
+			//}
+
+			string email = null;
+			if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+			{
+				/*string */
+				email = HttpContext.Current.User.Identity.Name;
+			}
+			else
+			{
+				email = AuthenticationUtil.ResolveLoggingUserId(tenant);
+			}
+			ContactInfo contactinfo = GetContactInfo(email, tenant, forceAPIFeaturesCheck);
+
+			if (contactinfo != null)
+			{
+				if (contactinfo.IsLogitudeAdmin)
+				{
+					exists = true;
+				}
+
+				else
+				{
+					ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+					if (objectTable != null)
+					{
+						foreach (string myRoleId in contactinfo.RolesIds)
+						{
+							Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant);
+							if (features.Keys.Contains(featureCode + objectTable.Id))
+							{
+								FeaturePM feature = features[featureCode + objectTable.Id];
+								if (feature != null)
+								{
+									exists = true;
+								}
+							}
+						}
+					}
+				}
+			}
+			//}
+
+			if (!exists)
+			{
+				return false;
+			}
+			else return true;
+		}
+
         public static void AuthenticationOnTenant(int tenant)
         {
             if (HttpContext.Current != null)
@@ -236,7 +306,7 @@ namespace WebFreight.Web.Security
             {
                 email = AuthenticationUtil.ResolveLoggingUserId(tenant);
             }
-            ContactInfo contactinfo = GetContactInfo(email, tenant);
+			ContactInfo contactinfo = GetContactInfo(email, tenant);
 
             if (contactinfo != null)
             {
@@ -276,7 +346,8 @@ namespace WebFreight.Web.Security
 
         }
 
-        public static bool CheckTableContactFeature(string objectTableName, string featureCode, int tenant)
+	 
+		public static bool CheckTableContactFeature(string objectTableName, string featureCode, int tenant)
         {
             bool exists = false;
 
@@ -433,7 +504,7 @@ namespace WebFreight.Web.Security
             return isAllowed;
         }
 
-        public static ContactInfo GetContactInfo(string email, int tenant)
+        public static ContactInfo GetContactInfo(string email, int tenant, bool forceAPIFeaturesCheck = false)
         {
             int loggedTenant = tenant;
 
@@ -487,7 +558,7 @@ namespace WebFreight.Web.Security
                         authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     }
 
-                    if (authToken == null || !authToken.APIToken)
+                    if (authToken == null || !authToken.APIToken || forceAPIFeaturesCheck)
                     {
                         ContactRepository contactrep = new ContactRepository(tenant);
                         Contact contact = contactrep.GetSingleContactByEmail(email, tenant);

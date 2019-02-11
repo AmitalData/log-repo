@@ -38,6 +38,8 @@ import {LogLovComponent} from './Components/LogitudeComponents/LogLovComponent';
 import {LogLovV2Component} from './Components/LogitudeComponents/LogLovV2Component';
 
 import {DWLovComponent} from './Components/LogitudeComponents/DWLovComponent';
+import {DWDateComponent} from './Components/LogitudeComponents/DWDateComponent'
+
 import {LogDatePickerComponent} from './Components/LogitudeComponents/LogDatePickerComponent';
 import {LogCalendarComponent} from './Components/LogitudeComponents/LogCalendarComponent';
 import {TimeSelectComponent} from './Components/LogitudeComponents/TimeSelectComponent';
@@ -51,7 +53,9 @@ import {ListHeaderTemplateComponent} from './Components/LogitudeComponents/LogGr
 import {ListTemplateComponent} from './Components/LogitudeComponents/LogGridComponent/ListTemplateComponent';
 import {UsersQueryList} from './Components/CustomControls/UsersQueryList';
 import {ChooseDatesComponent} from './Components/CustomControls/ChooseDatesComponent';
-import {SearchBox} from './Components/CustomControls/SearchBox';
+import { SearchBox } from './Components/CustomControls/SearchBox';
+import { RatioBoxComponent } from './Components/CustomControls/RatioBoxComponent';
+
 import {LogCellTemplateComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
 import {LogColumnComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogColumnComponent';
 import {EditableLogGridComponent} from './Components/LogitudeComponents/EditableLogGridComponent/EditableLogGridComponent';
@@ -198,7 +202,7 @@ export const ControlsComponents =
         LogLovComponent,
         LogLovV2Component,
         DWLovComponent,
-
+        DWDateComponent,
         LogDatePickerComponent,
         LogCalendarComponent,
         TimeSelectComponent,
@@ -214,6 +218,7 @@ export const ControlsComponents =
         UsersQueryList,
         ChooseDatesComponent,
         SearchBox,
+        RatioBoxComponent,
         LogCellTemplateComponent,
         LogColumnComponent,
         EditableLogGridComponent,

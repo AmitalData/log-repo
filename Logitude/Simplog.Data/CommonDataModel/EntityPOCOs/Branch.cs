@@ -26,8 +26,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string INTTRAId { get; set; }
         public string INTTRAContactId { get; set; }
         public string INTTRAAlias { get; set; }
+		public string CounterCode { get; set; }
 
-        public virtual Address Address { get; set; }
+		public virtual Address Address { get; set; }
 
         [ForeignKey("INTTRAContactId")]
         public virtual Contact INTTRAContact { get; set; }

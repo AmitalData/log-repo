@@ -14,6 +14,10 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Security;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -23,19 +27,24 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(PaymentChequePM entityPM, PaymentCheque entityPOCO)
         {
-            AddPOCOPropertyName(POCOPropertyNames.Id);
-            AddPOCOPropertyName(POCOPropertyNames.Tenant);
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {
-                entityPOCO.Id = entityPM.Id;
-                entityPOCO.Tenant = entityPM.Tenant;
-            }
 
-           
 
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
-            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
-            entityPOCO.SearchFields = entityPM.SearchFields;
+            PaymentChequeCustomDataMapping paymentChequeCustomDataMapping = new PaymentChequeCustomDataMapping();
+            paymentChequeCustomDataMapping.PMToPOCO(entityPM, entityPOCO, this.CustomMappedPOCOProperties);
+
+            //    AddPOCOPropertyName(POCOPropertyNames.Id);
+            //    AddPOCOPropertyName(POCOPropertyNames.Tenant);
+            //    if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            //    {
+            //        entityPOCO.Id = entityPM.Id;
+            //        entityPOCO.Tenant = entityPM.Tenant;
+            //    }
+
+
+
+            //    this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+            //    BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
+            //    entityPOCO.SearchFields = entityPM.SearchFields;
 
         }
         private static void BuildSearchFields(PaymentChequePM entityPM, PaymentCheque poco, bool isNewEntity)
@@ -121,7 +130,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 PaymentChequeStatusPM PaymentChequeStatus = paymentChequeStatusQueryService.GetSingle(entityPOCO.PaymentChequeStatusCode, false, false);
                 if (PaymentChequeStatus != null)
                 {
-                    ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                    ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
+
                     if (loggedContact.DontShowLocal)
                     {
 
@@ -145,6 +155,17 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
         }
+
+        private ContactPM GetLoggedContact(int tenant)
+        {
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
+
+
     }
 
 

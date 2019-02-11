@@ -42,6 +42,7 @@ import { RevenueExpenseFilterComponent } from './Components/FilterReportComponen
 import { TrailBalanceFiltersComponent } from './Components/FilterReportComponent/TrailBalanceFiltersComponent';
 import { ShipmentsStocksFiltersComponent } from './Components/FilterReportComponent/ShipmentsStocksFiltersComponent';
 import { DetailedShipmentChargesAnalysisComponent } from './Components/FiltersComponent/Accounting/DetailedShipmentChargesAnalysisComponent';
+import { VendorChargesAnalysisFilterComponent } from './Components/FiltersComponent/Accounting/VendorChargesAnalysisFilterComponent';
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
@@ -67,6 +68,9 @@ import { TasksOfNoProjectsFilterComponent } from './Components/FilterReportCompo
 //Shipment Details
 import { ShipmentDetailsFilterComponent } from './Components/FilterReportComponent/ShipmentDetailsFilterComponent';
 
+
+//VDK Templates
+import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilterComponent';
 
 export const Components =
     [
@@ -124,6 +128,8 @@ export const Components =
         ShipmentsStocksFiltersComponent,
         ShipmentDetailsFilterComponent,
         DetailedShipmentChargesAnalysisComponent,
+        VendorChargesAnalysisFilterComponent,
+        VDKFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -185,7 +191,9 @@ export class ModuleDeclarations {
             case "LicenseManagementFilterComponent": { myResult = LicenseManagementFilterComponent; break; }  
             case "ShipmentsStocksFiltersComponent": { myResult = ShipmentsStocksFiltersComponent; break; }  
             case "ShipmentDetailsFilterComponent": { myResult = ShipmentDetailsFilterComponent; break; }
-            case "DetailedShipmentChargesAnalysisComponent": { myResult = DetailedShipmentChargesAnalysisComponent; break; }                
+            case "DetailedShipmentChargesAnalysisComponent": { myResult = DetailedShipmentChargesAnalysisComponent; break; }
+            case "VendorChargesAnalysisFilterComponent": { myResult = VendorChargesAnalysisFilterComponent; break; }
+            case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }                
         }
 
         return myResult;

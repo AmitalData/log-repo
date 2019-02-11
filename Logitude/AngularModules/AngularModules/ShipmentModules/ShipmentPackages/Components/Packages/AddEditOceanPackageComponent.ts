@@ -50,18 +50,6 @@ export class AddEditOceanPackageComponent {
         this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
     }
 
-    MultiHarmonizeClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { PackagePM: this.EntityPM, ShipmentPM: this.DataContext.ShipmentPM ,IsEditingEnabled: this.DataContext.IsEditingEnabled };
-        logWindow.Title = "Container Multi-Harmonize";
-        logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AddEditPackageHarmonizeComponent");
-        logWindow.WindowClosed.subscribe(s => {
-            if (s) {
-                this.DataContext.SetUIProperties_Harmonize();                
-            }
-        });
-    }
-
     CancelButtonClicked() {
         this.RejectChanges();
         SessionLocator.CurrentSession.CloseCurrentWindow();
@@ -184,6 +172,10 @@ export class AddEditOceanPackageComponent {
                         DeliveryPackagePM.Length = this.EntityPM.Length;
                     }
 
+                    if (DeliveryPackagePM.Harmonize != this.EntityPM.Harmonize) {
+                        DeliveryPackagePM.Harmonize = this.EntityPM.Harmonize;
+                    }
+
                     if (DeliveryPackagePM.IsMultiHarmonize != this.EntityPM.IsMultiHarmonize) {
                         DeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
                     }
@@ -210,6 +202,29 @@ export class AddEditOceanPackageComponent {
         }
     }
 
+    MultiHarmonizeClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { PackagePM: this.EntityPM, ShipmentPM: this.DataContext.ShipmentPM, IsEditingEnabled: this.DataContext.IsEditingEnabled };
+        logWindow.Title = "Container Multi-Harmonize";
+        logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AddEditPackageHarmonizeComponent");
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.DataContext.SetUIProperties_Harmonize();
+            }
+        });
+    }
+    ChooseHarmonizeClicked() {
+        if (this.DataContext) {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("HarmonizeCode") + " Search";
+            logitudeWindow.WindowArgs = { Entity: this.DataContext, FieldName: 'Harmonize' };
+            logitudeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Harmonizes/HarmonizesComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+
+            });
+        }
+    }
+
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
@@ -222,6 +237,9 @@ export class AddEditOceanPackageComponent {
         this.myCloner.AddField('Volume');
         this.myCloner.AddField('VolumetricWeight');
         this.myCloner.AddField('Weight');
+        this.myCloner.AddField('Tare');
+        this.myCloner.AddField('ShipperSeal');
+        this.myCloner.AddField('Notes');       
         this.myCloner.AddField('IsDangerous');
         this.myCloner.AddField('ClassNumber');
         this.myCloner.AddField('UnNumber');
@@ -229,10 +247,8 @@ export class AddEditOceanPackageComponent {
         this.myCloner.AddField('IMDGCode');
         this.myCloner.AddField('FlashPoint');
         this.myCloner.AddField('MaterialDescription');
-        this.myCloner.AddField('ShipperSeal');
-        this.myCloner.AddField('CarrierSeal');
-        this.myCloner.AddField('Tare');
         this.myCloner.AddField('Harmonize');
+        this.myCloner.AddField('CarrierSeal');
         this.myCloner.AddField('Temperature');
         this.myCloner.AddField('Ventilation');
         this.myCloner.AddField('MarksAndNumbers');
@@ -240,6 +256,11 @@ export class AddEditOceanPackageComponent {
         this.myCloner.AddField('SOC');
         this.myCloner.AddField('VGM');
         this.myCloner.AddField('MethodUsed');
+        this.myCloner.AddField('CommodityNumber');
+        this.myCloner.AddField('Reference1');
+        this.myCloner.AddField('Reference2');
+        this.myCloner.AddField('Reference3');
+        this.myCloner.AddField('Reference4');  
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }

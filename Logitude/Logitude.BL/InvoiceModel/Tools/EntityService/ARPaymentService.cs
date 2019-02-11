@@ -556,92 +556,102 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (invoice != null)
                 {
-                    bool IsClosed = invoice.IsClosed;
-                    string StatusCode = invoice.StatusCode;
-                    double? Amount = MethodHelper.Roundd(invoice.AmountInInvoiceCurrency, 2);
-                    double? PaidAmount = 0;
-
-                    List<ARInvoicePayment> allConnectedItems = invoicePaymentRepository.GetARInvoicePaymentByInvoiceId(invoice.Id, invoice.Tenant).ToList();
-                    if (allConnectedItems.Count > 0)
+                    if (invoice.StatusCode == "VD")
                     {
-                        List<string> ids = new List<string>();
-
-                        foreach (ARInvoicePayment item in allConnectedItems)
-                        {
-                            if (!ids.Contains(item.ARPaymentId))
-                            {
-                                if (item.ForeignAmount != null)
-                                {
-                                    PaidAmount += item.ForeignAmount;
-                                }
-
-                                ids.Add(item.ARPaymentId);
-                            }
-                        }
-                    }
-
-                    PaidAmount = MethodHelper.Roundd(PaidAmount.Value, 2);
-
-                    double invoiceAmount = MethodHelper.Roundd(invoice.AmountInInvoiceCurrency.Value, 2);
-                    if (invoice.ARInvoiceTypeCode == "CD")
-                    {
-                        if (invoiceAmount > 0)
-                        {
-                            invoiceAmount = invoiceAmount * -1;
-                        }
-                    }
-
-                    if ((invoiceAmount < 0) || (PaidAmount <= invoiceAmount))
-                    {
-                        invoice.IsClosed = false;
-                        if (invoice.StatusCode == "PD" || invoice.StatusCode == "PP")
-                        {
-                            if (PaidAmount != 0)
-                            {
-                                invoice.StatusCode = "PP";
-                            }
-
-                            else
-                            {
-                                invoice.StatusCode = "AD";
-                            }
-                        }
-
-                        double? invoiceAmountDue = MethodHelper.Round((invoiceAmount - PaidAmount), 2);
-
-                        invoice.AmountDue = invoiceAmountDue;
-                        invoice.AmountDueInLocalCurrency = MethodHelper.Round((invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate), 2);
-                        invoice.AmountDueInProfitCurrency = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate), 2);
-                        if (invoiceAmountDue == 0)
-                        {
-                            invoice.IsClosed = true;
-                            invoice.StatusCode = "PD";
-                        }
-
-                        else if (invoiceAmountDue > 0 && invoiceAmountDue < invoiceAmount)
-                        {
-                            invoice.IsClosed = false;
-                            invoice.StatusCode = "PP";
-                        }
-
-                        else if (invoiceAmountDue < 0 && invoiceAmountDue > invoiceAmount)
-                        {
-                            invoice.IsClosed = false;
-                            invoice.StatusCode = "PP";
-                        }
-
-                        else if (invoiceAmountDue < 0 && invoiceAmount > 0)
-                        {
-                            throw new Exception("The Amount due is not suitable to the total amount paid");
-                        }
+                        throw new Exception("Invoice (" + invoice .InvoiceNumber + ") is Voided");
                     }
 
                     else
                     {
-                        throw new Exception("The Amount due is not suitable to the total amount paid!!");
-                    }
+                        #region
+                        bool IsClosed = invoice.IsClosed;
+                        string StatusCode = invoice.StatusCode;
+                        double? Amount = MethodHelper.Roundd(invoice.AmountInInvoiceCurrency, 2);
+                        double? PaidAmount = 0;
 
-                    invoiceRepository.Update(invoice);
+                        List<ARInvoicePayment> allConnectedItems = invoicePaymentRepository.GetARInvoicePaymentByInvoiceId(invoice.Id, invoice.Tenant).ToList();
+                        if (allConnectedItems.Count > 0)
+                        {
+                            List<string> ids = new List<string>();
+
+                            foreach (ARInvoicePayment item in allConnectedItems)
+                            {
+                                if (!ids.Contains(item.ARPaymentId))
+                                {
+                                    if (item.ForeignAmount != null)
+                                    {
+                                        PaidAmount += item.ForeignAmount;
+                                    }
+
+                                    ids.Add(item.ARPaymentId);
+                                }
+                            }
+                        }
+
+                        PaidAmount = MethodHelper.Roundd(PaidAmount.Value, 2);
+
+                        double invoiceAmount = MethodHelper.Roundd(invoice.AmountInInvoiceCurrency.Value, 2);
+                        if (invoice.ARInvoiceTypeCode == "CD")
+                        {
+                            if (invoiceAmount > 0)
+                            {
+                                invoiceAmount = invoiceAmount * -1;
+                            }
+                        }
+
+                        if ((invoiceAmount < 0) || (PaidAmount <= invoiceAmount))
+                        {
+                            invoice.IsClosed = false;
+                            if (invoice.StatusCode == "PD" || invoice.StatusCode == "PP")
+                            {
+                                if (PaidAmount != 0)
+                                {
+                                    invoice.StatusCode = "PP";
+                                }
+
+                                else
+                                {
+                                    invoice.StatusCode = "AD";
+                                }
+                            }
+
+                            double? invoiceAmountDue = MethodHelper.Round((invoiceAmount - PaidAmount), 2);
+
+                            invoice.AmountDue = invoiceAmountDue;
+                            invoice.AmountDueInLocalCurrency = MethodHelper.Round((invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate), 2);
+                            invoice.AmountDueInProfitCurrency = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate), 2);
+                            if (invoiceAmountDue == 0)
+                            {
+                                invoice.IsClosed = true;
+                                invoice.StatusCode = "PD";
+                            }
+
+                            else if (invoiceAmountDue > 0 && invoiceAmountDue < invoiceAmount)
+                            {
+                                invoice.IsClosed = false;
+                                invoice.StatusCode = "PP";
+                            }
+
+                            else if (invoiceAmountDue < 0 && invoiceAmountDue > invoiceAmount)
+                            {
+                                invoice.IsClosed = false;
+                                invoice.StatusCode = "PP";
+                            }
+
+                            else if (invoiceAmountDue < 0 && invoiceAmount > 0)
+                            {
+                                throw new Exception("The Amount due is not suitable to the total amount paid");
+                            }
+                        }
+
+                        else
+                        {
+                            throw new Exception("The Amount due is not suitable to the total amount paid!!");
+                        }
+
+                        invoiceRepository.Update(invoice);
+                        #endregion
+                    }
                 }
             }
         }
@@ -933,9 +943,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateARPaymentChequeJournals(ARPaymentPM theEntityPm, ARPaymentChequePM arPaymentcheque)
         {
-
-            
-
             int counter = 0;
             // Insert Journal 
             JournalPM journal = new JournalPM();
@@ -973,7 +980,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
             journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
             journalLine.Reference1 = theEntityPm.PaymentNo;
-            journalLine.Reference2 = arPaymentcheque.ChequeNumber;
+            if (theEntityPm.AccountingPaymentMethodCode == "BT")
+            {
+                journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
+            }
+            else
+            {
+                journalLine.Reference2 = arPaymentcheque.ChequeNumber;
+            }
             journalLine.Notes = theEntityPm.InternalNotes;
             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
             journal.JournalLines.Add(journalLine);
@@ -997,6 +1011,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.Reference1 = arPaymentcheque.PaymentNumber;
                 journalLine.Reference2 = arPaymentcheque.ChequeNumber;
                 journalLine.DebitAccountId = cashBook.AccountId;
+                journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                 journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                 journal.JournalLines.Add(journalLine);
             }
@@ -1017,8 +1032,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
                 journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                 journalLine.Reference1 = theEntityPm.PaymentNo;
-                journalLine.Reference2 = arPaymentcheque.ChequeNumber;
+                journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
                 journalLine.DebitAccountId = this.getGLAccountByPaymentMethodCode(theEntityPm);
+                journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                 journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                 journal.JournalLines.Add(journalLine);
             }
@@ -1044,9 +1060,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             );
                 AutoReconcileARPaymentServiceExt.InitMust(glAccount, journal, AutoReconcileRecordList);
                 AutoReconcileARPaymentServiceExt.InsertJournalReconcile();
-
-
-
             }
 
             IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;

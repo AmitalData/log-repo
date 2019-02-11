@@ -18,6 +18,10 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Security;
 using System.Web;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -47,18 +51,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 if (status != null)
                 {
 
-                    ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);
                     ContactPM loggedContact = null;
 
-                    if (HttpContext.Current != null)
-                    {
-                        loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
-                    }
-                    else
-                    {
+                    loggedContact = GetLoggedContact(entityPM.Tenant);
 
-                        loggedContact = contactQuery.GetSingleContactPM(entityPM.CreatedByUserId);
-                    }
 
 
                     if (loggedContact.DontShowLocal)
@@ -85,6 +81,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
 
 
+        }
+
+
+        private ContactPM GetLoggedContact(int tenant)
+        {
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
     }
 

@@ -69,6 +69,21 @@ export class AccountingIntegrityCheckPM {
     public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
        
 	 
+    private fromMonthInclusive: Date;
+    public get FromMonthInclusive() { return this.fromMonthInclusive; }
+    public set FromMonthInclusive(newValue: Date) { if (this.fromMonthInclusive != newValue) { this.fromMonthInclusive = newValue; this.MarkAsDirty("FromMonthInclusive"); } }
+       
+	 
+    private toMonthInclusive: Date;
+    public get ToMonthInclusive() { return this.toMonthInclusive; }
+    public set ToMonthInclusive(newValue: Date) { if (this.toMonthInclusive != newValue) { this.toMonthInclusive = newValue; this.MarkAsDirty("ToMonthInclusive"); } }
+       
+	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
 
     public OldEntityPM: AccountingIntegrityCheckPM;
 		

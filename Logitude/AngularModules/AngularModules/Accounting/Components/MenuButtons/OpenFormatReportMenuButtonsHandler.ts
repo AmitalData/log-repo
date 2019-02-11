@@ -9,7 +9,8 @@ declare var window: any;
 import { DocumentsFilingViewsExtService } from '../../../Common/Services/ExtendedLists/DocumentsFilingViewsExtService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
-
+import { DocumentTypePMExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
+import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 
 
 export class OpenFormatReportMenuButtonsHandler {
@@ -19,8 +20,9 @@ export class OpenFormatReportMenuButtonsHandler {
     public ObjectTableName: string = "OpenFormatReport"
     _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
     docFilingPM: any;
- 
-
+    DocumentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
+    documentType: any;
+    DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -58,6 +60,17 @@ export class OpenFormatReportMenuButtonsHandler {
 
                                 break;
                             }
+                        case "INIDL":
+                            {
+                                if (this.EntityPM.StatusTypeCode != "3") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
+                                break;
+                            }
                     }
                 }
             }
@@ -74,10 +87,36 @@ export class OpenFormatReportMenuButtonsHandler {
                 {
                     
 
-                    this.GetDocument();
+                    this.DocumentTypePMExtendedService.GetDocumentTypeByCode("BKMV", this.TenantPM.Id).subscribe(myResult => {
+                        console.log("[GetLastDocumentsFilingPM]", myResult);
+                        var mm: ServiceResponse = myResult;
+                        if (!mm.HasError) {
+                            this.documentType = mm.Result;
+                            if (this.documentType) {
+                                this.GetDocument();
+                            }
+
+                        }
+                    });
                     break;
                 }
+            case "INIDL": // Download
+                {
 
+                    this.DocumentTypePMExtendedService.GetDocumentTypeByCode("INI", this.TenantPM.Id).subscribe(myResult => {
+                        console.log("[GetLastDocumentsFilingPM]", myResult);
+                        var mm: ServiceResponse = myResult;
+                        if (!mm.HasError) {
+                            this.documentType = mm.Result;
+                            if (this.documentType) {
+                                this.GetDocument();
+                            }
+
+                        }
+                    });
+                    
+                    break;
+                }
         }
 
 
@@ -90,20 +129,19 @@ export class OpenFormatReportMenuButtonsHandler {
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
        
 
-
-        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.EntityPM.Id, objectTable.Id).subscribe(myResult => {
-                console.log("[GetLastDocumentsFilingPM]", myResult);
-                var mm: ServiceResponse = myResult;
+        this.DocumentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.documentType.Id, objectTable.Id, this.EntityPM.Id, this.TenantPM.Id).subscribe(myResult => {
+            console.log("[GetLastDocumentsFilingPM]", myResult);
+            var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.docFilingPM = mm.Result;
 
                 DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
             }
-            });
+        });
         
     
     }
-
+    
 
     private StartBusyIndicator(message: string) {
         SessionLocator.CurrentSession.StartBusyIndicator(message);

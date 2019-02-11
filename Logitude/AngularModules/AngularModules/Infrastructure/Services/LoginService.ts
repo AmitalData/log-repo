@@ -332,7 +332,12 @@ export class LoginService {
         });
     }
 
-
+    GetFeatureToggles() {
+        var url = this.baseUrlApi + "InfrastructureDomain/GetFeatureToggles";
+        return this._http.get(url, { headers: this.AuthHeader }).map(response => {
+            return response.json();
+        });
+    }
 }
 
 export class LoginParameters {

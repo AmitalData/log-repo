@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .iwanttohover:hover {
         background: #DDE6F0;
@@ -78,7 +78,7 @@
 
                                 <tr>
 
-                                    <td style="width:192px"><ComboBox [IsDisabled]="!IsEnableEdit" style="width:192px;" [ItemsSource]="ObjectTablesList" (SelectedItemChanged)="ObjectTableValueChanged($event)" [SelectedItem]="SelectedObjectTable" [Binding]="'DisplayName'"></ComboBox></td>
+                                    <td style="width:192px"><ComboBox [IsDisabled]="!IsEnableEdit" style="width:192px;" [ItemsSource]="ObjectTablesList" (SelectedItemChanged)="ObjectTableValueChanged($event)" [SelectedItem]="SelectedObjectTable" [Binding]="'Name'"></ComboBox></td>
                                     <td><div style="text-align:left"><a  *ngIf="IsShowAdvanceLink && IsEnableEdit" style="margin-left:12px;color:#0094ff;font-size:11px;" (click)="AdvanceLinkMethod()">Advance</a></div></td>
                                 </tr>
                             </table>

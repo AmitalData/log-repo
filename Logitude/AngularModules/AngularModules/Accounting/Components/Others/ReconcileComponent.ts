@@ -1,3 +1,4 @@
+import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -54,71 +55,8 @@ class LineModel extends BaseComponent {
 
 
         //#region Set Icons
-        var iconTxt = "";
-        var color = "";
 
-        switch (this.LedgerTransactionPM.SourceTypeCode) {
-
-            // 1-Journal
-            case '1': {
-                iconTxt = "JR";
-                break;
-            }
-
-            // 2-ARInvoice
-            case '2': {
-                iconTxt = "IN";
-                break;
-            }
-
-            // 3-ARPayment
-            case '3': {
-                iconTxt = "PY";
-                break;
-            }
-
-            // 4-APInvoice
-            case '4': {
-                iconTxt = "IN";
-                break;
-            }
-
-            // 5-APPayment
-            case '5': {
-                iconTxt = "PY";
-
-                break;
-            }
-
-            // 6-Cheque Deposit
-            case '6': {
-                iconTxt = "DP";
-
-                break;
-            }
-
-            // 7-Cash Deposit
-            case '7': {
-                iconTxt = "DP";
-
-                break;
-            }
-
-            // 8-Revaluation
-            case '8': {
-                iconTxt = "RV";
-
-                break;
-            }
-
-            // 9-PaymentCheque
-            case '9': {
-                iconTxt = "CH";
-
-                break;
-            }
-        }
-        this.IconCode = iconTxt;
+        this.IconCode = AccountingEntityHelper.getEntityIcon(this.LedgerTransactionPM.SourceTypeCode);
 
         //#endregion
     }
@@ -494,6 +432,13 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             errors.push(TextCodeTranslator.Translate("Accounting.General.O.NotransactionsSelected"));//"No transactions selected
         }
 
+        // lines errors
+        if (this.SelectedLines.Collection.find(d => d.isLineValid == false ))
+        {
+            // errors.push(TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
+            errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInSelectedLines"));
+        }
+
         //multiple payment check
         var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "5" ).length;
         if (paymentsCount > 1)
@@ -502,18 +447,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList = errors;
             return;
         }
-
-        //else if (!this.IsEntityValid) {
-        if (this.SelectedLines.Collection.find(d => d.isLineValid == false )) {
-
-
-            //errors.push("Check amount!");
-            errors.push(TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
-        } else {
-            //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        }
-
-
 
 
         this.ValidationErrorsList = errors;
@@ -795,7 +728,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             FieldName: 'OriginalAmount',
             DataTypeCode: 'String',
             //Display: 'Original Amount (' + this.originalAmountCurrency + ')',
-            Display: TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + this.originalAmountCurrency + ')',
+            Display: TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')',
             Styles: { width: '150px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
@@ -812,7 +745,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             FieldName: 'OpenAmount',
             DataTypeCode: 'String',
             //Display: 'Open Amount (' + this.openAmountCurrency + ')',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount") + ' (' + this.openAmountCurrency + ')',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?this.TenantPM.CurrencyCode:this.openAmountCurrency) + ')',
             Styles: { width: '114px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',

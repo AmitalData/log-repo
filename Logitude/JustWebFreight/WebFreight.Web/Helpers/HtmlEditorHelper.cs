@@ -1045,13 +1045,15 @@ namespace WebFreight.Web.Helpers
             {
                 htmlString = htmlString.Replace("<tbody>", "");
                 htmlString = htmlString.Replace("</tbody>", "");
-
+                htmlString = htmlString.Replace("]</P>", "]</span></P>");
+                htmlString = htmlString.Replace("<P>[", "<P><span>[");
 
                 if (htmlString.Contains("[") && htmlString.Contains("]"))
                 {
                     ReplaceHtmlStringWithTageHtml = true;
                     document = new HtmlDocument();
                     document.LoadHtml(htmlString);
+                    CorrectingBuildingHtml(document , htmlString);
                     HtmlNodeCollection spansList = document.DocumentNode.SelectNodes("//span");
                     if (spansList != null)
                     {
@@ -1374,6 +1376,20 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
+        private  void CorrectingBuildingHtml(HtmlDocument document, string htmlString)
+        {
+            if (!string.IsNullOrEmpty(htmlString) &&  htmlString.Contains("]</p>"))
+            {
+                List<HtmlNode> pTagList = document.DocumentNode.SelectNodes("//p").Where(d => !string.IsNullOrEmpty(d.InnerHtml) && d.InnerHtml.Contains("[") && d.InnerHtml.Contains("]") && !d.InnerHtml.Contains("</span>")).ToList();
+                if (pTagList.Count>0)
+                {
+                    foreach (HtmlNode node in pTagList)
+                    {
+                        node.InnerHtml = node.InnerHtml.Replace("[", "<span>[").Replace("]", "]</span>");
+                    }
+                }
+            }
+        }
 
         bool ReplaceHtmlStringWithTageHtml = false;
         public string ResolveHtmlString(string entityId, string objectTableId, string htmlString, string userId, int tenant)
@@ -4187,22 +4203,12 @@ namespace WebFreight.Web.Helpers
                             resultValue = (newValue != null ? newValue.ToString() : " ");
                         }
 
-                        if (!string.IsNullOrWhiteSpace(resultValue))
-                        {
-                            if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
-                            {
-                                resultValue = FormatNumber(resultValue, field);
-                            }
-
-                        }
+                        resultValue = ResolveFieldValue(resultValue, field);
                     }
 
                 }
-                else
-                {
-                    resultValue = (value != null ? value.ToString() : " ");
-                }
-
+                else resultValue = " ";
+      
 
                 if (!string.IsNullOrEmpty(resultValue) && !CheckIfFieldHaveValueHtml(propertyName) && ReplaceHtmlStringWithTageHtml)
                 {
@@ -4520,10 +4526,11 @@ namespace WebFreight.Web.Helpers
                                                 }
 
                                                 else resultValue = insideValue.ToString();
-
-
                                             }
+                                            else resultValue = string.Empty;
 
+
+                                            resultValue = ResolveFieldValue(resultValue, insideObjectField);
                                         }
                                         else
                                         {
@@ -4619,6 +4626,23 @@ namespace WebFreight.Web.Helpers
             }
 
             if (resultValue == "") resultValue = " ";
+            return resultValue;
+        }
+
+        private string ResolveFieldValue(string resultValue, ObjectField field)
+        {
+            if (field != null && !string.IsNullOrEmpty(resultValue))
+            {
+                if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
+                {
+                    resultValue = FormatNumber(resultValue, field);
+                }
+                else if (field.DataTypeCode.ToLower() == "boolean")
+                {
+                    resultValue = resultValue.ToLower() == "false" ? "No" : "Yes";
+                }
+            }
+
             return resultValue;
         }
 
@@ -5209,6 +5233,15 @@ namespace WebFreight.Web.Helpers
 
                                         }
                                     }
+                                }
+                                else if (propertyName == "OwnerLink" && ObjectTableName == "Shipment")
+                                {
+                                    var shipmentNumber = GetEntityFieldValue(theEntity, "ShipmentNumber", theEntityObjectFields, tenant);
+                                    string href = LogitudeSettings.LogitudeURL + "?Menu=LogBox&Tenant=" + tenant + "&Parmters=%7b%22SearchField%22%3a%22" + shipmentNumber + "%22%7d";
+                                    resultValue = "<a style=" + "'font-family:Arial;font-size:18px;color:#0000FF'" + " href='" + href + "'" + ">Link</a>";
+
+                                    node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue);
+                                    nodeTextValue = resultValue;
                                 }
                                 else
                                 {

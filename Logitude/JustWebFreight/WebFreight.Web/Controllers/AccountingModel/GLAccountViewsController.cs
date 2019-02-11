@@ -51,6 +51,7 @@ using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.Accounting.BL.Utils;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -76,7 +77,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
 
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("GLAccount", 0, true);
@@ -107,7 +108,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
                 var qs = new GLAccountQueryService(1);
                 var list=qs.GetByDisplayNumber(accountDisplayNumber, tenant);
                 var pm =list.First();
@@ -140,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
 
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, accountId, null);
                 ac.ReSetAccountList(false, false);
@@ -330,6 +331,33 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage GetCalculateFututreCheques()
+        {
+            try
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                    IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                    FutureOpenChequesBatch FutureOpenChequesBatch = new FutureOpenChequesBatch();
+                    FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
         public HttpResponseMessage GetParentAccountId(string id, string parentId)
         {
@@ -385,7 +413,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             string collectorId,
             string salesmanId,
             bool isCustomer,
-            string groupByDate
+            string groupByDate,
+            bool forceUseMonthMethod
             )
         {
             try
@@ -414,7 +443,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     Aging4AccountTypeCode = isCustomer == true ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.ControlAccountOnly1,
 
                     GroupByDate = groupByDate == "AccountingDate" ? AgingReportParam.DateEnum.AccountingDate : AgingReportParam.DateEnum.DueDate,
-                    AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
+                    AgingMethod = forceUseMonthMethod ? AgingReportParam.MethodEnum.TotalByMonthMethod.ToString() : AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
 
                     AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
                     GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
@@ -575,6 +604,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+    
     }
 
     class MyPeriodM

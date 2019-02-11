@@ -1,8 +1,51 @@
 import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
 import {NumbersPipe} from './Pipes/NumbersPipe';
+import { forEach } from '@angular/router/src/utils/collection';
 
 export class AppTool {
+
+    public static GetCounterPrefixLength(prefix: string) {
+        //[B]_[YYYY]_SH
+        let prefixLength: number = 0;
+        let currentVar = "";
+        let allVariables = [];
+        if (!AppTool.IsNullOrEmpty(prefix)) {
+            for (var i = 0; i < prefix.length; i++) {
+                let c = prefix.charAt(i);
+                if (c == '[') { currentVar += c; }
+                else if (c == ']') { currentVar += c; allVariables.push(currentVar); currentVar = "" }
+                else if (!AppTool.IsNullOrEmpty(currentVar))
+                    currentVar += c;
+            }
+
+            let prefixWithoutVars = prefix;
+            allVariables.forEach(prefVar => {
+                if (prefVar == "[B]") prefixLength += 4;
+                if (prefVar == "[YY]" || prefVar == "[MM]") prefixLength += 2;
+                if (prefVar == "[YYYY]") prefixLength += 4;
+            });
+
+            allVariables.forEach(prefVar => {
+                if (prefVar == "[B]" || prefVar == "[YY]" || prefVar == "[MM]" || "[YYYY]") {
+                    prefixWithoutVars = prefixWithoutVars.replace(prefVar, "");
+                }
+            });
+
+            prefixLength += prefixWithoutVars.length;
+        }
+
+        //DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
+        //string MM = date.ToString("MM");
+        //string YY = date.ToString("yy");
+        //string YYYY = date.ToString("yyyy");
+
+        //counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+
+
+        return prefixLength;
+    }
+
     public static TenantPM: any;
     public static IsNullOrEmpty(myFieldValue: any) {
         var myResult: boolean = false;
@@ -872,6 +915,11 @@ export class AppTool {
                 break;
             }
 
+            case "General.MH.SharedLogistics": {
+                myResult = "LogBoxIcon";
+                break;
+            }
+
             case "General.MH.CRM":
             case "General.MH.Dashboard":
             case "General.MH.Importers":
@@ -884,6 +932,17 @@ export class AppTool {
             case "General.MH.Accounting":
                 {
                     myResult = "Dollar";
+                    break;
+                }
+
+            case "General.MH.Contacts":
+                {
+                    myResult = "Contacts";
+                    break;
+                }
+            case "General.MH.Social":
+                {
+                    myResult = "Social";
                     break;
                 }
 
@@ -2773,6 +2832,8 @@ export class FileLoader {
             this.ResourcesLoaded.emit(true);
         }
     }
+
+   
 }
 class ResourceFile {
     public URL: string;

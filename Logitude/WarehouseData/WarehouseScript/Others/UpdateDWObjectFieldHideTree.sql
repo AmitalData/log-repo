@@ -1,0 +1,1 @@
+update DWObjectFields Set HideTree = 1 where Name = 'Direction' or Name = 'Transport Mode' or Name = 'Level' or Name = 'Type' 

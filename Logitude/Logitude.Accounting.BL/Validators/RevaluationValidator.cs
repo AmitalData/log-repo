@@ -26,12 +26,15 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("Revaluations.Q.DataMissing", myRevaluationPM.Tenant));
             }
-            IAccountingContext accountingContext = AccountingContext.GetContext(myRevaluationPM.Tenant);
-            RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(accountingContext);
-            List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(myRevaluationPM.Tenant);
-            if (revaluations != null && revaluations.Count > 0)
-            {
-                return new ValidationResult(TextCodesTranslator.TranslateText("Revaluations.Q.OpenRevaluations", myRevaluationPM.Tenant));
+            if (myRevaluationPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            { 
+                IAccountingContext accountingContext = AccountingContext.GetContext(myRevaluationPM.Tenant);
+                RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(accountingContext);
+                List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(myRevaluationPM.Tenant);
+                if (revaluations != null && revaluations.Count > 0)
+                {
+                    return new ValidationResult(TextCodesTranslator.TranslateText("Revaluations.Q.OpenRevaluations", myRevaluationPM.Tenant));
+                }
             }
             return null;
         }

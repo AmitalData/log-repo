@@ -23,16 +23,9 @@ namespace Logitude.Accounting.BL
 		    var all = new List<AccountingEntityDetails>();  
             all.Add(new AccountingEntityDetails()
             {    
-                Code = "4", 
-                LocalName = "חשבונית ספק", 
-                EnglishName = "APInvoice", 
-			});
-			 
-            all.Add(new AccountingEntityDetails()
-            {    
-                Code = "5", 
-                LocalName = "תשלום לספק", 
-                EnglishName = "APPayment", 
+                Code = "1", 
+                LocalName = "פקודת יומן", 
+                EnglishName = "Journal", 
 			});
 			 
             all.Add(new AccountingEntityDetails()
@@ -51,9 +44,16 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new AccountingEntityDetails()
             {    
-                Code = "7", 
-                LocalName = "הפקדת מזומן", 
-                EnglishName = "Cash Deposit", 
+                Code = "4", 
+                LocalName = "חשבונית ספק", 
+                EnglishName = "APInvoice", 
+			});
+			 
+            all.Add(new AccountingEntityDetails()
+            {    
+                Code = "5", 
+                LocalName = "תשלום לספק", 
+                EnglishName = "APPayment", 
 			});
 			 
             all.Add(new AccountingEntityDetails()
@@ -65,9 +65,16 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new AccountingEntityDetails()
             {    
-                Code = "1", 
-                LocalName = "פקודת יומן", 
-                EnglishName = "Journal", 
+                Code = "7", 
+                LocalName = "הפקדת מזומן", 
+                EnglishName = "Cash Deposit", 
+			});
+			 
+            all.Add(new AccountingEntityDetails()
+            {    
+                Code = "8", 
+                LocalName = "שערוך", 
+                EnglishName = "Revaluation", 
 			});
 			 
             all.Add(new AccountingEntityDetails()
@@ -81,14 +88,7 @@ namespace Logitude.Accounting.BL
             {    
                 Code = "10", 
                 LocalName = "התאמה", 
-                EnglishName = "Reconciliation", 
-			});
-			 
-            all.Add(new AccountingEntityDetails()
-            {    
-                Code = "8", 
-                LocalName = "שערוך", 
-                EnglishName = "Revaluation", 
+                EnglishName = "Adjustment", 
 			});
 			
             return all;

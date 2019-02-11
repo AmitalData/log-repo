@@ -21,16 +21,25 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             var fullAccountingSettingPM = FullAccountingSettingQueryService.Get(accountingIntegrityInParam.Tenant);
             if (fullAccountingSettingPM == null)
             {
-                return "FullAccountingSetting is null for tenant " + accountingIntegrityInParam.Tenant;
+                return "Full Accounting Setting is null for tenant " + accountingIntegrityInParam.Tenant;
             }
             if (accountingIntegrityInParam.FromMonthInclusive.Year != accountingIntegrityInParam.ToMonthInclusive.Year)
             {
-                return "must the same year";
+                return "From date and To date must be same year";
+            }
+            if (accountingIntegrityInParam.FromMonthInclusive == null)
+            {
+                return "From Month not selected";
+            }
+            if (accountingIntegrityInParam.ToMonthInclusive == null)
+            {
+                return "To Month not selected";
             }
             if (accountingIntegrityInParam.FromMonthInclusive.Month > accountingIntegrityInParam.ToMonthInclusive.Month)
             {
-                return "Bad months";
+                return "To month is greater than from month";
             }
+
             if (accountingIntegrityInParam.ToMonthInclusive.Subtract(accountingIntegrityInParam.FromMonthInclusive) > TimeSpan.FromDays(365))
             {
                 return "day  Subtract  > 365 ";
@@ -61,7 +70,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
         public void FixDBIntegrity(int tenant, List<AccountingIntegrityStep> MyAccountingIntegrityStep)
         {
-
+            MyAccountingIntegrityStep.ForEach(s => s.ExceptionMessage = null);
             var sb = new StringBuilder();
             try
             {
@@ -91,6 +100,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     }
                     catch (Exception ee)
                     {
+                        r.ExceptionMessage = ee.ToString();
                         sb.AppendLine(ee.ToString());
 
                     }
@@ -110,7 +120,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     }
                     catch (Exception ee)
                     {
-
+                        myGLAccountBalanceCheck.ExceptionMessage = ee.ToString();
                         sb.AppendLine(ee.ToString());
                     }
                 }
@@ -128,7 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     }
                     catch (Exception ee)
                     {
-
+                        myDueLocalBalanceCheck.ExceptionMessage = ee.ToString();
                         sb.AppendLine(ee.ToString());
                     }
                 }
@@ -185,8 +195,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 {
                     Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
                     //Month = currentMonth,
-                    ExcetionMessage = ExceptionMessage,
+                    ExceptionMessage = ExceptionMessage,
                     BadRows = badRows,
+                    ShouldFix = (badRows>0 && String.IsNullOrWhiteSpace( ExceptionMessage)),
                     ElapsedMilliseconds = sw.ElapsedMilliseconds,
                 });
             }
@@ -229,8 +240,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     {
                         Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
                         //Month = currentMonth,
-                        ExcetionMessage = ExceptionMessage,
+                        ExceptionMessage = ExceptionMessage,
                         BadRows = badRows,
+                        ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
                         ElapsedMilliseconds = sw.ElapsedMilliseconds,
                     });
                 }
@@ -281,8 +293,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                         {
                             Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
                             Month = currentMonth,
-                            ExcetionMessage = ExceptionMessage,
+                            ExceptionMessage = ExceptionMessage,
                             BadRows = badRows,
+                            ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
                             ElapsedMilliseconds = sw.ElapsedMilliseconds,
                         });
                     }
@@ -335,8 +348,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                         {
                             Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
                             Month = currentMonth,
-                            ExcetionMessage = ExceptionMessage,
+                            ExceptionMessage = ExceptionMessage,
                             BadRows = badRows,
+                            ShouldFix = false /*JournalLineToLedgerCheck can not fix */,   //(badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
                             ElapsedMilliseconds = sw.ElapsedMilliseconds,
                         });
                     }
@@ -376,8 +390,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
     {
         public string Name { get; set; }
         public DateTime? Month { get; set; }
-        public string ExcetionMessage { get; set; }
+        public string ExceptionMessage { get; set; }
+        public bool ShouldFix { get; set; }
         public int BadRows { get; set; }
-        public long ElapsedMilliseconds { get; internal set; }
+        public long ElapsedMilliseconds { get;  set; }
     }
 }

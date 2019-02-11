@@ -24,6 +24,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.GLAccountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LineActionCode).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.VatPercentage).IsOptional();
+            this.Property(t => t.PrepaidCollectId).HasMaxLength(1).IsUnicode(false);
 
             this.ToTable("ARInvoiceLines");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -56,6 +57,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.LineActionCode).HasColumnName("LineActionCode");
             this.Property(t => t.IsBackToBack).HasColumnName("IsBackToBack");
             this.Property(t => t.IsExpense).HasColumnName("IsExpense");
+            this.Property(t => t.PrepaidCollectId).HasColumnName("PrepaidCollectId");
 
             // Relationships
             this.HasRequired(t => t.ChargesType).WithMany().HasForeignKey(d => d.ChargesTypeId);
@@ -64,6 +66,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasOptional(t => t.Measurement).WithMany().HasForeignKey(d => d.MeasurementId);
             this.HasRequired(t => t.VatType).WithMany().HasForeignKey(d => d.VatTypeId);
             this.HasOptional(t => t.ARInvoiceLineAction).WithMany().HasForeignKey(d => d.LineActionCode);
+            this.HasOptional(t => t.PrepaidCollect).WithMany().HasForeignKey(d => d.PrepaidCollectId);
         }
     }
 }

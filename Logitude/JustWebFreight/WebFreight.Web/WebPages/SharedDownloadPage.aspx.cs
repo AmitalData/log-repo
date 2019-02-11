@@ -19,6 +19,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.WebPages
 {
@@ -111,29 +112,53 @@ namespace WebFreight.Web.WebPages
 
         }
 
-        public void DownloadAll(string entityId, int tenant, string partnerType)
+        public void DownloadAll(string entityId, int tenant, string partnerType,string token=null)
         {
             try
             {
-                bool isAuothenticatedRequest;
-                ShipmentRepository rep = new ShipmentRepository(tenant);
-                Shipment shipment = rep.GetSingleShipment(entityId, tenant);
-                isAuothenticatedRequest = CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+
+
                 string email = this.Context.User.Identity.Name;
 
-                if (CheckAvailablityTenantsForEmail(email, tenant) && isAuothenticatedRequest)
+                ShipmentRepository rep = new ShipmentRepository(tenant);
+                Shipment shipment = rep.GetSingleShipment(entityId, tenant);
+                bool isAuothenticatedRequest=true;
+                bool CheckForTenantAvailability = true;
+
+                if (!string.IsNullOrEmpty(token))
+                {
+                    SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
+                    if (securityDocumentResult.IsValid)
+                    {
+                        email = securityDocumentResult.Email;
+                        HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(email), new string[0]);
+                        SecurityUtility.AuthenticationOnTenant((int)tenant);
+                        SecurityUtility.CheckContactFeature("Shipment", "READ", (int)tenant);
+                    }
+
+                }
+                else
+                {
+
+                    isAuothenticatedRequest = CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+                    CheckForTenantAvailability = CheckAvailablityTenantsForEmail(email, tenant);
+                }
+                if (CheckForTenantAvailability && isAuothenticatedRequest)
                 {
                     Uploader up = new Uploader();
                     List<DocumentsFilingPM> documents = up.GetDocumentByEntityAndTenant(entityId, tenant);
 
-                    if (partnerType == "AG")
+                    if (string.IsNullOrEmpty(token))
                     {
-                        documents = documents.Where(d => d.IsAgentView).ToList();
-                    }
+                        if (partnerType == "AG")
+                        {
+                            documents = documents.Where(d => d.IsAgentView).ToList();
+                        }
 
-                    else if (partnerType == "CS")
-                    {
-                        documents = documents.Where(d => d.IsCustomerView).ToList();
+                        else if (partnerType == "CS")
+                        {
+                            documents = documents.Where(d => d.IsCustomerView == true).ToList();
+                        }
                     }
 
                     Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();
@@ -147,8 +172,22 @@ namespace WebFreight.Web.WebPages
                             continue;
                         }
 
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            if (partnerType == "O")
+                            {
+                                if (document.DirectionCode == "I")
+                                    continue;
+                            }
+                            else
+                            {
+                                if (document.DirectionCode == "O")
+                                    continue;
+                            }
+                        }
 
-                        else if (!string.IsNullOrEmpty(document.FileExtension))
+
+                         if (!string.IsNullOrEmpty(document.FileExtension))
                         {
                             DocumentsExistance = true;
                             string fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
@@ -169,11 +208,15 @@ namespace WebFreight.Web.WebPages
                     }
                     if (DocumentsExistance)
                     {
-
-                        byte[] CompressedData = CompressionData("Documents", CompressedArray, false);
+                        string name = "Documents";
+                        if(!string.IsNullOrEmpty(token))
+                        {
+                            name = shipment.ShipmentNumber;
+                        }
+                        byte[] CompressedData = CompressionData(name, CompressedArray, false);
                         HttpContext.Current.Response.Clear();
                         HttpContext.Current.Response.AddHeader("Content-Length", CompressedData.Length.ToString());
-                        HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=Documents.zip");
+                        HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename="+ name+".zip");
                         HttpContext.Current.Response.ContentType = "application/zip";
                         HttpContext.Current.Response.BinaryWrite(CompressedData);
 
@@ -276,7 +319,15 @@ namespace WebFreight.Web.WebPages
                 tenant = Convert.ToInt32(filestrings[0]);
                 if (filestrings[1] == "null")
                 {
-                    DownloadAll(filestrings[3], int.Parse(filestrings[0]), filestrings[4]);
+                    if (filestrings.Length==6)
+                    {
+                        DownloadAll(filestrings[3], int.Parse(filestrings[0]), filestrings[4], filestrings[5]);
+
+                    }
+                    else
+                    {
+                        DownloadAll(filestrings[3], int.Parse(filestrings[0]), filestrings[4]);
+                    }
                 }
                 else
                 {

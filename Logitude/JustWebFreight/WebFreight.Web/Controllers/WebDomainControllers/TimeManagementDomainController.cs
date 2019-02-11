@@ -49,9 +49,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
 
-                TFSParseWebhook weebhook = new TFSParseWebhook();
-                weebhook.CheckTMLineDuplication("54879", authToken.Tenant);
-
                 DateTime? myStartDate = periodStartDate == "null" ? null : DateHelper.GetDate(periodStartDate);
 
                 TimeManagementAPIHelper myResult = this.FillWeeklyTimeSheetList(employeeUserId, locationCode, myStartDate, tenant);
@@ -241,7 +238,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             List<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d).ToList();
 
             officeHours = (from a in myContext.TMOfficeHours
-                           where a.Tenant == tenant && a.UserId == employeeUserId && a.WorkDate != null &&
+                           where a.Tenant == tenant && a.Inactive==false && a.UserId == employeeUserId && a.WorkDate != null &&
                            System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) >= System.Data.Entity.DbFunctions.TruncateTime(myStartDate) &&
                            System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) <= System.Data.Entity.DbFunctions.TruncateTime(myEndDate)
                            select a);
@@ -301,7 +298,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TimeSheetItemDay newItemDay = new TimeSheetItemDay();
                 newItemDay.Index = i;
                 newItemDay.Date = date;
-                this.FillOfficeHours(newItemDay, date);
+                this.FillOfficeHours(newItemDay, date,false);
                 myResult.OfficeClockDays.Add(newItemDay);
 
             }
@@ -323,6 +320,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                      where d.Tenant == tenant && d.DateOfWork != null
                                                      select d);
             List<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d).ToList();
+            List<TMLocation> allLocations = (from d in myContext.TMLocations select d).ToList();
+
             if (!string.IsNullOrEmpty(employeeUserId))
             {
                 iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
@@ -352,6 +351,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                select a);
             }
 
+            //List<DateTime> workDays = iQueryable.Select(a => a.DateOfWork).ToList();
+            //officeHours = officeHours.Where(a => workDays.Contains(System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate)));
+
             double? totalOfficeHours = 0;
             for (int i = 0; i <= count; i++)
             {
@@ -359,10 +361,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TimeSheetItemDay newItemDay = new TimeSheetItemDay();
                 newItemDay.Index = i;
                 newItemDay.Date = date;
-                this.FillOfficeHours(newItemDay, date);
-                // myResult.OfficeClockDays.Add(newItemDay);
+                if (count == 0)
+                    this.FillOfficeHours(newItemDay, date,true);
+                else
+                {
+                    this.FillOfficeHours(newItemDay, date,false);
+                }
                 totalOfficeHours += newItemDay.TotalFromClock;
             }
+
             myResult.TotalFromClock = DateFormat(totalOfficeHours.Value);
             List<TMEmployeeTime> list = iQueryable.ToList();
             List<TMEmployeeTimePM> listPM = (from a in list
@@ -387,12 +394,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                  ProjectId_db = a.ProjectId,
                                                  SprintId=a.SprintId,
                                                  ProjectName = (allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault() != null ? allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault().Name : null),
+                                                 LocationName = (allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault() != null ? allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault().Name : null),
                                              }).ToList();
 
             myResult.ItemsPM = listPM;
             return myResult;
         }
-        private void FillOfficeHours(TimeSheetItemDay newItem, DateTime date)
+
+
+        private void FillOfficeHours(TimeSheetItemDay newItem, DateTime date,bool OneDay)
         {
             List<TMOfficeHour> officeDays = officeHours.Where(a => System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) == System.Data.Entity.DbFunctions.TruncateTime(date)).ToList();
             double total = 0;
@@ -400,9 +410,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 DateTime? entry = item.EntryTime != null ? item.EntryTime : item.RecordedEntryTime;
                 DateTime? exit = item.ExitTime != null ? item.ExitTime : item.RecordedExitTime;
-                if (entry != null && exit != null)
+                if (OneDay && officeDays.Count==1 && entry!=null && exit==null)
                 {
+                    exit = TenantServerConfigration.GetCurrentDateTime(item.Tenant);
                     total += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+
+                }
+                else
+                {
+                    if (entry != null && exit != null)
+                    {
+                        total += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+                    }
                 }
             }
 

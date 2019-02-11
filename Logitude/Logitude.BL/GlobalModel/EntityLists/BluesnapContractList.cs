@@ -9,10 +9,13 @@ namespace Logitude.BL.GlobalModel.EntityLists
     public class BluesnapContractList
     {
         [Key]
+        public string Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string ContractId { get; set; }
         public string SearchFields { get; set; }
         public bool InActive { get; set; }
+        public string BluesnapContractTypeCode { get; set; }
+        public string BluesnapContractTypeName { get; set; }
     }
 }

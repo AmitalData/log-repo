@@ -15,6 +15,10 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.BL.EntityQueryServices;
 using System.Web;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -59,7 +63,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 ReconcileExternalPageStatusQueryService statusQuery = new ReconcileExternalPageStatusQueryService(entityPOCO.Tenant);
                 ReconcileExternalPageStatusPM status = statusQuery.GetSingle(entityPOCO.StatusCode, false, false);
 
-                ContactPM user = GetLoggedContactData(GetLoggedContactEmail(entityPOCO.Tenant), entityPOCO.Tenant);
+                ContactPM user = GetLoggedContact(entityPOCO.Tenant);
 
 
                 if (status != null)
@@ -87,26 +91,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         }
 
-        private ContactPM GetLoggedContactData(string userEmail, int tenant)
-        {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(userEmail, tenant);
-            return contactPM;
-        }
 
-        private string GetLoggedContactEmail(int tenant)
+        private ContactPM GetLoggedContact(int tenant)
         {
-            string email = "";
-            if (HttpContext.Current != null)
-            {
-                email = HttpContext.Current.User.Identity.Name;
-            }
-            else
-            {
-                email = "system@tenant" + tenant.ToString() + ".com";
-            }
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
 
-            return email;
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
 

@@ -143,6 +143,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 TenantVATManagement = a.TenantVATManagement,
                                                 TemperatureUnitCode = a.TemperatureUnitCode,
                                                 DefaultSLAId = a.DefaultSLAId,
+                                                AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -294,6 +295,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         TemperatureUnitCode = tt.TemperatureUnitCode,
                         DefaultSLAId = tt.DefaultSLAId,
                         StockTypeCode = tt.StockTypeCode,
+                        AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -454,6 +456,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     TemperatureUnitCode = tt.TemperatureUnitCode,
                     DefaultSLAId = tt.DefaultSLAId,
                     StockTypeCode = tt.StockTypeCode,
+                    AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -596,6 +599,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
                                            StockTypeCode = a.StockTypeCode,
+                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -734,6 +738,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
                                        StockTypeCode = a.StockTypeCode,
+                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -876,6 +881,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                TemperatureUnitCode = a.TemperatureUnitCode,
                                                DefaultSLAId = a.DefaultSLAId,
                                                StockTypeCode = a.StockTypeCode,
+                                               AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1017,6 +1023,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
                                            StockTypeCode = a.StockTypeCode,
+                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1150,39 +1157,41 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
                                        StockTypeCode = a.StockTypeCode,
+                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                    }).FirstOrDefault();
-
-                if (tenant.AddressId != null)
+                if (tenant != null)
                 {
-                    AddressRepository addressrep = new AddressRepository(context);
-                    Address address = addressrep.GetSingleAddress(tenant.AddressId, tenant.Id);
-                    if (address != null)
+                    if (tenant.AddressId != null)
                     {
-                        tenant.CountryName = address.Country.EnglishName;
-                        tenant.CompanyAddress = address.Name;
+                        AddressRepository addressrep = new AddressRepository(context);
+                        Address address = addressrep.GetSingleAddress(tenant.AddressId, tenant.Id);
+                        if (address != null)
+                        {
+                            tenant.CountryName = address.Country.EnglishName;
+                            tenant.CompanyAddress = address.Name;
+                        }
                     }
-                }
 
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    IGlobalContext globalObjectContext = GlobalContext.GetContext();
-                    tenant.PackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().PackageCode;
-                    tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
-                    tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
-                    tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
-                    tenant.PrivateLabelId = globalObjectContext.GlobalTenants.Where(d => d.Id == tenant.Id).FirstOrDefault().PrivateLabelId;
-                    //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
-                }
-
-                if (tenant.CurrencyId != null)
-                {
-                    Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
-                    if (cur == null)
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, 0, true);
+                        IGlobalContext globalObjectContext = GlobalContext.GetContext();
+                        tenant.PackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().PackageCode;
+                        tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
+                        tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
+                        tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
+                        tenant.PrivateLabelId = globalObjectContext.GlobalTenants.Where(d => d.Id == tenant.Id).FirstOrDefault().PrivateLabelId;
+                        //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
-                    tenant.CurrencyCode = cur.Code;
-                }
+
+                    if (tenant.CurrencyId != null)
+                    {
+                        Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
+                        if (cur == null)
+                        {
+                            cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, 0, true);
+                        }
+                        tenant.CurrencyCode = cur.Code;
+                    }
 
                 if (tenant.AddressId != null)
                 {
@@ -1192,6 +1201,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     tenant.CountryName = add.CountryEnglishName;
                 }
 
+                  
+                }
                 entity = tenant;
             }
             return entity;
@@ -1315,6 +1326,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     TemperatureUnitCode = myPOCO.TemperatureUnitCode,
                     DefaultSLAId = myPOCO.DefaultSLAId,
                     StockTypeCode = myPOCO.StockTypeCode,
+                    AutoArchiveOnInvoice = myPOCO.AutoArchiveOnInvoice,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())

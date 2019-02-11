@@ -35,6 +35,9 @@ export class DailyTimeSheetComponent extends BaseComponent {
         super();
     }
 
+   
+
+
     private isLoaderReady: boolean = false;
     RunComponent() {
         if (this.AllLocations) {
@@ -486,6 +489,8 @@ export class ItemSourceItem extends BaseComponent {
             this.HasChanges = true;
         }
     }
+
+    get LocationName() { return this.entity.LocationName; }
 
     get Description() { return this.entity.Description; }
     set Description(value: string) {
