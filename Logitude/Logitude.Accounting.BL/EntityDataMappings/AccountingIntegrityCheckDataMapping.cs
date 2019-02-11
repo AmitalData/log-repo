@@ -88,10 +88,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             if (!string.IsNullOrEmpty(entityPM.StatusName))
             {
-                if (!(result.Split(',').Contains(entityPM.StatusName.ToString())))
-                {
-                    result = string.IsNullOrEmpty(result) ? entityPM.StatusName.ToString() : result + "," + entityPM.StatusName.ToString();
-                }
+                result = entityPM.StatusName + ',' + entityPM.StatusCode;
             }
 
             entityPM.SearchFields = result;

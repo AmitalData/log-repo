@@ -688,7 +688,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
 
         if (AppTool.IsNullOrEmpty(this.BillToId)) {
-            this.errors.push(msg.replace("%FieldName", "Bill to"));
+            this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.BillToId")));
         }
 
         //if (AppTool.IsNullOrEmpty(this.BillToAddressId)) {
@@ -696,11 +696,11 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         //}
 
         if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-            this.errors.push(msg.replace("%FieldName", "Currency"));
+            this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceCurrencyId")));
         }
 
         if (this.InvoiceDate == null) {
-            this.errors.push(msg.replace("%FieldName", "Invoice Date"));
+            this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate")));
         }
 
         else {
@@ -713,18 +713,18 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
 
         if (this.DueDate == null) {
-            this.errors.push(msg.replace("%FieldName", "Due Date"));
+            this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.DueDate")));
         }
 
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAR) {
             if (AppTool.IsNullOrEmpty(this.VatNumber)) {
-                this.errors.push(msg.replace("%FieldName", "Vat Number"));
+                this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.VatNumber")));
             }
         }
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
-                this.errors.push(msg.replace("%FieldName", "Forma Pago"));
+                this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
             }
         }
 

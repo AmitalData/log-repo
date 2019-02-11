@@ -2150,6 +2150,7 @@
     <Compile Include="DataProviders\ShipmentsStocksDataProvider.cs" />
     <Compile Include="DataProviders\TasksWithoutProjectsDataProvider.cs" />
     <Compile Include="DataProviders\UsersByTenantDataProvider.cs" />
+    <Compile Include="DataProviders\VDKDataProvider.Shared.cs" />
     <Compile Include="DataProviders\VendorChargesAnalysisDataProvider.cs" />
     <Compile Include="DataProviders\WorkHoursPerProjectDataProvider.cs" />
     <Compile Include="DropBoxAuth.aspx.cs">
@@ -2181,6 +2182,7 @@
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
     <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
+    <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />

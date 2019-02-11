@@ -778,19 +778,19 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (AppTool.IsNullOrEmpty(this.newARPaymentPM.BillToId)) {
-            errors.push(msg.replace("%FieldName", "Bill to"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BillToId")));
         }
 
         if (AppTool.IsNullOrEmpty(this.newARPaymentPM.BillToAddressId)) {
-            errors.push(msg.replace("%FieldName", "Address"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BillToAddressId")));
         }
 
         if (AppTool.IsNullOrEmpty(this.newARPaymentPM.PaymentCurrencyId)) {
-            errors.push(msg.replace("%FieldName", "Currency"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.PaymentCurrencyCode")));
         }
 
         if (this.RegisterDate == null) {
-            errors.push(msg.replace("%FieldName", "Register Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.RegisterDate")));
         }
 
         else if (DateTool.GetDateParts(this.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
@@ -798,20 +798,20 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         }
 
         if (AppTool.IsNullOrEmpty(this.newARPaymentPM.AccountingPaymentMethodId)) {
-            errors.push(msg.replace("%FieldName", "Payment Method"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.ARPaymentMethodCode")));
         }
 
         if (this.newARPaymentPM.AmountInPaymentCurrency == null) {
-            errors.push(msg.replace("%FieldName", "Amount"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.AmountInPaymentCurrency")));
         }
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
-                errors.push(msg.replace("%FieldName", "Forma Pago"));
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate( "ARPayment.F.SATPaymentMethodCode")));
             }
 
             if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
-                errors.push(msg.replace("%FieldName", "Metodo Pago"));
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.MetodoPagoCode")));
           }
 
           if (this.SATPaymentMethodCode == "99") {
