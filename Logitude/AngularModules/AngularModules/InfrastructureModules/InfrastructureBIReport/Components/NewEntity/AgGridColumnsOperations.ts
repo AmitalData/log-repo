@@ -90,8 +90,9 @@ export class AgGridColumnsOperations extends BaseComponent {
         }
     }
 
-    onValueChanged(item, event) {
+    onValueChanged(item, index, event) {
         item.IsChecked = event;
+        item.Index = index;
         this.IsAll = this.father.BIReportXMLData.BITabularViewSettings.Columns.filter(a => !a.IsChecked)[0] != null ? false : true;
     }
     IsAllClicked(event) {
