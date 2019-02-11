@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -127,6 +127,18 @@ export class NewGLAccountComponent extends BaseComponent {
             this.CD.detectChanges();
         }
     }
+
+    
+    get IsVATExempt() { return this.EntityPM.IsVATExempt }
+    set IsVATExempt(value: boolean) {
+        if (this.EntityPM.IsVATExempt != value) {
+            this.EntityPM.IsVATExempt = value;
+
+        }
+    }
+
+
+
     get RevaluationEnabled() { return this.EntityPM.RevaluationEnabled }
     set RevaluationEnabled(value: boolean) {
         if (this.EntityPM.RevaluationEnabled != value) {
@@ -269,6 +281,14 @@ export class NewGLAccountComponent extends BaseComponent {
     set RevenueExpenseType(value: string) {
         if (this.EntityPM.RevenueExpenseType != value) {
             this.EntityPM.RevenueExpenseType = value;
+            if (value == "3") {
+
+                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, false);
+            }
+            else {
+                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, true);
+            }
+
         }
     }
 
@@ -323,6 +343,9 @@ export class NewGLAccountComponent extends BaseComponent {
         this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
         this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
+
+     
+        
     }
 
     OnLovItemChanged(item: any){
