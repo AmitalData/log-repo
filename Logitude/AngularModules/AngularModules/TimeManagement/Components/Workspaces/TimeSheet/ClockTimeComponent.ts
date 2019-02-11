@@ -339,6 +339,14 @@ export class ItemSourceItem extends BaseComponent {
     set WorkDate(value: Date) { if (this.entity.WorkDate != value) this.entity.WorkDate = value; }
     set EntryTime(value: Date) {        
         if (this.entity.EntryTime != value) {
+
+            if (value != null) {
+                var year = DateTool.GetDateParts(this.WorkDate).DateObject.getUTCFullYear();
+                var month = DateTool.GetDateParts(this.WorkDate).DateObject.getUTCMonth();
+                var day = DateTool.GetDateParts(this.WorkDate).DateObject.getDate();
+                value.setFullYear(year, month, day);
+            }
+
             if (value == null)
                 this.entity.EntryTime = value;
             else {
@@ -360,7 +368,13 @@ export class ItemSourceItem extends BaseComponent {
     }
     set ExitTime(value: Date) {
         if (this.entity.ExitTime != value) {
-            if (value == null)
+            if (value != null) {
+                var year = DateTool.GetDateParts(this.WorkDate).DateObject.getUTCFullYear();
+                var month = DateTool.GetDateParts(this.WorkDate).DateObject.getUTCMonth();
+                var day = DateTool.GetDateParts(this.WorkDate).DateObject.getDate();
+                value.setFullYear(year, month, day);
+            }
+                if (value == null)
                 this.entity.ExitTime = value;
             else {
 

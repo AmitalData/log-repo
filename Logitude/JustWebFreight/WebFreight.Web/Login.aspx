@@ -1583,8 +1583,12 @@
                 return;
             }
 
- 
-                if (navigator.userAgent != null) {
+            var email = userdata.UserName;
+            if (email) {
+                email = email.toLowerCase();
+
+            }
+            if (navigator.userAgent != null && email!="perla@amital.co.il") {
                     if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
                         alert("IOS is currently not supported in HTML5 version");
                         return;
