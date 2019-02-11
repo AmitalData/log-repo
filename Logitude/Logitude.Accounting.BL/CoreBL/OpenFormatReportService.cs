@@ -3530,6 +3530,7 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append(CurrenteDateTime);
             stringBuilder.Append("0");
             stringBuilder.Append("1");
+            stringBuilder.Append(' ', 14);
             stringBuilder.Append("WinZip");
             stringBuilder.Append("ILS");
             stringBuilder.Append("0");
