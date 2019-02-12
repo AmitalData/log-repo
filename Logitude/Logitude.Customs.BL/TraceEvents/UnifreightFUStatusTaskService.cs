@@ -188,8 +188,10 @@ namespace Logitude.Customs.BL.TraceEvents
             myAmitalStatusTracerModel.Tenant = tenant;
             myAmitalStatusTracerModel.UserId = loggingUserId;
             myAmitalStatusTracerModel.MyFUStatus = myFUStatus;
+
             var myGFUSTS = AmitalEventTracer.GetFUStatus(myAmitalStatusTracerModel);
             var xml = XmlGenericUtil<GFUSTS>.SerializeObject(myGFUSTS, true);
+            
             return xml;
         }
 
