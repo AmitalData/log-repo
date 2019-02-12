@@ -22,6 +22,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.Messaging.Maman;
 using System.Threading;
 using Logitude.Customs.BL.Messaging;
+using System.Net;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -734,6 +735,14 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void hAWBALDARMamanToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            WebAPI2BearerMamanMessage.OVSTester();
+
+            //MamanBaldarTest();
+
+        }
+
+        private static void MamanBaldarTest()
+        {
             var wr = new SendWEBAPIMessage2MamanWR();
             string data =
                 @"{""BaldarCode"":""2026"",""BaldarAwb"":""baldarAWb35"",""AirlineAwbPref"":""001"",""Master"":22222211,""Awb8"":88888888,""HawbExtnd"":""abcd1234 update"",""AirlineCode"":""1X"",""FltNo"":null,""FltDate"":null,""LandTime"":null,""DecNoOfPackags"":1,""DecWeight"":100.1,""DolarValue"":200.12345,""StoreTypeReq"":""67"",""Description"":""Description1 - 2026 update"",""CustomerName"":""Miriam"",""CustomerAddress"":""Ein Gedi"",""CustomerPhone"":""026765544"",""DestLineDesc"":""DestLineDesc"",""BaldarMessageTime"":""2018 - 10 - 16T17: 38:33.1365366 + 03:00"",""BaldarHp"":""2323231"",""OpenBaldarAwbDate"":""2018 - 10 - 15T17: 38:33.1365366 + 03:00"",""ResponseStatusCode"":null,""ResponseStatusMsg"":null}";
@@ -756,11 +765,9 @@ namespace AmitalCustomsWindowsService.Tester
 
 
             });
-            
-            
-            var res = service.PostIt(data);
 
-            
+
+            var res = service.PostIt(data);
         }
 
         private void mamanCreateECSpclMessgaeToolStripMenuItem_Click(object sender, EventArgs e)

@@ -445,7 +445,70 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             }
         }
+        public static void OVSTester()
+        {
+            //שם המשתמש: ovrs\crmamital
+            //סיסמה: Amital123456
 
+            var myCredentials = new NetworkCredential("", "", "");
+            myCredentials.UserName = @"ovrs\crmamital";
+            myCredentials.Password = "Amital123456";
+            //using (var client = new WebClient())
+            //{
+            //    client.UseDefaultCredentials = false;
+            //    client.Credentials = myCredentials;
+            //    var url = //"http://localhost:93/Api/Test";
+            //        @"http://81.218.57.34:9094/api/Courier/SpecialActionReporting";
+            //    var json = client.DownloadString(url);
+            //    Console.WriteLine("success");
+            //}
+
+
+
+
+
+
+
+            WebRequest request = WebRequest.Create(@"http://81.218.57.34:9094/api/Courier/SpecialActionReporting");
+
+            request.Method = "POST";
+            request.UseDefaultCredentials = false;
+            request.PreAuthenticate = true;
+            request.Credentials = myCredentials;
+
+            // Create POST data and convert it to a byte array.
+            var postData = @"{""MessageType"":""C"",""CourierCompanyVat"":""61340333"",""CourierHawbNumber"":""514193408"",""CourierHawbDate"":""2019 - 01 - 31T00: 00:00"",""SpecialActionCode"":""2"",""LabelText1"":"""",""LabelText2"":"""",""LabelText3"":"""",""LabelText4"":"""",""LabelText5"":""""}";
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            // Set the ContentType property of the WebRequest.
+            request.ContentType = "application/x-www-form-urlencoded";
+            // Set the ContentLength property of the WebRequest.
+            request.ContentLength = byteArray.Length;
+            // Get the request stream.
+            Stream dataStream = request.GetRequestStream();
+            // Write the data to the request stream.
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            // Close the Stream object.
+            dataStream.Close();
+            // Get the response.
+            WebResponse response = request.GetResponse();
+            // Display the status.
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            // Get the stream containing content returned by the server.
+            dataStream = response.GetResponseStream();
+            // Open the stream using a StreamReader for easy access.
+            StreamReader reader = new StreamReader(dataStream);
+            // Read the content.
+            string responseFromServer = reader.ReadToEnd();
+            // Display the content.
+            //Console.WriteLine(responseFromServer);
+            // Clean up the streams.
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+
+
+
+        }
 
     }
 
