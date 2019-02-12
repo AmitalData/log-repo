@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -32,18 +32,14 @@ export class DeclarationFilterComponent
     public ObjectTableName: string = "Customs.Declaration";
 
     _TapagMessagesService: TapagMessagesService = new TapagMessagesService();
+    _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
 
     public ClaimObservableCollection: ObservableCollection;
-    DeficitObservableCollection: ObservableCollection;
-    _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
+    public DeficitObservableCollection: ObservableCollection;
 
     _MyResponseObjectToShow: any = null;
     _UserMessagehidden: boolean = true;
     _LastFetchDeclarationList: DeclarationList;
-    GeneralDetailsExternalID: any; // html component requires this property. AOT
-    GeneralDetailsName: any; // html component requires this property. AOT
-    GeneralDetailsCustomOfficeName: any; // html component requires this property. AOT
-    GeneralDetailsStatusName: any; // html component requires this property. AOT
 
     constructor() {
         super();
@@ -119,12 +115,12 @@ export class DeclarationFilterComponent
         this._LastFetchDeclarationList = null;
         this.ValidationErrorsList = [];
     }
+
     CustomFileNoTextChanged(searchtext) {
 
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             return;
         }
-
 
         if (this._LastFetchDeclarationList != null) {
             if (this.CustomFileNo == this._LastFetchDeclarationList.CustomFileNo) {
@@ -137,18 +133,15 @@ export class DeclarationFilterComponent
             .subscribe((myResponse: ServiceResponse) => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse, true);
-
             });
 
     }
-
 
 
     DeclarationNumberTextChanged(DeclarationNumberText: string): void {
         if (AppTool.IsNullOrEmpty(this.DeclarationNumber)) {
             return;
         }
-
 
         if (this._LastFetchDeclarationList != null) {
             if (this.DeclarationNumber == this._LastFetchDeclarationList.DeclarationNumber) {
@@ -177,8 +170,6 @@ export class DeclarationFilterComponent
             this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, true, "");
             this.UIProperties.SetValidity("DeclarationNumber", this.ObjectTableName, true, "");
 
-
-
         } else {
 
             if (sourceIsCostomFile) {
@@ -201,8 +192,6 @@ export class DeclarationFilterComponent
         this.ValidationErrorsList.push(msg);
         this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, false, msg);
     }
-
-
 
     get CustomFileNo() { return this.RequestParams ? this.RequestParams.CustomsFile : null; }
     set CustomFileNo(value: string) {
@@ -250,96 +239,36 @@ export class DeclarationFilterComponent
     }
    
     //#region Response Properties
-    get DisplayFileNumber() { return this.ResponseData.DisplayFileNumber; }
-    set DisplayFileNumber(value: string) {
-        if (this.ResponseData.DisplayFileNumber != value) {
-            this.ResponseData.DisplayFileNumber = value;
+    get ExternalID() { return this.ResponseData.externalID; }
+    set ExternalID(value: string) {
+        if (this.ResponseData.externalID != value) {
+            this.ResponseData.externalID = value;
         }
     }
 
-    get CustomOfficeName() { return this.ResponseData.CustomOfficeName; }
+    get CustomOfficeName() { return this.ResponseData.customOfficeName; }
     set CustomOfficeName(value: string) {
-        if (this.ResponseData.CustomOfficeName != value) {
-            this.ResponseData.CustomOfficeName = value;
+        if (this.ResponseData.customOfficeName != value) {
+            this.ResponseData.customOfficeName = value;
         }
     }
 
-    get CreditLimit() { return this.ResponseData.CreditLimit; }
-    set CreditLimit(value: string) {
-        if (this.ResponseData.CreditLimit != value) {
-            this.ResponseData.CreditLimit = value;
+    get ExternalName() { return this.ResponseData.name; }
+    set ExternalName(value: string) {
+        if (this.ResponseData.name != value) {
+            this.ResponseData.name = value;
         }
     }
 
-    get StatusName() { return this.ResponseData.StatusName; }
+    get StatusName() { return this.ResponseData.statusName; }
     set StatusName(value: string) {
-        if (this.ResponseData.StatusName != value) {
-            this.ResponseData.StatusName = value;
-        }
-    }
-
-    get EntityTypeName() { return this.ResponseData.EntityTypeName; }
-    set EntityTypeName(value: string) {
-        if (this.ResponseData.EntityTypeName != value) {
-            this.ResponseData.EntityTypeName = value;
-        }
-    }
-
-    get CreditBalance() { return this.ResponseData.CreditBalance; }
-    set CreditBalance(value: string) {
-        if (this.ResponseData.CreditBalance != value) {
-            this.ResponseData.CreditBalance = value;
-        }
-    }
-
-    get GuaranteedName() { return this.ResponseData.GuaranteedName; }
-    set GuaranteedName(value: string) {
-        if (this.ResponseData.GuaranteedName != value) {
-            this.ResponseData.GuaranteedName = value;
-        }
-    }
-
-    get EntityNumber() { return this.ResponseData.EntityNumber; }
-    set EntityNumber(value: string) {
-        if (this.ResponseData.EntityNumber != value) {
-            this.ResponseData.EntityNumber = value;
-        }
-    }
-
-    get GuaranteeExecutedAmountAdjusted() { return this.ResponseData.GuaranteeExecutedAmountAdjusted; }
-    set GuaranteeExecutedAmountAdjusted(value: string) {
-        if (this.ResponseData.GuaranteeExecutedAmountAdjusted != value) {
-            this.ResponseData.GuaranteeExecutedAmountAdjusted = value;
-        }
-    }
-
-    get AgentName() { return this.ResponseData.AgentName; }
-    set AgentName(value: string) {
-        if (this.ResponseData.AgentName != value) {
-            this.ResponseData.AgentName = value;
-        }
-    }
-
-    get Validity() { return this.ResponseData.Validity; }
-    set Validity(value: string) {
-        if (this.ResponseData.Validity != value) {
-            this.ResponseData.Validity = value;
-        }
-    }
-
-    get GuaranteeAmount() { return this.ResponseData.GuaranteeAmount; }
-    set GuaranteeAmount(value: string) {
-        if (this.ResponseData.GuaranteeAmount != value) {
-            this.ResponseData.GuaranteeAmount = value;
+        if (this.ResponseData.statusName != value) {
+            this.ResponseData.statusName = value;
         }
     }
 
     //#endregion Properties
 
-
-    
-
-  
 
     CancelButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
@@ -359,7 +288,7 @@ export class DeclarationFilterComponent
 
         
         this.ClaimObservableCollection.Clear();
-        
+        this.DeficitObservableCollection.Clear();
 
         var currRequestParams = new DeclarationFilterRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -372,7 +301,6 @@ export class DeclarationFilterComponent
         currRequestParams.CustomsFile = this.RequestParams.CustomsFile;
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
-        
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
