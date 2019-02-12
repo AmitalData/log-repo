@@ -191,11 +191,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         client.DefaultRequestHeaders.Accept.Add(
                         new MediaTypeWithQualityHeaderValue("application/xml"));
 
-                        string authInfo = "API_15408257301181065689979" + ":" + "1BlueSand123";
+                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
                         authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
                         var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
-                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:1BlueSand123"));
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
                         try
                         {
                             var response2 = request.GetResponse();
@@ -217,12 +217,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         catch (Exception EX1)
                         {
 
-                             authInfo = "API_15416735830591484092606" + ":" + "1BlueSand123";
+                             authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
                             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
                             //like this:
                              request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
-                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:1BlueSand123"));
+                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
                             try
                             {
                                 var response2 = request.GetResponse();
@@ -288,7 +288,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         client.DefaultRequestHeaders.Accept.Add(
                         new MediaTypeWithQualityHeaderValue("application/xml"));
 
-                        string authInfo = "API_15408257301181065689979" + ":" + "1BlueSand123";
+                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
                         authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
 
@@ -296,7 +296,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         string xml = @"<param-encryption xmlns='http://ws.plimus.com'><parameters><parameter><param-key>shopperId</param-key><param-value>"+VaultedShopperId+"</param-value></parameter><parameter><param-key>expirationInMinutes</param-key><param-value>300</param-value></parameter><parameter><param-key>pageName</param-key><param-value>AUTO_LOGIN_PAGE</param-value></parameter></parameters></param-encryption>";
                         //like this:
                         var request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
-                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:1BlueSand123"));
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
 
                         byte[] bytes;
                         bytes = System.Text.Encoding.ASCII.GetBytes(xml);
@@ -328,12 +328,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         catch (Exception EX1)
                         {
 
-                            authInfo = "API_15416735830591484092606" + ":" + "1BlueSand123";
+                            authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
                             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
                             //like this:
                              request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
-                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:1BlueSand123"));
+                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
 
                             bytes =null;
                             bytes = System.Text.Encoding.ASCII.GetBytes(xml);
@@ -1614,7 +1614,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     iAccountingSetting.AllowVoidARI = false;
                     iAccountingSetting.AllowVoidARP = false;
                     iAccountingSetting.AllowManualInvoiceNumber = false;
-                    iAccountingSetting.IsChronologicalDates = true;
+                    iAccountingSetting.IsARInvoiceChronologicalDates = true;
                     iAccountingSetting.IsVatNumberMandatoryInAP = true;
                     iAccountingSetting.IsVatNumberMandatoryInAR = true;
                     iAccountingSettingRepository.Update(iAccountingSetting);

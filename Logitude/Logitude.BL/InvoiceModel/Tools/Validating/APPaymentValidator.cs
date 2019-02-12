@@ -97,7 +97,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 if (string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef))
                 {
-                    throw new ApplicationException(rmsg.Replace("%FieldName", "Cheque Ref"));
+                    throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.ChequeOrPaymentRef", tenant)));
                 }
             }
 
@@ -105,7 +105,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 if (string.IsNullOrEmpty(entityPM.CreditCardTypeId))
                 {
-                    throw new ApplicationException(rmsg.Replace("%FieldName", "Credit Card Type"));
+                    throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.CreditCardTypeId", tenant)));
                 }
             }
 

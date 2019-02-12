@@ -52,6 +52,7 @@ import {GLAccountTaxWithholdingTabComponent} from './Components/EditTabs/GLAccou
 import {BankCodeGeneralTabComponent} from './Components/EditTabs/BankCode/BankCodeGeneralTabComponent';
 import {ExternalRecoDetailsTabComponent} from './Components/EditTabs/ExternalReconciliation/ExternalRecoDetailsTabComponent';
 import { OpenFormatReportLogTabComponent } from './Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent';
+import { TaxDeductionReportGeneralTabComponent } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabComponent';
 
 import {GlAccountLedgerTransactionsListTemplate} from './Components/ListTemplates/GlAccountLedgerTransactionsListTemplate';
 import {ReconcileExternalPageListTemplate} from './Components/ListTemplates/ReconcileExternalPageListTemplate';
@@ -152,6 +153,7 @@ export const Components =
         EditTaxReportLineComponent,
         TaxDeductionReportLogTabComponent,
         OpenFormatReportLogTabComponent,
+        TaxDeductionReportGeneralTabComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -253,6 +255,7 @@ export class ModuleDeclarations {
             case "EditTaxReportLineComponent": { myResult = EditTaxReportLineComponent; break; }
             case "TaxDeductionReportLogTabComponent": { myResult = TaxDeductionReportLogTabComponent; break; }
             case "OpenFormatReportLogTabComponent": { myResult = OpenFormatReportLogTabComponent; break; }
+            case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
             //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }

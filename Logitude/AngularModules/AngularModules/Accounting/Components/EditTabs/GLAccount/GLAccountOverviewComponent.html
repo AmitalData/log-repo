@@ -251,17 +251,17 @@
         width: 100%;
         padding-top: 10px;
         height: 30px;
-        min-width: 475px;
+        min-width: 485px;
     }
     .credit-limit-row .label{
         user-select: none;
         display: inline-block;
         font-size: 16px;
-        width: 160px;
+        width: 180px;
     }
     .credit-limit-row .amount{
         direction: ltr;
-        width: 180px;
+        width: 170px;
         height: 20px;
         display: inline-block;
         font-size: 16px;
@@ -495,10 +495,10 @@
                                                 <li id="9mo" (click)="FilterItemClicked('9mo')" [class.SelectedFilter]="FilterSelectedValue === '9mo'">
                                                     9 Mo
                                                 </li>
-                                                <li id="12mo" (click)="FilterItemClicked('12mo')"
+                                                <!-- <li id="12mo" (click)="FilterItemClicked('12mo')"
                                                     [class.SelectedFilter]="FilterSelectedValue === '12mo'">
                                                     12 Mo
-                                                </li>
+                                                </li> -->
                                             </ul>
 
                                             <ul [style.float]="isRTL ? 'left' : 'right'" class="FiltersMenu">

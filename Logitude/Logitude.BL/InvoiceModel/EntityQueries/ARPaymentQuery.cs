@@ -106,6 +106,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CertPago = a.CertPago,
                                        SelloPago = a.SelloPago,
                                        SATApprovalDate = a.SATApprovalDate,
+                                       ApprovedDate = a.ApprovedDate,
+                                       ApprovedByUserId = a.ApprovedByUserId,
+                                       FirstApproveDate = a.FirstApproveDate,
                                    }).FirstOrDefault();
 
 
@@ -203,6 +206,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CertPago = a.CertPago,
                                        SelloPago = a.SelloPago,
                                        SATApprovalDate = a.SATApprovalDate,
+                                       ApprovedDate = a.ApprovedDate,
+                                       ApprovedByUserId = a.ApprovedByUserId,
+                                       FirstApproveDate = a.FirstApproveDate,
                                    }).FirstOrDefault();
 
             Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
@@ -298,6 +304,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    CertPago = entity.CertPago,
                                                    SelloPago = entity.SelloPago,
                                                    SATApprovalDate = entity.SATApprovalDate,
+                                                   ApprovedDate = entity.ApprovedDate,
+                                                   ApprovedByUserId = entity.ApprovedByUserId,
+                                                   FirstApproveDate = entity.FirstApproveDate,
 
                                                };
             return query2;
@@ -376,7 +385,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             SelloPago = entity.SelloPago,
                             SATApprovalDate = entity.SATApprovalDate,
                             BankAccountName = entity.BankAccountLite != null ? entity.BankAccountLite.EnglishName : null,
-
+                            ApprovedDate = entity.ApprovedDate,
+                            ApprovedByUserId = entity.ApprovedByUserId,
+                            FirstApproveDate = entity.FirstApproveDate,
                         };
 
             return query;
@@ -455,6 +466,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             SelloPago = entity.SelloPago,
                             SATApprovalDate = entity.SATApprovalDate,
                             BankAccountName = entity.BankAccountLite != null ? entity.BankAccountLite.EnglishName : null,
+                            ApprovedDate = entity.ApprovedDate,
+                            ApprovedByUserId = entity.ApprovedByUserId,
+                            FirstApproveDate = entity.FirstApproveDate,
                         };
 
             return query;
@@ -519,7 +533,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          SelloPago = a.SelloPago,
                                          SATApprovalDate = a.SATApprovalDate,
                                          BankAccountName = a.BankAccountLite != null ? a.BankAccountLite.EnglishName : null,
-
+                                         ApprovedDate = a.ApprovedDate,
+                                         ApprovedByUserId = a.ApprovedByUserId,
+                                         FirstApproveDate = a.FirstApproveDate,
                                      }).FirstOrDefault();
 
             return payment;

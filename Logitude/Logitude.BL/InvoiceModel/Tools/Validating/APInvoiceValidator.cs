@@ -59,7 +59,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 if (string.IsNullOrEmpty(entityPM.VATNumber))
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Vat Number"));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
                 }
             }
 
@@ -93,7 +93,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         if (invoiceAmount == 0 || invoiceAmount == null)
                         {
-                            throw new ApplicationException(msgRequired.Replace("%FieldName", "Invoice Amount"));
+                            throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                         }
 
                         else
@@ -130,7 +130,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 if (entityPM.InvoiceExpectedAmount == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Invoice Amount"));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                 }
 
                 else if (entityPM.InvoiceExpectedAmount != entityPM.AmountInInvoiceCurrency)

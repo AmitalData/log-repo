@@ -50,6 +50,7 @@
     <Content Include="Accounting\Components\EditTabs\GLAccount\ManageReconciliationsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Journal\JournalDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Revaluation\RevaluationDetailsComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\EditTaxReportLine\EditTaxReportLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\TaxReportDetailsTabComponent.html" />
@@ -335,6 +336,7 @@
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.ts" />
@@ -778,6 +780,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.html" />
+    <Content Include="Report\Components\FilterReportComponent\VDKFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.html" />
@@ -3171,6 +3174,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureComputingPartner\Components\QueryColumnsComponents\btnComponentComputingPartnerEdit.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FilterReportComponent\VDKFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.ts" />

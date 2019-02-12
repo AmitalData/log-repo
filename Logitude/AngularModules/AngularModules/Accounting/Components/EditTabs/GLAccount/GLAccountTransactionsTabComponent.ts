@@ -268,7 +268,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'AccountingDate',
             DataTypeCode: 'DateTime',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate"),//'Acc. Date',
-            Styles: { width: '110px' },
+            Styles: { width: '85px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -277,7 +277,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'DocumentDate',
             DataTypeCode: 'DateTime',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate"), //'Ref. Date',
-            Styles: { width: '90px' },
+            Styles: { width: '85px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -286,7 +286,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'DueDate',
             DataTypeCode: 'DateTime',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate"), // 'Due Date',
-            Styles: { width: '90px' },
+            Styles: { width: '75px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -295,7 +295,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'Source',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Source"), // 'Source',
-            Styles: { width: '150px' },
+            Styles: { width: '100px' }, // TASK 47563
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -311,7 +311,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'LocalAmountCredit',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit"), // 'Local Amount',
-            Styles: { width: '100px' },
+            Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -320,7 +320,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'CumulativeLocalAmount',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeLocalAmount"), // 'Cu. Amount',
-            Styles: { width: '150px' },
+            Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -337,7 +337,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 FieldName: 'ForeignAmountCredit',
                 DataTypeCode: 'String',
                 Display: TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit"), // 'Foreign Amount',
-                Styles: { width: '110px' },
+                Styles: { width: '120px' },
                 HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                 HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                 IsCustomTemplate: true
@@ -347,7 +347,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     FieldName: 'CumulativeForeignAmount',
                     DataTypeCode: 'String',
                     Display: TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeForeignAmount"), // 'Cu. F. Amount',
-                    Styles: { width: '150px' },
+                    Styles: { width: '120px' },
                     HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                     HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                     IsCustomTemplate: true
@@ -390,7 +390,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'JournalNumber',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.JournalNumber"), // 'Journal No.',
-            Styles: { width: '80px' },
+            Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
