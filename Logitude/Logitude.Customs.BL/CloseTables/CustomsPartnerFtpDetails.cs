@@ -23,7 +23,9 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECOVSSPCL_REQUEST = "ECOVSSPCL+RQ";//EC = E-Commerce
         public const string InterfaceName_ECOVSSPCL_RESPONE = "ECOVSSPCL+RS";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
+        public const string InterfaceName_ECSOVSTB = "ECOVSSTB";//EC = E-Commerce
         public const string InterfaceName_ECSTB_Splited = "ECSTB+P";//EC = E-Commerce
+        public const string InterfaceName_ECSOVSTB_Splited = "ECOVSSTB+P";//EC = E-Commerce
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
@@ -83,7 +85,7 @@ namespace Logitude.Customs.BL.CloseTables
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
                 
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService,
-                Subject="Status / Availability Maman Raw"
+                Subject="Status/Availability Maman Raw"
             },
             new InterfaceDetails()
             {
@@ -94,7 +96,7 @@ namespace Logitude.Customs.BL.CloseTables
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
                 
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
-                Subject="Status / Availability Maman",
+                Subject="Status/Availability Maman",
                 ServerInternalDef= true
             },
             new InterfaceDetails()
@@ -148,7 +150,33 @@ namespace Logitude.Customs.BL.CloseTables
                 Subject= "פעולות מיוחדות מאוברסיז",
                 ServerInternalDef= true
 
+            }
+             ,
+
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECSOVSTB,
+                Name = "סטטוס/זמינות מאוברסיז",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILOVS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService,
+                Subject="Status/Availability ILOVS Raw"
             },
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECSOVSTB_Splited,
+                Name = "סטטוס/זמינות מאוברסיז",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILOVS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
+                Subject="Status/Availability ILOVS",
+                ServerInternalDef= true
+            },
+
 
             };
             ///
@@ -169,51 +197,7 @@ namespace Logitude.Customs.BL.CloseTables
                     ProxyUtil.JsonConvertSerialize(r)));
             });
             return all;
-            all.Add(new KeyValuePair<string, string>(InterfaceName_SubManifest,
-                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
-                {
-                    Code = InterfaceName_SubManifest,
-                    Name = "תת מצהר לממן",
-                     TypeCode= TypeCode_Out,
-                    Partner = PartnerCode_Mamam,
-                    ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key
-                }
-            )));
-            all.Add(new KeyValuePair<string, string>(InterfaceName_ECTHR,
-                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
-                {
-                    Code = InterfaceName_ECTHR,
-                    Name = "ש.מ.ב לממן",
-                    TypeCode = TypeCode_Out,
-                    Partner = PartnerCode_Mamam,
-                    ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
-                }
-            )));
-            all.Add(new KeyValuePair<string, string>(InterfaceName_ECSPCL,
-                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
-                {
-                    Code = InterfaceName_ECSPCL,
-                    Name = "פעולות מיוחדות לממן",
-                    TypeCode = TypeCode_Out,
-                    Partner = PartnerCode_Mamam,
-                    ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
-                }
-            )));
 
-            all.Add(new KeyValuePair<string, string>(InterfaceName_ECSTB,
-                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
-                {
-                    Code = InterfaceName_ECSTB,
-                    Name = "סטטוס/זמינות ממן",
-                    TypeCode = TypeCode_In,
-                    Partner = PartnerCode_Mamam,
-                    ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key
-                }
-            )));
-            ///
-
-            //all.Add(new KeyValuePair<string, string>("TST", "Test"));
-            return all;
         }
 
         public List<KeyValuePair<string, string>> GetAllPartnerCode()
