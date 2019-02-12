@@ -253,6 +253,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 if (mode == "SecondaryEntry")
                 {
                     this._MyDeclarationPM.Consignments[0].ReceiverWarehouseCode = TranslateReceiverWarehouse(_LogitudeReleaseFile.WarehouseId);
+                    this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateReceiverWarehouse(_LogitudeReleaseFile.StorageSiteCode);
                 }
                 else
                 {
