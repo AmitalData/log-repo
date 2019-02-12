@@ -168,11 +168,15 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
             myFollow_up_status.status_place = myAmitalEventTracer.MyFUStatus.status_place;// "FRA";
+            if (myFollow_up_status.xml_status == "del")
+            {
+                myFollow_up_status.reference = new reference[] { new reference() { referencexml = "*ANY*" } };
+            }
             myFUStatus.follow_up_status = new follow_up_status[] { myFollow_up_status };
 
             var myReference_list = new List<reference_list>();
 
-
+            
             return myFUStatus;
         }
         //protected  void Trace(DeclarationPM entityPM)

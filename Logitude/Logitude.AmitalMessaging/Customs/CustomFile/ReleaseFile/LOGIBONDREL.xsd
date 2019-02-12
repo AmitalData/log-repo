@@ -52,6 +52,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="agent_fee_currency" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomsDocuments" />
         <xs:element minOccurs="0" maxOccurs="1" ref="TaxationDateTime" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StorageSiteCode" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -302,4 +303,5 @@
   <xs:element name="COM_ID" type="xs:string" />
   <xs:element name="SerialNum" type="xs:string" />
   <xs:element name="TaxationDateTime" type="xs:string" />
+  <xs:element name="StorageSiteCode" type="xs:string" />
 </xs:schema>
