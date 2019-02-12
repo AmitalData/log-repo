@@ -133,8 +133,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             return req;
         }
 
-
-
         private ConnectedEntity GetRelatedEntity()
         {
             var relatedEntity = new ConnectedEntity();
@@ -233,6 +231,31 @@ namespace Logitude.CustomsMessaging.RequestServices
                     {
                         relatedEntity.entityType = 12234;
                         relatedEntity.entityIdKey1 = myCustomsCollateralPM.CollateralRequestNumber;
+                    }
+                }
+                else if (customsDocumentPointerPM.ParentEntityCode == "Claim")
+                {
+                    var myClaimQueryService = new ClaimQueryService(_Context);
+                    var myClaimPM = myClaimQueryService.GetSingle(customsDocumentPointerPM.ParentEntityId, true, false);
+                    if (myClaimPM != null)
+                    {
+                        this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Claim");
+                        this.MyRequestSheetParam.EntityId1 = myClaimPM.Id;
+                        if (customsDocumentPointerPM.Child1EntityCode == "ClaimsRelatedEntity" && customsDocumentPointerPM.Child1EntityId != null)
+                        {
+                            int child1EntityId = 0;
+                            int.TryParse(customsDocumentPointerPM.Child1EntityId, out child1EntityId);
+                            ClaimsRelatedEntityPM claimsRelatedEntityPM = myClaimPM.ClaimsRelatedEntities.FirstOrDefault(si => si.EntityCounterKey == child1EntityId);
+                            if (!string.IsNullOrEmpty(claimsRelatedEntityPM.TapagNumber))
+                            {
+                                relatedEntity.entityType = 1008;
+                                relatedEntity.entityIdKey1 = claimsRelatedEntityPM.TapagNumber;
+                                if (claimsRelatedEntityPM.Numeral != null)
+                                {
+                                    relatedEntity.entityIdKey2 = claimsRelatedEntityPM.Numeral.ToString();
+                                }
+                            }
+                        }
                     }
                 }
             }
