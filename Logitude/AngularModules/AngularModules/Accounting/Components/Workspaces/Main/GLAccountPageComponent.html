@@ -54,7 +54,7 @@
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <label  [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;" >{{'Accounting.General.O.MainQueries' | TextCodeTranslationPipe}}</label>
+                                    <label  float-start style="margin-right: 10px;" >{{'Accounting.General.O.MainQueries' | TextCodeTranslationPipe}}</label>
                                 </td>
                             </tr>
 
@@ -148,25 +148,25 @@
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" *ngIf="Draft_JournalsVisibility" (click)="ViewJournalQuery('Draft_Journals')"> {{'Journal.Q.DraftJournal' | TextCodeTranslationPipe}} ({{journalSummary.DraftJournalsCount}})</p>
-                                                                        </td>                                 
-                                                                    </tr>                                     
-                                                                    <tr>                                      
-                                                                        <td style="width:190px;">             
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
                                                                             <p class="QueryLink" *ngIf="Non_Approved_JournalsVisibility" (click)="ViewJournalQuery('Non_Approved_Journals')"> {{'Journal.Q.SavedJournal' | TextCodeTranslationPipe}} ({{journalSummary.WaitingJournalsCount}})</p>
-                                                                        </td>                                 
-                                                                    </tr>                                     
-                                                                    <tr>                                      
-                                                                        <td style="width:190px;">             
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
                                                                             <p class="QueryLink" *ngIf="Approved_JournalsVisibility" (click)="ViewJournalQuery('Approved_Journals')"> {{'Journal.Q.ApprovedJournal' | TextCodeTranslationPipe}} </p>
-                                                                        </td>                                 
-                                                                    </tr>                                     
-                                                                    <tr>                                      
-                                                                        <td style="width:190px;">             
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
                                                                             <p class="QueryLink" *ngIf="All_journalsVisibility" (click)="ViewJournalQuery('All_journals')"> {{'Journal.Q.Journal' | TextCodeTranslationPipe}} </p>
-                                                                        </td>                                 
-                                                                    </tr>                                     
-                                                                    <tr>                                      
-                                                                        <td style="width:190px;">             
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
                                                                             <p class="QueryLink" *ngIf="Auto_Created_JournalsVisibility" (click)="ViewJournalQuery('Auto_Created_Journals')"> {{'Journal.Q.AutoCreatedJournals' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
@@ -191,7 +191,7 @@
                                             </div>
 
 
-                                            
+
 
                                         </div>
                                     </div>
@@ -212,7 +212,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label  [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;" >{{ RecentGLAccountsCount }} {{'Accounting.General.O.RecentGLAccounts' | TextCodeTranslationPipe}}</label>
+                                                <label  float-start style="margin-right: 10px;" >{{ RecentGLAccountsCount }} {{'Accounting.General.O.RecentGLAccounts' | TextCodeTranslationPipe}}</label>
                                             </td>
                                         </tr>
 
