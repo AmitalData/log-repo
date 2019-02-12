@@ -36,6 +36,8 @@ import { DeclarationMamanSpecialActionPMService } from '../../../Customs/Service
 import { DeclarationCourierStatusWebService } from '../../../Customs/Services/WebServices/DeclarationCourierStatusWebService';
 import { retry } from 'rxjs/operator/retry';
 import { forEach } from "@angular/router/src/utils/collection";
+import { DeclarationMamanSpecialActionList } from "../../../Customs/EntityLists/DeclarationMamanSpecialActionList";
+import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 
 @Component({
     moduleId: module.id,
@@ -332,6 +334,62 @@ export class CourierWorksheetListTemplate {
                     mess = res.Result;
                 }
                 myMessageWindow.Show(mess);
+            });
+    }
+    SpecialActionStatusXClicked(event) {
+        this.ButtonClick(event);
+        SessionLocator.CurrentSession.StartBusyIndicator("");
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1000;
+        filters.addAdditionalFilter("DeclarationId", this._CourierWorksheet['DeclarationId'], null, null, "Equals", false, false, false, "string");
+        //filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+        let myEntityResourceService: EntityResourceService = new EntityResourceService();
+        myEntityResourceService.getEntityResourceByTableName("Customs.DeclarationMamanSpecialAction")
+            .subscribe(response => {
+                this._DeclarationMamanSpecialActionListService.getByFilters(filters)
+                    .subscribe((response: ServiceResponse) => {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (!response.HasError && response.Result != null) {
+                            let list: DeclarationMamanSpecialActionList[] = response.Result;
+                            list.forEach((declarationMamanSpecialActionPMItem: any) => {
+                                switch (declarationMamanSpecialActionPMItem.MamanSpecialActionCode) {
+                                    case "2": {
+                                        declarationMamanSpecialActionPMItem.MamanSpecialActionCode = "ת. עיכוב";//this.IsReceivingDelayCertificate = true;
+
+                                        break;
+                                    }
+                                    case "4": {
+
+                                        declarationMamanSpecialActionPMItem.MamanSpecialActionCode = "מדבקות";//this.IsMamanSticker = true;
+
+                                        break;
+                                    }
+                                    case "5": {
+                                        declarationMamanSpecialActionPMItem.MamanSpecialActionCode = "מסמכים";//this.IsPrintDocuments = true;
+                                    }
+                                        break;
+                                }
+                            });
+
+                            
+            
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 1000;
+                            logWindow.Height = 350;
+                            logWindow.Title = "פעולות מיוחדות";
+                            logWindow.WindowArgs = {
+                                MamanSpecialActionList: list
+                            };
+                            logWindow.ShowCloseButton = true;
+                            //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/AddEditMamanStickerComponent');
+                            logWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/DeclarationMamanSpecialActionComponent');
+                            logWindow.WindowClosed.subscribe(($event: any) => {
+                                //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                            });
+
+                        }
+                    });
             });
     }
     SendPay(event) {
