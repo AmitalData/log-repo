@@ -314,7 +314,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 taxReport.TaxableOutputAmount = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
                 taxReport.OutputTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
-                taxReport.ExemptTaxableOutput = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
+                taxReport.ExemptTaxableOutput = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
                 taxReport.OutputLinesCount = reportLinesList.Where(d => d.OutputOrInput == "O").Count();
                 taxReport.OtherInputsTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
                 taxReport.InputLinesCount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1").Count();
