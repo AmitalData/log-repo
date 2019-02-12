@@ -1524,7 +1524,7 @@ implements OnDestroy
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
             .subscribe(response => {
                 this.IsMamanEnabled = false;
-                if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                if (!response.HasError && response.Result != null && response.Result.DefaultValue.includes("ILMMN")) {
                     this.IsMamanEnabled = true;
                 }
                 myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_HWBBMMN", "NON", "NON", SessionLocator.Tenant)

@@ -21,6 +21,8 @@ using WebFreight.Web.Security;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -448,7 +450,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
-        static bool send2Maman= false;
         public HttpResponseMessage GetSendECTHRDataMaman(string declarationId)
         {
             try
@@ -457,17 +458,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 string response = "";
-                if (send2Maman)
+
+                var amitalContext = AmitalContext.GetContext(tenant);
+                var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+                var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+
+                string send2Maman = def.DEFDATA;
+
+                if (send2Maman.Contains("ILMMN"))
                 {
                     var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                     response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
                 }
-                else
+                else if(send2Maman.Contains("ILOVL"))
                 {
                     var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
                     response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
                 }
-                send2Maman = !send2Maman;
+                else
+                {
+                    response = "לא קיימת הרשאה";
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
