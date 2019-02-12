@@ -2397,6 +2397,34 @@ namespace Logitude.Customs.Def.ClosedTable
 
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "1030",
+                InOut = InOutEnum.O.ToString(),
+                Description = "בקשה/ביטול להעברת טובין",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "1035",
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "1035",
+                InOut = InOutEnum.I.ToString(),
+                Description = "משוב לבקשת העברה",
+                DcaPrefixName = "GP_MSG02_GatepassFeedbackMessage_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "UCB1170",
 
                 ///DCAInUniCourierBatchSend_MsgMessagingService

@@ -67,6 +67,7 @@
     <Compile Include="RequestParams\CustomsBookInRequestParams.Shared.cs" />
     <Compile Include="RequestParams\DeclarationFilterRequestParams.Shared.cs" />
     <Compile Include="RequestParams\ExportDeclarationDataRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\GatepassRequestMessageRequestParams.Shared.cs" />
     <Compile Include="RequestParams\GuaranteeCertificateRequestParams.Shared.cs" />
     <Compile Include="RequestParams\GuaranteeRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CreditQueryRequestParams.Shared.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="ResponseData\CustomsBookInResponseData.Shared.cs" />
     <Compile Include="ResponseData\DeclarationFilterResponseData.Shared.cs" />
     <Compile Include="ResponseData\ExportDeclarationDataResponseData.Shared.cs" />
+    <Compile Include="ResponseData\GatepassFeedbackMessageResponseData.Shared.cs" />
     <Compile Include="ResponseData\GuaranteeCertificateResponseData.Shared.cs" />
     <Compile Include="ResponseData\GuaranteeResponseData.Shared.cs" />
     <Compile Include="ResponseData\CreditQueryResponseData.Shared.cs" />

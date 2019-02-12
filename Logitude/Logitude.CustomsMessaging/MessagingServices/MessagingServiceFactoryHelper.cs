@@ -415,6 +415,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices>
                             ((new DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            GP_1030_GatepassRequestMessageMessagingService>
+                            ((new GP_1030_GatepassRequestMessageMessagingService()).MainInterfaceCode);
+
         }
         public static void InitContainer()
         {
