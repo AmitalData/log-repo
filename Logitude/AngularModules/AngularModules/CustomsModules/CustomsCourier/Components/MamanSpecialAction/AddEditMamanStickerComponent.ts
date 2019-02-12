@@ -25,6 +25,7 @@ export class AddEditMamanStickerComponent
     isWindowMode: boolean = true;
     ValidationErrorsList: any[] = [];
     IsLoaded: boolean = false;
+    IsNew: boolean = false;
 
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
@@ -49,9 +50,11 @@ export class AddEditMamanStickerComponent
                 this.EntityPM.Tenant = SessionLocator.Tenant;
                 this.EntityPM.DeclarationId = entityArgs.DeclarationId;
                 this.EntityPM.MamanSpecialActionCode = "4";
+                this.IsNew = true;
             }
             else {
                 this.EntityPM = entityArgs.EntityPM;
+                this.IsNew = false;
             }
         }
     }
@@ -87,22 +90,37 @@ export class AddEditMamanStickerComponent
 
     OkButtonClicked() {
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
-        this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(res => {
-            this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe(myResult => {
-                if (myResult.HasError) {
-                    this.ValidationErrorsList = [];
-                    this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
-                    return;
-                }
-                else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    var myMessageWindow = new MessageWindow();
-                    myMessageWindow.Show(myResult.Result);
-                }
-                this.CancelButtonClicked();
+        if (this.IsNew) {
+            this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.SendMamanSpecialAction();
             });
-        });
+        }
+        else {
+            this._DeclarationMamanSpecialActionPMService.update(this.EntityPM).subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.SendMamanSpecialAction();
+            });
+        }
         
+    }
+
+    SendMamanSpecialAction() {
+        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe(myResult => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            if (myResult.HasError) {
+                this.ValidationErrorsList = [];
+                this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
+                return;
+            }
+            else {
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(myResult.Result);
+            }
+            this.CancelButtonClicked();
+        });
+
     }
 
     CancelButtonClicked() {
