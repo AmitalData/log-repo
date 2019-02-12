@@ -423,22 +423,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    NumericButtonClicked(isIncreas: boolean) {
-        if (this.IsEditingEnabled) {
-            if (isIncreas) {
-                if (this.Ratio < 10) {
-                    this.Ratio += 1;
-                }
-            }
-
-            else {
-                if (this.Ratio > 1) {
-                    this.Ratio -= 1;
-                }
-            }
-        }
-    }
-
     ComputeDimFactor() {
         this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.Ratio, this.DimensionsUnitCode, this.ChargeableWeightUnitCode);
     }
@@ -1359,6 +1343,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 950;
             logitudeWindow.Height = 595;
+            logitudeWindow.IsFillScreen = true;
             logitudeWindow.Title = "Container Statuses";
             logitudeWindow.WindowArgs = { ShipmentId: this.EntityPM.Id, ContainerId: item.EntityPM.Id };
             logitudeWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/LastStatusComponent");
@@ -1460,6 +1445,13 @@ export class ShipmentPackageItem extends BaseComponent {
             this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
             this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
             this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
+
+            this.UIProperties.SetEnabled("CommodityNumber", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Reference1", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Reference2", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Reference3", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Reference4", this.ObjectTableName, this.IsEditingFieldsEnabled);
         }
     }
     SetUIProperties_Container() {

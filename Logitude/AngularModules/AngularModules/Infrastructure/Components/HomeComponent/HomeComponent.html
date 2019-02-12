@@ -167,6 +167,14 @@
         background: -o-linear-gradient(-90deg, rgba(235, 235, 235, 0.5) 0%, Orange 100%);
         background: linear-gradient(180deg, rgba(235, 235, 235, 0.5) 0%, Orange 100%);
     }
+
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #ccc;
+        padding: 0;
+    }
 </style>
 
 <table style="background: white; min-width: 1024px; min-height: 600px;" *ngIf="!IsNewSignupTenant" [style.direction]="LayoutDirection" [style.font-family]="SystemFontFamily">
@@ -191,8 +199,8 @@
                                     </td>
 
                                     <!--<td style="width: 1px;">
-                                        <button class="Button" (click)="OnClearCache()">Clear Cache</button>
-                                    </td>-->
+        <button class="Button" (click)="OnClearCache()">Clear Cache</button>
+    </td>-->
 
                                     <td style="width: 5px;">
                                         <div></div>
@@ -234,12 +242,32 @@
 
 
                                     </td>
+                                    <td style="width: 20px;">
+                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
+                                            <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
+                                            <div class="ToggleButtonMenu" style="right:-50px">
+                                                <button *ngIf="IsLogBox == false && IsBluesnapAccount" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
+                                                <hr />
+                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG')">Subscribe to Logitude</button>
+                                                <hr />
+                                                <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('AWB')">Subscribe to e-AWB</button>
+                                                <hr />
+                                                <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('BUY')">Buy e-AWB Package</button>
+                                                <hr />
+                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
+                                                <hr />
+                                                <button *ngIf="IsLogBox == false && IsOneTimeContract" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
+
+                                            </div>
+                                        </div>
+                                    </td>
 
                                     <td style="width: 5px;">
                                         <div></div>
                                     </td>
 
-                                    <td style="width: 20px;"><!--*ngIf="SettingBtnVisibility"-->
+                                    <td style="width: 20px;">
+                                        <!--*ngIf="SettingBtnVisibility"-->
                                         <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
                                             <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
                                             <div class="ToggleButtonMenu" style="right:-50px">
@@ -254,17 +282,13 @@
                                                 <button *ngIf="IsCustomizationVisible" (click)="DefaultTranslationClicked()">Default Translation</button>
                                                 <button *ngIf="IsCurrenciesRatesVisible" (click)="CurrenciesRatesClicked()">Currencies Rates</button>
                                                 <button *ngIf="IsDataBackupVisible" (click)="DataBackupClicked()">Data Backup</button>
-                                                <button  *ngIf="IsDocumentsBackupVisible" (click)="DocumentsBackupClicked()">Documents Backup</button>                                               
+                                                <button *ngIf="IsDocumentsBackupVisible" (click)="DocumentsBackupClicked()">Documents Backup</button>
                                                 <button *ngIf="Tenant == 0" (click)="LoadSampleDataClicked()">Load Sample Data</button>
-                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG')">Subscribe to Logitude</button>
-                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('AWB')">Subscribe to e-AWB</button>
-                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('BUY')">Buy AWB's package</button>
-                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
                                                 <button (click)="ShowQueryBuilderClicked()">Query Builder</button>
                                                 <button *ngIf="IsFillLocalStorageVisible" (click)="FillStorageClicked()">Fill Local Storage</button>
 
                                                 <!--<button (click)="ConnectToDropBox()">Connect To DropBox</button>
-                                                <button (click)="CreateCommLogForDropBox()">Create Comm. Log For DropBox</button>-->
+                <button (click)="CreateCommLogForDropBox()">Create Comm. Log For DropBox</button>-->
 
                                             </div>
                                         </div>

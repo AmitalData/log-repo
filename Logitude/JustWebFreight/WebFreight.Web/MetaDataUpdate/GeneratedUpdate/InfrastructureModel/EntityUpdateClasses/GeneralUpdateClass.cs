@@ -79,47 +79,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             {
 			
 	             				    ObjectTableName =  "General",
+			      				    IsNew =  false,
 			      				    DBTableName =  "Generals",
+			      				    OldDBTableName =  "Generals",
 			      				    ObjectTableSingular =  "General",
 			      				    ObjectTablePlural =  "Generals",
-			      				    DefaultText =  "General",
-			      				    Name =  "General",
-			      				    IsNewWizard =  false,
 			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
+			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "General,Generals,,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  false,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
-			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    DefaultText =  "General",
+			      				    Code =  "ac60",
+			      				    Name =  "General",
+			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
 			      				    ServerModuleName =  "Generals",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
+			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    SearchFields =  "General,Generals,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -524,6 +528,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GeneralObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GeneralObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -1559,7 +1599,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOAccountingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingBalance", DefaultText = "Accounting Balance",LocalDefaultText = @"יתרה חשבונאית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralONewInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInvoice", DefaultText = "New Invoice",LocalDefaultText = @"חשבונית חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralONewInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInvoice", DefaultText = "New General Invoice",LocalDefaultText = @"חשבונית הכלליות חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralONewCreditNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewCreditNote", DefaultText = "New Credit Note",LocalDefaultText = @"זיכוי חדש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -1575,7 +1615,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Customers", DefaultText = "Customers",LocalDefaultText = @"לקוחות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOGeneralInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.GeneralInvoice", DefaultText = "General Invoice",LocalDefaultText = @"חשבונית כללית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOGeneralInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.GeneralInvoice", DefaultText = "Invoices",LocalDefaultText = @" החשבוניות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O ", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Payments", DefaultText = "Payments",LocalDefaultText = @"תשלומים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

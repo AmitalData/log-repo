@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {CounterPM} from '../../../../../Common/EntityPMs/CounterPM';
 import {CounterDefinitionPM} from '../../../../../Common/EntityPMs/CounterDefinitionPM';
@@ -61,6 +61,8 @@ export class CounterTableComponent extends BaseComponent {
     SetUIProperties() {
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, !this.IsCounterUsed);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, !this.IsCounterUsed);
+        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, !this.IsCounterUsed);
+
     }
     InitializeDefinitions() {
 
@@ -88,6 +90,13 @@ export class CounterTableComponent extends BaseComponent {
         }
     }
 
+    public get CounterSize() { return this.EntityPM.CounterSize; }
+    public set CounterSize(value: number) {
+        if (this.EntityPM.CounterSize != value) {
+            this.EntityPM.CounterSize = value;
+        }
+    }
+
     public get StartNumber() { return this.EntityPM.StartNumber; }
     public set StartNumber(value: number) {
         if (this.EntityPM.StartNumber != value) {
@@ -106,7 +115,10 @@ export class CounterTableComponent extends BaseComponent {
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-
+        let counterLength: number = 15;
+        if (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote") {
+            counterLength = 20;
+        }
         var isValidGreaterStartNumber: boolean = true;
 
         if (!AppTool.IsNullOrEmpty(this.StartNumber)) {
@@ -122,13 +134,22 @@ export class CounterTableComponent extends BaseComponent {
 
         else {
             var errors: string[] = [];
-            Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+            if (this.CounterSize > counterLength) {
+                errors.push("Maximum size allowed for counter is " + counterLength);
+                }
+            if (this.UniquePerPrefix == true) {
+                Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-            if (this.UniquePerPrefix && !AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.StartNumber)) {
-                if ((this.StartNumber + this.Prefix).length > 15) {
-                    errors.push("Maximum length allowed for [Startnumber + Prefix] is 15");
+                if (this.UniquePerPrefix && !AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.StartNumber)) {
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > counterLength) {
+                        errors.push("Maximum length allowed for [Startnumber + Prefix] is " + counterLength);
+                    }
                 }
             }
+            else if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > counterLength) {
+                errors.push("Maximum length allowed for [Prefix + StartNumber] is " + counterLength);
+            }
+        
 
             this.ValidationErrorsList = errors;
 

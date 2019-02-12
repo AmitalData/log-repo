@@ -105,7 +105,8 @@ namespace CommunicationWorkerRole
 					string extention = Path.GetExtension(fileName);
 					if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
                     {
-                        byte[] fileData = ftpService.Download(fileName);
+						string p_message = "";
+						byte[] fileData = ftpService.Download(fileName, out p_message);
 
                         switch (myService)
                         {

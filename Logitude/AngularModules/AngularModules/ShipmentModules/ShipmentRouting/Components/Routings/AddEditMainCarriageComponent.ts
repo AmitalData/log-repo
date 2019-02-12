@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ShipmentValidator} from '../../../../Shipment/Validators/ShipmentValidator';
@@ -60,11 +60,15 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.myPartnersDomainService = new PartnersDomainService();
     }
 
+    private OriginMainCarriageFromPortId: string;
+    private OriginFinalDestinationPortId: string;
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
         this.LabelWidth = this.EntityPM.TransportModeId == "I" ? 115 : 100;
+        this.OriginMainCarriageFromPortId = this.EntityPM.MainCarriageFromPortId;
+        this.OriginFinalDestinationPortId = this.EntityPM.MainCarriageFinalDestinationPortId;
 
         if (this.EntityPM.TransportModeId == "A") {
             this.LabelWidth = 80;
@@ -171,15 +175,15 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
         return myResult;
     }
-    get IsCloseMasterInfoVisible() {
-        var myResult = false;
+    //get IsCloseMasterInfoVisible() {
+    //    var myResult = false;
 
-        if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-            myResult = true;
-        }
+    //    if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+    //        myResult = true;
+    //    }
 
-        return myResult;
-    }
+    //    return myResult;
+    //}
     public IsEditingEnabled: boolean = true;
     public IsEditingEntityEnabled: boolean = true;
     public IsPortsEditingEnabled: boolean = true;
@@ -244,7 +248,11 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             isPortVia1Enabled = true;
 
             if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-                isMainPortsEnabled = false;
+                //isMainPortsEnabled = false;
+
+                if (this.EntityPM.StatusWeight >= 60) {
+                    isMainPortsEnabled = false;
+                }
             }
 
             if (this.Transshipment1FromPortId != null || this.Transshipment2FromPortId != null || this.Transshipment3FromPortId != null) {
@@ -258,6 +266,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isMainPortsEnabled);
         this.UIProperties.SetEnabled("MainCarriageFinalDestinationPortId", this.ObjectTableName, isMainPortsEnabled);
+
         this.UIProperties.SetEnabled("Transshipment1FromPortId", this.ObjectTableName, isPortVia1Enabled);
         this.UIProperties.SetEnabled("Transshipment2FromPortId", this.ObjectTableName, isPortVia2Enabled);
         this.UIProperties.SetEnabled("Transshipment3FromPortId", this.ObjectTableName, isPortVia3Enabled);
@@ -1765,9 +1774,57 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                 RoutingHelper.RemoveTransshipment3Leg(this.EntityPM);
             }
 
-            this.FatherComponent.BuildItemsCollection();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            var isConfirmingPorts: boolean = false;
+            if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+                if (this.OriginMainCarriageFromPortId != this.EntityPM.MainCarriageFromPortId) {
+                    isConfirmingPorts = true;
+                }
+
+                else if (this.OriginFinalDestinationPortId != this.EntityPM.MainCarriageFinalDestinationPortId) {
+                    isConfirmingPorts = true;
+                }                
+            }
+
+            if (isConfirmingPorts) {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Title = "Ports Changed";
+                confirmWindow.Show("Updating the Master shipment ports will update the house shipment accordingly");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                       
+                        if (!this.SaveCompletedEvent) {
+                            this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+
+                                AppTool.KillEventEmitter(this.SaveCompletedEvent);
+                                this.SaveCompletedEvent = null;
+
+                                if (isSaveSuccess) {
+
+                                    SessionLocator.CurrentSession.SessionEvent.emit("ReloadHouses");
+
+                                    this.CloseOk();
+                                }
+
+                                else {
+                                    this.ValidationErrorsList = SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                                }
+                            });
+
+                            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                        }
+                    }
+                });
+            }
+
+            else {
+                this.CloseOk();
+            }
         }
+    }
+
+    private CloseOk() {
+        this.FatherComponent.BuildItemsCollection();
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     private myCloner: Cloner;

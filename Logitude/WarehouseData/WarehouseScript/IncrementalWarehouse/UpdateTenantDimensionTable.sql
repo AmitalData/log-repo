@@ -26,7 +26,7 @@
 	BEGIN
 
 	set @Key = (select [Tenant Number] from Dim_Tenants where [Tenant Number] = @Id)
-	if(@Key is  null) begin insert into Dim_Tenants values(@Id,@Company,@Country); end
+	if(@Key is  null) begin insert into Dim_Tenants ([Tenant Number] , [Tenant Name] , [Country]) values(@Id,@Company,@Country); end
 	else begin update   Dim_Tenants set [Tenant Name]  =@Company,  Country =@Country  Where [Tenant Number] = @Id end
 
 

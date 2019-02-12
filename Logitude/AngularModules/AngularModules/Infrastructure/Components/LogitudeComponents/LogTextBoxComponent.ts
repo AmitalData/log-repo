@@ -1,3 +1,5 @@
+import { EntityResourceService } from './../../Services/EntityResourceService';
+
 import { LogitudeWindow } from './../../../Controls/Windows/LogitudeWindow';
 declare var window: any;
 declare var SelectingElement: any;
@@ -25,7 +27,7 @@ declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
     selector: 'LogTextBox',
     templateUrl: "./LogTextBoxComponent.html",
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, FixedPositionDirective],
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', "IsMultiline", "InputType", "HideColumns", "HideLastColumn", "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative", "AllowPercentage", "UseArialFont", "DontAllowAutoSelect"],
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', "IsMultiline", "InputType", "HideColumns", "HideLastColumn", "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative", "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox'],
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -44,6 +46,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     public HideColumns: boolean = false;
     public HideLastColumn: boolean = false;
     public DigitsAfterPoint: number;
+    public IsRatioBox: boolean = false;
     CopyValueSubs: any;
     @Output() KeyUp = new EventEmitter();
     @Output() ValueChanged = new EventEmitter();
@@ -290,6 +293,11 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
 
+        if (this.IsRatioBox == true) {
+            this.DigitsAfterPoint = 1;
+            this.InputDivStyle = {};
+        }
+
         var objectFieldAvailable: boolean = true;
 
         this.counterId = null;
@@ -469,7 +477,15 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         this.show = true;
         if (this.uiProperty.ValidValue) {
             this.timerToken = setTimeout(() => {
-                this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                if (this.IsRatioBox) {
+                    this.InputDivStyle = null;
+                }
+
+                else
+                {
+                    this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                }
+
                 this.ShowErrorPopup = false;
             }, 300);
 
@@ -1390,7 +1406,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         else {
             this.ShowErrorPopup = false;
             if (this.show) {
-                this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                if (this.IsRatioBox) {
+                    this.InputDivStyle = null;
+                }
+
+                else {
+                    this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                }
             }
             else {
                 this.InputDivStyle = null;
@@ -1520,7 +1542,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     OnMouseOver() {
         this.isMouseOver = true;
         if (this.IsDisabled) {
-            this.InputDivStyle = { 'border': '1px solid #AAAAAA' };
+            if (this.IsRatioBox) {
+                this.InputDivStyle = null;
+            }
+
+            else {
+                this.InputDivStyle = { 'border': '1px solid #AAAAAA' };
+            }
         }
     }
     OnMouseLeave() {
@@ -1540,27 +1568,20 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         //this.isExpanded = !this.isExpanded;
 
+        if(this.ObjectField){
+            this.showMultiLineWindow();
+        }else{
+            var _resSrvc = new EntityResourceService();
+            _resSrvc.getEntityResourceByTableName(this.ObjectTableName)
+            .subscribe((response: any) => {
+                var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+                this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
+                this.showMultiLineWindow();
+             });
+        }
 
 
-        // show window
-        var windowArgs: any = {};
-        windowArgs.ObjectTableName = this.ObjectTableName;
-        windowArgs.ObjectFieldName = this.ObjectFieldName;
-        windowArgs.TextValue = this.TextValue;
 
-        var wind = new LogitudeWindow();
-        // wind.IsFullScreen = true;
-        wind.Width = 960;
-        wind.Height = 570;
-        wind.WindowArgs = windowArgs;
-        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
-        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
-        wind.WindowClosed.subscribe(res=>{
-            console.log("Rsukt--",res);
-            if(res)
-                this.TextValue = res;
-                this.TextValueChanges(this.TextValue);
-        });
 
 
 
@@ -1590,6 +1611,33 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
+    }
+
+    showMultiLineWindow(){
+        // show window
+        var windowArgs: any = {};
+        windowArgs.ObjectTableName = this.ObjectTableName;
+        windowArgs.ObjectFieldName = this.ObjectFieldName;
+        windowArgs.TextValue = this.TextValue;
+
+        var wind = new LogitudeWindow();
+        // wind.IsFullScreen = true;
+        wind.Width = 960;
+        wind.Height = 570;
+        wind.WindowArgs = windowArgs;
+
+        if(this.ObjectField)
+            wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
+        else
+            wind.Title = "";
+
+        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
+        wind.WindowClosed.subscribe(res=>{
+            console.log("Rsukt--",res);
+            if(res)
+                this.TextValue = res;
+                this.TextValueChanges(this.TextValue);
+        });
     }
 
 }

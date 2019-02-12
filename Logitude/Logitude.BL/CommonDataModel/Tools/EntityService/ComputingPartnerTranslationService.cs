@@ -31,19 +31,26 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void GetLoggedContact()
         {
             ContactRepository contactRepository = new ContactRepository(tenant);
-
             string email = HttpContext.Current.User.Identity.Name;
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
 
-            if (email != null)
+            if (loggedContact == null)
             {
-                Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+                loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
                 this.loggedContactId = loggedContact.Id;
             }
 
             else
             {
-                ContactPM loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
-                this.loggedContactId = loggedContact.Id;
+                if (loggedContact.Tenant != tenant)
+                {
+                    loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
+                    this.loggedContactId = loggedContact.Id;
+                }
+                else
+                {
+                    this.loggedContactId = loggedContact.Id;
+                }
             }
         }
 

@@ -11,7 +11,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.EntityId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.EntityReference).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.EntityReference).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.APInvoiceId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
 

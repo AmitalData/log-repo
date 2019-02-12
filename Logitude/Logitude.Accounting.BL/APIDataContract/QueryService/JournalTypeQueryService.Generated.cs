@@ -76,14 +76,16 @@ using Logitude.Accounting.Data;
         {
 		    try
             {
-				   					var temp = new JournalTypePM();
-					if (!string.IsNullOrEmpty(MyEntity.Code))
+				   
+					var temp = new JournalTypePM();
+										if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("JournalType with Code " + MyEntity.Code + " doesn't exist");
+						
 					} 
 					temp.JournalTypeID = MyEntity.Code;
 					temp.EnglishName = MyEntity.EnglishName;

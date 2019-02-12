@@ -428,6 +428,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StatusLocation { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int StatusWeight { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2206,6 +2209,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string LastFinalDestination { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string From { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string To { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string Origin { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstPickupETD { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2292,5 +2304,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string FreightPayerAddressId { get; set; }
 
         public bool HasContainerException { get; set; }
+
+        public bool IsRequestedDocuments { get; set; }
+        public bool IsDigitalSignRequired { get; set; }
+        public bool IsDepositionCloseTask { get; set; }
+
     }
 }

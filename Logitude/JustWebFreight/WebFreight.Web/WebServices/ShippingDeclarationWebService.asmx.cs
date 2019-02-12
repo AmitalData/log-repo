@@ -134,6 +134,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.MasterInternalNumber = shipment.MasterShipmentNumber;
                 myDataProvider.CompleteShipmentType = shipment.TransportModeName + " " + shipment.DirectionName;
                 myDataProvider.ChargeableWeight = shipment.ChargeableWeight;
+                myDataProvider.ProjectNumber = shipment.ProjectNumber;
 
                 if (shipment.DocumentsClosingDate != null)
                 {
@@ -2610,6 +2611,7 @@ namespace WebFreight.Web.WebServices
                     packageline.Description = package.Description;
                     packageline.Notes = package.Notes;
                     packageline.PackageTare = package.Tare != null ? String.Format("{0:0,0.00}", package.Tare.Value) : null;
+                    packageline.MarksAndNumbersOnly = package.MarksAndNumbers;
 
                     #region Harmonize
                     if (package.IsMultiHarmonize)

@@ -66,6 +66,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
+    <None Include="EntityFiles\AccountingNote.lxml" />
     <None Include="EntityFiles\IntegrityCheckStatus.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -174,7 +175,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\JournalActionType.lxml" />
-    <None Include="EntityFiles\JournalLine.lxml" />
+    <None Include="EntityFiles\JournalLine.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\JournalStatusType.lxml" />
     <None Include="EntityFiles\JournalType.lxml" />
     <None Include="EntityFiles\LedgerTransaction.lxml" />

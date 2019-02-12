@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 
@@ -36,6 +36,7 @@ export class CommunicationLogMessageBodyComponent extends BaseComponent implemen
     public myForm: FormGroup;
     public MessageBody: string;
     public ResponseBody: string;
+    public Logs: string;
     MessageWidth: string;
     constructor(public entityArgs: EntityArgs, fb: FormBuilder, public _documentExtendedService: DocumentExtendedService, public _imageLibraryService: ImageLibraryService) {
         super();
@@ -66,9 +67,12 @@ export class CommunicationLogMessageBodyComponent extends BaseComponent implemen
             if (!AppTool.IsNullOrEmpty(this.EntityPM.ResponseDocumentId)) {
                 this.GetResponseBodyFileName();
             }
+
+            if (this.EntityPM.To == "FTP")
+                this.Logs = this.EntityPM.Logs;
         }
 
-        
+       
 
   
 

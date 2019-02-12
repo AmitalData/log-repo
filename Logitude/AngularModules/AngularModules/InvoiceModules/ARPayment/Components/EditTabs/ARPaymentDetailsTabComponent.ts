@@ -338,13 +338,12 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     GetRateIsEnabled() {
         var result = true;
         if (this.EntityPM != null) {
-            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, true);
-
-            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
-                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {                
                 result = false;
             }
         }
+
+        this.SetUIProperties_ExchangeRate();
 
         this.RateIsEnabled = result;
     }

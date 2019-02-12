@@ -36,8 +36,8 @@ export class LogitudeWindow {
     public ZIndex: number = 0;
     public IsFillScreen_90: boolean = false;
     public SuppressBusyIndicator: boolean = false;
+    public IsHideWindowMargin: boolean = false;
 
-    IsHideWindowMargin: any;/// jit problem after khalid revert code ?!?!?
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
     constructor() {
@@ -284,6 +284,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
+        this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
 
         this.SetWindowSize();
         this.RunComponent();
@@ -316,6 +317,8 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.ZIndex = logWindow.ZIndex;
         this.NotifyOnClose = logWindow.NotifyOnClose;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
+        this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
+
 
         this.ChildComponentPath = "./Infrastructure/Components/EditComponent/EditComponent";
         this.HelpText = logWindow.HelpText;
@@ -395,7 +398,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
 
 
             //change window position according to editcomponent location
-             if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
+            if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
 
                 //get window location from edit component
                 var editComponentCelId = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentCellId;

@@ -131,7 +131,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     documentPM: DocumentPM;
     Count = 0;
     Title: string;
-    IsSendEditMode: boolean = true;;
+    IsSendEditMode: boolean = true;
     AttachmentListId: string;
     EventRefreshName: string;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -219,13 +219,16 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     ChildObjectTableId: string;
     SetDataContext(dataContext: DocsOutDataViewModel) {
         this.SelectedInternalDocument = dataContext;
-        if (this.SelectedInternalDocument.ModeSendDocument == "preview") this.IsSendEditMode = false;
+        if (this.SelectedInternalDocument.ModeSendDocument == "preview") {
+            this.IsSendEditMode = false;
+            this.froalaEditorSetting.IsDisableEdit = true;
+        }
+
         if (this.IsSendEditMode) {
             this.froalaEditorSetting.Height = this.SelectedInternalDocument.WindowHeight - 210;
             this.froalaEditorSetting.IsDisableEdit = false;
         }
        
-
         if (!dataContext.DocumentTypePM && !AppTool.IsNullOrEmpty(dataContext.Id)) {
             SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
             this._documentTypePMService.GetSinglePMWithOutInclude(dataContext.Id, SessionLocator.Tenant).subscribe(res => {

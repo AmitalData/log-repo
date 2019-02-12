@@ -17,7 +17,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {GatepassRequestList} from '../../EntityLists/GatepassRequestList';
+import {GatepassRequestList} from '../../EntityLists/GatepassRequestsList';
 
 @Injectable()
 

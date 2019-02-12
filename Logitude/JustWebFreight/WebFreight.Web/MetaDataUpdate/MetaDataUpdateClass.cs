@@ -572,6 +572,25 @@ namespace WebFreight.Web.MetaDataUpdate
             this.ObjectContext.SaveChanges();
         }
 
+        public void UpdateShipmentLogboxAuomationObjectFields(IWebFreightContext context)
+        {
+                List<string> fieldsName = new List<string> { "OwnerLink", "IsDigitalSignRequired", "IsRequestedDocuments" };
+                ObjectFieldsRepository = new ObjectFieldRepository(context);
+                List<ObjectField> objectFields = ObjectFieldsRepository.GetObjectFieldsByFieldsNamesAndObjectTable(fieldsName, ShipmentObject.Id).ToList();
+                if (objectFields.Count > 0)
+                {
+                    foreach (ObjectField objectField in objectFields)
+                    {
+                        if (objectField.FieldName == "OwnerLink") objectField.DisplayInEntityVariables = true;
+                        else objectField.AllowedinAutomationConditions = true;
+                        ObjectFieldsRepository.Update(objectField);
+                    }
+                    ObjectFieldsRepository.SubmitChanges();
+                }
+            
+
+        }
+
         private void CreateINTTRADocumentTypeFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15358,6 +15377,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactEmail",
                 PMPropertyPath = "ContactEmail",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15376,6 +15396,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactName",
                 PMPropertyPath = "ContactName",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15412,6 +15433,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactBusinessPhone",
                 PMPropertyPath = "ContactBusinessPhone",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15430,6 +15452,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactMobile",
                 PMPropertyPath = "ContactMobile",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15448,6 +15471,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactFax",
                 PMPropertyPath = "ContactFax",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15484,6 +15508,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactEmail",
                 PMPropertyPath = "ContactEmail",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -41129,28 +41154,28 @@ namespace WebFreight.Web.MetaDataUpdate
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             //BluesnapContractCode
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Contract",
-                FullFieldLable = "BluesnapContractCode",
-                FieldName = "BluesnapContractCode",
-                FieldsDataType = "LookUp",
-                IsRequired = false,
-                MinLength = 0,
-                MaxLength = 10,
-                ObjectTableId = TenantManagementObject.Id,
-                ObjectTableName = TenantManagementObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                Operator = "Equals",
-                LookUpTableId = BluesnapContractObject.Id,
-                CanFilter = true,
-                ListFieldLable = "BluesnapContractCodeListLable",
-                ListLableDefaultText = "Contract",
-                ValidForQuerySection1 = "TenantManagement",
-                ListPropertyPath = "BluesnapContractCode",
-                PMPropertyPath = "BluesnapContractCode",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            //{
+            //    DefaultText = "Contract",
+            //    FullFieldLable = "BluesnapContractCode",
+            //    FieldName = "BluesnapContractCode",
+            //    FieldsDataType = "LookUp",
+            //    IsRequired = false,
+            //    MinLength = 0,
+            //    MaxLength = 10,
+            //    ObjectTableId = TenantManagementObject.Id,
+            //    ObjectTableName = TenantManagementObject.Name,
+            //    Tenant = 0,
+            //    TextCodeType = "F",
+            //    Operator = "Equals",
+            //    LookUpTableId = BluesnapContractObject.Id,
+            //    CanFilter = true,
+            //    ListFieldLable = "BluesnapContractCodeListLable",
+            //    ListLableDefaultText = "Contract",
+            //    ValidForQuerySection1 = "TenantManagement",
+            //    ListPropertyPath = "BluesnapContractCode",
+            //    PMPropertyPath = "BluesnapContractCode",
+            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
@@ -59087,7 +59112,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature freightFilesFeature = tenantFeatures.Where(d => d.Code == "FREIGHTFILES" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
             Feature connectionsFeature = tenantFeatures.Where(d => d.Code == "CONNECTIONS" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
             Feature customsFeature = tenantFeatures.Where(d => d.Code == "CUSTOMS" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
+            Feature DocsInDownloadDocumentsFeature = tenantFeatures.Where(d => d.Code == "DOCSINDOWNLOADDOCUMENTS" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
 
+
+            
             Feature shipmentAUDITFeature = tenantFeatures.Where(d => d.Code == "AUDIT" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
 
 
@@ -61915,20 +61943,20 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 #endregion
 
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.Q.AllLeadSources", DefaultText = "Lead Sources", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.Q.AllCommodities", DefaultText = "All Commodities", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.Q.AllIndustries", DefaultText = "All Industries", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.Q.AllBusinessUnits", DefaultText = "All Business Units", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", DefaultText = "All Logitude Leads ", ObjectTableId = LogitudeLeadTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.Q.AllMessagingStocks", DefaultText = "All AWB Messaging Stocks", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.Q.AllCustomerSizes", DefaultText = "Customer Sizes", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = "Quote Stages", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.Q.AllComputingPartners", DefaultText = "All Computing Partners", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.Q.AllBluesnapContracts", DefaultText = "Bluesnap Contracts", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.Q.AllAccountingSystems", DefaultText = "Accounting Systems", ObjectTableId = AccountingSystemTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalHandlingInfo.Q.AllHandlingInfos", DefaultText = "AWB Additional Handling Infos", ObjectTableId = AWBAdditionalHandlingInfoTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.Q.AllAccountingPaymentMethods", DefaultText = "Accounting Payment Methods", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.Q.AllAPPaymentMethods", DefaultText = "AP Payment Methods", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.Q.AllLeadSources", DefaultText = "Lead Sources", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.Q.AllCommodities", DefaultText = "All Commodities", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.Q.AllIndustries", DefaultText = "All Industries", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.Q.AllBusinessUnits", DefaultText = "All Business Units", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", DefaultText = "All Logitude Leads ", ObjectTableId = LogitudeLeadTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.Q.AllMessagingStocks", DefaultText = "All Messaging Stocks", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.Q.AllCustomerSizes", DefaultText = "Customer Sizes", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = "Quote Stages", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.Q.AllComputingPartners", DefaultText = "All Computing Partners", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.Q.AllBluesnapContracts", DefaultText = "Bluesnap Contracts", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.Q.AllAccountingSystems", DefaultText = "Accounting Systems", ObjectTableId = AccountingSystemTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalHandlingInfo.Q.AllHandlingInfos", DefaultText = "AWB Additional Handling Infos", ObjectTableId = AWBAdditionalHandlingInfoTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.Q.AllAccountingPaymentMethods", DefaultText = "Accounting Payment Methods", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.Q.AllAPPaymentMethods", DefaultText = "AP Payment Methods", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
 
                 #region competitor
                 AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.Q.AllCompetitors", DefaultText = "Competitors", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
@@ -62185,6 +62213,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.FBLStock", DefaultText = "FBL Stock", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.BTEX", DefaultText = "Batch Task Executions", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.FeatureToggle", DefaultText = "Feature Toggles", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
 
             // Business Process 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.BusinessProcess", DefaultText = "Business Process", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
@@ -64158,7 +64187,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.CantIssueInvoiceWithFutureDate", LocalDefaultText = "לא ניתן לאשר חשבונית עם תאריך עתידי", DefaultText = "Cant issue Invoice with Future Invoice Date", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates", LocalDefaultText = "ישנם שערי חליפין שונים בשורות החשבונית", DefaultText = "(%CurrencyCode) Invoice Lines have different Exchange Rate values", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.ManualInvoiceNumberNotAllowed", LocalDefaultText = "ע''פ הגדרות מערכת הנה''ח לא ניתן להקליד מספר חשבונית באופן ידני", DefaultText = "Accounting Settings dont allowe manual invoice number", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.ChronologicalDate", LocalDefaultText = "תאריך חשבונית חייב להיות גדול או שווה לתאריך הכרונולוגי", DefaultText = "Invoice Date should be bigger or equals to the Last Chronological Date", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.ChronologicalDate", LocalDefaultText = "שהוא תאריך החשבונית האחרונה במערכת, %Date תאריך החשבונית חייב להיות גדול או שווה לתאריך", DefaultText = "Invoice Date should be bigger or equals to the Last Chronological Date %Date", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.CantAddPaymentForDraftInvoice", LocalDefaultText = "לא ניתן להוסיף תשלום עבור טיוטת חשבונית", DefaultText = "Cant add payment for Draft invoice", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.AmountPaidBiggerThanInvoiceAmount", LocalDefaultText = "הסכום ששולם שווה או גדול לסכום החשבונית", DefaultText = "Amount paid equals or bigger than invoice amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.AccountingSettingsDontAllowVoid", LocalDefaultText = "הגדרות הנה''ח לא מאפשרות ביטול חשבוניות", DefaultText = "Accounting Settings doesn't allow void A/R Invoice", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
@@ -67121,6 +67150,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ReportFeature56= AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTSSTOCKS", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentsStocks", NameTextCodeDefaultText = "Shipments Stocks", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature57 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKSWITHNORPROJECTSREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.TasksWithoutProjects", NameTextCodeDefaultText = "Tasks not Connected to Projects", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature58 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTDETAILS", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentDetails", NameTextCodeDefaultText = "Shipment Details", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ReportFeature59 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.VendorCharges", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.VendorChargesAnalysis", NameTextCodeDefaultText = "Vendor Charges Analysis", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ReportFeature60 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VDK", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.VDK", NameTextCodeDefaultText = "VDK Report Templates", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -67482,6 +67513,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ShipmentFeature_C27 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentEditExchangeRate", ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_C28 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingInstructions", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.ShippingInstructions", NameTextCodeDefaultText = "Send Shipping Instructions", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_C29 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTTRASimulator", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.INTTRASimulator", NameTextCodeDefaultText = "INTTRA Simulator", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShipmentFeature_AC30 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSINDOWNLOADDOCUMENTS", FeatureTypeCode = "ACT", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.DOCSINDOWNLOADDOCUMENTS", NameTextCodeDefaultText = "Docs In Download Documents" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature ShipmentFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTS", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.Shipments", NameTextCodeDefaultText = "Shipments", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MASTERS", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.Masters", NameTextCodeDefaultText = "Masters", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);

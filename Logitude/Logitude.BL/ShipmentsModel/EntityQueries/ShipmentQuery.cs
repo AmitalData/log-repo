@@ -34,11 +34,13 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using System.Reflection;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ShipmentQuery
     {
+        
         ShipmentRepository repository;
 
         public ShipmentQuery(int tenant)
@@ -1468,6 +1470,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
             shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
             shipmentPM.SplitOnCarriage = shipment.SplitOnCarriage;
+            shipmentPM.From = shipment.From;
+            shipmentPM.To = shipment.To;
+            shipmentPM.Origin = shipment.Origin;
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
@@ -1514,6 +1519,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.StatusName = shipment.EntityStatus.Name;
             shipmentPM.StatusLocation = shipment.StatusLocation;
             shipmentPM.StatusDate = shipment.StatusDate;
+            shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
+
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
             shipmentPM.ProfitExchangeRate = shipment.ProfitExchangeRate;
@@ -2211,8 +2218,23 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
 
+            //  if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+            //{
+            //    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentPM.Tenant);
+            //    ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentPM.Id, shipmentPM.Tenant);
+            //    if (shipmentComputedFields != null)
+            //    {
+            //        shipmentPM.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
+            //        shipmentPM.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
+            //    }
+            //}
+
+
+
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
+
+
 
             return returnShipment;
         }
@@ -2927,6 +2949,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
             shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
             shipmentPM.SplitOnCarriage = shipment.SplitOnCarriage;
+            shipmentPM.From = shipment.From;
+            shipmentPM.To = shipment.To;
+            shipmentPM.Origin = shipment.Origin;
 
             if (!string.IsNullOrEmpty(shipment.LastSharedEventId))
             {
@@ -10261,7 +10286,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             IQueryable<ShipmentDataView> allAgentShipments = allShipments.Where(d => d.ForwarderShipmentNumber != null && d.ForwarderShipmentNumber != string.Empty);
             IQueryable<ShipmentDataView> allImporterShipments = allShipments.Where(d => d.ForwarderShipmentNumber == null || d.ForwarderShipmentNumber == string.Empty);
-            IQueryable<ShipmentDataView> allReqDocsShipments = allShipments.Where(d => d.IsRequestedDocuments == true || d.IsDigitalSignRequired == true);
+            IQueryable<ShipmentDataView> allReqDocsShipments = allShipments.Where(d => d.IsRequestedDocuments == true || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true);
             IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.IsDigitalSignRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
 
             myResult.AllShipmentsCount = allShipments.Take(1001).Count();
@@ -10509,6 +10534,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          LastFinalDestination = s.LastFinalDestination,
                                                          FirstPickupETA = s.FirstPickupETA,
                                                          FirstPickupETD = s.FirstPickupETD,
+                                                         From = s.From,
+                                                         To = s.To,
+                                                         Origin = s.Origin
                                                      };
 
             return shipmentsList;
@@ -10825,9 +10853,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                FromPortCountry = f.MainCarriageFromPortCountryName,
 
                                // Column: To
-                               ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPortName,
-                               MainCarriageToState = f.MainCarriageToState,
-
+                               ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPortName,                               
                                ToPortName = f.ToPortName,
                                ToPortCountry = f.MainCarriageToPortCountryName,
                                MasterShipmentDataId = f.MasterShipmentDataId,
@@ -10846,9 +10872,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageFromPortId = f.MainCarriageFromPortId,
 
                                // Column: Origin
-                               MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.FromPortName,
-                               MainCarriageFromState = f.MainCarriageFromState,
-
+                               MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.FromPortName,                              
                                MainCarriageATA = f.MainCarriageATA,
                                MainCarriageETD = f.MainCarriageETD,
                                IncotermId = f.IncotermId,
@@ -11031,6 +11055,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                                ProjectNumber = f.ProjectNumber,
                                ContainerLastStatusDate = f.ContainerLastStatusDate,
+                               IsDepositionRequired = f.IsDepositionRequired,
+                               ImporterDepositionRequestDetails = f.ImporterDepositionRequestDetails,
+                               ForwarderPartnerId = f.ForwarderPartnerId,
+                               From = f.From,
+                               To = f.To,
+                               Origin = f.Origin
                            };
             return myResult;
         }
@@ -11159,8 +11189,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     // Column: To
                     ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPortName,
-                    MainCarriageToState = f.MainCarriageToState,
-
+                    
 
                     ToPortName = f.ToPortName,
                     ToPortCountry = f.MainCarriageToPortCountryName,
@@ -11181,8 +11210,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     // Column: Origin
                     MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.FromPortName,
-                    MainCarriageFromState = f.MainCarriageFromState,
-
+                   
                     MainCarriageATA = f.MainCarriageATA,
                     MainCarriageETD = f.MainCarriageETD,
                     IncotermId = f.IncotermId,
@@ -11363,6 +11391,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                     ProjectNumber = f.ProjectNumber,
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
+                    From = f.From,
+                    To = f.To,
+                    Origin = f.Origin
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11484,8 +11515,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     // Column: To
                     ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPort,
-                    MainCarriageToState = f.MainCarriageToState,
-
+                    
                     ToPortName = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortName) ? f.MainCarriageFinalDestinationPortName : f.ToPortName,
                     ToPortCountry = f.MainCarriageToPortCountryName,
                     MasterShipmentDataId = f.MasterShipmentDataId,
@@ -11505,8 +11535,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     // Column: Origin
                     MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.MainCarriageFromPortName,
-                    MainCarriageFromState = f.MainCarriageFromState,
-
+                    
                     MainCarriageATA = f.MainCarriageATA,
                     MainCarriageETD = f.MainCarriageETD,
                     IncotermId = f.IncotermId,
@@ -11610,6 +11639,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                     ProjectNumber = f.ProjectNumber,
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
+                    From = f.From,
+                    To = f.To,
+                    Origin = f.Origin
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11683,12 +11715,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
 
             string shipmentId = (from a in repository.context.Shipments
-                                 where a.Tenant == tenant && a.ShipmentNumber == agentRef
+                                 where a.Tenant == tenant && a.ShipmentNumber == agentRef && !a.IsCancelled
                                  select a.Id).FirstOrDefault();
 
             return shipmentId;
 
         }
+
+
+        public string GetShipmentIdByForwarderShipmentNumber(string agentRef, int tenant)
+        {
+            string shipmentId = (from a in repository.context.Shipments
+                                 where a.Tenant == tenant && a.ForwarderShipmentNumber == agentRef && !a.IsCancelled
+                                 select a.Id).FirstOrDefault();
+
+            return shipmentId;
+
+        }
+
+
         public string GetShipmentByAgentSharedManifestRef(string agentSharedManifestRef, int tenant)
         {
 
@@ -11859,8 +11904,211 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
 
+        public int? GetCustomerTenantByShipmentNumber(string shipmentNumber,  int tenant)
+        {
+         
+            int? result = (from a in repository.context.Shipments
+                                 where a.Tenant == tenant && a.ShipmentNumber == shipmentNumber 
+                                 select a.CustomerTenantNumber).FirstOrDefault();
 
 
+            return result;
+
+        }
+
+        public IQueryable<ShipmentList> GetAllShipmentListTenant(int tenant)
+        {
+            IQueryable<ShipmentList> shipmentsList = from s in repository.context.Shipments.Include("ShipmentType").Include("ShipmentLevel")
+                                                     join sm in repository.context.ShipmentMasterDatas
+                                                     on s.MasterShipmentDataId equals sm.Id into shipmentJoin
+                                                     from m in shipmentJoin.DefaultIfEmpty()
+                                                     where s.Tenant == tenant
+                                                     select new ShipmentList()
+                                                     {
+                                                         ProfitExchangeRate = s.ProfitExchangeRate,
+                                                         OpenPayablesInLocalCurrency = s.OpenPayablesInLocalCurrency,
+                                                         AccountedPayablesInLocalCurrency = s.AccountedPayablesInLocalCurrency,
+                                                         OpenReceivablesInLocalCurrency = s.OpenReceivablesInLocalCurrency,
+                                                         AccountedReceivablesInLocalCurrency = s.AccountedReceivablesInLocalCurrency,
+                                                         ProfitInLocalCurrency = s.ProfitInLocalCurrency,
+                                                         OpenPayablesInProfitCurrency = s.OpenPayablesInProfitCurrency,
+                                                         AccountedPayablesInProfitCurrency = s.AccountedPayablesInProfitCurrency,
+                                                         OpenReceivablesInProfitCurrency = s.OpenReceivablesInProfitCurrency,
+                                                         AccountedReceivablesInProfitCurrency = s.AccountedReceivablesInProfitCurrency,
+                                                         ProfitInProfitCurrency = s.ProfitInProfitCurrency,
+                                                         AgentId = s.AgentId,
+                                                         AgentName = s.AgentCard != null ? s.AgentCard.EnglishName : null,
+                                                         AgentReference1 = s.AgentReference1,
+                                                         AgentReference2 = s.AgentReference2,
+                                                         BookingNumberOfPackages = s.BookingNumberOfPackages,
+                                                         BranchId = s.BranchId,
+                                                         ChargeableWeightInKG = s.ChargeableWeightInKG,
+                                                         ConsigneeId = s.ConsigneeId,
+                                                         ConsigneeName = s.ConsigneeCard != null ? s.ConsigneeCard.EnglishName : null,
+                                                         ConsigneeReference1 = s.ConsigneeReference1,
+                                                         ConsigneeReference2 = s.ConsigneeReference2,
+                                                         CreateDateTime = s.CreateDateTime,
+                                                         AWBCurrencyCode = s.AWBCurrency != null ? s.AWBCurrency.Code : null,
+                                                         CustomerId = s.CustomerId,
+                                                         CustomerName = s.CustomerCard != null ? s.CustomerCard.EnglishName : null,
+                                                         CustomerReference1 = s.CustomerReference1,
+                                                         CustomerReference2 = s.CustomerReference2,
+                                                         DepartmentId = s.DepartmentId,
+                                                         ChargeableWeightUnitCode = s.ChargeableWeightUnitCode,
+                                                         DirectionId = s.DirectionId,
+                                                         DirectionName = s.Direction.Name,
+                                                         EstimateProfitInLocalCurrency = s.EstimateProfitInLocalCurrency,
+                                                         EstimateProfitInProfitCurrency = s.EstimateProfitInProfitCurrency,
+                                                         MainCarriageFinalDestinationETA = m.MainCarriageFinalDestinationETA,
+                                                         MainCarriageFinalDestinationATA = m.MainCarriageFinalDestinationATA,
+                                                         MainCarriageFinalDestinationPortCode = m.MainCarriageFinalDestinationPort == null ? null : m.MainCarriageFinalDestinationPort.Code,
+                                                         FreightForwarderId = s.FreightForwarderId,
+                                                         FreightForwarderName = s.FreightForwarderCard != null ? s.FreightForwarderCard.EnglishName : null,
+                                                         FromPort = m.MainCarriageFromPort.Code,
+                                                         FromPortCountry = m.MainCarriageFromPort.Country.Code,
+                                                         FromPortName = m.MainCarriageFromPort.EnglishName,
+                                                         GrossWeightInKG = s.GrossWeightInKG,
+                                                         GrossWeightPerTon = s.GrossWeightPerTon,
+                                                         House = s.House,
+                                                         Id = s.Id,
+                                                         IncotermId = s.IncotermId,
+                                                         IncotermCode = s.Incoterm != null ? s.Incoterm.Code : null,
+                                                         IsAccountingClosed = s.IsAccountingClosed,
+                                                         IsCancelled = s.IsCancelled,
+                                                         CancelledDate = s.CancelledDate,
+                                                         ShipmentLevelCode = s.ShipmentLevelCode,
+                                                         IsOperationalClosed = s.IsOperationalClosed,
+                                                         AccountingCloseDate = s.AccountingCloseDate,
+                                                         OperationalCloseDate = s.AccountingCloseDate,
+                                                         LastUpdateDate = s.LastUpdateDate,
+                                                         MainCarriageATA = m.MainCarriageATA,
+                                                         MainCarriageATD = m.MainCarriageATD,
+                                                         MainCarriageCarrierCode = m.MainCarriageCarrierCard != null ? m.MainCarriageCarrierCard.Code : null,
+                                                         MainCarriageCarrierId = m.MainCarriageCarrierId,
+                                                         MainCarriageCarrierName = m.MainCarriageCarrierCard != null ? m.MainCarriageCarrierCard.EnglishName : null,
+                                                         MainCarriageCarrierNumber = m.MainCarriageCarrierNumber,
+                                                         MainCarriageETA = m.MainCarriageETA,
+                                                         MainCarriageETD = m.MainCarriageETD,
+                                                         MainCarriageFromPortCode = m.MainCarriageFromPort.Code,
+                                                         MainCarriageFromPortCountryCode = m.MainCarriageFromPort.Country.Code,
+                                                         MainCarriageFromPortCountryName = m.MainCarriageFromPort.Country.EnglishName,
+                                                         MainCarriageFromPortId = m.MainCarriageFromPortId,
+                                                         MainCarriageFromPortName = m.MainCarriageFromPort.EnglishName,
+                                                         MainCarriageToPortCode = m.MainCarriageToPort.Code,
+                                                         MainCarriageToPortCountryCode = m.MainCarriageToPort.Country.Code,
+                                                         MainCarriageToPortCountryName = m.MainCarriageToPort.Country.EnglishName,
+                                                         MainCarriageToPortName = m.MainCarriageToPort.EnglishName,
+                                                         Master = m.Master,
+                                                         NextETA = s.NextETA,
+                                                         NextETD = s.NextETD,
+                                                         NextLegCode = s.NextLegCode,
+                                                         NextLegName = s.NextLeg != null ? s.NextLeg.Name : null,
+                                                         PackagesQuantity = s.PackagesQuantity,
+                                                         NumberOfContainers = s.NumberOfContainers,
+                                                         NumberOfFollowUps = s.NumberOfFollowUps,
+                                                         NumberOfPackages = s.NumberOfPackages,
+                                                         PreCarriageETD = s.PreCarriageETD,
+                                                         OrderChargeableWeight = s.OrderChargeableWeight,
+                                                         OrderVolumetricWeight = s.OrderVolumetricWeight,
+                                                         TransportModeId = s.TransportModeId,
+                                                         Tenant = s.Tenant,
+                                                         ToPort = m.MainCarriageToPort.Code,
+                                                         ToPortCountry = m.MainCarriageToPort.Country.Code,
+                                                         ToPortName = m.MainCarriageToPort.EnglishName,
+                                                         TransportModeName = s.TransportMode.Name,
+                                                         SalesmanUserId = s.SalesmanUserId,
+                                                         AccountManagerUserId = s.AccountManagerUserId,
+                                                         MasterShipmentDataId = s.MasterShipmentDataId,
+                                                         ShipmentPayableStatusCode = s.ShipmentPayableStatusCode,
+                                                         ShipmentPayableStatusName = s.ShipmentPayableStatus != null ? s.ShipmentPayableStatus.Name : null,
+                                                         ShipmentNumber = s.ShipmentNumber,
+                                                         ShipmentReceivableStatusCode = s.ShipmentReceivableStatusCode,
+                                                         ShipmentReceivableStatusName = s.ShipmentReceivableStatus != null ? s.ShipmentReceivableStatus.Name : null,
+                                                         ShipperId = s.ShipperId,
+                                                         ShipperName = s.ShipperCard != null ? s.ShipperCard.EnglishName : null,
+                                                         ShipperReference1 = s.ShipperReference1,
+                                                         ShipperReference2 = s.ShipperReference2,
+                                                         UpdatedByUserId = s.UpdatedByUserId,
+                                                         VolumeInCBM = s.VolumeInCBM,
+                                                         VolumetricWeight = s.VolumetricWeight,
+                                                         QuoteId = s.QuoteId,
+                                                         MainCarriageFullCarrierNumber = (m.MainCarriageCarrierNumber != null && m.MainCarriageCarrierCard != null) ? m.MainCarriageCarrierCard.Code + m.MainCarriageCarrierNumber : null,
+                                                         Transshipment1FullCarrierNumber = (m.Transshipment1CarrierNumber != null && m.Transshipment1CarrierPrefix != null) ? m.Transshipment1CarrierPrefix + m.Transshipment1CarrierNumber : null,
+                                                         Transshipment2FullCarrierNumber = (m.Transshipment2CarrierNumber != null && m.Transshipment2CarrierPrefix != null) ? m.Transshipment2CarrierPrefix + m.Transshipment2CarrierNumber : null,
+                                                         Transshipment3FullCarrierNumber = (m.Transshipment3CarrierNumber != null && m.Transshipment3CarrierPrefix != null) ? m.Transshipment3CarrierPrefix + m.Transshipment3CarrierNumber : null,
+                                                         AsAgreedFreight = s.AsAgreedFreight,
+                                                         AsAgreedOtherCharges = s.AsAgreedOtherCharges,
+                                                         AccountNumber = s.AccountNumber,
+                                                         FinalArrivalDate = s.FinalArrivalDate,
+                                                         EstimatedFinalArrivalDate = s.EstimatedFinalArrivalDate,
+                                                         ActualFinalArrivalDate = s.ActualFinalArrivalDate,
+                                                         AMSBL = s.AMSBL,
+                                                         CASSCode = s.CASSCode,
+                                                         FreelancerId = s.FreelancerId,
+                                                         FreelancerAddressId = s.FreelancerAddressId,
+                                                         FreelancerContactId = s.FreelancerContactId,
+                                                         ARInvoiceIssued = s.ARInvoiceIssued,
+                                                         CreditNoteIssued = s.CreditNoteIssued,
+                                                         ProductCode = s.ProductCode,
+                                                         LastStatusLogDate = s.LastStatusLogDate,
+                                                         ExceptionDescription = s.ExceptionDescription,
+                                                         ExceptionDate = s.ExceptionDate,
+                                                         HasException = s.HasException,
+                                                         ExceptionResolvedDescription = s.ExceptionResolvedDescription,
+                                                         LastExceptionDescription = s.LastExceptionDescription,
+                                                         CustomConnectToShipment = s.CustomConnectToShipment,
+                                                         CustomsDeclarationNumber = s.CustomsDeclarationNumber,
+                                                         NumberOfInsidePackages = s.NumberOfInsidePackages,
+                                                         NumberOfInsidePackagesDetails = s.NumberOfInsidePackagesDetails,
+                                                         ComputedStatusId = s.ComputedStatusId,
+                                                         ComputedStatusDate = s.ComputedStatusDate,
+                                                         StatusId = s.StatusId,
+                                                         StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
+                                                         StatusDate = s.StatusDate,
+                                                         StatusLocation = s.StatusLocation,
+                                                         ForeignPartnerCountryCode = s.ForeignPartnerCountryCode,
+                                                         DescriptionOfGoods = s.DescriptionOfGoods,
+                                                         AgentSharedManifestRef = s.AgentSharedManifestRef,
+                                                         IsManifestSentToAgent = s.IsManifestSentToAgent,
+                                                         IsNewARInvoiceBlocked = s.IsNewARInvoiceBlocked,
+                                                         OperationalDate = s.OperationalDate,
+                                                         CutoffDate = s.CutoffDate,
+                                                         ValueOfGoods = s.ValueOfGoods,
+                                                         ISFDate = s.ISFDate,
+                                                         ISFNumber = s.ISFNumber,
+                                                         ITDate = s.ITDate,
+                                                         ITNumber = s.ITNumber,
+                                                         FreightRelease = s.FreightRelease,
+                                                         TerminalAvailable = s.TerminalAvailable,
+                                                         OBLTypeCode = m.OBLTypeCode,
+                                                         DocumentsClosingDate = m.DocumentsClosingDate,
+                                                         TEU = s.TEU,
+                                                         ENSNumber = s.ENSNumber,
+                                                         ENSDate = s.ENSDate,
+                                                         RegistryDate = s.RegistryDate,
+                                                         IsAssembly = s.IsAssembly,
+                                                         FirstOperationalCloseDate = s.FirstOperationalCloseDate,
+                                                         ShipmentTypeId = s.ShipmentTypeId,
+                                                         LastFinalDestination = s.LastFinalDestination,
+                                                         FirstPickupETA = s.FirstPickupETA,
+                                                         FirstPickupETD = s.FirstPickupETD,
+                                                         ShipmentType = s.ShipmentType == null ? null : s.ShipmentType.Name,
+                                                         ShipmentLevelName = s.ShipmentLevel == null ? null : s.ShipmentLevel.Name,
+                                                         CreatedByUserName = s.CreatedByUser == null ? null : s.CreatedByUser.Contact.EnglishName,
+                                                         SpecialServicesTypeName = s.SpecialServicesType == null ? null : s.SpecialServicesType.EnglishName,
+                                                         PreCarriageFromPortId = s.PreCarriageFromPortId,
+                                                         OnCarriageToPortId = s.OnCarriageToPortId,
+                                                         Transshipment1ToPortId = m.Transshipment1ToPortId,
+                                                         Transshipment2ToPortId = m.Transshipment2ToPortId,
+                                                         Transshipment3ToPortId = m.Transshipment3ToPortId,
+                                                         MainCarriageToPortId = m.MainCarriageToPortId,
+                                                         From = s.From,
+                                                         To = s.To,
+                                                         Origin = s.Origin
+                                                     };
+
+            return shipmentsList;
+        }
     }
 
     public class DeparturesArrivalsDataItem

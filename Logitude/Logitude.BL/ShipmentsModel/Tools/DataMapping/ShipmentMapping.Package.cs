@@ -91,6 +91,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ETD = itemPM.ETD;
             itemPoco.ETA = itemPM.ETA;
             itemPoco.Routing = itemPM.Routing;
+            itemPoco.RoutingIds = itemPM.RoutingIds;
             itemPoco.VoyageTripNumber = itemPM.VoyageTripNumber;
             itemPoco.HasContainerException = itemPM.HasContainerException;
 

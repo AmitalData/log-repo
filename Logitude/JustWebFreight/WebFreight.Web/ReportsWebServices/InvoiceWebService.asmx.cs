@@ -204,10 +204,12 @@ namespace WebFreight.Web.ReportsWebServices
                             case "999S":
                             case "999M":
                             case "999C":
+                            case "999G":
                                 invoicedataprovider.CopyName_hebrew = "מקור";
                                 break;
 
                             case "999C1":
+                            case "999G1":
                                 invoicedataprovider.CopyName_hebrew = "עותק";
                                 break;
 
@@ -233,6 +235,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.Type = invoiceTypeCode == "CD" ? "Credit" : "Debit";
                 invoicedataprovider.MasterInternalNumber = shipment.MasterShipmentNumber != null ? shipment.MasterShipmentNumber : "";
                 invoicedataprovider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
+                invoicedataprovider.ProjectNumber = shipment.ProjectNumber != null ? shipment.ProjectNumber : "";
 
                 if (currentInvoice.IsAutoCredit)
                 {
@@ -2501,10 +2504,12 @@ namespace WebFreight.Web.ReportsWebServices
                         case "999S":
                         case "999M":
                         case "999C":
+                        case "999G":
                             invoiceDataProvider.CopyName_hebrew = "מקור";
                             break;
 
                         case "999C1":
+                        case "999G1":
                             invoiceDataProvider.CopyName_hebrew = "עותק";
                             break;
 
@@ -3220,7 +3225,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoiceDataProvider.SubTotalLocalCurr = invoiceSubTotals != null ? String.Format("{0:#,0.00}", invoiceSubTotals.Value) : "";
                 invoiceDataProvider.SubTotalInvoiceCurr = invoiceSubTotals_Local != null ? String.Format("{0:#,0.00}", invoiceSubTotals_Local.Value) : "";
                 invoiceDataProvider.TotalInvoiceCurr = invoiceAmount != null ? invoiceAmount.Value : 0;
-                invoiceDataProvider.TotalLocalCurr = invoiceAmountLocal != null ? String.Format("{0:#,0.00}", invoiceAmount.Value) : "";
+                invoiceDataProvider.TotalLocalCurr = invoiceAmountLocal != null ? String.Format("{0:#,0.00}", invoiceAmountLocal.Value) : "";
                 invoiceDataProvider.TotalProfitCurr = profitAmount != null ? profitAmount.Value : 0;
 
                 var result = invoiceDataProvider.TotalInvoiceCurr - Math.Truncate(invoiceDataProvider.TotalInvoiceCurr);

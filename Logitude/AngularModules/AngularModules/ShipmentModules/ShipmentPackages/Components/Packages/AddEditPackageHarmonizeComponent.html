@@ -32,7 +32,7 @@
                     <div class="SimpleGridViewHeader">
                         <table>
                             <tr>                                
-                                <td style="width: 120px;">{{'ShipmentPackageHarmonize.F.Harmonize' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'ShipmentPackageHarmonize.F.Harmonize' | TextCodeTranslationPipe}}</td>
                                 
                                 <td class="LastChild">
                                     <div></div>
@@ -45,8 +45,24 @@
                         <table>
                             <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource;let i = index">
                                 
-                                <td class="CellStretched" style="width: 120px;">
-                                    <LogTextBox [ObjectFieldName]="'Harmonize'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true" [Text]="item.Harmonize"></LogTextBox>
+                                <td class="CellStretched" style="width: 130px; min-width: 130px; max-width: 130px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'Harmonize'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true" [Text]="item.Harmonize"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 2px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 14px;">
+                                                <span class="hyperlink" (click)="ChooseHarmonizeClicked(item)">
+                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
 
                                 <td class="CellTools">

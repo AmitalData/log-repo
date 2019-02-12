@@ -330,7 +330,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   AddressTypeId = a.AddressTypeId,
                                                   Id = a.Id,
                                                   Address1 = a.Address1,
-                                                  Address2= a.Address2
+                                                  Address2= a.Address2,
+                                                  PhoneNumber = a.PhoneNumber,
                                               }).ToList();
 
             return addressLists;

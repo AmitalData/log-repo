@@ -53,8 +53,8 @@ import {UserListService} from '../../Common/Services/StandardLists/UserListServi
 import {VatTypeListService} from '../../Common/Services/StandardLists/VatTypeListService';
 import {VesselListService} from '../../Common/Services/StandardLists/VesselListService';
 import {WarehouseListService} from '../../Common/Services/StandardLists/WarehouseListService';
-import {JournalActionTypeListService} from '../../Accounting/Services/StandardLists/JournalActionTypeListService'; 
-
+import { JournalActionTypeListService } from '../../Accounting/Services/StandardLists/JournalActionTypeListService';
+import { BluesnapContractTypeListService } from '../Services/StandardLists/BluesnapContractTypeListService';
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
 import {CustomDocumentTypeListService} from '../../Customs/Services/StandardLists/CustomDocumentTypeListService'; 
@@ -76,11 +76,9 @@ import { ARPaymentMethodListService } from '../../Invoice/Services/StandardLists
 import {TMBudgetListService} from '../../TimeManagement/Services/StandardLists/TMBudgetListService'; 
 import {TMProjectCategoryListService} from '../../TimeManagement/Services/StandardLists/TMProjectCategoryListService'; 
 import {SprintListService} from '../../TimeManagement/Services/StandardLists/SprintListService';
-
 import { TenantManagmentPrivateLabelsListService } from '../../Infrastructure/Services/StandardLists/TenantManagmentPrivateLabelsListService';
-
-
 import { BIReportsTypeListService } from  '../Services/StandardLists/BIReportsTypeListService'; 
+import { FeatureToggleListService } from '../Services/StandardLists/FeatureToggleListService';
 
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
@@ -177,7 +175,8 @@ export class CachedDataManagerServices {
             case "SprintListService": { myResult = new SprintListService(); break; }
             case "TenantManagmentPrivateLabelsListService": { myResult = new TenantManagmentPrivateLabelsListService(); break; }
             case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
-
+            case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
+            case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
 
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");

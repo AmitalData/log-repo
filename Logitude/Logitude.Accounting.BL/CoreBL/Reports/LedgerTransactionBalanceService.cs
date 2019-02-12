@@ -144,40 +144,62 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             MyBlance myBlance = new MyBlance() { SumForeignAmount = 0, SumLocalAmount = 0 };
             if (_Param.PageStartAtRecordIndex > 0)
             {
-                var qgGperiod = QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
-                                    .Take(_Param.PageStartAtRecordIndex)
-                                    .GroupBy(r => r);
+                var ledgerPrevPages = QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
+                                    .Take(_Param.PageStartAtRecordIndex);
 
-
-                IQueryable<MyBlance> qMyBlance = null;
-
-                if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
+                bool calcForeign = !this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault();
+                var qprevTot =
+                    (from lt in ledgerPrevPages
+                     group lt by 1 into gb
+                     select new MyBlance()
+                     {
+                         SumLocalAmount = gb.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
+                         SumForeignAmount = calcForeign ? gb.Sum(rec => rec.ForeignAmountDebit - rec.ForeignAmountCredit) : 0,
+                     });
+                myBlance=qprevTot.FirstOrDefault();
+                if (false)
                 {
 
-                    qMyBlance = qgGperiod.Select(g => new MyBlance()
+
+                    var qgGperiod =
+                        //QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId.Take(_Param.PageStartAtRecordIndex)
+                        ledgerPrevPages
+                                        .GroupBy(r => r);
+
+
+                    IQueryable<MyBlance> qMyBlance = null;
+
+
+
+
+                    if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
                     {
 
-                        SumLocalAmount = g.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
-                        SumForeignAmount = g.Sum(rec => rec.ForeignAmountDebit - rec.ForeignAmountCredit),
+                        qMyBlance = qgGperiod.Select(g => new MyBlance()
+                        {
 
-                    });
-                    
-                }
-                else
-                {
-                    qMyBlance = qgGperiod.Select(g => new MyBlance()
+                            SumLocalAmount = g.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
+                            SumForeignAmount = g.Sum(rec => rec.ForeignAmountDebit - rec.ForeignAmountCredit),
+
+                        });
+
+                    }
+                    else
                     {
+                        qMyBlance = qgGperiod.Select(g => new MyBlance()
+                        {
 
-                        SumLocalAmount = g.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
-                        SumForeignAmount = 0,
+                            SumLocalAmount = g.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
+                            SumForeignAmount = 0,
 
-                    });
+                        });
+                    }
+                    myBlance = qMyBlance.GroupBy(g => g).Select(g => new MyBlance()
+                    {
+                        SumLocalAmount = g.Sum(r => r.SumLocalAmount),
+                        SumForeignAmount = g.Sum(r => r.SumForeignAmount),
+                    }).First();
                 }
-                myBlance = qMyBlance.GroupBy(g => g).Select(g => new MyBlance()
-                {
-                    SumLocalAmount = g.Sum(r => r.SumLocalAmount),
-                    SumForeignAmount = g.Sum(r => r.SumForeignAmount),
-                }).First();
             }
 
             return myBlance;
@@ -296,7 +318,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      select new CallBackBalance
                      {
                          CurrencyId = tot.CurrencyId,
-                         BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit
+                         BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit,
+                         BalanceLocal = tot.LocalAmountDebit - tot.LocalAmountCredit
+
                      });
                 if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
                 {
@@ -309,7 +333,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                            select new CallBackBalance
                            {
                                CurrencyId = tot.CurrencyId,
-                               BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit
+                               BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit,
+
+                               BalanceLocal = tot.LocalAmountDebit - tot.LocalAmountCredit
                            });
                 if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
                 {

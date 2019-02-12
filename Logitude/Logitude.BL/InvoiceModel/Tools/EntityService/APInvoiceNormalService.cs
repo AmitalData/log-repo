@@ -1731,58 +1731,71 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             APPayment payment = paymentRepository.GetSingleAPPayment(itemPM.APPaymentId);
 
-            double? invoicepaymentstotalamount = (from a in objectContext.APInvoicePayments
-                                                  where a.APPaymentId == itemPM.APPaymentId
-                                                  && a.Tenant == tenant
-                                                  select a).Sum(s => s.PaymentAmount);
-
-            if (invoicepaymentstotalamount == null)
+            if (payment != null)
             {
-                invoicepaymentstotalamount = 0;
-            }
-
-            invoicepaymentstotalamount = MethodHelper.Round(invoicepaymentstotalamount, 2);
-
-            if (isDelete)
-            {
-                invoicepaymentstotalamount = MethodHelper.Round((invoicepaymentstotalamount - itemPM.PaymentAmount), 2);
-            }
-
-            if (invoicepaymentstotalamount <= payment.AmountInPaymentCurrency)
-            {
-                if (invoicepaymentstotalamount < 0)
+                if (payment.StatusCode == "VD")
                 {
-                    invoicepaymentstotalamount = invoicepaymentstotalamount * -1;
-                }
-
-                payment.OpenAmount = MethodHelper.Round((payment.AmountInPaymentCurrency - invoicepaymentstotalamount), 2);
-
-                if (payment.OpenAmount == 0)
-                {
-                    if (payment.StatusCode == "AD")
-                    {
-                        payment.IsClosed = true;
-                        payment.StatusCode = "CL";
-                    }
-
+                    throw new Exception("Payment (" + payment.PaymentNo + ") is Voided");
                 }
 
                 else
                 {
-                    if (payment.StatusCode != "DR")
+                    #region
+                    double? invoicepaymentstotalamount = (from a in objectContext.APInvoicePayments
+                                                          where a.APPaymentId == itemPM.APPaymentId
+                                                          && a.Tenant == tenant
+                                                          select a).Sum(s => s.PaymentAmount);
+
+                    if (invoicepaymentstotalamount == null)
                     {
-                        payment.IsClosed = false;
-                        payment.StatusCode = "AD";
+                        invoicepaymentstotalamount = 0;
                     }
+
+                    invoicepaymentstotalamount = MethodHelper.Round(invoicepaymentstotalamount, 2);
+
+                    if (isDelete)
+                    {
+                        invoicepaymentstotalamount = MethodHelper.Round((invoicepaymentstotalamount - itemPM.PaymentAmount), 2);
+                    }
+
+                    if (invoicepaymentstotalamount <= payment.AmountInPaymentCurrency)
+                    {
+                        if (invoicepaymentstotalamount < 0)
+                        {
+                            invoicepaymentstotalamount = invoicepaymentstotalamount * -1;
+                        }
+
+                        payment.OpenAmount = MethodHelper.Round((payment.AmountInPaymentCurrency - invoicepaymentstotalamount), 2);
+
+                        if (payment.OpenAmount == 0)
+                        {
+                            if (payment.StatusCode == "AD")
+                            {
+                                payment.IsClosed = true;
+                                payment.StatusCode = "CL";
+                            }
+
+                        }
+
+                        else
+                        {
+                            if (payment.StatusCode != "DR")
+                            {
+                                payment.IsClosed = false;
+                                payment.StatusCode = "AD";
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        throw new Exception("The amount paid is not suitable to the total payment amount!!");
+                    }
+
+                    paymentRepository.Update(payment);
+                    #endregion
                 }
             }
-
-            else
-            {
-                throw new Exception("The amount paid is not suitable to the total payment amount!!");
-            }
-
-            paymentRepository.Update(payment);
         }
         #endregion
 

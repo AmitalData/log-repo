@@ -169,5 +169,31 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return LogitudeCode;
         }
+
+        public List<ComputingPartnerTranslationPM> GetAllByComputingPartner(string computingPartner, int tenant)
+        {
+            List<ComputingPartnerTranslationPM> entityPMs =
+                (from a in repository.Context.ComputingPartnerTranslations.Include("ObjectTable").Include("ComputingPartner").Include("CreatedByUser").Include("UpdatedByUser")
+                 where  a.Tenant == tenant && a.ComputingPartnerId == computingPartner
+                 select new ComputingPartnerTranslationPM()
+                 {
+                     Id = a.Id,
+                     Tenant = a.Tenant,
+                     OurCode = a.OurCode,
+                     PartnerCode = a.PartnerCode,
+                     CreateDate = a.CreateDate,
+                     UpdateDate = a.UpdateDate,
+                     CreatedByUserId = a.CreatedByUserId,
+                     UpdatedByUserId = a.UpdatedByUserId,
+                     ObjectTableId = a.ObjectTableId,
+                     ComputingPartnerId = a.ComputingPartnerId,
+                     ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
+                     ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
+                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                     UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                 }).ToList();
+
+            return entityPMs;
+        }
     }
 }

@@ -20,7 +20,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     {
 
 	    
-	[XmlAttribute]
     public string Id { get; set; }
     
     public ARInvoiceType InvoiceType { get; set; }
@@ -49,7 +48,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     
     public User CreatedByUser { get; set; }
     
-    public string VatNumber { get; set; }
+    public string VATNumber { get; set; }
     
     public Address BillToAddress { get; set; }
     
@@ -84,6 +83,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public int Tenant { get; set; }
     
     public bool IsMultiCurrency { get; set; }
+    
+    public string CreditARInvoice { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

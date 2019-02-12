@@ -19,7 +19,9 @@ import {VolumeUnitListService} from './Services/StandardLists/VolumeUnitListServ
 import {AdvancedQueryFiltersPMService} from './Services/StandardPMs/AdvancedQueryFiltersPMService';
 import {BusinessHoursHolidayPMService} from './Services/StandardPMs/BusinessHoursHolidayPMService';
 import {ChargesGroupPMService} from './Services/StandardPMs/ChargesGroupPMService';
-import {CustomPickListPMService} from './Services/StandardPMs/CustomPickListPMService';
+import { CustomPickListPMService } from './Services/StandardPMs/CustomPickListPMService';
+import { BluesnapContractPMService } from './Services/StandardPMs/BluesnapContractPMService';
+
 //import {EntityStatusPMService} from './Services/StandardPMs/EntityStatusPMService';
 //import {EventTypeCategoryPMService} from './Services/StandardPMs/EventTypeCategoryPMService';
 import {EventTypePMService} from './Services/StandardPMs/EventTypePMService';
@@ -41,7 +43,8 @@ import {TraceEventPMService} from './Services/StandardPMs/TraceEventPMService';
 import {APILogsListService} from './Services/StandardLists/APILogsListService';
 import {APILogsPMService} from './Services/StandardPMs/APILogsPMService';
 import { EmailAlertSettingPMService } from './Services/ExtendedPMs/EmailAlertSettingPMService';
-import {BluesnapContractListService} from './Services/StandardLists/BluesnapContractListService';
+import { BluesnapContractListService } from './Services/StandardLists/BluesnapContractListService';
+import { BluesnapContractTypeListService } from './Services/StandardLists/BluesnapContractTypeListService';
 import {BusinessHourListService} from './Services/StandardLists/BusinessHourListService';
 import {TenantTypeListService} from './Services/StandardLists/TenantTypeListService';
 import {PaymentChannelListService} from './Services/StandardLists/PaymentChannelListService';
@@ -72,11 +75,14 @@ import {TeamListService} from  './Services/StandardLists/TeamListService';
 import {TeamPMService} from './Services/StandardPMs/TeamPMService'; 
 import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderService';
 
-
 import { BIReportListService } from './Services/StandardLists/BIReportListService';
 import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
 import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
 import { WebhookKeysListService } from './Services/StandardLists/WebhookKeysListService';
+
+import { ToggleListService } from './Services/StandardLists/ToggleListService';
+import { FeatureToggleListService } from './Services/StandardLists/FeatureToggleListService';
+import { FeatureTogglePMService } from './Services/StandardPMs/FeatureTogglePMService';
 
 export class ModuleProviders {
     
@@ -133,6 +139,8 @@ export class ModuleProviders {
             case "APILogsPMService": { myResult = new APILogsPMService(); break; }
             case "EmailAlertSettingPMService": { myResult = new EmailAlertSettingPMService(); break; }
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
+            case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }                
+            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }                
             case "TenantTypeListService": { myResult = new TenantTypeListService(); break; }   
             case "BusinessHourListService": { myResult = new BusinessHourListService(); break; }
             case "PaymentChannelListService": { myResult = new PaymentChannelListService(); break; }
@@ -161,7 +169,9 @@ export class ModuleProviders {
             case "BatchTaskExecutionPMService": { myResult = new BatchTaskExecutionPMService(); break; } 
             case "DWQueryBuilderService": { myResult = new DWQueryBuilderService(); break; }
             case "WebhookKeysListService": { myResult = new WebhookKeysListService(); break; }
-                
+            case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
+            case "FeatureTogglePMService": { myResult = new FeatureTogglePMService(); break; }
+            case "ToggleListService": { myResult = new ToggleListService(); break; }
         }
 
         return myResult;

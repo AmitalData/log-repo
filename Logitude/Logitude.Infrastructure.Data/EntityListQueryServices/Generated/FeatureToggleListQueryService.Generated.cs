@@ -1,0 +1,175 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.EntityLists;
+
+namespace Logitude.Infrastructure.Data.EntityListQueryServices
+{ 
+
+    public partial class FeatureToggleListQueryService
+    {
+         private IInfrastructureContext context;
+        public FeatureToggleListQueryService(IInfrastructureContext context)
+        {
+            this.context = context;
+        }
+
+        public List<FeatureToggleList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<FeatureToggle> iQueryable = (from a in context.FeatureToggles
+                                              
+                   where a.Tenant == tenant select a);
+            			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<FeatureToggle>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<FeatureToggleList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<FeatureToggleList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(FeatureToggleList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> FeatureToggleObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("FeatureToggle",tenant).ToList();
+
+                ObjectField objectField = (from a in FeatureToggleObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<FeatureToggleList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<FeatureToggleList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<FeatureToggleList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<FeatureToggleList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<FeatureToggleList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<FeatureToggleList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<FeatureToggleList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderBy(d => d.Tenant);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderBy(d => d.Tenant);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<FeatureToggleList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public FeatureToggleList GetSingle(string id)
+        {
+            IQueryable<FeatureToggle> FeatureToggleQuery = (from a in context.FeatureToggles
+                                                       where a.Id == id
+                                                       select a);
+
+             
+            IQueryable<FeatureToggleList> FeatureToggleListQuery = GetIqueryableList( FeatureToggleQuery);
+            FeatureToggleList FeatureToggleList = FeatureToggleListQuery.FirstOrDefault();
+            return FeatureToggleList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<FeatureToggle> iQueryable = (from a in context.FeatureToggles 
+                   where a.Tenant == tenant select a);
+
+			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<FeatureToggle>(nonListQueryOperation, iQueryable);
+
+            IQueryable<FeatureToggleList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<FeatureToggleList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -17,6 +17,20 @@
 
                         <td style="width: 150px;">
                             <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 100px;">
+                            <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width: 150px;">
+                            <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="CounterSize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                         </td>
 
                         <td>

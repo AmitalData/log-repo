@@ -24,6 +24,10 @@ using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
@@ -130,6 +134,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 // change payment cheque status
                 LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
                 PaymentChequeQueryService paymentChequeQuery = new PaymentChequeQueryService(entityPM.Tenant);
+                BankDepositQueryService  depositQuery = new BankDepositQueryService(entityPM.Tenant);
+                ARPaymentChequeQueryService  arpChequeQuery = new ARPaymentChequeQueryService(entityPM.Tenant);
+                ARPaymentChequeUpdateService arpChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+
                 List<string> LedgerTransactionIds = entityPM.ExternalReconciliationLines.Where(d => d.LedgerTransactionId != null).Select(d => d.LedgerTransactionId).ToList();
                 List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
                 foreach (var transactionPM in LedgerTransactions)
@@ -141,6 +149,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         chequePM.ChangeSetOp = ChangeSetOperation.Update;
                         PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
                         paymentChequeUpdateService.Update(chequePM, true);
+                    }
+                    else if(transactionPM.SourceTypeCode == "6") // 6- Cheque Deposit
+                    {
+                        BankDepositPM depositPM = depositQuery.GetSingle(transactionPM.SourceId, true, false);
+
+                        foreach (BankDepositLinePM depLine in depositPM.BankDepositLines)
+                        {
+
+                            if (transactionPM.Reference1 == depLine.ChequeNumber)
+                            {
+                                ARPaymentChequePM chequePM = arpChequeQuery.GetSingle(depLine.ARPaymentChequeId, false, false);
+                                chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                                chequePM.StatusCode = "4"; // 4- In cashbook
+                                arpChequeUpdateService.Update(chequePM, true);
+                            }
+
+                        }
                     }
                 }
 
@@ -271,26 +296,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-        private static ContactPM GetLoggedContact(int tenant)
-        {
 
+        public static ContactPM GetLoggedContact(int tenant)
+        {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
+
     }
-   
+
 }
 	 

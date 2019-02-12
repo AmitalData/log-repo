@@ -24,6 +24,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public ComputingPartner Poco { get; set; }
         private ComputingPartnerPM entityPM;
         private ICommonDataContext objectContext;
+        private ContactRepository contactRepository;
+
         private ComputingPartnerRepository entityRepository;
         private ComputingPartnerTableRepository computingPartnerTableRepository;
         public ComputingPartnerService(ICommonDataContext objectContext, ComputingPartnerPM entityPM)
@@ -41,18 +43,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ContactRepository contactRepository = new ContactRepository(tenant);
 
             string email = HttpContext.Current.User.Identity.Name;
+            Contact loggedContact= contactRepository.GetSingleContactByEmail(email, tenant);
 
-            if (email != null)
+            if (loggedContact == null)
             {
-                Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+                loggedContact =  contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
                 this.loggedContactId = loggedContact.Id;
             }
 
             else
             {
-                ContactPM loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
-                this.loggedContactId = loggedContact.Id;
+                if (loggedContact.Tenant != tenant)
+                {
+                    loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
+                    this.loggedContactId = loggedContact.Id;
+                }
+                else
+                {
+                    this.loggedContactId = loggedContact.Id;
+                }
             }
+            
+
+
         }
 
         public void Create()
@@ -325,7 +338,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             itemPM.Tenant = tenant;
             itemPM.ComputingPartnerId = entityPM.Id;
-
+            itemPM.CreatedByUserId = this.loggedContactId;
+            itemPM.UpdatedByUserId = this.loggedContactId;
             ComputingPartnerTable itemPoco = new ComputingPartnerTable()
             {
                 Tenant = itemPM.Tenant,
@@ -339,6 +353,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void UpdatePartnerTable(ComputingPartnerTablePM itemPM)
         {
             ComputingPartnerTable itemPoco = computingPartnerTableRepository.GetSingleComputingPartnerTable(itemPM.Tenant, itemPM.ObjectTableId, itemPM.ComputingPartnerId);
+            itemPM.UpdatedByUserId = this.loggedContactId;
             ComputingPartnerTableMapping.MapEntity(itemPM, itemPoco, false);
             computingPartnerTableRepository.Update(itemPoco);
         }

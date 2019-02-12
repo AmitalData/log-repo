@@ -22,6 +22,11 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using System.Web;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -117,6 +122,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.ParentAccountNumber);
             this.CustomMappedPMProperties.Add(PMPropertyNames.PreviousEnglishName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.PreviousLocalName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.CardId);
 
             // GET logged contact, RTL
             ContactPM contact = GetLoggedContact(entityPOCO.Tenant)?? new ContactPM();
@@ -462,6 +468,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
+            //get cardid if exisit
+            CardQuery cardQuery = new CardQuery(entityPM.Tenant);
+            CardList cardList = cardQuery.GetSingleByGLAccount(entityPM.Id, entityPM.Tenant);
+            if(cardList != null)
+            {
+                entityPM.CardId = cardList.Id;
+            }
+
         }
 
 
@@ -471,22 +485,19 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         private static ContactPM GetLoggedContact(int tenant)
         {
-
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
+
+
 
     }
 

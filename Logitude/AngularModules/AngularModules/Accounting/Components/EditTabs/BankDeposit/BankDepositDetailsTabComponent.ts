@@ -1,3 +1,5 @@
+import { ARPaymentChequeList } from './../../../EntityLists/ARPaymentChequeList';
+import { ARPaymentChequeListService } from './../../../Services/StandardLists/ARPaymentChequeListService';
 import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {BankDepositPM} from '../../../EntityPMs/BankDepositPM';
@@ -18,6 +20,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {BankDepositExtendedPMService } from '../../../Services/ExtendedPMs/BankDepositExtendedPMService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: module.id,
@@ -42,6 +45,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
     currencyListService: CurrencyListService = new CurrencyListService();
     _BankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
+    _ARPaymentChequeListService: ARPaymentChequeListService = new ARPaymentChequeListService();
+
     public isRTL: boolean = false;
     public IsReturnChequeEnabled: boolean = false;
 
@@ -69,23 +74,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         }
 
+        this.Listen();
 
-        // Subscribe save event
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-            if (isSaveSuccess) {
-                console.log("Deposited Success", this.EntityPM);
-                this.RedrawScreen();
-                this.ShowAlert();
-            }
-        });
-        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-            if (isLoadSuccess) {
-                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                console.log("Entity Reloaded");
-                console.log("Deposited Success", this.EntityPM);
-                this.RedrawScreen();
-            }
-        });
 
         // Dim fields
         //this.SetUIProperty(); // do it after getting cashbook (isCashDeposit)
@@ -95,30 +85,50 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.GetDefaultValues();
     }
 
-    RedrawScreen() {
-        SessionLocator.CurrentSession.CurrentEditComponent.EntityId = this.EntityPM.Id; // Set entity id in edit component to reload
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM(); // reloading
-
-        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => { // after loading complete
-            if (isLoadSuccess) {
-                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                console.log("Deposit Reloaded: ", this.EntityPM);
-
-                // Redraw UI
-                this.IsLinesSelection = false;
-                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                this.CashBookLines = [];
-                this.BankDepositLines = this.EntityPM.BankDepositLines;
-                this.CalculateTotals();
-
-                this.GetCashBook();
-                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
-                this.SetUIProperty();
+    Listen(){
+        // Save
+        SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            if (isSaveSuccess) {
+                console.log("Deposited Success", this.EntityPM);
+                this.RedrawScreen();
+                this.ShowAlert();
             }
         });
 
+        // Reload
+        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            if (isLoadSuccess) {
+                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                console.log("Entity Reloaded");
+                console.log("Deposited Success", this.EntityPM);
+                this.RedrawScreen();
+            }
+        });
+    }
+
+    RefreshEntity(){
+        SessionLocator.CurrentSession.CurrentEditComponent.EntityId = this.EntityPM.Id; // Set entity id in edit component to reload
+        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM(); // reloading
+    }
+
+    RedrawScreen() {
+
+        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+        console.log("Deposit Reloaded: ", this.EntityPM);
+
+        this.IsLinesSelection = !this.EntityPM.Id;
 
 
+        // Redraw UI
+        this.IsLinesSelection = false;
+        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+        this.CashBookLines = [];
+        this.BankDepositLines = this.EntityPM.BankDepositLines;
+        this.CalculateTotals();
+
+        this.GetCashBook();
+        SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
+        this.SetUIProperty();
     }
 
     //#region Alert
@@ -658,6 +668,21 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     //#region Out of Deposit
     ReturnChequeButtonClicked(line: BankDepositLinePM) {
 
+        // validate redeemed cheque
+        if (line.ChequeStatusCode == "6") { // 6- Redeemed
+            // var msg = new MessageWindow();
+            // msg.Show(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+
+            return;
+        } else {
+            this.showReturnChequeWindow(line);
+        }
+
+    }
+    showReturnChequeWindow(line){
+
         // new code
         var windowArgs: any = {};
         //windowArgs.ReconciliationPM = entity;
@@ -680,7 +705,6 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
             }
         });
-
 
     }
     ReturnCheque(chequeId:string ,returnType:string, notes: string) {

@@ -19,6 +19,10 @@ using System.Web;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -89,7 +93,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 accContext = accContext ?? AccountingContext.GetContext(entityPOCO.Tenant);
                 AccountingEntityQueryService accountingEntityQueryService = new AccountingEntityQueryService(accContext);
                 AccountingEntityPM parent = accountingEntityQueryService.GetSingle(entityPOCO.AccountingEntityCode, false, true);
-                ContactPM user = GetLoggedContactData(GetLoggedContactEmail(entityPOCO.Tenant), entityPOCO.Tenant);
+                ContactPM user = GetLoggedContact(entityPOCO.Tenant);
                 if (user != null)
                 {
                     entityPM.AccountingEntityName = user.DontShowLocal ? parent.EnglishName : parent.LocalName;
@@ -114,7 +118,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 JournalStatusTypePM type = journalStatusTypeQueryService.GetSingle(entityPOCO.StatusCode, false, true);
                 entityPM.StatusName = type.EnglishName;
 
-                ContactPM user = GetLoggedContactData(GetLoggedContactEmail(entityPOCO.Tenant), entityPOCO.Tenant);
+                ContactPM user = GetLoggedContact(entityPOCO.Tenant);
 
                 if (user != null)
                 {
@@ -154,27 +158,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         }
 
 
-        private ContactPM GetLoggedContactData(string userEmail, int tenant)
-        {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(userEmail, tenant);
-            return contactPM;
-        }
 
-        private string GetLoggedContactEmail(int tenant)
-        {
-            string email = "";
-            if (HttpContext.Current != null)
-            {
-                email = HttpContext.Current.User.Identity.Name;
-            }
-            else
-            {
-                email = "system@tenant" + tenant.ToString() + ".com";
-            }
-
-            return email;
-        }
         private static void BuildSearchFields(JournalPM entityPM, Journal poco, bool isNewEntity)
         {
             string result = "";
@@ -245,24 +229,22 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
 
 
+
         private static ContactPM GetLoggedContact(int tenant)
         {
-
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
+
+
 
 
         //if (!string.IsNullOrEmpty(entityPM.))

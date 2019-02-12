@@ -594,11 +594,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusTypeCode",
-					  						DefaultText =  @"Status",
-					  						FullLocalDefaultText =  @"סטטוס",
+					  						DefaultText =  @"Status Code",
+					  						FullLocalDefaultText =  @"קוד סטטוס ",
 					  						ListFieldLable =  "StatusTypeCodeListLable",
-					  						ListLableDefaultText =  @"Status",
-					  						ListLocalDefaultText =  @"סטטוס",
+					  						ListLableDefaultText =  @"Status Code",
+					  						ListLocalDefaultText =  @"קוד סטטוס ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -720,7 +720,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -772,6 +772,114 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "StatusListLable",
 					  						ListLableDefaultText =  @"Status",
 					  						ListLocalDefaultText =  @"סטטוס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "UserLocalName",
+					  						OldFieldName =  "UserLocalName",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "UserLocalName",
+					  						ListPropertyPath =  "UserLocalName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "UserLocalName",
+					  						DefaultText =  @"UserLocalName",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusLocalName",
+					  						OldFieldName =  "StatusLocalName",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusLocalName",
+					  						ListPropertyPath =  "StatusLocalName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusLocalName",
+					  						DefaultText =  @"StatusLocalName",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -924,6 +1032,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature OpenFormatReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPDL", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Download", NameTextCodeDefaultText = "Download", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature OpenFormatReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INIDL", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.DownloadINIfile", NameTextCodeDefaultText = "Download INI file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -967,6 +1076,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  OpenFormatReportFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הורדה",
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton OpenFormatReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "INIDL",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "OpenFormatReport.B.DownloadINIfile",
+						LabelTextCodeDefaultText = "Download INI file",
+						Tenant = 0,
+						MenuButtonGroupId = OpenFormatReportMenuButtonGroup.Id,
+						ParentMenuButtonId = OpenFormatReportMenuButton0.Id,
+						ObjectTableId = OpenFormatReportObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  OpenFormatReportFeature_MB01.Id,
+						Style = null,
+						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

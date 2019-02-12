@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -47,13 +47,13 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         this.Listen();
     }
 
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+
     Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.UpdateFiltersFields();
                     this.SetUIProperties();
 
                     if (this.isLoadMasterRequested) {
@@ -84,6 +84,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.UpdateFiltersFields();
                     this.SetUIProperties();
 
                     if (this.isLoadHousesRequested) {
@@ -94,8 +95,20 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
                 this.isLoadHousesRequested = false;
             });
         }
+
+        this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "ReloadHouses") {
+                this.UpdateFiltersFields();
+                this.LoadAllHouses();
+            }
+        });
     }
+
+    private SessionEvent: any = null;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null; 
     ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
@@ -123,6 +136,9 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             }
         }
 
+        this.UpdateFiltersFields();
+    }
+    UpdateFiltersFields() {
         this.fromPortId = this.EntityPM.MainCarriageFromPortId;
         this.toPortId = this.EntityPM.MainCarriageFinalDestinationPortId;
         this.branchId = this.EntityPM.BranchId;

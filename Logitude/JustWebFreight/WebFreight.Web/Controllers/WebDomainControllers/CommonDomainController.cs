@@ -191,11 +191,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         client.DefaultRequestHeaders.Accept.Add(
                         new MediaTypeWithQualityHeaderValue("application/xml"));
 
-                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
+                        string authInfo = "API_15408257301181065689979" + ":" + "1BlueSand123";
                         authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
                         var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
-                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:1BlueSand123"));
                         try
                         {
                             var response2 = request.GetResponse();
@@ -217,12 +217,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         catch (Exception EX1)
                         {
 
-                             authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
+                             authInfo = "API_15416735830591484092606" + ":" + "1BlueSand123";
                             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
                             //like this:
                              request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
-                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
+                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:1BlueSand123"));
                             try
                             {
                                 var response2 = request.GetResponse();
@@ -288,7 +288,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         client.DefaultRequestHeaders.Accept.Add(
                         new MediaTypeWithQualityHeaderValue("application/xml"));
 
-                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
+                        string authInfo = "API_15408257301181065689979" + ":" + "1BlueSand123";
                         authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
 
@@ -296,7 +296,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         string xml = @"<param-encryption xmlns='http://ws.plimus.com'><parameters><parameter><param-key>shopperId</param-key><param-value>"+VaultedShopperId+"</param-value></parameter><parameter><param-key>expirationInMinutes</param-key><param-value>300</param-value></parameter><parameter><param-key>pageName</param-key><param-value>AUTO_LOGIN_PAGE</param-value></parameter></parameters></param-encryption>";
                         //like this:
                         var request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
-                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:1BlueSand123"));
 
                         byte[] bytes;
                         bytes = System.Text.Encoding.ASCII.GetBytes(xml);
@@ -328,12 +328,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         catch (Exception EX1)
                         {
 
-                            authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
+                            authInfo = "API_15416735830591484092606" + ":" + "1BlueSand123";
                             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
                             //like this:
                              request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
-                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
+                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:1BlueSand123"));
 
                             bytes =null;
                             bytes = System.Text.Encoding.ASCII.GetBytes(xml);
@@ -1593,6 +1593,84 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetOnCreatingIsraelTenant()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                AccountingSettingPM myResult = null;
+
+                ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+
+                AccountingSettingRepository iAccountingSettingRepository = new AccountingSettingRepository(myContext);
+                AccountingSetting iAccountingSetting = iAccountingSettingRepository.GetSingleAccountSetting(tenant);
+                if (iAccountingSetting != null)
+                {
+                    iAccountingSetting.AllowVoidAPI = false;
+                    iAccountingSetting.AllowVoidAPP = false;
+                    iAccountingSetting.AllowVoidARI = false;
+                    iAccountingSetting.AllowVoidARP = false;
+                    iAccountingSetting.AllowManualInvoiceNumber = false;
+                    iAccountingSetting.IsChronologicalDates = true;
+                    iAccountingSetting.IsVatNumberMandatoryInAP = true;
+                    iAccountingSetting.IsVatNumberMandatoryInAR = true;
+                    iAccountingSettingRepository.Update(iAccountingSetting);
+                    iAccountingSettingRepository.SubmitChanges();
+
+                    AccountingSettingQuery accountingSettingQuery = new AccountingSettingQuery(iAccountingSettingRepository);
+                    myResult = accountingSettingQuery.GetSinglePM(tenant);
+                }
+
+                List<string> iCodes = new List<string>();
+                iCodes.Add("999S");
+                iCodes.Add("999C");
+                iCodes.Add("999M");
+                iCodes.Add("999CI");
+                iCodes.Add("999MP");
+                iCodes.Add("999P");
+                DocumentTypeRepository iDocumentTypeRepository = new DocumentTypeRepository(myContext);
+                List<DocumentType> iDocumentTypes = iDocumentTypeRepository.GetDocumentTypesByCodeLists(iCodes, tenant);
+                if (iDocumentTypes.Count > 0)
+                {
+                    foreach (DocumentType iDocumentType in iDocumentTypes)
+                    {
+                        List<DocumentTypeCopy> iDocumentTypeCopies = (from d in myContext.DocumentTypeCopies
+                                                                      where d.Tenant == tenant && d.DocumentTypeId == iDocumentType.Id
+                                                                      select d).ToList();
+
+                        if (iDocumentTypeCopies.Count > 0)
+                        {
+                            DocumentTypeCopy iDocumentTypeCopy = iDocumentTypeCopies.Where(d => d.Name.ToLower() == "original").FirstOrDefault();
+                            if (iDocumentTypeCopy == null)
+                            {
+                                iDocumentTypeCopy = iDocumentTypeCopies.Where(d => d.Code.ToLower() == iDocumentType.Code.ToLower()).FirstOrDefault();
+                            }
+
+
+                            if (iDocumentTypeCopy != null)
+                            {
+                                iDocumentType.LimitedPrintCopyId = iDocumentTypeCopy.Id;
+                                iDocumentType.IsDocumentOneTimePrintLimited = true;
+                                iDocumentTypeRepository.Update(iDocumentType);
+                            }
+                        }
+                    }
+
+                    iDocumentTypeRepository.SubmitChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetNoneZeroTenantTranslation(string ComputingPartnerId, string ObjectTableId, string Code)
         {
             try

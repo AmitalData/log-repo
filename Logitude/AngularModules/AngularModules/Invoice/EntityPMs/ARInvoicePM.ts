@@ -932,6 +932,11 @@ export class ARInvoicePM {
     public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
        
 	 
+    private creditARInvoice: string;
+    public get CreditARInvoice() { return this.creditARInvoice; }
+    public set CreditARInvoice(newValue: string) { if (this.creditARInvoice != newValue) { this.creditARInvoice = newValue; this.MarkAsDirty("CreditARInvoice"); } }
+       
+	 
     private totalAmountForTaxReport: number;
     public get TotalAmountForTaxReport() { return this.totalAmountForTaxReport; }
     public set TotalAmountForTaxReport(newValue: number) { if (this.totalAmountForTaxReport != newValue) { this.totalAmountForTaxReport = newValue; this.MarkAsDirty("TotalAmountForTaxReport"); } }
@@ -945,6 +950,11 @@ export class ARInvoicePM {
     private totalVAT: number;
     public get TotalVAT() { return this.totalVAT; }
     public set TotalVAT(newValue: number) { if (this.totalVAT != newValue) { this.totalVAT = newValue; this.MarkAsDirty("TotalVAT"); } }
+       
+	 
+    private isFullAccounting: boolean;
+    public get IsFullAccounting() { return this.isFullAccounting; }
+    public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
        
 	 
 

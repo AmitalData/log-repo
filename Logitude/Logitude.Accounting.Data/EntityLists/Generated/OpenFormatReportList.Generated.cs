@@ -40,6 +40,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string Status  { get; set; }
+       [DataMember]
+       public string UserLocalName  { get; set; }
+       [DataMember]
+       public string StatusLocalName  { get; set; }
    }
 
 }

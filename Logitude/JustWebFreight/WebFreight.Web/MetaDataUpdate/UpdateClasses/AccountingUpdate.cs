@@ -1372,7 +1372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TransactionNo", DefaultText = "Transaction No.", LocalDefaultText = "מספר תנועה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingDate", DefaultText = "Accounting Date", LocalDefaultText = "תאריך חשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.DueDate", DefaultText = "Due Date", LocalDefaultText = "תאריך לתשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount", LocalDefaultText = "סכום מקורי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount", LocalDefaultText = "סכום מקורי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenAmount", DefaultText = "Open Amount", LocalDefaultText = "סכום פתוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AmountToReconcile", DefaultText = "Amount to Reconcile", LocalDefaultText = "סכום להתאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ReconciliationAmount", DefaultText = "Reconciliation Amount", LocalDefaultText = "סכום התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1559,7 +1559,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LessThan", DefaultText = "Less Than", LocalDefaultText = "פחות מ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LessThanOrEqual", DefaultText = "Less Than Or Equal", LocalDefaultText = "פחות מ או שווה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.GreaterThanOrEqual", DefaultText = "Greater Than Or Equal", LocalDefaultText = "גדול או שווה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount", LocalDefaultText = "מקורף סכום מקורי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount", LocalDefaultText = "סכום מקורי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Reconciled", DefaultText = "Reconciled", LocalDefaultText = "התואם", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Reconciliation", DefaultText = "Reconciliation", LocalDefaultText = "התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.wascreatedsuccessfully", DefaultText = "was created successfully", LocalDefaultText = "נוצרה בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1736,13 +1736,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MultiRecoCreated", DefaultText = "Reconciliations created successfully", LocalDefaultText = "התאמות בוצעו בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.RedeemedChequeMSG", DefaultText = "The cheque is redeemed and can’t be out of deposit, cancel the external reconcilaition in order to return the cheque to the cashbook", LocalDefaultText = "לא ניתן להוציא את ההמחאה מההפקדה משום שהיא בסטטוס נפרע, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.IntegrityChecks", DefaultText = "Accounting Integrity Checks", LocalDefaultText = "Accounting Integrity Checks", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CustomersNotes", DefaultText = "Customer's Notes", LocalDefaultText = "הערות לקוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.NewAccountingNote", DefaultText = "New Accounting Note", LocalDefaultText = "הזן הערה חדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             #region MainMenu
 
 
-            #endregion
-            objectContext.SaveChanges();
+                #endregion
+                objectContext.SaveChanges();
         }
         #endregion
 
@@ -1896,6 +1898,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting", LocalDefaultText = "חשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Reference", LocalDefaultText = "אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due", LocalDefaultText = "לגביה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditDetails", DefaultText = "Credit Details", LocalDefaultText = "נתוני אשראי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditLimit", DefaultText = "Credit Limit", LocalDefaultText = "מסגרת אשראי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountingBalance", DefaultText = "Accounting Balance", LocalDefaultText = "יתרה חשבונאית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CardIndex", DefaultText = "Card Index", LocalDefaultText = "הצג את הכרטסת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureChequesToday", DefaultText = "Total Open Cheques", LocalDefaultText = "המחאות שלא נפרעו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayChequelist", DefaultText = "Display Cheque list", LocalDefaultText = " הצג רשימת המחאות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheques", DefaultText = "Total Future Open Cheques", LocalDefaultText = "המחאות עתידיות שלא נפרעו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.TotalOpenShipments", DefaultText = "Total Open Shipments", LocalDefaultText = " תיקים פתוחים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.xxxx", DefaultText = "xxxxx", LocalDefaultText = "yyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
@@ -1938,6 +1948,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.reconciliationwassavedas", DefaultText = "The reconciliation was successfully saved as draft, and it will be dispalyed next time entering the the screen.", LocalDefaultText = "ההתאמה נשמרה כטיוטה והיא תוצג ברגע שנכנסים למסך התאמות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.ThereisUncompletedReconciliation", DefaultText = "There is uncompleted reconciliation, do you want to complete it?", LocalDefaultText = "קיימת התאמה שלא הושלמה, האם תרצה להשלים אותה?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.AmountMustBSmaller2OpenAmount", DefaultText = "The amount must be smaller or equal to open amount", LocalDefaultText = "הסכום חייב להיות קטן או שווה לסכום הפתוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInSelectedLines", DefaultText = "There are errors in the selected reconciliation lines", LocalDefaultText = "קיימת הודעת שגיאה בשורת ההתאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             // Postdated cheque redemption

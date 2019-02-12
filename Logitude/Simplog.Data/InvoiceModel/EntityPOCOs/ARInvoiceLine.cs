@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
@@ -35,6 +36,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string GLAccountId { get; set; }
         public bool IsBackToBack { get; set; }
         public bool IsExpense { get; set; }
+        public string PrepaidCollectId { get; set; }
 
         [ForeignKey("LineActionCode")]
         public virtual ARInvoiceLineAction ARInvoiceLineAction { get; set; }
@@ -59,5 +61,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
         public string VatTypeId { get; set; }
+
+        [ForeignKey("PrepaidCollectId")]
+        public virtual PrepaidCollect PrepaidCollect { get; set; }
     }
 }

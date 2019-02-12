@@ -213,6 +213,8 @@ namespace WebFreight.Web.MetaDataUpdate
                                 GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
                                 globalmodelUpdateClass.LoadObjectsTenantZero(context);
 
+							InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
+							modelUpdateClass.LoadObjectsTenantZero(context);
 
                                 updateClass.LoadUpdateTenantZero(context, false);
 
@@ -234,6 +236,10 @@ namespace WebFreight.Web.MetaDataUpdate
                                 updateClass.LoadHelpResources();
                                 updateClass.CreateMasterCounter(0);
                                 updateClass.LoadEmailAlertSettings();
+                                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                                {
+                                    updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                                }
                             }
                             break;
                         }

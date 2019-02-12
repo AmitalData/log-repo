@@ -220,6 +220,14 @@
     <Compile Include="Migrations\201902071221184_AddMigrationGatepassRequest.Designer.cs">
       <DependentUpon>201902071221184_AddMigrationGatepassRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902111405202_missingmigration121212.cs" />
+    <Compile Include="Migrations\201902111405202_missingmigration121212.Designer.cs">
+      <DependentUpon>201902111405202_missingmigration121212.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902111428378_inframissing.cs" />
+    <Compile Include="Migrations\201902111428378_inframissing.Designer.cs">
+      <DependentUpon>201902111428378_inframissing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -246,6 +254,10 @@
     <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
       <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
       <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{b02e4d92-9226-4f3f-990f-66c7f66e9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Social.Data\Logitude.Social.Data.csproj">
       <Project>{a00ae10e-2560-4e06-99fa-859ea7488ec3}</Project>
@@ -367,6 +379,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902071221184_AddMigrationGatepassRequest.resx">
       <DependentUpon>201902071221184_AddMigrationGatepassRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111405202_missingmigration121212.resx">
+      <DependentUpon>201902111405202_missingmigration121212.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111428378_inframissing.resx">
+      <DependentUpon>201902111428378_inframissing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

@@ -238,7 +238,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    myStringBuilder.Append("a");
+                  //  myStringBuilder.Append("a");
                     myStringBuilder.Append(' ', 14);
                 }
                 myStringBuilder.Append(' ', 52);

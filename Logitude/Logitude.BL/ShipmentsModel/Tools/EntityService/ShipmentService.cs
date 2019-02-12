@@ -408,6 +408,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
                         ShipmentValidating.ValidateRoutingDates(entityPM, this.shipmentPickUpsChangeSet, this.shipmentDeliveriesChangeSet);
                     }
+
                     this.UpdateShipmentOrderPackagesCollection();
                     this.UpdateShipmentPackagesCollection();
                     this.UpdateShipmentPickUpsCollection();
@@ -427,16 +428,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     entityPM.CalculatePayables = calculatePayables;
                     entityPM.CalculateReceivables = calculateReceivables;
 
-
                     if (!entityPM.IsHybrid && !loggedTenant.IsDocumentsArchive)
                     {
                         shipmentTracing.BeginTracing();
-                    }
-
-                    if (entityPM.IsCancelled)
-                    {
-                        entityPM.CancelledDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        entityPM.BookingId = null;
                     }
 
                     if (string.IsNullOrEmpty(entityPM.CustomFileId) && !string.IsNullOrEmpty(entityPoco.CustomFileId))
@@ -453,6 +447,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.BuildShipmentExternalUpdate();
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
+                    this.CheckUpdatingMasterHouses();
 
                     RunAutomation("OnUpdate");
 
@@ -463,22 +458,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
 
-                    if (entityPM.ShipmentLevelCode == "C")
-                    {
-                        if (allHouses.Count > 0)
-                        {
-                            foreach (Shipment item in allHouses)
-                            {
-                                item.NextETA = this.entityPoco.NextETA;
-                                item.NextETD = this.entityPoco.NextETD;
-                                item.NextLeg = this.entityPoco.NextLeg;
-                                item.NextLegCode = this.entityPoco.NextLegCode;
-                                entityRepository.Update(item);
-                            }
-
-                            entityRepository.SubmitChanges();
-                        }
-                    }
+                    this.ApplyUpdatingMasterHouses();
 
                     RunStoredProcedures();
                     GetForeignFields();
@@ -550,7 +530,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             List<WarehouseEntry> warehouseEntryLists = null;
             string fromPortId = String.Empty;
             string toPortId = String.Empty;
-     
+
             if (entityPM != null)
             {
                 WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(entityPM.Tenant);
@@ -559,9 +539,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
                 {
-                    warehouseEntryLists = allWarehouseEntryList.Where(d=>d.FromAddressId!=this.entityPM.MainCarriageFromAddressId || d.ToAddressId != this.entityPM.MainCarriageToAddressId || d.FromPartnerId != this.entityPM.MainCarriageFromPartnerId || d.ToAddressId != this.entityPM.MainCarriageToPartnerId).ToList();
+                    warehouseEntryLists = allWarehouseEntryList.Where(d => d.FromAddressId != this.entityPM.MainCarriageFromAddressId || d.ToAddressId != this.entityPM.MainCarriageToAddressId || d.FromPartnerId != this.entityPM.MainCarriageFromPartnerId || d.ToAddressId != this.entityPM.MainCarriageToPartnerId).ToList();
                 }
-               else
+                else
                 {
                     fromPortId = !string.IsNullOrEmpty(this.entityPM.MainCarriageFromPortId) ? this.entityPM.MainCarriageFromPortId : this.entityPM.FromPortId;
                     toPortId = this.entityPM.ShipmentLevelCode == "H" ? this.entityPM.MainCarriageFinalDestinationPortId : this.entityPM.FinalDistenationPortId;
@@ -709,13 +689,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                             if (item.DueDate != fieldValuedate)
                             {
-                                item.DueDate = fieldValuedate;                                
+                                item.DueDate = fieldValuedate;
                             }
                         }
 
                         else
                         {
-                            item.DueDate = null;                           
+                            item.DueDate = null;
                         }
 
                         activityRepository.Update(item);
@@ -893,10 +873,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IncotermCode = myIncotermCode;
             entityPM.IncotermName = myIncotermName;
 
+            entityPM.StatusName = null;
+            entityPM.StatusWeight = 0;
             if (entityPoco.StatusId != null)
             {
-                EntityStatus status = EntityStatusRepository.GetSingleEntityStatus(entityPoco.StatusId, entityPoco.Tenant, true);
-                entityPM.StatusName = status.Name;
+                EntityStatus iEntityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPoco.StatusId, entityPoco.Tenant, true);
+                if (iEntityStatus != null)
+                {
+                    entityPM.StatusName = iEntityStatus.Name;
+                    entityPM.StatusWeight = iEntityStatus.StatusWeight;
+                }
             }
 
             string myShipmentType = "";
@@ -1021,7 +1007,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
-                        
+
                         if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0)
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
@@ -1095,7 +1081,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (this.entityPM.ShipmentLevelCode != "D")
                 {
-                    UpdateShipmentProfitClass.UpdatePayables(entityPM.Id, entityPM.Tenant,false);
+                    UpdateShipmentProfitClass.UpdatePayables(entityPM.Id, entityPM.Tenant, false);
 
                     // Ayman: Please don't remove
                     if (this.entityPM.ShipmentLevelCode == "C")
@@ -2275,17 +2261,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
             return status;
         }
-        
+
         private void RunAutomation(string type)
         {
             if (entityPM != null)
             {
                 DateTime? dateBefore = DateTime.Now;
                 string tableName = entityPM.ShipmentLevelCode == "C" ? "Master" : entityPM.ShipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
-
+                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
                 if (type == "OnCreate")
                 {
-                    EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
                     bool isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
@@ -2295,7 +2280,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 else if (!entityPM.IsUpdateByAutomation && type == "OnUpdate")
                 {
-                    EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
+
                     ShipmentPM changeTrackingPM = new ShipmentPM();
                     ShipmentQuery query = new ShipmentQuery(tenant);
                     query.MapShipmentToShipmentPMForAutomation(changeTrackingPM, this.entityPoco, null, this.entityMasterData);
@@ -2312,7 +2297,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (isHaveAutomation)
                     {
                         entityChangeHelper.AddEntityChange(entityPM, changeTrackingPM, "OnUpdate", entityChangeFieldXml, tableName, dateBefore);
-                    }                    
+                    }
 
                     #region Houses
 
@@ -2354,9 +2339,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IsRemovingStackEvents = false;
             entityPM.CalculateStatus = false;
 
-            this.ComputeShipmentStatus();            
-            this.UpdateCustomerWorkingDates();            
-            
+            this.ComputeShipmentStatus();
+            if (!entityPM.IsHybrid)
+            {
+                this.UpdateCustomerWorkingDates();
+            }
+
+
 
             if (isNewEntity)
             {
@@ -2404,12 +2393,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid)
                 {
+                    Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
+                    if (!string.IsNullOrEmpty(entityPM.BranchId))
+                    {
+                        Branch myBranch = (from d in myCommonContext.Branches
+                                           where d.Tenant == tenant
+                                           && d.Id == entityPM.BranchId
+                                           select d).FirstOrDefault();
+
+                        if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
+                        {
+                            counterAdditionalParameters["[B]"] = myBranch.CounterCode;
+                        }
+                    }
+
                     entityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                     if (entityPM.ShipmentLevelCode == "C")
                     {
                         if (entityPM.ShipmentNumber == null)
-                            entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "MAST", entityPM.DirectionId, entityPM.TransportModeId);
+                            entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "MAST", entityPM.DirectionId, entityPM.TransportModeId, counterAdditionalParameters);
                     }
 
                     else
@@ -2417,13 +2420,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         if (entityPM.DirectionId.ToUpper() == "C")
                         {
                             if (entityPM.ShipmentNumber == null)
-                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", "I", entityPM.TransportModeId);
+                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", "I", entityPM.TransportModeId, counterAdditionalParameters);
                         }
 
                         else
                         {
                             if (entityPM.ShipmentNumber == null)
-                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
+                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId, counterAdditionalParameters);
                         }
                     }
                 }
@@ -2470,10 +2473,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     entityComputedFields.IsMissingDocuments = true;
                 }
+
+
                 if (entityPM.CustomsClearanceDate != null)
                 {
                     entityComputedFields.IsDigitalSignRequired = false;
                 }
+
+                if (entityPM.IsDepositionCloseTask)
+                {
+                    entityComputedFields.IsDepositionRequired = false;
+                }
+
+
                 entityComputedFields.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
                 shipmentComputedFieldsRepository.Add(entityComputedFields);
 
@@ -2617,6 +2629,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (entityPM.ConvertFromDirectToHouse)
                     {
+                        #region
                         entityPM.ShipmentLevelCode = "H";
                         entityPM.MasterShipmentDataId = null;
                         entityPoco.MasterShipmentDataId = null;
@@ -2635,10 +2648,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             this.InitializeHouseField();
                         }
+                        #endregion
                     }
 
                     else if (entityPM.ConvertFromHouseToDirect)
                     {
+                        #region
                         entityPM.ShipmentLevelCode = "D";
 
                         if (entityPM.IsHybrid)
@@ -2684,7 +2699,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 }
                             }
                         }
+                        #endregion
                     }
+
                     else
                     {
                         TenantSettingRepository tenantSettingsRepository = new TenantSettingRepository(tenant);
@@ -2699,37 +2716,49 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-
-
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                 entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
-                if (entityPM.IsOperationalClosed)
-                {
-                    entityComputedFields.IsMissingDocuments = false;
-                    entityComputedFields.IsRequestedDocuments = false;
-                    entityComputedFields.IsDigitalSignRequired = false;
-                    entityComputedFields.MissingDocumentsCount = 0;
-                    entityComputedFields.MissingDocumentsNames = "";
-                }
 
-                else
+
+                if (entityComputedFields != null)
                 {
-                    var OTId = objectTableRepository.GetObjectTableIdByName("Shipment");
-                    entityComputedFields.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
-                    entityComputedFields.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
-                    if (entityComputedFields.MissingDocumentsCount == 0)
+
+                    if (entityPM.IsDepositionCloseTask)
+                    {
+                        entityComputedFields.IsDepositionRequired = false;
+                    }
+
+                    if (entityPM.IsOperationalClosed)
                     {
                         entityComputedFields.IsMissingDocuments = false;
+                        entityComputedFields.IsRequestedDocuments = false;
+                        entityComputedFields.IsDigitalSignRequired = false;
+                        entityComputedFields.MissingDocumentsCount = 0;
+                        entityComputedFields.MissingDocumentsNames = "";
+
                     }
 
                     else
                     {
-                        entityComputedFields.IsMissingDocuments = true;
+                        var OTId = objectTableRepository.GetObjectTableIdByName("Shipment");
+                        entityComputedFields.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
+                        entityComputedFields.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
+                        if (entityComputedFields.MissingDocumentsCount == 0)
+                        {
+                            entityComputedFields.IsMissingDocuments = false;
+                        }
+
+                        else
+                        {
+                            entityComputedFields.IsMissingDocuments = true;
+                        }
                     }
+
+                    shipmentComputedFieldsRepository.Update(entityComputedFields);
                 }
 
-                shipmentComputedFieldsRepository.Update(entityComputedFields);
+           
 
                 if (entityPM.IsHybrid || loggedTenant.IsDocumentsArchive)
                 {
@@ -2752,11 +2781,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
                     }
-                   
-                   
+
+
                     if (entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData) && entityPM.CustomsClearanceDate == null)
                     {
-                        shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData; 
+                        shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                         shipmentAdditionalCloudData.IsImporterApprovalRequried = true;
                         shipmentAdditionalCloudData.ApprovedByUserName = null;
                         shipmentAdditionalCloudData.ApproveDateTime = null;
@@ -2822,8 +2851,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
                 this.InitializeFCL_LCL();
-                this.InitializeOperationalClose();
-                this.InitializeMasterHouses();
+                this.InitializeClosingFields();
                 this.InitializeStatus();
                 this.InitializePartners();
                 this.InitializeInlandDomestic();
@@ -2957,7 +2985,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-      
+
         private void InitializeFCL_LCL()
         {
             var isFCL = false;
@@ -3013,7 +3041,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-        
+
         private void ReturnFBLStock(bool throwNotFoundException = false)
         {
             FBLStockRepository fBLStockRepository = new FBLStockRepository(tenant);
@@ -4396,165 +4424,191 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return myResult;
         }
 
-        private void InitializeOperationalClose()
+        private void InitializeClosingFields()
         {
             if (!this.entityPM.IsHybrid)
             {
                 if (this.entityPM.ShipmentLevelCode != "H")
                 {
-                    if (this.entityPM.IsOperationalClosed == true && this.entityPoco.IsOperationalClosed == false)
+                    if (this.entityPM.IsOperationalClosed != this.entityPoco.IsOperationalClosed)
                     {
-                        this.entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                        if (this.entityPM.FirstOperationalCloseDate == null)
+                        if (this.entityPM.IsOperationalClosed)
                         {
-                            this.entityPM.FirstOperationalCloseDate = this.entityPM.OperationalCloseDate;
-                        }
-                    }
-                }
-            }
-        }
+                            this.entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-        List<Shipment> allHouses = new List<Shipment>();
-        private void InitializeMasterHouses()
-        {
-            this.allHouses = new List<Shipment>();
-
-            if (entityPM.ShipmentLevelCode == "C")
-            {
-                allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, tenant);
-
-                if (allHouses.Count > 0)
-                {
-                    this.CheckCancelMasterHouses(allHouses);
-                    this.CheckAccountingCloseMasterHouses(allHouses);
-                    this.CheckOperationalCloseMasterHouses(allHouses);
-                }
-
-                if (this.entityComputedFields != null)
-                {
-                    if (this.isNewEntity)
-                    {
-
-                    }
-
-                    else
-                    {
-                        if (shipmentConsoleShipmentsChangeSet != null)
-                        {
-                            entityComputedFields.NumberOfHouses = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
-                            shipmentComputedFieldsRepository.Update(entityComputedFields);
-                        }
-                    }
-
-                }
-            }
-
-            else if (entityPM.ShipmentLevelCode == "H")
-            {
-                if (!string.IsNullOrEmpty(entityPM.MasterShipmentDataId))
-                {
-                    if (this.isNewEntity)
-                    {
-                        ShipmentComputedFields entityMasterComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.MasterShipmentDataId, entityPM.Tenant);
-                        if (entityMasterComputedFields != null)
-                        {
-                            entityMasterComputedFields.NumberOfHouses += 1;
-                            shipmentComputedFieldsRepository.Update(entityMasterComputedFields);
-                        }
-                    }
-                }
-            }
-        }
-        private void CheckCancelMasterHouses(List<Shipment> allHouses)
-        {
-            if (entityPM.ShipmentLevelCode == "C")
-            {
-                if (allHouses.Count > 0)
-                {
-                    if (entityPM.IsCancelled && !entityPoco.IsCancelled)
-                    {
-                        foreach (Shipment item in allHouses)
-                        {
-                            item.IsCancelled = true;
-                        }
-
-                        entityRepository.SubmitChanges();
-                    }
-
-                    else if (!entityPM.IsCancelled && entityPoco.IsCancelled)
-                    {
-                        foreach (Shipment item in allHouses)
-                        {
-                            item.IsCancelled = false;
-                        }
-
-                        entityRepository.SubmitChanges();
-                    }
-                }
-            }
-        }
-        private void CheckAccountingCloseMasterHouses(List<Shipment> allHouses)
-        {
-            if (entityPM.ShipmentLevelCode == "C")
-            {
-                if (allHouses.Count > 0)
-                {
-                    if (entityPM.IsAccountingClosed && !entityPoco.IsAccountingClosed)
-                    {
-                        foreach (Shipment item in allHouses)
-                        {
-                            item.IsAccountingClosed = true;
-                            item.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        }
-
-                        entityRepository.SubmitChanges();
-                    }
-
-                    else if (!entityPM.IsAccountingClosed && entityPoco.IsAccountingClosed)
-                    {
-                        foreach (Shipment item in allHouses)
-                        {
-                            item.IsAccountingClosed = false;
-                            item.AccountingCloseDate = null;
-                        }
-
-                        entityRepository.SubmitChanges();
-                    }
-                }
-            }
-        }
-        private void CheckOperationalCloseMasterHouses(List<Shipment> allHouses)
-        {
-            if (entityPM.ShipmentLevelCode == "C")
-            {
-                if (allHouses.Count > 0)
-                {
-                    if (entityPM.IsOperationalClosed && !entityPoco.IsOperationalClosed)
-                    {
-                        foreach (Shipment item in allHouses)
-                        {
-                            item.IsOperationalClosed = true;
-                            item.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                            if (item.FirstOperationalCloseDate == null)
+                            if (this.entityPM.FirstOperationalCloseDate == null)
                             {
-                                item.FirstOperationalCloseDate = item.OperationalCloseDate;
+                                this.entityPM.FirstOperationalCloseDate = this.entityPM.OperationalCloseDate;
                             }
                         }
 
-                        entityRepository.SubmitChanges();
+                        else
+                        {
+                            this.entityPM.OperationalCloseDate = null;
+                        }
                     }
 
-                    else if (!entityPM.IsOperationalClosed && entityPoco.IsOperationalClosed)
+                    if (this.entityPM.IsAccountingClosed != this.entityPoco.IsAccountingClosed)
+                    {
+                        if (this.entityPM.IsAccountingClosed)
+                        {
+                            entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                        }
+
+                        else
+                        {
+                            entityPM.AccountingCloseDate = null;
+                        }
+                    }
+                }
+
+                bool isConnectedHouse = false;
+                if (this.entityPM.ShipmentLevelCode == "H" && this.entityPM.MasterShipmentDataId != null)
+                {
+                    isConnectedHouse = true;
+                }
+
+                if (!isConnectedHouse)
+                {
+                    if (this.entityPM.IsCancelled != this.entityPoco.IsCancelled)
+                    {
+                        if (entityPM.IsCancelled)
+                        {
+                            entityPM.CancelledDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            entityPM.BookingId = null;
+                        }
+
+                        else
+                        {
+                            entityPM.CancelledDate = null;
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool isUpdatingHouses = false;
+        List<Shipment> allHouses = new List<Shipment>();
+        private void CheckUpdatingMasterHouses()
+        {
+            if (this.isNewEntity)
+            {
+                if (entityPM.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(entityPM.MasterShipmentDataId))
+                {
+                    ShipmentComputedFields entityMasterComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.MasterShipmentDataId, entityPM.Tenant);
+                    if (entityMasterComputedFields != null)
+                    {
+                        entityMasterComputedFields.NumberOfHouses += 1;
+                        shipmentComputedFieldsRepository.Update(entityMasterComputedFields);
+                    }
+                }
+            }
+
+            else
+            {
+                if (entityPM.ShipmentLevelCode == "C")
+                {
+                    this.allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, tenant);
+
+                    if (entityPM.IsCancelled != entityPoco.IsCancelled)
+                    {
+                        isUpdatingHouses = true;
+                    }
+                    else if (entityPM.IsAccountingClosed != entityPoco.IsAccountingClosed)
+                    {
+                        isUpdatingHouses = true;
+                    }
+                    else if (entityPM.IsOperationalClosed != entityPoco.IsOperationalClosed)
+                    {
+                        isUpdatingHouses = true;
+                    }
+                    else if (entityPM.MainCarriageFromPortId != entityMasterData.MainCarriageFromPortId)
+                    {
+                        isUpdatingHouses = true;
+                    }
+                    else if (entityPM.MainCarriageFinalDestinationPortId != entityMasterData.MainCarriageFinalDestinationPortId)
+                    {
+                        isUpdatingHouses = true;
+                    }
+
+                    if (entityComputedFields != null && shipmentConsoleShipmentsChangeSet != null)
+                    {
+                        entityComputedFields.NumberOfHouses = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+                        shipmentComputedFieldsRepository.Update(entityComputedFields);
+                    }
+                }
+            }
+        }
+        private void ApplyUpdatingMasterHouses()
+        {
+            if (!this.isNewEntity)
+            {
+                if (entityPM.ShipmentLevelCode == "C")
+                {
+                    if (allHouses.Count > 0)
                     {
                         foreach (Shipment item in allHouses)
                         {
-                            item.IsOperationalClosed = false;
-                            item.OperationalCloseDate = null;
+                            item.NextETA = this.entityPoco.NextETA;
+                            item.NextETD = this.entityPoco.NextETD;
+                            item.NextLeg = this.entityPoco.NextLeg;
+                            item.NextLegCode = this.entityPoco.NextLegCode;
+                            entityRepository.Update(item);
                         }
 
                         entityRepository.SubmitChanges();
+                    }
+
+                    if (isUpdatingHouses)
+                    {
+                        if (shipmentConsoleShipmentsChangeSet != null)
+                        {
+                            List<string> ids = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
+
+                            if (ids.Count > 0)
+                            {
+                                ShipmentQuery iShipmentQuery = new ShipmentQuery(this.entityRepository);
+
+                                foreach (string id in ids)
+                                {
+                                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePMWithoutComposition(id, this.tenant);
+
+                                    if (iHousePM != null)
+                                    {
+                                        iHousePM.IsCancelled = this.entityPM.IsCancelled;
+                                        iHousePM.CancelledDate = this.entityPM.CancelledDate;
+                                        iHousePM.IsOperationalClosed = this.entityPM.IsOperationalClosed;
+                                        iHousePM.OperationalCloseDate = this.entityPM.OperationalCloseDate;
+                                        iHousePM.FirstOperationalCloseDate = this.entityPM.FirstOperationalCloseDate;
+                                        iHousePM.IsAccountingClosed = this.entityPM.IsAccountingClosed;
+                                        iHousePM.AccountingCloseDate = this.entityPM.AccountingCloseDate;
+
+                                        if (iHousePM.FromPortId != this.entityPM.MainCarriageFromPortId)
+                                        {
+                                            iHousePM.FromPortId = this.entityPM.MainCarriageFromPortId;
+
+                                            if (iHousePM.PreCarriageFromPortId != null && iHousePM.PreCarriageToPortId != null)
+                                            {
+                                                iHousePM.PreCarriageToPortId = iHousePM.FromPortId;
+                                            }
+                                        }
+
+                                        if (iHousePM.ToPortId != this.entityPM.MainCarriageFinalDestinationPortId)
+                                        {
+                                            iHousePM.ToPortId = this.entityPM.MainCarriageFinalDestinationPortId;
+
+                                            if (iHousePM.OnCarriageFromPortId != null && iHousePM.OnCarriageToPortId != null)
+                                            {
+                                                iHousePM.OnCarriageFromPortId = iHousePM.ToPortId;
+                                            }
+                                        }
+
+                                        ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
+                                        iShipmentService.Update();
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -5385,7 +5439,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             if (myDelivery.ShipmentPickUpDeliveryPackages.Count > 0)
                             {
                                 ShipmentPickUpDeliveryPackagePM DeliveryPackagePM = myDelivery.ShipmentPickUpDeliveryPackages.Where(d => d.OriginalShipmentPackageId == itemPoco.Id).FirstOrDefault();
-                                if(DeliveryPackagePM != null)
+                                if (DeliveryPackagePM != null)
                                 {
                                     DeliveryPackagePM.ContainerNumber = itemPM.ContainerNumber;
                                     DeliveryPackagePM.Description = itemPM.Description;
@@ -6271,7 +6325,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
                 {
-                    CustomerRepository customerRepository = new CustomerRepository(tenant);                    
+                    CustomerRepository customerRepository = new CustomerRepository(tenant);
 
                     if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
                     {
@@ -6297,7 +6351,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 customerRepository.SubmitChanges();
                             }
                         }
-                    }                    
+                    }
                 }
             }
         }
@@ -6376,11 +6430,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void ComputeFinalDestination()
         {
-            List<ShipmentDeliveryPM> deliveries = this.entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.PickUpDeliveryTypeCode == "DELV").OrderBy(s => s.PickUpDeliveryNumber).ToList();
+            this.ComputeFrom();
+            this.ComputeTo();
+
+            List<ShipmentDeliveryPM> deliveries = this.entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).ToList();
             List<ShipmentPickUpPM> pickups = this.entityPM.ShipmentPickUps.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).ToList();
 
-            ShipmentDeliveryPM myFirstDelivery = deliveries.FirstOrDefault();
+            ShipmentDeliveryPM myLastDelivery = deliveries.FirstOrDefault();
             ShipmentPickUpPM myFirstPickup = pickups.FirstOrDefault();
+
+            this.ComputeOrigin(myFirstPickup);
 
             if (myFirstPickup != null)
             {
@@ -6394,104 +6453,295 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.entityPM.FirstPickupETD = null;
             }
 
-            if (myFirstDelivery != null)
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
-                switch (myFirstDelivery.PickUpDeliveryToTypeCode)
+                if (!string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
                 {
-                    case "PART":
-                        {
-                            if (!string.IsNullOrEmpty(myFirstDelivery.ToAddressId))
-                            {
-                                Address myPartnerAddress = myAddressRepository.GetSingleAddress(myFirstDelivery.ToAddressId, tenant);
-                                if (myPartnerAddress != null)
-                                {
-                                    this.entityPM.LastFinalDestination = myPartnerAddress.City;
-                                }
-                            }
-
-                            break;
-                        }
-
-                    case "PORT":
-                        {
-                            if (!string.IsNullOrEmpty(myFirstDelivery.ToPortId))
-                            {
-                                Port myPort = myPortRepository.GetSinglePort(tenant, myFirstDelivery.ToPortId);
-                                if (myPort != null)
-                                {
-                                    this.entityPM.LastFinalDestination = myPort.EnglishName;
-                                }
-                            }
-
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            string myCity = myFirstDelivery.ToAddressCity;
-                            if (!string.IsNullOrEmpty(myCity))
-                            {
-                                this.entityPM.LastFinalDestination = myCity;
-                            }
-
-                            break;
-                        }
-                }
-            }
-
-            else if (this.entityPM.DirectionId == "I" && !string.IsNullOrEmpty(this.entityPM.WarehouseLegWarehouseId))
-            {
-                Card warehouse = cardRepository.GetSingleCard(this.entityPM.WarehouseLegWarehouseId, tenant);
-                if (warehouse != null)
-                {
-                    this.entityPM.LastFinalDestination = warehouse.Code;
-                }
-            }
-
-            else if (!string.IsNullOrEmpty(this.entityPM.OnCarriageToPortId))
-            {
-                Port onCarriageToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.OnCarriageToPortId);
-                if (onCarriageToPort != null)
-                {
-                    this.entityPM.LastFinalDestination = onCarriageToPort.EnglishName;
+                    Address myPartnerAddress = myAddressRepository.GetSingleAddress(entityPM.MainCarriageToAddressId, tenant);
+                    if (myPartnerAddress != null)
+                    {
+                        this.entityPM.LastFinalDestination = myPartnerAddress.City;
+                    }
                 }
             }
 
             else
             {
-                if (!string.IsNullOrEmpty(this.entityPM.Transshipment3ToPortId))
+                if (myLastDelivery != null)
                 {
-                    Port transshipment3ToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.Transshipment3ToPortId);
-                    if (transshipment3ToPort != null)
+                    switch (myLastDelivery.PickUpDeliveryToTypeCode)
                     {
-                        this.entityPM.LastFinalDestination = transshipment3ToPort.EnglishName;
+                        case "PART":
+                            {
+                                if (!string.IsNullOrEmpty(myLastDelivery.ToAddressId))
+                                {
+                                    Address myPartnerAddress = myAddressRepository.GetSingleAddress(myLastDelivery.ToAddressId, tenant);
+                                    if (myPartnerAddress != null)
+                                    {
+                                        this.entityPM.LastFinalDestination = myPartnerAddress.City;
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "PORT":
+                            {
+                                if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
+                                {
+                                    Port myPort = myPortRepository.GetSinglePort(tenant, myLastDelivery.ToPortId);
+                                    if (myPort != null)
+                                    {
+                                        this.entityPM.LastFinalDestination = myPort.EnglishName;
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "CASL":
+                            {
+                                string myCity = myLastDelivery.ToAddressCity;
+                                if (!string.IsNullOrEmpty(myCity))
+                                {
+                                    this.entityPM.LastFinalDestination = myCity;
+                                }
+
+                                break;
+                            }
                     }
                 }
 
-                else if (!string.IsNullOrEmpty(this.entityPM.Transshipment2ToPortId))
+                else if (this.entityPM.DirectionId == "I" && !string.IsNullOrEmpty(this.entityPM.WarehouseLegWarehouseId))
                 {
-                    Port transshipment2ToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.Transshipment2ToPortId);
-                    if (transshipment2ToPort != null)
+                    Card warehouse = cardRepository.GetSingleCard(this.entityPM.WarehouseLegWarehouseId, tenant);
+                    if (warehouse != null)
                     {
-                        this.entityPM.LastFinalDestination = transshipment2ToPort.EnglishName;
+                        this.entityPM.LastFinalDestination = warehouse.EnglishName;
                     }
                 }
 
-                else if (!string.IsNullOrEmpty(this.entityPM.Transshipment1ToPortId))
+                else if (!string.IsNullOrEmpty(this.entityPM.OnCarriageToPortId))
                 {
-                    Port transshipment1ToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.Transshipment1ToPortId);
-                    if (transshipment1ToPort != null)
+                    Port onCarriageToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.OnCarriageToPortId);
+                    if (onCarriageToPort != null)
                     {
-                        this.entityPM.LastFinalDestination = transshipment1ToPort.EnglishName;
+                        this.entityPM.LastFinalDestination = onCarriageToPort.EnglishName;
                     }
                 }
 
-                else if (!string.IsNullOrEmpty(this.entityPM.MainCarriageToPortId))
+                else
                 {
-                    Port mainCarriageToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.MainCarriageToPortId);
-                    if (mainCarriageToPort != null)
+                    if (!string.IsNullOrEmpty(this.entityPM.Transshipment3ToPortId))
                     {
-                        this.entityPM.LastFinalDestination = mainCarriageToPort.EnglishName;
+                        Port transshipment3ToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.Transshipment3ToPortId);
+                        if (transshipment3ToPort != null)
+                        {
+                            this.entityPM.LastFinalDestination = transshipment3ToPort.EnglishName;
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(this.entityPM.Transshipment2ToPortId))
+                    {
+                        Port transshipment2ToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.Transshipment2ToPortId);
+                        if (transshipment2ToPort != null)
+                        {
+                            this.entityPM.LastFinalDestination = transshipment2ToPort.EnglishName;
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(this.entityPM.Transshipment1ToPortId))
+                    {
+                        Port transshipment1ToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.Transshipment1ToPortId);
+                        if (transshipment1ToPort != null)
+                        {
+                            this.entityPM.LastFinalDestination = transshipment1ToPort.EnglishName;
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(this.entityPM.MainCarriageToPortId))
+                    {
+                        Port mainCarriageToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.MainCarriageToPortId);
+                        if (mainCarriageToPort != null)
+                        {
+                            this.entityPM.LastFinalDestination = mainCarriageToPort.EnglishName;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ComputeFrom()
+        {
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+            {
+                if (!string.IsNullOrEmpty(entityPM.MainCarriageFromAddressId))
+                {
+                    Address myPartnerAddress = myAddressRepository.GetSingleAddress(entityPM.MainCarriageFromAddressId, tenant);
+                    if (myPartnerAddress != null)
+                    {
+                        this.entityPM.From = myPartnerAddress.City;
+                    }
+                }
+            }
+
+            else
+            {
+                string fromId = null;
+                if (entityPM.ShipmentLevelCode == "H")
+                {
+                    fromId = entityPM.FromPortId;
+                }
+
+                else
+                {
+                    fromId = entityPM.MainCarriageFromPortId;
+                }
+                
+                PortPM portFrom = PortQuery.GetSinglePort(tenant, fromId, true);
+                if (portFrom != null)
+                {
+                    entityPM.From = portFrom.EnglishName;
+                }
+            }
+        }
+        private void ComputeTo()
+        {
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+            {
+                if (!string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
+                {
+                    Address myPartnerAddress = myAddressRepository.GetSingleAddress(entityPM.MainCarriageToAddressId, tenant);
+                    if (myPartnerAddress != null)
+                    {
+                        this.entityPM.To = myPartnerAddress.City;
+                    }
+                }
+            }
+
+            else
+            {
+                string toId = null;
+                if (entityPM.ShipmentLevelCode == "H")
+                {
+                    toId = entityPM.ToPortId;
+                }
+
+                else
+                {
+                    if (!string.IsNullOrEmpty(entityPM.Transshipment3ToPortId))
+                    {
+                        toId = this.entityPM.Transshipment3ToPortId;
+                    }
+
+                    else if (!string.IsNullOrEmpty(entityPM.Transshipment2ToPortId))
+                    {
+                        toId = this.entityPM.Transshipment2ToPortId;
+                    }
+
+                    else if (!string.IsNullOrEmpty(entityPM.Transshipment1ToPortId))
+                    {
+                        toId = this.entityPM.Transshipment1ToPortId;
+                    }
+
+                    else if (!string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
+                    {
+                        toId = this.entityPM.MainCarriageToPortId;
+                    }
+                }
+                
+                PortPM portTo = PortQuery.GetSinglePort(tenant, toId, true);
+                if (portTo != null)
+                {
+                    entityPM.To = portTo.EnglishName;
+                }
+            }
+        }
+        private void ComputeOrigin(ShipmentPickUpPM myFirstPickup)
+        {
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+            {
+                if (!string.IsNullOrEmpty(entityPM.MainCarriageFromAddressId))
+                {
+                    Address myPartnerAddress = myAddressRepository.GetSingleAddress(entityPM.MainCarriageFromAddressId, tenant);
+                    if (myPartnerAddress != null)
+                    {
+                        this.entityPM.Origin = myPartnerAddress.City;
+                    }
+                }
+            }
+
+            else
+            {
+                if (myFirstPickup != null)
+                {
+                    switch (myFirstPickup.PickUpDeliveryFromTypeCode)
+                    {
+                        case "PART":
+                            {
+                                if (!string.IsNullOrEmpty(myFirstPickup.FromAddressId))
+                                {
+                                    Address myPartnerAddress = myAddressRepository.GetSingleAddress(myFirstPickup.FromAddressId, tenant);
+                                    if (myPartnerAddress != null)
+                                    {
+                                        this.entityPM.Origin = myPartnerAddress.City;
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "PORT":
+                            {
+                                if (!string.IsNullOrEmpty(myFirstPickup.FromPortId))
+                                {
+                                    Port myPort = myPortRepository.GetSinglePort(tenant, myFirstPickup.FromPortId);
+                                    if (myPort != null)
+                                    {
+                                        this.entityPM.Origin = myPort.EnglishName;
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "CASL":
+                            {
+                                string myCity = myFirstPickup.FromAddressCity;
+                                if (!string.IsNullOrEmpty(myCity))
+                                {
+                                    this.entityPM.Origin = myCity;
+                                }
+
+                                break;
+                            }
+                    }
+                }
+
+                else if (this.entityPM.DirectionId == "E" && !string.IsNullOrEmpty(this.entityPM.WarehouseLegWarehouseId))
+                {
+                    Card warehouse = cardRepository.GetSingleCard(this.entityPM.WarehouseLegWarehouseId, tenant);
+                    if (warehouse != null)
+                    {
+                        this.entityPM.Origin = warehouse.EnglishName;
+                    }
+                }
+
+                else if (!string.IsNullOrEmpty(entityPM.PreCarriageFromPortId))
+                {
+                    Port myPort = myPortRepository.GetSinglePort(tenant, entityPM.PreCarriageFromPortId);
+                    if (myPort != null)
+                    {
+                        this.entityPM.Origin = myPort.EnglishName;
+                    }
+                }
+
+                else
+                {
+                    Port myPort = myPortRepository.GetSinglePort(tenant, entityPM.MainCarriageFromPortId);
+                    if (myPort != null)
+                    {
+                        this.entityPM.Origin = myPort.EnglishName;
                     }
                 }
             }

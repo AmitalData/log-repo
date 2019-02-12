@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class AgedAccountsReceivableDataProvider: BaseDataProvider
+    public class AgedAccountsReceivableDataProvider : BaseDataProvider
     {
         public double? DaysPastDue1_30 { get; set; }
         public double? DaysPastDue31_60 { get; set; }
@@ -13,7 +13,7 @@ namespace WebFreight.Web.DataProviders
         public double? DaysPastDue91_120 { get; set; }
         public double? Over120DaysPastDue { get; set; }
         public double? CurrentDue { get; set; }
-        public string Name {get; set;}
+        public string Name { get; set; }
         public string CompanyName { get; set; }
         public string Currency { get; set; }
         public string Rate { get; set; }
@@ -42,6 +42,11 @@ namespace WebFreight.Web.DataProviders
             public double? Over120DaysPastDue { get; set; }
             public double? CustomerTotals { get; set; }
             public double? CurrentDue { get; set; }
+
+            public double? DaysPastDue1_15 { get; set; }
+            public double? DaysPastDue16_30 { get; set; }
+            public double? DaysPastDue1_24 { get; set; }
+            public double? DaysPastDue25_30 { get; set; }
         }
     }
 }

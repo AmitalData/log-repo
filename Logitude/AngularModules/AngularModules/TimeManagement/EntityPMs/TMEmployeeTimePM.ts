@@ -144,6 +144,11 @@ export class TMEmployeeTimePM {
     public set NeedsProrating(newValue: boolean) { if (this.needsProrating != newValue) { this.needsProrating = newValue; this.MarkAsDirty("NeedsProrating"); } }
        
 	 
+    private locationName: string;
+    public get LocationName() { return this.locationName; }
+    public set LocationName(newValue: string) { if (this.locationName != newValue) { this.locationName = newValue; this.MarkAsDirty("LocationName"); } }
+       
+	 
 
     public OldEntityPM: TMEmployeeTimePM;
 		

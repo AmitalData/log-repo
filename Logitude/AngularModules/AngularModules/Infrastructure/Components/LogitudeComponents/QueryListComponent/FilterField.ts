@@ -1,21 +1,16 @@
 declare var window: any;
-import {QueryPM} from '../../../../Infrastructure/EntityPMs/QueryPM'; 
-import {LogEvents} from '../../../../Infrastructure/Utilities/LogEvents';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {PubSubService} from '../../../../Infrastructure/Utilities/events/ApiFiltersEvent';
-import {ComboBox} from '../../../../Controls/ComboBox';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AdvancedQueryFilterPM} from '../../../../Infrastructure/EntityPMs/AdvancedQueryFilterPM';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-
+import {AppTool} from '../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../Utilities/FeatureLocator';
 
 export class FilterField extends BaseComponent {
-
-    //public textchangeevent: EventEmitter<any>;
     AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]
     ParentClass: any; 
     filters: ApiQueryFilters;
@@ -24,6 +19,14 @@ export class FilterField extends BaseComponent {
     public ControlId: string = null;
     SessionIdx: number = 0;
     public IsCustomFilter: boolean = false;
+
+    public IsFilterDeleteButtonVisible: boolean = false;
+    public BooleanFiltersEnabled: boolean = false;
+    public TextFiltersEnabled: boolean = false;
+    public LOVFiltersEnabled: boolean = false;
+    public DateFiltersEnabled: boolean = false;
+    public PickFiltersEnabled: boolean = false;
+
     constructor(objectField: any, queryId: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
         this.SessionIdx = SessionLocator.CurrentSession.SessionIndex;
@@ -36,15 +39,9 @@ export class FilterField extends BaseComponent {
         this.ObjectTable = window.ObjectTables.filter(a => a.Id == this.ObjectField.ObjectTableId)[0];
         var translation = TextCodeTranslator.Translate(this.ObjectField.FullNameTextCodeCode);
         this.iswidnowMode = iswidnowMode;
-        //if (translation != null && translation != undefined && translation != "") {
-        //    this.FieldName = translation;
-        //}
-        //else {
         this.FieldName = this.ObjectField.FieldName;
         this.IsCustomFilter = this.ObjectField.IsCustomFilter;
-
-        //}
-        //SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId
+        
         if (queryId != null && queryId != undefined && queryId != "") {
             var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == objectField.Id)[0];
             if (preDefinedFilter != null) {
@@ -71,6 +68,7 @@ export class FilterField extends BaseComponent {
                 this.EnableDelete = true;
             }
         }
+
         else {
             var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldId == objectField.Id)[0];
             if (preDefinedFilter != null) {
@@ -97,8 +95,48 @@ export class FilterField extends BaseComponent {
                 this.EnableDelete = true;
             }
         }
-    }
 
+        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
+        if (currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
+            if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                if (this.ObjectField) {
+                    this.TextFiltersEnabled = true;
+                    this.LOVFiltersEnabled = true;
+                    this.DateFiltersEnabled = true;
+                    this.PickFiltersEnabled = true;
+
+                    if (this.ObjectField.DataTypeCode != "Constant") {
+                        this.IsFilterDeleteButtonVisible = true;
+                    }
+
+                    if (!this.IsCustomFilter) {
+                        this.BooleanFiltersEnabled = true;
+                    }                    
+                }
+            }
+        }
+
+        else {
+            this.TextFiltersEnabled = true;
+            this.IsFilterDeleteButtonVisible = true;
+            this.BooleanFiltersEnabled = true;
+            this.LOVFiltersEnabled = true;
+            this.DateFiltersEnabled = true;
+            this.PickFiltersEnabled = true;
+        }
+
+        if (this.ObjectField.DataTypeCode == "Text" || this.ObjectField.DataTypeCode == "nText" || this.ObjectField.DataTypeCode == "Integer" || this.ObjectField.DataTypeCode == "Double" || this.ObjectField.DataTypeCode == "Decimal") {
+            this.UIProperties.SetEnabled("TextValue", null, this.TextFiltersEnabled);
+        }
+
+        else if (this.ObjectField.DataTypeCode == "LookUp") {
+            this.UIProperties.SetEnabled("TextValue", this.ObjectTable.Name, this.LOVFiltersEnabled);
+        }
+
+        else if (this.ObjectField.DataTypeCode == "PickList") {
+            this.UIProperties.SetEnabled(this.ObjectField.FieldName, this.ObjectTable.Name, this.PickFiltersEnabled);
+        }
+    }
     
     private filterchangeevent: PubSubService;
     public get Filterchangeevent() { return this.filterchangeevent; }

@@ -72,7 +72,16 @@ export class TenantManagementList {
 		IsDEXXConnectionEnabled: boolean;
 		LastFWBCargonautSentDate: Date;
 		LastFHLCargonautSentDate: Date;
-		BluesnapContractCode: string;
+		BluesnapContractId: string;
+		BluesnapCRMContractId: string;
+		BluesnapEAWBContractId: string;
+		BluesnapEAWBSContractId: string;
+		BluesnapOneTimeContractId: string;
+		BluesnapContractQTY: number;
+		BluesnapCRMContractQTY: number;
+		BluesnapEAWBContractQTY: number;
+		BluesnapEAWBSContractQTY: number;
+		BluesnapOneTimeContractQTY: number;
 		AWBMessagesCCSTypeCode: string;
 		PIMA: string;
 		IsEAWBOnlyDemo: boolean;

@@ -84,5 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string CodeField { get; set; }
         public string NameField { get; set; }
         public bool AllowedInQueues { get; set; }
+        public string LovDisplayMemberPath { get; set; }
+        public string LovDisplayMemberPathLocal { get; set; }
     }
 }

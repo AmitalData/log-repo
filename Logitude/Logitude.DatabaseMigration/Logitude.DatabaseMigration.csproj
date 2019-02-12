@@ -510,6 +510,30 @@
     <Compile Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.Designer.cs">
       <DependentUpon>201901131510531_NewTables_AccountingIntegrityCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901160901352_AddHarmonizeCodesTable.cs" />
+    <Compile Include="Migrations\201901160901352_AddHarmonizeCodesTable.Designer.cs">
+      <DependentUpon>201901160901352_AddHarmonizeCodesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161513218_AddHarmonizeCodesTableModifications.cs" />
+    <Compile Include="Migrations\201901161513218_AddHarmonizeCodesTableModifications.Designer.cs">
+      <DependentUpon>201901161513218_AddHarmonizeCodesTableModifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161520085_AddHarmonizeCodesTableModifications2.cs" />
+    <Compile Include="Migrations\201901161520085_AddHarmonizeCodesTableModifications2.Designer.cs">
+      <DependentUpon>201901161520085_AddHarmonizeCodesTableModifications2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161524277_AddHarmonizeCodesTableModifications3.cs" />
+    <Compile Include="Migrations\201901161524277_AddHarmonizeCodesTableModifications3.Designer.cs">
+      <DependentUpon>201901161524277_AddHarmonizeCodesTableModifications3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901160605329_branch_countercode_field.cs" />
+    <Compile Include="Migrations\201901160605329_branch_countercode_field.Designer.cs">
+      <DependentUpon>201901160605329_branch_countercode_field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901170542318_counterdefinition_countersize.cs" />
+    <Compile Include="Migrations\201901170542318_counterdefinition_countersize.Designer.cs">
+      <DependentUpon>201901170542318_counterdefinition_countersize.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811060825038_missingCustoms-MM.cs" />
     <Compile Include="Migrations\201811060825038_missingCustoms-MM.Designer.cs">
       <DependentUpon>201811060825038_missingCustoms-MM.cs</DependentUpon>
@@ -525,6 +549,130 @@
     <Compile Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.cs" />
     <Compile Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.Designer.cs">
       <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.cs" />
+    <Compile Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.Designer.cs">
+      <DependentUpon>201901170921329_AddShipmentContainerStatusChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901210635206_counterdefinition_suffix.cs" />
+    <Compile Include="Migrations\201901210635206_counterdefinition_suffix.Designer.cs">
+      <DependentUpon>201901210635206_counterdefinition_suffix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs" />
+    <Compile Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.Designer.cs">
+      <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.cs" />
+    <Compile Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.Designer.cs">
+      <DependentUpon>201901230833116_IncreasePackagesReferencesLength_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs" />
+    <Compile Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.Designer.cs">
+      <DependentUpon>201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901231239517_AddShipmentPackageRoutingIds.cs" />
+    <Compile Include="Migrations\201901231239517_AddShipmentPackageRoutingIds.Designer.cs">
+      <DependentUpon>201901231239517_AddShipmentPackageRoutingIds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901241214337_NewTable_AccountingNote.cs" />
+    <Compile Include="Migrations\201901241214337_NewTable_AccountingNote.Designer.cs">
+      <DependentUpon>201901241214337_NewTable_AccountingNote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901241252449_AddToggleTablesToDB_Samar.cs" />
+    <Compile Include="Migrations\201901241252449_AddToggleTablesToDB_Samar.Designer.cs">
+      <DependentUpon>201901241252449_AddToggleTablesToDB_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901271528466_DisplayMemberPath.cs" />
+    <Compile Include="Migrations\201901271528466_DisplayMemberPath.Designer.cs">
+      <DependentUpon>201901271528466_DisplayMemberPath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901271103565_IncreaseToggleNameLength_Samar.cs" />
+    <Compile Include="Migrations\201901271103565_IncreaseToggleNameLength_Samar.Designer.cs">
+      <DependentUpon>201901271103565_IncreaseToggleNameLength_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901281129187_AddToggleCodeToFeature_Samar.cs" />
+    <Compile Include="Migrations\201901281129187_AddToggleCodeToFeature_Samar.Designer.cs">
+      <DependentUpon>201901281129187_AddToggleCodeToFeature_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.cs" />
+    <Compile Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.Designer.cs">
+      <DependentUpon>201901230654530_shipmentnumber_length_15_to_40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240724374_quotenumber_increate_from_15_to_40.cs" />
+    <Compile Include="Migrations\201901240724374_quotenumber_increate_from_15_to_40.Designer.cs">
+      <DependentUpon>201901240724374_quotenumber_increate_from_15_to_40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300536311_shipment_quote_number_length_25.cs" />
+    <Compile Include="Migrations\201901300536311_shipment_quote_number_length_25.Designer.cs">
+      <DependentUpon>201901300536311_shipment_quote_number_length_25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300632309_counterdefinition_prefix_suffix_20.cs" />
+    <Compile Include="Migrations\201901300632309_counterdefinition_prefix_suffix_20.Designer.cs">
+      <DependentUpon>201901300632309_counterdefinition_prefix_suffix_20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300705089_shipment_number_20.cs" />
+    <Compile Include="Migrations\201901300705089_shipment_number_20.Designer.cs">
+      <DependentUpon>201901300705089_shipment_number_20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300729067_AddDWCategoriesTables_Rabaia.cs" />
+    <Compile Include="Migrations\201901300729067_AddDWCategoriesTables_Rabaia.Designer.cs">
+      <DependentUpon>201901300729067_AddDWCategoriesTables_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300734566_AddDWCategoriesTables2_Rabaia.cs" />
+    <Compile Include="Migrations\201901300734566_AddDWCategoriesTables2_Rabaia.Designer.cs">
+      <DependentUpon>201901300734566_AddDWCategoriesTables2_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.cs" />
+    <Compile Include="Migrations\201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.Designer.cs">
+      <DependentUpon>201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.cs" />
+    <Compile Include="Migrations\201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.Designer.cs">
+      <DependentUpon>201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300853442_invoice_mainentityreference_20.cs" />
+    <Compile Include="Migrations\201901300853442_invoice_mainentityreference_20.Designer.cs">
+      <DependentUpon>201901300853442_invoice_mainentityreference_20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300931146_invoiceentity_mainentityreference_20.cs" />
+    <Compile Include="Migrations\201901300931146_invoiceentity_mainentityreference_20.Designer.cs">
+      <DependentUpon>201901300931146_invoiceentity_mainentityreference_20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901301051517_documentsfiling_entitynumber_20.cs" />
+    <Compile Include="Migrations\201901301051517_documentsfiling_entitynumber_20.Designer.cs">
+      <DependentUpon>201901301051517_documentsfiling_entitynumber_20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901310916356_AddIsFullAccountingToARInvoice_Maheera.cs" />
+    <Compile Include="Migrations\201901310916356_AddIsFullAccountingToARInvoice_Maheera.Designer.cs">
+      <DependentUpon>201901310916356_AddIsFullAccountingToARInvoice_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902031110327_AddHarmonizeModification.cs" />
+    <Compile Include="Migrations\201902031110327_AddHarmonizeModification.Designer.cs">
+      <DependentUpon>201902031110327_AddHarmonizeModification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902060935006_AbedIncreaseShipmentCustomFieldsLength.cs" />
+    <Compile Include="Migrations\201902060935006_AbedIncreaseShipmentCustomFieldsLength.Designer.cs">
+      <DependentUpon>201902060935006_AbedIncreaseShipmentCustomFieldsLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061253026_AddCloseIfInvoiceGenerated_Rabaia.cs" />
+    <Compile Include="Migrations\201902061253026_AddCloseIfInvoiceGenerated_Rabaia.Designer.cs">
+      <DependentUpon>201902061253026_AddCloseIfInvoiceGenerated_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902091108402_NewField_SearchFields_AccountingIntegirityCheck.cs" />
+    <Compile Include="Migrations\201902091108402_NewField_SearchFields_AccountingIntegirityCheck.Designer.cs">
+      <DependentUpon>201902091108402_NewField_SearchFields_AccountingIntegirityCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902071125540_AddUserRolesStringToUser_Samar.cs" />
+    <Compile Include="Migrations\201902071125540_AddUserRolesStringToUser_Samar.Designer.cs">
+      <DependentUpon>201902071125540_AddUserRolesStringToUser_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902100944337_AddFromToOriginToShipment_Samar.cs" />
+    <Compile Include="Migrations\201902100944337_AddFromToOriginToShipment_Samar.Designer.cs">
+      <DependentUpon>201902100944337_AddFromToOriginToShipment_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902071414099_AbedAddHideTreeToTableDwObjectField.cs" />
+    <Compile Include="Migrations\201902071414099_AbedAddHideTreeToTableDwObjectField.Designer.cs">
+      <DependentUpon>201902071414099_AbedAddHideTreeToTableDwObjectField.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -862,8 +1010,119 @@
     <EmbeddedResource Include="Migrations\201901161128192_AddPackageHasContainerExcField_MM_Fix.resx">
       <DependentUpon>201901161128192_AddPackageHasContainerExcField_MM_Fix.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901160901352_AddHarmonizeCodesTable.resx">
+      <DependentUpon>201901160901352_AddHarmonizeCodesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161513218_AddHarmonizeCodesTableModifications.resx">
+      <DependentUpon>201901161513218_AddHarmonizeCodesTableModifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161520085_AddHarmonizeCodesTableModifications2.resx">
+      <DependentUpon>201901161520085_AddHarmonizeCodesTableModifications2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161524277_AddHarmonizeCodesTableModifications3.resx">
+      <DependentUpon>201901161524277_AddHarmonizeCodesTableModifications3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901160605329_branch_countercode_field.resx">
+      <DependentUpon>201901160605329_branch_countercode_field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901170542318_counterdefinition_countersize.resx">
+      <DependentUpon>201901170542318_counterdefinition_countersize.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.resx">
       <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.resx">
+      <DependentUpon>201901170921329_AddShipmentContainerStatusChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901210635206_counterdefinition_suffix.resx">
+      <DependentUpon>201901210635206_counterdefinition_suffix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.resx">
+      <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.resx">
+      <DependentUpon>201901230833116_IncreasePackagesReferencesLength_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.resx">
+      <DependentUpon>201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901231239517_AddShipmentPackageRoutingIds.resx">
+      <DependentUpon>201901231239517_AddShipmentPackageRoutingIds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901241214337_NewTable_AccountingNote.resx">
+      <DependentUpon>201901241214337_NewTable_AccountingNote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901241252449_AddToggleTablesToDB_Samar.resx">
+      <DependentUpon>201901241252449_AddToggleTablesToDB_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271528466_DisplayMemberPath.resx">
+      <DependentUpon>201901271528466_DisplayMemberPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271103565_IncreaseToggleNameLength_Samar.resx">
+      <DependentUpon>201901271103565_IncreaseToggleNameLength_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901281129187_AddToggleCodeToFeature_Samar.resx">
+      <DependentUpon>201901281129187_AddToggleCodeToFeature_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.resx">
+      <DependentUpon>201901230654530_shipmentnumber_length_15_to_40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240724374_quotenumber_increate_from_15_to_40.resx">
+      <DependentUpon>201901240724374_quotenumber_increate_from_15_to_40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300536311_shipment_quote_number_length_25.resx">
+      <DependentUpon>201901300536311_shipment_quote_number_length_25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300632309_counterdefinition_prefix_suffix_20.resx">
+      <DependentUpon>201901300632309_counterdefinition_prefix_suffix_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300705089_shipment_number_20.resx">
+      <DependentUpon>201901300705089_shipment_number_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300729067_AddDWCategoriesTables_Rabaia.resx">
+      <DependentUpon>201901300729067_AddDWCategoriesTables_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300734566_AddDWCategoriesTables2_Rabaia.resx">
+      <DependentUpon>201901300734566_AddDWCategoriesTables2_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.resx">
+      <DependentUpon>201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.resx">
+      <DependentUpon>201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300853442_invoice_mainentityreference_20.resx">
+      <DependentUpon>201901300853442_invoice_mainentityreference_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300931146_invoiceentity_mainentityreference_20.resx">
+      <DependentUpon>201901300931146_invoiceentity_mainentityreference_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901301051517_documentsfiling_entitynumber_20.resx">
+      <DependentUpon>201901301051517_documentsfiling_entitynumber_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901310916356_AddIsFullAccountingToARInvoice_Maheera.resx">
+      <DependentUpon>201901310916356_AddIsFullAccountingToARInvoice_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902031110327_AddHarmonizeModification.resx">
+      <DependentUpon>201902031110327_AddHarmonizeModification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902060935006_AbedIncreaseShipmentCustomFieldsLength.resx">
+      <DependentUpon>201902060935006_AbedIncreaseShipmentCustomFieldsLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061253026_AddCloseIfInvoiceGenerated_Rabaia.resx">
+      <DependentUpon>201902061253026_AddCloseIfInvoiceGenerated_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902091108402_NewField_SearchFields_AccountingIntegirityCheck.resx">
+      <DependentUpon>201902091108402_NewField_SearchFields_AccountingIntegirityCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902071125540_AddUserRolesStringToUser_Samar.resx">
+      <DependentUpon>201902071125540_AddUserRolesStringToUser_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902071414099_AbedAddHideTreeToTableDwObjectField.resx">
+      <DependentUpon>201902071414099_AbedAddHideTreeToTableDwObjectField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902100944337_AddFromToOriginToShipment_Samar.resx">
+      <DependentUpon>201902100944337_AddFromToOriginToShipment_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

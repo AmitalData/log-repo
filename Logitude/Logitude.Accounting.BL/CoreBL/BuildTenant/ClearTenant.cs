@@ -13,60 +13,64 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTestDB
         {
             return
 @"
-delete fullaccountingsettings where tenant = 1
-delete  ReconciliationLines where tenant = 1
-delete  Reconciliations where tenant = 1
-delete  LedgerTransactions where tenant = 1
+delete fullaccountingsettings where tenant = 1051
+delete  ReconciliationLines where tenant = 1051
+delete  Reconciliations where tenant = 1051
+delete  LedgerTransactions where tenant = 1051
 
-delete  ReconciliationLines WHERE TENANT=1
-delete  Reconciliations WHERE TENANT=1
-delete journalReconciles where tenant = 1
-delete journallines where tenant = 1
-delete Journals where tenant = 1
-delete CashBookLines where tenant = 1
+delete  ReconciliationLines WHERE tenant = 1051
+delete  Reconciliations WHERE tenant = 1051
+delete journalReconciles where tenant = 1051
+delete journallines where tenant = 1051
+delete JournalAdditionalDatas where tenant = 1051
+delete Journals where tenant = 1051
+delete CashBookLines where tenant = 1051
 
-delete CashBooks where tenant = 1
+delete CashBooks where tenant = 1051
 
-delete ReconcileExternalPages where tenant = 1
-delete BankAccounts where tenant = 1
+delete ReconcileExternalPages where tenant = 1051
+delete BankAccounts where tenant = 1051
 
---update CashBooks set AccountId =''  where tenant = 1
---update BankAccounts set DeferredGLAccountId ='' where tenant = 1
---update BankAccounts set GLAccountId ='' where tenant = 1
-delete BankDepositLines where tenant = 1
-delete BankDeposits where tenant = 1
-delete ARPaymentCheques where tenant = 1
-update ChargesTypes set ReceivableCreditGLAccountId=''  where tenant = 1 and ReceivableCreditGLAccountId <>''
-update ChargesTypes set PayableDebitGLAcountId='' where tenant = 1  and PayableDebitGLAcountId <> ''
+--update CashBooks set AccountId =''  where tenant = 1051
+--update BankAccounts set DeferredGLAccountId ='' where tenant = 1051
+--update BankAccounts set GLAccountId ='' where tenant = 1051
+delete BankDepositLines where tenant = 1051
+delete BankDeposits where tenant = 1051
+delete ARPaymentCheques where tenant = 1051
+update ChargesTypes set ReceivableCreditGLAccountId=''  where tenant = 1051 and ReceivableCreditGLAccountId <>''
+update ChargesTypes set PayableDebitGLAcountId='' where tenant = 1051  and PayableDebitGLAcountId <> ''
 
-delete GLAccountTotalByMonths where tenant = 1
-delete GLAccountCurrencies where tenant = 1
+delete GLAccountTotalByMonths where tenant = 1051
+delete GLAccountCurrencies where tenant = 1051
 
-update GLAccounts set controlAccountId =NULL where controlAccountId is not null
+update GLAccounts set controlAccountId =NULL where controlAccountId is not null AND tenant = 1051 
 
-delete GLAccounts where (IsControlAccount is null or IsControlAccount=0) and tenant = 1 
-and id not in (select VATInputsGLAccountId from  FullAccountingSettings where tenant = 1)
-and id not in (select VATOutputGLAccountId from  FullAccountingSettings where tenant = 1)
-and id not in (select RevenueExpenseGLAccountId from  FullAccountingSettings where tenant = 1)
+delete GLAccountMOredatas where  tenant = 1051 
+
+delete GLAccounts where (IsControlAccount is null or IsControlAccount=0) and tenant = 1051 
+and id not in (select VATInputsGLAccountId from  FullAccountingSettings where tenant = 1051)
+and id not in (select VATOutputGLAccountId from  FullAccountingSettings where tenant = 1051)
+and id not in (select RevenueExpenseGLAccountId from  FullAccountingSettings where tenant = 1051)
  and id not in (select DeferredGLAccountId from BankAccounts) 
 and id not in (select GLAccountId from BankAccounts) AND  id not in (select AccountId from CashBooks) 
 
 update GLAccounts set PreviousChartOfAccountsId =NULL where PreviousChartOfAccountsId is not null
 
-delete ChartOfAccounts where id not in (select ChartOfAccountsId from glaccounts where tenant = 1) AND Tenant = 1
+delete ChartOfAccounts where id not in (select ChartOfAccountsId from glaccounts where tenant = 1051) AND tenant = 1051
 
 
 
-update cards set glaccountid = '' where glaccountid is not null and tenant = 1
-update GLAccountMoreDatas set BalanceInLocalCurrency = null,LocalBalanceInDue= null,NextDueDate=null where tenant = 1
+update cards set glaccountid = '' where glaccountid is not null and tenant = 1051
+update GLAccountMoreDatas set BalanceInLocalCurrency = null,LocalBalanceInDue= null,NextDueDate=null where tenant = 1051
 
 update QueueMessages set Status='1'  where QueueDefinitionCode='AccountingJournalApproveWR' and status ='0'
 
-delete   FROM [DBIdCounters]  WHERE [TableName] in ( 'LedgerTransaction',  'Journal' ,'GLAccount')
-DELETE  FullAccountingSettings where tenant = 1
-DELETE GLAccountMoreDatas WHERE TENANT=1
-DELETE GLAccountS WHERE TENANT=1
-DELETE ChartOfAccountS WHERE TENANT=1
+---delete   FROM [DBIdCounters]  WHERE [TableName] in ( 'LedgerTransaction',  'Journal' ,'GLAccount')
+DELETE  FullAccountingSettings where tenant = 1051
+DELETE GLAccountMoreDatas WHERE tenant = 1051
+DELETE GLAccountS WHERE tenant = 1051
+DELETE ChartOfAccountS WHERE tenant = 1051
+
 
 ";
         }

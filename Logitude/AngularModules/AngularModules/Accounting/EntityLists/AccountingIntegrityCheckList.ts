@@ -17,6 +17,9 @@ export class AccountingIntegrityCheckList {
 	HasException: boolean;
 	DoneDateTimeUTC: Date;
 	StatusName: string;
+	FromMonthInclusive: Date;
+	ToMonthInclusive: Date;
+	SearchFields: string;
 	
 }
  

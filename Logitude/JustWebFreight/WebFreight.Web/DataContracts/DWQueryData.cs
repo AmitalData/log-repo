@@ -12,5 +12,8 @@ namespace WebFreight.Web.DataContracts
         public DWSubQueryPM SubQueryData { get; set; }
         public List<DWObjectFieldsDetails> Columns { get; set; }
         public DWObjectFieldsDetails Filters { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public string ColumnsSort { get; set; }
     }
 }

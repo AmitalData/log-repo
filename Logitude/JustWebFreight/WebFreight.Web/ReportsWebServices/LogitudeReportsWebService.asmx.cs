@@ -704,6 +704,11 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.Destination = a.ToPortName;
                     profitrecord.Notes = a.Notes;
                     profitrecord.RealShipmentType = a.ShipmentTypeName;
+                    profitrecord.Master = a.LongMaster;
+                    profitrecord.FromPortCode = a.MainCarriageFromPortCode;
+                    profitrecord.FromPortName = a.MainCarriageFromPortName;
+                    profitrecord.FinalDestinationPortCode = a.MainCarriageFinalDestinationPortCode;
+                    profitrecord.FinalDestinationPortName = a.MainCarriageFinalDestinationPortName;
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
@@ -1003,26 +1008,35 @@ namespace WebFreight.Web.ReportsWebServices
 
             #endregion
 
-            #region Fill Statement Record List
+            #region Fill Statement Record Listc
 
-            List<StatementDataProvider.StatementRecord> list_ARInvoices =
-                (from d in iQueryable_ARInvoice
-                 select new StatementDataProvider.StatementRecord()
-                 {
-                     MasterNumber = d.MasterNumber,
-                     Desicription = d.Description + " " + d.MainEntityReference,
-                     ShipmentId = d.MainEntityId,
-                     HouseNumber = d.HouseNumber,
-                     Date = d.InvoiceDate.Value,
-                     DueDate = d.DueDate.Value,
-                     OurRefrence = d.InvoiceNumber,
-                     YourRefrence = d.CustomerRef,
-                     CurrencyId = d.InvoiceCurrencyId,
-                     Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice")),
-                     Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue),
-                     Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue),
-                     Notes = d.InternalNotes,
-                 }).ToList();
+            List<StatementDataProvider.StatementRecord> list_ARInvoices = new List<StatementDataProvider.StatementRecord>();
+            List<ARInvoice> iQueryableList = iQueryable_ARInvoice.ToList();
+            foreach(ARInvoice d in iQueryableList)
+            {
+                StatementDataProvider.StatementRecord item = new StatementDataProvider.StatementRecord();
+                item.MasterNumber = d.MasterNumber;
+                  item.Desicription = d.Description + " " + d.MainEntityReference;
+                item.ShipmentId = d.MainEntityId;
+                item.HouseNumber = d.HouseNumber;
+                item.Date = d.InvoiceDate.Value;
+                item.DueDate = d.DueDate.Value;
+                item.OurRefrence = d.InvoiceNumber;
+                item.YourRefrence = d.CustomerRef;
+                item.CurrencyId = d.InvoiceCurrencyId;
+                item.Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice"));
+                item.Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue);
+                item.Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue);
+                item.Notes = d.InternalNotes;
+                item.BillToVendorId = d.BillToId;
+                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
+
+                list_ARInvoices.Add(item);
+            }
+
+
+
+
 
             List<StatementDataProvider.StatementRecord> list_APInvoices =
                 (from d in iQueryable_APInvoice
@@ -1041,6 +1055,7 @@ namespace WebFreight.Web.ReportsWebServices
                      Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null),
                      Notes = d.InternalNotes,
                      YourRefrence = d.InvoiceNumber,
+                     BillToVendorId = d.VendorId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> list_ARPayments =
@@ -1057,6 +1072,7 @@ namespace WebFreight.Web.ReportsWebServices
                      RegisterDate = d.RegisterDate,
                      ValueDate = d.ValueDate,
                      PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
+                     BillToVendorId = d.BillToId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> list_APPayments =
@@ -1073,10 +1089,14 @@ namespace WebFreight.Web.ReportsWebServices
                      RegisterDate = d.RegisterDate,
                      ValueDate = d.ValueDate,
                      PaymentMethod = d.PaymentMethod == null ? null : d.PaymentMethod.Name,
+                     BillToVendorId = d.VendorId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> totalList = new List<StatementDataProvider.StatementRecord>();
             totalList = list_ARInvoices.Concat(list_APInvoices).Concat(list_ARPayments).Concat(list_APPayments).ToList();
+
+            List<string> allCardIds = totalList.Select(s => s.BillToVendorId).ToList();
+            IQueryable<Card> allCards = commonContext.Cards.Where(d => d.Tenant == tenant && allCardIds.Contains(d.Id));
 
             List<string> allShipmentIds = totalList.Select(s => s.ShipmentId).ToList();
             List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard").Include("ConsigneeCard")
@@ -1113,8 +1133,13 @@ namespace WebFreight.Web.ReportsWebServices
                     record.Credit = (double)Math.Abs((decimal)record.Credit);
                 }
 
-                ShipmentEntityClass shipmentEntity = allShipmentData.Where(d => d.ShipmentId == record.ShipmentId).FirstOrDefault();
+                Card card = allCards.Where(d => d.Id == record.BillToVendorId).FirstOrDefault();
+                if(card != null)
+                {
+                    record.BillToVendor = card.EnglishName;
+                }
 
+                ShipmentEntityClass shipmentEntity = allShipmentData.Where(d => d.ShipmentId == record.ShipmentId).FirstOrDefault();
                 if (shipmentEntity != null)
                 {
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentEntity, record);
@@ -2094,7 +2119,243 @@ namespace WebFreight.Web.ReportsWebServices
             return dataProvider;
         }
 
-        #endregion       
+        #region VDK Report
+
+        internal byte[] LoadVDKDataProvider(byte[] xmlFilters, int tenant)
+        {
+            VDKDataProvider dataprovider = GetVDKDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(VDKDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private VDKDataProvider GetVDKDataProvider(byte[] xmlFilters, int tenant)
+        {
+            VDKDataProvider totalData = new DataProviders.VDKDataProvider();
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_EntityStatus = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EntityStatus").FirstOrDefault();
+            QueryFilterItem filterItem_ShipmentCustomerTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipmentCustomerTypeCode").FirstOrDefault();
+
+            //ToDate
+            DateTime? toDate = null;
+
+            if (filterItem_tODate != null)
+            {
+                if (filterItem_tODate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_tODate.FieldValue;
+                }
+            }
+
+            //FromDate
+            DateTime? FromDate = null;
+
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    FromDate = (DateTime)filterItem_FromDate.FieldValue;
+                }
+            }
+
+
+            string branchId = null;
+            totalData.BranchName = "All";
+            if (filterItem_BranchId != null)
+            {
+                if (filterItem_BranchId.FieldValue != null)
+                {
+                    branchId = filterItem_BranchId.FieldValue.ToString();
+                    if (!String.IsNullOrEmpty(branchId))
+                    {
+                        BranchRepository branchRepository = new BranchRepository(commonContext);
+                        Branch branch = branchRepository.GetSingleBranch(branchId, tenant);
+                        if (branch != null)
+                            totalData.BranchName = branch.EnglishName;
+                    }
+                }
+            }
+
+            string customerId = null;
+            totalData.CustomerName = "All";
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                    if (!String.IsNullOrEmpty(customerId))
+                    {
+                        CardRepository cardRepository = new CardRepository(commonContext);
+                        Card customer = cardRepository.GetSingleCard(customerId, tenant);
+                        if (customer != null)
+                            totalData.ShipperName = customer.EnglishName;
+                    }
+                }
+            }
+
+            
+
+
+            string entityStatus = null;
+            totalData.StatusName = "All";
+            if (filterItem_EntityStatus != null)
+            {
+                if (filterItem_EntityStatus.FieldValue != null)
+                {
+                    entityStatus = filterItem_EntityStatus.FieldValue.ToString();
+                    if (!String.IsNullOrEmpty(entityStatus))
+                    {
+                        EntityStatusRepository entitiyStatusRepository = new EntityStatusRepository(WebFreightContext.GetContext(tenant));
+                        EntityStatus status = entitiyStatusRepository.GetSingleEntityStatus(entityStatus,tenant);
+                        if (status != null)
+                            totalData.StatusName = status.Name;
+                    }
+                }
+            }
+
+            
+
+
+
+            string shipmentCustomerTypeCode = null;
+            if (filterItem_ShipmentCustomerTypeCode != null)
+            {
+                if (filterItem_ShipmentCustomerTypeCode.FieldValue != null)
+                {
+                    shipmentCustomerTypeCode = filterItem_ShipmentCustomerTypeCode.FieldValue.ToString();
+
+                    if (!String.IsNullOrEmpty(shipmentCustomerTypeCode))
+                    {
+                        ShipmentCustomerTypeRepository shipmentsRepository = new ShipmentCustomerTypeRepository(shipmentsContext);
+                        ShipmentCustomerType shipmentcustomertypeCode = shipmentsRepository.GetSingleShipmentCustomerType(shipmentCustomerTypeCode);
+                        if (shipmentcustomertypeCode != null)
+                            totalData.CustomerName = shipmentcustomertypeCode.Name;
+                    }
+                }
+            }
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
+
+            shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
+            GenericFilter genericFilter = new GenericFilter();
+            QueryOperations queryOperations2 = new QueryOperations()
+            {
+                ObjectTableName = "Shipment",
+                PageIndex = 1,
+                PageSize = 10,
+                QuerySection = "Shipments",
+                SortByColumnName = null,
+                SortDirectin = null,
+                QueryFilterItems = new List<QueryFilterItem>(),
+            };
+            QueryFilterItem item = new QueryFilterItem();
+            item.DisplayInList = true;
+            item.FieldDataType = "Date";
+            item.FieldName = "Field2";
+            item.FieldValue = FromDate;
+            item.FieldValue2 = toDate;
+            item.IsCustomField = true;
+            item.Operator = "Between";
+            queryOperations2.QueryFilterItems.Add(item);
+
+            shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations2, shipments);
+
+            
+            if (!string.IsNullOrEmpty(branchId))
+            {
+                shipments = shipments.Where(d => d.BranchId == branchId);
+            }
+
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                shipments = shipments.Where(d => d.CustomerId == customerId);
+            }
+
+
+            if (!string.IsNullOrEmpty(entityStatus))
+            {
+                shipments = shipments.Where(d => d.StatusId == entityStatus);
+            }
+
+
+            if (!string.IsNullOrEmpty(shipmentCustomerTypeCode))
+            {
+                shipments = shipments.Where(d => d.ShipmentCustomerTypeCode == shipmentCustomerTypeCode);
+            }
+
+            List<ShipmentDataView> Shipments = shipments.ToList();
+            List<string> ShipmentIds = Shipments.Select(p=>p.Id).ToList();
+           // List<string> ConsigneeAdressIds = Shipments.Select(p => p.ConsigneeAddressId).ToList();
+
+            List<ShipmentPackage> shipmentPackages = (from d in shipmentsContext.ShipmentPackages.Include("PackageType") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
+           // List<Card> Consiness = (from d in commonContext.Cards.Include("Address") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
+
+
+
+            if (shipmentPackages.Count > 0)
+            {               
+                totalData.ShipmentPackages = new List<ShipmentPackageRecord>();
+                foreach (ShipmentPackage Item in shipmentPackages)
+                {
+                    ShipmentPackageRecord shipment = new ShipmentPackageRecord();
+                    ShipmentDataView dataView = Shipments.Where(d => d.Id == Item.ShipmentId).FirstOrDefault(); 
+
+                    shipment.ActualETD = dataView.MainCarriageATD ;
+                    shipment.ConsigneeAddress = dataView.ConsigneeName;
+                    shipment.CommodityNumber = Item.CommodityNumber;
+                    shipment.ProjectNumber = dataView.ProjectNumber;
+                    shipment.Customer = dataView.CustomerName;
+                    shipment.Supplier = dataView.ShipperName;
+                    shipment.Status = dataView.StatusName;
+                    shipment.CustomerRef = dataView.CustomerReference1;
+                    shipment.Product = Item.CommodityName;
+                    shipment.Weight = Item.VolumetricWeight;
+                    shipment.Unit = Item.PackageType!=null?Item.PackageType.EnglishName:null;
+                    shipment.RequestETD = dataView.FirstPickupETD;
+                    shipment.EstimateETD = dataView.FirstPickupETA;
+                    if (!String.IsNullOrEmpty(dataView.Field2))
+                        shipment.RequestETA = Convert.ToDateTime(dataView.Field2);
+                    shipment.EstimateETA = dataView.MainCarriageFinalDestinationETA;
+                    shipment.Shipper = dataView.ShipperName;
+                    shipment.Pieces = Item.Quantity;
+                    shipment.ContainerNr = Item.ContainerNumber;
+                    totalData.ShipmentPackages.Add(shipment);
+
+                }
+
+            }
+
+
+
+                    totalData.FromDate = FromDate;
+            totalData.ToDate = toDate;
+            #endregion
+
+            return totalData;
+        }
+        #endregion
+#endregion
 
         #region AgedAccountsReceivable
         [WebMethod]
@@ -2327,6 +2588,11 @@ namespace WebFreight.Web.ReportsWebServices
                 double? sum91_120 = 0;
                 double? over120 = 0;
 
+                double? sum1_15 = 0;
+                double? sum16_30 = 0;
+                double? sum1_24 = 0;
+                double? sum25_30 = 0;
+
                 List<AgingStatemantDataItem> tempList = totalList.Where(d => d.CardId == cardId).ToList();
 
                 List<AgingStatemantDataItem> currentDueItems = tempList.Where(d => d.Date >= todayDate).ToList();
@@ -2335,6 +2601,12 @@ namespace WebFreight.Web.ReportsWebServices
                 List<AgingStatemantDataItem> Due61_90Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 60) && (((todayDate - d.Date.Value).TotalDays) <= 90)).ToList();
                 List<AgingStatemantDataItem> Due91_120Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 90) && (((todayDate - d.Date.Value).TotalDays) <= 120)).ToList();
                 List<AgingStatemantDataItem> over120Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays > 120).ToList();
+
+                List<AgingStatemantDataItem> Due1_15Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 1 && (todayDate - d.Date.Value).TotalDays <= 15).ToList();
+                List<AgingStatemantDataItem> Due16_30Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 15) && (((todayDate - d.Date.Value).TotalDays) <= 30)).ToList();
+
+                List<AgingStatemantDataItem> Due1_24Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 1 && (todayDate - d.Date.Value).TotalDays <= 24).ToList();
+                List<AgingStatemantDataItem> Due25_30Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 24) && (((todayDate - d.Date.Value).TotalDays) <= 30)).ToList();
 
                 if (currencyType == "profit")
                 {
@@ -2346,6 +2618,11 @@ namespace WebFreight.Web.ReportsWebServices
                         sum61_90 = (Due61_90Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                         sum91_120 = (Due91_120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                         over120 = (over120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+
+                        sum1_15 = (Due1_15Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum16_30 = (Due16_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum1_24 = (Due1_24Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum25_30 = (Due25_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                     }
                 }
 
@@ -2357,6 +2634,11 @@ namespace WebFreight.Web.ReportsWebServices
                     sum61_90 = Due61_90Items.Sum(d => d.Debit + d.Credit);
                     sum91_120 = Due91_120Items.Sum(d => d.Debit + d.Credit);
                     over120 = over120Items.Sum(d => d.Debit + d.Credit);
+
+                    sum1_15 = Due1_15Items.Sum(d => d.Debit + d.Credit);
+                    sum16_30 = Due16_30Items.Sum(d => d.Debit + d.Credit);
+                    sum1_24 = Due1_24Items.Sum(d => d.Debit + d.Credit);
+                    sum25_30 = Due25_30Items.Sum(d => d.Debit + d.Credit);
                 }
 
                 CardEntityClass cardEntity = allCardData.Where(d => d.Id == cardId).FirstOrDefault();
@@ -2375,6 +2657,10 @@ namespace WebFreight.Web.ReportsWebServices
                 acountsRecored.Over120DaysPastDue = over120;
                 acountsRecored.CustomerTotals = currentsum + sum1_30 + sum31_60 + sum61_90 + sum91_120 + over120;
 
+                acountsRecored.DaysPastDue1_15 = sum1_15;
+                acountsRecored.DaysPastDue16_30 = sum16_30;
+                acountsRecored.DaysPastDue1_24 = sum1_24;
+                acountsRecored.DaysPastDue25_30 = sum25_30;
                 dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
             }
 
@@ -8686,6 +8972,8 @@ namespace WebFreight.Web.ReportsWebServices
                                               BranchNumber = d.BankAccountLite != null ? d.BankAccountLite.BranchNumber : null,
                                           }).OrderBy(o => o.PaymentCurrencyCode).ToList();
 
+
+
             foreach (ARPaymentDataProvider item in myResult.ARPaymentDataList)
             {
                 item.PaidAPInvoicesList = new List<ARPaymentDataProvider.ReportARInvoicePayments>();                
@@ -8701,6 +8989,7 @@ namespace WebFreight.Web.ReportsWebServices
                     reportAPIPayment.AmountPaid = null;
                     reportAPIPayment.OriginalAmount = null;
                     reportAPIPayment.InvocieDate = null;
+
                     item.PaidAPInvoicesList.Add(reportAPIPayment);
                 }
 
@@ -8724,6 +9013,10 @@ namespace WebFreight.Web.ReportsWebServices
                             reportAPIPayment.BillTo = apiInvoicePayment.ARInvoice.BillTo.LocalName;
                             reportAPIPayment.InvoiceNumber = apiInvoicePayment.ARInvoice.InvoiceNumber;
                             reportAPIPayment.InvocieDate = apiInvoicePayment.ARInvoice.InvoiceDate;
+                            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                            customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, apiInvoicePayment.ARInvoice, reportAPIPayment);
+
+                            
 
                             if (isLocalCurrency)
                             {
@@ -9346,7 +9639,7 @@ namespace WebFreight.Web.ReportsWebServices
                 differenceTime_Total += differenceTime;
                 timSheetItem.DifferenceTime = DateFormat(differenceTime);
 
-                var totalWorkHrs = Math.Round((timeFromOffice + timeFromClient + timeFromHome), 2);
+                var totalWorkHrs = Math.Round((timeFromClock + timeFromClient + timeFromHome), 2);
                 totalWorkHrs_Total += totalWorkHrs;
                 timSheetItem.TotalWorkHrs = DateFormat(totalWorkHrs);
 
@@ -9377,14 +9670,25 @@ namespace WebFreight.Web.ReportsWebServices
             if (time != 0)
             {
                 var ts = TimeSpan.FromHours(time);
+                var h = 0.0;
                 if(ts.TotalHours < 0)
                 {
                     isMinus = true;
+                    var h_Abs = Math.Abs(ts.TotalHours);
+                     h = System.Math.Floor(h_Abs);
                 }
-                var h = System.Math.Floor(ts.TotalHours);
+                else
+                {
+                     h = System.Math.Floor(ts.TotalHours);
+                }
+               
                 if (Math.Abs(ts.TotalHours) < 1)
                 {
                     h = 0;
+                }
+                if(isMinus)
+                {
+                    h = h * -1;
                 }
                 var m = (ts.TotalHours - h) * 60;
                 if (isMinus)
@@ -9680,7 +9984,6 @@ namespace WebFreight.Web.ReportsWebServices
                                           ProjectId = g.Key.ProjectId,
                                       });
 
-
                 foreach (var item in daysList_Total)
                 {
                     List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => d.ProjectId == item.ProjectId).ToList();
@@ -9706,17 +10009,34 @@ namespace WebFreight.Web.ReportsWebServices
                                 TMProjectCategoryRepository repo = new TMProjectCategoryRepository(tenant);
                                 category = repo.GetSingle(project.CategoryId, tenant);
                                 if (category != null)
-                                    timSheetItem.Category = category.Name;
+                                {
+                                    timSheetItem.CategoryId = category.Id;
+                                    timSheetItem.CategoryName = category.Name;
+                                }
+                                   
                             }
                         }
 
                         var wIWorkedDays = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2) / 8;
                         totalWIWorkedDays += wIWorkedDays;
                         timSheetItem.TotalWIWorkedDays = DateFormat(wIWorkedDays);
-
+                        timSheetItem.TotalWIWorkedDays_number = wIWorkedDays;
                         result.SummarizedWorkHoursPerProjectList.Add(timSheetItem);
+
                     }
                 }
+
+                List<ProjectsByCategoryGroup> finalResults = (from p in result.SummarizedWorkHoursPerProjectList
+                                                              group p by new { p.CategoryId, p.CategoryName } into g
+                                                              select new ProjectsByCategoryGroup()
+                                                              {
+                                                                  CategoryId = g.Key.CategoryId,
+                                                                  CategoryName = g.Key.CategoryName,
+                                                                  ProjectsRecordList = g.ToList(),
+                                                                  Total = DateFormat((Math.Round(g.Sum(s => s.TotalWIWorkedDays_number), 2))),
+                                                              }).ToList();
+
+                result.ProjectsByCategoryGroupList = finalResults.OrderBy(d => d.CategoryName).ToList();
 
                 if (!string.IsNullOrEmpty(employeeUserId))
                 {
@@ -10311,6 +10631,12 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.PortOfDischargeName = a.MainCarriageFinalDestinationPortName;
                     myRecord.Consignee = a.ConsigneeName;
                     myRecord.BookingNumber = a.BookingConfirmationNumber;
+                    myRecord.Transshipment1ETA = a.Transshipment1ETA;
+                    myRecord.Transshipment2ETA = a.Transshipment2ETA;
+                    myRecord.Transshipment3ETA = a.Transshipment3ETA;
+                    myRecord.Transshipment1ETD = a.Transshipment1ETD;
+                    myRecord.Transshipment2ETD = a.Transshipment2ETD;
+                    myRecord.Transshipment3ETD = a.Transshipment3ETD;
 
                     myRecord.FullStatus = a.StatusName;
                     if(!string.IsNullOrEmpty(a.StatusLocation))
@@ -11864,7 +12190,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
 
-            shipments = shipments.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H" && !d.IsCancelled);
+            shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
             if (FromDate != null)
             {
                 shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
@@ -11894,8 +12220,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<Address> FromPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
                 List<Country> FromAddressCountryLists = (from record in commonContext.Countries.Include("GlobalZone") where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
                 List<Address> ToPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
-
-                //(from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPortCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+                List<ShipmentPackage> ShipmentPackages = (from d in shipmentsContext.ShipmentPackages where shipmentdelevriesIds.Contains(d.ShipmentId) && d.Reference1!=null && d.Reference2 != null && d.Reference3 != null && d.Reference4 != null  select d).ToList();
 
 
 
@@ -11903,7 +12228,7 @@ namespace WebFreight.Web.ReportsWebServices
                 foreach (ShipmentDataView Item in Shipments)
                 {
 
-
+                  
 
 
                     Currency ValueOfgoodsCurrency = currencyLists.Where(d => d.Id == Item.ValueOfGoodsCurrencyId).FirstOrDefault(); // (from d in commonContext.Currencies where d.Id == Item.ValueOfGoodsCurrencyId select d).FirstOrDefault();
@@ -11920,6 +12245,11 @@ namespace WebFreight.Web.ReportsWebServices
                     //                                         select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
                     ShipmentPickUpDelivery myFirstPickup = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    ShipmentPackage firstShipmentPackage = ShipmentPackages.Where(d => d.ShipmentId == Item.Id).FirstOrDefault();
+
+
+                  
+
                     //(from d in shipmentsContext.ShipmentPickUpDeliveries
                     //  where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK"
                     //  select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
@@ -11927,6 +12257,16 @@ namespace WebFreight.Web.ReportsWebServices
                     ShipmentDetals shipment = new ShipmentDetals();
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Item, shipment);
+
+                    if (firstShipmentPackage != null)
+                    {
+                        shipment.Reference1 = firstShipmentPackage.Reference1;
+                        shipment.Reference2 = firstShipmentPackage.Reference2;
+                        shipment.Reference3 = firstShipmentPackage.Reference3;
+                        shipment.Reference4 = firstShipmentPackage.Reference4;
+                    }
+
+
 
                     if (myLastPickup != null)
                     {

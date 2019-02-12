@@ -1405,6 +1405,19 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<DWCategories> DWCategories
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DWObjectFieldCategories> DWObjectFieldCategories
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Shipment Context
@@ -1618,6 +1631,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
+        public IDbSet<HarmonizeCode> HarmonizeCodes { get; }
 
         #endregion
 
@@ -3331,6 +3345,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses { get; set; }
         public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; set; }
         public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; set; }
+        public IDbSet<AccountingNote> AccountingNotes { get; set; }
    
 
         #endregion
@@ -3450,6 +3465,20 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Infrastructure Generated
+        public IDbSet<Toggle> Toggles
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<FeatureToggle> FeatureToggle
+        {
+            get;
+            set;
+
+        }
+
         public IDbSet<BIReport> BIReports
         {
             get;
@@ -4207,6 +4236,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             #endregion
 
             #region Infrastructure Generated
+            modelBuilder.Configurations.Add(new ToggleMap());
+            modelBuilder.Configurations.Add(new FeatureToggleMap());
             modelBuilder.Configurations.Add(new BIReportMap());
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
             modelBuilder.Configurations.Add(new BusinessRoleMap());
@@ -4745,7 +4776,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
+            modelBuilder.Configurations.Add(new AccountingNoteMap());
             modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
+            modelBuilder.Configurations.Add(new HarmonizeCodeMap());
+            modelBuilder.Configurations.Add(new DWCategoriesMap());
+            modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
+
+
 
             base.OnModelCreating(modelBuilder);
         }

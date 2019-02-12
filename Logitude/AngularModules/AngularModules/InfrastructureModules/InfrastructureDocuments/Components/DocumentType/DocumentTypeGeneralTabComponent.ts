@@ -164,10 +164,11 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
 
         this.ObjectTablesList.forEach((item) => {
 
-            if (item.Name == "WarehouseEntry" || item.Name == "WarehouseRelease") {
-                item.DisplayName = item.Name == "WarehouseEntry" ? "CrossDockEntry" : "CrossDockRelease";
-            }
-            else item.DisplayName = item.Name;
+            // if (item.Name == "WarehouseEntry" || item.Name == "WarehouseRelease") {
+            //     item.DisplayName = item.Name == "WarehouseEntry" ? "CrossDockEntry" : "CrossDockRelease";
+            // }
+            // else item.DisplayName = item.Name;
+
         });
 
         this.SelectedObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.EntityPM.ObjectTableId)[0];

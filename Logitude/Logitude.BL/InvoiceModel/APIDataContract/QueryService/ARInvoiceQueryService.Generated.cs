@@ -102,7 +102,7 @@ using Simplog.Data.InvoiceModel;
 			       
 					   				   }
 				   
-				   temp.VatNumber = MyEntityPM.VatNumber;			  
+				   temp.VATNumber = MyEntityPM.VatNumber;			  
 				   if(MyEntityPM.BillToAddressId != null)
 				   {
 					   AddressQueryService AddressService4 = new AddressQueryService(Tenant);
@@ -155,7 +155,8 @@ using Simplog.Data.InvoiceModel;
 					   				   }
 				   
 				   temp.Tenant = MyEntityPM.Tenant;
-				   temp.IsMultiCurrency = MyEntityPM.IsMultiCurrency;					
+				   temp.IsMultiCurrency = MyEntityPM.IsMultiCurrency;
+				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -236,7 +237,7 @@ using Simplog.Data.InvoiceModel;
 					}
 			
 					
-					temp.VatNumber = MyEntity.VatNumber;					AddressQueryService BillToAddressAddressService = new AddressQueryService(Tenant);
+					temp.VatNumber = MyEntity.VATNumber;					AddressQueryService BillToAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.BillToAddress != null)
 					{
 						var myBillToAddressPM = BillToAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.BillToAddress,Tenant);
@@ -309,7 +310,8 @@ using Simplog.Data.InvoiceModel;
 			
 					
 					temp.Tenant = MyEntity.Tenant;
-					temp.IsMultiCurrency = MyEntity.IsMultiCurrency;					   
+					temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
+					temp.CreditARInvoice = MyEntity.CreditARInvoice;					   
 					   return temp;
 		    }
             catch (Exception ex)

@@ -1721,11 +1721,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
             var paramDefault = new
             {
-                Tenant = 989,
-                YYYY = 2017,
+                Tenant = 1051,
+                YYYY = 2019,
                 BuildFullAccountingSetting = true,
-                BuildGLAccountEachType = 30000,
-                BuildJournalEachMonth = 20000,
+                BuildFullAccountingSettingVAT = true,
+                BuildGLAccountEachType = 30,
+                BuildJournalEachMonth = 20,
 
 
             };
@@ -1747,6 +1748,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 int tenant = param.Tenant;
                 int YYYY = param.YYYY;
                 bool BuildFullAccountingSetting = param.BuildFullAccountingSetting;
+                bool BuildFullAccountingSettingVAT = param.BuildFullAccountingSettingVAT;
+                
                 int BuildGLAccountEachType = param.BuildGLAccountEachType;
                 int BuildJournalEachMonth = param.BuildJournalEachMonth;
 
@@ -1762,6 +1765,21 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     var BTFullAccountingService = new FullAccountingProvider(chartOfAccountProvider, displayNumberProvider);
                     fullSetting = BTFullAccountingService.Insert(tenant, accountingContext);
                 }
+                if (BuildFullAccountingSettingVAT)
+                {
+                    if (fullSetting == null)
+                    {
+                        var repo = new FullAccountingSettingRepository(tenant);
+                        fullSetting = repo.GetSingleFullAccountingSetting(tenant);
+                        if (fullSetting==null)
+                        {
+                            throw new Exception("BuildFullAccountingSettingVAT - but not BuildFullAccountingSetting");
+                        }
+                    }
+                    var BTFullAccountingService = new FullAccountingProvider(chartOfAccountProvider, displayNumberProvider);
+
+                    BTFullAccountingService.CreateVatGLAccount(tenant, accountingContext,fullSetting);
+                }
                 CacheManager.ClearCacheItems();
 
 
@@ -1769,9 +1787,18 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 if (BuildGLAccountEachType > 0)
                 {
+                    var dummyTenantProviderArg = new DummyTenantProviderArg()
+                    {
+                         CreateJobs = BuildGLAccountEachType,
+                        CreateCustomers= BuildGLAccountEachType,
+                        CreateExpanse= BuildGLAccountEachType,
+                        CreateFiles= BuildGLAccountEachType,
+                        CreateRevenue = BuildGLAccountEachType,
+                        CreateVendors = BuildGLAccountEachType,
 
+                    };
                     var g = new DummyTenantProvider();
-                    g.GenrateGLAccount(BuildGLAccountEachType, accountingContext, chartOfAccountProvider, displayNumberProvider, fullSetting, tenant);
+                    g.GenrateGLAccount(dummyTenantProviderArg, accountingContext, chartOfAccountProvider, displayNumberProvider, fullSetting, tenant);
                     accountingContext.SaveChanges();
                 }
                 CacheManager.ClearCacheItems();

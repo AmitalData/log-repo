@@ -11,7 +11,7 @@ declare @AutomaticLastUpdateDate as datetime
 
    declare @Key as varchar(1)
 
-   declare @Id as varchar(1)
+   declare @Code as varchar(1)
    declare @Name as varchar(10)
 
 	DECLARE TransportModesCursor CURSOR READ_ONLY
@@ -19,17 +19,17 @@ declare @AutomaticLastUpdateDate as datetime
 	SELECT Id, Name
 	From dw_TransportModes
 	where AutomaticLastUpdateDate > @LastUpdateDate
-	OPEN TransportModesCursor FETCH NEXT FROM TransportModesCursor INTO @Id , @Name
+	OPEN TransportModesCursor FETCH NEXT FROM TransportModesCursor INTO @Code , @Name
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-	set @Key = (select Code from DIM_TransportModes where Code = @Id)
-	if(@Key is  null) begin  insert into DIM_TransportModes values(@Id,@Name); end
-	else begin update   DIM_TransportModes set Name =@Name Where Code = @Id; end
+	set @Key = (select Code from DIM_TransportModes where Code = @Code)
+	if(@Key is  null) begin  insert into DIM_TransportModes (Code,Name) values(@Code,@Name); end
+	else begin update   DIM_TransportModes set Name =@Name Where Code = @Code; end
 
     
 
-	FETCH NEXT FROM TransportModesCursor INTO @Id , @Name
+	FETCH NEXT FROM TransportModesCursor INTO @Code , @Name
 		End
 	CLOSE TransportModesCursor
 	DEALLOCATE TransportModesCursor
