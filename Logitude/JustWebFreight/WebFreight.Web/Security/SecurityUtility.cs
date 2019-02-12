@@ -522,12 +522,11 @@ namespace WebFreight.Web.Security
             //}
             string key = email + "_" + tenant + "_info";
 
-            if (CacheManager.CacheWrapper.Get(key) != null)
+            if (CacheManager.CacheWrapper.Get(key) != null && !forceAPIFeaturesCheck)
             {
                 myContactInfo = (ContactInfo)CacheManager.CacheWrapper.Get(key);
             }
-
-            else
+			else
             {
                 if (tenant == 0)
                 {
