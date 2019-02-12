@@ -8,6 +8,7 @@ import { CourierMasterGeneralTabComponent} from './Components/EditTabs/CourierMa
 import { CourierWorksheetComponent} from './Components/CourierWorkSheet/CourierWorksheetComponent';
 import { GetInternalBankComponent} from './Components/CourierWorkSheet/GetInternalBankComponent';
 import { AddEditMamanStickerComponent } from './Components/MamanSpecialAction/AddEditMamanStickerComponent';
+import { DeclarationMamanSpecialActionComponent } from './Components/MamanSpecialAction/DeclarationMamanSpecialActionComponent';
 import { AddCourierPendingToUnifreightStatusComponent } from './Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent';
 import { GatepassRequestComponent } from './Components/GatepassRequest/GatepassRequestComponent';
 
@@ -25,6 +26,7 @@ export const Components =
         AddEditMamanStickerComponent,
         AddCourierPendingToUnifreightStatusComponent,
         GatepassRequestComponent,
+        DeclarationMamanSpecialActionComponent,
 
     ];
 
@@ -46,6 +48,7 @@ export class ModuleDeclarations {
             case "AddEditMamanStickerComponent": { myResult = AddEditMamanStickerComponent; break; }
             case "AddCourierPendingToUnifreightStatusComponent": { myResult = AddCourierPendingToUnifreightStatusComponent; break; }
             case "GatepassRequestComponent": { myResult = GatepassRequestComponent; break; }
+            case "DeclarationMamanSpecialActionComponent": { myResult = DeclarationMamanSpecialActionComponent; break; }
         }
 
         return myResult;
