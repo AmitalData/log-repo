@@ -155,8 +155,7 @@ export class DWDateComponent extends BaseComponent {
             var stringOfYear = AppTool.PadLeft("" + myDateParts.Year, 4, '0');
             var stringOfMonth = AppTool.PadLeft("" + myDateParts.Month, 2, '0');
             var stringOfDay = AppTool.PadLeft("" + myDateParts.Day, 2, '0');
-            //result = stringOfMonth + "/" + stringOfDay  + "/" + stringOfYear;
-            result = stringOfYear + "/" + stringOfMonth + "/" + stringOfDay;
+            result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay;
 
         }
         return result;

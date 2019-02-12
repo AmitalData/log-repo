@@ -14,7 +14,7 @@ export class AgGridColumnsOperations extends BaseComponent {
     public ItemsSource: any[];
     private father: BIReportPreviewComponent;
     public IsAll = false;
-    private itemSource_Unsaved = null; 
+    itemSource_Unsaved: Array<Column> = []; 
 
     constructor() {
         super();
@@ -28,7 +28,7 @@ export class AgGridColumnsOperations extends BaseComponent {
     }
     SetWindowArgs(args: any) {
         this.father = args.father;
-        this.itemSource_Unsaved = args.father.BIReportXMLData.BITabularViewSettings.Columns;
+        this.itemSource_Unsaved = JSON.parse(JSON.stringify(this.father.BIReportXMLData.BITabularViewSettings.Columns));
         this.BuildList();
     }
 
@@ -90,8 +90,9 @@ export class AgGridColumnsOperations extends BaseComponent {
         }
     }
 
-    onValueChanged(item, event) {
+    onValueChanged(item, index, event) {
         item.IsChecked = event;
+        item.Index = index;
         this.IsAll = this.father.BIReportXMLData.BITabularViewSettings.Columns.filter(a => !a.IsChecked)[0] != null ? false : true;
     }
     IsAllClicked(event) {
