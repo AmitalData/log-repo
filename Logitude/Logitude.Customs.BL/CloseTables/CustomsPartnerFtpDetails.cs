@@ -23,9 +23,9 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECOVSSPCL_REQUEST = "ECOVSSPCL+RQ";//EC = E-Commerce
         public const string InterfaceName_ECOVSSPCL_RESPONE = "ECOVSSPCL+RS";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
-        public const string InterfaceName_ECSOVSTB = "ECOVSSTB";//EC = E-Commerce
+        public const string InterfaceName_ECOVSTB = "ECOVSSTB";//EC = E-Commerce
         public const string InterfaceName_ECSTB_Splited = "ECSTB+P";//EC = E-Commerce
-        public const string InterfaceName_ECSOVSTB_Splited = "ECOVSSTB+P";//EC = E-Commerce
+        public const string InterfaceName_ECOVSTB_Splited = "ECOVSSTB+P";//EC = E-Commerce
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
@@ -155,7 +155,7 @@ namespace Logitude.Customs.BL.CloseTables
 
             new InterfaceDetails()
             {
-                Code = InterfaceName_ECSOVSTB,
+                Code = InterfaceName_ECOVSTB,
                 Name = "סטטוס/זמינות מאוברסיז",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILOVS,
@@ -166,7 +166,7 @@ namespace Logitude.Customs.BL.CloseTables
             },
             new InterfaceDetails()
             {
-                Code = InterfaceName_ECSOVSTB_Splited,
+                Code = InterfaceName_ECOVSTB_Splited,
                 Name = "סטטוס/זמינות מאוברסיז",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILOVS,
@@ -240,7 +240,10 @@ namespace Logitude.Customs.BL.CloseTables
                     return new CourierOVSHAWBQService(@interface);
                 case AnalyzeQueueServiceEnum.OVSSpecialActionService:
                     return new CourierOVSSpecialActionQService(@interface);
-
+                case AnalyzeQueueServiceEnum.OVSStatusAvailabilitySpliterService:
+                    return new CourierOVSStatusAvailabilitySplitterQService(@interface);
+                case AnalyzeQueueServiceEnum.OVSStatusAvailabilityService:
+                    return new CourierOVSStatusAvailabilityQService(@interface);
                 default:
 
                     throw new Exception("No analyze service define " + @interface.Code);
@@ -286,6 +289,8 @@ namespace Logitude.Customs.BL.CloseTables
         MamanStatusAvailabilityService,
         OVSHAWBService,
         OVSSpecialActionService,
+        OVSStatusAvailabilitySpliterService,
+        OVSStatusAvailabilityService,
     }
     public class InterfaceDetails
     {

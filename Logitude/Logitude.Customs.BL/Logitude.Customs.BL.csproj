@@ -1644,12 +1644,13 @@
     <Compile Include="Messaging\Amital\UnifreightTaskService.cs" />
     <Compile Include="Messaging\Amital\UServerCommunicationService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\AnalyzeQueueUtil.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilityQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CustomAnalyzerQueueBase.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSHAWBQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSSpecialActionQService.cs" />
-    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\SetInAnalyzeQResponseService.cs" />
     <Compile Include="Messaging\Customs\ClientProgressBarIndicatorService.cs" />
     <Compile Include="Messaging\Customs\CustomsRequestsSheetDomainModelUtil.cs" />
