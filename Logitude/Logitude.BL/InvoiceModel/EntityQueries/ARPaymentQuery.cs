@@ -109,6 +109,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedDate = a.ApprovedDate,
                                        ApprovedByUserId = a.ApprovedByUserId,
                                        FirstApproveDate = a.FirstApproveDate,
+                                       IsFullAccounting = a.IsFullAccounting,
                                    }).FirstOrDefault();
 
 
@@ -209,6 +210,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedDate = a.ApprovedDate,
                                        ApprovedByUserId = a.ApprovedByUserId,
                                        FirstApproveDate = a.FirstApproveDate,
+                                       IsFullAccounting = a.IsFullAccounting,
                                    }).FirstOrDefault();
 
             Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
@@ -307,6 +309,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    ApprovedDate = entity.ApprovedDate,
                                                    ApprovedByUserId = entity.ApprovedByUserId,
                                                    FirstApproveDate = entity.FirstApproveDate,
+                                                   IsFullAccounting = entity.IsFullAccounting,
 
                                                };
             return query2;
@@ -388,6 +391,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ApprovedDate = entity.ApprovedDate,
                             ApprovedByUserId = entity.ApprovedByUserId,
                             FirstApproveDate = entity.FirstApproveDate,
+                            IsFullAccounting = entity.IsFullAccounting,
                         };
 
             return query;
@@ -469,6 +473,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ApprovedDate = entity.ApprovedDate,
                             ApprovedByUserId = entity.ApprovedByUserId,
                             FirstApproveDate = entity.FirstApproveDate,
+                            IsFullAccounting = entity.IsFullAccounting,
                         };
 
             return query;
@@ -536,6 +541,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          ApprovedDate = a.ApprovedDate,
                                          ApprovedByUserId = a.ApprovedByUserId,
                                          FirstApproveDate = a.FirstApproveDate,
+                                         IsFullAccounting = a.IsFullAccounting,
                                      }).FirstOrDefault();
 
             return payment;
