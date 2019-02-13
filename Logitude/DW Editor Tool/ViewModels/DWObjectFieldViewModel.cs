@@ -114,11 +114,17 @@ namespace DW_Editor_Tool.ViewModels
             get { return lOVAdditionalFields; }
             set { lOVAdditionalFields = value; FirePropertyChanged("LOVAdditionalColumns"); }
         }
-        
 
-        // is Measurement , Aggregation Type
+		bool hideTree;
+		public bool HideTree
+		{
+			get { return hideTree; }
+			set { hideTree = value; FirePropertyChanged("HideTree"); }
+		}
 
-        public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension" }; } }
+		// is Measurement , Aggregation Type
+
+		public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension" }; } }
         public List<string> AggregationTypesList { get { return new List<string>() { "SUM", "COUNT" }; } }
 
         Visibility errorsVisibility = Visibility.Collapsed;
