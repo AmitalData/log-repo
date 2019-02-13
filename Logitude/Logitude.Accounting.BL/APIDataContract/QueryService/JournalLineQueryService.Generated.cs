@@ -97,7 +97,8 @@ using Logitude.Accounting.Data;
 				   temp.Notes = item.Notes;
 				   temp.ExternalOpenAmount = item.ExternalOpenAmount;
 				   temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
-				   temp.IsDebitAccountMulti = item.IsDebitAccountMulti;					
+				   temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
+				   temp.ExternalReconcileNumber = item.ExternalReconcileNumber;					
 					MyList.Add(temp);
 				}
 					
@@ -121,12 +122,12 @@ using Logitude.Accounting.Data;
 					   
 					var temp = new JournalLinePM();
 										if (!string.IsNullOrEmpty(item.JournalId))
-					//{
-					//	temp = query.GetSinglePMByJournalId(item.JournalId, Tenant);
-					//} 					if (!string.IsNullOrEmpty(item.Line))
-					//{
-					//	temp = query.GetSinglePMByLine(item.Line, Tenant);
-					//} 					   
+					{
+						temp = query.GetSinglePMByJournalId(item.JournalId, Tenant);
+					} 					if (!string.IsNullOrEmpty(item.Line))
+					{
+						temp = query.GetSinglePMByLine(item.Line, Tenant);
+					} 					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("JournalLine with Line " + item.Line + " doesn't exist");
@@ -209,7 +210,8 @@ using Logitude.Accounting.Data;
 					temp.Notes = item.Notes;
 					temp.ExternalOpenAmount = item.ExternalOpenAmount;
 					temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
-					temp.IsDebitAccountMulti = item.IsDebitAccountMulti;					   
+					temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
+					temp.ExternalReconcileNumber = item.ExternalReconcileNumber;					   
 						MyList.Add(temp);
 					}
 						

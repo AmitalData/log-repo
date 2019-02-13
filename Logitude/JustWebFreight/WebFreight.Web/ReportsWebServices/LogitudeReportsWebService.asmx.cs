@@ -2119,7 +2119,243 @@ namespace WebFreight.Web.ReportsWebServices
             return dataProvider;
         }
 
-        #endregion       
+        #region VDK Report
+
+        internal byte[] LoadVDKDataProvider(byte[] xmlFilters, int tenant)
+        {
+            VDKDataProvider dataprovider = GetVDKDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(VDKDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private VDKDataProvider GetVDKDataProvider(byte[] xmlFilters, int tenant)
+        {
+            VDKDataProvider totalData = new DataProviders.VDKDataProvider();
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_EntityStatus = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EntityStatus").FirstOrDefault();
+            QueryFilterItem filterItem_ShipmentCustomerTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipmentCustomerTypeCode").FirstOrDefault();
+
+            //ToDate
+            DateTime? toDate = null;
+
+            if (filterItem_tODate != null)
+            {
+                if (filterItem_tODate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_tODate.FieldValue;
+                }
+            }
+
+            //FromDate
+            DateTime? FromDate = null;
+
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    FromDate = (DateTime)filterItem_FromDate.FieldValue;
+                }
+            }
+
+
+            string branchId = null;
+            totalData.BranchName = "All";
+            if (filterItem_BranchId != null)
+            {
+                if (filterItem_BranchId.FieldValue != null)
+                {
+                    branchId = filterItem_BranchId.FieldValue.ToString();
+                    if (!String.IsNullOrEmpty(branchId))
+                    {
+                        BranchRepository branchRepository = new BranchRepository(commonContext);
+                        Branch branch = branchRepository.GetSingleBranch(branchId, tenant);
+                        if (branch != null)
+                            totalData.BranchName = branch.EnglishName;
+                    }
+                }
+            }
+
+            string customerId = null;
+            totalData.CustomerName = "All";
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                    if (!String.IsNullOrEmpty(customerId))
+                    {
+                        CardRepository cardRepository = new CardRepository(commonContext);
+                        Card customer = cardRepository.GetSingleCard(customerId, tenant);
+                        if (customer != null)
+                            totalData.ShipperName = customer.EnglishName;
+                    }
+                }
+            }
+
+            
+
+
+            string entityStatus = null;
+            totalData.StatusName = "All";
+            if (filterItem_EntityStatus != null)
+            {
+                if (filterItem_EntityStatus.FieldValue != null)
+                {
+                    entityStatus = filterItem_EntityStatus.FieldValue.ToString();
+                    if (!String.IsNullOrEmpty(entityStatus))
+                    {
+                        EntityStatusRepository entitiyStatusRepository = new EntityStatusRepository(WebFreightContext.GetContext(tenant));
+                        EntityStatus status = entitiyStatusRepository.GetSingleEntityStatus(entityStatus,tenant);
+                        if (status != null)
+                            totalData.StatusName = status.Name;
+                    }
+                }
+            }
+
+            
+
+
+
+            string shipmentCustomerTypeCode = null;
+            if (filterItem_ShipmentCustomerTypeCode != null)
+            {
+                if (filterItem_ShipmentCustomerTypeCode.FieldValue != null)
+                {
+                    shipmentCustomerTypeCode = filterItem_ShipmentCustomerTypeCode.FieldValue.ToString();
+
+                    if (!String.IsNullOrEmpty(shipmentCustomerTypeCode))
+                    {
+                        ShipmentCustomerTypeRepository shipmentsRepository = new ShipmentCustomerTypeRepository(shipmentsContext);
+                        ShipmentCustomerType shipmentcustomertypeCode = shipmentsRepository.GetSingleShipmentCustomerType(shipmentCustomerTypeCode);
+                        if (shipmentcustomertypeCode != null)
+                            totalData.CustomerName = shipmentcustomertypeCode.Name;
+                    }
+                }
+            }
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
+
+            shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
+            GenericFilter genericFilter = new GenericFilter();
+            QueryOperations queryOperations2 = new QueryOperations()
+            {
+                ObjectTableName = "Shipment",
+                PageIndex = 1,
+                PageSize = 10,
+                QuerySection = "Shipments",
+                SortByColumnName = null,
+                SortDirectin = null,
+                QueryFilterItems = new List<QueryFilterItem>(),
+            };
+            QueryFilterItem item = new QueryFilterItem();
+            item.DisplayInList = true;
+            item.FieldDataType = "Date";
+            item.FieldName = "Field2";
+            item.FieldValue = FromDate;
+            item.FieldValue2 = toDate;
+            item.IsCustomField = true;
+            item.Operator = "Between";
+            queryOperations2.QueryFilterItems.Add(item);
+
+            shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations2, shipments);
+
+            
+            if (!string.IsNullOrEmpty(branchId))
+            {
+                shipments = shipments.Where(d => d.BranchId == branchId);
+            }
+
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                shipments = shipments.Where(d => d.CustomerId == customerId);
+            }
+
+
+            if (!string.IsNullOrEmpty(entityStatus))
+            {
+                shipments = shipments.Where(d => d.StatusId == entityStatus);
+            }
+
+
+            if (!string.IsNullOrEmpty(shipmentCustomerTypeCode))
+            {
+                shipments = shipments.Where(d => d.ShipmentCustomerTypeCode == shipmentCustomerTypeCode);
+            }
+
+            List<ShipmentDataView> Shipments = shipments.ToList();
+            List<string> ShipmentIds = Shipments.Select(p=>p.Id).ToList();
+           // List<string> ConsigneeAdressIds = Shipments.Select(p => p.ConsigneeAddressId).ToList();
+
+            List<ShipmentPackage> shipmentPackages = (from d in shipmentsContext.ShipmentPackages.Include("PackageType") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
+           // List<Card> Consiness = (from d in commonContext.Cards.Include("Address") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
+
+
+
+            if (shipmentPackages.Count > 0)
+            {               
+                totalData.ShipmentPackages = new List<ShipmentPackageRecord>();
+                foreach (ShipmentPackage Item in shipmentPackages)
+                {
+                    ShipmentPackageRecord shipment = new ShipmentPackageRecord();
+                    ShipmentDataView dataView = Shipments.Where(d => d.Id == Item.ShipmentId).FirstOrDefault(); 
+
+                    shipment.ActualETD = dataView.MainCarriageATD ;
+                    shipment.ConsigneeAddress = dataView.ConsigneeName;
+                    shipment.CommodityNumber = Item.CommodityNumber;
+                    shipment.ProjectNumber = dataView.ProjectNumber;
+                    shipment.Customer = dataView.CustomerName;
+                    shipment.Supplier = dataView.ShipperName;
+                    shipment.Status = dataView.StatusName;
+                    shipment.CustomerRef = dataView.CustomerReference1;
+                    shipment.Product = Item.CommodityName;
+                    shipment.Weight = Item.VolumetricWeight;
+                    shipment.Unit = Item.PackageType!=null?Item.PackageType.EnglishName:null;
+                    shipment.RequestETD = dataView.FirstPickupETD;
+                    shipment.EstimateETD = dataView.FirstPickupETA;
+                    if (!String.IsNullOrEmpty(dataView.Field2))
+                        shipment.RequestETA = Convert.ToDateTime(dataView.Field2);
+                    shipment.EstimateETA = dataView.MainCarriageFinalDestinationETA;
+                    shipment.Shipper = dataView.ShipperName;
+                    shipment.Pieces = Item.Quantity;
+                    shipment.ContainerNr = Item.ContainerNumber;
+                    totalData.ShipmentPackages.Add(shipment);
+
+                }
+
+            }
+
+
+
+                    totalData.FromDate = FromDate;
+            totalData.ToDate = toDate;
+            #endregion
+
+            return totalData;
+        }
+        #endregion
+#endregion
 
         #region AgedAccountsReceivable
         [WebMethod]

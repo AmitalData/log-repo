@@ -815,7 +815,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                    
                     if (isValidatingChronological)
                     {
-                        if (loggedTenant.AccountingSetting.IsChronologicalDates)
+                        if (loggedTenant.AccountingSetting.IsARInvoiceChronologicalDates)
                         {
                             DateTime? lastChronologicalDate = (from a in myContext.ARInvoices
                                                                where a.Tenant == entityPM.Tenant

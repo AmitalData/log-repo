@@ -60,7 +60,7 @@
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.CustomersQueries' | TextCodeTranslationPipe}}</label>
+                                    <label float-start style="margin-right: 10px;">{{'Accounting.General.O.CustomersQueries' | TextCodeTranslationPipe}}</label>
                                 </td>
                             </tr>
 
@@ -212,7 +212,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{RecentGLAccountsCount}} {{'Accounting.General.O.RecentCustomers' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{RecentGLAccountsCount}} {{'Accounting.General.O.RecentCustomers' | TextCodeTranslationPipe}}</label>
                                             </td>
                                         </tr>
 
@@ -320,7 +320,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td colspan="3">
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.AgingGraph' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{'Accounting.General.O.AgingGraph' | TextCodeTranslationPipe}}</label>
 
                                             </td>
                                         </tr>
@@ -377,7 +377,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td style="padding: 0px 5px;">
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.Top10Debtors' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{'Accounting.General.O.Top10Debtors' | TextCodeTranslationPipe}}</label>
                                                 <div [style.float]="isRTL ? 'left' : 'right'" style="width: 160px; float: right;">
                                                     <!--<ComboBox [ItemsSource]="DeptorsFiltersList"
                                                               [SelectedItem]="SelectedDeptorsFilter"
@@ -415,7 +415,7 @@
                                                                             <div></div>
                                                                         </td>
 
-                                                                        <td rowspan="2" style="float: right; font-size: 16px; color:#e15a00;padding-top: 5px;">
+                                                                        <td rowspan="2" style="float: right; font-size: 16px; color:#00a24d;padding-top: 5px;">
                                                                             {{(SelectedDeptorsFilter.EnglishName == 'Balance Due' ? item.LocalBalanceInDue : item.BalanceInLocalCurrency) | NumbersPipe:'n2'}}
                                                                         </td>
 

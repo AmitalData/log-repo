@@ -1256,6 +1256,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsSpellCheckedHelpLocalDefaultText", f.IsSpellCheckedHelpLocalDefaultText.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsSpellCheckedShortLocalDefaultText", f.IsSpellCheckedShortLocalDefaultText.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsSpellCheckedListLocalDefaultText", f.IsSpellCheckedListLocalDefaultText.ToString().ToLower(), fieldElement, null);
+                SetAttribute("EnableFullscreenTextBox", f.EnableFullscreenTextBox.ToString().ToLower(), fieldElement, null);
             }
 
             #endregion
@@ -1724,6 +1725,7 @@ namespace MeatadataGeneratorTool
                             SetAttribute("IgnoreCustomTypeCheck", item.IgnoreCustomTypeCheck.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("IsCloseField", item.IsCloseField.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("IsCompositKey", item.IsCompositKey.ToString().ToLower(), DCFieldElement, null);
+                            SetAttribute("CloseTableCode", GetStringValue(item.CloseTableCode), DCFieldElement, null);
 
                         }
                     }

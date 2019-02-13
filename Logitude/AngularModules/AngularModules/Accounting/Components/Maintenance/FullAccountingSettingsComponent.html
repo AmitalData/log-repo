@@ -159,7 +159,7 @@
                 <!-- Tab Header-->
                 <div class="TabControlHead">
                     <ul>
-                        <li *ngFor="let tab of TabsSource" style="width: auto; min-width: 48px;" [class.Selected]="tab.isSelected" [style.float]="isRTL ? 'right' : 'left'" (click)="SelectionChanged(tab)">
+                        <li *ngFor="let tab of TabsSource" style="width: auto; min-width: 48px;" [class.Selected]="tab.isSelected" float-start (click)="SelectionChanged(tab)">
 
                             <div style="position: relative; width: 100%;" class="InnerChild"
                                  [style.text-align]="'center'">

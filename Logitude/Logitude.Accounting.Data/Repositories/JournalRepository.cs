@@ -247,6 +247,19 @@ namespace Logitude.Accounting.Data.Repositories
             return Journal;
         }
 
+        public Journal GetSingleJournalByNumber(string number, int tenant)
+        {
+            if (string.IsNullOrWhiteSpace(number))
+            {
+                return null;
+            }
+
+            Journal Journal = (from a in context.Journals
+                                     where a.JournalNumber == number && a.Tenant == tenant
+                                     select a).FirstOrDefault();
+            return Journal;
+        }
+
 
 
         public bool CheckIfExternalNoAndSystemExist(string externalNo, string externalSystem, out string journalNumber, int tenant)

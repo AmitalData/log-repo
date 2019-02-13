@@ -20,6 +20,7 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -135,7 +136,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 entityPM.TaxableOutputAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
                 entityPM.OutputTaxAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
-                entityPM.ExemptTaxableOutput = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
+                entityPM.ExemptTaxableOutput = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
                 entityPM.OutputLinesCount = lines.Where(d => d.OutputOrInput == "O").Count();
                 entityPM.OtherInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
                 entityPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1" ).Count();

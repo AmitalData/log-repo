@@ -131,5 +131,10 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SelloPago { get; set; }
         public string BranchName { get; set; }
 
+        public DateTime? ApprovedDate { get; set; }
+        public string ApprovedByUserId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? FirstApproveDate { get; set; }
     }
 }

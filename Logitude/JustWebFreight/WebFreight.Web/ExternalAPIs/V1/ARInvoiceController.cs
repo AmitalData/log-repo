@@ -39,12 +39,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
-                bool exist = SecurityUtility.CheckFeature("General", "EXTERNALAPIS", tenant);
-                if (!exist)
-                {
-
-                }
+				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+ 
 
                 ARInvoiceQueryService Service = new ARInvoiceQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
@@ -84,7 +80,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = entity.Tenant;
 
-                        if (entity != null)
+						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+
+						if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
@@ -246,8 +244,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = authToken.Tenant;
-
-                        if (entity != null)
+						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+						if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }

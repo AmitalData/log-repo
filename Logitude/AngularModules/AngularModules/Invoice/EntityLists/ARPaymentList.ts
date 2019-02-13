@@ -78,5 +78,8 @@ export class ARPaymentList {
 		SelloPago: string;
 		BranchName: string;
 		SATApprovalDate: Date;
+		ApprovedDate: Date;
+		ApprovedByUserId: string;
+		FirstApproveDate: Date;
 	
 }

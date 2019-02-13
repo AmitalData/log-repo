@@ -296,6 +296,15 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 field.HtmlHeaderComponentUrl = GetAttributeStringValue(fieldNode.Attributes["HtmlHeaderComponentUrl"]);
             }
+            if (fieldNode.Attributes["EnableFullscreenTextBox"] != null)
+            {
+
+                field.EnableFullscreenTextBox = GetAttributeBoolValue(fieldNode.Attributes["EnableFullscreenTextBox"]);
+            }
+            else
+            {
+                field.EnableFullscreenTextBox = false;
+            }
 
 
             field.HelpTextCode = GetAttributeStringValue(fieldNode.Attributes["HelpTextCode"]);
@@ -862,6 +871,17 @@ namespace MeatadataGeneratorTool.Helpers
                 DCField.IsCompositKey = false;
 
             }
+            try
+            {
+                DCField.CloseTableCode = GetAttributeStringValue(fieldNode.Attributes["CloseTableCode"]);
+
+            }
+            catch (Exception)
+            {
+                //DCField.CloseTableCode = false;
+
+            }
+
 
             return DCField;
         }

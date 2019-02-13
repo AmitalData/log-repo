@@ -41,7 +41,8 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     AllowVoidARI = true,
                     AllowManualInvoiceNumber = true,
                     AllowVoidARP = true,
-                    IsChronologicalDates = false,
+                    IsARInvoiceChronologicalDates = false,
+                    IsARPaymentChronologicalDates = false,
                     IsVatNumberMandatoryInAP = false,
                     IsVatNumberMandatoryInAR = false,
                     ReceivableVATableTempCard = null,
@@ -144,7 +145,8 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             entityPOCO.AllowVoidAPP = entityPM.AllowVoidAPP;
             entityPOCO.AllowVoidARI = entityPM.AllowVoidARI;
             entityPOCO.AllowVoidARP = entityPM.AllowVoidARP;
-            entityPOCO.IsChronologicalDates = entityPM.IsChronologicalDates;
+            entityPOCO.IsARInvoiceChronologicalDates = entityPM.IsARInvoiceChronologicalDates;
+            entityPOCO.IsARPaymentChronologicalDates = entityPM.IsARPaymentChronologicalDates;
             entityPOCO.IsVatNumberMandatoryInAP = entityPM.IsVatNumberMandatoryInAP;
             entityPOCO.IsVatNumberMandatoryInAR = entityPM.IsVatNumberMandatoryInAR;
             entityPOCO.ReceivableVATableTempCard = entityPM.ReceivableVATableTempCard;
@@ -164,7 +166,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             if (entityPOCO.AllowManualInvoiceNumber)
             {
-                entityPOCO.IsChronologicalDates = false;
+                entityPOCO.IsARInvoiceChronologicalDates = false;
             }
         }
 

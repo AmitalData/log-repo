@@ -395,7 +395,7 @@
                         <td>
 
                             <!-- Filters -->
-                            <div *ngIf="reportCounters" [style.float]="isRTL ? 'right' : 'left'" class="noselect">
+                            <div *ngIf="reportCounters" float-start class="noselect">
 
                                 <ul class="FiltersMenu">
 
@@ -434,7 +434,7 @@
                             </div>
 
                             <!-- DDL -->
-                            <div [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 15px;" class="noselect">
+                            <div float-start style="padding: 0 15px;" class="noselect">
                                 <dropdown-button [Dropdownbutton_TextCode]="'TaxReportLine.F.StatusCode'">
                                     <div class="class-dropdown-content">
                                         <div style="width:250px;height:130px">
@@ -618,7 +618,7 @@
 
                                     <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template template="let item" [IgnoreMods]="true">
-                                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Edit'" [IsSmall]="true"
+                                            <IconButton float-start [Name]="'Edit'" [IsSmall]="true"
                                                         style="display: block; margin-left:10px; margin-top:4px;" (click)="EditLine(item)"></IconButton>
                                         </log-cell-template>
                                     </log-column>

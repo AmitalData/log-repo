@@ -68,6 +68,9 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
         if (this.ToDate == null) {
             this.ValidationErrorsList.push("To Date is required");
         }
+        if (this.FromDate > this.ToDate) {
+            this.ValidationErrorsList.push("From Date cannot be greater than To Date");
+        }
         if (this.EmployeeUserId == null) {
             this.ValidationErrorsList.push("Employee is required");
         }

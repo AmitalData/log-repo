@@ -80,7 +80,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         Remarks = "",
                         Direction = directionId
                     };
-                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, "");

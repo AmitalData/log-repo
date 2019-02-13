@@ -251,17 +251,17 @@
         width: 100%;
         padding-top: 10px;
         height: 30px;
-        min-width: 475px;
+        min-width: 485px;
     }
     .credit-limit-row .label{
         user-select: none;
         display: inline-block;
         font-size: 16px;
-        width: 160px;
+        width: 180px;
     }
     .credit-limit-row .amount{
         direction: ltr;
-        width: 180px;
+        width: 170px;
         height: 20px;
         display: inline-block;
         font-size: 16px;
@@ -350,7 +350,7 @@
                         <td style="vertical-align: top;">
                             <div>
                                 <!-- Widget: Balance Section -->
-                                <div [style.float]="isRTL ? 'right' : 'left'" *ngIf="GLAccountMoreData" class="widget">
+                                <div float-start *ngIf="GLAccountMoreData" class="widget">
 
                                     <!-- <IconButton [Name]="'Refresh'" (click)="LoadAllData()"></IconButton> -->
 
@@ -426,7 +426,7 @@
                                 </div>
 
                                 <!-- Widget: Last 10 transactions -->
-                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget" style="">
+                                <div float-start class="widget" style="">
                                     <div class="header">
                                         {{ 'GLAccounts.O.LastTransactions' | TextCodeTranslationPipe }}
                                     </div>
@@ -473,10 +473,10 @@
                                     </div>
                                 </div>
 
-                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget">3</div>
+                                <div float-start class="widget">3</div>
 
                                 <!-- Widget: Aging Details -->
-                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget" style="position: relative;">
+                                <div float-start class="widget" style="position: relative;">
                                     <div class="header">
                                         {{ GetAgingHeader() }}
                                     </div>
@@ -485,7 +485,7 @@
                                         <!-- Filters -->
                                         <div style="height: 22px; width: 100%;">
                                             <!-- Months -->
-                                            <ul [style.float]="isRTL ? 'right' : 'left'" class="FiltersMenu">
+                                            <ul float-start class="FiltersMenu">
                                                 <li id="3mo" (click)="FilterItemClicked('3mo')" [class.SelectedFilter]="FilterSelectedValue === '3mo'">
                                                     3 Mo
                                                 </li>
@@ -495,10 +495,10 @@
                                                 <li id="9mo" (click)="FilterItemClicked('9mo')" [class.SelectedFilter]="FilterSelectedValue === '9mo'">
                                                     9 Mo
                                                 </li>
-                                                <li id="12mo" (click)="FilterItemClicked('12mo')"
+                                                <!-- <li id="12mo" (click)="FilterItemClicked('12mo')"
                                                     [class.SelectedFilter]="FilterSelectedValue === '12mo'">
                                                     12 Mo
-                                                </li>
+                                                </li> -->
                                             </ul>
 
                                             <ul [style.float]="isRTL ? 'left' : 'right'" class="FiltersMenu">
@@ -523,7 +523,7 @@
                                 </div>
 
                                 <!-- Widget: Credit Limit -->
-                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget">
+                                <div float-start class="widget">
                                     <div class="header">
                                         {{ 'GLAccounts.O.CreditDetails' | TextCodeTranslationPipe }} {{TenantCurrency ? '('+ TenantCurrency +')' : ''}}
                                     </div>
@@ -531,7 +531,7 @@
 
                                         <!-- 1 -->
                                         <div class="credit-limit-row" style="height: 45px;">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="progress" [style.float]="isRTL ? 'left' : 'right'">
@@ -542,52 +542,52 @@
 
                                         <!-- 2 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.AccountingBalance' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="amount" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'right'" >
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{GLAccountMoreData.BalanceInLocalCurrency | NumbersPipe:'N2'}}
                                             </div>
-                                            <div class="link"  (click)="CardIndexClicked()" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'left' : 'right'" >
+                                            <div class="link"  (click)="CardIndexClicked()" float-start [style.text-align]="isRTL ? 'left' : 'right'" >
                                                 {{ 'GLAccounts.O.CardIndex' | TextCodeTranslationPipe }}
                                             </div>
                                         </div>
 
                                         <!-- 3 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.FutureChequesToday' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="amount" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'right'" >
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{GLAccountMoreData.TotalOpenChequesInLocalCur | NumbersPipe:'N2'}}
                                             </div>
-                                            <div class="link" (click)="DisplayChequelistClicked()" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="link" (click)="DisplayChequelistClicked()" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </div>
                                         </div>
 
                                         <!-- 4 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.FutureCheques' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="amount" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'right'" >
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{GLAccountMoreData.TotFutureOpenChequesInLocalCur | NumbersPipe:'N2'}}
                                             </div>
-                                            <div class="link" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="link" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 <!-- {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }} -->
                                             </div>
                                         </div>
 
                                         <!-- 5 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.TotalOpenShipments' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="amount" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'right'" >
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 <!-- 132,538 -->
                                             </div>
-                                            <!-- <div class="link" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <!-- <div class="link" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </div> -->
                                         </div>
@@ -595,13 +595,13 @@
 
                                         <!-- 6 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="amount" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'right'" >
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{accountCardlist.CreditLimitAmount | NumbersPipe:'N2'}}
                                             </div>
-                                            <!-- <div class="link" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <!-- <div class="link" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </div> -->
                                         </div>
@@ -609,7 +609,7 @@
                                     </div>
                                 </div>
 
-                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget">6</div>
+                                <div float-start class="widget">6</div>
                             </div>
                         </td>
                     </tr>

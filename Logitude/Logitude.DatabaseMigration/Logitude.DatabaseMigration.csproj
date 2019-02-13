@@ -666,6 +666,26 @@
     <Compile Include="Migrations\201902071125540_AddUserRolesStringToUser_Samar.Designer.cs">
       <DependentUpon>201902071125540_AddUserRolesStringToUser_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902100944337_AddFromToOriginToShipment_Samar.cs" />
+    <Compile Include="Migrations\201902100944337_AddFromToOriginToShipment_Samar.Designer.cs">
+      <DependentUpon>201902100944337_AddFromToOriginToShipment_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902071414099_AbedAddHideTreeToTableDwObjectField.cs" />
+    <Compile Include="Migrations\201902071414099_AbedAddHideTreeToTableDwObjectField.Designer.cs">
+      <DependentUpon>201902071414099_AbedAddHideTreeToTableDwObjectField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.cs" />
+    <Compile Include="Migrations\201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.Designer.cs">
+      <DependentUpon>201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.cs" />
+    <Compile Include="Migrations\201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.Designer.cs">
+      <DependentUpon>201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.cs" />
+    <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.Designer.cs">
+      <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1109,6 +1129,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902071125540_AddUserRolesStringToUser_Samar.resx">
       <DependentUpon>201902071125540_AddUserRolesStringToUser_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902071414099_AbedAddHideTreeToTableDwObjectField.resx">
+      <DependentUpon>201902071414099_AbedAddHideTreeToTableDwObjectField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902100944337_AddFromToOriginToShipment_Samar.resx">
+      <DependentUpon>201902100944337_AddFromToOriginToShipment_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.resx">
+      <DependentUpon>201902111214481_AddIsARPaymentChronologicalDatesToAccountingSettingsTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.resx">
+      <DependentUpon>201902111251015_AddApprovedateFieldsOnARPaymentTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.resx">
+      <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
