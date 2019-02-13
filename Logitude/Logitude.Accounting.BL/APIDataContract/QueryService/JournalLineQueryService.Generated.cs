@@ -97,7 +97,8 @@ using Logitude.Accounting.Data;
 				   temp.Notes = item.Notes;
 				   temp.ExternalOpenAmount = item.ExternalOpenAmount;
 				   temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
-				   temp.IsDebitAccountMulti = item.IsDebitAccountMulti;					
+				   temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
+				   temp.ExternalReconcileNumber = item.ExternalReconcileNumber;					
 					MyList.Add(temp);
 				}
 					
@@ -209,7 +210,8 @@ using Logitude.Accounting.Data;
 					temp.Notes = item.Notes;
 					temp.ExternalOpenAmount = item.ExternalOpenAmount;
 					temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
-					temp.IsDebitAccountMulti = item.IsDebitAccountMulti;					   
+					temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
+					temp.ExternalReconcileNumber = item.ExternalReconcileNumber;					   
 						MyList.Add(temp);
 					}
 						
