@@ -454,9 +454,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
                             if (!string.IsNullOrWhiteSpace(defaultClassificationCode))
                             {
+                                Dictionary<string, string> ClasificationQtyTypes = new Dictionary<string, string>() { };
+                                CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(entityPM.Tenant);
                                 foreach (SupplierInvoiceItemPM item in entityPM.SupplierInvoiceItems)
                                 {
-                                    if (string.IsNullOrWhiteSpace(item.ClassificationCode)) item.ClassificationCode = defaultClassificationCode;
+                                    if (string.IsNullOrWhiteSpace(item.ClassificationCode))
+                                    {
+                                        item.ClassificationCode = defaultClassificationCode;
+                                        if (ClasificationQtyTypes.Keys.Contains(item.ClassificationCode))
+                                        {
+                                            item.InvoiceQuantityType = ClasificationQtyTypes[item.ClassificationCode];
+                                        }
+                                        else
+                                        {
+                                            item.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(item.ClassificationCode, entityPM.Tenant);
+                                            ClasificationQtyTypes.Add(item.ClassificationCode, item.InvoiceQuantityType);
+                                        }
+                                    }
                                 }
                                 toUpdateClassification = true;
                             }
