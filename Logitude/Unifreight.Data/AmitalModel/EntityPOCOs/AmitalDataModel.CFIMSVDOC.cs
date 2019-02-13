@@ -254,7 +254,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for HASCHANGED in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual string HASCHANGED
+        public virtual short? HASCHANGED
         {
             get
             {
@@ -269,7 +269,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private string _HASCHANGED;
+        private short? _HASCHANGED;
 
         #endregion
 
