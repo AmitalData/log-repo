@@ -87,7 +87,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DolarValue = _DeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD.GetValueOrDefault());
             }
 
-            string defBaldarCodeValue = GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _DeclarationPM.Tenant);
+            string defBaldarCodeValue =
+                //GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _DeclarationPM.Tenant);
+                GetDefault("ISRAEL", "CGO_MMN_FORW", "NON", "NON", _DeclarationPM.Tenant);
             var rep = new CustomsAirlineRepository(_CourierMasterPM.Tenant);
             var customsAirline = rep.GetSingle(_CourierMasterPM.AirlineId, _CourierMasterPM.Tenant);
 
