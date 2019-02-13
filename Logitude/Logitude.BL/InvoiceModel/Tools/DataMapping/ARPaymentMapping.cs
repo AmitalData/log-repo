@@ -89,6 +89,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ApprovedDate = entityPM.ApprovedDate;
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.FirstApproveDate = entityPM.FirstApproveDate;
+            entity.IsFullAccounting = entityPM.IsFullAccounting;
 
             if (entityPM.StatusCode == "AD" && entityPM.OpenAmount == 0)
             {
