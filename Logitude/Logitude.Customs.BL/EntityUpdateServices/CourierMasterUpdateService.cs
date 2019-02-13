@@ -153,7 +153,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 CourierMasterPM dbOccCourierMasterPM = GetDBEntity(entityPM.Id, entityPM.Tenant);
 
-                if(entityPM.OriginPortCode != dbOccCourierMasterPM.OriginPortCode ||
+                if(entityPM.GatewayPortCode != dbOccCourierMasterPM.GatewayPortCode ||
+                    entityPM.OriginPortCode != dbOccCourierMasterPM.OriginPortCode ||
                     entityPM.MAWB != dbOccCourierMasterPM.MAWB ||
                     entityPM.MAWBTypeCode != dbOccCourierMasterPM.MAWBTypeCode ||
                     entityPM.AirlineId != dbOccCourierMasterPM.AirlineId ||
