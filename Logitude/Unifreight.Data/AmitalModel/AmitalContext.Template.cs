@@ -4750,10 +4750,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(15)
                     .HasColumnType("varchar2");
             modelBuilder.Entity<CFIMSVDOC>()
-    .Property(p => p.HASCHANGED)
-        .HasColumnName(@"HAS_CHANGED")
-        .HasMaxLength(1)
-        .HasColumnType("char");
+                .Property(p => p.HASCHANGED)
+                    .HasColumnName(@"HAS_CHANGED")
+                    .HasColumnType("int16");
 
             #endregion
 
