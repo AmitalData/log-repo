@@ -3,11 +3,11 @@
         <td>
 
             <div>
-                <div [style.float]="isRTL ? 'right' : 'left'" style="padding-left: 5px;padding-right: 5px;font-size: 16px; color: #333333;padding-right: 5px;font-family: Arial;padding-top: 3px;">
+                <div float-start style="padding-left: 5px;padding-right: 5px;font-size: 16px; color: #333333;padding-right: 5px;font-family: Arial;padding-top: 3px;">
                     {{EntityPM.IsCashDeposit ? txt_cash : txt_chequeDeposit}}
                 </div>
                 <!-- Cancelled -->
-                <div *ngIf="EntityPM.IsCanceled" class="ShortTitleControl" [style.float]="isRTL ? 'right' : 'left'" style="padding: 0px 5px;background: #e66464;"><span style="color: white;"> {{'Accounting.General.O.IsCancelled' | TextCodeTranslationPipe}}</span></div>
+                <div *ngIf="EntityPM.IsCanceled" class="ShortTitleControl" float-start style="padding: 0px 5px;background: #e66464;"><span style="color: white;"> {{'Accounting.General.O.IsCancelled' | TextCodeTranslationPipe}}</span></div>
             </div>
 
         </td>

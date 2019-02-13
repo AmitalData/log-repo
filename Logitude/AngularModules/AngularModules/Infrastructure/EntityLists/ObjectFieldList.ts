@@ -73,5 +73,6 @@ export class ObjectFieldList {
 		Code: string;
 		CopyToDW: boolean;
 		DisplayOnLookUpLocal: boolean;
+		EnableFullscreenTextBox: boolean;
 	
 }

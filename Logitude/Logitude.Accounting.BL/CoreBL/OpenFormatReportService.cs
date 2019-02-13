@@ -384,13 +384,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (user.Code != null)
                     {
-                        if (user.Code.Length > 8) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append( user.Code.PadLeft(9, ' '));
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
                     }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
+
                     else
                     {
                         myStringBuilder.Append(' ', 9);
                     }
+
                 }
 
 
@@ -999,9 +1006,9 @@ namespace Logitude.Accounting.BL.CoreBL
             BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(tenant);
             List<BankDepositLinePM> depositLines = bankDepositLineQueryService.GetDepositLinePMsByDepositIds(depositIds, tenant);
 
-            ARInvoicePaymentQuery aRInvoicePaymentQuery = new ARInvoicePaymentQuery(tenant);
+          
             ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
-            List<ARInvoicePaymentPM> aRInvoicePayments = aRInvoicePaymentQuery.GetARInvoicePaymentPMsForPaymentIds(arpaymentIds, tenant);
+         
             List<ARPaymentChequePM> cheques = aRPaymentChequeQueryService.GetAllARPaymentChequesByPaymentIds(arpaymentIds, tenant);
             //ARInvoice
             foreach (C100Data item in ARC100)
@@ -2461,14 +2468,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append('\n');
 
                 //D120
-                List<ARInvoicePaymentPM> lines = aRInvoicePayments.Where(d => d.ARPaymentId == item.ARPaymentId).ToList();
+                List<ARPaymentChequePM> lines = cheques.Where(d => d.PaymentId == item.ARPaymentId).ToList();
 
-                foreach (ARInvoicePaymentPM line in lines)
+                foreach (ARPaymentChequePM line in lines)
                 {
                     counter++;
                     D120Count++;
                     myStringBuilder.Append("D120");
-                    ARPaymentChequePM cheque = cheques.Where(d => d.PaymentId == item.ARPaymentId).FirstOrDefault();
+                  
 
                     if (counter.ToString().Length > 9)
                     {
@@ -2507,20 +2514,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.ARPaymentMethod == "Cheque")
                     {
 
-                        if (cheque != null)
-                        {
-                            string lineNumber = cheque.LineNumber.ToString();
+                       
+                            string lineNumber = line.LineNumber.ToString();
                             if (lineNumber.Length > 4)
                             {
                                 lineNumber = lineNumber.Substring(0, 4);
                             }
                             myStringBuilder.Append("a" + lineNumber.PadLeft(4, '0'));
-                        }
-                        else
-                        {
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 4);
-                        }
+                       
                     }
                     else
                     {
@@ -2552,40 +2553,38 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (item.ARPaymentMethod == "Cheque")
                     {
-                        if (cheque != null)
+
+                        if (line.BankId != null && line.BankId.Length > 10)
                         {
+                            line.BankId = line.BankId.Substring(0, 10);
 
-                            if (cheque.BankId != null && cheque.BankId.Length > 10)
-                            {
-                                cheque.BankId = cheque.BankId.Substring(0, 10);
-                            }
-                            myStringBuilder.Append("a" + cheque.BankId.PadLeft(10, '0'));
+                            myStringBuilder.Append("a" + line.BankId.PadLeft(10, '0'));
+                        }
+                        if (line.BankBranch != null && line.BankBranch.Length > 10)
+                        {
+                            line.BankBranch = line.BankBranch.Substring(0, 10);
 
-                            if (cheque.BankBranch != null && cheque.BankBranch.Length > 10)
-                            {
-                                cheque.BankBranch = cheque.BankBranch.Substring(0, 10);
-                            }
-                            myStringBuilder.Append("a" + cheque.BankBranch.PadLeft(10, '0'));
+                            myStringBuilder.Append("a" + line.BankBranch.PadLeft(10, '0'));
+                        }
+                        if (line.BankAccount != null && line.BankAccount.Length > 10)
+                        {
+                            line.BankAccount = line.BankAccount.Substring(0, 10);
 
-                            if (cheque.BankAccount != null && cheque.BankAccount.Length > 10)
-                            {
-                                cheque.BankAccount = cheque.BankAccount.Substring(0, 10);
-                            }
-                            myStringBuilder.Append("a" + cheque.BankAccount.PadLeft(10, '0'));
+                            myStringBuilder.Append("a" + line.BankAccount.PadLeft(10, '0'));
+                        }
+                        if (line.ChequeNumber != null && line.ChequeNumber.Length > 10)
+                        {
+                            line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
 
-                            if (cheque.ChequeNumber != null && cheque.ChequeNumber.Length > 10)
-                            {
-                                cheque.ChequeNumber = cheque.ChequeNumber.Substring(0, 10);
-                            }
-                            myStringBuilder.Append("a" + cheque.ChequeNumber.PadLeft(10, '0'));
+                            myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
+                        }
+                        if (line.ChequeNumber != null && line.ChequeNumber.Length > 10)
+                        {
+                            line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
 
-                            if (cheque.ChequeNumber != null && cheque.ChequeNumber.Length > 10)
-                            {
-                                cheque.ChequeNumber = cheque.ChequeNumber.Substring(0, 10);
-                            }
-                            myStringBuilder.Append("a" + cheque.ChequeNumber.PadLeft(10, '0'));
-
-                            var valueDate = String.Format("{0:yyyyMMdd}", cheque.ValueDate);
+                            myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
+                        }
+                            var valueDate = String.Format("{0:yyyyMMdd}", line.ValueDate);
                             if (valueDate != null)
                             {
                                 myStringBuilder.Append("a" + valueDate);
@@ -2595,30 +2594,16 @@ namespace Logitude.Accounting.BL.CoreBL
                                 myStringBuilder.Append("a");
                                 myStringBuilder.Append('0', 8);
                             }
-
-                            string amount = cheque.LocalAmount.ToString();
+                         
+                            string amount = line.LocalAmount.ToString();
                             if (amount.Length > 15)
                             {
                                 amount = amount.Substring(0, 15);
                             }
                             myStringBuilder.Append("a" + amount.PadLeft(15, '0'));
 
-                        }
-                        else
-                        {
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 10);
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 10);
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 10);
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 10);
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 8);
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 15);
-                        }
+                        
+                       
                     }
                     else
                     {
@@ -2831,9 +2816,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append('\n');
 
                 //D120
-                List<BankDepositLinePM> lines = depositLines.Where(d => d.DepositId == item.DepositId).ToList();
 
-                foreach (BankDepositLinePM line in lines)
+                if (item.CashBookType == "1")
                 {
                     counter++;
                     D120Count++;
@@ -2874,7 +2858,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(' ', 20);
                     }
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append(line.Line.ToString().PadLeft(4, '0'));
+                    myStringBuilder.Append("0001");
 
 
                     if (item.CashBookType != null)
@@ -2889,116 +2873,22 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
 
-                    if (item.CashBookType == "2")
-                    {
-                        string bank = line.Bank;
-                        if (bank != null)
-                        {
-                            if (bank.Length > 10)
-                            {
-                                bank = bank.Substring(0, 10);
-                            }
-                            myStringBuilder.Append("a" + bank.PadLeft(10, '0'));
-
-                        }
-                        else
-                        {
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 10);
-                        }
-                        string branch = line.Branch;
-
-                        if (branch != null)
-                        {
-                            if (branch.Length > 10)
-                            {
-                                branch = branch.Substring(0, 10);
-                            }
-                            myStringBuilder.Append("a" + branch.PadLeft(10, '0'));
-
-                        }
-                        else
-                        {
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 10);
-                        }
-                        string accountNumber = line.AccountNumber;
-
-                        if (accountNumber != null)
-                        {
-                            if (accountNumber.Length > 15)
-                            {
-                                accountNumber = accountNumber.Substring(0, 15);
-                            }
-                            myStringBuilder.Append("a" + accountNumber.PadLeft(15, '0'));
-
-                        }
-                        else
-                        {
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 15);
-                        }
-
-                        string chequeNumber = line.ChequeNumber;
-                        if (chequeNumber != null)
-                        {
-                            if (chequeNumber.Length > 10)
-                            {
-                                chequeNumber = chequeNumber.Substring(0, 10);
-                            }
-                            myStringBuilder.Append("a" + chequeNumber.PadLeft(10, '0'));
-
-                        }
-                        else
-                        {
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 10);
-                        }
-
-                        var DueDate = String.Format("{0:yyyyMMdd}", line.DueDate);
-                        if (DueDate != null)
-                        {
-                            myStringBuilder.Append("a" + DueDate);
-
-                        }
-                        else
-                        {
-                            myStringBuilder.Append('0', 8);
-                        }
 
 
-                        string localAmount = line.LocalAmount.ToString();
-                        if (localAmount != null)
-                        {
-                            if (localAmount.Length > 15)
-                            {
-                                localAmount = localAmount.Substring(0, 15);
-                            }
-                            myStringBuilder.Append("a" + localAmount.PadLeft(15, '0'));
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 10);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 10);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 10);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 8);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
 
-                        }
-                        else
-                        {
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 15);
-                        }
-                    }
-                    else
-                    {
-                        myStringBuilder.Append("a");
-                        myStringBuilder.Append('0', 10);
-                        myStringBuilder.Append("a");
-                        myStringBuilder.Append('0', 10);
-                        myStringBuilder.Append("a");
-                        myStringBuilder.Append('0', 15);
-                        myStringBuilder.Append("a");
-                        myStringBuilder.Append('0', 10);
-                        myStringBuilder.Append("a");
-                        myStringBuilder.Append('0', 8);
-                        myStringBuilder.Append("a");
-                        myStringBuilder.Append('0', 15);
 
-                    }
 
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0');
@@ -3031,6 +2921,209 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('\n');
                 }
 
+                else
+                {
+                    List<BankDepositLinePM> lines = depositLines.Where(d => d.DepositId == item.DepositId).ToList();
+
+
+                    foreach (BankDepositLinePM line in lines)
+                    {
+                        counter++;
+                        D120Count++;
+                        myStringBuilder.Append("D120");
+
+
+                        if (counter.ToString().Length > 9)
+                        {
+                            counter.ToString().Substring(0, 9);
+                            myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                        }
+
+                        if (tenantPM.VatNumber != null)
+                        {
+                            if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                            myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 9);
+                        }
+
+                        myStringBuilder.Append("420");
+
+                        if (item.DocumentReference != null)
+                        {
+                            if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
+                            myStringBuilder.Append("a" + item.DocumentReference.PadLeft(20, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append(' ', 20);
+                        }
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(line.Line.ToString().PadLeft(4, '0'));
+
+
+                        if (item.CashBookType != null)
+                        {
+                            if (item.CashBookType.Length > 1) { item.CashBookType = item.CashBookType.Substring(0, 1); }
+                            myStringBuilder.Append("a" + item.CashBookType);
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 1);
+                        }
+
+
+                        if (item.CashBookType == "2")
+                        {
+                            string bank = line.Bank;
+                            if (bank != null)
+                            {
+                                if (bank.Length > 10)
+                                {
+                                    bank = bank.Substring(0, 10);
+                                }
+                                myStringBuilder.Append("a" + bank.PadLeft(10, '0'));
+
+                            }
+                            else
+                            {
+                                myStringBuilder.Append("a");
+                                myStringBuilder.Append('0', 10);
+                            }
+                            string branch = line.Branch;
+
+                            if (branch != null)
+                            {
+                                if (branch.Length > 10)
+                                {
+                                    branch = branch.Substring(0, 10);
+                                }
+                                myStringBuilder.Append("a" + branch.PadLeft(10, '0'));
+
+                            }
+                            else
+                            {
+                                myStringBuilder.Append("a");
+                                myStringBuilder.Append('0', 10);
+                            }
+                            string accountNumber = line.AccountNumber;
+
+                            if (accountNumber != null)
+                            {
+                                if (accountNumber.Length > 15)
+                                {
+                                    accountNumber = accountNumber.Substring(0, 15);
+                                }
+                                myStringBuilder.Append("a" + accountNumber.PadLeft(15, '0'));
+
+                            }
+                            else
+                            {
+                                myStringBuilder.Append("a");
+                                myStringBuilder.Append('0', 15);
+                            }
+
+                            string chequeNumber = line.ChequeNumber;
+                            if (chequeNumber != null)
+                            {
+                                if (chequeNumber.Length > 10)
+                                {
+                                    chequeNumber = chequeNumber.Substring(0, 10);
+                                }
+                                myStringBuilder.Append("a" + chequeNumber.PadLeft(10, '0'));
+
+                            }
+                            else
+                            {
+                                myStringBuilder.Append("a");
+                                myStringBuilder.Append('0', 10);
+                            }
+
+                            var DueDate = String.Format("{0:yyyyMMdd}", line.DueDate);
+                            if (DueDate != null)
+                            {
+                                myStringBuilder.Append("a" + DueDate);
+
+                            }
+                            else
+                            {
+                                myStringBuilder.Append('0', 8);
+                            }
+
+
+                            string localAmount = line.LocalAmount.ToString();
+                            if (localAmount != null)
+                            {
+                                if (localAmount.Length > 15)
+                                {
+                                    localAmount = localAmount.Substring(0, 15);
+                                }
+                                myStringBuilder.Append("a" + localAmount.PadLeft(15, '0'));
+
+                            }
+                            else
+                            {
+                                myStringBuilder.Append("a");
+                                myStringBuilder.Append('0', 15);
+                            }
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 10);
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 10);
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 10);
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 8);
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+
+                        }
+
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0');
+
+
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 20);
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0');
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 7);
+
+                        if (DocuemntsReferenceDate != null)
+                        {
+
+                            myStringBuilder.Append("a" + DocuemntsReferenceDate);
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 8);
+                        }
+
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 7);
+
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 60);
+
+                        myStringBuilder.Append('\n');
+                    }
+                }
 
             }
 

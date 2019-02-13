@@ -7,6 +7,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { TaxDeductionReportExtendedPMService } from '../../../Services/ExtendedPMs/TaxDeductionReportExtendedPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { BatchTaskExecutionListService } from '../../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { TaxDeductionReportPMService } from '../../../Services/StandardPMs/TaxDeductionReportPMService';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class TaxDeductionReportGeneralTabComponent extends BaseComponent {
     taxDeductionReportExtendedPMService: TaxDeductionReportExtendedPMService = new TaxDeductionReportExtendedPMService();
     _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
     Faild: boolean = false;
-
+    taxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
     
 
     constructor(private entityArgs: EntityArgs) {
@@ -44,14 +45,30 @@ export class TaxDeductionReportGeneralTabComponent extends BaseComponent {
 
     get Email() { return this.entityPM.Email; }
     RunService() {
+        this.entityPM.StatusTypeCode = "2";
+        SessionLocator.CurrentSession.StartBusyIndicator("Accounting.General.O.Saving");
+        this.taxDeductionReportPMService.update(this.entityPM).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                 
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.entityPM).subscribe(myResult => {
+                        var mm: ServiceResponse = myResult;
+                        var entity = mm.Result;
 
-        this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.entityPM).subscribe(myResult => {
-            var mm: ServiceResponse = myResult;
-            var entity = mm.Result;
-    
-            
 
+
+                    });
+                }
+
+                else {
+                  
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                }
+            }
         });
+        
 
 
     }

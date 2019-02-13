@@ -213,6 +213,11 @@ namespace WebFreight.Web.DataProviders
         public string Notify2ATTN { get; set; }
         public string AgentATTN { get; set; }
 
+        public string ShipperContactDetails { get; set; }
+        public string ConsigneeContactDetails { get; set; }
+        public string Notify1ContactDetails { get; set; }
+        public string Notify2ContactDetails { get; set; }
+        public string ShipperNotExporterContactDetails { get; set; }
     }
 
     public class CommodityLine

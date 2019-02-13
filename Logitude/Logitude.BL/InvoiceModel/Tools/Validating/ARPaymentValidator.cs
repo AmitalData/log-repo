@@ -27,6 +27,8 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Globalization;
+using Simplog.Data.InvoiceModel;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -168,6 +170,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 throw new ApplicationException("Can't connect lines with zero Amount to Pay");
             }
 
+            ValidateAccountingSetting(entityPM);
             ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account);
         }
 
@@ -199,6 +202,57 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             if (MethodHelper.IsAirlineRestricted(myCardId, airlineRepository, tenant))
                             {
                                 throw new ApplicationException("Bill to Airline is not allowed");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void ValidateAccountingSetting(ARPaymentPM entityPM)
+        {
+            if (entityPM.SetApproved)
+            {
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
+                Tenant loggedTenant = (from a in myCommonContext.Tenants.Include("AccountingSetting")
+                                       where a.Id == entityPM.Tenant
+                                       select a).FirstOrDefault();
+
+                IInvoiceContext myContext = InvoiceContext.GetContext(entityPM.Tenant);
+
+                if (loggedTenant != null)
+                {
+                    if (loggedTenant.AccountingSetting != null)
+                    {
+                        if (loggedTenant.AccountingSetting.IsARPaymentChronologicalDates)
+                        {
+                            DateTime? lastChronologicalDate = (from a in myContext.ARPayments
+                                                               where a.Tenant == entityPM.Tenant
+                                                               && a.StatusCode != "DR"
+                                                               && a.StatusCode != "VD"
+                                                               && a.PaymentNo != entityPM.PaymentNo
+                                                               select a).Max(d => d.ApprovedDate);
+                            if (lastChronologicalDate != null)
+                            {
+                                var entityDate = entityPM.ValueDate != null ? entityPM.ValueDate : entityPM.RegisterDate; 
+
+                                if (entityDate < lastChronologicalDate)
+                                {
+                                    ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
+                                    Tenant currentTenant = context.Tenants.Where(t => t.Id == entityPM.Tenant).FirstOrDefault();
+                                    string datetimeformat = @"dd\/MM\/yyyy";
+                                    if (!string.IsNullOrEmpty(currentTenant.DateTimeFormat))
+                                    {
+                                        datetimeformat = currentTenant.DateTimeFormat;
+                                    }
+                                    string dateString = lastChronologicalDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
+                                    bool useLocal = true;
+                                    var user = GetLoggedContact(entityPM.Tenant);
+                                    if (user != null) useLocal = !(GetLoggedContact(entityPM.Tenant).DontShowLocal);
+
+                                    string fieldLabel = TranslateTextsClass.Translate("ARPayment.M.ChronologicalDate", entityPM.Tenant, useLocal);
+                                    throw new ApplicationException(fieldLabel.Replace("%Date", dateString));
+                                }
                             }
                         }
                     }

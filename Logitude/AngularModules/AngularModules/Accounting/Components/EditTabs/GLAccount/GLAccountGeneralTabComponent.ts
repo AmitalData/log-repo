@@ -183,6 +183,16 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
   }
 
+    get IsVATExempt() { return this.EntityPM.IsVATExempt }
+    set IsVATExempt(value: boolean) {
+        if (this.EntityPM.IsVATExempt != value) {
+            this.EntityPM.IsVATExempt = value;
+
+        }
+    }
+
+
+
   get IsEquipmentVendor() { return this.EntityPM.IsEquipmentVendor }
   set IsEquipmentVendor(value: boolean) {
     if (this.EntityPM.IsEquipmentVendor != value) {
@@ -340,6 +350,14 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     set RevenueExpenseType(value: string) {
         if (this.EntityPM.RevenueExpenseType != value) {
             this.EntityPM.RevenueExpenseType = value;
+            if (value == "3") {
+
+                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, false);
+            }
+            else {
+                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, true);
+            }
+
         }
     }
     //#endregion
@@ -358,6 +376,15 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         if (this.EntityPM.ChartOfAccountsId) {
             this.ChartOfAccountsId = this.EntityPM.ChartOfAccountsId;
             this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
+        }
+
+        if (this.EntityPM.RevenueExpenseType == "3") {
+
+
+            this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, true);
         }
 
     }
