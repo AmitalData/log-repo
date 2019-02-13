@@ -654,6 +654,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AWBPrintingComments).HasColumnName("AWBPrintingComments");
             this.Property(t => t.LocalCustomsSentByUserId).HasColumnName("LocalCustomsSentByUserId");
             this.Property(t => t.FirstOperationalCloseDate).HasColumnName("FirstOperationalCloseDate");
+            this.Property(t => t.FirstAccountingCloseDate).HasColumnName("FirstAccountingCloseDate");
             this.Property(t => t.AMSClosingDate).HasColumnName("AMSClosingDate");
             this.Property(t => t.UpdatedByPartner).HasColumnName("UpdatedByPartner");
             this.Property(t => t.INTTRASIStatusCode).HasColumnName("INTTRASIStatusCode");
