@@ -27,7 +27,8 @@ import { SendManifestService } from '../../../CustomsModules/CustomsDeclarationM
 import {DeclarationPMService} from '../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {DropdownMenuFilterComponent} from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/DropdownMenuFilterComponent';
 import {DeclarationCourierStatusPMService} from '../../../Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
-import {DeclarationCourierStatusPM} from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
+import { DeclarationCourierStatusPM } from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
+import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
 import { DeclarationCourierStatusList } from '../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 import { DeclarationMamanSpecialActionListService } from '../../../Customs/Services/StandardLists/DeclarationMamanSpecialActionListService';
@@ -275,9 +276,29 @@ export class CourierWorksheetListTemplate {
 
 
     }
+
     SendButtonClicked() {
         this.ButtonClick(null);
     }
+
+    _IsSplitButtonMenuFilterReady: boolean = false;
+    PrepareSplitButtonMenuFilter(){
+        this._IsSplitButtonMenuFilterReady = false;
+        this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
+        let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
+        myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
+            let entitypm: DeclarationPM = rsptPMget.Result;
+            if (entitypm != null && entitypm.Consignments != null) {
+                if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
+                    this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
+                }
+            }
+            this._IsSplitButtonMenuFilterReady = true;
+            this.CD.detectChanges();
+        });
+        this.CD.detectChanges();
+    }
+
     SendDec(event) {
         //event.stopPropagation();
         //SplitButtonComponent.EnsureLastSplitButtonIsClosed();
@@ -318,7 +339,8 @@ export class CourierWorksheetListTemplate {
     }
 
 
-    get IsWebAPICourierGWMessageECTHRDataMamanEnable() { return this._CourierWorksheetSharedDataService.IsWebAPICourierGWMessageECTHRDataMamanEnable }
+    get WebAPICourierGWMessageECTHRDataMaman() { return this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman }
+    IsWebAPICourierGWMessageECTHRDataMamanEnable: boolean = false;
 
     GetSendECTHRDataMaman(event) {
         this.ButtonClick(event);
@@ -455,50 +477,67 @@ export class CourierWorksheetListTemplate {
     _IsDropdownMenuFilterReady: boolean = false;
     PrepareDropdownMenuFilter(event, declarationId) {
         this._IsDropdownMenuFilterReady = false;
+        this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
+        this.IsReceivingDelayCertificate = false;
+        this.IsPrintDocuments = false;
+        this.DelayCertificateDetails = null;
+        this.MamanStickerDetails = null;
+        this.PrintDocumentsDetails = null;
 
-        var filters = new ApiQueryFilters();
-        filters.PageIndex = 0;
-        filters.PageSize = 1000;
-        filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
-        //filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+        let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
+        myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
+            let entitypm: DeclarationPM = rsptPMget.Result;
+            if (entitypm != null && entitypm.Consignments != null) {
+                if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
+                    this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
 
-        this._DeclarationMamanSpecialActionListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
-            this.IsReceivingDelayCertificate = false;
-            this.IsPrintDocuments = false;
-            this.DelayCertificateDetails = null;
-            this.MamanStickerDetails = null;
-            this.PrintDocumentsDetails = null;
-            if (!response.HasError && response.Result != null) {
-                response.Result.forEach((declarationMamanSpecialActionPMItem: DeclarationMamanSpecialActionPM) => {
-                    switch (declarationMamanSpecialActionPMItem.MamanSpecialActionCode) {
-                        case "2": {
-                            this.DelayCertificateDetails = declarationMamanSpecialActionPMItem;
-                            if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
-                                this.IsReceivingDelayCertificate = true;
-                            }
-                            break;
-                        }
-                        case "4": {
-                            this.MamanStickerDetails = declarationMamanSpecialActionPMItem;
-                            if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
-                                this.IsMamanSticker = true;
-                            }
-                            break;
-                        }
-                        case "5": {
-                            this.PrintDocumentsDetails = declarationMamanSpecialActionPMItem;
-                            if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
-                                this.IsPrintDocuments = true;
-                            }
-                            break;
-                        }
-                    }
-                });
+                    var filters = new ApiQueryFilters();
+                    filters.PageIndex = 0;
+                    filters.PageSize = 1000;
+                    filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
 
+                    this._DeclarationMamanSpecialActionListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
+                        if (!response.HasError && response.Result != null) {
+                            response.Result.forEach((declarationMamanSpecialActionPMItem: DeclarationMamanSpecialActionPM) => {
+                                switch (declarationMamanSpecialActionPMItem.MamanSpecialActionCode) {
+                                    case "2": {
+                                        this.DelayCertificateDetails = declarationMamanSpecialActionPMItem;
+                                        if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                            this.IsReceivingDelayCertificate = true;
+                                        }
+                                        break;
+                                    }
+                                    case "4": {
+                                        this.MamanStickerDetails = declarationMamanSpecialActionPMItem;
+                                        if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                            this.IsMamanSticker = true;
+                                        }
+                                        break;
+                                    }
+                                    case "5": {
+                                        this.PrintDocumentsDetails = declarationMamanSpecialActionPMItem;
+                                        if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                            this.IsPrintDocuments = true;
+                                        }
+                                        break;
+                                    }
+                                }
+                            });
+
+                        }
+                        this._IsDropdownMenuFilterReady = true;
+                        this.CD.detectChanges();
+                    });
+                }
+
+                this._IsDropdownMenuFilterReady = true;
+                this.CD.detectChanges();
             }
-            this._IsDropdownMenuFilterReady = true;
-            this.CD.detectChanges();
-            });
+            else {
+                this._IsDropdownMenuFilterReady = true;
+                this.CD.detectChanges();
+            }
+        });
         this.CD.detectChanges();
     }
 

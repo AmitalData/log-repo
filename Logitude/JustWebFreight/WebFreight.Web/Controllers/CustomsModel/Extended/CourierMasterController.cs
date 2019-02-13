@@ -459,21 +459,29 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 int tenant = authToken.Tenant;
                 string response = "";
 
-                var amitalContext = AmitalContext.GetContext(tenant);
-                var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-                var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
-
-                string send2Maman = def.DEFDATA;
-
-                if (send2Maman.Contains("ILMMN"))
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
+                DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
+                if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
                 {
-                    var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
-                    response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
-                }
-                else if(send2Maman.Contains("ILOVL"))
-                {
-                    var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
-                    response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                    var amitalContext = AmitalContext.GetContext(tenant);
+                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+
+                    if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
+                    {
+                        var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
+                        response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                    }
+                    else if (def.DEFDATA.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
+                    {
+                        var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
+                        response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                    }
+                    else
+                    {
+                        response = "לא קיימת הרשאה";
+                    }
                 }
                 else
                 {
