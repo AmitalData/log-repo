@@ -78,15 +78,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                 var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
                 var myCustomsDocumentPointerUpdateService = new CustomsDocumentPointerUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                 var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-
+                
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(_MyDeclarationPM.Tenant);
                 DocumentsFilingPM documentIn = documentsFilingQuery.GetSinglePM(this._LogitudeDocs.COM_ID, _MyDeclarationPM.Tenant);
                 if (documentIn != null)
                 {
+                    if (this._LogitudeDocs.DOC_ID == null)
+                    {
+                        throw new BusinessErrorException("DOC_ID is missing");
+                    }
                     string pointerLevel = null;
                     var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
                     var myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._LogitudeDocs.DOC_ID, true, true);
-
+                    if (myDocumentTypeCustomsData == null || String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
+                    {
+                        throw new BusinessErrorException("DOC_ID " + this._LogitudeDocs.DOC_ID + " but not found");
+                    }
                     CustomsDocumentsTicketPM customsDocumentsTicketPM = new CustomsDocumentsTicketPM();
                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Insert;
                     customsDocumentsTicketPM.Tenant = _MyDeclarationPM.Tenant;
@@ -142,6 +149,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         customsDocumentPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                         customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
                         customsDocumentPM.Tenant = _MyDeclarationPM.Tenant;
+                        customsDocumentPM.CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues;
                         foreach (CustomsDocumentMetaDataValuePM value in customsDocumentPM.CustomsDocumentMetaDataValues)
                         {
                             value.ChangeSetOp = ChangeSetOperation.Insert;
