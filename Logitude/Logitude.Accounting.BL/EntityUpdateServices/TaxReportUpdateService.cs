@@ -66,26 +66,36 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 TaxReportRepository repo = new TaxReportRepository(entityPM.Tenant);
                 AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(entityPM.Tenant);
                 bool exist = repo.CheckIfTaxReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
+                bool previousCompletedExist = repo.CheckIfPreviousReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
+                bool previousNotCompletedExist = repo.CheckIfPreviousNotCompReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
+                int count = repo.ReportCount(entityPM.Tenant);
                 bool higherDateReportExist = repo.CheckIfTaxReportWithHigherDateExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
                 //List<AccountingPeriodList> accountingPeriods = accountingPeriodQueryService.GetAccountingPeriodListByYearAndType(entityPM.Year, "1", entityPM.Tenant);
                 ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
                 //var openMonth = accountingPeriods.Where(d => (d.ClosedMonth < entityPM.TaxReportMonth.Month && d.OpenMonth > entityPM.TaxReportMonth.Month) || d.OpenMonth == entityPM.TaxReportMonth.Month ).Any();
 
                 bool showLocals = !contact.DontShowLocal;
-                if (exist == true)
+                if (count > 0)
                 {
-                    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportExist", entityPM.Tenant, showLocals));
-                }
-                if (higherDateReportExist == true)
-                {
-                    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.HigherMonthReport", entityPM.Tenant, showLocals));
-                }
+                    if (exist == true)
+                    {
+                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportExist", entityPM.Tenant, showLocals));
+                    }
+                    if (higherDateReportExist == true)
+                    {
+                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.HigherMonthReport", entityPM.Tenant, showLocals));
+                    }
 
-                //if (openMonth)
-                //{
+                    if (previousCompletedExist)
+                    {
 
-                //    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportWithClosedMonth", entityPM.Tenant, showLocals));
-                //}
+                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.CompletedReportExist", entityPM.Tenant, showLocals));
+                    }
+                    if (previousNotCompletedExist)
+                    {
+                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.NotCompletedReportExist", entityPM.Tenant, showLocals));
+                    }
+                }
 
             }
 
