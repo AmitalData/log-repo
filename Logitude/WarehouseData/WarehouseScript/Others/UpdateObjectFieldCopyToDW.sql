@@ -36,7 +36,7 @@ or FieldName = 'ShipmentNumber' or FieldName = 'House' or FieldName = 'GrossWeig
 or  FieldName = 'OperationalCloseDate'or  FieldName = 'AccountingCloseDate'or  FieldName = 'LastUpdateDate' or  FieldName = 'OpenReceivablesInLocalCurrency'or  FieldName = 'OpenReceivablesInProfitCurrency'or  FieldName = 'AccountedReceivablesInLocalCurrency'
 or  FieldName = 'AccountedReceivablesInProfitCurrency'or  FieldName = 'OpenPayablesInLocalCurrency'or  FieldName = 'OpenPayablesInProfitCurrency' or  FieldName = 'AccountedPayablesInLocalCurrency'or  FieldName = 'AccountedPayablesInProfitCurrency' or    FieldName='TEU'or FieldName='ValueOfGoods'or FieldName='ValueOfGoodsCurrencyId' or FieldName='FirstPickupETA'or FieldName='FirstPickupETD'  
 or FieldName = 'ProjectNumber' or FieldName = 'CustomerReference1' or FieldName = 'CustomerReference2'  or FieldName = 'ShipperReference1' or FieldName = 'ShipperReference2'  or FieldName = 'ConsigneeReference1' or FieldName = 'ConsigneeReference2'  or FieldName = 'AgentReference1' or FieldName = 'AgentReference2'   or FieldName = 'AMSBL' or FieldName = 'FreightPrepaidCollectId'  or FieldName = 'OtherPrepaidCollectId'   or FieldName = 'MainHarmonize'
-or FieldName = 'ForwarderPartnerId' or FieldName = 'CreatedByUserId' or FieldName = 'CustomAgentExportId'  or FieldName = 'CustomAgentImportId'  or FieldName = 'CustomAgentExportId' or FieldName = 'WarehouseLegWarehouseId' 
+or FieldName = 'ForwarderPartnerId' or FieldName = 'CreatedByUserId' or FieldName = 'CustomAgentExportId'  or FieldName = 'CustomAgentImportId'  or FieldName = 'CustomAgentExportId' or FieldName = 'WarehouseLegWarehouseId' or FieldName = 'IsCancelled' 
 
 )
 

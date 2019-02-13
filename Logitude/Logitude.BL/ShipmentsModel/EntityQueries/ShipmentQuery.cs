@@ -1465,6 +1465,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
             shipmentPM.LocalCustomsSentByUserId = shipment.LocalCustomsSentByUserId;
             shipmentPM.FirstOperationalCloseDate = shipment.FirstOperationalCloseDate;
+            shipmentPM.FirstAccountingCloseDate = shipment.FirstAccountingCloseDate;
             shipmentPM.OnCarriageAdditionalTransportModeCode = shipment.OnCarriageAdditionalTransportModeCode;
             shipmentPM.LastFinalDestination = shipment.LastFinalDestination;
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
@@ -2945,6 +2946,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.LastSharedEventNotes = shipment.LastSharedEventNotes;
             shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
             shipmentPM.FirstOperationalCloseDate = shipment.FirstOperationalCloseDate;
+            shipmentPM.FirstAccountingCloseDate = shipment.FirstAccountingCloseDate;
             shipmentPM.LastFinalDestination = shipment.LastFinalDestination;
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
             shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
@@ -9959,6 +9961,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         LastSharedEventNotes = view.LastSharedEventNotes,
                         LastSharedEventDate = view.LastSharedEventDate,
                         FirstOperationalCloseDate = view.FirstOperationalCloseDate,
+                        FirstAccountingCloseDate = view.FirstAccountingCloseDate,
                         DeclarationNumber = view.DeclarationNumber,
                         CustomsClearanceDate = view.CustomsClearanceDate,
                         IncludesCustoms = view.IncludesCustoms,
@@ -10530,6 +10533,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          WarehouseLegReleaseDate = s.WarehouseLegActualReleaseDate != null ? s.WarehouseLegActualReleaseDate : s.WarehouseLegExpectedReleaseDate,
                                                          ManifestLastSharingDate = s.ManifestLastSharingDate,
                                                          FirstOperationalCloseDate = s.FirstOperationalCloseDate,
+                                                         FirstAccountingCloseDate = s.FirstAccountingCloseDate,
                                                          ShipmentTypeId = s.ShipmentTypeId,
                                                          LastFinalDestination = s.LastFinalDestination,
                                                          FirstPickupETA = s.FirstPickupETA,
@@ -11037,6 +11041,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                NumberOfPackages = f.NumberOfPackages,
                                NumberOfContainers = f.NumberOfContainers,
                                FirstOperationalCloseDate = f.FirstOperationalCloseDate,
+                               FirstAccountingCloseDate = f.FirstAccountingCloseDate,
                                DeclarationNumber = f.DeclarationNumber,
                                CustomsClearanceDate = f.CustomsClearanceDate,
                                IncludesCustoms = f.IncludesCustoms,
@@ -11373,6 +11378,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastSharedEventDate = f.LastSharedEventDate,
                     ManifestLastSharingDate = f.ManifestLastSharingDate,
                     FirstOperationalCloseDate = f.FirstOperationalCloseDate,
+                    FirstAccountingCloseDate = f.FirstAccountingCloseDate,
                     DeclarationNumber = f.DeclarationNumber,
                     CustomsClearanceDate = f.CustomsClearanceDate,
                     IncludesCustoms = f.IncludesCustoms,
@@ -11628,6 +11634,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastSharedEventNotes = f.LastSharedEventNotes,
                     LastSharedEventDate = f.LastSharedEventDate,
                     FirstOperationalCloseDate = f.FirstOperationalCloseDate,
+                    FirstAccountingCloseDate = f.FirstAccountingCloseDate,
                     INTTRASIStatusName = f.INTTRASIStatusName,
                     LastFinalDestination = f.LastFinalDestination,
                     FirstPickupETA = f.FirstPickupETA,
@@ -12088,6 +12095,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          RegistryDate = s.RegistryDate,
                                                          IsAssembly = s.IsAssembly,
                                                          FirstOperationalCloseDate = s.FirstOperationalCloseDate,
+                                                         FirstAccountingCloseDate = s.FirstAccountingCloseDate,
                                                          ShipmentTypeId = s.ShipmentTypeId,
                                                          LastFinalDestination = s.LastFinalDestination,
                                                          FirstPickupETA = s.FirstPickupETA,

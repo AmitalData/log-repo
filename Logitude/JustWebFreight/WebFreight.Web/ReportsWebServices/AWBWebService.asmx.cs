@@ -534,6 +534,16 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
                     }
+
+                    if(!string.IsNullOrEmpty(actualShipperCard.PrimaryContactId))
+                    {
+                        Contact primaryContact = contactRepository.GetSingleContact(actualShipperCard.PrimaryContactId, tenant);
+                        if (primaryContact != null)
+                        {
+                            awbDp.ShipperPrimaryContactName = primaryContact.EnglishName;
+                            awbDp.ShipperPrimaryContactPhone = primaryContact.BusinessPhone;                            
+                        }
+                    }
                 }
             }
 
@@ -553,8 +563,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             if (!string.IsNullOrEmpty(shipmentPM.ShipperNotExporterContactId))
-            {
-               
+            {               
                 Contact contact = contactRepository.GetSingleContact(shipmentPM.ShipperNotExporterContactId, tenant);
                 if (contact != null)
                 {
@@ -617,7 +626,6 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
             }
-
         }
 
         private void GetConsigneeData(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
@@ -710,6 +718,16 @@ namespace WebFreight.Web.ReportsWebServices
                             {
                                 awbDp.ActualConsigneeNameAddress = awbDp.ActualConsigneeNameAddress + "Fax: " + actualConsigneeAddress.FaxNumber;
                             }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(actualConsigneeCard.PrimaryContactId))
+                    {
+                        Contact primaryContact = contactRepository.GetSingleContact(actualConsigneeCard.PrimaryContactId, tenant);
+                        if (primaryContact != null)
+                        {
+                            awbDp.ConsigneePrimaryContactName = primaryContact.EnglishName;
+                            awbDp.ConsigneePrimaryContactPhone = primaryContact.BusinessPhone;
                         }
                     }
                 }

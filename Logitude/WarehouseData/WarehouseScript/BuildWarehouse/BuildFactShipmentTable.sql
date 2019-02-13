@@ -159,8 +159,7 @@
 	inner JOIN NewDIM_Partners WarehouseLegWarehousePartners ON dw_Shipments.WarehouseLegWarehouseId = WarehouseLegWarehousePartners.Id
 	inner JOIN NewDIM_Users createdByUser ON dw_Shipments.CreatedByUserId = createdByUser.Id
 	inner JOIN NewDIM_Currencies valueOfGoodsCurrency ON dw_Shipments.ValueOfGoodsCurrencyId = valueOfGoodsCurrency.Id
-	
-
+	where dw_Shipments.IsCancelled = 0 and (dw_Shipments.ShipmentLevelCode = 'H' or  dw_Shipments.ShipmentLevelCode = 'D') 
 
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO    @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @Level , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
 	,@Incoterm , @TotalGrossWeightInKG, @TotalChargeableWeightInKG , @TotalVolumeInCBM , @NumberOfPackages , @NumberOfContainers , @Salesman ,@AccountManager,@TotalProfitInLocalCurrency ,
