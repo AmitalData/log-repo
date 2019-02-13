@@ -462,6 +462,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         #endregion 
 
         public DateTime? FirstOperationalCloseDate { get; set; }
+        public DateTime? FirstAccountingCloseDate { get; set; }
         public DateTime? AMSClosingDate { get; set; }
         public string UpdatedByPartner { get; set; }
 

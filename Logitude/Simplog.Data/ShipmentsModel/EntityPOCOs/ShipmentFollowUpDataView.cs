@@ -610,6 +610,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? RegistryDate { get; set; }
         public bool IsAssembly { get; set; }
         public DateTime? FirstOperationalCloseDate { get; set; }
+        public DateTime? FirstAccountingCloseDate { get; set; }
 
         public string LastSharedEventId { get; set; }
         public string LastSharedEventName { get; set; }

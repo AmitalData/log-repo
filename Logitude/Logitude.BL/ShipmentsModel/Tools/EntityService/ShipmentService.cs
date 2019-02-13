@@ -4453,6 +4453,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         if (this.entityPM.IsAccountingClosed)
                         {
                             entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
+                            if (this.entityPM.FirstAccountingCloseDate == null)
+                            {
+                                this.entityPM.FirstAccountingCloseDate = this.entityPM.AccountingCloseDate;
+                            }
                         }
 
                         else
@@ -4582,6 +4587,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                         iHousePM.FirstOperationalCloseDate = this.entityPM.FirstOperationalCloseDate;
                                         iHousePM.IsAccountingClosed = this.entityPM.IsAccountingClosed;
                                         iHousePM.AccountingCloseDate = this.entityPM.AccountingCloseDate;
+                                        iHousePM.FirstAccountingCloseDate = this.entityPM.FirstAccountingCloseDate;
 
                                         if (iHousePM.FromPortId != this.entityPM.MainCarriageFromPortId)
                                         {
