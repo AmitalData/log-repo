@@ -69,7 +69,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage Put(GeneralEntitiesArgs args)
+        public HttpResponseMessage PutGeneralEntities(GeneralEntitiesArgs args)
         {
             try
             {
