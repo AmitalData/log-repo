@@ -184,22 +184,22 @@
 
                         <li style="text-align: center; border-bottom: 1px solid #555;"></li>
 
-                        <li *ngIf="!IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
                             <span>הפקת תעודת עיכוב</span>
                         </li>
-                        <li *ngIf="IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','2');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','2');">
                             <span>ביטול תעודת עיכוב</span>
                         </li>
-                        <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                             <span>הפקת מדבקה</span>
                         </li>
-                        <li *ngIf="IsMamanSticker" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','4');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsMamanSticker" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','4');">
                             <span>ביטול הפקת מדבקה</span>
                         </li>
-                        <li *ngIf="!IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','5');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','5');">
                             <span>הדפסת מסמכים</span>
                         </li>
-                        <li *ngIf="IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','5');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','5');">
                             <span>ביטול הדפסת מסמכים</span>
                         </li>
                         <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] != 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'I');">
@@ -220,13 +220,13 @@
             <split-button #currSplitButtonComponent
                           [IsDisabled]="_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O'   "
                           [OnClickedShowMenuContent]="true"
-                          (DefaultSplitButtonClicked)="SendButtonClicked()"
+                          (DefaultSplitButtonClicked)="PrepareSplitButtonMenuFilter()"
                           [ButtonText]="'שלח'"
                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="66">
 
                 <div class="class-MENUSplitButton-content" style="cursor:pointer">
                     <div>
-                        <ul class="x-button-drop-menu" style="width:90px;">
+                        <ul *ngIf="_IsSplitButtonMenuFilterReady" class="x-button-drop-menu" style="width:90px;">
 
                             <li>
                                 <span (click)="currSplitButtonComponent.DropdownDisplayClose();SendManifest($event);">מצהר</span>

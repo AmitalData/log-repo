@@ -1526,18 +1526,11 @@ implements OnDestroy
                 this.IsMamanEnabled = false;
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue.includes("ILMMN")) {
                     this.IsMamanEnabled = true;
+                    this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman = response.Result.DefaultValue;
                 }
-                myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_HWBBMMN", "NON", "NON", SessionLocator.Tenant)
-                    .subscribe(res => {
-                        if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
-                            this._CourierWorksheetSharedDataService.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
-                        }
-                    });
             });
+        }
     }
-
-
-}
 
 
     export class KeyValuePair {

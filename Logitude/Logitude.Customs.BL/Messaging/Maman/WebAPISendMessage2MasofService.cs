@@ -49,7 +49,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
                     {
                         var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
 
-                        bool sendMamanWEBAPIIsOn = def.DEFDATA /*DefaultValue*/ == "Y";
+                        bool sendMamanWEBAPIIsOn = def.DEFDATA.Contains("ILMMN");
                         if (!sendMamanWEBAPIIsOn)
                         {
                             throw new Exception("WebAPISendMessage2MamanService()->!sendMamanWEBAPIIsOn");
