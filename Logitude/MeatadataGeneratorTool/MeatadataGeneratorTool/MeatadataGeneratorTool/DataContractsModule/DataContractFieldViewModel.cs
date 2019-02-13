@@ -223,8 +223,20 @@ namespace MeatadataGeneratorTool.DataContractsModule
                 FirePropertyChanged("IsCompositKey");
             }
         }
-        
-        
+
+        string closeTableCode;
+        public string CloseTableCode
+        {
+            get { return closeTableCode; }
+            set
+            {
+
+                closeTableCode = value;
+                FirePropertyChanged(CloseTableCode);
+            }
+        }
+
+
 
 
 

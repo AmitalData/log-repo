@@ -65,5 +65,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public bool? IsCreditAccountMulti { get; set; }
     
     public bool? IsDebitAccountMulti { get; set; }
+    
+    public string ExternalReconcileNumber { get; set; }
     }
 } 
