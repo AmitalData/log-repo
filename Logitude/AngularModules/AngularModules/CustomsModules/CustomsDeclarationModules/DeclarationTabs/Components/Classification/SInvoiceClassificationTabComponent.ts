@@ -101,8 +101,9 @@ export class SInvoiceClassificationTabComponent
         //if (this.Tab.ComponentReference && this.Tab.ComponentReference.ngOnDestroy) {
         //    this.Tab.ComponentReference.ngOnDestroy();
         //}
-
-        this.Tab.ComponentReference = null;
+        if (this.Tab) {
+            this.Tab.ComponentReference = null;
+        }
         this.Tab = null;
         if (this._SubDisplayModeChanged) {
             this._SubDisplayModeChanged.unsubscribe();
