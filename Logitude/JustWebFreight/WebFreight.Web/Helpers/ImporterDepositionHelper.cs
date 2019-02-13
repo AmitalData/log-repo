@@ -296,7 +296,7 @@ namespace WebFreight.Web.Helpers
 
             SettingQuery SettingQuery = new SettingQuery();
             string URI = SettingQuery.GetSinglePM().ForwarderTenantsURL.TrimEnd('/') + "/api/";
-            string token = "0YKw2rpyJbWVIuTrYiAW+8YN+vV++z73s/Y=";
+            string token = string.Empty;
 
             APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
             {
@@ -304,20 +304,19 @@ namespace WebFreight.Web.Helpers
                 SecondaryKey = "c2dd0ebf-20bf-4d44-916c-7f9000dce4ec"
             };
 
-            if (string.IsNullOrEmpty(token))
-            {
-                using (var client = new HttpClient())
-                {
 
-                    string AuthURI = URI + "APIAuthentication";
-                    var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
-                    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = await client.PostAsync(AuthURI, content);
-                    var tempUser = result.Content.ReadAsStringAsync().Result;
-                    ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
-                    token = User.Token;
-                }
+            using (var client = new HttpClient())
+            {
+
+                string AuthURI = URI + "APIAuthentication";
+                var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
+                var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                var result = await client.PostAsync(AuthURI, content);
+                var tempUser = result.Content.ReadAsStringAsync().Result;
+                ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
+                token = User.Token;
             }
+          
 
             using (var client = new HttpClient())
             {
