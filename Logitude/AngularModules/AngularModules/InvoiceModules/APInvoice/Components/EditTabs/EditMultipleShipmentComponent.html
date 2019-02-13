@@ -138,12 +138,12 @@
                     <div class="SimpleGridViewBody">
                         <table *ngIf="ItemsSource">
                             <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource.Collection">
-                                
+
                                 <!-- CheckBox -->
                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                     <div class="MediaFill">
                                         <div class="CenterCenter" style="width: 16px; height: 16px; padding-left: 1px;">
-                                            <img [style.float]="isRTL ? 'right' : 'left'" *ngIf="!item.IsMatch" src="./Images/Buttons/NotMatched.png" />
+                                            <img float-start *ngIf="!item.IsMatch" src="./Images/Buttons/NotMatched.png" />
                                             <CheckBox *ngIf="item.IsMatch" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
                                         </div>
                                     </div>
@@ -189,7 +189,7 @@
 
                                 <td class="CellDisabled" style="width: 100px; min-width: 100px; max-width: 100px;">
                                     <table>
-                                        <tr>                                           
+                                        <tr>
                                             <td class="TextTrimming" [ngStyle]="{color: item.VatTypeCellColor}">
                                                 {{item.VatTypeCell}}
                                             </td>
@@ -339,7 +339,7 @@
                                 <td class="CellDisabled" style="width: 55px; min-width: 55px; max-width: 55px;">
                                     <table>
                                         <tr>
-                                            <td [style.float]="isRTL ? 'right' : 'left'" style="text-align:left;">
+                                            <td float-start style="text-align:left;">
                                                 <span class="CellSeparator"></span>
                                             </td>
                                             <td style="width:18px;height:12px; padding-left:3px;">
@@ -613,7 +613,7 @@
                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                             <table>
                                 <tr>
-                                    <td [style.float]="isRTL ? 'right' : 'left'" style="text-align:left;">
+                                    <td float-start style="text-align:left;">
                                         <span class="CellSeparator"></span>
                                     </td>
                                     <td style="width:18px;height:12px; padding-left:3px;">

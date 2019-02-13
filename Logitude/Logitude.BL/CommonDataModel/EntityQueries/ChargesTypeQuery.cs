@@ -29,6 +29,69 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             repository = chargesTypeRepository;
         }
 
+        public ChargesTypePM GetSingle(string id, int tenant)
+        {
+            ChargesTypePM entity = null;
+
+            entity = (from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement")
+                      where a.Id == id && a.Tenant == tenant
+                      select new ChargesTypePM()
+                      {
+                          AddedManually = a.AddedManually,
+                          Code = a.Code,
+                          MeasurementId = a.MeasurementId,
+                          MeasurementCode = a.Measurement.Code,
+                          MeasurementShortName = a.Measurement.ShortName,
+                          Id = a.Id,
+                          InActive = a.InActive,
+                          LocalName = a.LocalName,
+                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                          EnglishName = a.EnglishName,
+                          Tenant = a.Tenant,
+                          AWBPrintDescription = a.AWBPrintDescription,
+                          ChargesGroupCode = a.ChargesGroupCode,
+                          ChargesGroupId = a.ChargesGroupId,
+                          IATACodeId = a.IATACodeId,
+                          Description = a.Description,
+                          IsAir = a.IsAir,
+                          IsOcean = a.IsOcean,
+                          IsInland = a.IsInland,
+                          IsAutoDisplayInConsolidation = a.IsAutoDisplayInConsolidation,
+                          IsAutoDisplayInShipment = a.IsAutoDisplayInShipment,
+                          IsPayable = a.IsPayable,
+                          IsReceivable = a.IsReceivable,
+                          VatTypeId = a.VatTypeId,
+                          DueTypeCode = a.DueTypeCode,
+                          IsAutoDisplayInQuote = a.IsAutoDisplayInQuote,
+                          ContainerMeasurementId = a.ContainerMeasurementId,
+                          ContainerMeasurementCode = a.ContainerMeasurement != null ? a.ContainerMeasurement.Code : null,
+                          ViewOrder = a.ViewOrder,
+                          SearchFields = a.SearchFields,
+                          ReceivableAccountId = a.ReceivableAccountId,
+                          PayableAccountId = a.PayableAccountId,
+                          AccountingVATSplit = a.AccountingVATSplit,
+                          ReceivableCreditAccount = a.ReceivableCreditAccount,
+                          PayableDebitAccount = a.PayableDebitAccount,
+                          ReceivablesChargesTypeExternalCode = a.ReceivablesChargesTypeExternalCode,
+                          PayablesChargesTypeExternalCode = a.PayablesChargesTypeExternalCode,
+                          PayableDebitGLAcountId = a.PayableDebitGLAcountId,
+                          ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                          IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
+                          IsCustoms = a.IsCustoms,
+                          IsBackToBack = a.IsBackToBack,
+                          SATExternalId = a.SATExternalId,
+                          IsExpense = a.IsExpense,
+                      }).FirstOrDefault();
+
+            ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
+            entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
+
+            ChargesTypePM securedPm = new ChargesTypePM();
+            SecuredMapping.GetMappedPM(entity, securedPm, "ChargesType", tenant);
+
+            return securedPm;
+        }
+
         public ChargesTypePM GetSinglePM(string id, int tenant)
         {
             ChargesTypePM entity = null;

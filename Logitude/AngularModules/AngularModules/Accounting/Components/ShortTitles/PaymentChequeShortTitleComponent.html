@@ -2,11 +2,11 @@
     <tr>
         <td style="padding-left: 5px;" *ngIf="EntityPM.IsCancelled">
 
-            <div class="ShortTitleControl" [style.float]="isRTL ? 'right' : 'left'" style="background: Red;">
+            <div class="ShortTitleControl" float-start style="background: Red;">
                 <!-- Cancelled -->
                 <span style="color: white;">{{'PaymentCheque.F.IsCancelled' | TextCodeTranslationPipe}}</span>
             </div>
-        
+
         </td>
     </tr>
 </table>
