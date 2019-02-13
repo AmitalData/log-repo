@@ -19,6 +19,7 @@ namespace WebFreight.Web.DataProviders
         //Pickup From
         public string PickupCompanyName { get; set; }
         public string PickupAddress { get; set; }
+        public string FromAddressDescription { get; set; }
         public string PickupContactName { get; set; }
         public string PickupContactPhone { get; set; }
         public string PickupDate { get; set; }
@@ -28,6 +29,7 @@ namespace WebFreight.Web.DataProviders
         //Delivery To
         public string DeliveryCompanyName { get; set; }
         public string DeliveryAddress { get; set; }
+        public string ToAddressDescription { get; set; }
         public string DeliveryContactName { get; set; }
         public string DeliveryContactPhone { get; set; }
         public string DeliveryDate { get; set; }
