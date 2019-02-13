@@ -871,6 +871,17 @@ namespace MeatadataGeneratorTool.Helpers
                 DCField.IsCompositKey = false;
 
             }
+            try
+            {
+                DCField.CloseTableCode = GetAttributeStringValue(fieldNode.Attributes["CloseTableCode"]);
+
+            }
+            catch (Exception)
+            {
+                //DCField.CloseTableCode = false;
+
+            }
+
 
             return DCField;
         }
