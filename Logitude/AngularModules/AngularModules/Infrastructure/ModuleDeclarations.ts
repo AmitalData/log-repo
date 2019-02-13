@@ -7,6 +7,7 @@ import {FixedPositionDirective} from './Utilities/FixedPositionDirective';
 import {FloatStartDirective} from './Utilities/RTLDirectives/FloatStartDirective';
 import { FloatEndDirective } from './Utilities/RTLDirectives/FloatEndDirective';
 import { TextAlignStart } from './Utilities/RTLDirectives/TextAlignStart';
+import { TextAlignEnd } from './Utilities/RTLDirectives/TextAlignEnd';
 
 // Pipes
 import {DateTimeToColorPipe} from './Pipes/DateTimePipes/DateTimeToColorPipe';
@@ -174,6 +175,7 @@ export const Directives =
         FloatStartDirective,
         FloatEndDirective,
         TextAlignStart,
+        TextAlignEnd,
     ];
 export const Pipes =
     [

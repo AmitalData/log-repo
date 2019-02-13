@@ -136,5 +136,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstApproveDate { get; set; }
+        public bool IsFullAccounting { get; set; }
     }
 }
