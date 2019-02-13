@@ -92,28 +92,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         }
 
 
-        public List<ARInvoicePaymentPM> GetARInvoicePaymentPMsForPaymentIds(List<string> paymentids, int tenant)
-        {
-            List<ARInvoicePaymentPM> result =
-             (from a in repository.context.ARInvoicePayments
-              where paymentids.Contains(a.ARPaymentId) && a.Tenant == tenant
-              select new ARInvoicePaymentPM()
-              {
-                  ARInvoiceId = a.ARInvoiceId,
-                  Id = a.Id,
-                  ForeignAmount = a.ForeignAmount,
-                  ForeignCurrencyId = a.ForeignCurrencyId,
-                  LocalAmount = a.LocalAmount,
-                  Tenant = a.Tenant,
-                  ARPaymentId = a.ARPaymentId,
-                  ExchangeRate = a.ExchangeRate,
-                  PaymentAmount = a.PaymentAmount,
-                  PaymentNumber = a.ARPayment == null ? null : a.ARPayment.PaymentNo,
-
-              }).ToList();
-
-
-            return result;
-        }
+      
     }
 }

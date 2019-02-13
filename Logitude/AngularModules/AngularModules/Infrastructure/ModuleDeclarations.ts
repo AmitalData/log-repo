@@ -3,6 +3,11 @@ import {FocusMeDirective} from './Utilities/FocusMeDirective';
 import {LocationDirective} from './Utilities/LocationDirective';
 import {FixedPositionDirective} from './Utilities/FixedPositionDirective';
 
+//rtl directives
+import {FloatStartDirective} from './Utilities/RTLDirectives/FloatStartDirective';
+import { FloatEndDirective } from './Utilities/RTLDirectives/FloatEndDirective';
+import { TextAlignStart } from './Utilities/RTLDirectives/TextAlignStart';
+
 // Pipes
 import {DateTimeToColorPipe} from './Pipes/DateTimePipes/DateTimeToColorPipe';
 import {NumbersPipe} from './Pipes/NumbersPipe';
@@ -165,6 +170,10 @@ export const Directives =
         FocusMeDirective,
         LocationDirective,
         FixedPositionDirective,
+
+        FloatStartDirective,
+        FloatEndDirective,
+        TextAlignStart,
     ];
 export const Pipes =
     [
@@ -375,7 +384,7 @@ export class ModuleDeclarations {
             case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }
             case 'ToComponent': { myResult = ToComponent; break; }
             case 'DWLogSearchAddFieldsComponent': { myResult = DWLogSearchAddFieldsComponent; break; }
-                
+
             case 'NewEntityComponent': { myResult = NewEntityComponent; break; }
             case 'LogSearchWindowComponent': { myResult = LogSearchWindowComponent; break; }
             case 'DWLogSearchWindowComponent': { myResult = DWLogSearchWindowComponent; break; }

@@ -21,6 +21,17 @@ namespace Logitude.BL.Security
                 if (HttpContext.Current != null)
                 {
                     loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
+
+
+                    // add by Abdullah & Mohammad to fix customer care contact issue, BUG 48520
+                    // if (null and tenant <> 0) - customer care
+                    //      get it by tenant 0 
+                    if (tenant != 0 && loggedContact == null)
+                    {
+                        loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserIdentityName(tenant), 0);
+                    }
+                    // note: the user will be found by method (GetContactByEmailOnly) in the cache 
+
                 }
                 else
                 {

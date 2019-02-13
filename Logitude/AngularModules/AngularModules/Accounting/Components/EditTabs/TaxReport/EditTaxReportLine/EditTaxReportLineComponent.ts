@@ -111,7 +111,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
         if (this.TaxReportLinePM.OutputOrInput == "O") {
             this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
         }
-        this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, true);
+        // this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, true);
     }
 
     //#region Buttons
