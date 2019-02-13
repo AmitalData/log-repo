@@ -686,6 +686,14 @@
     <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.Designer.cs">
       <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs" />
+    <Compile Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.Designer.cs">
+      <DependentUpon>201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902121710035_NewField_IsFullAccounting_ARPayment.cs" />
+    <Compile Include="Migrations\201902121710035_NewField_IsFullAccounting_ARPayment.Designer.cs">
+      <DependentUpon>201902121710035_NewField_IsFullAccounting_ARPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1144,6 +1152,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.resx">
       <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.resx">
+      <DependentUpon>201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902121710035_NewField_IsFullAccounting_ARPayment.resx">
+      <DependentUpon>201902121710035_NewField_IsFullAccounting_ARPayment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

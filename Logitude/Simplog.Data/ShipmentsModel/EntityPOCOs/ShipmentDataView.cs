@@ -696,6 +696,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string LastSharedEventNotes { get; set; }
         public DateTime? LastSharedEventDate { get; set; }
         public DateTime? FirstOperationalCloseDate { get; set; }
+        public DateTime? FirstAccountingCloseDate { get; set; }
 
         public double? GrossWeightPerTon { get; set; }
         public string LocalCustomsSentByUserId { get; set; }
