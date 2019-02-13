@@ -218,6 +218,11 @@ namespace WebFreight.Web.DataProviders
         public string Notify1ContactDetails { get; set; }
         public string Notify2ContactDetails { get; set; }
         public string ShipperNotExporterContactDetails { get; set; }
+
+        public string ShipperPrimaryContactName { get; set; }
+        public string ShipperPrimaryContactPhone { get; set; }
+        public string ConsigneePrimaryContactName { get; set; }
+        public string ConsigneePrimaryContactPhone { get; set; }
     }
 
     public class CommodityLine
