@@ -479,6 +479,11 @@ export class ARPaymentPM {
     public set FirstApproveDate(newValue: Date) { if (this.firstApproveDate != newValue) { this.firstApproveDate = newValue; this.MarkAsDirty("FirstApproveDate"); } }
        
 	 
+    private isFullAccounting: boolean;
+    public get IsFullAccounting() { return this.isFullAccounting; }
+    public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
+       
+	 
 
     public OldEntityPM: ARPaymentPM;
 		
