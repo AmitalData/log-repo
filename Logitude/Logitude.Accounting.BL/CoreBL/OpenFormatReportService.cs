@@ -1931,10 +1931,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
                     }
 
-                    if (tenantPM.VatNumber != null)
+                    if (item.CustomerVendorVatNumber != null)
                     {
-                        if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
-                        myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+                        if (item.CustomerVendorVatNumber.Length > 9) { item.CustomerVendorVatNumber = item.CustomerVendorVatNumber.Substring(0, 9); }
+                        myStringBuilder.Append("a" + item.CustomerVendorVatNumber.PadLeft(9, '0'));
                     }
                     else
                     {
@@ -3384,6 +3384,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         GLAccountId = a.VendorCard.GLAccountId,
                                         IsCancelled = a.StatusCode =="VD" ? true:false,
                                         VendorId =a.VendorId,
+
                                     }).ToList();
 
 
