@@ -336,7 +336,7 @@ namespace WarehouseData.Helper
                         string values = null;
                         if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText")
                         {
-                            if (field.FieldName == "[Id]" || field.FieldName == "[Code]") values = field.MaxLength > 1 ? "'-1'" : "'1'";
+                            if (field.FieldName == "[Id]" || (field.FieldName == "[Code]" && table.TableName != "Card")) values = field.MaxLength > 1 ? "'-1'" : "'1'";
                             else values = "'Not Specified'";
 
                             if (field.MaxLength + 2 < values.Length) values = "null";

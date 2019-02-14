@@ -32,25 +32,30 @@ namespace WebFreight.Web.Helpers
                     contactPassword.PasswordExpirationDate = null;
                     globalContext.SaveChanges();
 
-                    if (!string.IsNullOrEmpty(token))
+                if (!string.IsNullOrEmpty(token))
+                {
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    if (authToken != null)
                     {
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        if (authToken != null)
+                        AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);
+                        authToken.Password = contactPassword.Password;
+                        authenticationTokenRepository.Update(authToken);
+                        authenticationTokenRepository.SubmitChanges();
+
+                        string entityName = "Token" + authToken.Token;
+                        if (CacheManager.CacheWrapper.Get(entityName) != null)
                         {
-                            AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);
-                            authToken.Password = contactPassword.Password;
-                            authenticationTokenRepository.Update(authToken);
-                            authenticationTokenRepository.SubmitChanges();
-
-                            string entityName = "Token" + authToken.Token;
-                            if (CacheManager.CacheWrapper.Get(entityName) != null)
-                            {
-                                CacheManager.CacheWrapper.Remove(entityName);
-                            }
-
+                            CacheManager.CacheWrapper.Remove(entityName);
                         }
 
+                       
+
                     }
+
+                }
+
+                string cahce_key = "ContactPassword_" + email;
+                if (CacheManager.CacheWrapper.Get(cahce_key) != null) CacheManager.CacheWrapper.Remove(cahce_key);
 
 
                 result = true;
