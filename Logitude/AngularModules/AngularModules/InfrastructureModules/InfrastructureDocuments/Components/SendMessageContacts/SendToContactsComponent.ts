@@ -275,8 +275,15 @@ export class SendToContactsComponent implements OnInit {
             ServerSideSortable: true,
         });
 
-
-
+        this.columns.push({
+            FieldName: "Position",
+            DataTypeCode: 'String',
+            IsCustomTemplate: true,
+            Display: 'Position',
+            Styles: { width: '140px' },
+            ServerSideSortable: true,
+        });
+        
     }
 
 

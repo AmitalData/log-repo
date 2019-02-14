@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
@@ -25,18 +26,19 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 {
     public class ShipmentComputedFieldExtendedController : ApiController
     {
-       
-        public HttpResponseMessage GetMarkCompleteDepositionRequest(string id , string directionId ,  string forwardershipmentNumber , string forwarderPartnerId)
+
+        public  async Task<HttpResponseMessage> GetMarkCompleteDepositionRequest(string id , string directionId ,  string forwardershipmentNumber , string forwarderPartnerId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(authToken.Tenant);
-                ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(id, authToken.Tenant);
-
                 int tenant = authToken.Tenant;
+
+                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
+                ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(id, tenant);
+
                 if (shipmentComputedFields != null && shipmentComputedFields.IsDepositionRequired)
                 {
                     shipmentComputedFields.IsDepositionRequired = false;
@@ -50,7 +52,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                     APILogsPM LogPM = new APILogsPM()
                     {
-                        Id = IdCounter.GetNumber("APILogs", authToken.Tenant),
+                        Id = IdCounter.GetNumber("APILogs", tenant),
                         CorrelationId = Guid.NewGuid().ToString(),
                         CreateDate = DateTime.Now,
                         CreateDateUTC = DateTime.UtcNow,
@@ -60,7 +62,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         NumberOfRetries = 1,
                         ExpirationDate = DateTime.Now.AddDays(90),
                         Status = "I",
-                        ObjectTableId = objecttable!=null ? objecttable.Id:null,
+                        ObjectTableId = objecttable != null ? objecttable.Id : null,
                         EntityId = id,
                         Tenant = tenant,
                         Subject = "Send VDC status to UNF"
@@ -71,19 +73,16 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
                     apiLogsService.Create(LogPM);
 
-                    var msg = "Send VDC status to UNF " + DateTime.Now;
-                    ShipmentAdditionalCloudDataAM DataAM = new ShipmentAdditionalCloudDataAM()
-                    {
-                        ShipmentNumber = forwardershipmentNumber,
-                        Tenant = partnerTenant,
-                        Code = "VDC",
-                        Remarks = "",
-                        Direction = directionId
-                    };
-                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
+                    ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
+                    return await importerDepositionHelper.SendVDCStatusToUNF(directionId, forwardershipmentNumber, tenant, partnerTenant, LogPM);
+
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "");
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, "");
+                //return null;
 
             }
 
