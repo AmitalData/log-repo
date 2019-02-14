@@ -30,7 +30,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
 
 
-class LineModel extends BaseComponent {
+export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
     public ObjectTableName = "LedgerTransaction";
     public RowIndex: number;
