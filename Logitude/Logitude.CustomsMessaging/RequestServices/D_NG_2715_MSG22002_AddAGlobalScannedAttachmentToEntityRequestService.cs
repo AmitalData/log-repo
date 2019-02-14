@@ -280,7 +280,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 throw new BusinessErrorException("Unable to get Bolb Of " + _CustomsDocumentPM.DocumentsFilingId);
             }
 
-            if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId) && _IsSendAnywayWithoutAttachment)
+            if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId) && !_IsSendAnywayWithoutAttachment)
             {
 
                 var attachmentOnly = new Attachment();
