@@ -124,7 +124,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage Put(TraceEventsServiceArgs args)
+        public HttpResponseMessage PutDeleteTraceEvent(TraceEventsServiceArgs args)
         {
             try
             {

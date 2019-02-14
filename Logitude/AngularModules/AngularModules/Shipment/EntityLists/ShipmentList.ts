@@ -383,6 +383,7 @@ export class ShipmentList {
 		WarehouseLegVGMCutOffDate: Date;
 		WarehouseLegCutOffDate: Date;
 		FirstOperationalCloseDate: Date;
+		FirstAccountingCloseDate: Date;
 		AMSClosingDate: Date;
 		UpdatedByPartner: string;
 		INTTRASIError: string;

@@ -25,7 +25,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class JournalController : ApiController
     {
-        public HttpResponseMessage GetSingleJournal(string id)
+        public HttpResponseMessage GetSingleJournal(string id, string number)
         {
             try
             {

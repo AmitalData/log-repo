@@ -1,5 +1,4 @@
 ﻿
-
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
@@ -17,8 +16,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ShipmentComputedFieldExtendedService} from '../../../../Shipment/Services/ExtendedPMs/ShipmentComputedFieldExtendedService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-
-
+import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 @Component({
     moduleId: module.id,
     templateUrl: './DepositionRequestComponent.html',
@@ -63,7 +61,7 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
 
 
     NewDepositionFormClcik() {
-
+        ServiceLocator.SendTotangoUserActivity("CustomsShipper", "Deposition Link");
         var link = "https://forms.gov.il/globaldata/getsequence/getHtmlForm.aspx?formType=SOVE01_hasava@taxes.gov.il";
         var win = window.open(link, '_blank');
         win.focus();
