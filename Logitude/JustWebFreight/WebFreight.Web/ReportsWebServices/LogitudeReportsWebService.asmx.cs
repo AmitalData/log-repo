@@ -2152,7 +2152,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_EntityStatus = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EntityStatus").FirstOrDefault();
-            QueryFilterItem filterItem_ShipmentCustomerTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipmentCustomerTypeCode").FirstOrDefault();
+            QueryFilterItem filterItem_SupplierId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SupplierId").FirstOrDefault();
 
             //ToDate
             DateTime? toDate = null;
@@ -2163,6 +2163,11 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     toDate = (DateTime)filterItem_tODate.FieldValue;
                 }
+            }
+
+            if (toDate == null)
+            {
+                toDate= TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             }
 
             //FromDate
@@ -2194,17 +2199,16 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            string customerId = null;
-            totalData.CustomerName = "All";
-            if (filterItem_CustomerId != null)
+            string supplierId = null;
+            if (filterItem_SupplierId != null)
             {
-                if (filterItem_CustomerId.FieldValue != null)
+                if (filterItem_SupplierId.FieldValue != null)
                 {
-                    customerId = filterItem_CustomerId.FieldValue.ToString();
-                    if (!String.IsNullOrEmpty(customerId))
+                    supplierId = filterItem_SupplierId.FieldValue.ToString();
+                    if (!String.IsNullOrEmpty(supplierId))
                     {
                         CardRepository cardRepository = new CardRepository(commonContext);
-                        Card customer = cardRepository.GetSingleCard(customerId, tenant);
+                        Card customer = cardRepository.GetSingleCard(supplierId, tenant);
                         if (customer != null)
                             totalData.ShipperName = customer.EnglishName;
                     }
@@ -2235,19 +2239,20 @@ namespace WebFreight.Web.ReportsWebServices
 
 
 
-            string shipmentCustomerTypeCode = null;
-            if (filterItem_ShipmentCustomerTypeCode != null)
+            string CustomerId = null;
+            totalData.CustomerName = "All";
+            if (filterItem_CustomerId != null)
             {
-                if (filterItem_ShipmentCustomerTypeCode.FieldValue != null)
+                if (filterItem_CustomerId.FieldValue != null)
                 {
-                    shipmentCustomerTypeCode = filterItem_ShipmentCustomerTypeCode.FieldValue.ToString();
+                    CustomerId = filterItem_CustomerId.FieldValue.ToString();
 
-                    if (!String.IsNullOrEmpty(shipmentCustomerTypeCode))
+                    if (!String.IsNullOrEmpty(CustomerId))
                     {
-                        ShipmentCustomerTypeRepository shipmentsRepository = new ShipmentCustomerTypeRepository(shipmentsContext);
-                        ShipmentCustomerType shipmentcustomertypeCode = shipmentsRepository.GetSingleShipmentCustomerType(shipmentCustomerTypeCode);
-                        if (shipmentcustomertypeCode != null)
-                            totalData.CustomerName = shipmentcustomertypeCode.Name;
+                        CardRepository cardRepository = new CardRepository(commonContext);
+                        Card customerCard = cardRepository.GetSingleCard(CustomerId,tenant);
+                        if (customerCard != null)
+                            totalData.CustomerName = customerCard.EnglishName;
                     }
                 }
             }
@@ -2287,9 +2292,9 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
 
-            if (!string.IsNullOrEmpty(customerId))
+            if (!string.IsNullOrEmpty(CustomerId))
             {
-                shipments = shipments.Where(d => d.CustomerId == customerId);
+                shipments = shipments.Where(d => d.CustomerId == CustomerId);
             }
 
 
@@ -2299,9 +2304,9 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
 
-            if (!string.IsNullOrEmpty(shipmentCustomerTypeCode))
+            if (!string.IsNullOrEmpty(supplierId))
             {
-                shipments = shipments.Where(d => d.ShipmentCustomerTypeCode == shipmentCustomerTypeCode);
+                shipments = shipments.Where(d => d.ShipperId == supplierId);
             }
 
             List<ShipmentDataView> Shipments = shipments.ToList();
