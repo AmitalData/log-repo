@@ -302,7 +302,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     CustomQuoteFieldList() {
         if (this.QuoteTemplateSectionTypeCode == "QD") {
 
-            var QuoteFieldNameString = "Expiration Date, Expiration Days, Shipper Name, Shipper Address, Quote Number, Shipper Contact, Shipper References , Consignee Name, Consignee Address, Consignee Contact, Consignee References, Customer Name, Customer Address, Customer Contact, Customer References, Pickup From, Delivery To, Incoterms, Service, Salesman, Description of goods , Dangerous goods, Chargeable Weight, Gross Weight, Volume, Volumetric Weight, Transit Time, Notify Name, Notify Address, Notify Contact"  ;
+            var QuoteFieldNameString = "Expiration Date, Expiration Days, Shipper Name, Shipper Address, Quote Number, Shipper Contact, Shipper References , Consignee Name, Consignee Address, Consignee Contact, Consignee References, Customer Name, Customer Address, Customer Contact, Customer References, Pickup From, Delivery To, Incoterms, Service, Salesman, Description of goods , Dangerous goods, Chargeable Weight, Gross Weight, Volume, Volumetric Weight, Transit Time, Notify Name, Notify Address, Notify Contact ,Move Type"  ;
 
 
             var quoteFieldList = QuoteFieldNameString.split(',');
@@ -661,8 +661,12 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         else if (fieldname == "TRANSITTIME") {
             Field = "Transit Time";
         }     
-        
-        if (fieldname == "CUSTOMERREFERENCES") {
+
+        else if (fieldname == "MOVETYPE") {
+            Field = "Move Type";
+        }   
+
+       else if (fieldname == "CUSTOMERREFERENCES") {
             Field = "Customer References";
         }
         
