@@ -16,6 +16,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { DWObjectFieldsDetails } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     moduleId: module.id,
@@ -42,11 +43,13 @@ export class BIReportPreviewComponent implements OnInit {
     private _EntityPMService: EntityPMService = new EntityPMService();
     private timerToken: any;
     public BIReportXMLData: BIReportXMLData = null;
+    public HasDeletionFeature = false;
 
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
     }
     ngOnInit() {
+        this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
         this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.DWQueryData = myResult.Result;
@@ -484,6 +487,34 @@ export class BIReportPreviewComponent implements OnInit {
                         this.BuildRows(this.BIReportXMLData);
                     }
                 });
+            });
+        }
+    }
+    onDeleteBIReportClick() {
+        if (!this.IsNewEntity) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 450;
+            confirmWindow.Height = 190;
+            confirmWindow.ShowCancelButton = true;
+            confirmWindow.NoButtonText = "Cancel";
+            confirmWindow.YesButtonText = "Delete";
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+            confirmWindow.Show("Deleting this report will remove it from the BI reports list Once deleted it can't be restored");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    // save
+                    this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe(myResult => {
+                        if (!myResult.HasError) {
+                            if (this.ComponentRef) {
+                                SessionLocator.CurrentSession.FireEvent("BIRefresh");
+                                this.ComponentRef.destroy();
+                            }
+                        }
+                    });
+                }
+                else if (confirmWindow.No) {
+                    //nth
+                }
             });
         }
     }
