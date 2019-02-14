@@ -495,7 +495,6 @@ export class BIReportPreviewComponent implements OnInit {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 450;
             confirmWindow.Height = 190;
-            confirmWindow.ShowCancelButton = true;
             confirmWindow.NoButtonText = "Cancel";
             confirmWindow.YesButtonText = "Delete";
             confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");

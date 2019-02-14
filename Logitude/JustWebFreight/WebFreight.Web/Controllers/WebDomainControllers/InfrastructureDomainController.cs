@@ -1867,8 +1867,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     repository.SubmitChanges();
 
                     DWQuery DWQuery = dWQueryRepository.GetSingleDWQuery(queryId, authToken.Tenant);
-                    dWQueryRepository.Remove(DWQuery);
-                    dWQueryRepository.SubmitChanges();
+                    if(DWQuery != null)
+                    {
+                        dWQueryRepository.Remove(DWQuery);
+                        dWQueryRepository.SubmitChanges();
+                    }
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
