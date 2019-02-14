@@ -43,7 +43,7 @@ import { LineModel } from '../../../../Accounting/Components/Others/ReconcileCom
 export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements OnInit, OnDestroy {
 
 
-    public TransacionsList: ObservableCollection;
+    public TransactionsList: ObservableCollection;
 
 
     public EntityPM: ARPaymentPM;
@@ -70,6 +70,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         this.EntityPM = entityArgs.EntityPM;
         this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        this.TransactionsList = new ObservableCollection([]);
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
 
