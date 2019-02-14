@@ -87,6 +87,28 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     {
                         throw new BusinessErrorException("DOC_ID is missing");
                     }
+                    CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_MyDeclarationPM.Tenant);
+                    List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(this._LogitudeDocs.COM_ID, _MyDeclarationPM.Tenant);
+                    if(myCustomsDocumentsTicketPMList != null && myCustomsDocumentsTicketPMList.Count() > 0)
+                    {
+                        List<string> ticketdIds = myCustomsDocumentsTicketPMList.Select(r => r.Id).ToList();
+                        if(ticketdIds != null && ticketdIds.Count() > 0)
+                        {
+                            CustomsDocumentPointerQueryService myCustomsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(_MyDeclarationPM.Tenant);
+                            List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _MyDeclarationPM.Tenant);
+                            if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
+                            {
+                                var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == _MyDeclarationPM.Id);
+                                if(myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
+                                {
+                                    throw new BusinessErrorException("Ticket already Exist for this Document");
+                                }
+                            }
+                        }
+                    }
+                    //List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList2 = myCustomsDocumentsTicketQueryService.
+                    
+
                     string pointerLevel = null;
                     var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
                     var myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._LogitudeDocs.DOC_ID, true, true);
