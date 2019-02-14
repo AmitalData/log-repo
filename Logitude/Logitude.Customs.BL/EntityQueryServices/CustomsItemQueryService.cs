@@ -33,6 +33,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public string GetQuantityTypeByClassificationCode(string classificationCode, int tenant)
         {
+            if (string.IsNullOrWhiteSpace(classificationCode)) return null;
+            if (classificationCode.Length > 10)
+            {
+                classificationCode = classificationCode.Substring(0,10);
+            }
             CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
             CustomsItemPM customsItem = customsItemQueryService.GetCustomsItemByClassificationCode(classificationCode);
 

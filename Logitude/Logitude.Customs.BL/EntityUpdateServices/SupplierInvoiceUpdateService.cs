@@ -440,6 +440,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
             bool toUpdateClassification = false;
             string defaultClassificationCode = null;
+            string defaultClassificationCodeUnit = null;
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 75)
             {
                 try
@@ -454,21 +455,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
                             if (!string.IsNullOrWhiteSpace(defaultClassificationCode))
                             {
-                                Dictionary<string, string> ClasificationQtyTypes = new Dictionary<string, string>() { };
                                 CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(entityPM.Tenant);
                                 foreach (SupplierInvoiceItemPM item in entityPM.SupplierInvoiceItems)
                                 {
                                     if (string.IsNullOrWhiteSpace(item.ClassificationCode))
                                     {
                                         item.ClassificationCode = defaultClassificationCode;
-                                        if (ClasificationQtyTypes.Keys.Contains(item.ClassificationCode))
+                                        if (!string.IsNullOrWhiteSpace(defaultClassificationCodeUnit))
                                         {
-                                            item.InvoiceQuantityType = ClasificationQtyTypes[item.ClassificationCode];
+                                            item.InvoiceQuantityType = defaultClassificationCodeUnit;
                                         }
                                         else
                                         {
                                             item.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(item.ClassificationCode, entityPM.Tenant);
-                                            ClasificationQtyTypes.Add(item.ClassificationCode, item.InvoiceQuantityType);
+                                            defaultClassificationCodeUnit = item.InvoiceQuantityType;
                                         }
                                     }
                                 }
@@ -516,6 +516,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 if (string.IsNullOrWhiteSpace(SIitem.ClassificationCode))
                                 {
                                     SIitem.ClassificationCode = defaultClassificationCode;
+                                    if (string.IsNullOrWhiteSpace(SIitem.InvoiceQuantityType)) SIitem.InvoiceQuantityType = defaultClassificationCodeUnit;
                                     invoiceItemRepository.Update(SIitem);
                                 }
                             }
