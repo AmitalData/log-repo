@@ -469,6 +469,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_IncludeAccountedOnly = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeAccountedOnly").FirstOrDefault();
             QueryFilterItem filterItem_IsByCreateDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
             QueryFilterItem filterItem_DepartmentId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DepartmentId").FirstOrDefault();
+            QueryFilterItem filterItem_CarrierId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CarrierId").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
@@ -483,6 +484,7 @@ namespace WebFreight.Web.ReportsWebServices
             bool includeAccountedOnly = false;
             bool isByCreateDate = false;
             string departmentId = null;
+            string carrierId = null;
 
             if (filterItem_AccountingClosed != null)
             {
@@ -556,6 +558,14 @@ namespace WebFreight.Web.ReportsWebServices
                 if (filterItem_DepartmentId.FieldValue != null)
                 {
                     departmentId = filterItem_DepartmentId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CarrierId != null)
+            {
+                if (filterItem_CarrierId.FieldValue != null)
+                {
+                    carrierId = filterItem_CarrierId.FieldValue.ToString();
                 }
             }
             #endregion
@@ -636,6 +646,11 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(departmentId))
             {
                 shipments = shipments.Where(d => d.DepartmentId == departmentId);
+            }
+
+            if (!string.IsNullOrEmpty(carrierId))
+            {
+                shipments = shipments.Where(d => d.MainCarriageCarrierId == carrierId);
             }
             #endregion
 
