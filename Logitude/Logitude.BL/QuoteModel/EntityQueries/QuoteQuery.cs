@@ -1414,6 +1414,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 QuotationSections = entityPOCO.QuotationSections,
                 NumberOfFollowUps = entityPOCO.NumberOfFollowUps,
                 SameOrFixed = entityPOCO.IsSaleCurrencySameAsCost ? "Same as Cost Currency" : "Fixed",
+                QuoteLevel = entityPOCO.ShipmentTypeId,
             };
 
             int tenant = entityPOCO.Tenant;
