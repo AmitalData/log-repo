@@ -30,19 +30,19 @@ namespace Logitude.Accounting.Data.Repositories
 
         public bool CheckIfPreviousReportExist(int month, int year, int tenant)
         {
-
+            int preMonth = month - 1;
             return (from a in context.TaxReports
-                    where a.TaxReportMonth.Month < month && a.TaxReportMonth.Year <= year
-                           && a.Tenant == tenant && a.TaxReportTypeCode == "1" && a.IsCancelled == false
+                    where a.TaxReportMonth.Month == preMonth && a.TaxReportMonth.Year == year
+                           && a.Tenant == tenant && a.StatusCode == "T" && a.IsCancelled == false
                     select a).Any();
         }
 
         public bool CheckIfPreviousNotCompReportExist(int month, int year, int tenant)
         {
-
+            int preMonth = month - 1;
             return (from a in context.TaxReports
-                    where a.TaxReportMonth.Month < month && a.TaxReportMonth.Year <= year
-                           && a.Tenant == tenant && a.TaxReportTypeCode != "1" && a.IsCancelled == false
+                    where a.TaxReportMonth.Month == preMonth && a.TaxReportMonth.Year == year
+                           && a.Tenant == tenant && a.StatusCode != "T" && a.IsCancelled == false
                     select a).Any();
         }
 
