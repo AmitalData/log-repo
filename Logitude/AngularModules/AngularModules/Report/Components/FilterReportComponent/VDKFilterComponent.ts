@@ -40,6 +40,14 @@ export class VDKFilterComponent extends BaseComponent {
         }
     }
 
+    private supplierId: string;
+    get SupplierId() { return this.supplierId; }
+    set SupplierId(newValue: string) {
+        if (this.supplierId != newValue) {
+            this.supplierId = newValue;
+        }
+    }
+
 
     private branchId: string;
     get BranchId() { return this.branchId; }
@@ -82,13 +90,7 @@ export class VDKFilterComponent extends BaseComponent {
             this.ValidationErrorsList.push("From Date is required");
         }
 
-        if (this.ToDate == null) {
-            this.ValidationErrorsList.push("To Date is required");
-        }
-
-        if (this.FromDate > this.ToDate) {
-            this.ValidationErrorsList.push("From Date cannot be greater than To Date");
-        }
+       
 
             if (this.ValidationErrorsList.length == 0) {
                 this.queryFilterItems = new Array<QueryFilterItem>();
@@ -110,7 +112,7 @@ export class VDKFilterComponent extends BaseComponent {
                 this.queryFilterItems.push(new QueryFilterItem("BranchId", this.BranchId, "String"));
                 this.queryFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId, "String"));
                 this.queryFilterItems.push(new QueryFilterItem("EntityStatus", this.EntityStatus, "String"));
-                this.queryFilterItems.push(new QueryFilterItem("ShipmentCustomerTypeCode", this.ShipmentCustomerTypeCode, "String"));
+                this.queryFilterItems.push(new QueryFilterItem("SupplierId", this.supplierId, "String"));
                 
                 this.reportFliter = new ReportFliter();
                 this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
