@@ -14,6 +14,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.EntityAMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Newtonsoft.Json;
@@ -77,7 +78,7 @@ namespace WebFreight.Web.Helpers
                     using (var client = new HttpClient())
                     {
                         client.DefaultRequestHeaders.Add("Token", token);
-                        string AuthURI = URI + "ImporterDeposition";
+                        string AuthURI = URI + "ImporterDeposition" + "/PostImporterDeposition";
                         var serializedObject = JsonConvert.SerializeObject(importerDepositionAM);
                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
 
@@ -270,7 +271,82 @@ namespace WebFreight.Web.Helpers
             importerDepositionAM.ValidityStartDate = importerDepositionPM.ValidityStartDate != null ? importerDepositionPM.ValidityStartDate.Value.Date : importerDepositionPM.ValidityStartDate;
             importerDepositionAM.ValidityEndDate = importerDepositionPM.ValidityEndDate != null ? importerDepositionPM.ValidityEndDate.Value.Date : importerDepositionPM.ValidityEndDate;
         }
-        #endregion 
+        #endregion
+
+        #region  Send VDC Status To UNF
+
+        public async Task<HttpResponseMessage> SendVDCStatusToUNF(string directionId, string forwardershipmentNumber, int tenant, int partnerTenant, APILogsPM LogPM)
+        {
+               return await SendVDCStatus(directionId, forwardershipmentNumber, tenant, partnerTenant, LogPM);
+        }
+
+        private static async Task<HttpResponseMessage> SendVDCStatus(string directionId, string forwardershipmentNumber, int tenant, int partnerTenant, APILogsPM LogPM)
+        {
+            var msg = "Send VDC status to UNF " + DateTime.Now;
+            ShipmentAdditionalCloudDataAM DataAM = new ShipmentAdditionalCloudDataAM()
+            {
+                ShipmentNumber = forwardershipmentNumber,
+                Tenant = partnerTenant,
+                Code = "VDC",
+                Remarks = "",
+                Direction = directionId
+            };
+
+            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
+
+            SettingQuery SettingQuery = new SettingQuery();
+            string URI = SettingQuery.GetSinglePM().ForwarderTenantsURL.TrimEnd('/') + "/api/";
+            string token = string.Empty;
+
+            APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
+            {
+                PrimaryKey = "8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",
+                SecondaryKey = "c2dd0ebf-20bf-4d44-916c-7f9000dce4ec"
+            };
+
+
+            using (var client = new HttpClient())
+            {
+
+                string AuthURI = URI + "APIAuthentication";
+                var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
+                var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                var result = await client.PostAsync(AuthURI, content);
+                var tempUser = result.Content.ReadAsStringAsync().Result;
+                ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
+                token = User.Token;
+            }
+          
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Token", token);
+                string ImporterShipmentsURI = URI + "ImporterDeposition" + "/PostSendVDCStatusToUNF";
+                var serializedObject = JsonConvert.SerializeObject(DataAM);
+                var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                var result = await client.PostAsync(ImporterShipmentsURI, content);
+                if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    msg = "Send VDC status to UNF " + DateTime.Now;
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
+                }
+                else
+                {
+                    APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
+                    if (EXC != null)
+                    {
+                        var Failmsg = EXC.ErrorType + " Fail To Send VDC status to UNF " + DateTime.Now;
+                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
+
+                    }
+                }
+
+                return result;
+            }
+
+
+        }
+        #endregion
 
     }
 }
