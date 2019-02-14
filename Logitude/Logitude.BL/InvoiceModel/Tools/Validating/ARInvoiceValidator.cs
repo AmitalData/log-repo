@@ -817,16 +817,17 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (loggedTenant.AccountingSetting.IsARInvoiceChronologicalDates)
                         {
-                            DateTime? lastChronologicalDate = (from a in myContext.ARInvoices
+                            ARInvoice lastApprovedInvoice = (from a in myContext.ARInvoices
                                                                where a.Tenant == entityPM.Tenant
                                                                && a.IsInvoiceNumberManuallySet == false
                                                                && a.StatusCode != "DR"
                                                                && a.StatusCode != "VD"
                                                                && a.InvoiceNumber != a.Id
-                                                               select a).Max(d => d.ApprovedDate);
-                            if (lastChronologicalDate != null)
+                                                               select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
+
+                            if (lastApprovedInvoice != null)
                             {
-                                if (entityPM.InvoiceDate < lastChronologicalDate)
+                                if (entityPM.InvoiceDate < lastApprovedInvoice.InvoiceDate)
                                 {
                                     ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
                                     Tenant currentTenant = context.Tenants.Where(t => t.Id == entityPM.Tenant).FirstOrDefault();
@@ -836,7 +837,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                         datetimeformat = currentTenant.DateTimeFormat;
                                     }
 
-                                    string dateString = lastChronologicalDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
+                                    string dateString = lastApprovedInvoice.InvoiceDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
 
                                     bool useLocal = true;
                                     var user = GetLoggedContact(entityPM.Tenant);
