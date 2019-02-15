@@ -164,19 +164,18 @@
 
             <tr>
                 <td>
-                    <!--   [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" [enableCellChangeFlash]="true" -->
+                    <!--    [multiSortKey]="'ctrl'" [columnTypes]="columnTypes" [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" [enableCellChangeFlash]="true" -->
                     <div class="MediaFill">
                         <ag-grid-angular style="width:100%; height:100%;"
                                          #agGrid
                                          id="myGrid"
+                                         [context]="context"
                                          [enableCellChangeFlash]="true"
                                          class="ag-theme-balham"
-                                         [enableSorting]="true"
-                                         [enableFilter]="true"
                                          [rowData]="rowData"
                                          [columnDefs]="columnDefs"
                                          [rowSelection]="'multiple'"
-                                         [multiSortKey]="'ctrl'"
+                                         [suppressMultiSort]="true"
                                          (gridReady)="onGridReady($event)"
                                          (sortChanged)="onSortChanged($event)"
                                          (columnResized)="onColumnResized($event)"
