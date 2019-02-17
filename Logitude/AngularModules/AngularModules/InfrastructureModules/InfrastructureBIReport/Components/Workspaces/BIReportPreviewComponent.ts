@@ -51,7 +51,7 @@ export class BIReportPreviewComponent implements OnInit {
     public HasDeletionFeature = false;
     public columnTypes;
     public context;
-
+    public CountText: string; 
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
 
@@ -126,6 +126,14 @@ export class BIReportPreviewComponent implements OnInit {
             //    force: true,
             //};
             this.agGrid.api.refreshCells();
+            var count = this.agGrid.api.getDisplayedRowCount();
+            if (count > 50000) {
+                this.CountText = "Showing the first 50,000 rows, scroll down or download the excel to view all."
+            }
+            else {
+                this.CountText = "Number of rows: " + count;
+            }
+
         }
     }
     public BuildColumns(arg: BIReportXMLData) {
@@ -288,6 +296,7 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
+        this.CountText = "";
         this.StartBusyIndicator();
         this.RunReportCommand.emit({ MyData: arg.DWQueryData,FirstTime : true });
     }
@@ -296,6 +305,7 @@ export class BIReportPreviewComponent implements OnInit {
         return datepipe.transform(params.value, "SD");
     }
     public methodFromParent(cell) {
+        this.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
             if (!myResult.HasError) {
                 var Id = myResult.Result;
@@ -305,6 +315,8 @@ export class BIReportPreviewComponent implements OnInit {
                         cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'Shipment', BackButtonLabel: "BI Report" });
                     });
             }
+
+            this.StopBusyIndicator();
         });
     }
     //#endregion
