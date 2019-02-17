@@ -277,7 +277,9 @@ export class UserWorkspaceComponent implements OnInit {
         }
 
         if (FeatureLocator.HasFeaturePermession("User", "User.Query.ActiveNotLicensed")) {
-            this.ActiveNotLicensedQueryVisibility = true;
+            if (SessionLocator.TenantManagementJS.ManageLicencesPerUser) {
+                this.ActiveNotLicensedQueryVisibility = true;
+            }
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES")) {

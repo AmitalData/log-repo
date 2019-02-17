@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport",
 			      				    DefaultText =  "BI Report",
-			      				    Code =  "029e",
+			      				    Code =  "d2c4",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -793,6 +793,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   		   //--------------> Additional Features <--------------\\
 
 		   Feature BIReportFeature_BIReport_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Menu", NameTextCodeDefaultText = @"BI Reports" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature BIReportFeature_BIReportDelete = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportDelete", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportDelete", NameTextCodeDefaultText = @"Delete" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
