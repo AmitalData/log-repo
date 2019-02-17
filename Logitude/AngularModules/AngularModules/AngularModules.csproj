@@ -648,6 +648,8 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\AGGridCustomHeader.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\EditShipmentLinkRendererComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWAskUserFiltersComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleDeclarations.ts" />

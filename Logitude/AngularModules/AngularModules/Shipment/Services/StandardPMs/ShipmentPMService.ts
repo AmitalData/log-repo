@@ -179,6 +179,24 @@ export class ShipmentPMService {
         */
     }
 
+    getSingleByShipmentNumber(number: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getSingleByShipmentNumber?number=' + number, {
+                headers: authHeader
+            }).map(response => {
+                var Id = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = Id;
+                return pmresponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        }); 
+    }
+
     GetSingleByCustomerReference1(CustomerReference1: string, IsForwarderShipment: boolean = true) {
 
         var authHeader = new Headers();

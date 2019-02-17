@@ -8,6 +8,7 @@ import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { DWQueryBuilderService } from '../../../../Infrastructure/Services/ExtendedPMs/DWQueryBuilderService';
 import { DateTimePipe } from '../../../../Controls/Pipes/DateTimePipe';
+import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 import { AgGridNg2 } from 'ag-grid-angular/main';
 import { InfrastructureDomainService, BIReportXMLData, BITabularViewSettings, Column } from '../../../../Infrastructure/Services/InfrastructureDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
@@ -17,6 +18,9 @@ import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMSer
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { DWObjectFieldsDetails } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { AGGridCustomHeader } from "../TemplateRenderer/AGGridCustomHeader";
+import { EditShipmentLinkRendererComponent } from "../TemplateRenderer/EditShipmentLinkRendererComponent";
+import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 
 @Component({
     moduleId: module.id,
@@ -36,6 +40,7 @@ export class BIReportPreviewComponent implements OnInit {
     public _DWQueryBuilderHelper: DWQueryBuilderHelper
     public _BIReportPMService: BIReportPMService;
     public _InfrastructureDomainService: InfrastructureDomainService;
+    public _ShipmentPMService: ShipmentPMService;
     public columnDefs: any[] = [];
     public rowData: any[] = [];
     public BIReportName = "";
@@ -44,9 +49,12 @@ export class BIReportPreviewComponent implements OnInit {
     private timerToken: any;
     public BIReportXMLData: BIReportXMLData = null;
     public HasDeletionFeature = false;
+    public columnTypes;
+    public context;
 
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
+
     }
     ngOnInit() {
         this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
@@ -73,6 +81,7 @@ export class BIReportPreviewComponent implements OnInit {
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._BIReportPMService = new BIReportPMService();
         this._DWQueryBuilderService = new DWQueryBuilderService();
+        this._ShipmentPMService = new ShipmentPMService();
     }
 
     //#region Build ag-grid Data
@@ -121,12 +130,14 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public BuildColumns(arg: BIReportXMLData) {
         this.columnDefs = [];
+        
         this.agGrid.api.setColumnDefs(this.columnDefs);
         var columns = arg.BITabularViewSettings.Columns.sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 });
         if (columns != null) {
             for (var i = 0; i < columns.length; i++) {
                 if (columns[i].IsChecked) {
-                    if (columns[i].DataTypeCode == "DateTime") {
+                    var type = this.GetColumnDataType(columns[i].DataTypeCode);
+                    if (type == "dateColumn") {
                         this.columnDefs.push({
                             colId: columns[i].Code,
                             headerName: columns[i].Code,
@@ -134,14 +145,17 @@ export class BIReportPreviewComponent implements OnInit {
                             sortable: true,
                             width: columns[i].Width,
                             resizable: true,
-                            //cellRenderer: this.DateCellRenderer,
-                            cellClass: columns[i].DataTypeCode,
-                            //filter: 'agTextColumnFilter',
-                            pivotIndex: columns[i].Index,
-
-                        });                            //sort: sortingDirction,
+                            //cellClass: columns[i].DataTypeCode,
+                            Index: columns[i].Index,
+                            type: type,
+                            cellRenderer: this.DateCellRenderer,
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-bars" },
+                            filter: 'agDateColumnFilter'
+                            //sort: sortingDirction,
+                        });
                     }
-                    else {
+                    else if (type == "numericColumn") {
                         this.columnDefs.push({
                             colId: columns[i].Code,
                             headerName: columns[i].Code,
@@ -150,16 +164,128 @@ export class BIReportPreviewComponent implements OnInit {
                             filter: true,
                             width: columns[i].Width,
                             resizable: true,
-                            cellClass: columns[i].DataTypeCode,
-                            pivotIndex: columns[i].Index,
-                            //sort: sortingDirction,
+                            //cellClass: columns[i].DataTypeCode,
+                            Index: columns[i].Index,
+                            type: type,
+                            valueFormatter: function (params) {
+                                var pipe = new NumbersPipe();
+                                return pipe.transform(params.value, "N2");
+                            },
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-bars" }
+                        });
+                    }
+                    else if (type == "booleanColumn"){
+                        this.columnDefs.push({
+                            colId: columns[i].Code,
+                            headerName: columns[i].Code,
+                            field: columns[i].Code,
+                            sortable: true,
+                            filter: true,
+                            width: columns[i].Width,
+                            resizable: true,
+                           // cellClass: columns[i].DataTypeCode,
+                            Index: columns[i].Index,
+                            type: type,
+                            cellRenderer: params => {
+                                if (params && params.value) {
+                                    return `<img src="./Images/CheckBoxIcon.png" class="CenterCenter" />`;
+                                }
+                            },
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-bars" }
+                        });
+                    }
+                    else if (columns[i].Code == "Shipment Number") {
+                        this.columnDefs.push({
+                            colId: columns[i].Code,
+                            headerName: columns[i].Code,
+                            field: columns[i].Code,
+                            sortable: true,
+                            filter: true,
+                            width: columns[i].Width,
+                            resizable: true,
+                            Index: columns[i].Index,
+                            type: type,
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-bars" },
+                            cellRendererFramework: EditShipmentLinkRendererComponent,
+                            //cellRendererParams: {
+                            //   
+                            //}
+                        });
+                    }
+                    else  {
+                        this.columnDefs.push({
+                            colId: columns[i].Code,
+                            headerName: columns[i].Code,
+                            field: columns[i].Code,
+                            sortable: true,
+                            filter: true,
+                            width: columns[i].Width,
+                            resizable: true,
+                            //cellClass: columns[i].DataTypeCode,
+                            Index: columns[i].Index,
+                            type: type,
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-bars" }
                         });
                     }
                 }
-
             }
+            //this.columnTypes = {
+            //    numericColumn: {
+            //        valueFormatter: function (params) {
+            //            return this.NumberPipe.transform(params.value, "N2");
+            //        },
+            //    },
+            //    dateColumn: {
+            //        cellRenderer: this.DateCellRenderer,
+            //    }
+            //};
             this.agGrid.api.setColumnDefs(this.columnDefs);
+            this.agGrid.api.refreshHeader();
+            this.context = { componentParent: this };
         }
+    }
+    private GetColumnDataType(type: string) {
+        var datatype = "";
+        switch (type) {
+            case "Date":
+            case "Dimension":
+            case "DateTime":
+                {
+                    datatype = "dateColumn"; 
+                    break;
+                }
+            case "Integer":
+            case "UnsInteger":
+            case "Double":
+            case "Decimal":
+            case "SigDouble":
+            case "UnsDecimal":
+                {
+                    datatype = "numericColumn";
+                    break;
+                }
+            case "nText":
+            case "Text":
+                {
+                    datatype = "stringColumn";
+                    break;
+                }
+            case "Boolean":
+                {
+                    datatype = "booleanColumn";
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+
+        return datatype;
     }
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
@@ -167,8 +293,20 @@ export class BIReportPreviewComponent implements OnInit {
         this.RunReportCommand.emit({ MyData: arg.DWQueryData,FirstTime : true });
     }
     private DateCellRenderer(params: any) {
-        var DatePipe = new DateTimePipe();
-        return DatePipe.transform(params.value, "SD");
+        var datepipe = new DateTimePipe();
+        return datepipe.transform(params.value, "SD");
+    }
+    public methodFromParent(cell) {
+        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
+            if (!myResult.HasError) {
+                var Id = myResult.Result;
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'Shipment', BackButtonLabel: "BI Report" });
+                    });
+            }
+        });
     }
     //#endregion
 
