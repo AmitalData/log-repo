@@ -1,6 +1,6 @@
 <style type="text/css">
-    button{
-        display:initial !important;
+    button {
+        display: initial !important;
     }
 </style>
 <div class="MediaFillAbsolute" style="background: white;">
@@ -111,7 +111,7 @@
                                         </td>
 
                                         <td style="width: 15px;">
-                                            <img *ngIf="HasDeletionFeature" class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer; height:18px;" (click)="onDeleteBIReportClick()" [className]="'LeftCenter'"/>
+                                            <img *ngIf="HasDeletionFeature" class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer; height:18px;" (click)="onDeleteBIReportClick()" [className]="'LeftCenter'" />
                                         </td>
 
                                         <td style="width: 5px;">
@@ -195,3 +195,5 @@
 </div>
 
 <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator"></BusyIndicator>
+
+
