@@ -10,6 +10,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -22,6 +23,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -675,6 +677,112 @@ namespace Logitude.Accounting.BL.CoreBL
             return loggedContact;
         }
 
+
+        public static DocumentOutPM CreateDocumentOut(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, int tenant, string userId = null)
+        {
+            try
+            {
+                ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+                DocumentOutRepository documentOutRepository = new DocumentOutRepository(objectContext);
+                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(objectContext);
+                DocumentOutQuery documentOutQuery = new DocumentOutQuery(documentOutRepository);
+
+                DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(documentTypeId, tenant);
+                string documentTemplateId = null;
+                string emailTemplateId = null;
+
+                documentTemplateId = documentType.DocumentTypeDefaultReportTemplateId;
+                emailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId;
+
+
+                //---------------------------------------- islam
+                DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(objectContext);
+            
+                if (string.IsNullOrEmpty(userId))
+                {
+                  
+                 
+                    User loggedUser = GetLoggedUser(tenant);
+                        
+                    if (loggedUser != null)
+                    {
+                        userId = loggedUser.Id;
+                    }
+                }
+
+                DocumentsFiling newDocumentFiling = new DocumentsFiling() { DocumentTypeId = documentTypeId, EntityId = entityId, Tenant = tenant, ObjectTableId = objectTableId, ChildEntityId = childEntityId, ChildEntityReference = childReference, DirectionCode = "O" };
+
+                newDocumentFiling.Id = IdCounter.GetNumber("Document", tenant).ToString();
+                newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
+                newDocumentFiling.Code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
+                newDocumentFiling.CreatedByUserId = userId;
+                newDocumentFiling.OwnerId = userId;
+                newDocumentFiling.UpdatedByUserId = userId;
+              
+                newDocumentFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                newDocumentFiling.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
+                documentsFilingRepository.Add(newDocumentFiling);
+
+                //----------------------------------------
+                DocumentOut newDocument = new DocumentOut() { EmailTemplateId = emailTemplateId, DocumentTemplateId = documentTemplateId, Tenant = tenant, Issued = false, };
+                newDocument.Id = newDocumentFiling.Id;
+                documentOutRepository.Add(newDocument);
+
+                objectContext.SaveChanges();
+
+                DocumentOutPM docPM = documentOutQuery.GetSinglePM(newDocument.Id, newDocument.Tenant);
+                return docPM;
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException e)
+            {
+                string Error = "";
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Error += "Entity of type " + eve.Entry.Entity.GetType().Name + " in state " + eve.Entry.State + " has the following validation errors:";
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        //Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                        //ve.PropertyName, ve.ErrorMessage);
+
+                        Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
+                    }
+                }
+
+
+                string authenticateduser = "";
+
+                try
+                {
+                    authenticateduser = Logitude.BL.Security.SecurityUtility.GetAuthenticatedUser();
+                }
+
+                catch
+                {
+                    authenticateduser = "UnKnown";
+                }
+                string ip = "";
+                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                {
+                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                    if (string.IsNullOrEmpty(currentIP))
+                    {
+                        currentIP = HttpContext.Current.Request.UserHostAddress;
+                    }
+                    ip = currentIP;
+                }
+              //  ExceptionHandler.HandleException(new Exception(Error), DateTime.Now, 0, "", authenticateduser, "", ip);
+                throw new Exception(Error);
+            }
+        }
+
+        private static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
 
 
     }

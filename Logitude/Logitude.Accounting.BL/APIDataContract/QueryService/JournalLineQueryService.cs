@@ -118,6 +118,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.ExternalOpenAmount = item.ExternalOpenAmount;
                     temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
                     temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
+                    temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
                     lines.Add(temp);
                 }
 
