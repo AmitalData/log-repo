@@ -107,8 +107,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             return new OVSECSpclRequest()
             {
                 MessageType = mamanActionCodeUpdateOrCancel,
-                CourierCompanyVat = _DeclarationPM.CourierHAWB ?? "",
-                CourierHawbNumber = _DeclarationPM.AgentId ?? "",
+                CourierCompanyVat = _DeclarationPM.AgentId?? "",
+                CourierHawbNumber = _DeclarationPM.CourierHAWB ?? "",
                 CourierHawbDate = Maman.CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM),
                 SpecialActionCode = mamanSpecialActionCode ?? "",
                 LabelText1 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText1 ?? "" : "",
