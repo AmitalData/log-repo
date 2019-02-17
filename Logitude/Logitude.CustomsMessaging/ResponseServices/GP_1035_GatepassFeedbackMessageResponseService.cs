@@ -72,14 +72,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case 1: // מסר משוב על קליטת בקשת העברה
                             if(gatepassFeedbackMessageItem.gatepassStatus == 1)
                             {
-
+                                myEventContextTagModel.EventCode = "VGE";
+                                myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
                             }
                             else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
                             {
-
+                                myEventContextTagModel.EventCode = "VGR";
+                                myEventContextTagModel.EventRemarks = "בקשת העברה ממתינה לאישור";
                             }
                             break;
                         case 2: // מסר משוב על קליטת בקשת ביטול
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 1)
+                            {
+                                myEventContextTagModel.EventCode = "VGE";
+                                myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
+                            }
+                            else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
+                            {
+                                myEventContextTagModel.EventCode = "VGR";
+                                myEventContextTagModel.EventRemarks = "בקשת ביטול העברה ממתינה לאישור";
+                            }
                             break;
                         case 3: // מסר אישור/דחייה בקשת העברה
                             break;
@@ -87,9 +99,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             break;
                     }
                     RaiseEvent(myEventContextTagModel);
-
                     gatepassRequestUpdateService.Update(this._GatepassRequestPM, true);
-
 
                 }
                 else
@@ -100,6 +110,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
             }
+        }
+
+        private string GetException(UnifreightIIG.Common.GatepassFeedbackMServiceReference.Exception[] exception)
+        {
+            string exceptionDescription = "";
+            if (exception != null)
+            {
+                foreach (var item in exception)
+                {
+                    exceptionDescription += string.Concat(exceptionDescription, item.ExceptionLevel, ": ", item.ExeptionDescription, "\n");
+                }
+            }
+            return exceptionDescription;
         }
 
         private void RaiseEvent(EventContextTagModel myEventContextTagModel)
@@ -116,7 +139,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CommunicationLoggingEntityReference = _GatepassRequestPM.GatepassNumber.ToString(),
                     EntityId = _GatepassRequestPM.MasterCourierId,
                     UserId = loggingUserId,
-
                     CommunicationSubject = "FU Status " + myEventContextTagModel.EventCode + " from logitude ",
                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                     {

@@ -223,8 +223,8 @@
             <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
         </td>
         <td style="width: 67px;vertical-align: bottom; padding-right: 10px;">
-            <custom-send-options #MyCustomSendOptionsComponent
-                                 [CustomSendOptionsButtonCanForcePersonalSign]="CustomSendOptionsButtonCanForcePersonalSign"></custom-send-options>
+            <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
+                                 (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"> </custom-send-options>
         </td>
     </tr>
 

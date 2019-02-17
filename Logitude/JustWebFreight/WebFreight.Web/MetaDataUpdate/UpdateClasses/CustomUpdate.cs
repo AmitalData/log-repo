@@ -16925,6 +16925,62 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             }, EventTypesRepository, tenantEventTypes);
             EventTypesRepository.SubmitChanges();
+
+            ObjectTablePM courierMasterObject = ObjectTableQuery.GetObjectTableByCode("Customs.CourierMaster", 0);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VGR",
+                EnglishName = "Gatepass Movement Recived",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "בקשה לגייטפס העברות ממתינה לאישור",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VGA",
+                EnglishName = "Gatepass Movement Approved",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "בקשת גייטפס העברות אושרה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VGE",
+                EnglishName = "Gatepass Movement Error",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "בקשת גייטפס העברות שגויה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VGD",
+                EnglishName = "Gatepass Movement Reject",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "בקשת גייטפס העברות נדחתה",
+                ObjectTableId = courierMasterObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            EventTypesRepository.SubmitChanges();
         }
 
         #endregion
