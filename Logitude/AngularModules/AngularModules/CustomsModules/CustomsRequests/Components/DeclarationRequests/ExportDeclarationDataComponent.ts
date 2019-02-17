@@ -79,6 +79,7 @@ export class ExportDeclarationDataComponent
 
             if (this.ResponseData.RequestList) {
                 this.RequestList.InsertCollection(this.ResponseData.RequestList);
+                this.RequestList.Collection.sort((a, b) => { return (a.SequenceNumeric < b.SequenceNumeric) ? 1 : -1 })
             }
             if (this.ResponseData.RequestList) {
                 for (let item of this.ResponseData.RequestList) {
