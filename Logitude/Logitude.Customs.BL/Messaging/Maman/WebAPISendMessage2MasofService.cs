@@ -104,7 +104,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             //.PostIt("", "F_unitedf", "Unit2019", data);
             var settings = new CourierWEBAPICommSettings()
             {
-                 WEBAPICredentialType = defDefault.WEBAPICredentialType,
+                 ///WEBAPICredentialType = defDefault.WEBAPICredentialType,
                 MessageCode = InterfaceName,
                 URIMethod = dtoWebApiDefinition.WEBAPIURL,/// @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
                 URIToken = dtoWebApiDefinition.WEBAPIAuthenticationURL, ///@"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
@@ -204,7 +204,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
    
     public class CourierWEBAPICommSettings
     {
-        public CourierWEBAPICredentialType WEBAPICredentialType { get; set; }
+        
         
         public string URIToken { get; set; }////@"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
         public string URIMethod { get; set; }///"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";

@@ -290,8 +290,29 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 GWMessageECTHRData responeGWMessageECTHRData = null;
                 LogMessagingUtil.Instance.AppendLine($"Post {courier2MamanCommSettings.URIMethod}");
                 string webAPIResultString = null;
-                var service = new WebAPI2BearerMamanMessage(courier2MamanCommSettings);
-                webAPIResultString = service.PostIt(dataJson);
+                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+                var @intrface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == courier2MamanCommSettings.MessageCode);
+
+                switch (@intrface.WEBAPICredentialType)
+                {
+                 
+                    case CourierWEBAPICredentialType.Bearer:
+                        {
+                            var service = new WebAPI2BearerMamanMessage(courier2MamanCommSettings);
+                            webAPIResultString = service.PostIt(dataJson);
+                        }
+                        break;
+                    case CourierWEBAPICredentialType.NetworkCredential:
+                        {
+                            var service = new WebAPINetworkCredentialMessage(courier2MamanCommSettings);
+                            webAPIResultString = service.PostIt(dataJson);
+                        }
+                        break;
+                    default:
+                        throw new Exception("@PostWebAPIAnalyzeAndSaveCommDone():intrface.WEBAPICredentialType IS UNKNOWN");
+                        break;
+                }
+                
                 LogMessagingUtil.Instance.AppendLine("webAPIResultString:" + webAPIResultString);
 
 
@@ -299,10 +320,10 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 //myWebAPICourierHawbMamanService.AnalyzeResponse(courier2MamanCommSettings, responeGWMessageECTHRData);
 
                 IWebAPIMessage2MamanAnalyzer analyzer = null;
-                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+                
 
 
-                var @intrface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == courier2MamanCommSettings.MessageCode);
+                
                 if (!string.IsNullOrWhiteSpace(@intrface.ResponseCode))
                 {
                     courier2MamanCommSettings.RqstCommLogID = _WaitingCommLog.Id;

@@ -735,7 +735,7 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void hAWBALDARMamanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WebAPI2BearerMamanMessage.OVSUpdateHawbStatusTester();
+            WebAPINetworkCredentialMessage.OVSUpdateHawbStatusTester();
             //WebAPI2BearerMamanMessage.OVSUpdateHawbStatusTesterNotWork();
 
             //MamanBaldarTest();
