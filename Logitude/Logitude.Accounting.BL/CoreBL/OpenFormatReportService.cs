@@ -2556,33 +2556,50 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.ARPaymentMethod == "Cheque")
                     {
 
-                        if (line.BankId != null && line.BankId.Length > 10)
+                        if (line.BankId != null )
                         {
-                            line.BankId = line.BankId.Substring(0, 10);
+                            if (line.BankId.Length > 10)
+                            {
+                                line.BankId = line.BankId.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.BankId.PadLeft(10, '0'));
                         }
-                        if (line.BankBranch != null && line.BankBranch.Length > 10)
+                        if (line.BankBranch != null)
                         {
-                            line.BankBranch = line.BankBranch.Substring(0, 10);
+                            if (line.BankBranch.Length > 10)
+                            {
+                                line.BankBranch = line.BankBranch.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.BankBranch.PadLeft(10, '0'));
                         }
-                        if (line.BankAccount != null && line.BankAccount.Length > 10)
+
+                        if (line.BankAccount != null )
                         {
-                            line.BankAccount = line.BankAccount.Substring(0, 10);
+                            if (line.BankAccount.Length > 10)
+                            {
+                                line.BankAccount = line.BankAccount.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.BankAccount.PadLeft(10, '0'));
                         }
-                        if (line.ChequeNumber != null && line.ChequeNumber.Length > 10)
+                        if (line.ChequeNumber != null )
                         {
-                            line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
+                            if (line.ChequeNumber.Length > 10)
+                            {
+                                line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
                         }
-                        if (line.ChequeNumber != null && line.ChequeNumber.Length > 10)
+                        if (line.ChequeNumber != null)
                         {
-                            line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
+                            if (line.ChequeNumber.Length > 10)
+                            {
+
+                                line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
                         }
