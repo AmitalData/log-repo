@@ -223,8 +223,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
         //public string DestLineDesc { get; set; }
         //task 46455:
         //public string DestLineCode { get; set; }
-        public string DistributorHP { get; set; }
-        public string DistributorName { get; set; }
+        //public string DistributorHP { get; set; }
+        //public string DistributorName { get; set; }
         public string DeclarationNumber { get; set; }
         public string CustomsSuspention { get; set; }
         public bool Preclearence { get; set; }
