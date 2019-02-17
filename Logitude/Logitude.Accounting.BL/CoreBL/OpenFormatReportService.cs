@@ -10,10 +10,12 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -81,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL
             List<ComputingPartnerTranslationPM> computingPartnerTranslations = new List<ComputingPartnerTranslationPM>();
             computingPartnerTranslations = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslations("Cust", tenant);
 
-
+          
 
             List<string> linesArray = new List<string>();
 
@@ -1931,10 +1933,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
                     }
 
-                    if (tenantPM.VatNumber != null)
+                    if (item.CustomerVendorVatNumber != null)
                     {
-                        if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
-                        myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+                        if (item.CustomerVendorVatNumber.Length > 9) { item.CustomerVendorVatNumber = item.CustomerVendorVatNumber.Substring(0, 9); }
+                        myStringBuilder.Append("a" + item.CustomerVendorVatNumber.PadLeft(9, '0'));
                     }
                     else
                     {
@@ -2554,33 +2556,50 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.ARPaymentMethod == "Cheque")
                     {
 
-                        if (line.BankId != null && line.BankId.Length > 10)
+                        if (line.BankId != null )
                         {
-                            line.BankId = line.BankId.Substring(0, 10);
+                            if (line.BankId.Length > 10)
+                            {
+                                line.BankId = line.BankId.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.BankId.PadLeft(10, '0'));
                         }
-                        if (line.BankBranch != null && line.BankBranch.Length > 10)
+                        if (line.BankBranch != null)
                         {
-                            line.BankBranch = line.BankBranch.Substring(0, 10);
+                            if (line.BankBranch.Length > 10)
+                            {
+                                line.BankBranch = line.BankBranch.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.BankBranch.PadLeft(10, '0'));
                         }
-                        if (line.BankAccount != null && line.BankAccount.Length > 10)
+
+                        if (line.BankAccount != null )
                         {
-                            line.BankAccount = line.BankAccount.Substring(0, 10);
+                            if (line.BankAccount.Length > 10)
+                            {
+                                line.BankAccount = line.BankAccount.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.BankAccount.PadLeft(10, '0'));
                         }
-                        if (line.ChequeNumber != null && line.ChequeNumber.Length > 10)
+                        if (line.ChequeNumber != null )
                         {
-                            line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
+                            if (line.ChequeNumber.Length > 10)
+                            {
+                                line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
                         }
-                        if (line.ChequeNumber != null && line.ChequeNumber.Length > 10)
+                        if (line.ChequeNumber != null)
                         {
-                            line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
+                            if (line.ChequeNumber.Length > 10)
+                            {
+
+                                line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
+                            }
 
                             myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
                         }
@@ -2624,7 +2643,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0', 1);
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 10);
+                    myStringBuilder.Append(' ', 20);
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0', 1);
                     myStringBuilder.Append("a");
@@ -3249,6 +3268,20 @@ namespace Logitude.Accounting.BL.CoreBL
             User loggedUser = GetLoggedUser(tenant);
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
+            ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
+            bool showLocals = !contact.DontShowLocal;
+          
+            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, showLocals);
+           
+            if (error  != null)
+            {
+              error=  error.Replace("X", "BKMV");
+            }
+            if (docType == null)
+            {
+                throw new Exception(error);
+            }
+
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
            // string name = "A856." + tenantPM.VatNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
             DocumentsFilingPM document = new DocumentsFilingPM()
@@ -3285,22 +3318,27 @@ namespace Logitude.Accounting.BL.CoreBL
             return docFiling;
         }
 
-        private static Contact GetLoggedContact(int tenant)
+        private static ContactPM GetLoggedContact(int tenant)
         {
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact loggedContact;
-            if (HttpContext.Current != null)
-            {
-                string email = HttpContext.Current.User.Identity.Name;
-                loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-            }
-            else
-            {
-                string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
-                loggedContact = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
+        //    ContactRepository contactRepository = new ContactRepository(tenant);
+        //    Contact loggedContact;
+        //    if (HttpContext.Current != null)
+        //    {
+        //        string email = HttpContext.Current.User.Identity.Name;
+        //        loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+        //    }
+        //    else
+        //    {
+        //        string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
+        //        loggedContact = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
 
-            }
-            return loggedContact;
+        //    }
+        //    return loggedContact;
+
+
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
         private static User GetLoggedUser(int tenant)
@@ -3384,6 +3422,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         GLAccountId = a.VendorCard.GLAccountId,
                                         IsCancelled = a.StatusCode =="VD" ? true:false,
                                         VendorId =a.VendorId,
+
                                     }).ToList();
 
 
@@ -3746,6 +3785,20 @@ namespace Logitude.Accounting.BL.CoreBL
             // user
             User loggedUser = GetLoggedUser(tenant);
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("INI", tenant);
+
+            ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
+            bool showLocals = !contact.DontShowLocal;
+
+            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, showLocals);
+
+            if (error != null)
+            {
+               error= error.Replace("X", "INI");
+            }
+            if (docType == null)
+            {
+                throw new Exception(error);
+            }
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
             // string name = "A856." + tenantPM.VatNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);

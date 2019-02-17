@@ -4870,6 +4870,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "IsFullAccounting",
+					  						OldFieldName =  "IsFullAccounting",
 					  						ObjectTableName =  "ARPayment",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4889,6 +4890,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsFullAccounting",
 					  						ListPropertyPath =  "IsFullAccounting",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5218,6 +5220,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
                  
 			   TextCode ARPaymentEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ARPaymentEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   Feature ARPaymentDetailsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPayment.Tab.Details", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentFeatures.PYDF", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -5236,6 +5241,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ARPaymentCommunicationFeature_TH5.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentCommunicationTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ARPaymentEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentEventsTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PYDF",HtmlComponentName = "ARPaymentDetailsFullAccountingTab",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDetailsFullAccountingTab", FeatureId = ARPaymentDetailsFeature_TH7.Id, ControlPath = "ARPaymentDetailsFullAccountingTab", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
