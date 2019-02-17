@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class BIReportPM {
+export class BIReportFolderPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -69,33 +69,23 @@ export class BIReportPM {
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
        
 	 
-    private dWQueryId: string;
-    public get DWQueryId() { return this.dWQueryId; }
-    public set DWQueryId(newValue: string) { if (this.dWQueryId != newValue) { this.dWQueryId = newValue; this.MarkAsDirty("DWQueryId"); } }
+    private index: number;
+    public get Index() { return this.index; }
+    public set Index(newValue: number) { if (this.index != newValue) { this.index = newValue; this.MarkAsDirty("Index"); } }
        
 	 
-    private inactive: boolean;
-    public get Inactive() { return this.inactive; }
-    public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
        
 	 
-    private typeCode: string;
-    public get TypeCode() { return this.typeCode; }
-    public set TypeCode(newValue: string) { if (this.typeCode != newValue) { this.typeCode = newValue; this.MarkAsDirty("TypeCode"); } }
-       
-	 
-    private aGGridOptionsXML: string;
-    public get AGGridOptionsXML() { return this.aGGridOptionsXML; }
-    public set AGGridOptionsXML(newValue: string) { if (this.aGGridOptionsXML != newValue) { this.aGGridOptionsXML = newValue; this.MarkAsDirty("AGGridOptionsXML"); } }
-       
-	 
-    private bIReportFolderId: string;
-    public get BIReportFolderId() { return this.bIReportFolderId; }
-    public set BIReportFolderId(newValue: string) { if (this.bIReportFolderId != newValue) { this.bIReportFolderId = newValue; this.MarkAsDirty("BIReportFolderId"); } }
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
        
 	 
 
-    public OldEntityPM: BIReportPM;
+    public OldEntityPM: BIReportFolderPM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -103,12 +93,12 @@ export class BIReportPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BIReport");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BIReportFolder");
            
         }
     }
 
-    private MyClone: BIReportPM;
+    private MyClone: BIReportFolderPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

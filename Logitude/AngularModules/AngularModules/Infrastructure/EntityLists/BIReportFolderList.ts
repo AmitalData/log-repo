@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class BIReportList {
+export class BIReportFolderList {
    
 	Id: string;
 	Tenant: number;
@@ -17,11 +17,9 @@ export class BIReportList {
 	SearchFields: string;
 	Name: string;
 	Description: string;
-	DWQueryId: string;
-	Inactive: boolean;
-	TypeCode: string;
-	AGGridOptionsXML: string;
-	BIReportFolderId: string;
+	Index: number;
+	CreatedByUserName: string;
+	UpdatedByUserName: string;
 	
 }
  

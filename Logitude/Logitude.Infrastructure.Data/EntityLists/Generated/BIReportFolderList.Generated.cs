@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Logitude.Infrastructure.Data.EntityLists
 {
    [DataContract]
-   public partial class BIReportList
+   public partial class BIReportFolderList
    {
    
        [Key]
@@ -33,15 +33,11 @@ namespace Logitude.Infrastructure.Data.EntityLists
        [DataMember]
        public string Description  { get; set; }
        [DataMember]
-       public string DWQueryId  { get; set; }
+       public int Index  { get; set; }
        [DataMember]
-       public bool Inactive  { get; set; }
+       public string CreatedByUserName  { get; set; }
        [DataMember]
-       public string TypeCode  { get; set; }
-       [DataMember]
-       public string AGGridOptionsXML  { get; set; }
-       [DataMember]
-       public string BIReportFolderId  { get; set; }
+       public string UpdatedByUserName  { get; set; }
    }
 
 }

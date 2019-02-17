@@ -16,7 +16,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 {
    [CustomValidation(typeof(InfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class BIReportPM : EntityPM
+   public partial class BIReportFolderPM : EntityPM
    {
    	  private string id ;
 	  
@@ -227,117 +227,71 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private string dWQueryId ;
+	  private int index ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string DWQueryId  
+       public int Index  
 	   {
 	    
 	     get
 		{
-		   return dWQueryId;
+		   return index;
 		 }
 		 set
 		 {
-		   if(dWQueryId != value)
+		   if(index != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DWQueryId",OldValue=dWQueryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Index",OldValue=index,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
-		   dWQueryId=value;
+		   index=value;
 		   }
 			
 		 }
 	   }
-	  private bool inactive ;
+	  private string createdByUserName ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool Inactive  
+       public string CreatedByUserName  
 	   {
 	    
 	     get
 		{
-		   return inactive;
+		   return createdByUserName;
 		 }
 		 set
 		 {
-		   if(inactive != value)
+		   if(createdByUserName != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Inactive",OldValue=inactive,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=createdByUserName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   inactive=value;
+		   createdByUserName=value;
 		   }
 			
 		 }
 	   }
-	  private string typeCode ;
+	  private string updatedByUserName ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string TypeCode  
+       public string UpdatedByUserName  
 	   {
 	    
 	     get
 		{
-		   return typeCode;
+		   return updatedByUserName;
 		 }
 		 set
 		 {
-		   if(typeCode != value)
+		   if(updatedByUserName != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TypeCode",OldValue=typeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=updatedByUserName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   typeCode=value;
-		   }
-			
-		 }
-	   }
-	  private string aGGridOptionsXML ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AGGridOptionsXML  
-	   {
-	    
-	     get
-		{
-		   return aGGridOptionsXML;
-		 }
-		 set
-		 {
-		   if(aGGridOptionsXML != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AGGridOptionsXML",OldValue=aGGridOptionsXML,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   aGGridOptionsXML=value;
-		   }
-			
-		 }
-	   }
-	  private string bIReportFolderId ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BIReportFolderId  
-	   {
-	    
-	     get
-		{
-		   return bIReportFolderId;
-		 }
-		 set
-		 {
-		   if(bIReportFolderId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BIReportFolderId",OldValue=bIReportFolderId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   bIReportFolderId=value;
+		   updatedByUserName=value;
 		   }
 			
 		 }

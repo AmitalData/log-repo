@@ -17,7 +17,7 @@ using Logitude.Infrastructure.Data;
 namespace Logitude.Infrastructure.BL.EntityDataMappings
 {
    
-   public partial class BIReportDataMapping: IMapping<BIReportPM, BIReport>,IMappingEncodeBase64NVARCHARFields<BIReportPM>
+   public partial class BIReportFolderDataMapping: IMapping<BIReportFolderPM, BIReportFolder>,IMappingEncodeBase64NVARCHARFields<BIReportFolderPM>
    {
           public enum POCOPropertyNames
           { 
@@ -31,11 +31,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         DWQueryId, 
-	         Inactive, 
-	         TypeCode, 
-	         AGGridOptionsXML, 
-	         BIReportFolderId,
+	         Index,
 	      }
 
 
@@ -51,17 +47,15 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         DWQueryId, 
-	         Inactive, 
-	         TypeCode, 
-	         AGGridOptionsXML, 
-	         BIReportFolderId,
+	         Index, 
+	         CreatedByUserName, 
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(BIReportPM entityPM, BIReport entityPOCO)
+	    public void PMToPOCO(BIReportFolderPM entityPM, BIReportFolder entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
@@ -104,35 +98,15 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 				entityPOCO.Description = entityPM.Description;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DWQueryId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Index))
             {
-				entityPOCO.DWQueryId = entityPM.DWQueryId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
-            {
-				entityPOCO.Inactive = entityPM.Inactive;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TypeCode))
-            {
-				entityPOCO.TypeCode = entityPM.TypeCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AGGridOptionsXML))
-            {
-				entityPOCO.AGGridOptionsXML = entityPM.AGGridOptionsXML;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BIReportFolderId))
-            {
-				entityPOCO.BIReportFolderId = entityPM.BIReportFolderId;
+				entityPOCO.Index = entityPM.Index;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
-		public void POCOToPM(BIReportPM entityPM, BIReport entityPOCO)
+		public void POCOToPM(BIReportFolderPM entityPM, BIReportFolder entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
@@ -180,34 +154,14 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Description = entityPOCO.Description;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DWQueryId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Index))
             {
-					entityPM.DWQueryId = entityPOCO.DWQueryId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
-            {
-					entityPM.Inactive = entityPOCO.Inactive;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TypeCode))
-            {
-					entityPM.TypeCode = entityPOCO.TypeCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AGGridOptionsXML))
-            {
-					entityPM.AGGridOptionsXML = entityPOCO.AGGridOptionsXML;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BIReportFolderId))
-            {
-					entityPM.BIReportFolderId = entityPOCO.BIReportFolderId;
+					entityPM.Index = entityPOCO.Index;
             }
 
 		}
 
-		public void PMToOldPM(BIReportPM entityPM, BIReportPM oldEntityPM)
+		public void PMToOldPM(BIReportFolderPM entityPM, BIReportFolderPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -251,34 +205,14 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 oldEntityPM.Description = entityPM.Description;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DWQueryId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Index))
             {
-                oldEntityPM.DWQueryId = entityPM.DWQueryId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
-            {
-                oldEntityPM.Inactive = entityPM.Inactive;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TypeCode))
-            {
-                oldEntityPM.TypeCode = entityPM.TypeCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AGGridOptionsXML))
-            {
-                oldEntityPM.AGGridOptionsXML = entityPM.AGGridOptionsXML;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BIReportFolderId))
-            {
-                oldEntityPM.BIReportFolderId = entityPM.BIReportFolderId;
+                oldEntityPM.Index = entityPM.Index;
             }
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(BIReportPM entityPM)
+	    public void EncodeBase64NVARCHARFields(BIReportFolderPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
@@ -288,18 +222,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.Name)) //T4 find type == nText 
-            {
-                entityPM.Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Name));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.Description)) //T4 find type == nText 
-            {
-                entityPM.Description = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Description));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.AGGridOptionsXML)) //T4 find type == nText 
-            {
-                entityPM.AGGridOptionsXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AGGridOptionsXML));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
@@ -315,7 +237,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
 		
-		private void BuildSearchFieldsGenerated(BIReportPM entityPM, BIReport entityPOCO, bool isNewEntity)
+		private void BuildSearchFieldsGenerated(BIReportFolderPM entityPM, BIReportFolder entityPOCO, bool isNewEntity)
         {
             string mySearchFields = "";
 			

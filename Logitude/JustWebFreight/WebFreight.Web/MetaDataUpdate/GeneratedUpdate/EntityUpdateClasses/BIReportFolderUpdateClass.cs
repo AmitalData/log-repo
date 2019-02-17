@@ -70,7 +70,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class BIReportUpdateClass
+   public class BIReportFolderUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -78,12 +78,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "BIReport",
+	             				    ObjectTableName =  "BIReportFolder",
 			      				    IsNew =  true,
-			      				    DBTableName =  "BIReports",
-			      				    OldDBTableName =  "BIReports",
-			      				    ObjectTableSingular =  "BI Report",
-			      				    ObjectTablePlural =  "BI Reports",
+			      				    DBTableName =  " BIReportFolders",
+			      				    OldDBTableName =  " BIReportFolders",
+			      				    ObjectTableSingular =  " BI Report Folder",
+			      				    ObjectTablePlural =  " BI Report Folders",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -91,6 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  true,
+			      				    LookUp1 =  "Name",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -100,7 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
-			      				    IsAutoComplete =  false,
+			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "CreateDate",
 			      				    InActive =  false,
@@ -111,14 +112,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    NewWizardControlName =  "./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport",
-			      				    DefaultText =  "BI Report",
-			      				    Code =  "c91a",
+			      				    NewWizardControlName =  "./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReportFolder",
+			      				    DefaultText =  " BI Report Folder",
+			      				    Code =  "fc3f",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
-			      				    ServerModuleName =  "",
-			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport",
+			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReportFolder",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -138,7 +138,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreateDate",
 					  						OldFieldName =  "CreateDate",
-					  						ObjectTableName =  "BIReport",
+					  						ObjectTableName =  "BIReportFolder",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -165,7 +165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "BIReport",
+					  						ValidForQuerySection1 =  "BIReportFolder",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -197,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreatedByUserId",
 					  						OldFieldName =  "CreatedByUserId",
-					  						ObjectTableName =  "BIReport",
+					  						ObjectTableName =  "BIReportFolder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
@@ -254,7 +254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "UpdateDate",
 					  						OldFieldName =  "UpdateDate",
-					  						ObjectTableName =  "BIReport",
+					  						ObjectTableName =  "BIReportFolder",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -281,7 +281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "BIReport",
+					  						ValidForQuerySection1 =  "BIReportFolder",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -313,7 +313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "UpdatedByUserId",
 					  						OldFieldName =  "UpdatedByUserId",
-					  						ObjectTableName =  "BIReport",
+					  						ObjectTableName =  "BIReportFolder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
@@ -370,7 +370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						ObjectTableName =  "BIReport",
+					  						ObjectTableName =  "BIReportFolder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -397,7 +397,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "BIReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -408,8 +407,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  @"Search ...",
-					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  @"Search ...",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -429,23 +426,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Name",
 					  						OldFieldName =  "Name",
-					  						ObjectTableName =  "BIReport",
-					  						FieldsDataType =  "nText",
+					  						ObjectTableName =  "BIReportFolder",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  80,
+					  						MaxLength =  100,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  80,
-					  						DisplayInList =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
 					  						DisplayInLookUpIndex =  0,
@@ -456,6 +454,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BIReportFolder",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -466,6 +465,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  @"Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  @"Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -485,10 +486,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Description",
 					  						OldFieldName =  "Description",
-					  						ObjectTableName =  "BIReport",
-					  						FieldsDataType =  "nText",
+					  						ObjectTableName =  "BIReportFolder",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  1000,
+					  						MaxLength =  500,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -496,8 +497,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1000,
-					  						DisplayInList =  false,
+					  						SystemMaxLength =  500,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -512,6 +513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BIReportFolder",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -522,6 +524,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Description",
 					  						DefaultText =  @"Description",
+					  						ListFieldLable =  "DescriptionListLable",
+					  						ListLableDefaultText =  @"Description",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -539,253 +543,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DWQueryId",
-					  						OldFieldName =  "DWQueryId",
-					  						ObjectTableName =  "BIReport",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DWQueryId",
-					  						ListPropertyPath =  "DWQueryId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DWQueryId",
-					  						DefaultText =  @"DW Query",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
-					  						ObjectTableName =  "BIReport",
-					  						FieldsDataType =  "Boolean",
+					 						FieldName =  "Index",
+					  						OldFieldName =  "Index",
+					  						ObjectTableName =  "BIReportFolder",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Inactive",
-					  						ListPropertyPath =  "Inactive",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  @"Inactive",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "TypeCode",
-					  						OldFieldName =  "TypeCode",
-					  						ObjectTableName =  "BIReport",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "BIReportsType",
-					  						MinLength =  0,
-					  						MaxLength =  3,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  3,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TypeCode",
-					  						ListPropertyPath =  "TypeCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TypeCode",
-					  						DefaultText =  @"Type",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "AGGridOptionsXML",
-					  						OldFieldName =  "AGGridOptionsXML",
-					  						ObjectTableName =  "BIReport",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  1000,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "AGGridOptionsXML",
-					  						ListPropertyPath =  "AGGridOptionsXML",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AGGridOptionsXML",
-					  						DefaultText =  @"XML",
-					  						IsMaxLength =  true,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "BIReportFolderId",
-					  						OldFieldName =  "BIReportFolderId",
-					  						ObjectTableName =  "BIReport",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "BIReportFolder",
-					  						MinLength =  0,
-					  						MaxLength =  15,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BIReportFolderId",
-					  						ListPropertyPath =  "BIReportFolderId",
+					  						PMPropertyPath =  "Index",
+					  						ListPropertyPath =  "Index",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -794,6 +573,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BIReportFolder",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -802,8 +582,128 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BIReportFolderId",
-					  						DefaultText =  @"Folder",
+					  						FullFieldLable =  "Index",
+					  						DefaultText =  @"Index",
+					  						ListFieldLable =  "IndexListLable",
+					  						ListLableDefaultText =  @"Index",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreatedByUserName",
+					  						OldFieldName =  "CreatedByUserName",
+					  						ObjectTableName =  "BIReportFolder",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  60,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreatedByUserName",
+					  						ListPropertyPath =  "CreatedByUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BIReportFolder",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreatedByUserName",
+					  						DefaultText =  @"Created by",
+					  						ListFieldLable =  "CreatedByUserNameListLable",
+					  						ListLableDefaultText =  @"Created by",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "UpdatedByUserName",
+					  						OldFieldName =  "UpdatedByUserName",
+					  						ObjectTableName =  "BIReportFolder",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  60,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "UpdatedByUserName",
+					  						ListPropertyPath =  "UpdatedByUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BIReportFolder",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "UpdatedByUserName",
+					  						DefaultText =  @"Updated by",
+					  						ListFieldLable =  "UpdatedByUserNameListLable",
+					  						ListLableDefaultText =  @"Updated by",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -829,48 +729,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {                
-			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
-			   ObjectTable BIReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReport" && d.Tenant == 0).FirstOrDefault();  
-                 
-			   TextCode BIReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BIReport.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BIReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Tab.General", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.BIGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
- 
-                 
-			   TextCode BIReportEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BIReport.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BIReportEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Tab.Events", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.BIEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-			 TextCodeRepository.SubmitChanges();
-			 FeaturesRepository.SubmitChanges();
-			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
-			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BIGE",HtmlComponentName = "BIReportGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureBIReport/Components/EditTabs/BIReportGeneralTabComponent", FeatureId = BIReportGeneralFeature_TH0.Id, ControlPath = "./InfrastructureModules/InfrastructureBIReport/Components/EditTabs/BIReportGeneralTabComponent", ObjectTableId = BIReportObjectTable.Id, TabNameTextCodeId = BIReportGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
-   
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BIEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BIReportEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BIReportObjectTable.Id, TabNameTextCodeId = BIReportEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
-   
+	    {      
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable BIReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReport" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature BIReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BIReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BIReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BIReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.PackageFeature", NameTextCodeDefaultText = "BIReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature BIReportFeature_BIReport_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Menu", NameTextCodeDefaultText = @"BI Reports" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature BIReportFeature_BIReportDelete = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportDelete", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportDelete", NameTextCodeDefaultText = @"Delete" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   ObjectTable BIReportFolderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReportFolder" && d.Tenant == 0).FirstOrDefault(); 
+		   Feature BIReportFolderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BIReportFolderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BIReportFolderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BIReportFolderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.PackageFeature", NameTextCodeDefaultText = "BIReportFolder Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable BIReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReport" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable BIReportFolderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReportFolder" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -884,7 +758,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = BIReportObjectTable.Id,
+                ObjectTableId = BIReportFolderObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -902,7 +776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = BIReportObjectTable.Id,
+                ObjectTableId = BIReportFolderObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

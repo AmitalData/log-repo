@@ -690,6 +690,18 @@
     <Compile Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.Designer.cs">
       <DependentUpon>201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902170955193_AddBIReportFolder_Samar.cs" />
+    <Compile Include="Migrations\201902170955193_AddBIReportFolder_Samar.Designer.cs">
+      <DependentUpon>201902170955193_AddBIReportFolder_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171033526_AddBIReportFolderIdToBIReport.cs" />
+    <Compile Include="Migrations\201902171033526_AddBIReportFolderIdToBIReport.Designer.cs">
+      <DependentUpon>201902171033526_AddBIReportFolderIdToBIReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171042304_SetBIReportFolderIdToBeRequired_Samar.cs" />
+    <Compile Include="Migrations\201902171042304_SetBIReportFolderIdToBeRequired_Samar.Designer.cs">
+      <DependentUpon>201902171042304_SetBIReportFolderIdToBeRequired_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1151,6 +1163,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.resx">
       <DependentUpon>201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902170955193_AddBIReportFolder_Samar.resx">
+      <DependentUpon>201902170955193_AddBIReportFolder_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171033526_AddBIReportFolderIdToBIReport.resx">
+      <DependentUpon>201902171033526_AddBIReportFolderIdToBIReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171042304_SetBIReportFolderIdToBeRequired_Samar.resx">
+      <DependentUpon>201902171042304_SetBIReportFolderIdToBeRequired_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

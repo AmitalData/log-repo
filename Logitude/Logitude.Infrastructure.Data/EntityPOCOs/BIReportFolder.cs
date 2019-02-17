@@ -14,7 +14,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.Infrastructure.Data.EntityPOCOs
 {
    
-    public class BIReport
+    public class BIReportFolder
     {
 	 string dbms;
 
@@ -43,25 +43,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("Description")]
 	    public string Description { get; set; }
-        [ForeignKey("DWQuery")]
-        [Column("DWQueryId")]
-	    public string DWQueryId { get; set; }
-	      
-        public virtual DWQuery DWQuery { get; set; }
-        [Column("Inactive")]
-	    public bool Inactive { get; set; }
-        [ForeignKey("BIReportsType")]
-        [Column("TypeCode")]
-	    public string TypeCode { get; set; }
-	      
-        public virtual BIReportsType BIReportsType { get; set; }
-        [Column("AGGridOptionsXML")]
-	    public string AGGridOptionsXML { get; set; }
-        [ForeignKey("BIReportFolder")]
-        [Column("BIReportFolderId")]
-	    public string BIReportFolderId { get; set; }
-	      
-        public virtual BIReportFolder BIReportFolder { get; set; }
+        [Column("Index")]
+	    public int Index { get; set; }
     }
 }
 	 

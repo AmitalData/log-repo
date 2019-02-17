@@ -14,12 +14,12 @@ using Logitude.Infrastructure.Data;
 namespace Logitude.Infrastructure.Data.EntityMapping
 {
  
-    public class BIReportMap : EntityTypeConfiguration<BIReport>
+    public class BIReportFolderMap : EntityTypeConfiguration<BIReportFolder>
     {
 	    string dbms;
-        public BIReportMap()
+        public BIReportFolderMap()
         { 
-				this.ToTable("BIReports");
+				this.ToTable(" BIReportFolders");
 		
 		    this.HasKey(t => new { t.Id });
 	 
@@ -37,19 +37,11 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(80).IsUnicode(true);
+            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(500).IsUnicode(false);
 
-            this.Property(t => t.DWQueryId).HasColumnName("DWQueryId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Inactive).HasColumnName("Inactive");
-
-            this.Property(t => t.TypeCode).HasColumnName("TypeCode").HasMaxLength(3).IsUnicode(false);
-
-            this.Property(t => t.AGGridOptionsXML).HasColumnName("AGGridOptionsXML").IsMaxLength().IsUnicode(true);
-
-            this.Property(t => t.BIReportFolderId).HasColumnName("BIReportFolderId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Index).HasColumnName("Index").IsRequired();
         }
     }
 }
