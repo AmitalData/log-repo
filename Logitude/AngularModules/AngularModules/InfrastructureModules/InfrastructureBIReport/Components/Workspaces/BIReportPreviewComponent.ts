@@ -172,7 +172,7 @@ export class BIReportPreviewComponent implements OnInit {
                                 return pipe.transform(params.value, "N2");
                             },
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa fa-list-ol" }
+                            headerComponentParams: { menuIcon: "fa fa-ruler" }
                         });
                     }
                     else if (type == "booleanColumn"){
@@ -252,7 +252,6 @@ export class BIReportPreviewComponent implements OnInit {
         var datatype = "";
         switch (type) {
             case "Date":
-            case"Dimension":
             case "DateTime":
                 {
                     datatype = "dateColumn"; 
