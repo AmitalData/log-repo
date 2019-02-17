@@ -89,6 +89,11 @@ export class BIReportPM {
     public set AGGridOptionsXML(newValue: string) { if (this.aGGridOptionsXML != newValue) { this.aGGridOptionsXML = newValue; this.MarkAsDirty("AGGridOptionsXML"); } }
        
 	 
+    private bIReportFolderId: string;
+    public get BIReportFolderId() { return this.bIReportFolderId; }
+    public set BIReportFolderId(newValue: string) { if (this.bIReportFolderId != newValue) { this.bIReportFolderId = newValue; this.MarkAsDirty("BIReportFolderId"); } }
+       
+	 
 
     public OldEntityPM: BIReportPM;
 		

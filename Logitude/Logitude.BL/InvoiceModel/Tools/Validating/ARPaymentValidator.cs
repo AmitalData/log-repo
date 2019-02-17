@@ -267,8 +267,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                                     string fieldLabel = TranslateTextsClass.Translate("ARPayment.M.ChronologicalDate", entityPM.Tenant, useLocal);
                                     string exception = fieldLabel.Replace("%Date", dateString);
-                                    exception = fieldLabel.Replace("%ApprovedDate", approvedDateString);
-                                    throw new ApplicationException(fieldLabel.Replace("%Date", dateString));
+                                    exception = exception.Replace("%ApprovedDate", approvedDateString);
+                                    throw new ApplicationException(exception);
                                 }
                             }
                         }

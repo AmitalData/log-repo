@@ -6,7 +6,7 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentLevel')and (FieldName = 'Code' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentType')and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'Branch') and (FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Code' )
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Card') and (FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'CityName' or FieldName = 'ZipCode'  or FieldName='SalesmanUserId' or FieldName='PrimaryContactId' or FieldName='PartnerTypeId'  or  FieldName='CountryName' or FieldName = 'CountryId' or FieldName = 'ReceivablesAccountingCard' or FieldName = 'PayablesAccountingCard')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Card') and (FieldName = 'EnglishName' or FieldName = 'Code' or FieldName = 'LocalName' or FieldName = 'CityName' or FieldName = 'ZipCode'  or FieldName='SalesmanUserId' or FieldName='PrimaryContactId' or FieldName='PartnerTypeId'  or  FieldName='CountryName' or FieldName = 'CountryId' or FieldName = 'ReceivablesAccountingCard' or FieldName = 'PayablesAccountingCard')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'User') and (FieldName = 'BranchId' or FieldName = 'DepartmentId'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Contact') and (FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Email' )
 
@@ -41,7 +41,7 @@ or FieldName = 'ForwarderPartnerId' or FieldName = 'CreatedByUserId' or FieldNam
 )
 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Master') and (FieldName = 'MainCarriageATD' or FieldName = 'Master' or FieldName = 'MainCarriageToPortId' or FieldName = 'Transshipment1ToPortId' or FieldName = 'Transshipment2ToPortId' or FieldName = 'Transshipment3ToPortId' 
-or FieldName = 'MainCarriageETD' or FieldName = 'MainCarriageFinalDestinationATA' or FieldName = 'MainCarriageFinalDestinationETA' or FieldName = 'MainCarriageCarrierNumber'  or FieldName='MainCarriageCarrierId')
+or FieldName = 'MainCarriageETD' or FieldName = 'MainCarriageFinalDestinationATA' or FieldName = 'MainCarriageFinalDestinationETA' or FieldName = 'MainCarriageCarrierNumber'  or FieldName='MainCarriageCarrierId'  or FieldName = 'AirlinePrefix')
 
 
 

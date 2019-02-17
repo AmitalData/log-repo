@@ -88,6 +88,7 @@
     <None Include="EntityFiles\BIReport.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\BIReportFolder.lxml" />
     <None Include="EntityFiles\BIReportsType.lxml" />
     <None Include="EntityFiles\BusinessProcessQueue.lxml" />
     <None Include="EntityFiles\BusinessRole.lxml" />
