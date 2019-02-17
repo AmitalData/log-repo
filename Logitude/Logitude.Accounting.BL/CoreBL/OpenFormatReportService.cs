@@ -10,10 +10,12 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -81,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL
             List<ComputingPartnerTranslationPM> computingPartnerTranslations = new List<ComputingPartnerTranslationPM>();
             computingPartnerTranslations = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslations("Cust", tenant);
 
-
+          
 
             List<string> linesArray = new List<string>();
 
@@ -3249,6 +3251,20 @@ namespace Logitude.Accounting.BL.CoreBL
             User loggedUser = GetLoggedUser(tenant);
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
+            ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
+            bool showLocals = !contact.DontShowLocal;
+          
+            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, showLocals);
+           
+            if (error  != null)
+            {
+              error=  error.Replace("X", "BKMV");
+            }
+            if (docType == null)
+            {
+                throw new Exception(error);
+            }
+
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
            // string name = "A856." + tenantPM.VatNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
             DocumentsFilingPM document = new DocumentsFilingPM()
@@ -3285,22 +3301,27 @@ namespace Logitude.Accounting.BL.CoreBL
             return docFiling;
         }
 
-        private static Contact GetLoggedContact(int tenant)
+        private static ContactPM GetLoggedContact(int tenant)
         {
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact loggedContact;
-            if (HttpContext.Current != null)
-            {
-                string email = HttpContext.Current.User.Identity.Name;
-                loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-            }
-            else
-            {
-                string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
-                loggedContact = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
+        //    ContactRepository contactRepository = new ContactRepository(tenant);
+        //    Contact loggedContact;
+        //    if (HttpContext.Current != null)
+        //    {
+        //        string email = HttpContext.Current.User.Identity.Name;
+        //        loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+        //    }
+        //    else
+        //    {
+        //        string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
+        //        loggedContact = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
 
-            }
-            return loggedContact;
+        //    }
+        //    return loggedContact;
+
+
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
         private static User GetLoggedUser(int tenant)
@@ -3747,6 +3768,20 @@ namespace Logitude.Accounting.BL.CoreBL
             // user
             User loggedUser = GetLoggedUser(tenant);
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("INI", tenant);
+
+            ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
+            bool showLocals = !contact.DontShowLocal;
+
+            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, showLocals);
+
+            if (error != null)
+            {
+               error= error.Replace("X", "INI");
+            }
+            if (docType == null)
+            {
+                throw new Exception(error);
+            }
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
             // string name = "A856." + tenantPM.VatNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
