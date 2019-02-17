@@ -52,7 +52,10 @@ namespace Logitude.Customs.BL.CloseTables
                 Name = "ש.מ.ב לממן",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+                 WEBAPICredentialType = CourierWEBAPICredentialType.Bearer
+                  
+                
             }
             ,
             new InterfaceDetails()
@@ -62,7 +65,8 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_ILOVS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                ResponseCode=InterfaceName_ECOVSTHR_Response
+                ResponseCode=InterfaceName_ECOVSTHR_Response,
+                WEBAPICredentialType = CourierWEBAPICredentialType.NetworkCredential
 
             }
 
@@ -72,7 +76,8 @@ namespace Logitude.Customs.BL.CloseTables
                 Name = "פעולות מיוחדות לממן",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+                WEBAPICredentialType = CourierWEBAPICredentialType.Bearer
             }
             ,
 
@@ -135,7 +140,8 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_ILOVS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                 ResponseCode =InterfaceName_ECOVSSPCL_RESPONE
+                 ResponseCode =InterfaceName_ECOVSSPCL_RESPONE,
+                 WEBAPICredentialType = CourierWEBAPICredentialType.NetworkCredential
             }
              ,
              new InterfaceDetails()
@@ -292,6 +298,12 @@ namespace Logitude.Customs.BL.CloseTables
         OVSStatusAvailabilitySpliterService,
         OVSStatusAvailabilityService,
     }
+    public enum CourierWEBAPICredentialType
+    {
+        none,
+        Bearer,
+        NetworkCredential,
+    }
     public class InterfaceDetails
     {
         public string Code { get; set; }
@@ -300,6 +312,7 @@ namespace Logitude.Customs.BL.CloseTables
         public string TypeCode { get; set; }
         public string Partner { get; set; }
         public string ViaMethod { get; set; }
+        public CourierWEBAPICredentialType WEBAPICredentialType { get; set; }
         //public string QueueName { get; set; }
         public AnalyzeQueueServiceEnum AnalyzeQueueService { get; internal set; }
         public string Subject { get; internal set; }
