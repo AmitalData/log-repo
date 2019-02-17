@@ -319,6 +319,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string bIReportFolderId ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BIReportFolderId  
+	   {
+	    
+	     get
+		{
+		   return bIReportFolderId;
+		 }
+		 set
+		 {
+		   if(bIReportFolderId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BIReportFolderId",OldValue=bIReportFolderId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bIReportFolderId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

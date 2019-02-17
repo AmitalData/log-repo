@@ -75,6 +75,7 @@ import {TeamListService} from  './Services/StandardLists/TeamListService';
 import {TeamPMService} from './Services/StandardPMs/TeamPMService'; 
 import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderService';
 
+import { BIReportFolderListService } from './Services/StandardLists/BIReportFolderListService';
 import { BIReportListService } from './Services/StandardLists/BIReportListService';
 import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
 import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
@@ -94,6 +95,7 @@ export class ModuleProviders {
             case "BIReportPMService": { myResult = new BIReportPMService(); break; }
             case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
             case "BIReportListService": { myResult = new BIReportListService(); break; }
+            case "BIReportFolderListService": { myResult = new BIReportFolderListService(); break; }
             case "BusinessHoursHolidayListService": { myResult = new BusinessHoursHolidayListService(); break; }
             case "ChargesGroupListService": { myResult = new ChargesGroupListService(); break; }
             case "CustomPickListListService": { myResult = new CustomPickListListService(); break; }

@@ -61,30 +61,48 @@
                     </td>
                 </tr>
 
-                <!-- DWQueryId -->
-                <!--<tr class="FormFieldRow">
+                <!-- BIReportFolderId -->
+                <tr class="FormFieldRow">
                     <td>
-                        <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [ObjectFieldName]="'BIReportFolderId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <table>
-                            <tr>
-                                <td *ngIf="IsNewQuery" style="width: 57px;">
-                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
-                                </td>
-                                <td *ngIf="!IsNewQuery" s style="width: 57px;">
-                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
+                        <LogLov [ObjectFieldName]="'BIReportFolderId'"
+                                [SelectedValue]="BIReportFolderId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'BIReportFolder'" [HideColumns]="true">
+                        </LogLov>
                     </td>
                     <td>
                         <div></div>
                     </td>
-                </tr>-->
+                </tr>
+
+                <!-- DWQueryId -->
+                <!--<tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td *ngIf="IsNewQuery" style="width: 57px;">
+                        <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
+                    </td>
+                    <td *ngIf="!IsNewQuery" s style="width: 57px;">
+                        <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <div></div>
+        </td>
+    </tr>-->
 
                 <tr>
                     <td colspan="3">

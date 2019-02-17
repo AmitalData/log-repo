@@ -306,13 +306,13 @@ namespace WebFreight.Web
                 {
                     dataCacheTopic = StorageAcountDetails.NameSpaceManager.GetTopic(StorageAcountDetails.DataCacheTopicName);
                 }
-                if (!RoleEnvironment.IsAvailable)//is azure env
-                {
-                    return;
-                }
+                //if (!RoleEnvironment.IsAvailable)//is azure env
+                //{
+                //    return;
+                //}
                 SubscriptionDescription myAgentSubscription;
-                string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-                string subscribtionName = roleId[roleId.Length - 1];
+                //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+                string subscribtionName = Environment.MachineName; //roleId[roleId.Length - 1];
                 if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
                 {
                     myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
@@ -402,13 +402,13 @@ namespace WebFreight.Web
             {
                 signalRTopic = StorageAcountDetails.NameSpaceManager.GetTopic(StorageAcountDetails.SignalRHubTopicName);
             }
-            if (!RoleEnvironment.IsAvailable)//is azure env
-            {
-                return;
-            }
+            //if (!RoleEnvironment.IsAvailable)//is azure env
+            //{
+            //    return;
+            //}
             SubscriptionDescription myAgentSubscription;
-            string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-            string subscribtionName = roleId[roleId.Length - 1];
+            //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+            string subscribtionName = Environment.MachineName; //roleId[roleId.Length - 1];
             if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(signalRTopic.Path, subscribtionName))
             {
                 myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(signalRTopic.Path, subscribtionName);
