@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
+using WebFreight.Web.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -684,10 +685,12 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
                 DocumentOutRepository documentOutRepository = new DocumentOutRepository(objectContext);
-                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(objectContext);
+                DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(documentOutRepository);
 
-                DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(documentTypeId, tenant);
+                DocumentTypePM documentType = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
+              
+
                 string documentTemplateId = null;
                 string emailTemplateId = null;
 
@@ -729,7 +732,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 newDocument.Id = newDocumentFiling.Id;
                 documentOutRepository.Add(newDocument);
 
+
+
                 objectContext.SaveChanges();
+                string documentTypeOutId = null;
+                if(documentType.DocumentTypeCopies.Count > 0)
+                {
+                    documentTypeOutId = documentType.DocumentTypeCopies.FirstOrDefault().Id;
+                }
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                exportDocumentHelper.ExportDocument2Pdf(documentType.Id, entityId, objectTableId, null, null, newDocument.Id, tenant, documentTypeOutId);
 
                 DocumentOutPM docPM = documentOutQuery.GetSinglePM(newDocument.Id, newDocument.Tenant);
                 return docPM;
@@ -783,6 +795,9 @@ namespace Logitude.Accounting.BL.CoreBL
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+
+     
 
 
     }
