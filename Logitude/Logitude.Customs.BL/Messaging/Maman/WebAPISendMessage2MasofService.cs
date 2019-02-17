@@ -104,8 +104,9 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             //.PostIt("", "F_unitedf", "Unit2019", data);
             var settings = new CourierWEBAPICommSettings()
             {
+                 ///WEBAPICredentialType = defDefault.WEBAPICredentialType,
                 MessageCode = InterfaceName,
-                URIBaldarCreateECTHRMessgae = dtoWebApiDefinition.WEBAPIURL,/// @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
+                URIMethod = dtoWebApiDefinition.WEBAPIURL,/// @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
                 URIToken = dtoWebApiDefinition.WEBAPIAuthenticationURL, ///@"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
 
                 username = dtoWebApiDefinition.User, //"F_unitedf",
@@ -200,12 +201,13 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
     }
 
 
+   
     public class CourierWEBAPICommSettings
     {
-
-
+        
+        
         public string URIToken { get; set; }////@"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
-        public string URIBaldarCreateECTHRMessgae { get; set; }///"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
+        public string URIMethod { get; set; }///"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
 
         //.PostIt("", "ftp-uti", "Pariz2019+", data);
         //.PostIt("", "F_unitedf", "Unit2019", data);

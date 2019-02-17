@@ -735,7 +735,8 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void hAWBALDARMamanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WebAPI2BearerMamanMessage.OVSTester();
+            WebAPINetworkCredentialMessage.OVSUpdateHawbStatusTester();
+            //WebAPI2BearerMamanMessage.OVSUpdateHawbStatusTesterNotWork();
 
             //MamanBaldarTest();
 
@@ -758,7 +759,7 @@ namespace AmitalCustomsWindowsService.Tester
                 //URIBaldarCreateECTHRMessgae = @"http://localhost:52013/api/MamanCreateECTHRMessgae",
 
                 URIToken = @"http://192.116.221.103/WebApp3PartySimulator/api/Token",
-                URIBaldarCreateECTHRMessgae = @"http://192.116.221.103/WebApp3PartySimulator/api/MamanCreateECTHRMessgae",
+                URIMethod = @"http://192.116.221.103/WebApp3PartySimulator/api/MamanCreateECTHRMessgae",
 
 
                 Tenant = 1
@@ -795,7 +796,7 @@ namespace AmitalCustomsWindowsService.Tester
                 username = "F_unitedf",
                 password = "Unit2019",
                 URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
-                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECSpclMessgae",
+                URIMethod = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECSpclMessgae",
                 Tenant = 1
 
             });

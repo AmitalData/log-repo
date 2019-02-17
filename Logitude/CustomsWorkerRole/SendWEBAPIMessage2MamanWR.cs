@@ -288,10 +288,31 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 }
                 LogMessagingUtil.Instance.AppendLine("courierHawbMamanCommunication DB is valid");
                 GWMessageECTHRData responeGWMessageECTHRData = null;
-                LogMessagingUtil.Instance.AppendLine($"Post {courier2MamanCommSettings.URIBaldarCreateECTHRMessgae}");
+                LogMessagingUtil.Instance.AppendLine($"Post {courier2MamanCommSettings.URIMethod}");
                 string webAPIResultString = null;
-                var service = new WebAPI2BearerMamanMessage(courier2MamanCommSettings);
-                webAPIResultString = service.PostIt(dataJson);
+                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+                var @intrface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == courier2MamanCommSettings.MessageCode);
+
+                switch (@intrface.WEBAPICredentialType)
+                {
+                 
+                    case CourierWEBAPICredentialType.Bearer:
+                        {
+                            var service = new WebAPI2BearerMamanMessage(courier2MamanCommSettings);
+                            webAPIResultString = service.PostIt(dataJson);
+                        }
+                        break;
+                    case CourierWEBAPICredentialType.NetworkCredential:
+                        {
+                            var service = new WebAPINetworkCredentialMessage(courier2MamanCommSettings);
+                            webAPIResultString = service.PostIt(dataJson);
+                        }
+                        break;
+                    default:
+                        throw new Exception("@PostWebAPIAnalyzeAndSaveCommDone():intrface.WEBAPICredentialType IS UNKNOWN");
+                        break;
+                }
+                
                 LogMessagingUtil.Instance.AppendLine("webAPIResultString:" + webAPIResultString);
 
 
@@ -299,10 +320,10 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 //myWebAPICourierHawbMamanService.AnalyzeResponse(courier2MamanCommSettings, responeGWMessageECTHRData);
 
                 IWebAPIMessage2MamanAnalyzer analyzer = null;
-                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+                
 
 
-                var @intrface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == courier2MamanCommSettings.MessageCode);
+                
                 if (!string.IsNullOrWhiteSpace(@intrface.ResponseCode))
                 {
                     courier2MamanCommSettings.RqstCommLogID = _WaitingCommLog.Id;
@@ -404,7 +425,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     //credentials = "O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY";
                     client.DefaultRequestHeaders.Add("Authorization", $"{token_type} {access_token}");
                     LogMessagingUtil.Instance.AppendLine($"URIBaldarCreateECTHRMessgae.PostAsync....");
-                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIBaldarCreateECTHRMessgae, content);
+                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIMethod, content);
                     Wait4Finsh(task, 1);
                     myResultString = task.Result.Content.ReadAsStringAsync().Result;
                     LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString }");
@@ -445,7 +466,171 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             }
         }
-        public static void OVSTester()
+
+    }
+
+
+
+
+    public class WebAPINetworkCredentialMessage
+    {
+        private CourierWEBAPICommSettings _CourierCommunicationLogSettings;
+
+        public WebAPINetworkCredentialMessage(CourierWEBAPICommSettings courierHawbMamanCommunicationLogSettings)
+        {
+            this._CourierCommunicationLogSettings = courierHawbMamanCommunicationLogSettings;
+        }
+
+        public string PostIt(string dataJson)
+        {
+            string myResultString = "";
+
+            string access_token = "";
+            string token_type = "";
+
+            try
+            {
+
+
+               
+                {
+                    //שם המשתמש: ovrs\crmamital
+                    //סיסמה: Amital123456
+
+                    var myCredentials = new NetworkCredential("", "", "");
+                    myCredentials.UserName = _CourierCommunicationLogSettings.username;//  @"ovrs\crmamital";
+                    myCredentials.Password = _CourierCommunicationLogSettings.password;// "Amital123456";
+
+
+                    
+                    using (var client = new WebClient())
+                    {
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = myCredentials;
+                        
+
+                        var dataString = dataJson;
+                        client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+
+                        myResultString =
+                        client.UploadString(
+                            new Uri(_CourierCommunicationLogSettings.URIMethod /*@"http://81.218.57.34:9094/api/Courier/UpdateHawbStatus"*/), 
+                            "POST", 
+                            dataString);
+
+                        Console.WriteLine("success");
+                    }
+
+
+                }
+
+
+
+                return myResultString;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+       
+        public static void OVSUpdateHawbStatusTester()
+        {
+            //שם המשתמש: ovrs\crmamital
+            //סיסמה: Amital123456
+
+            var myCredentials = new NetworkCredential("", "", "");
+            myCredentials.UserName = @"ovrs\crmamital";
+            myCredentials.Password = "Amital123456";
+
+
+            var postData = @"{""CourierCompanyVat"":""514193408"",""CourierHawbNumber"":""99994668068"",""CourierHawbDate"":""2019-02-12T00: 00:00"",""MawbPrefix"":""114"",""Mawb"":15381173,""Hawb"":""1514112"",""FlightNumber"":316,""FltDate"":null,""EstimatedArrivalDate"":""2018-12-24T20:00:00"",""PackageQuantity"":1,""Weight"":0.30,""GoodValueInUSD"":12.0,""Description"":""IBOX 2331"",""ImporterName"":""Kobi Cohen"",""ImporterAddress"":""Dekel 27 2nd avenu 13 ddk Tel Aviv ISRAEL"",""DistributionLine"":"""",""DistributionCompanyVat"":"""",""DistributorHP"":null,""DistributorName"":null,""DeclarationNumber"":""19041052508346"",""CustomsSuspention"":"""",""Preclearence"":false}";
+
+            using (var client = new WebClient())
+            {
+                client.UseDefaultCredentials = false;
+                client.Credentials = myCredentials;
+                var url = //"http://localhost:93/Api/Test";
+                    @"http://81.218.57.34:9094/api/Courier/SpecialActionReporting";
+                //var json = client.DownloadString(url);
+
+                var dataString = postData;//JsonConvert.SerializeObject(vm);
+                client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                client.UploadString(new Uri(@"http://81.218.57.34:9094/api/Courier/UpdateHawbStatus"), "POST", dataString);
+
+                Console.WriteLine("success");
+            }
+
+
+        }
+
+        public static void OVSUpdateHawbStatusTesterNotWork()
+        {
+            //שם המשתמש: ovrs\crmamital
+            //סיסמה: Amital123456
+
+            var myCredentials = new NetworkCredential("", "", "");
+            myCredentials.UserName = @"ovrs\crmamital";
+            myCredentials.Password = "Amital123456";
+            //using (var client = new WebClient())
+            //{
+            //    client.UseDefaultCredentials = false;
+            //    client.Credentials = myCredentials;
+            //    var url = //"http://localhost:93/Api/Test";
+            //        @"http://81.218.57.34:9094/api/Courier/SpecialActionReporting";
+            //    var json = client.DownloadString(url);
+            //    Console.WriteLine("success");
+            //}
+
+
+
+
+
+
+
+            WebRequest request = WebRequest.Create(@"http://81.218.57.34:9094/api/Courier/UpdateHawbStatus");
+
+            request.Method = "POST";
+            request.UseDefaultCredentials = false;
+            request.PreAuthenticate = true;
+            request.Credentials = myCredentials;
+
+            // Create POST data and convert it to a byte array.
+            var postData = @"{""CourierCompanyVat"":""514193408"",""CourierHawbNumber"":""99376529290"",""CourierHawbDate"":""2019 - 02 - 12T00: 00:00"",""MawbPrefix"":""114"",""Mawb"":15381173,""Hawb"":""1514112"",""FlightNumber"":316,""FltDate"":null,""EstimatedArrivalDate"":""2018 - 12 - 24T20: 00:00"",""PackageQuantity"":1,""Weight"":0.30,""GoodValueInUSD"":12.0,""Description"":""IBOX 2331"",""ImporterName"":""Kobi Cohen"",""ImporterAddress"":""Dekel 27 2nd avenu 13 ddk Tel Aviv ISRAEL"",""DistributionLine"":"""",""DistributionCompanyVat"":"""",""DistributorHP"":null,""DistributorName"":null,""DeclarationNumber"":""19041052508346"",""CustomsSuspention"":"""",""Preclearence"":false}";
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            // Set the ContentType property of the WebRequest.
+            request.ContentType = "application/x-www-form-urlencoded";
+            // Set the ContentLength property of the WebRequest.
+            request.ContentLength = byteArray.Length;
+            // Get the request stream.
+            Stream dataStream = request.GetRequestStream();
+            // Write the data to the request stream.
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            // Close the Stream object.
+            dataStream.Close();
+            // Get the response.
+            WebResponse response = request.GetResponse();
+            // Display the status.
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            // Get the stream containing content returned by the server.
+            dataStream = response.GetResponseStream();
+            // Open the stream using a StreamReader for easy access.
+            StreamReader reader = new StreamReader(dataStream);
+            // Read the content.
+            string responseFromServer = reader.ReadToEnd();
+            // Display the content.
+            //Console.WriteLine(responseFromServer);
+            // Clean up the streams.
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+
+
+
+        }
+
+        public static void OVSSpecialActionReportingTester()
         {
             //שם המשתמש: ovrs\crmamital
             //סיסמה: Amital123456
@@ -511,5 +696,4 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         }
 
     }
-
 }
