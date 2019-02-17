@@ -559,8 +559,8 @@ export class BIReportPreviewComponent implements OnInit {
                         var temp = [];
                         temp.push(MyFilter);
                         this.SelectedFiltersDataSource = temp;
-                        this.LoadBIReportData();
-                    }                  
+                    }
+                    this.LoadBIReportData();
                 }
             });
         });
