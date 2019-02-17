@@ -2626,7 +2626,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0', 1);
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 10);
+                    myStringBuilder.Append(' ', 20);
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0', 1);
                     myStringBuilder.Append("a");
