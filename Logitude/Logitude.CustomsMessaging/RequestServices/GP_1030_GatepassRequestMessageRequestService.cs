@@ -34,6 +34,12 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
             myGatepassRequestMessage.gatepassNumber = 1;
             myGatepassRequestMessage.ExternalID = ""; // to do SYSMGR17
+
+            var declarationQS = new DeclarationQueryService(dbContext);
+            string forwarder = declarationQS.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
+            forwarder = forwarder.Substring(forwarder.Length - 3);
+
+
             myGatepassRequestMessage.originSiteCode = requestParams.OriginSiteCode;
             myGatepassRequestMessage.processTypeCode = 1;
             myGatepassRequestMessage.requestDate = DateTime.Now;
