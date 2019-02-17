@@ -90,6 +90,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         public void Create(ARPaymentPM theEntityPm)
         {
+
+            // Full Accounting
+            TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
+            if (tenantPM != null && tenantPM.AccountingActivated == true)
+            {
+                theEntityPm.IsFullAccounting = true;
+            }
+
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.changedList = theEntityPm.PaymentInvoices;
@@ -129,6 +137,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CreateChequeInCashBook(theEntityPm);
             }
 
+
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
             this.TraceConnected();
@@ -141,6 +150,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // DropBox
             this.CreateARInvoiceMessage(setApproved);
+
         }
 
         public void SetChangedList(List<ARPaymentInvoicePM> list)
@@ -358,6 +368,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 {
                     entityPM.StatusCode = "AD";
+                    entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    entityPM.ApprovedByUserId = loggedContact.Id;
                 }
 
                 UpdateDocOutNeedsRebuild();
@@ -1390,9 +1402,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
+            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly( AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
             if (loggedContact == null)
             {
                 loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);

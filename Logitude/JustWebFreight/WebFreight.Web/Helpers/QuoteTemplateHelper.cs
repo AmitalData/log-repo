@@ -472,6 +472,7 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NUMBEROFPACKAGES", "Number Of Packages", "Number Of Packages", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NUMBEROFCONTAINERS", "Number Of Containers", "Number Of Containers", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TRANSITTIME", "Transit Time", "Transit Time", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("MOVETYPE", "Move Type", "Move Type", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEGROUP", "Charge Group", "Charge Group", "TotalPerContainers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALPERCONTAINERS", "Total Per Containers", "Total Per Containers", "TotalPerContainers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NOTIFYNAME", "Notify Name", "Notify Name", "QuoteDetails"));

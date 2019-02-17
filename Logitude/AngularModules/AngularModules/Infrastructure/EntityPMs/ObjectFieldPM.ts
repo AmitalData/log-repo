@@ -588,6 +588,11 @@ export class ObjectFieldPM {
     public set CopyToDW(newValue: boolean) { if (this.copyToDW != newValue) { this.copyToDW = newValue; this.MarkAsDirty("CopyToDW"); } }
        
 	 
+    private enableFullscreenTextBox: boolean;
+    public get EnableFullscreenTextBox() { return this.enableFullscreenTextBox; }
+    public set EnableFullscreenTextBox(newValue: boolean) { if (this.enableFullscreenTextBox != newValue) { this.enableFullscreenTextBox = newValue; this.MarkAsDirty("EnableFullscreenTextBox"); } }
+       
+	 
 
     public OldEntityPM: ObjectFieldPM;
 		

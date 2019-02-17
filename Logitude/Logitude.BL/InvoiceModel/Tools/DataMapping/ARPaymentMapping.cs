@@ -86,6 +86,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.CadPago = entityPM.CadPago;
             entity.CertPago = entityPM.CertPago;
             entity.SelloPago = entityPM.SelloPago;
+            entity.ApprovedDate = entityPM.ApprovedDate;
+            entity.ApprovedByUserId = entityPM.ApprovedByUserId;
+            entity.FirstApproveDate = entityPM.FirstApproveDate;
+            entity.IsFullAccounting = entityPM.IsFullAccounting;
 
             if (entityPM.StatusCode == "AD" && entityPM.OpenAmount == 0)
             {
@@ -99,7 +103,17 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.IsClosed = entityPM.IsClosed;
             }
 
-
+            if (entityPM.SetApproved)
+            {
+                if (entity.FirstApproveDate == null)
+                {
+                    if (entityPM.ApprovedDate != null)
+                    {
+                        entity.FirstApproveDate = entityPM.ApprovedDate;
+                        entityPM.FirstApproveDate = entityPM.ApprovedDate;
+                    }
+                }
+            }
 
             entityPM.SetVoided = false;
             entityPM.SetApproved = false;

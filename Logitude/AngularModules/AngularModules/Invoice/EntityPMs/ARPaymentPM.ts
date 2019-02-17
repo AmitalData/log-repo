@@ -464,6 +464,26 @@ export class ARPaymentPM {
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
+    private approvedDate: Date;
+    public get ApprovedDate() { return this.approvedDate; }
+    public set ApprovedDate(newValue: Date) { if (this.approvedDate != newValue) { this.approvedDate = newValue; this.MarkAsDirty("ApprovedDate"); } }
+       
+	 
+    private approvedByUserId: string;
+    public get ApprovedByUserId() { return this.approvedByUserId; }
+    public set ApprovedByUserId(newValue: string) { if (this.approvedByUserId != newValue) { this.approvedByUserId = newValue; this.MarkAsDirty("ApprovedByUserId"); } }
+       
+	 
+    private firstApproveDate: Date;
+    public get FirstApproveDate() { return this.firstApproveDate; }
+    public set FirstApproveDate(newValue: Date) { if (this.firstApproveDate != newValue) { this.firstApproveDate = newValue; this.MarkAsDirty("FirstApproveDate"); } }
+       
+	 
+    private isFullAccounting: boolean;
+    public get IsFullAccounting() { return this.isFullAccounting; }
+    public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
+       
+	 
 
     public OldEntityPM: ARPaymentPM;
 		

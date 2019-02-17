@@ -615,6 +615,11 @@ export class TenantPM {
     public set StockTypeCode(newValue: string) { if (this.stockTypeCode != newValue) { this.stockTypeCode = newValue; this.MarkAsDirty("StockTypeCode"); } }
        
 	 
+    private autoArchiveOnInvoice: boolean;
+    public get AutoArchiveOnInvoice() { return this.autoArchiveOnInvoice; }
+    public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

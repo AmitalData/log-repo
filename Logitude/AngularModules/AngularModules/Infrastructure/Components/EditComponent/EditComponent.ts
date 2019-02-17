@@ -731,6 +731,15 @@ export class EditComponent implements OnDestroy {
             }
             case "ARPayment": {
 
+                if (this.EntityPM.IsFullAccounting) {
+                    let indexOfTab = allTabs.findIndex(t => t.Code == 'ARPD');
+                    if (indexOfTab > -1)
+                        allTabs.splice(indexOfTab, 1);
+                } else {
+                    let indexOfTab = allTabs.findIndex(t => t.Code == 'PYDF');
+                    if (indexOfTab > -1)
+                        allTabs.splice(indexOfTab, 1);
+                }
 
                 break;
             }

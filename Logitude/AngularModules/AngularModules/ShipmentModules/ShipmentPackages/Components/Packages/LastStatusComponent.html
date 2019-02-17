@@ -53,7 +53,7 @@
                     </log-column>
 
                     <!-- Received date -->
-                    <log-column [width]="'140'" [header]="'Received date'">
+                    <log-column [width]="'140'" [header]="'Received Date'">
                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                             {{item.ReceivingDate | DateTimePipe:'DT'}}
                         </log-cell-template>
