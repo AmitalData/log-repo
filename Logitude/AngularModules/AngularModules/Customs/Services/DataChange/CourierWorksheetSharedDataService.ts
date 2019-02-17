@@ -9,7 +9,7 @@ export class CourierWorksheetSharedDataService {
   public SupperssOnRowSelectedAction: boolean = false;
     private messageSource = new BehaviorSubject('default message');
     CurrentMessage = this.messageSource.asObservable();
-    IsWebAPICourierGWMessageECTHRDataMamanEnable: boolean;
+    WebAPICourierGWMessageECTHRDataMaman: string;
     constructor() { }
 
     SendNextMessage(message: string) {

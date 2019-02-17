@@ -1640,7 +1640,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
-        static bool toMaman = false;
         //DeclarationMamanSpecialAction
         public HttpResponseMessage GetDeclarationMamanSpecialAction(string declarationId, int tenant, string actionCode, string mamanSpecialActionCode)
         {
@@ -1648,37 +1647,53 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 ICustomContext myContext = CustomContext.GetContext(tenant);
                 ICourierGWMessageECSpcRequestService courierGWMessageECSpclRequestService = null;
-                if (toMaman)
+
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(myContext);
+                DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
+                if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
                 {
-                    courierGWMessageECSpclRequestService =new CourierGWMessageECSpclMamanRequestService();
+                    var amitalContext = AmitalContext.GetContext(tenant);
+                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+
+                    if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
+                    {
+                        courierGWMessageECSpclRequestService = new CourierGWMessageECSpclMamanRequestService();
+                    }
+                    else if (def.DEFDATA.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
+                    {
+                        courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILOVS.CourierOVSSpecialActionRequestService();
+                    }
+                }
+
+                string actionResultString = "";
+                if (courierGWMessageECSpclRequestService != null)
+                {
+                    MamanActionCodeUpdateOrCancel mamanActionCode = MamanActionCodeUpdateOrCancel.Upsert;
+                    MamanSpecialCode mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                    if (actionCode == "C")
+                    {
+                        mamanActionCode = MamanActionCodeUpdateOrCancel.Cancel;
+                    }
+                    switch (mamanSpecialActionCode)
+                    {
+                        case "2":
+                            mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                            break;
+                        case "4":
+                            mamanSpecialCode = MamanSpecialCode.StickerPrinting;
+                            break;
+                        case "5":
+                            mamanSpecialCode = MamanSpecialCode.PrintDocuments;
+                            break;
+                    }
+
+                    actionResultString = courierGWMessageECSpclRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
                 }
                 else
                 {
-                    courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILOVS.CourierOVSSpecialActionRequestService();
-
+                    actionResultString = "לא קיימת הרשאה";
                 }
-                toMaman = !toMaman;
-
-                MamanActionCodeUpdateOrCancel mamanActionCode = MamanActionCodeUpdateOrCancel.Upsert;
-                MamanSpecialCode mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
-                if (actionCode == "C")
-                {
-                    mamanActionCode = MamanActionCodeUpdateOrCancel.Cancel;
-                }
-                switch(mamanSpecialActionCode)
-                {
-                    case "2":
-                        mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
-                        break;
-                    case "4":
-                        mamanSpecialCode = MamanSpecialCode.StickerPrinting;
-                        break;
-                    case "5":
-                        mamanSpecialCode = MamanSpecialCode.PrintDocuments;
-                        break;
-                }
-
-                string actionResultString = courierGWMessageECSpclRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
                 return Request.CreateResponse(HttpStatusCode.OK, actionResultString);
 
             }
