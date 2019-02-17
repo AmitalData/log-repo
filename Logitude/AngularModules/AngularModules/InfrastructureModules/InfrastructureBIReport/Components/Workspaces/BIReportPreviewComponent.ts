@@ -172,7 +172,7 @@ export class BIReportPreviewComponent implements OnInit {
                                 return pipe.transform(params.value, "N2");
                             },
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa fa-ruler" }
+                            headerComponentParams: { menuIcon: "fa fa-list-ol" }
                         });
                     }
                     else if (type == "booleanColumn"){
@@ -208,7 +208,7 @@ export class BIReportPreviewComponent implements OnInit {
                             Index: columns[i].Index,
                             type: type,
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa fa-font" },
+                            headerComponentParams: { menuIcon: "fa fa-text-height" },
                             cellRendererFramework: EditShipmentLinkRendererComponent,
                             //cellRendererParams: {
                             //   
@@ -228,7 +228,7 @@ export class BIReportPreviewComponent implements OnInit {
                             Index: columns[i].Index,
                             type: type,
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa fa-font" }
+                            headerComponentParams: { menuIcon: "fa fa-text-height" }
                         });
                     }
                 }
