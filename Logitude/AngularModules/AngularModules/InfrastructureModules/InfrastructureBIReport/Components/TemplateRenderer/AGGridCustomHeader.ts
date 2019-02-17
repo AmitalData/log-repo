@@ -36,7 +36,6 @@ import { IHeaderAngularComp  } from 'ag-grid-angular';
         {
             float: left;
             margin: 0 0 0 3px;
-            width:0px;
         }
 
             .customSortUpLabel {
