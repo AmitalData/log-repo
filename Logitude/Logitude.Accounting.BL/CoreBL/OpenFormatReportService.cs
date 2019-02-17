@@ -3079,7 +3079,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
 
 
-                            string localAmount = line.LocalAmount.ToString();
+                            string localAmount = line.LocalAmount.ToString().Replace(".", string.Empty);
                             if (localAmount != null)
                             {
                                 if (localAmount.Length > 15)
