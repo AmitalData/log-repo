@@ -290,14 +290,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if(item.LocalAmountDebit > 0)
                     {
-                        string LocalAmountDebit =Math.Abs(item.LocalAmountDebit).ToString();
+                        string LocalAmountDebit =Math.Abs(item.LocalAmountDebit).ToString().Replace(".", string.Empty);
                         myStringBuilder.Append("+");
                         if (LocalAmountDebit.Length > 14) { LocalAmountDebit = LocalAmountDebit.Substring(0, 14); }
                         myStringBuilder.Append(LocalAmountDebit.PadLeft(14, '0'));
                     }
                     else if(item.LocalAmountDebit <0)
                     {
-                        var LocalAmountDebit = Math.Abs(item.LocalAmountDebit).ToString();
+                        var LocalAmountDebit = Math.Abs(item.LocalAmountDebit).ToString().Replace(".", string.Empty);
                         myStringBuilder.Append("-");
                         if (LocalAmountDebit.Length > 14) { LocalAmountDebit= LocalAmountDebit.Substring(0, 14); }
                         myStringBuilder.Append(LocalAmountDebit.PadLeft(14, '0'));
@@ -2614,8 +2614,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                 myStringBuilder.Append('0', 8);
                             }
                          
-                            string amount = line.LocalAmount.ToString();
-                            if (amount.Length > 15)
+                            string amount = line.LocalAmount.ToString().Replace(".", string.Empty);
+                        if (amount.Length > 15)
                             {
                                 amount = amount.Substring(0, 15);
                             }
