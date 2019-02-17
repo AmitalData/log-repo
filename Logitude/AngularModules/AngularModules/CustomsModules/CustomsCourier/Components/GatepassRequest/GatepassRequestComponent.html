@@ -7,9 +7,9 @@
     </tr>-->
 
     <!-- HeaderScreen -->
-    <tr style="height: 40px;">
-        <td colspan="4">
-            <div style="height: 40px;" class="HeaderScreen">
+    <tr class="FormFieldRow" style="height: 30px; width:700px">
+        <td colspan="4" rowspan="2" style="height: 60px;">
+            <div style="height: 60px;" class="HeaderScreen">
                 <table *ngIf="CourierMasterPM">
                     <tr>
                         <!-- col 1 -->
@@ -223,7 +223,8 @@
             <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
         </td>
         <td style="width: 67px;vertical-align: bottom; padding-right: 10px;">
-            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonEnabled">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
+            <custom-send-options #MyCustomSendOptionsComponent
+                                 [CustomSendOptionsButtonCanForcePersonalSign]="CustomSendOptionsButtonCanForcePersonalSign"></custom-send-options>
         </td>
     </tr>
 

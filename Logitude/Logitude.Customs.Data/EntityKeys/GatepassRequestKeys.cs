@@ -1,0 +1,38 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure; 
+  
+namespace Logitude.Customs.Data.EntityKeys
+{
+   public partial class GatepassRequestKeys : EntityKeyFields
+   {
+   	  public string MasterCourierId  { get; set; }
+	  
+				 
+	    			   
+	  public int GatepassNumber  { get; set; }
+	  
+				 
+	    			   
+	
+	 
+	  public override string GetFullKey()
+      {
+          return MasterCourierId+'_'+GatepassNumber;
+      }
+
+      public override string GetEntityPMName()
+      {
+          return "GatepassRequestPM";
+      }
+	 
+   }
+
+}
+	 

@@ -711,7 +711,7 @@ implements OnDestroy
         this.columns.push({
             FieldName: 'HighLowValue',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.HighLowValue"),
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.FastIndividualProcessCode"),
             Styles: { width: '70px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',

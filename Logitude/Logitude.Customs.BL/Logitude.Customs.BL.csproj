@@ -852,6 +852,7 @@
     <Compile Include="EntityQueryServices\CustomsDocumentsDefinitionQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationConsAcceptanceQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationCourierStatusQueryService.cs" />
+    <Compile Include="EntityQueryServices\GatepassRequestQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AcceptanceStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccumalationStateQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ActionCodeQueryService.Generated.cs" />

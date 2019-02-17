@@ -63,7 +63,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
             }
-            return "המסר נבנה בהצלחה וישלח בתהליך רקעOVS ";
+            return "המסר נבנה בהצלחה וישלח בתהליך רקע ";
         }
 
         private CourierOVSHAWBRequest CreateCourierOVSHawbMessage()

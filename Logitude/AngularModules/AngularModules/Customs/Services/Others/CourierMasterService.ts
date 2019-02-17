@@ -9,6 +9,7 @@ import {CourierMasterPM} from '../../EntityPMs/CourierMasterPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { SendPayReadyLowRequestParams } from '../../DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../DataContract/RequestParams/SendALLCorrectRequestParams';
+import { GatepassRequestMessageRequestParams } from '../../DataContract/RequestParams/GatepassRequestMessageRequestParams';
 
 @Injectable()
 
@@ -518,4 +519,28 @@ export class CourierMasterService {
         return entity;
     }
 
+    PostGatepassRequestMessage(requestParams: GatepassRequestMessageRequestParams) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostGatepassRequestMessage/',
+                JSON.stringify(requestParams),
+                { headers: authHeader }).map((res) => {
+
+                    serviceResponse.Result = res.json();
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+
+        });
+    }
 }

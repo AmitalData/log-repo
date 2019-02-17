@@ -33,12 +33,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey3 = _CourierMasterPM.HAWB;
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
             myGatepassRequestMessage.gatepassNumber = 1;
-            myGatepassRequestMessage.ExternalID = ""; // to do SYSMGR17
 
             var declarationQS = new DeclarationQueryService(dbContext);
             string forwarder = declarationQS.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
-            forwarder = forwarder.Substring(forwarder.Length - 3);
-
+            if(!string.IsNullOrEmpty(forwarder))
+            {
+                myGatepassRequestMessage.ExternalID = forwarder.Substring(forwarder.Length - 3);
+            }
 
             myGatepassRequestMessage.originSiteCode = requestParams.OriginSiteCode;
             myGatepassRequestMessage.processTypeCode = 1;
@@ -62,7 +63,6 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             myGatepassRequestMessageList.Add(myGatepassRequestMessage);
             myGP_NG_1030_MSG1_GatepassRequestMessage.GatepassRequestMessage = myGatepassRequestMessageList.ToArray();
-
 
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = "בקשת העברה ";

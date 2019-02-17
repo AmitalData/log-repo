@@ -21,16 +21,7 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public GatepassRequest GetGatepassRequestByGatepassNumber(int gatepassNumber, int tenant)
-        {
-            GatepassRequest gatepassRequest = (from a in context.GatepassRequests
-                                               where a.GatepassNumber == gatepassNumber && a.Tenant == tenant
-                                               select a).FirstOrDefault();
-
-            return gatepassRequest;
-        }
-
-    }
+   }
 
 }
    

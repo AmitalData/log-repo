@@ -527,12 +527,13 @@
     <TypeScriptCompile Include="Customs\Components\MenuButtons\PhysicalCheckMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\BankAccountToRefundRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\DataContract\RequestParams\GatepassRequestMessageRequestParams.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CourierPendingReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAirlineList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsPartnerFtpList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DecisionTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationMamanSpecialActionList.ts" />
-    <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestsList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RefundCustomerActivityTypeList.ts" />
@@ -550,7 +551,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecisionTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationMamanSpecialActionPM.ts" />
-    <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestsPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RefundCustomerActivityTypePM.ts" />
@@ -568,7 +569,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPartnerFtpListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DecisionTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationMamanSpecialActionListService.ts" />
-    <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestsListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingErrorPlaceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RefundCustomerActivityTypeListService.ts" />
@@ -581,7 +582,7 @@
     <TypeScriptCompile Include="Customs\Services\Others\GITITEMCacheService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
-    <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestsPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />

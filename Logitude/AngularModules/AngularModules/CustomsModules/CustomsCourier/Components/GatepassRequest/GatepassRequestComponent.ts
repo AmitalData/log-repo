@@ -4,8 +4,11 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
-import { DeclarationCourierStatusPMService } from '../../../../Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
-
+import { GatepassRequestPM } from '../../../../Customs/EntityPMs/GatepassRequestPM';
+import { CourierMasterService } from '../../../../Customs/Services/others/CourierMasterService';
+import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { GatepassRequestMessageRequestParams } from '../../../../Customs/DataContract/RequestParams/GatepassRequestMessageRequestParams';
+import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 
 @Component({
     moduleId: module.id,
@@ -15,12 +18,13 @@ import { DeclarationCourierStatusPMService } from '../../../../Customs/Services/
 export class GatepassRequestComponent extends BaseComponent {
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.GatepassRequest";
-    //public EntityPM: GatepassRequestPM;
+    public EntityPM: GatepassRequestPM;
     CourierMasterPM: CourierMasterPM = new CourierMasterPM();
     ValidationErrorsList: any[] = [];
     OriginPortCode: string;
     OkButtonEnabled: boolean;
-    //_DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+
+    _CourierMasterService: CourierMasterService = new CourierMasterService();
     UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
 
     constructor() {
@@ -30,7 +34,7 @@ export class GatepassRequestComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.CourierMasterPM = args.CourierMasterPM;
-            this.SetScreenFieldsEditability(true);
+            //this.SetScreenFieldsEditability(true);
         }
     }
 
@@ -48,7 +52,7 @@ export class GatepassRequestComponent extends BaseComponent {
     //}
 
     public get GatepassNumber() { return this.EntityPM.GatepassNumber; }
-    public set GatepassNumber(newValue: string) {
+    public set GatepassNumber(newValue: number) {
         this.EntityPM.GatepassNumber = newValue;
     }
 
@@ -106,13 +110,42 @@ export class GatepassRequestComponent extends BaseComponent {
 
     }
 
-    OkButtonClicked() {
+    OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
 
         this.FillErrors();
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
 
+        SessionLocator.CurrentSession.StartBusyIndicator("");
+        var currRequestParams = new GatepassRequestMessageRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
+        currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+
+        currRequestParams.MasterCourierId = this.CourierMasterPM.Id;
+        currRequestParams.OriginSiteCode = this.OriginSiteCode;
+        currRequestParams.DesignateSiteCode = this.DesignateSiteCode;
+        //currRequestParams.UpdateCode = this.UpdateCode;
+        currRequestParams.TransportationTypeCode = this.TransportationTypeCode;
+        
+        CustomMessageProgressComponent
+            .ShowProgressBar(currRequestParams.PBId,
+                "שליחת בקשה העברה", true)
+            .then((res) => {
+                //this.ResponseData = res;
+                //this.OnMassageDisplayMethod();
+            }
+            ).catch((err) => {
+                this.ValidationErrorsList.push(err);
+            });
+
+
+        this._CourierMasterService.PostGatepassRequestMessage(currRequestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+            });
     }
 
     CancelButtonClicked() {

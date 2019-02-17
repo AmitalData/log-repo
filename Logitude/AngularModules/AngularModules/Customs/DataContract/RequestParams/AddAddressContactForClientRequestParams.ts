@@ -1,4 +1,4 @@
-﻿import {GenericRequestParams} from './GenericRequestParams';
+import {GenericRequestParams} from './GenericRequestParams';
 
 export class AddAddressContactForClientRequestParams extends GenericRequestParams  {
 
@@ -66,4 +66,3 @@ export class ClientsAddressCommunicationResult  {
     public CommunicationTypeName: string;
 
 }
-        
