@@ -40,6 +40,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string TypeCode  { get; set; }
        [DataMember]
        public string AGGridOptionsXML  { get; set; }
+       [DataMember]
+       public string BIReportFolderId  { get; set; }
    }
 
 }

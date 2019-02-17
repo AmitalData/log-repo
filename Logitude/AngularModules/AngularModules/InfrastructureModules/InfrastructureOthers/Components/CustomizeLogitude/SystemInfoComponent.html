@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .iwanttohover:hover {
         background: #DDE6F0;
@@ -65,7 +65,7 @@
                     <tr *ngIf="TemporalPackageVisibility" style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:210px;color:black"> <span>{{'TenantManagement.F.TemporalStartDate' | TextCodeTranslationPipe}} :</span></td>
-                        <td style="width:200px;color:black">{{Tenant.TemporalStartDate | DateTimeToDatePipe}} </td>
+                        <td style="width:200px;color:black">{{TemporalStartDate | DateTimeToDatePipe}} </td>
                         <td><div></div></td>
                     </tr>
 
@@ -73,7 +73,7 @@
                     <tr *ngIf="TemporalPackageVisibility" style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:210px;color:black"> <span>{{'TenantManagement.F.TemporalEndDate' | TextCodeTranslationPipe}} :</span></td>
-                        <td style="width:200px;color:black">{{Tenant.TemporalEndDate | DateTimeToDatePipe}}</td>
+                        <td style="width:200px;color:black">{{TemporalEndDate | DateTimeToDatePipe}}</td>
                         <td><div></div></td>
                     </tr>
 
@@ -101,7 +101,7 @@
                     <tr *ngIf="IsTrailVisibility" style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:210px;color:black"> <span>{{'TenantManagement.F.TrialStartDate' | TextCodeTranslationPipe}} :</span></td>
-                        <td style="width:200px;color:black"> {{Tenant.TrialStartDate | DateTimeToDatePipe}}</td>
+                        <td style="width:200px;color:black"> {{TrialStartDate | DateTimeToDatePipe}}</td>
                         <td><div></div></td>
                     </tr>
 
@@ -109,7 +109,7 @@
                         
                         <td style="width:5px"><div></div></td>
                         <td style="width:210px;color:black"> <span>{{'TenantManagement.F.TrialEndDate' | TextCodeTranslationPipe}} :</span></td>
-                        <td style="width:200px;color:black"> {{Tenant.TrialEndDate | DateTimeToDatePipe}}</td>
+                        <td style="width:200px;color:black"> {{TrialEndDate | DateTimeToDatePipe}}</td>
                         <td><div></div></td>
                     </tr>
 
@@ -124,21 +124,21 @@
 
                     <tr *ngIf="PaidVisibility" style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:210px;;color:black"> <span>{{'TenantManagement.F.PaidUntilDate' | TextCodeTranslationPipe}} :</span></td>
-                        <td style="width:200px;color:black"> {{Tenant.PaidUntilDate | DateTimeToDatePipe}} </td>
+                        <td style="width:210px;color:black"> <span>{{'TenantManagement.F.PaidUntilDate' | TextCodeTranslationPipe}} :</span></td>
+                        <td style="width:200px;color:black"> {{PaidUntilDate | DateTimeToDatePipe}} </td>
                         <td><div></div></td>
                     </tr>
 
                     <tr  style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:210px;;color:black"> <span>{{'General.F.UsedSpace' | TextCodeTranslationPipe}} : </span></td>
+                        <td style="width:210px;color:black"> <span>{{'General.F.UsedSpace' | TextCodeTranslationPipe}} : </span></td>
                         <td style="width:200px;color:black">{{UsedSpace}}</td>
                         <td><div></div></td>
                     </tr>
 
                     <tr *ngIf="BluesnapVisibility" style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:210px;;color:black"> <span> Bluesnap user ID :</span></td>
+                        <td style="width:210px;color:black"> <span> Bluesnap user ID :</span></td>
                         <td style="width:200px;color:black">{{BluesnapID}}</td>
                         <td><div></div></td>
                     </tr>
