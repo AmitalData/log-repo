@@ -27,12 +27,13 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Data.Entity.Core;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class APInvoiceValidator
     {
-        public static void Validate(APInvoicePM entityPM, IInvoiceContext myContext)
+        public static void Validate(APInvoicePM entityPM, IInvoiceContext myContext, string MainShipmentConcurrencyGUID = null)
         {
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
 
@@ -40,8 +41,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
 
             AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings
-                                                   where d.Id == entityPM.Tenant
-                                                   select d).FirstOrDefault();
+                                                     where d.Id == entityPM.Tenant
+                                                     select d).FirstOrDefault();
 
             bool isVatNumberMandatoryInAP = false;
             if (myAccountingSetting != null)
@@ -88,7 +89,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
 
                     else
-                    {                        
+                    {
                         double? invoiceAmount = (double)MethodHelper.Round(entityPM.AmountInInvoiceCurrency, 2);
 
                         if (invoiceAmount == 0 || invoiceAmount == null)
@@ -171,6 +172,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
 
                 ValidateMultiVatPercentages(entityPM, myAccountingSetting, allVats);
+                ValidateShipmentConcurrencyGUID(entityPM, MainShipmentConcurrencyGUID);
             }
 
             ValidateOnVoid(entityPM);
@@ -326,5 +328,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
+        private static void ValidateShipmentConcurrencyGUID(APInvoicePM entityPM, string MainShipmentConcurrencyGUID)
+        {
+            if (!string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) && !string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) && !string.IsNullOrEmpty(MainShipmentConcurrencyGUID))
+            {
+                if (!entityPM.ShipmentConcurrencyGUID.Equals(MainShipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(MainShipmentConcurrencyGUID))
+                {
+                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                    throw new OptimisticConcurrencyException(msg);
+                }
+            }
+        }
     }
 }

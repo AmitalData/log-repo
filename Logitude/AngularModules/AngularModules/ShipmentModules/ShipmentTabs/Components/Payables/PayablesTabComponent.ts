@@ -814,8 +814,13 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
+
+                    var iFields: any[] = [];
+                    iFields.push({ FieldName: "ShipmentConcurrencyGUID", FieldValue: this.EntityPM.ConcurrencyGUID });
+                    iFields.push({ FieldName: "ShipmentNewConcurrencyGUID", FieldValue: this.EntityPM.NewConcurrencyGUID });
+
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
+                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber, EntityFields: iFields });
 
                     let isEditComponentSaved = false;
                     cmpRef.instance.BackCompleted.subscribe(bk => {

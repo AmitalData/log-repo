@@ -82,6 +82,7 @@ export class EditComponent implements OnDestroy {
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
     }
 
+    private EntityFields: any[] = null;
     public Run(args: any) {
         this.EntityId = args['EntityId'];
         this.EntityPM = args['EntityPM'];
@@ -95,15 +96,19 @@ export class EditComponent implements OnDestroy {
         this.HasShortTitle = this.ObjectTable.HasShortTitle;
         this.HasMenuButtons = this.ObjectTable.HasMenuButtons;
         this.NavigationIds = args['NavigationIds'];
+        this.EntityFields = args['EntityFields'];
+
         if (this.NavigationIds) {
             this.NextPreviousVisible = true;
         }
+
         if (AppTool.IsNullOrEmpty(this.CurrentNavigatedIndex) && this.NavigationIds) {
             this.CurrentNavigatedIndex = 0;
             this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
             //this.PreviousButtonDisabled = true;
             this.SetNextPreviousButtonsEnablity();
         }
+
         if (this.EntityPM != null) {
             this.entityArgs.EntityPM = this.EntityPM;
             this.entityArgs.ObjectTableName = this.ObjectTableName;
@@ -125,8 +130,6 @@ export class EditComponent implements OnDestroy {
 
         this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible;
 
-
-
         // Split Component
         var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
         if (!AppTool.IsNullOrEmpty(feature)) { // granted
@@ -138,20 +141,24 @@ export class EditComponent implements OnDestroy {
                 this.IsSplitBtnVisible = true;
                 this.ShowWindowsOverEditComponent = true;
             }
-
-
         }
-
     }
 
     private LoadEntityPM() {
-
         this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((response: any) => {
             response.subscribe((res) => {
                 var pmResponse: ServiceResponse = res;
 
                 if (!pmResponse.HasError) {
                     this.EntityPM = pmResponse.Result;
+
+                    if (this.EntityFields) {
+                        this.EntityFields.forEach(itemField => {
+                            this.EntityPM[itemField["FieldName"]] = itemField["FieldValue"];
+                        });
+
+                        this.EntityPM.IsDirty = false;
+                    }
 
                     if (this.EntityPM) {
                         this.entityArgs.EntityPM = this.EntityPM;

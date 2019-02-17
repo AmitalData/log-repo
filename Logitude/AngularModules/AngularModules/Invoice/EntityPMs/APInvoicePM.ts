@@ -674,6 +674,16 @@ export class APInvoicePM {
     public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
        
 	 
+    private shipmentConcurrencyGUID: string;
+    public get ShipmentConcurrencyGUID() { return this.shipmentConcurrencyGUID; }
+    public set ShipmentConcurrencyGUID(newValue: string) { if (this.shipmentConcurrencyGUID != newValue) { this.shipmentConcurrencyGUID = newValue; this.MarkAsDirty("ShipmentConcurrencyGUID"); } }
+       
+	 
+    private shipmentNewConcurrencyGUID: string;
+    public get ShipmentNewConcurrencyGUID() { return this.shipmentNewConcurrencyGUID; }
+    public set ShipmentNewConcurrencyGUID(newValue: string) { if (this.shipmentNewConcurrencyGUID != newValue) { this.shipmentNewConcurrencyGUID = newValue; this.MarkAsDirty("ShipmentNewConcurrencyGUID"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		
