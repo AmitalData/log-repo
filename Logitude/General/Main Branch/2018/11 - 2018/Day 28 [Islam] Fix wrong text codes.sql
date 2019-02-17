@@ -174,3 +174,6 @@ update TextCodes set Code = 'MessagingStock.UpdatedByUserIdHelpText' where Code 
 delete from TextCodes where Code = 'AccountingSetting.CH.IsChronologicalDates'
 delete from TextCodes where Code = 'Customer.CH.BillToNameListLable'
 delete from TextCodes where Code = 'Participant.AccountingCardHelpText'
+delete from ObjectFields where FieldName = 'IsChronologicalDates'
+delete from TextCodes where Code like '%IsChronologicalDates%'
+
