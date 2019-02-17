@@ -7,7 +7,7 @@ import { IHeaderAngularComp  } from 'ag-grid-angular';
     template: `
         <div>
             <div *ngIf="params.enableMenu" #menuButton class="customHeaderMenuButton" (click)="onMenuClicked($event)">
-                <i class="fa {{params.menuIcon}}"></i></div> 
+                <i class="{{params.menuIcon}}"></i></div> 
             <div class="customHeaderLabel">{{params.displayName}}</div> 
             <div class="action-holders__sort-number action-holders__sorting">
                 <p id="sortingOrder{{colId}}"></p>
@@ -27,6 +27,7 @@ import { IHeaderAngularComp  } from 'ag-grid-angular';
             float: left;
             width: 7px;
             height: 32px;
+            margin: 0 0 0 3px;
         }
         .customHeaderMenuButton, 
         .customHeaderLabel, 
@@ -35,7 +36,7 @@ import { IHeaderAngularComp  } from 'ag-grid-angular';
         .customSortRemoveLabel 
         {
             float: left;
-            margin: 0 0 0 3px;
+            margin: 0 0 0 5px;
         }
 
             .customSortUpLabel {
