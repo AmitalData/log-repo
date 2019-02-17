@@ -114,7 +114,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     case "AVA":
                         {
-                            Update0001(theDecId, mySTBMessage.EventQty);
+                            UpdateAVA(theDecId, mySTBMessage.PackageQuantity);
                             unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
                             {
                                 Entname = "CFIFILEM",
@@ -161,7 +161,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             }
             return res;
         }
-        void Update0001(string theDecId, int EventQty)
+        void UpdateAVA(string theDecId, int EventQty)
         {
             string AcceptanceStatusCode = "";
             var totPackageQuantity = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages).Sum(p => p.PackageQuantity);
@@ -214,7 +214,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
             mySTBMessage.StatusDate = (DateTime)GetXElement(myXElementSTBMessage, "StatusDate");//<EventTime>2019-01-01T10:14:35.433269+02:00</EventTime>
-            //mySTBMessage.EventQty = (int)GetXElement(myXElementSTBMessage, "EventQty");//<EventQty>1298</EventQty>
+            mySTBMessage.PackageQuantity = (int)GetXElement(myXElementSTBMessage, "PackageQuantity");//<EventQty>1298</EventQty>
 
 
             return mySTBMessage;
@@ -237,15 +237,15 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
     class CourierHawbStatus
     {
 
-        public string CourierHawbNumber { get; internal set; }
-        public string CourierHawbDate { get; internal set; }
+        public string CourierHawbNumber { get; set; }
+        public string CourierHawbDate { get; set; }
         /// <summary>
         /// AVA- זמין
         //REL- יצא מהמסוף
         /// </summary>
-        public string StatusCode { get; internal set; }
-        public DateTime StatusDate { get; internal set; }
-        public int EventQty { get; internal set; }
+        public string StatusCode { get; set; }
+        public DateTime StatusDate { get; set; }
+        public int PackageQuantity { get; set; }
     }
     
 }
