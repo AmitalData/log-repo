@@ -1,4 +1,6 @@
-﻿using Logitude.Customs.BL.CloseTables;
+﻿//http://81.218.57.34:9094/Help/Api/POST-api-Courier-UpdateHawbStatus
+
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
@@ -99,31 +101,25 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 CourierHawbDate = GetOpenBaldarAwbDate(this._DeclarationPM),
                 MawbPrefix = _CourierMasterPM.AirlinePrefix ?? "",//יש לשלוח את Airline PRFIX)- 114
                 Mawb = CInt(_CourierMasterPM.MAWB),
-                //Awb8 = CInt(_CourierMasterPM.ShortHAWB),
+                
                 Hawb = _CourierMasterPM.HAWB ?? "",
-                //AirlineCode = customsAirline.AirlineCode ?? "",
+                
                 FlightNumber = CInt(_CourierMasterPM.FlightNumber),
+                DepartureDate= _CourierMasterPM.DepartureDate,// LandTime is not nullable ??
                 EstimatedArrivalDate = _CourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
                 PackageQuantity = DecNoOfPackags,
                 Weight = DecWeight,
                 GoodValueInUSD = DolarValue,
 
-                //StoreTypeReq = "67",//לפי טבלה B1                יש לשלוח תמיד 67
+                
                 Description = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
                 ImporterName = _DeclarationPM.ImporterName ?? "",
                 ImporterAddress = _DeclarationPM.ImporterAddress ?? "",
-                //CustomerPhone = _DeclarationPM.CasualImporterTel ?? "",
-                //                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
                 DistributionLine = "",
                 DistributionCompanyVat = "",
 
 
-                //DestLineDesc = "כללי",// - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
-                //BaldarMessageTime = DateTime.Now,
-                //DestLineCode = "9999999999",
                 DeclarationNumber = this._DeclarationPM.DeclarationNumber??"",
-                //CustomIkuv = this._DeclarationPM.CourierSuspentionReasonCode,
-                //Task 46455
                 CustomsSuspention = this._DeclarationPM.CourierSuspentionCode??"",
                 Preclearence = this._DeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
@@ -132,10 +128,6 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
             };
 
-            //if (_CourierMasterPM.DepartureDate.HasValue)
-            //{
-            //    courierHawbMamanModel.FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date;// fltdate is not nullable ??
-            //}
             return courierHawbMamanModel;
         }
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
@@ -194,7 +186,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
     {
 
         //https://docs.google.com/document/d/1bFMdrDnByDpvLcvE9H5eOfCAzbVdeoUypbzhwxbr0Po/edit#
-        //public string BaldarCode { get; set; }
+        
         public string CourierCompanyVat { get; set; }
         public string CourierHawbNumber { get; set; }
         public DateTime CourierHawbDate { get; set; }
@@ -202,12 +194,12 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
 
         public int Mawb { get; set; }
-        //public int Awb8 { get; set; }
+        
 
         public string Hawb { get; set; }
-        //public string AirlineCode { get; set; }
+        
         public int FlightNumber { get; set; }
-        public DateTime? FltDate { get; set; }
+        public DateTime? DepartureDate { get; set; }
         public DateTime? EstimatedArrivalDate { get; set; }
         public int PackageQuantity { get; set; }
         public decimal Weight { get; set; }
