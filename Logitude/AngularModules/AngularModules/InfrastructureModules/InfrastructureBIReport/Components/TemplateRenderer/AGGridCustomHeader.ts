@@ -74,7 +74,7 @@ export class AGGridCustomHeader implements IHeaderAngularComp  {
         return false; 
     }
     onMenuClicked() {
-        this.params.showColumnMenu(this.menuButton.nativeElement);
+        //this.params.showColumnMenu(this.menuButton.nativeElement);
     };
 
     onSortChanged() {
