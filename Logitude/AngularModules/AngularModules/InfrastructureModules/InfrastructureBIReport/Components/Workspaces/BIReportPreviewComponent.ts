@@ -150,7 +150,7 @@ export class BIReportPreviewComponent implements OnInit {
                             type: type,
                             cellRenderer: this.DateCellRenderer,
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" },
+                            headerComponentParams: { menuIcon: "fa fa-calendar" },
                             filter: 'agDateColumnFilter'
                             //sort: sortingDirction,
                         });
@@ -172,7 +172,7 @@ export class BIReportPreviewComponent implements OnInit {
                                 return pipe.transform(params.value, "N2");
                             },
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" }
+                            headerComponentParams: { menuIcon: "fa fa-list-ol" }
                         });
                     }
                     else if (type == "booleanColumn"){
@@ -193,7 +193,7 @@ export class BIReportPreviewComponent implements OnInit {
                                 }
                             },
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" }
+                            headerComponentParams: { menuIcon: "fa fa-check" }
                         });
                     }
                     else if (columns[i].Code == "Shipment Number") {
@@ -208,7 +208,7 @@ export class BIReportPreviewComponent implements OnInit {
                             Index: columns[i].Index,
                             type: type,
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" },
+                            headerComponentParams: { menuIcon: "fa fa-font" },
                             cellRendererFramework: EditShipmentLinkRendererComponent,
                             //cellRendererParams: {
                             //   
@@ -228,7 +228,7 @@ export class BIReportPreviewComponent implements OnInit {
                             Index: columns[i].Index,
                             type: type,
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" }
+                            headerComponentParams: { menuIcon: "fa fa-font" }
                         });
                     }
                 }
@@ -252,7 +252,7 @@ export class BIReportPreviewComponent implements OnInit {
         var datatype = "";
         switch (type) {
             case "Date":
-            case "Dimension":
+            case"Dimension":
             case "DateTime":
                 {
                     datatype = "dateColumn"; 
