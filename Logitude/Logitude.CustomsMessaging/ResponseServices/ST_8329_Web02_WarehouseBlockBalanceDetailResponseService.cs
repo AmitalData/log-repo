@@ -47,12 +47,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.LogicalPackagesQuantityBalance = customResponse.BlockDetails.LogicalPackagesQuantityBalance.ToString("N");
             this.MyResponseData.PhysicalPackagesQuantityBalance = customResponse.BlockDetails.PhysicalPackagesQuantityBalance.ToString("N2"); ;
             this.MyResponseData.Value = String.Format("{0:N2}", customResponse.BlockDetails.Value);
-            //this.MyResponseData.StorageEntryPortChargeBalance = String.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
-            //this.MyResponseData.StorageEntryPortChargeCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
-            //this.MyResponseData.StorageEntryTransportBalance = String.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
-            //this.MyResponseData.StorageEntryTransportCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
-            //this.MyResponseData.StorageEntryInsuranceBalance = String.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
-            //this.MyResponseData.StorageEntryInsuranceCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
+            this.MyResponseData.StorageEntryPortChargeBalance = String.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            this.MyResponseData.StorageEntryPortChargeCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
+            this.MyResponseData.StorageEntryTransportBalance = String.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            this.MyResponseData.StorageEntryTransportCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
+            this.MyResponseData.StorageEntryInsuranceBalance = String.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            this.MyResponseData.StorageEntryInsuranceCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
             //Get Block Special Activities
             if (customResponse.BlockDetails.BlockSpecialActivities != null)
             {
