@@ -57,12 +57,14 @@ export class AppTool {
             calculatedPrefix = calculatedPrefix.replace("[YYYY]", yyyy);
             calculatedPrefix = calculatedPrefix.replace("[YY]", yy);
             calculatedPrefix = calculatedPrefix.replace("[B]", 'BBBBB');
+            calculatedPrefix = calculatedPrefix.replace("[MM]", mm);
         }
 
         if (!AppTool.IsNullOrEmpty(suffix)) {
             calculatedSuffix = calculatedSuffix.replace("[YYYY]", yyyy);
             calculatedSuffix = calculatedSuffix.replace("[YY]", yy);
             calculatedSuffix = calculatedSuffix.replace("[B]", 'BBBBB');
+            calculatedSuffix = calculatedSuffix.replace("[MM]", mm);
         }
 
         let totalNumberLength = calculatedNumber.length;

@@ -51,7 +51,7 @@ export class BIReportPreviewComponent implements OnInit {
     public HasDeletionFeature = false;
     public columnTypes;
     public context;
-
+    public CountText: string; 
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
 
@@ -126,6 +126,14 @@ export class BIReportPreviewComponent implements OnInit {
             //    force: true,
             //};
             this.agGrid.api.refreshCells();
+            var count = this.agGrid.api.getDisplayedRowCount();
+            if (count > 50000) {
+                this.CountText = "Showing the first 50,000 rows, scroll down or download the excel to view all."
+            }
+            else {
+                this.CountText = "Number of rows: " + count;
+            }
+
         }
     }
     public BuildColumns(arg: BIReportXMLData) {
@@ -150,7 +158,7 @@ export class BIReportPreviewComponent implements OnInit {
                             type: type,
                             cellRenderer: this.DateCellRenderer,
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" },
+                            headerComponentParams: { menuIcon: "fa fa-calendar" },
                             filter: 'agDateColumnFilter'
                             //sort: sortingDirction,
                         });
@@ -172,7 +180,7 @@ export class BIReportPreviewComponent implements OnInit {
                                 return pipe.transform(params.value, "N2");
                             },
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" }
+                            headerComponentParams: { menuIcon: "fa fa-list-ol" }
                         });
                     }
                     else if (type == "booleanColumn"){
@@ -193,7 +201,7 @@ export class BIReportPreviewComponent implements OnInit {
                                 }
                             },
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" }
+                            headerComponentParams: { menuIcon: "fa fa-check" }
                         });
                     }
                     else if (columns[i].Code == "Shipment Number") {
@@ -208,7 +216,7 @@ export class BIReportPreviewComponent implements OnInit {
                             Index: columns[i].Index,
                             type: type,
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" },
+                            headerComponentParams: { menuIcon: "fa fa-text-height" },
                             cellRendererFramework: EditShipmentLinkRendererComponent,
                             //cellRendererParams: {
                             //   
@@ -228,7 +236,7 @@ export class BIReportPreviewComponent implements OnInit {
                             Index: columns[i].Index,
                             type: type,
                             headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-bars" }
+                            headerComponentParams: { menuIcon: "fa fa-text-height" }
                         });
                     }
                 }
@@ -252,7 +260,6 @@ export class BIReportPreviewComponent implements OnInit {
         var datatype = "";
         switch (type) {
             case "Date":
-            case "Dimension":
             case "DateTime":
                 {
                     datatype = "dateColumn"; 
@@ -289,6 +296,7 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
+        this.CountText = "";
         this.StartBusyIndicator();
         this.RunReportCommand.emit({ MyData: arg.DWQueryData,FirstTime : true });
     }
@@ -297,6 +305,7 @@ export class BIReportPreviewComponent implements OnInit {
         return datepipe.transform(params.value, "SD");
     }
     public methodFromParent(cell) {
+        this.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
             if (!myResult.HasError) {
                 var Id = myResult.Result;
@@ -306,6 +315,8 @@ export class BIReportPreviewComponent implements OnInit {
                         cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'Shipment', BackButtonLabel: "BI Report" });
                     });
             }
+
+            this.StopBusyIndicator();
         });
     }
     //#endregion
@@ -560,8 +571,8 @@ export class BIReportPreviewComponent implements OnInit {
                         var temp = [];
                         temp.push(MyFilter);
                         this.SelectedFiltersDataSource = temp;
-                        this.LoadBIReportData();
-                    }                  
+                    }
+                    this.LoadBIReportData();
                 }
             });
         });
@@ -589,7 +600,7 @@ export class BIReportPreviewComponent implements OnInit {
     OnRunReportComplete(MyData) {
         if (MyData == "ValidationError") {
             this.HasValidationError = true;
-
+            this.rowData = [];
            this.StopBusyIndicator();
         }
         else {

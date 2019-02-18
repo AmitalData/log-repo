@@ -48,6 +48,8 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.TypeCode).HasColumnName("TypeCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.AGGridOptionsXML).HasColumnName("AGGridOptionsXML").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.BIReportFolderId).HasColumnName("BIReportFolderId").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }
