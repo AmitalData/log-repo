@@ -13,6 +13,11 @@ using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -118,12 +123,37 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARInvoicePaymentRepository entityRepository = new ARInvoicePaymentRepository(repository.context);
             ARInvoicePaymentQuery entityQuery = new ARInvoicePaymentQuery(entityRepository);
             payment.PaymentInvoices = entityQuery.GetARPaymentInvoicePMsForPayment(payment.Id, tenant);
-            
+
+            GetGLAccountFields(payment);
+
             ARPaymentPM securedPM = new ARPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "ARPayment", tenant);
 
+
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
+
+        void GetGLAccountFields(ARPaymentPM paymentPM)
+        {
+            GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+            paymentPM.GLAccountId = glaccount.Id;
+            paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+        }
+
+        private GLAccountPM getGLAccount(string billToId, int tenant)
+        {
+            GLAccountPM glaAccount = null;
+            CardRepository cardRep = new CardRepository(tenant);
+            Card card = cardRep.GetSingleCard(billToId, tenant);
+            if (card != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+            }
+
+            return glaAccount;
+        }
+
 
 
         public ARPayment GetSingleARPayment(string id, int tenant)

@@ -1,3 +1,8 @@
+import { ReconcileEventManager } from './../../../../Accounting/Utilities/ReconcileEventManager';
+import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
+import { LedgerTransactionPM } from './../../../../Accounting/EntityPMs/LedgerTransactionPM';
+import { LedgerTransactionExtendedListService } from './../../../../Accounting/Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { RegionList } from './../../../../Common/EntityLists/RegionList';
 import { EventEmitter, Output } from '@angular/core';
 import { EntityListService } from './../../../../Infrastructure/Services/EntityListService';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -47,6 +52,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
     public EntityPM: ARPaymentPM;
+    public glAccount: GLAccountPM;
     public ObjectTableName = "ARPayment";
     public DataContext = this;
     public ItemsSource: ObservableCollection;
@@ -61,8 +67,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
 
+    _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
+
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
+        console.log("[FULL ACCOUNING ARPayment]");
 
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -96,6 +105,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.ComputeRelativeRateDate();
         this.Listen();
         this.CheckARPaymentCashBook();
+
         if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.LoadCurrencyRates();
         }
@@ -104,12 +114,96 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.LoadData();
         }
 
+        this.GetData();
+
+
     }
 
     ngOnInit() {
         this.LoadPaymentMethods();
     }
 
+    //#region abdullah code
+    _loading: boolean = false;
+    GetData(){
+        if(this.EntityPM.GLAccountId){
+            console.log(">>> Getting transactions for Account: ", this.EntityPM.GLAccountId);
+
+            this._loading = true;
+            this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id,this.EntityPM.GLAccountId).subscribe(myResult => {
+                this._loading = false;
+
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError)
+                {
+
+                    console.log();
+
+                    var transactions = mm.Result.Result;
+                    var tempItemSource: any[] = [];
+                    if (transactions != null) {
+                        for (var i = 0; i < transactions.length; i++) {
+                            var line = new TransactionLineModel(transactions[i], this);
+                            // var line = transactions;
+                            tempItemSource.push(line);
+                        }
+                        this.TransactionsList.InsertCollection(tempItemSource);
+                    }
+                }
+                else
+                {
+                }
+            });
+        }else{
+            console.error("No GLAccount for this payment ", this.EntityPM);
+
+        }
+    }
+
+    CalculateTotals(){
+
+    }
+    OpenSource(id: string, sourceTypeCode: string) {
+
+        var tableName = AccountingEntityHelper.getEntityObjectTableName(sourceTypeCode);;
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: id,
+                    ObjectTableName: tableName
+                });
+            });
+
+    }
+    OpenJournal(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal', BackButtonLabel: 'Back' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+    OpenReco(recoId) {
+        if (!AppTool.IsNullOrEmpty(recoId)) {
+            // this.showAlert = false;
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        // SessionLocator.CurrentSession.CloseCurrentWindow();
+                    });
+                });
+
+        }
+    }
+    //#endregion
+
+    //#region old code
     public AllMethods: AccountingPaymentMethodList[] = [];
     LoadPaymentMethods() {
         var myService: AccountingPaymentMethodListService = new AccountingPaymentMethodListService();
@@ -1406,6 +1500,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         this.RequestedCommandCode = null;
     }
+
+    //#endregion
 }
 export class ARPaymentInvoiceArgs extends BaseComponent {
     public EntityPM: ARPaymentInvoicePM = null;
@@ -2042,5 +2138,255 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
         });
 
         logWindow.Show('./InvoiceModules/ARPayment/Components/EditTabs/EditMultiCurrency');
+    }
+}
+
+export class TextStore{
+    static open: string =  TextCodeTranslator.Translate('Accounting.O.ARP.Open');
+    static Closed: string =  TextCodeTranslator.Translate('Accounting.O.ARP.Closed');
+    static partiallyOpened: string =  TextCodeTranslator.Translate('Accounting.O.ARP.partiallyOpened');
+
+
+}
+
+export class TransactionLineModel extends BaseComponent {
+    public DataContext = this;
+    public LedgerTransactionPM: LedgerTransactionPM = null;
+    public ObjectTableName = "LedgerTransaction";
+    public isRTL: boolean = false;
+
+    constructor(
+        private ledgerTransaction: LedgerTransactionPM,
+        private parent: ARPaymentDetailsFullAccountingTab
+    ) {
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.EntityPM = this.parent.EntityPM;
+        this.LedgerTransactionPM = ledgerTransaction;
+
+
+
+        this.CalculateFields();
+    }
+
+    CalculateFields(){
+        this.IconCode = AccountingEntityHelper.getEntityIcon(this.LedgerTransactionPM.SourceTypeCode);
+
+        this.Status = this.GetStatus();
+        this.OriginalAmount = this.CalculateOriginalAmount();
+        this.OriginalAmountCurrency = this.CalculatOriginalCurruncy();
+    }
+
+    // Properties
+    public IconCode: string;
+    public ReconciliationNumber: string;
+
+
+    private _OriginalAmount : number;
+    public get OriginalAmount() : number {
+        return this._OriginalAmount;
+    }
+    public set OriginalAmount(v : number) {
+        this._OriginalAmount = v;
+    }
+
+
+    private _OriginalAmountCurrency : string;
+    public get OriginalAmountCurrency() : string {
+        return this._OriginalAmountCurrency;
+    }
+    public set OriginalAmountCurrency(v : string) {
+        this._OriginalAmountCurrency = v;
+    }
+
+
+
+    // get OriginalAmount() { return this.CalculateOriginalAmount(); }
+    // get OriginalAmountCurrency() { return this.CalculatOriginalCurruncy(); }
+
+
+
+    private _isChecked : boolean;
+    public get IsChecked() : boolean {
+        if(this.IsReconciled){
+            return true;
+        }else{
+            return this._isChecked;
+        }
+    }
+    public set IsChecked(v : boolean) {
+        this._isChecked = v;
+    }
+
+
+    get IsReconciled() { return this.LedgerTransactionPM.IsReconciled; }
+    set IsReconciled(value: boolean) {
+        if (this.LedgerTransactionPM.IsReconciled != value) {
+            this.LedgerTransactionPM.IsReconciled = value;
+        }
+    }
+
+    get AmountToReconcile() { return this.LedgerTransactionPM.AmountToReconcile; }
+    set AmountToReconcile(value: number) {
+        if (this.LedgerTransactionPM.AmountToReconcile != value) {
+            this.LedgerTransactionPM.AmountToReconcile = value;
+
+
+                // if (this.OpenAmount < 0) { // debit
+                //     if (value < this.OpenAmount || value > 0) {
+                //         this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
+                //         this.parent.IsEntityValid = false;
+                //         this.isLineValid = false;
+                //     } else {
+                //         this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, true, "");
+                //         this.parent.IsEntityValid = true;
+                //         this.isLineValid = true;
+
+                //     }
+                // } else { // credit
+                //     if (value > this.OpenAmount || value < 0) {
+                //         this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
+                //         this.parent.IsEntityValid = false;
+                //         this.isLineValid = false;
+
+                //     } else {
+                //         this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, true, "");
+                //         this.parent.IsEntityValid = true;
+                //         this.isLineValid = true;
+                //     }
+                // }
+
+                //WI26522
+                // if (this.parent.IsEntityValid) {
+                //     if (Math.abs(value) > Math.abs(this.OpenAmount)) {
+                //         this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
+                //         this.parent.IsEntityValid = false;
+                //         this.isLineValid = false;
+
+                //     } else {
+                //         this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, true, "");
+                //         this.parent.IsEntityValid = true;
+                //         this.isLineValid = true;
+                //     }
+                // }
+
+            this.parent.CalculateTotals();
+        }
+
+    }
+
+
+    private _Status : string;
+    public get Status() : string {
+        return this._Status;
+    }
+    public set Status(v : string) {
+        this._Status = v;
+    }
+
+
+
+
+
+    //#region Other Properties
+    get Id() { return this.LedgerTransactionPM.Id; }
+    get Tenant() { return this.LedgerTransactionPM.Tenant; }
+    get AccountingDate() { return this.LedgerTransactionPM.AccountingDate; }
+    get DocumentDate() { return this.LedgerTransactionPM.DocumentDate; }
+    get JournalNumber() { return this.LedgerTransactionPM.JournalNumber; }
+    get Source() { return this.LedgerTransactionPM.Source; }
+    get SourceType() { return this.LedgerTransactionPM.SourceType; }
+    get SourceId() { return this.LedgerTransactionPM.SourceId; }
+    get DueDate() { return this.LedgerTransactionPM.DueDate; }
+    get LocalAmountCredit() { return this.LedgerTransactionPM.LocalAmountCredit; }
+    get LocalAmountDebit() { return this.LedgerTransactionPM.LocalAmountDebit; }
+    get ForeignAmountCredit() { return this.LedgerTransactionPM.ForeignAmountCredit; }
+    get ForeignAmountDebit() { return this.LedgerTransactionPM.ForeignAmountDebit; }
+    get OpenAmount() { return this.LedgerTransactionPM.OpenAmount; }
+    get OpenAmountCurrencyCode() { return this.LedgerTransactionPM.OpenAmountCurrencyCode; }
+    get OpenAmountCurrencySign() { return this.LedgerTransactionPM.OpenAmountCurrencySign; }
+    get CurrencyId() { return this.LedgerTransactionPM.CurrencyId; }
+    get Reference1() { return this.LedgerTransactionPM.Reference1; }
+    get Reference2() { return this.LedgerTransactionPM.Reference2; }
+    get Reference3() { return this.LedgerTransactionPM.Reference3; }
+    get Notes() { return this.LedgerTransactionPM.Notes; }
+    get IsPartial() { return this.OpenAmount != this.AmountToReconcile; }
+    get OpenAmountCurrencyId() { return this.LedgerTransactionPM.OpenAmountCurrencyId; }
+    get SourceTypeCode() { return this.LedgerTransactionPM.SourceTypeCode; }
+    get SourceNumber() { return this.LedgerTransactionPM.SourceNumber; }
+    get GroupNumber() { return this.LedgerTransactionPM.GroupHash; }
+    get RecoNumber() { return this.LedgerTransactionPM.RecoNumber; }
+    get ReconciliationId() { return this.LedgerTransactionPM.ReconciliationId; }
+
+    //#endregion
+
+    GetStatus() {
+        var __s = "";
+
+        if (this.OriginalAmount == this.OpenAmount)
+            __s = TextStore.open;
+        else if (0 == this.OpenAmount)
+            __s = TextStore.Closed;
+        else
+            __s = TextStore.partiallyOpened;
+
+        return __s;
+    }
+    GetStatusColor(){
+        var _color = 'black';
+        if (this.OriginalAmount == this.OpenAmount)
+            _color = 'green';
+        else if (0 == this.OpenAmount)
+            _color = 'black';
+        else
+            _color = 'orange';
+        return _color;
+    }
+
+    CalculateOriginalAmount() {
+        var transaction = this.LedgerTransactionPM;
+
+        if (!AppTool.IsNullOrEmpty(this.parent.EntityPM.GLAccountRecoMethodCode)) {
+
+            if (this.parent.EntityPM.GLAccountRecoMethodCode == "0") { // 0-local currency
+
+                if (transaction['LocalAmountCredit'] == 0) {
+                    return transaction['LocalAmountDebit'];
+                } else {
+                    return -1 * transaction['LocalAmountCredit'];
+                }
+
+            } else if (this.parent.EntityPM.GLAccountRecoMethodCode == "1") { // 1-foreign currency
+
+                if (transaction['ForeignAmountCredit'] == 0) {
+                    return transaction['ForeignAmountDebit'];
+                } else {
+                    return -1 * transaction['ForeignAmountCredit'];
+                }
+
+            }
+
+        }
+    }
+    CalculatOriginalCurruncy() {
+        //
+        // [i] copied from list template
+        //
+
+        if (!AppTool.IsNullOrEmpty(this.parent.EntityPM.GLAccountRecoMethodCode)) {
+            // this code was copied to reconcile window, if it need change, please chenge it in reconcile window too
+            if (this.parent.EntityPM.GLAccountRecoMethodCode == "0") { // 0-local currency
+
+                // local
+                return SessionLocator.TenantPM.CurrencySign;
+
+            } else if (this.parent.EntityPM.GLAccountRecoMethodCode == "1") { // 1-foreign currency
+
+                // foreign
+                return this.ledgerTransaction.CurrencySign;
+
+            }
+
+        }
     }
 }
