@@ -200,6 +200,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactShipmentTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateMoveTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateBrancheDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
