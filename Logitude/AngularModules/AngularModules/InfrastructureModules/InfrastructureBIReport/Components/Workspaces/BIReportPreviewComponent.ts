@@ -54,7 +54,6 @@ export class BIReportPreviewComponent implements OnInit {
     public CountText: string; 
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
-
     }
     ngOnInit() {
         this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
@@ -103,7 +102,7 @@ export class BIReportPreviewComponent implements OnInit {
             });
         }
     }
-    public UpdateAGGrid(arg: BIReportXMLData) {
+    public UpdateAGGrid(arg: BIReportXMLData, msg = null) {
         var sortsList = [];
         if (arg.BITabularViewSettings != null && arg.BITabularViewSettings.Columns != null) {
             arg.BITabularViewSettings.Columns.forEach(item => {
@@ -127,7 +126,7 @@ export class BIReportPreviewComponent implements OnInit {
             //};
             this.agGrid.api.refreshCells();
             var count = this.agGrid.api.getDisplayedRowCount();
-            if (count > 50000) {
+            if (count > 50000 || msg!= null) {
                 this.CountText = "Showing the first 50,000 rows, scroll down or download the excel to view all."
             }
             else {
@@ -598,15 +597,15 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public  HasValidationError = false; 
     OnRunReportComplete(MyData) {
-        if (MyData == "ValidationError") {
+        if (MyData.Msg == "ValidationError") {
             this.HasValidationError = true;
             this.rowData = [];
            this.StopBusyIndicator();
         }
         else {
             this.HasValidationError = false;
-            this.rowData = MyData;
-            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
+            this.rowData = MyData.rowData;
+            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, "MT5000"), 500);
             this.StopBusyIndicator();
         }
        
