@@ -54,12 +54,12 @@ import { IHeaderAngularComp  } from 'ag-grid-angular';
     ]
 })
 export class AGGridCustomHeader implements IHeaderAngularComp  {
-    private params: any;
-    private ascSort: string;
+    public params: any;
+    public ascSort: string;
     public colId;
     public sortNumber = 0;
-    private descSort: string;
-    private noSort: string;
+    public descSort: string;
+    public noSort: string;
 
     @ViewChild('menuButton', {read: ElementRef}) public menuButton;
 
