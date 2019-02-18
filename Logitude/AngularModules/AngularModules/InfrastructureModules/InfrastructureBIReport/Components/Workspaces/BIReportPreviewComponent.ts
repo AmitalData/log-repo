@@ -126,7 +126,7 @@ export class BIReportPreviewComponent implements OnInit {
             //};
             this.agGrid.api.refreshCells();
             var count = this.agGrid.api.getDisplayedRowCount();
-            if (count > 50000 || msg!= null) {
+            if (count > 50000 || msg == "MT5000") {
                 this.CountText = "Showing the first 50,000 rows, scroll down or download the excel to view all."
             }
             else {
@@ -605,7 +605,7 @@ export class BIReportPreviewComponent implements OnInit {
         else {
             this.HasValidationError = false;
             this.rowData = MyData.rowData;
-            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, "MT5000"), 500);
+            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg), 500);
             this.StopBusyIndicator();
         }
        
