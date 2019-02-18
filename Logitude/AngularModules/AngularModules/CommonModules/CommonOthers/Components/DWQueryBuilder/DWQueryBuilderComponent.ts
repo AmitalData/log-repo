@@ -55,6 +55,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     HasChanges: boolean = false;
     IsBIReportWorkspace: boolean = false;
     IsBIReportEditScreen: boolean = false;
+    FolderId: string;
     public SelectedFiltersDataSourceChanged: any;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper;
 
@@ -181,6 +182,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.QID = args.DWQueryId;
         this.IsBIReportWorkspace = args.IsBIReportWorkspace;
         this.IsBIReportEditScreen = args.IsBIReportEditScreen;
+        this.FolderId = args.FolderId;
+
         if (this.QID) {
             this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
                 if (!myResult.HasError) {
