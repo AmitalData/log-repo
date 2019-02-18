@@ -33,6 +33,7 @@ export class BIReportPreviewComponent implements OnInit {
     public EntityPM: BIReportPM = null;
     public EntityId: string;
     public DWQueryId: string;
+    public FolderId: string;
     public DWQueryData: DWQueryData;
     SelectedFiltersDataSource: any[] = [];
     public _DWSubQueryPMService: DWSubQueryPMService;
@@ -54,7 +55,6 @@ export class BIReportPreviewComponent implements OnInit {
     public CountText: string; 
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
-
     }
     ngOnInit() {
         this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
@@ -75,6 +75,7 @@ export class BIReportPreviewComponent implements OnInit {
         this.InitializeServices();
         this.DWQueryId = args['DWQueryId'];
         this.EntityId = args['EntityId'];
+        this.FolderId = args['FolderId'];
     }
     InitializeServices() {
         this._InfrastructureDomainService = new InfrastructureDomainService();
@@ -103,7 +104,7 @@ export class BIReportPreviewComponent implements OnInit {
             });
         }
     }
-    public UpdateAGGrid(arg: BIReportXMLData) {
+    public UpdateAGGrid(arg: BIReportXMLData, msg = null) {
         var sortsList = [];
         if (arg.BITabularViewSettings != null && arg.BITabularViewSettings.Columns != null) {
             arg.BITabularViewSettings.Columns.forEach(item => {
@@ -127,7 +128,7 @@ export class BIReportPreviewComponent implements OnInit {
             //};
             this.agGrid.api.refreshCells();
             var count = this.agGrid.api.getDisplayedRowCount();
-            if (count > 50000) {
+            if (count > 50000 || msg == "MT5000") {
                 this.CountText = "Showing the first 50,000 rows, scroll down or download the excel to view all."
             }
             else {
@@ -462,6 +463,7 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.Title = windowTitle;
         var windowArgs: any = {};
         windowArgs.DWQueryId = this.DWQueryId;
+        windowArgs.FolderId = this.FolderId;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
@@ -598,15 +600,15 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public  HasValidationError = false; 
     OnRunReportComplete(MyData) {
-        if (MyData == "ValidationError") {
+        if (MyData.Msg == "ValidationError") {
             this.HasValidationError = true;
             this.rowData = [];
            this.StopBusyIndicator();
         }
         else {
             this.HasValidationError = false;
-            this.rowData = MyData;
-            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
+            this.rowData = MyData.rowData;
+            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg), 500);
             this.StopBusyIndicator();
         }
        

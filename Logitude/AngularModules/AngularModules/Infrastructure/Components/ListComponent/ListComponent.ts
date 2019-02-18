@@ -1451,6 +1451,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public set DestroyMe(val) {
         this._DestroyMe = val;
     }
+
     onRowSelected($event) {
         if (this.listArgs.SuppressOnRowSelected == true) {
             console.log("SuppressOnRowSelected");
@@ -1488,7 +1489,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     var myCodes: string[] = [];
                     myCodes.push("EAWB");
                     myCodes.push("BUBK");
-
+                    
                     if (FeatureLocator.IsPackageOneOf(myCodes) && (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master")) {
 
                         var isFullWizard = false;
@@ -1529,7 +1530,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             this.OnBackFromEdit(selectedEntityId, $event)
                         });
                     }
-
+                    
                     else if (!AppTool.IsNullOrEmpty(this.SelectedQuery.EditWizardComponentPath)) {
                         var windowArgs: any = {};
                         windowArgs.EntityId = entityList.Id;
@@ -1616,7 +1617,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 this.OnBackFromEdit(selectedEntityId, $event)
                             });
                         }
-
+                        
                         else if (this.ObjectTableName == "Customs.CourierMaster") {
                                 var windowArgs: any = {};
                                 this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
@@ -1977,6 +1978,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                         }
                     }
 
+                    else if (this.ObjectTableName == "BIReport") {
+                        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({ DWQueryId: $event.rowData.DWQueryId, ObjectTableName: 'BIReport', EntityList: $event.rowData, EntityId: $event.rowData.Id });
+                            });
+                    }
+
                     else {
 
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
@@ -2003,6 +2012,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //SessionLocator.CurrentSession.StopBusyIndicator();
         }
     }
+
     public MyScrollTop: number = 0;
     public SelectedItem: any;
     public MySelectedRowIndex: number;
@@ -2253,7 +2263,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                 return;
             }
 
-
             if (this.TenantPM.Id != 0 && this.ObjectTableName == "Port") {
 
 
@@ -2317,6 +2326,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             logWindow.NewWizardArgs = { IsNewEntity: true };
 
             switch (this.ObjectTableName) {
+                case "BIReport": {
+                    logWindow.Width = 1200;
+                    logWindow.Height = 820;
+                    break;
+                }
+
                 case "Customs.Vehicle":
                     {
                         logWindow.Width = 1300;
@@ -2448,6 +2463,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             //var windowTitle = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             var str = FinalText;
 
+            if (this.ObjectTableName == "BIReport") {
+                str = "Query Builder";
+            }
+
             if (this.ObjectTableName == "Currency") {
                 str = TextCodeTranslator.Translate("General.B.Add") + " Currency";
             }
@@ -2470,6 +2489,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
 
             else {
+                if (this.ObjectTableName == "BIReport") {
+                    var windowArgs: any = {};
+                    windowArgs.IsBIReportWorkspace = true;
+                    windowArgs.FolderId = this.listArgs.BIReportFolderId;
+                    logWindow.WindowArgs = windowArgs;
+                }
 
                 if (this.ObjectTableName == "Questionnaire" || this.ObjectTableName == "CustomerFieldsUpdateSetting") {
                     var windowArgs: any = {};
@@ -2478,7 +2503,24 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
             }
 
-            logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
+            if (this.ObjectTableName == "BIReport") {
+                logWindow.ComponentLoaded.subscribe(s => {
+                    logWindow.WindowClosed.subscribe(d => {
+                        if (s != null && d != "cancel") {
+                            SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run({ DWQueryId: s.QID, ObjectTableName: 'BIReport', EntityId: null, FolderId: this.listArgs.BIReportFolderId });
+                                });
+                        }
+                    });
+                });
+            }
+
+            else {
+                logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
+            }
+
             logWindow.Show(componentPath);
         }
 
@@ -2525,8 +2567,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
     private OnNewEntityWindowClosed($event: any) {
-        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
+        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });        
     }
+
     ShowIt: boolean = true;
     ImportEntitiesCommand() {
         var windowTitle = "Add " + this.ObjectTableName;

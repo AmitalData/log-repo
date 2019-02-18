@@ -19,7 +19,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 	    string dbms;
         public BIReportFolderMap()
         { 
-				this.ToTable(" BIReportFolders");
+				this.ToTable("BIReportFolders");
 		
 		    this.HasKey(t => new { t.Id });
 	 

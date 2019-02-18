@@ -60,7 +60,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
     public class ImporterDepositionController : ApiController
     {
-        public HttpResponseMessage PostImporterDepositions(ImporterDepositionAM importerDepositionAM)
+        public HttpResponseMessage PostImporterDeposition(ImporterDepositionAM importerDepositionAM)
         {
             try 
             {
