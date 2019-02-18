@@ -33,6 +33,7 @@ export class BIReportPreviewComponent implements OnInit {
     public EntityPM: BIReportPM = null;
     public EntityId: string;
     public DWQueryId: string;
+    public FolderId: string;
     public DWQueryData: DWQueryData;
     SelectedFiltersDataSource: any[] = [];
     public _DWSubQueryPMService: DWSubQueryPMService;
@@ -74,6 +75,7 @@ export class BIReportPreviewComponent implements OnInit {
         this.InitializeServices();
         this.DWQueryId = args['DWQueryId'];
         this.EntityId = args['EntityId'];
+        this.FolderId = args['FolderId'];
     }
     InitializeServices() {
         this._InfrastructureDomainService = new InfrastructureDomainService();
@@ -461,6 +463,7 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.Title = windowTitle;
         var windowArgs: any = {};
         windowArgs.DWQueryId = this.DWQueryId;
+        windowArgs.FolderId = this.FolderId;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');

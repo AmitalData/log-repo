@@ -119,6 +119,7 @@
     <Compile Include="EntityQueryServices\LBPTeamMemberQueryService.cs" />
     <Compile Include="EntityQueryServices\TeamQueryService.cs" />
     <Compile Include="EntityUpdateServices\BatchTaskExecutionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BIReportFolderUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BusinessRoleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\FeatureToggleUpdateService.cs" />
