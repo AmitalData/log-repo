@@ -6,6 +6,8 @@
                 <li id="{{'Report' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'Report'" (click)="SelectedItem = 'Report'">Reports</li>
 
                 <li id="{{'BI' | IdGeneratorPipe}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BI'" (click)="SelectedItem = 'BI'">BI</li>
+
+                <li id="{{'BF' | IdGeneratorPipe}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BF'" (click)="SelectedItem = 'BF'">BI Folder</li>
             </ul>
         </td>
     </tr>
@@ -24,6 +26,10 @@
 
             <div class="CellContent" [hidden]="SelectedItem != 'BI'">
                 <div LocationDirective Code="BI"></div>
+            </div>
+
+            <div class="CellContent" [hidden]="SelectedItem != 'BF'">
+                <div LocationDirective Code="BF"></div>
             </div>
         </td>
     </tr>

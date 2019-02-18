@@ -37,7 +37,7 @@ or  FieldName = 'OperationalCloseDate'or  FieldName = 'AccountingCloseDate'or  F
 or  FieldName = 'AccountedReceivablesInProfitCurrency'or  FieldName = 'OpenPayablesInLocalCurrency'or  FieldName = 'OpenPayablesInProfitCurrency' or  FieldName = 'AccountedPayablesInLocalCurrency'or  FieldName = 'AccountedPayablesInProfitCurrency' or    FieldName='TEU'or FieldName='ValueOfGoods'or FieldName='ValueOfGoodsCurrencyId' or FieldName='FirstPickupETA'or FieldName='FirstPickupETD'  
 or FieldName = 'ProjectNumber' or FieldName = 'CustomerReference1' or FieldName = 'CustomerReference2'  or FieldName = 'ShipperReference1' or FieldName = 'ShipperReference2'  or FieldName = 'ConsigneeReference1' or FieldName = 'ConsigneeReference2'  or FieldName = 'AgentReference1' or FieldName = 'AgentReference2'   or FieldName = 'AMSBL' or FieldName = 'FreightPrepaidCollectId'  or FieldName = 'OtherPrepaidCollectId'   or FieldName = 'MainHarmonize'
 or FieldName = 'ForwarderPartnerId' or FieldName = 'CreatedByUserId' or FieldName = 'CustomAgentExportId'  or FieldName = 'CustomAgentImportId'  or FieldName = 'CustomAgentExportId' or FieldName = 'WarehouseLegWarehouseId' or FieldName = 'IsCancelled' 
-   or FieldName='StatusDate' or FieldName='CustomsDeclarationNumber' or FieldName='CancelledDate'  or FieldName='FirstOperationalCloseDate' or FieldName='GrossWeightPerTon'  or FieldName='EstimatedFinalArrivalDate' or FieldName='ActualFinalArrivalDate'  or FieldName='Routing' or FieldName='DescriptionOfGoods' or FieldName='PreCarriageETD' 
+   or FieldName='StatusDate' or FieldName='CustomsDeclarationNumber' or FieldName='CancelledDate'  or FieldName='FirstOperationalCloseDate' or FieldName='GrossWeightPerTon'  or FieldName='EstimatedFinalArrivalDate' or FieldName='ActualFinalArrivalDate'  or FieldName='Routing' or FieldName='DescriptionOfGoods' or FieldName='PreCarriageETD' or FieldName='MoveTypeId' 
 )
 
 
@@ -48,4 +48,7 @@ or FieldName='BookingConfirmationNumber' or FieldName='MainCarriageATA' or Field
 )
 
 
-
+select CopyToDW,* from ObjectFields where ObjectTableId = (select id from ObjectTables where Name = 'MoveType') and (FieldName = 'Code' or FieldName = 'MoveTypeEnglishName' or FieldName = 'MoveTypeLocalName' or FieldName = 'TransportModeId' or FieldName = 'IsAir' or FieldName = 'IsInland' or FieldName = 'IsOcean')
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'MoveType') and (FieldName = 'Code' or FieldName = 'MoveTypeEnglishName' or FieldName = 'MoveTypeLocalName' or FieldName = 'TransportModeId' )
+--update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'Vessel') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Notes' or FieldName = 'CountryName' )
+--update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'SpecialServicesType') and (FieldName = 'Code' or FieldName = 'EnglishName' )

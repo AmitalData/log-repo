@@ -200,6 +200,10 @@ namespace WarehouseData
 
                             foreach (TableClass table in tableNameLists)
                             {
+                                if (table.TableName == "MoveType")
+                                {
+
+                                }
                                     stepName = table.DBTableName;
 
                                     Stopwatch stopWatchDWTable = null;

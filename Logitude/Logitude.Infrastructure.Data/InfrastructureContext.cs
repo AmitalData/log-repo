@@ -389,7 +389,7 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
-	 public IDbSet<BIReportFolder>  BIReportFolders 
+	 public IDbSet<BIReportFolder> BIReportFolders 
 	 {
 	      get; set;
 	 
