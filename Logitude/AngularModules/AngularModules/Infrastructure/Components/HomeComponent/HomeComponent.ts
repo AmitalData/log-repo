@@ -41,6 +41,7 @@ export class HomeComponent implements OnDestroy{
     @ViewChild("ApplicationLocation", { read: ViewContainerRef }) ApplicationLocation: ViewContainerRef;
     SettingBtnVisibility: boolean = false;
     IsShowLastSuccessfulLoginComponent: boolean = true;
+    public IfBlueSnapContracts: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 private BluesnapContractService: BluesnapContractPMService= new BluesnapContractPMService();
     constructor() {
@@ -185,6 +186,11 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.DocumentsBackup")) {
             this.IsDocumentsBackupVisible = true;
         }
+
+        if (FeatureLocator.HasFeaturePermession("BluesnapContract", "PaymentSettingButton")) {
+            this.IfBlueSnapContracts = true;
+        }
+
 
     }
 
