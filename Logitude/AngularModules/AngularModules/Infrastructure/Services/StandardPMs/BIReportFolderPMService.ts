@@ -27,7 +27,7 @@ export class BIReportFolderPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ bireportfolders';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bireportfolders';      
     }
 
  get(id: string) {

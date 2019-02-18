@@ -10,13 +10,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityLists;
 
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
 {
-
     public partial class BIReportListQueryService
     {
         private IQueryable<BIReportList> GetIqueryableList(IQueryable<BIReport> iQueryable)
@@ -24,33 +22,20 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             IQueryable<BIReportList> query = (from a in iQueryable
                                               select new BIReportList()
                                               {
-
                                                   Id = a.Id,
-
                                                   Tenant = a.Tenant,
-
                                                   CreateDate = a.CreateDate,
-
                                                   CreatedByUserId = a.CreatedByUserId,
-
                                                   UpdateDate = a.UpdateDate,
-
                                                   UpdatedByUserId = a.UpdatedByUserId,
-
                                                   SearchFields = a.SearchFields,
-
                                                   Name = a.Name,
-
                                                   Description = a.Description,
-
                                                   DWQueryId = a.DWQueryId,
-
                                                   Inactive = a.Inactive,
-
                                                   TypeCode = a.TypeCode,
-
                                                   AGGridOptionsXML = a.AGGridOptionsXML,
-
+                                                  BIReportFolderId = a.BIReportFolderId,
                                               });
             return query;
         }
@@ -59,11 +44,11 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
         {
             return iQueryable;
         }
+
         private IQueryable<BIReport> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<BIReport> iQueryable, int tenant)
         {
             return iQueryable;
         }
-
     }
 }
 	
