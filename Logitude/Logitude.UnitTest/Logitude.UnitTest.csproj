@@ -103,6 +103,7 @@
     <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeDataMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnUpdatingServiceUnitTest.cs" />
+    <Compile Include="Accounting\UniTests\Reconciliation\ReconciliationValidatorUnitTest.cs" />
     <Compile Include="Accounting\UniTests\Report\LedgerTransactionBalanceServiceUnderTest.cs" />
     <Compile Include="Accounting\UniTests\CashBookOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\CashBookOnUpdatingServiceUnitTest.cs" />

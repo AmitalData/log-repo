@@ -1,7 +1,6 @@
 ﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -25,7 +24,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class JournalController : ApiController
     {
-        public HttpResponseMessage GetSingleJournal(string id)
+        public HttpResponseMessage GetSingleJournal(string id, string number)
         {
             try
             {
@@ -35,7 +34,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 				JournalQueryService Service = new JournalQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetJournalById(id, tenant);
+                Journal Result = new Journal();
+
+                if (id != null)
+                {
+                    Result = Service.GetJournalById(id, tenant);
+                }
+                if(number != null)
+                {
+
+                    Result = Service.GetJournalByNumber(number, tenant);
+                }
+
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }

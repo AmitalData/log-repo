@@ -112,7 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Ledger Transaction",
-			      				    Code =  "281f",
+			      				    Code =  "9b06",
 			      				    Name =  "LedgerTransaction Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -140,7 +140,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -185,6 +187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -199,7 +202,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -244,6 +249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -258,7 +264,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -303,6 +311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -318,7 +327,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -363,6 +374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -378,7 +390,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -423,6 +437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -437,7 +452,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -482,6 +499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -496,7 +514,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -540,6 +560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -554,7 +575,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -598,6 +621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -612,7 +636,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -658,6 +684,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -672,7 +699,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -718,6 +747,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -733,7 +763,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -778,6 +810,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -792,7 +825,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -838,6 +873,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -852,7 +888,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -898,6 +936,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -912,7 +951,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -958,6 +999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -972,7 +1014,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1016,6 +1060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1030,7 +1075,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1074,6 +1121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1088,7 +1136,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1132,6 +1182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1146,7 +1197,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1192,6 +1245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1207,7 +1261,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1252,6 +1308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1266,7 +1323,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  4000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1310,6 +1369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1324,7 +1384,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1368,6 +1430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1382,7 +1445,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  4,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1427,6 +1492,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1441,7 +1507,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1485,6 +1553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1499,7 +1568,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1543,6 +1614,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1558,7 +1630,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1603,6 +1677,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1617,7 +1692,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  150,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1661,6 +1738,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1675,7 +1753,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1721,6 +1801,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1735,7 +1816,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1781,6 +1864,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1795,7 +1879,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1828,10 +1914,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmountToReconcile",
 					  						DefaultText =  @"Amount to Reconcile",
-					  						FullLocalDefaultText =  @"סך להתאמה",
+					  						FullLocalDefaultText =  @"סכום להתאמה",
 					  						ListFieldLable =  "AmountToReconcileListLable",
 					  						ListLableDefaultText =  @"Amount to Reconcile",
-					  						ListLocalDefaultText =  @"סך להתאמה",
+					  						ListLocalDefaultText =  @"סכום להתאמה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1841,6 +1927,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1855,7 +1942,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1900,6 +1989,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1914,7 +2004,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  4,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1959,6 +2051,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1973,7 +2066,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2018,6 +2113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2032,7 +2128,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2073,6 +2171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2087,7 +2186,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  200,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2129,6 +2230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2143,7 +2245,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2184,6 +2288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2198,7 +2303,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2239,6 +2346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2253,7 +2361,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2297,6 +2407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2311,7 +2422,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2355,6 +2468,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2369,7 +2483,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2410,6 +2526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2424,7 +2541,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2468,6 +2587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2482,7 +2602,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2526,6 +2648,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2540,7 +2663,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2586,6 +2711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2600,7 +2726,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  400,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2644,6 +2772,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2658,7 +2787,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2699,6 +2830,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2713,7 +2845,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  200,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2757,6 +2891,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2771,7 +2906,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  200,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2815,6 +2952,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2829,7 +2967,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2873,6 +3013,117 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "RecoNumber",
+					  						OldFieldName =  "RecoNumber",
+					  						ObjectTableName =  "LedgerTransaction",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "RecoNumber",
+					  						ListPropertyPath =  "RecoNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "RecoNumber",
+					  						DefaultText =  @"Reco Number",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ReconciliationId",
+					  						ObjectTableName =  "LedgerTransaction",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ReconciliationId",
+					  						ListPropertyPath =  "ReconciliationId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ReconciliationId",
+					  						DefaultText =  @"ReconciliationId",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  

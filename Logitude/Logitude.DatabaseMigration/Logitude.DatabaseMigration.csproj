@@ -690,6 +690,10 @@
     <Compile Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.Designer.cs">
       <DependentUpon>201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902121710035_NewField_IsFullAccounting_ARPayment.cs" />
+    <Compile Include="Migrations\201902121710035_NewField_IsFullAccounting_ARPayment.Designer.cs">
+      <DependentUpon>201902121710035_NewField_IsFullAccounting_ARPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902170955193_AddBIReportFolder_Samar.cs" />
     <Compile Include="Migrations\201902170955193_AddBIReportFolder_Samar.Designer.cs">
       <DependentUpon>201902170955193_AddBIReportFolder_Samar.cs</DependentUpon>
@@ -1167,6 +1171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.resx">
       <DependentUpon>201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902121710035_NewField_IsFullAccounting_ARPayment.resx">
+      <DependentUpon>201902121710035_NewField_IsFullAccounting_ARPayment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902171020578_IsUnicodeDescriptionChargesType_Maheera.resx">
       <DependentUpon>201902171020578_IsUnicodeDescriptionChargesType_Maheera.cs</DependentUpon>

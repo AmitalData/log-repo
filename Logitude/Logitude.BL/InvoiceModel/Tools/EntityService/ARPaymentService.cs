@@ -90,6 +90,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         public void Create(ARPaymentPM theEntityPm)
         {
+
+            // Full Accounting
+            TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
+            if (tenantPM != null && tenantPM.AccountingActivated == true)
+            {
+                theEntityPm.IsFullAccounting = true;
+            }
+
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.changedList = theEntityPm.PaymentInvoices;
@@ -129,6 +137,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CreateChequeInCashBook(theEntityPm);
             }
 
+
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
             this.TraceConnected();
@@ -141,6 +150,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // DropBox
             this.CreateARInvoiceMessage(setApproved);
+
         }
 
         public void SetChangedList(List<ARPaymentInvoicePM> list)

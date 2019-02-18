@@ -632,7 +632,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return loggedUserId;
         }
 
-        public HttpResponseMessage GetQuoteConnectedEntities(string quoteId)
+        public HttpResponseMessage GetQuoteConnectedEntities(string quoteId, string opportunityId)
         {
             try
             {
@@ -685,6 +685,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     });
                 }
 
+                if (!string.IsNullOrEmpty(opportunityId))
+                {
+                    OpportunityListQueryService opportunityListQueryService = new OpportunityListQueryService(crmContext);
+                    OpportunityList myOpportunity = opportunityListQueryService.GetSingleOpportunityByQuote(opportunityId, tenant);
+                    if (myOpportunity != null)
+                    {
+                        myResult.Add(new QuoteConnectedEntity()
+                        {
+                            EntityId = myOpportunity.Id,
+                            ObjectTable = "Opportunity",
+                            EntityStatus = myOpportunity.StageName,
+                            EntityOwner = myOpportunity.OwnerName,
+                            EntityClosingDate = myOpportunity.EstimatedClosingDate,
+                            EntityNumber = myOpportunity.Subject,
+                        });
+                    }
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -711,4 +729,6 @@ public class QuoteConnectedEntity
     public string To { get; set; }
     public Double? GrossWeight { get; set; }
     public Double? VolumeInKG { get; set; }
+    public string EntityOwner { get; set; }
+    public DateTime? EntityClosingDate { get; set; }
 }

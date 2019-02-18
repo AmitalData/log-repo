@@ -2427,7 +2427,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                 {
 
-                  logWindow.Width = 400;
+                  logWindow.Width = 450;
                   logWindow.Height = 200;
                   break;
                   }

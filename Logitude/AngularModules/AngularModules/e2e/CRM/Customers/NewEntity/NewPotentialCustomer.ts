@@ -15,8 +15,12 @@ export class NewPotentialCustomer{
   public CreateNewPotentialCustomer(customerNo: string) {
 
     this.Helper.WaitByIdAndClick('NewCustomer');
-
+    // this.Helper.WaitByIdAndClick('Cancel-DontCreatePotCustomer');
+    
+    // this.Helper.WaitByIdAndClick('NewCustomer');
+    // browser.driver.sleep(5000);
     this.FillPotentialCustomerFields(customerNo);
+
     this.Helper.WaitByIdAndClick('Ok-AddPotCustomer');
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitWindowClosed();
@@ -24,6 +28,9 @@ export class NewPotentialCustomer{
   }
 
   FillPotentialCustomerFields(customerNo: string) {
+
+this.Helper.WaitByIdAndClick('Shipper/ConsigneeisNOTmycustomer_CustomerRadio_LBL');
+
     this.Helper.WaitByIdAndFill('Customer_EnglishName', customerNo);
 
     this.Helper.WaitByIdAndFill('Customer_VatNumber', '1111155');
@@ -37,10 +44,29 @@ export class NewPotentialCustomer{
 
     // ---------- Contact
 
-    this.Helper.WaitByIdAndFill('Contact_Email', 'contactus@mail.com');
+this.Helper.WaitByIdAndClick('CheckBox_0_7_LBL');
+     browser.driver.sleep(5000);
 
-    this.Helper.WaitByIdAndFill('Customer_EntityNotes', 'Potential Customer');
 
+  // var EC = protractor.ExpectedConditions;
+  // browser.wait(EC.elementToBeClickable(element(by.css('.LogitudeCheckBox'))), 100000000).then(a => {
+  //   var button = element(by.css('.LogitudeCheckBox')).click();
+  // });
+  // <label _ngcontent-c23="" for="CheckBox_0_4"></label>
+//   element(by.id('ProfitCurrency')).getAttribute('textContent').then(function (recCurrency) {            
+//     receivableCurrency = recCurrency.trim();
+//     if (receivableCurrency != null) {
+//         console.log('Receivable  Profit Currency-ReceivableTab : ' + receivableCurrency);
+//     } else {
+
+//        s console.log('No Profit Currency in Receiavble Tab');
+//     }
+//     // return receivableCurrency;
+// });
+
+    // this.Helper.WaitByIdAndFill('Contact_Email', 'contactus@mail.com');
+    // this.Helper.WaitByIdAndFill('Customer_EntityNotes', 'Potential Customer');
+    // this.Helper.WaitBusyIndicator();
 
   }
   
