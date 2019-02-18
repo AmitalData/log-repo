@@ -145,7 +145,13 @@ export class ClockTimeComponent extends BaseComponent {
     }
 
     SearchButtonClicked() {
-        this.LoadClockTimeSheet();
+        if(this.ItemSourceCollection.Collection.filter(p => p.IsDirty).length > 0)
+        {
+            this.SaveTimeOfficeHour();
+        }
+        else {
+            this.LoadClockTimeSheet();
+        }   
     }
 
     LoadClockTimeSheet() {

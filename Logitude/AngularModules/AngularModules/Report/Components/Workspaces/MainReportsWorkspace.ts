@@ -20,15 +20,17 @@ export class MainReportsWorkspace implements OnInit {
 
     }
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe(response => {
-            this.IsResourcesReady = true;
+        this._entityResourceService.getEntityResourceByTableName("BIReportFolder", 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe(response => {
+                this.IsResourcesReady = true;
 
-            if (FeatureLocator.HasFeaturePermession("BIReport", "BIReport.Menu")) {
-                this.IsBIItemVisible = true;
-                this.IsMenuVisible = true;
-            }
+                if (FeatureLocator.HasFeaturePermession("BIReport", "BIReport.Menu")) {
+                    this.IsBIItemVisible = true;
+                    this.IsMenuVisible = true;
+                }
 
-            this.RunComponent();
+                this.RunComponent();
+            });
         });
     }
 
@@ -78,6 +80,7 @@ export class MainReportsWorkspace implements OnInit {
         }
     }
 
+    private Page_BF: any = null;
     private Page_BI: any = null;
     private Page_Report: any = null;
 
@@ -109,6 +112,17 @@ export class MainReportsWorkspace implements OnInit {
                                     .then(cmpRef => {
                                         this.Page_BI = cmpRef.instance;
                                         this.Page_BI.InitComponent();
+                                    });
+                            }
+                            break;
+                        }
+
+                        case "BF": {
+                            if (this.Page_BF == null) {
+                                SessionLocator.DynamicLoader.Load('./Report/Components/Workspaces/BIFolderReportComponent', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.Page_BF = cmpRef.instance;
+                                        this.Page_BF.InitComponent();
                                     });
                             }
                             break;
