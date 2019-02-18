@@ -176,7 +176,7 @@ export class DWAskUserFiltersComponent implements OnInit {
 
             if (field.FilterItems.length == 0) {
                 if (field.IsMandatoryFilter == true && AppTool.IsNullOrEmpty(field.TextValue)) {
-                    this.ValidationErrorsList.push(field.Name + " filter is required");
+                    this.ValidationErrorsList.push(field.DisplayName.replace('[', '').replace(']', '') + " filter is required");
                 }
             }
             else {
