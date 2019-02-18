@@ -103,6 +103,7 @@ export class BIFolderReportComponent {
         listArgs.ObjectTableName = objectTableName;
         listArgs.DisplayTitle = folder.Name; //listArgs.QueryCode;
         listArgs.BackButtonTitle = "Back";
+        listArgs.BIReportFolderId = folder.FolderId;
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
@@ -131,7 +132,6 @@ export class BIFolderClass {
 
         this.ComputeTitle();
     }
-
 
     private ComputeTitle() {
         this.Title = this.folder.Name + " (" + this.reportsList.length + ")";        

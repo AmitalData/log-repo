@@ -36,6 +36,7 @@ export class NewBIReport extends BaseComponent {
     }
     SetWindowArgs(args: any) {
         this.DWQueryId = args.DWQueryId;
+        this.EntityPM.BIReportFolderId = args.FolderId;
         this.SetUIProperties();
     }
 
