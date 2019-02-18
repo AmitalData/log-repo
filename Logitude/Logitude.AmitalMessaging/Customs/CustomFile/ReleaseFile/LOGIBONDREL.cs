@@ -138,6 +138,8 @@
 
         private string taxationDateTimeField;
 
+        private string storageSiteCodeField;
+
         /// <remarks/>
         public string CustomFileNo
         {
@@ -684,6 +686,19 @@
             set
             {
                 this.taxationDateTimeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string StorageSiteCode
+        {
+            get
+            {
+                return this.storageSiteCodeField;
+            }
+            set
+            {
+                this.storageSiteCodeField = value;
             }
         }
     }
@@ -1992,6 +2007,5 @@
             }
         }
     }
-
 
 }
