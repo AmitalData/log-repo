@@ -600,7 +600,7 @@ export class BIReportPreviewComponent implements OnInit {
     OnRunReportComplete(MyData) {
         if (MyData == "ValidationError") {
             this.HasValidationError = true;
-
+            this.rowData = [];
            this.StopBusyIndicator();
         }
         else {
