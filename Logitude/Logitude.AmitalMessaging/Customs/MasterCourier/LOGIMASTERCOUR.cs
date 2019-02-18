@@ -76,6 +76,8 @@ public partial class LogitudeMasterCourier
 
     private string weightValueCodeField;
 
+    private string storageSiteCodeField;
+
     /// <remarks/>
     public string AirlineId
     {
@@ -228,6 +230,19 @@ public partial class LogitudeMasterCourier
         set
         {
             this.weightValueCodeField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string StorageSiteCode
+    {
+        get
+        {
+            return this.storageSiteCodeField;
+        }
+        set
+        {
+            this.storageSiteCodeField = value;
         }
     }
 }
