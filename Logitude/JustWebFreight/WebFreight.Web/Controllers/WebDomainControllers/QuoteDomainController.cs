@@ -661,8 +661,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         House = item.House,
                         Master = item.Master,
                         Customer = item.CustomerName,
-                        From = item.MainCarriageFromPortCode,
-                        To = item.MainCarriageFinalDestinationPortCode,
+                        From = item.ShipmentLevelCode == "H" ? item.FromPortCode : item.MainCarriageFromPortCode,
+                        To = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode,
                         GrossWeight = item.GrossWeight,
                         VolumeInKG = item.Volume,
                     });
