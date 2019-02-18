@@ -1592,6 +1592,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\APILogsViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BatchTaskExecutionStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BatchTaskExecutionViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BIReportFolderViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BIReportsTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BIReportViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BusinessHourViewsController.Generated.cs" />
@@ -1615,6 +1616,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\APILogsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BatchTaskExecutionController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BIReportController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BIReportFolderController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BusinessHourController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BusinessProcessQueueController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BusinessRoleController.Generated.cs" />
@@ -2445,6 +2447,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BankPageEntryTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BatchTaskExecutionStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BatchTaskExecutionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportFolderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportsTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BusinessProcessQueueUpdateClass.cs" />

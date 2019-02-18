@@ -336,7 +336,7 @@ namespace WarehouseData.Helper
                         string values = null;
                         if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText")
                         {
-                            if (field.FieldName == "[Id]" || field.FieldName == "[Code]") values = field.MaxLength > 1 ? "'-1'" : "'1'";
+                            if (field.FieldName == "[Id]" || (field.FieldName == "[Code]" && table.TableName != "Card")) values = field.MaxLength > 1 ? "'-1'" : "'1'";
                             else values = "'Not Specified'";
 
                             if (field.MaxLength + 2 < values.Length) values = "null";
@@ -457,7 +457,7 @@ namespace WarehouseData.Helper
                 sql += (" ALTER TABLE " + table.DWObjectTableCode + " ADD CONSTRAINT PK_" + table.DWObjectTableCode + "_" + primaryfield.Replace(" ", "") + " PRIMARY KEY CLUSTERED([" + primaryfield + "]) \r\n");
             }
 
-            foreach (DWObjectFieldDB objectFieldDB in table.DWObjectFieldDBLists.Where(d => !string.IsNullOrWhiteSpace(d.DimensionTableCode)))
+            foreach (DWObjectFieldDB objectFieldDB in table.DWObjectFieldDBLists.Where(d => !string.IsNullOrWhiteSpace(d.DimensionTableCode) &&  d.DimensionTableCode!= "DIM_Dates"))
             {
                 string field = objectFieldDB.FieldName.Replace("[", "").Replace("]", "");
                 TableClass orginalTable = tableLists.Where(d => d.DWObjectTableCode == objectFieldDB.DimensionTableCode).FirstOrDefault();

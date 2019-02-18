@@ -6198,7 +6198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						FullFieldLable =  "QuoteTypeCode",
 					  						DefaultText =  @"Quote Type",
 					  						HelpTextCode =  "QuoteTypeCode",
-					  						HelpTextDefaultText =  @"Ad hoc: Use for quoting prices for a specific shipment with a given quantity.\nRouting Rates: Use for quoting your rates for package types, per unit or by price break levels.",
+					  						HelpTextDefaultText =  @"Spot Rate: Use for quoting prices for a specific shipment with a given quantity.%nRouting Rates: Use for quoting your rates for package types, per unit or by price break levels.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
