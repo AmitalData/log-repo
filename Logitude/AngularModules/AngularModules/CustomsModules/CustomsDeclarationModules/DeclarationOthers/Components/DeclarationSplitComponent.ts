@@ -289,7 +289,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe(res => {
 
 
-                //var documentName =  documentFiling.DocumentId;
+                var documentName =  documentFiling.DocumentId;
                 //var token = ServiceHelper.GetLDocumentDownloadToken();
                 //let uri = ServiceHelper.GetLogitudeURL() + "WebPages/Downloadpage.aspx?id=" + documentName + "&tempId=" + token;
                 //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
