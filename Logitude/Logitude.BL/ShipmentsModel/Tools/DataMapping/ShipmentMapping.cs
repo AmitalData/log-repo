@@ -480,6 +480,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.LastSharedEventNotes = entityPM.LastSharedEventNotes;
             entityPoco.LastSharedEventDate = entityPM.LastSharedEventDate;
             entityPoco.FirstOperationalCloseDate = entityPM.FirstOperationalCloseDate;
+            entityPoco.FirstAccountingCloseDate = entityPM.FirstAccountingCloseDate;
             entityPoco.AMSClosingDate = entityPM.AMSClosingDate;
             entityPoco.UpdatedByPartner = entityPM.UpdatedByPartner;
             entityPoco.EmergencyContactId = entityPM.EmergencyContactId;
@@ -2733,6 +2734,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.MainCarriageTransportModeId = houseShipment.TransportModeId;
             shipmentPM.TransportModeId = houseShipment.TransportModeId;
             shipmentPM.IncotermId = houseShipment.IncotermId;
+            shipmentPM.CustomerContactId = houseShipment.CustomerContactId;
+            shipmentPM.AgentContactId = houseShipment.AgentContactId;
 
             shipmentPM.Field1 = houseShipment.Field1;
             shipmentPM.Field2 = houseShipment.Field2;

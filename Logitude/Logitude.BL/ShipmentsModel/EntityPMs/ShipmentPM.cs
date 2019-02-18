@@ -2164,6 +2164,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? FirstOperationalCloseDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? FirstAccountingCloseDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string OldStatusValue { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

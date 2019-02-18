@@ -2,6 +2,7 @@ import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
 import {NumbersPipe} from './Pipes/NumbersPipe';
 import { forEach } from '@angular/router/src/utils/collection';
+import { DatePipe } from '@angular/common';
 
 export class AppTool {
 
@@ -35,15 +36,49 @@ export class AppTool {
             prefixLength += prefixWithoutVars.length;
         }
 
-        //DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
-        //string MM = date.ToString("MM");
-        //string YY = date.ToString("yy");
-        //string YYYY = date.ToString("yyyy");
-
-        //counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
-
+   
 
         return prefixLength;
+    }
+    public static GetCounterResolvedNumber(prefix: string, startNumber: number, suffix: string, counterSize: number) {
+        //[B]_[YYYY]_SH
+        let calculatedNumber: string = (startNumber ? startNumber.toString() : '');
+        let calculatedPrefix: string = (!AppTool.IsNullOrEmpty(prefix) ? prefix : '');
+        let calculatedSuffix: string = (!AppTool.IsNullOrEmpty(suffix) ? suffix : '');
+
+        let currentDate: Date = new Date();
+        var curr_date = currentDate.getDate();
+        let curr_month: string = (currentDate.getMonth() + 1).toString(); //Months are zero based
+        let mm = AppTool.PadLeft(curr_month, 2, '0');
+        let yyyy = currentDate.getFullYear().toString();
+        let yy = yyyy.substring(2, yyyy.length);
+
+        if (!AppTool.IsNullOrEmpty(prefix)) {
+            calculatedPrefix = calculatedPrefix.replace("[YYYY]", yyyy);
+            calculatedPrefix = calculatedPrefix.replace("[YY]", yy);
+            calculatedPrefix = calculatedPrefix.replace("[B]", 'BBBBB');
+            calculatedPrefix = calculatedPrefix.replace("[MM]", mm);
+        }
+
+        if (!AppTool.IsNullOrEmpty(suffix)) {
+            calculatedSuffix = calculatedSuffix.replace("[YYYY]", yyyy);
+            calculatedSuffix = calculatedSuffix.replace("[YY]", yy);
+            calculatedSuffix = calculatedSuffix.replace("[B]", 'BBBBB');
+            calculatedSuffix = calculatedSuffix.replace("[MM]", mm);
+        }
+
+        let totalNumberLength = calculatedNumber.length;
+        if (calculatedPrefix)
+            totalNumberLength += calculatedPrefix.length;
+        if (calculatedPrefix)
+            totalNumberLength += calculatedSuffix.length;
+
+        if (counterSize > totalNumberLength)
+            calculatedNumber = AppTool.PadLeft(calculatedNumber, ((counterSize - totalNumberLength) + calculatedNumber.length), '0');
+
+        calculatedNumber = calculatedPrefix + calculatedNumber + calculatedSuffix;
+
+        return calculatedNumber;
     }
 
     public static TenantPM: any;

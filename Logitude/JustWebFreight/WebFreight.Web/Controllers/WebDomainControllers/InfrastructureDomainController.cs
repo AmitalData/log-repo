@@ -1846,6 +1846,40 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetDeleteBIReport(string Id )
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                IWebFreightContext webContext = WebFreightContext.GetContext(authToken.Tenant);
+                BIReportRepository repository = new BIReportRepository(objectContext);
+                DWQueryRepository dWQueryRepository = new DWQueryRepository(webContext);
+
+                BIReport BIReport = repository.GetSingle(Id, authToken.Tenant);
+                if (BIReport != null)
+                {
+                    var queryId = BIReport.DWQueryId;
+                    repository.Remove(BIReport);
+                    repository.SubmitChanges();
+
+                    DWQuery DWQuery = dWQueryRepository.GetSingleDWQuery(queryId, authToken.Tenant);
+                    if(DWQuery != null)
+                    {
+                        dWQueryRepository.Remove(DWQuery);
+                        dWQueryRepository.SubmitChanges();
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetFeatureToggles()
         {

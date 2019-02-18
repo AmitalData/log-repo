@@ -226,17 +226,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (loggedTenant.AccountingSetting.IsARPaymentChronologicalDates)
                         {
-                            DateTime? lastChronologicalDate = (from a in myContext.ARPayments
-                                                               where a.Tenant == entityPM.Tenant
-                                                               && a.StatusCode != "DR"
-                                                               && a.StatusCode != "VD"
-                                                               && a.PaymentNo != entityPM.PaymentNo
-                                                               select a).Max(d => d.ApprovedDate);
-                            if (lastChronologicalDate != null)
+                            ARPayment lastApprovedPayment = (from a in myContext.ARPayments
+                                                             where a.Tenant == entityPM.Tenant
+                                                             && a.StatusCode != "DR"
+                                                             && a.StatusCode != "VD"
+                                                             && a.PaymentNo != entityPM.PaymentNo
+                                                             select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
+                            if (lastApprovedPayment != null)
                             {
-                                var entityDate = entityPM.ValueDate != null ? entityPM.ValueDate : entityPM.RegisterDate; 
+                                DateTime? entityDate = null;
+                                DateTime? lastApprovedDate = null;
+                                string approvedDateString = "";
 
-                                if (entityDate < lastChronologicalDate)
+                                entityDate = entityPM.RegisterDate;
+                                lastApprovedDate = lastApprovedPayment.RegisterDate;
+                                approvedDateString = "Register Date";
+
+                                if (entityDate < lastApprovedDate)
                                 {
                                     ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
                                     Tenant currentTenant = context.Tenants.Where(t => t.Id == entityPM.Tenant).FirstOrDefault();
@@ -245,13 +251,15 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                     {
                                         datetimeformat = currentTenant.DateTimeFormat;
                                     }
-                                    string dateString = lastChronologicalDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
+                                    string dateString = lastApprovedDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
                                     bool useLocal = true;
                                     var user = GetLoggedContact(entityPM.Tenant);
                                     if (user != null) useLocal = !(GetLoggedContact(entityPM.Tenant).DontShowLocal);
 
                                     string fieldLabel = TranslateTextsClass.Translate("ARPayment.M.ChronologicalDate", entityPM.Tenant, useLocal);
-                                    throw new ApplicationException(fieldLabel.Replace("%Date", dateString));
+                                    string exception = fieldLabel.Replace("%Date", dateString);
+                                    exception = exception.Replace("%ApprovedDate", approvedDateString);
+                                    throw new ApplicationException(exception);
                                 }
                             }
                         }

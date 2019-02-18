@@ -746,3 +746,36 @@ END CATCH;
 
 
 		  End
+
+
+
+		  IF not EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'AutomaticLastUpdateDate'
+          AND Object_ID = Object_ID(N'MoveTypes'))
+		  Begin
+		   ALTER TABLE MoveTypes ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE();
+		  declare @SQLMoveType as varchar(8000)
+		 
+BEGIN TRY
+    BEGIN TRANSACTION
+
+    BEGIN
+            ;
+
+        SET @SQLMoveType = 
+            'CREATE TRIGGER Trigger_AutomaticLastUpdateDateMoveTypes ON MoveTypes AFTER UPDATE  AS  BEGIN UPDATE MoveTypes SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
+
+        EXEC (@SQLMoveType);
+
+       
+    END
+
+    COMMIT TRANSACTION;
+END TRY
+
+BEGIN CATCH
+    ROLLBACK TRANSACTION
+END CATCH;
+
+
+		  End

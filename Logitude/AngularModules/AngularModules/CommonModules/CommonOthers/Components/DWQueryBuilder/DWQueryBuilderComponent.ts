@@ -55,6 +55,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     HasChanges: boolean = false;
     IsBIReportWorkspace: boolean = false;
     IsBIReportEditScreen: boolean = false;
+    FolderId: string;
     public SelectedFiltersDataSourceChanged: any;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper;
 
@@ -181,6 +182,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.QID = args.DWQueryId;
         this.IsBIReportWorkspace = args.IsBIReportWorkspace;
         this.IsBIReportEditScreen = args.IsBIReportEditScreen;
+        this.FolderId = args.FolderId;
+
         if (this.QID) {
             this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
                 if (!myResult.HasError) {
@@ -424,7 +427,10 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.SelectedItem = item;
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
         if (this.SelectedItem && myCurrentItem && myCurrentItem.length == 0) {
-
+            if (this.SelectedItem.Code == '[Full Date]') {
+                this.SelectedItem.ParentDataTypeCode = "LookUp";
+                this.SelectedItem.DataTypeCode = "DateTime";
+            } 
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
             this.SelectedFieldsDataSource = this.ResetIndexes(tempData);
@@ -928,7 +934,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace) {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
                         }
                     });
                 }
@@ -946,7 +952,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace || this.IsBIReportEditScreen) {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
                         }
                     });
                 }
@@ -1509,6 +1515,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
                                 if (field.Code == '[Full Date]') {
                                     view.ParentDataTypeCode = field.DataTypeCode;
+                                    view.DataTypeCode = "DateTime";
                                 }
                                 else {
                                     view.ParentDataTypeCode = DWObjectField.DataTypeCode;

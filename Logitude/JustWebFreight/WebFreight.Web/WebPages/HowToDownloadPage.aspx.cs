@@ -356,6 +356,11 @@ namespace WebFreight.Web.WebPages
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
 
+                case "69":
+                    documentName = "generic_payment_interface.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
                 case "REL001":
                     documentName = "december_2015_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
@@ -433,6 +438,11 @@ namespace WebFreight.Web.WebPages
 
                 case "REL016":
                     documentName = "december_2018_release.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "REL017":
+                    documentName = "february_2019_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
             }

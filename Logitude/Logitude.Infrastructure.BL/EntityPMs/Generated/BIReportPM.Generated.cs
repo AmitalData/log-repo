@@ -319,6 +319,75 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string bIReportFolderId ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BIReportFolderId  
+	   {
+	    
+	     get
+		{
+		   return bIReportFolderId;
+		 }
+		 set
+		 {
+		   if(bIReportFolderId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BIReportFolderId",OldValue=bIReportFolderId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bIReportFolderId=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return createdByUserName;
+		 }
+		 set
+		 {
+		   if(createdByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=createdByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return updatedByUserName;
+		 }
+		 set
+		 {
+		   if(updatedByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByUserName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
