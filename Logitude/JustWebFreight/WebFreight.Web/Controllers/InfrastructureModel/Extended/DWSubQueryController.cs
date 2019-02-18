@@ -140,13 +140,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 MyQuery.UpdatedDate = DateTime.Now;
                 MyQuery.CreatedByUserId = loggedUser.Id;
                 MyQuery.UpdateByUserId = loggedUser.Id;
-
+                MyQuery.Tenant = authToken.Tenant;
                 Qservice.Create(MyQuery);
                 entityPM.DWQueryId = MyQuery.Id;
                 entityPM.ColumnsXML = ColumnsXML;
                 entityPM.FiltersXML = FiltersXML;
+                entityPM.Tenant = authToken.Tenant;
 
-               
                 DWSubQueryService service = new DWSubQueryService(objectContext, entityPM.Tenant);
                 service.Create(entityPM);
 

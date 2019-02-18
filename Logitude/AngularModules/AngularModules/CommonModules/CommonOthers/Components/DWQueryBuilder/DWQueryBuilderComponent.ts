@@ -427,7 +427,10 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.SelectedItem = item;
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
         if (this.SelectedItem && myCurrentItem && myCurrentItem.length == 0) {
-
+            if (this.SelectedItem.Code == '[Full Date]') {
+                this.SelectedItem.ParentDataTypeCode = "LookUp";
+                this.SelectedItem.DataTypeCode = "DateTime";
+            } 
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
             this.SelectedFieldsDataSource = this.ResetIndexes(tempData);
@@ -1512,6 +1515,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
                                 if (field.Code == '[Full Date]') {
                                     view.ParentDataTypeCode = field.DataTypeCode;
+                                    view.DataTypeCode = "DateTime";
                                 }
                                 else {
                                     view.ParentDataTypeCode = DWObjectField.DataTypeCode;
