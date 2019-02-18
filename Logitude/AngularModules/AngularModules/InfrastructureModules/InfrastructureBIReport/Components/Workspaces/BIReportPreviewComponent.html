@@ -77,21 +77,26 @@
                                 <button [disabled]="IsNewEntity || HasValidationError" style="width:120px;float:left;" class="Button" (click)="ExportToExcelClicked()">Export To Excel</button>
                             </td>
 
-
-                            <td style="width: 5px;">
-                                <div></div>
-                            </td>
-
-                            <td style="width: 120px;">
-                                <button style="width:120px;float:left;" class="Button" (click)="CountClicked()">Grid Total Rows</button>
-                            </td>
-
                             <td style="width: 5px;">
                                 <div></div>
                             </td>
 
                             <td *ngIf="SelectedFiltersDataSource" style="width: 57px;">
                                 <button class="GreenButton" (click)="RunReportButtonClicked()">Run Report</button>
+                            </td>
+
+                            <td style="width: 5px;">
+                                <div></div>
+                            </td>
+
+                            <td style="width: 57px;">
+                                <div class="Label">
+                                    {{CountText}}
+                                </div>
+                            </td>
+
+                            <td style="width: 5px;">
+                                <div></div>
                             </td>
 
 
@@ -175,7 +180,6 @@
                                          [rowData]="rowData"
                                          [columnDefs]="columnDefs"
                                          [rowSelection]="'multiple'"
-                                         [suppressMultiSort]="true"
                                          (gridReady)="onGridReady($event)"
                                          (sortChanged)="onSortChanged($event)"
                                          (columnResized)="onColumnResized($event)"

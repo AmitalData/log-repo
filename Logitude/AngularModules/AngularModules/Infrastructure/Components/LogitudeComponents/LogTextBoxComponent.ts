@@ -1550,17 +1550,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         //this.isExpanded = !this.isExpanded;
 
-        if (this.ObjectField) {
-            this.showMultiLineWindow();
-        } else {
-            var _resSrvc = new EntityResourceService();
-            _resSrvc.getEntityResourceByTableName(this.ObjectTableName)
-                .subscribe((response: any) => {
-                    var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
-                    this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
-                    this.showMultiLineWindow();
-                });
-        }
+        this.showMultiLineWindow();
 
 
 
@@ -1598,8 +1588,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     showMultiLineWindow() {
         // show window
         var windowArgs: any = {};
-        windowArgs.ObjectTableName = this.ObjectTableName;
-        windowArgs.ObjectFieldName = this.ObjectFieldName;
+        // windowArgs.ObjectTableName = this.ObjectTableName;
+        // windowArgs.ObjectFieldName = this.ObjectFieldName;
         windowArgs.TextValue = this.TextValue;
 
         var wind = new LogitudeWindow();

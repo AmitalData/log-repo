@@ -53,6 +53,7 @@ export class DWQueryBuilderHelper   {
                 if (field.DWObjectTableCode.indexOf("DIM_") != -1) {
                     if (view.Code == '[Full Date]') {
                         view.ParentDataTypeCode = "DateTime";
+                        view.DataTypeCode = "DateTime";
                     }
                     else {
                         view.ParentDataTypeCode = "LookUp";

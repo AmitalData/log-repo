@@ -30,7 +30,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<BIReportFolder> iQueryable = (from a in context. BIReportFolders
+            IQueryable<BIReportFolder> iQueryable = (from a in context.BIReportFolders
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -133,7 +133,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
         public BIReportFolderList GetSingle(string id)
         {
-            IQueryable<BIReportFolder> BIReportFolderQuery = (from a in context. BIReportFolders
+            IQueryable<BIReportFolder> BIReportFolderQuery = (from a in context.BIReportFolders
                                                        where a.Id == id
                                                        select a);
 
@@ -149,7 +149,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<BIReportFolder> iQueryable = (from a in context. BIReportFolders 
+            IQueryable<BIReportFolder> iQueryable = (from a in context.BIReportFolders 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);

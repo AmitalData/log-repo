@@ -1,4 +1,4 @@
-
+import { NewBIReportFolderComponent } from './Components/NewEntity/NewBIReportFolderComponent';
 import { NewBIReport } from './Components/NewEntity/NewBIReport';
 import { BIReportGeneralTabComponent } from './Components/EditTabs/BIReportGeneralTabComponent';
 import { BIReportPreviewComponent } from './Components/Workspaces/BIReportPreviewComponent';
@@ -9,6 +9,7 @@ import { DWAskUserFiltersComponent } from './Components/Workspaces/DWAskUserFilt
 
 export const Components =
     [
+        NewBIReportFolderComponent,
         NewBIReport,
         BIReportGeneralTabComponent,
         BIReportPreviewComponent,
@@ -22,6 +23,7 @@ export class ModuleDeclarations {
     public static Get(name: string) {
         var myResult: any = null;
         switch (name) {
+            case "NewBIReportFolderComponent": { myResult = NewBIReportFolderComponent; break; }
             case "NewBIReport": { myResult = NewBIReport; break; }
             case "BIReportGeneralTabComponent": { myResult = BIReportGeneralTabComponent; break; }
             case "BIReportPreviewComponent": { myResult = BIReportPreviewComponent; break; }
