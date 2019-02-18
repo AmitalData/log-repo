@@ -226,6 +226,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public CostMaxAmountHeader: any = [];
     public SaleMinAmountHeader: any = [];
     public SaleMaxAmountHeader: any = [];
+    public Cost1HeaderTooltip: string = null;
+    public Cost2HeaderTooltip: string = null;
+    public Cost3HeaderTooltip: string = null;
+    public Cost4HeaderTooltip: string = null;
+    public Cost5HeaderTooltip: string = null;
+    public Sale1HeaderTooltip: string = null;
+    public Sale2HeaderTooltip: string = null;
+    public Sale3HeaderTooltip: string = null;
+    public Sale4HeaderTooltip: string = null;
+    public Sale5HeaderTooltip: string = null;
     SetLabels() {
         this.CostQuentityHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostQuantity").split('%n');
         this.CostPriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostPrice").split('%n');
@@ -239,7 +249,18 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SetLabelsAttached();
     }
     SetLabelsAttached() {
+        var myCostString = TextCodeTranslator.Translate("Quote.O.Charges.Cost");
         var mySaleCurrencyCode = AppTool.IsNullOrEmpty(this.SaleCurrencyCode) ? "" : this.SaleCurrencyCode;
+
+        if (this.EntityPM.IsSaleCurrencySameAsCost) {
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
+            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
+        }
+
+        else {
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", mySaleCurrencyCode).split('%n');
+            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", mySaleCurrencyCode).split('%n');
+        }
 
         this.Cost1Header = [2];
         this.Cost2Header = [2];
@@ -267,6 +288,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType1Id)[0];
             if (item) {
                 p1 = item.Code;
+
+                var value1 = q1 + " " + item.EnglishName;
+                this.Cost1HeaderTooltip = myCostString + " " + q1 + value1;
+                this.Sale1HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n"," ") + " " + value1;
             }
         }
 
@@ -274,6 +299,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType2Id)[0];
             if (item) {
                 p2 = item.Code;
+
+                var value2 = q2 + " " + item.EnglishName;
+                this.Cost2HeaderTooltip = myCostString + " " + value2;
+                this.Sale2HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n", " ") + " " + value2;
             }
         }
 
@@ -281,6 +310,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType3Id)[0];
             if (item) {
                 p3 = item.Code;
+
+                var value3 = q3 + " " + item.EnglishName;
+                this.Cost3HeaderTooltip = myCostString + " " + value3;
+                this.Sale3HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n", " ") + " " + value3;
             }
         }
 
@@ -288,6 +321,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType4Id)[0];
             if (item) {
                 p4 = item.Code;
+
+                var value4 = q4 + " " + item.EnglishName;
+                this.Cost4HeaderTooltip = myCostString + " " + value4;
+                this.Sale4HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n", " ") + " " + value4;
             }
         }
 
@@ -295,20 +332,12 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType5Id)[0];
             if (item) {
                 p5 = item.Code;
+
+                var value5 = q5 + " " + item.EnglishName;
+                this.Cost5HeaderTooltip = myCostString + " " + value5;
+                this.Sale5HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n", " ") + " " + value5;
             }
         }
-
-        if (this.EntityPM.IsSaleCurrencySameAsCost) {
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
-            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
-        }
-
-        else {
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", mySaleCurrencyCode).split('%n');
-            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", mySaleCurrencyCode).split('%n');
-        }
-
-        var myCostString = TextCodeTranslator.Translate("Quote.O.Charges.Cost");
 
         this.Cost1Header[0] = myCostString;
         this.Cost2Header[0] = myCostString;

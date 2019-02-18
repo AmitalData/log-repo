@@ -72,9 +72,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
                                                            OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
                                                            OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
-
-
+                                                           
                                                        });
+
+
             return query;
         }
 
@@ -483,7 +484,40 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var list = query.ToList();
             return list.Count();
         }
+        
 
+        public List<LedgerTransactionList> GetARPaymentOpenTransactions(string billToGLAccountId, int tenant)
+        {
+            IQueryable<LedgerTransaction> ledgerTransactionQuery = (from a in context.LedgerTransactions
+                                                                    where a.AccountId == billToGLAccountId && a.Tenant == tenant && a.IsReconciled == false
+                                                                    select a).OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
+
+            IQueryable<LedgerTransactionList> ledgerTransactionListQuery = GetIqueryableList(ledgerTransactionQuery);
+
+            ledgerTransactionListQuery = (from t in ledgerTransactionListQuery
+                                          where t.SourceTypeCode == "2" // 2- ARInvoice
+                                          select t);
+            return ledgerTransactionListQuery.ToList();
+        }
+        public List<LedgerTransactionList> GetARPaymentReconciledTransactions(string arpaymentId, string billToGLAccountId, int tenant)
+        {
+            IQueryable<LedgerTransaction> ledgerTransactionQuery = (from a in context.LedgerTransactions
+                                                                    where a.AccountId == billToGLAccountId && a.Tenant == tenant && a.IsReconciled == true
+                                                                    select a).OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
+
+            IQueryable<LedgerTransactionList> ledgerTransactionListQuery = GetIqueryableList(ledgerTransactionQuery);
+
+            //ledgerTransactionListQuery = ledgerTransactionListQuery.Where(d => d.SourceId == arpaymentId);
+            ledgerTransactionListQuery = ledgerTransactionListQuery.Where(d => d.SourceTypeCode == "2");
+
+            List<LedgerTransactionList> list = ledgerTransactionListQuery.ToList();
+            list.ForEach(trans =>
+            {
+                trans.IsReconciled = true;
+            });
+
+            return list;
+        }
 
     }
 

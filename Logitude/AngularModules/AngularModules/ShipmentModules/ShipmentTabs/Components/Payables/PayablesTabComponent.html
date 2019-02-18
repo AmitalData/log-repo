@@ -402,7 +402,7 @@
                                                                                         <table>
                                                                                             <tr style="line-height: 19px;">
                                                                                                 <td>
-                                                                                                    <button class="HyperlinkButton" (click)="item.IsInvoicesTooltipOpened = false; ViewInvoiceClicked(invoiceItem.Id)">{{invoiceItem.InvoiceNumber}}</button>
+                                                                                                    <Hyperlink (click)="item.IsInvoicesTooltipOpened = false; ViewInvoiceClicked(invoiceItem.Id)">{{invoiceItem.InvoiceNumber}}</Hyperlink>
                                                                                                     <span style="margin-left: 5px;" [ngStyle]="{color: invoiceItem.StatusName | StringToColorPipe}">{{invoiceItem.StatusName}}</span>
                                                                                                 </td>
 
