@@ -170,7 +170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "PackageCode",
-					  						DefaultText =  @"Package",
+					  						DefaultText =  "Package",
 					  						HelpTextCode =  "PackageCode",
 					  						Code =  "PackageCode",
 					  						DependencyFilter3IsList =  false,
