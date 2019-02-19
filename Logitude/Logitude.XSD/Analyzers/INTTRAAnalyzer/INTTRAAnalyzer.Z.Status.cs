@@ -753,6 +753,16 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         }
                     }
                 }
+
+                else
+                {
+                    foreach (ShipmentPackagePM item in AllContainers.Where(d => d.VoyageTripNumber != null && d.Routing != null))
+                    {
+                        item.HasContainerException = false;
+                        item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    }
+                }
+
                 #endregion
             }
 
