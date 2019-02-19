@@ -79,8 +79,7 @@ export class MainReportsWorkspace implements OnInit {
             this.SelectionChanged();
         }
     }
-
-    private Page_BF: any = null;
+    
     private Page_BI: any = null;
     private Page_Report: any = null;
 
@@ -108,21 +107,10 @@ export class MainReportsWorkspace implements OnInit {
 
                         case "BI": {
                             if (this.Page_BI == null) {
-                                SessionLocator.DynamicLoader.Load('./Report/Components/Workspaces/BIReportComponent', myLocation.viewContainerRef)
+                                SessionLocator.DynamicLoader.Load('./Report/Components/Workspaces/BIFolderReportComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.Page_BI = cmpRef.instance;
                                         this.Page_BI.InitComponent();
-                                    });
-                            }
-                            break;
-                        }
-
-                        case "BF": {
-                            if (this.Page_BF == null) {
-                                SessionLocator.DynamicLoader.Load('./Report/Components/Workspaces/BIFolderReportComponent', myLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        this.Page_BF = cmpRef.instance;
-                                        this.Page_BF.InitComponent();
                                     });
                             }
                             break;

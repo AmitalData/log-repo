@@ -46,6 +46,7 @@ export class BIReportPreviewComponent implements OnInit {
     public rowData: any[] = [];
     public BIReportName = "";
     @Output() RunReportCommand = new EventEmitter();
+    @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     private _EntityPMService: EntityPMService = new EntityPMService();
     private timerToken: any;
     public BIReportXMLData: BIReportXMLData = null;
@@ -432,6 +433,7 @@ export class BIReportPreviewComponent implements OnInit {
                 }
                 else if (confirmWindow.No) {
                     if (this.ComponentRef) {
+                        this.BackCompleted.emit(false);
                         this.ComponentRef.destroy();
                     }
                 }
@@ -442,6 +444,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
         else {
             if (this.ComponentRef) {
+                this.BackCompleted.emit(false);
                 SessionLocator.CurrentSession.FireEvent("BIRefresh");
                 this.ComponentRef.destroy();
             }
@@ -535,6 +538,12 @@ export class BIReportPreviewComponent implements OnInit {
                 this.EntityId = this.BIReportXMLData.BIReportId;
                 this.hasChanged = false;
                 this.StopBusyIndicator();
+
+                if (this.ComponentRef) {
+                    this.BackCompleted.emit(true);
+                    this.ComponentRef.destroy();
+                }
+
                 if (arg) {
                     this.ShowQueryBuilder();
                 }

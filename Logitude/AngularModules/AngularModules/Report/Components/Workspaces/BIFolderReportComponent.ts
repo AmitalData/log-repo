@@ -45,8 +45,7 @@ export class BIFolderReportComponent {
         this.folderListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.folderList = myResponse.Result;
-                this.folderList = this.folderList.sort((a, b) => { return a.Index - b.Index });
-
+                
                 this.reportListService.getAll().subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.reportList = myResponse.Result;
@@ -108,6 +107,7 @@ export class BIFolderReportComponent {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
+                cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadData());
             });
     }
     
@@ -129,6 +129,7 @@ export class BIFolderClass {
         this.reportsList = myReports;
         this.FolderId = myFolder.Id;
         this.Name = myFolder.Name;
+        this.FolderIcon = this.FolderIcon + SessionLocator.CurrentSession.GetNewId(this.FolderIcon);
 
         this.ComputeTitle();
     }
@@ -138,12 +139,17 @@ export class BIFolderClass {
     }
     
     public FolderIcon: string = "folder_icon";
+    public LinkColor: string = "#282E30";
     FolderIconMouseOver() {
         var img = document.getElementById(this.FolderIcon);
         img.setAttribute("src", "./Images/Icons/Folder_L.png");
+
+        this.LinkColor = "#1B90CB";
     }
     FolderIconMouseLeave() {
         var img = document.getElementById(this.FolderIcon);
         img.setAttribute("src", "./Images/Icons/Folder_B.png");
+
+        this.LinkColor = "#282E30";
     }
 }
