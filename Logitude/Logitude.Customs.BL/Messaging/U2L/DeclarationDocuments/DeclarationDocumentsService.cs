@@ -162,11 +162,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQuery = new CustomsDocumentMetaDataValueQueryService(_context);
                     List<CustomsDocumentMetaDataValuePM> CustomsDocumentMetaDataValues = customsDocumentMetaDataValueQuery.GetCustomsDocumentMetaDataValuesByConnectedEntity(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
-                    if(CustomsDocumentMetaDataValues.Where(r => r.MetaDataValue == "1" && r.MetaDataTypeCode == "380").FirstOrDefault() == null)
-                    {
-                        CustomsDocumentMetaDataValues.Add(new CustomsDocumentMetaDataValuePM { CustomsDocumentId = this._LogitudeDocs.COM_ID, MetaDataTypeCode = "380", MetaDataValue = "1", Tenant = _MyDeclarationPM.Tenant, ChangeSetOp = ChangeSetOperation.Insert });
+                    //if(CustomsDocumentMetaDataValues.Where(r => r.MetaDataValue == "1" && r.MetaDataTypeCode == "380").FirstOrDefault() == null)
+                    //{
+                    //    CustomsDocumentMetaDataValues.Add(new CustomsDocumentMetaDataValuePM { CustomsDocumentId = this._LogitudeDocs.COM_ID, MetaDataTypeCode = "380", MetaDataValue = "1", Tenant = _MyDeclarationPM.Tenant, ChangeSetOp = ChangeSetOperation.Insert });
 
-                    }
+                    //}
                     if (myDocumentId == null)
                     {
                         customsDocumentPM = new CustomsDocumentPM();
