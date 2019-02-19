@@ -504,9 +504,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 this.SelectedFiltersDataSource = tempDataNew;
             }
 
-            if (this.CD) {
-                this.CD.detectChanges();
-            }
+            this.RunDetectChanges();
+
             if (this.SelectedItem.DataTypeCode == "Boolean") {
                 //this.SaveChanges();
                 this.ClearData();
@@ -868,7 +867,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public StartBusyIndicator(myText: string) {
         this.BusyIndicatorText = myText;
         this.ShowBusyIndicator = true;
-        this.CD.detectChanges();
+        this.RunDetectChanges();
     }
 
     public StopBusyIndicator() {
@@ -881,7 +880,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public StartFiltersBusyIndicator(myText: string) {
         this.FiltersBusyIndicatorText = myText;
         this.FiltersShowBusyIndicator = true;
-        this.CD.detectChanges();
+        this.RunDetectChanges();
     }
 
     public StopFiltersBusyIndicator() {
@@ -1094,6 +1093,15 @@ export class DWQueryBuilderComponent extends BaseComponent {
             });
 
             return result;
+        }
+    }
+
+    RunDetectChanges() {
+        if (this.CD) {
+            var isDestroyed: boolean = this.CD['destroyed'];
+            if (!isDestroyed) {
+                this.CD.detectChanges();
+            }
         }
     }
 }

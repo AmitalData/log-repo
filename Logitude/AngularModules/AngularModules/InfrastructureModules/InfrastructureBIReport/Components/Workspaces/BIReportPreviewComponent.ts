@@ -46,6 +46,7 @@ export class BIReportPreviewComponent implements OnInit {
     public rowData: any[] = [];
     public BIReportName = "";
     @Output() RunReportCommand = new EventEmitter();
+    @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     private _EntityPMService: EntityPMService = new EntityPMService();
     private timerToken: any;
     public BIReportXMLData: BIReportXMLData = null;
@@ -473,6 +474,7 @@ export class BIReportPreviewComponent implements OnInit {
                 this.EntityId = s.EntityPM.Id;
                 this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                 this.UpdateBIReport(false);
+                this.BackCompleted.emit(true);
             });
         });
     }
@@ -537,6 +539,7 @@ export class BIReportPreviewComponent implements OnInit {
                 this.StopBusyIndicator();
                 if (arg) {
                     this.ShowQueryBuilder();
+                    this.BackCompleted.emit(true);
                 }
             }
         });
