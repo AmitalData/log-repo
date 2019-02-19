@@ -168,7 +168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "GetExternalCodeInterval",
-					  						DefaultText =  @"Get External Code Interval",
+					  						DefaultText =  "Get External Code Interval",
 					  						HelpTextCode =  "GetExternalCodeInterval",
 					  						Code =  "GetExternalCodeInterval",
 					  						DependencyFilter3IsList =  false,
