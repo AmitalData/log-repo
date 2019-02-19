@@ -657,7 +657,7 @@ export class BIReportPreviewComponent implements OnInit {
             confirmWindow.Height = 190;
             confirmWindow.NoButtonText = "Cancel";
             confirmWindow.YesButtonText = "Delete";
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+            confirmWindow.Title = "Confirm Deletion";
             confirmWindow.Show("Deleting this report will remove it from the BI reports list Once deleted it can't be restored");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {

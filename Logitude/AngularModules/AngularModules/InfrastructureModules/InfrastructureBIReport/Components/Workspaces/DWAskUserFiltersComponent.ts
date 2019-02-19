@@ -72,6 +72,8 @@ export class DWAskUserFiltersComponent implements OnInit {
 
     RunReport(MyDWQueryData) {
         this.ValidationErrorsList = [];
+        this.PageIndex = 0;
+        this.PageSize = 10000;
         if (MyDWQueryData.FirstTime == true) {
             this.DWQueryData = MyDWQueryData.MyData;
         }

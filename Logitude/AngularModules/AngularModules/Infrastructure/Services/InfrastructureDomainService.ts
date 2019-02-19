@@ -784,7 +784,23 @@ export class InfrastructureDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
+    DeleteFolder(Id: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeleteFolder?' + 'Id=' + Id, {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                var servertime = response.headers.get('ServerExecutionTime');
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {
 
         if (!entityPM) {
