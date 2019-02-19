@@ -2258,6 +2258,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsSharedLogisticsMoneyTabEnabled { get; set; }
         public bool IsSharedLogisticsMainCarrierVisible { get; set; }
         public bool IsSharedLogisticsPickDelvCarrierVisible { get; set; }
+        public bool IsSharedLogisticsAgentVisible { get; set; }
+        public bool IsSharedLogisticsShipperVisible { get; set; }
+        public bool IsSharedLogisticsConsigneeVisible { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstPickupATA { get; set; }
