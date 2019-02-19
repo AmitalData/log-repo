@@ -1,4 +1,3 @@
-
 import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -8,7 +7,7 @@ import {CourierMasterValidator} from '../../../../Customs/Validators/CourierMast
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     moduleId: module.id,
@@ -25,9 +24,13 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     public CurrentEditComponentId: string;
 
+    public WeightValueFilterItems: ApiQueryFilters;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.WeightValueFilterItems = new ApiQueryFilters();
+        this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
         this.Listen();
     }
 
