@@ -433,6 +433,7 @@ export class BIReportPreviewComponent implements OnInit {
                 }
                 else if (confirmWindow.No) {
                     if (this.ComponentRef) {
+                        this.BackCompleted.emit(false);
                         this.ComponentRef.destroy();
                     }
                 }
@@ -443,6 +444,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
         else {
             if (this.ComponentRef) {
+                this.BackCompleted.emit(false);
                 SessionLocator.CurrentSession.FireEvent("BIRefresh");
                 this.ComponentRef.destroy();
             }
@@ -474,7 +476,6 @@ export class BIReportPreviewComponent implements OnInit {
                 this.EntityId = s.EntityPM.Id;
                 this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                 this.UpdateBIReport(false);
-                this.BackCompleted.emit(true);
             });
         });
     }
@@ -537,9 +538,14 @@ export class BIReportPreviewComponent implements OnInit {
                 this.EntityId = this.BIReportXMLData.BIReportId;
                 this.hasChanged = false;
                 this.StopBusyIndicator();
+
+                if (this.ComponentRef) {
+                    this.BackCompleted.emit(true);
+                    this.ComponentRef.destroy();
+                }
+
                 if (arg) {
                     this.ShowQueryBuilder();
-                    this.BackCompleted.emit(true);
                 }
             }
         });
