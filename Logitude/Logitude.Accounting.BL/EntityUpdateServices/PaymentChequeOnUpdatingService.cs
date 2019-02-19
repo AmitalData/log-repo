@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
                 //TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
                 entityPM.ForeignAmount = entityPM.LocalAmount;
-                CreateJournalPM(entityPM);
+                JournalPM journal= CreateJournalPM(entityPM);
             }
 
             entityPM.UpdateDate = DateTime.Now;
@@ -95,7 +95,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
-        public virtual void  CreateJournalPM(PaymentChequePM entityPM)
+        public virtual JournalPM  CreateJournalPM(PaymentChequePM entityPM)
         {
             BankAccountPM bankAccount = GetSingleBankAccountPM(entityPM);
             JournalUpdateService journalUpdateService = new JournalUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -171,6 +171,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             journal.JournalLines.Add(journalLine2);
             journalUpdateService.Update(journal, true);
             entityPM.JournalNumber = journal.JournalNumber;
+
+            return journal;
         }
 
         public virtual BankAccountPM GetSingleBankAccountPM(PaymentChequePM entityPM)
@@ -189,7 +191,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
        // string GetObjectTableId(int tenant);
         string GetLogContactId(int tenant);
         DateTime GetCurrentDateTime(int tenant);
-        void CreateJournalPM(PaymentChequePM entityPM);
+        JournalPM  CreateJournalPM(PaymentChequePM entityPM);
         BankAccountPM GetSingleBankAccountPM(PaymentChequePM entityPM);
     }
 }
