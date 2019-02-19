@@ -1126,7 +1126,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
-            this.DisplayName = this.ComputeDisplayName(DWObjectField);
+            //if (DWObjectField.FilterItems && DWObjectField.FilterItems.length == 0) {
+                this.DisplayName = this.ComputeDisplayName(DWObjectField);
+            //}
+           
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
@@ -1151,7 +1154,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         //(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
         var Displayname = DWObjectField.DisplayName;
         if (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
-            if (DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
+            if (DWObjectField.DWObjectTableCode && DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
                 Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Code;
             }
             else {
