@@ -546,6 +546,7 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
         PartnerAddress: ko.observable(""),
         PartnerContact: ko.observable(""),
         PartnerCountrySRC: ko.observable(""),
+        PartnerVisibility: "collapse",
 
         FromCountySRC: ko.observable(""),
         ToCountySRC: ko.observable(""),
@@ -555,7 +556,7 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
 
         DeliveryDate: ko.observable(""),
     };
-
+    
     viewModel.FromCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
     viewModel.ToCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFinalDestinationPortCountryCode + ".png";
 
@@ -571,14 +572,22 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
     var _myRef = "";
     
     if (shipment.ShipmentLevelCode == "C") {
+        if (!shipment.IsSharedLogisticsAgentVisible) {
+            viewModel.PartnerVisibility = "collapse";
+        }
+        else {
+            viewModel.PartnerVisibility = "visible";
+        }
 
         viewModel.PartnerTitle = "Agent: ";
         viewModel.PartnerName = shipment.AgentName;
         viewModel.PartnerAddress = shipment.AgentAddressText;
 
-        if ($.trim(shipment.AgentAddressCountryCode) != "") {
-            viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.AgentAddressCountryCode + ".png";
-            $(".ShowPartnerData").show();
+        if (shipment.IsSharedLogisticsAgentVisible) {
+            if ($.trim(shipment.AgentAddressCountryCode) != "") {
+                viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.AgentAddressCountryCode + ".png";
+                $(".ShowPartnerData").show();
+            }
         }
 
         _myRef = shipment.AgentReference1;
@@ -589,26 +598,42 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
 
     else {
         if (shipment.DirectionId == "I") {
+            if (!shipment.IsSharedLogisticsShipperVisible) {
+                viewModel.PartnerVisibility = "collapse";
+            }
+            else {
+                viewModel.PartnerVisibility = "visible";
+            }
 
             viewModel.PartnerTitle = "Shipper: ";
             viewModel.PartnerName = shipment.ShipperName;
             viewModel.PartnerAddress = shipment.ShipperAddressText;
 
-            if ($.trim(shipment.ShipperAddressCountryCode) != "") {
-                viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.ShipperAddressCountryCode + ".png";
-                $(".ShowPartnerData").show();
+            if (shipment.IsSharedLogisticsShipperVisible) {
+                if ($.trim(shipment.ShipperAddressCountryCode) != "") {
+                    viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.ShipperAddressCountryCode + ".png";
+                    $(".ShowPartnerData").show();
+                }
             }
         }
 
         else {
+            if (!shipment.IsSharedLogisticsConsigneeVisible) {
+                viewModel.PartnerVisibility = "collapse";
+            }
+            else {
+                viewModel.PartnerVisibility = "visible";
+            }
 
             viewModel.PartnerTitle = "Consignee: ";
             viewModel.PartnerName = shipment.ConsigneeName;
             viewModel.PartnerAddress = shipment.ConsigneeAddressText;
 
-            if ($.trim(shipment.ConsigneeAddressCountryCode) != "") {
-                viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.ConsigneeAddressCountryCode + ".png";
-                $(".ShowPartnerData").show();
+            if (shipment.IsSharedLogisticsConsigneeVisible) {
+                if ($.trim(shipment.ConsigneeAddressCountryCode) != "") {
+                    viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.ConsigneeAddressCountryCode + ".png";
+                    $(".ShowPartnerData").show();
+                }
             }
         }
 
