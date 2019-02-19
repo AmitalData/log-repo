@@ -178,6 +178,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildIncotermDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildMoveTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildPortsDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -199,6 +200,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactShipmentTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateMoveTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateBrancheDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -30,14 +30,14 @@ namespace Logitude.Infrastructure.Data.Repsitories
 		
 		public  BIReportFolder GetSingle(string id, int tenant)
         {
-            return (from a in context. BIReportFolders
+            return (from a in context.BIReportFolders
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
         public IQueryable<BIReportFolder> GetAll(int tenant)
         {
-            return from a in context. BIReportFolders  
+            return from a in context.BIReportFolders  
                    where a.Tenant == tenant
                    select a;
         }
@@ -45,7 +45,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
         public BIReportFolder GetSingle(EntityKeyFields entityKeys)
         {
             BIReportFolderKeys keys = entityKeys as BIReportFolderKeys;
-            return (from a in context. BIReportFolders
+            return (from a in context.BIReportFolders
                     where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
@@ -54,26 +54,26 @@ namespace Logitude.Infrastructure.Data.Repsitories
         public void Add(BIReportFolder entity)
         {
             onAdd();
-            context. BIReportFolders.Add(entity);
+            context.BIReportFolders.Add(entity);
         }
 
         public void Remove(BIReportFolder entity)
         {
-            context. BIReportFolders.Attach(entity);
-            context. BIReportFolders.Remove(entity);
+            context.BIReportFolders.Attach(entity);
+            context.BIReportFolders.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(BIReportFolder entity)
         {
             onUpdate();
-            context. BIReportFolders.Attach(entity);
+            context.BIReportFolders.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<BIReportFolder> All()
         {
-            return context. BIReportFolders.ToList();
+            return context.BIReportFolders.ToList();
         }
 
         private IInfrastructureContext context

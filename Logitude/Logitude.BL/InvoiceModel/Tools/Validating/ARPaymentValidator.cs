@@ -227,29 +227,20 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         if (loggedTenant.AccountingSetting.IsARPaymentChronologicalDates)
                         {
                             ARPayment lastApprovedPayment = (from a in myContext.ARPayments
-                                                               where a.Tenant == entityPM.Tenant
-                                                               && a.StatusCode != "DR"
-                                                               && a.StatusCode != "VD"
-                                                               && a.PaymentNo != entityPM.PaymentNo
-                                                               select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
+                                                             where a.Tenant == entityPM.Tenant
+                                                             && a.StatusCode != "DR"
+                                                             && a.StatusCode != "VD"
+                                                             && a.PaymentNo != entityPM.PaymentNo
+                                                             select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
                             if (lastApprovedPayment != null)
                             {
                                 DateTime? entityDate = null;
                                 DateTime? lastApprovedDate = null;
-                                string approvedDateString = ""; 
+                                string approvedDateString = "";
 
-                                if (entityPM.ValueDate != null)
-                                {
-                                    entityDate = entityPM.ValueDate;
-                                    lastApprovedDate = lastApprovedPayment.ValueDate;
-                                    approvedDateString = "Value Date";
-                                }
-                                else
-                                {
-                                    entityDate = entityPM.RegisterDate;
-                                    lastApprovedDate = lastApprovedPayment.RegisterDate;
-                                    approvedDateString = "Register Date";
-                                }
+                                entityDate = entityPM.RegisterDate;
+                                lastApprovedDate = lastApprovedPayment.RegisterDate;
+                                approvedDateString = "Register Date";
 
                                 if (entityDate < lastApprovedDate)
                                 {

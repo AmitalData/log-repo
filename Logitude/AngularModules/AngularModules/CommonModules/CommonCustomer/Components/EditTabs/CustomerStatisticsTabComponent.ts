@@ -338,6 +338,11 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
                         this.NewActualVsPotential[1].ProductTypeCode.push(productItem.ProductTypeCode);
                         this.NewActualVsPotential[1].Month.push(null);
                     }
+                    else {
+                        this.NewActualVsPotential[1].Year.push(null);
+                        this.NewActualVsPotential[1].ProductTypeCode.push(element.Code);
+                        this.NewActualVsPotential[1].Month.push(null);
+                    }
                         if (i == 0) {
                             Graphs = [{
                                 "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
