@@ -10,13 +10,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityLists;
 
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
 {
-
     public partial class BIReportFolderListQueryService
     {
         private IQueryable<BIReportFolderList> GetIqueryableList(IQueryable<BIReportFolder> iQueryable)
@@ -24,25 +22,16 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             IQueryable<BIReportFolderList> query = (from a in iQueryable
                                                     select new BIReportFolderList()
                                                     {
-
                                                         Id = a.Id,
-
                                                         Tenant = a.Tenant,
-
                                                         CreateDate = a.CreateDate,
-
                                                         CreatedByUserId = a.CreatedByUserId,
-
                                                         UpdateDate = a.UpdateDate,
-
                                                         UpdatedByUserId = a.UpdatedByUserId,
-
                                                         SearchFields = a.SearchFields,
-
                                                         Name = a.Name,
-
                                                         Description = a.Description,
-
+                                                        Index = a.Index,
                                                     });
             return query;
         }

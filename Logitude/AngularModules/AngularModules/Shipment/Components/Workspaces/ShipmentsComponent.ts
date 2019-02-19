@@ -37,7 +37,7 @@ export class ShipmentsComponent {
             }
         }
 
-        var FeatureToggle = window.FeatureToggles.filter(d => d.ToggleCode == "TST" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TST" && d.TenantNumber == SessionLocator.Tenant)[0];
         if (FeatureToggle) {
             this.TestToggleIsVisible = true;
         }
