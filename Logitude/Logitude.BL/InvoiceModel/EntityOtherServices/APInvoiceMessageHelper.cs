@@ -271,6 +271,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage,
                         ChargeTypeCode = myline.ChargesType == null ? "" : myline.ChargesType.Code,
                         TaxCode = myline.VatType == null ? "" : myline.VatType.Code,
+                        Quantity=null,
                     };
                     
                     if (string.IsNullOrEmpty(lineElement.OriginalCurrency))

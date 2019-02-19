@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class  BIReportFoldersController : ApiController
+    public partial class BIReportFoldersController : ApiController
     {
 	  
        

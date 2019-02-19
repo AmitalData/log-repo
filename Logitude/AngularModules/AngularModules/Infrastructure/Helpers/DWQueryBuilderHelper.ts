@@ -53,6 +53,7 @@ export class DWQueryBuilderHelper   {
                 if (field.DWObjectTableCode.indexOf("DIM_") != -1) {
                     if (view.Code == '[Full Date]') {
                         view.ParentDataTypeCode = "DateTime";
+                        view.DataTypeCode = "DateTime";
                     }
                     else {
                         view.ParentDataTypeCode = "LookUp";
@@ -138,7 +139,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
-            this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
+            if (DWObjectField.FilterItems.length == 0) {
+                this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
+            }
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
@@ -647,6 +650,15 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.list.push(this.equalsOp);
             this.list.push(this.notEqualsOp);
         }
+
+        if (field.ParentDataTypeCode == "DateTime" || field.ParentDataTypeCode == "Date") {
+            this.list.push(this.beforeOp);
+            this.list.push(this.afterOp);
+            this.list.push(this.previousOp);
+            this.list.push(this.currentOp);
+            this.list.push(this.nextOp);
+
+        }
         return this.list;
     }
 
@@ -663,6 +675,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
     BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
     IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Empty");
     IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Has Value");
+    beforeOp: ObjectFieldOperator = new ObjectFieldOperator("Before", "Before");
+    afterOp: ObjectFieldOperator = new ObjectFieldOperator("After", "After");
+    previousOp: ObjectFieldOperator = new ObjectFieldOperator("Previous", "Previous");
+    currentOp: ObjectFieldOperator = new ObjectFieldOperator("Current", "Current");
+    nextOp: ObjectFieldOperator = new ObjectFieldOperator("Next", "Next");
 
 }
 

@@ -45,7 +45,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="EmailBoxMultiLinesText" style="white-space: normal;">
-                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete($event)" [ComputeFiltersCommand]="ComputeFiltersCommand" (ComputeFiltersComplete)="OnComputeFiltersComplete($event)"></DWAskUserFiltersComponent>
+                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete($event)" [ComputeFiltersCommand]="ComputeFiltersCommand" (ComputeFiltersComplete)="OnComputeFiltersComplete($event)" [IsFirstTime]="true"></DWAskUserFiltersComponent>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -180,7 +180,6 @@
                                          [rowData]="rowData"
                                          [columnDefs]="columnDefs"
                                          [rowSelection]="'multiple'"
-                                         [enableSorting]="true"
                                          (gridReady)="onGridReady($event)"
                                          (sortChanged)="onSortChanged($event)"
                                          (columnResized)="onColumnResized($event)"
