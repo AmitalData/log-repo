@@ -107,6 +107,7 @@ export class BIFolderReportComponent {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
+                cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadData());
             });
     }
     
