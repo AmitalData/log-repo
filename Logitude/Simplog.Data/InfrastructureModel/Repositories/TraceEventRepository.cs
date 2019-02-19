@@ -59,7 +59,18 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             return iQueryable;
         }
-      
+
+        public IQueryable<TraceEvent> GetAllTraceEventsByEventType(string entityId, string eventTypeId, int tenant)
+        {
+            IQueryable<TraceEvent> iQueryable = from a in context.TraceEvent
+                                                where a.Tenant == tenant
+                                                && a.EntityId == entityId
+                                                && a.EventTypeId == eventTypeId
+                                                select a;
+
+            return iQueryable;
+        }
+
         public void Add(TraceEvent entity)
         {
             context.TraceEvent.Add(entity);
