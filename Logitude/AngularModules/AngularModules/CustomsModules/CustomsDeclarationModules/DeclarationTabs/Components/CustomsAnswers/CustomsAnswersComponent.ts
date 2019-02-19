@@ -1114,37 +1114,46 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     private GetDepositionDefaults(CustomerCode: string) {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
-        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", SessionLocator.Tenant)
             .subscribe(response => {
                 this.IsDepositionStatusCodeButton = false;
                 this.IsDepositionStatusCodeSendDigital = false;
-                //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/U_LOGBOX.png";
-                this.DepositionStatusCodeIcon = "LOGBOX";
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
-                    this.IsDepositionStatusCodeButton = true;
-                }
-                myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                    .subscribe(res => {
-                        if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
-                            this.IsDepositionStatusCodeButton = true;
-                            this.IsDepositionStatusCodeSendDigital = true;
-                        }
-                        if (this.IsDepositionStatusCodeSendDigital) {
-                            this.DepositionStatusCodeText = "נשלחה משימה ליבואן בדיגיטל";
-                            this.DepositionStatusCodeIcon = "DEFAULT";
-                        }
-                        else {
-                            this.DepositionStatusCodeText = "נשלחה משימה ליבואן בלוגבוקס";
-                        }
 
-                        //myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)
-                          //  .subscribe(res => {
-                            //    if (!res.HasError && res.Result != null) {
+
+                    myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+                        .subscribe(response => {
+                            this.IsDepositionStatusCodeButton = false;
+                            this.IsDepositionStatusCodeSendDigital = false;
+                            //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/U_LOGBOX.png";
+                            this.DepositionStatusCodeIcon = "LOGBOX";
+                            if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                                this.IsDepositionStatusCodeButton = true;
+                            }
+                            myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+                                .subscribe(res => {
+                                    if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
+                                        this.IsDepositionStatusCodeButton = true;
+                                        this.IsDepositionStatusCodeSendDigital = true;
+                                    }
+                                    if (this.IsDepositionStatusCodeSendDigital) {
+                                        this.DepositionStatusCodeText = "נשלחה משימה ליבואן בדיגיטל";
+                                        this.DepositionStatusCodeIcon = "DEFAULT";
+                                    }
+                                    else {
+                                        this.DepositionStatusCodeText = "נשלחה משימה ליבואן בלוגבוקס";
+                                    }
+
+                                    //myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)
+                                    //  .subscribe(res => {
+                                    //    if (!res.HasError && res.Result != null) {
                                     //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/Tab_Logo_Original.png";
-                              //      this.DepositionStatusCodeIcon = "DEFAULT";
-                                //}
-                            //});
-                    });
+                                    //      this.DepositionStatusCodeIcon = "DEFAULT";
+                                    //}
+                                    //});
+                                });
+                        });
+                }
             });
     }
     //#endregion
