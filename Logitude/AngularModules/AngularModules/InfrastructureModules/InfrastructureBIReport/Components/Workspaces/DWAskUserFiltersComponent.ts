@@ -13,7 +13,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
     selector: 'DWAskUserFiltersComponent',
     moduleId: module.id,
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand','IsFirstTime']
 })
 
 export class DWAskUserFiltersComponent implements OnInit {
@@ -35,6 +35,7 @@ export class DWAskUserFiltersComponent implements OnInit {
     ValidationErrorsList: any[];
     public DWQueryData: DWQueryData;
     IsDateFilter: boolean = false;
+    IsFirstTime: boolean = false;
     public ComputeFiltersCommand: EventEmitter<any>;
 
     constructor() {

@@ -2400,9 +2400,15 @@ export class AWBWizardComponent {
         this.myService.insert(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
             if (!myRespone.HasError) {
                 this.EntityPM = myRespone.Result;
-                this.OnSaveCompletedSuccessfully();
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                this.SaveCompleted.emit(true);
+
+                if (this.isReloadingOnSave) {
+                    this.OnSaveCompletedSuccessfully();
+                }
+
+                else {
+                    this.SaveCompleted.emit(true);
+                    this.OnSaveCompletedSuccessfully();
+                }
             }
 
             else {
@@ -2422,8 +2428,15 @@ export class AWBWizardComponent {
         this.myService.update(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
             if (!myRespone.HasError) {
                 this.EntityPM = myRespone.Result;
-                this.OnSaveCompletedSuccessfully();
-                this.SaveCompleted.emit(true);
+
+                if (this.isReloadingOnSave) {
+                    this.OnSaveCompletedSuccessfully();
+                }
+
+                else {
+                    this.SaveCompleted.emit(true);
+                    this.OnSaveCompletedSuccessfully();
+                }               
             }
 
             else {
@@ -2436,6 +2449,7 @@ export class AWBWizardComponent {
     }
     private OnSaveCompletedSuccessfully() {
         if (this.isReloadingOnSave) {
+            this.isReloadingOnSave = false;
             this.isExecutingMethod = true;
             this.ReloadShipment();
         }

@@ -96,8 +96,8 @@
     </tr>
     <tr *ngIf="IsDateFilter == false">
         <td>
-            <div *ngFor="let item of SelectedFiltersDataSource; let i=index;">
-                <div style="float:left;margin-left:15px;width: 300px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode != 'DateTime' && item.ParentDataTypeCode != 'Date')">
+            <div *ngFor="let item of SelectedFiltersDataSource; let i=index;" style="float:left;">
+                <div  style="float:left;margin-left:15px;width:413px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode != 'DateTime' && item.ParentDataTypeCode != 'Date')">
                     <div>
                         <table style="height:30px;">
                             <tr style="height:30px;" class="MyFilterItem">
@@ -109,6 +109,12 @@
                                 </td>
                                 <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
                                     <span>{{item.DisplayName.replace('[', '').replace(']','')}}</span>
+                                </td>
+                                <td style="width:7px;">
+                                    <div style="width:7px;"></div>
+                                </td>
+                                <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
+                                    <ComboBox style="width:130px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
                                 </td>
                                 <td style="width:7px;">
                                     <div style="width:7px;"></div>
@@ -198,8 +204,8 @@
                                     </div>
                                 </td>
                                 <!--<td *ngIf="item.FilterType == 'Ask User'" [style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310">
-        <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
-    </td>-->
+                            <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
+                        </td>-->
                             </tr>
                         </table>
                         <!-------------------------->
@@ -222,12 +228,13 @@
                     </div>
 
                 </div>
-                <div style="width:100%;" *ngIf="item && item.IsGroup == true">
-                    <DWAskUserFiltersComponent [SelectedFiltersDataSource]="item.FilterItems"></DWAskUserFiltersComponent>
-                </div>
+                <!--<div>-->
+                    <DWAskUserFiltersComponent *ngIf="item && item.IsGroup == true" [SelectedFiltersDataSource]="item.FilterItems"></DWAskUserFiltersComponent>
+                <!--</div>-->
 
-            </div>
+            </div> 
         </td>
+        <!--<td><div></div></td>-->
 
     </tr>
     <tr>
@@ -251,7 +258,6 @@
                                         <div style="width:7px;"></div>
                                     </td>
                                     <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
-                                        <!--<span>{{item.Operation.Name}}</span>-->
                                         <ComboBox style="width:130px;" [ItemsSource]="Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
                                     </td>
                                     <td style="width:7px;">
@@ -284,12 +290,12 @@
 
                         </div>
 
-                    </td> 
+                    </td>
 
                 </tr>
             </table>
         </td>
-
+        
     </tr>
      
 
