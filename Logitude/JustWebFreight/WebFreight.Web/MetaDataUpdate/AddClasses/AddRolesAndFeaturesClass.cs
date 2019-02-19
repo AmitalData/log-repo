@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     updatedFeature.Code = featureDetails.Code;
                     updatedFeature.Packagable = featureDetails.Packagable;
                     updatedFeature.IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled;
-                    updatedFeature.IsOld = featureDetails.IsOld;
-                    updatedFeature.IsCoreFeature = featureDetails.IsCoreFeature;
+                    
 
                 TextCode updatedTextCode = null;
                     if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
