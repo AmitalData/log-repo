@@ -163,7 +163,7 @@
                                                         <button style="text-align:right" (click)="OpenCourierMaster('ConnectedDeclarations')">{{'General.O.ConnectedDeclarations' |TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="DeclarationsStatusRequestMethod()">{{'Customs.Declaration.O.DeclarationStatusRequest' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="GatepassRequestMethod()">{{'גייטפס העברות' }}</button>
-                                                        <button style="text-align:right" (click)="SendFTPMamanRequestMethod()" [disabled]="!IsMamanEnabled">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
+                                                        <button *ngIf="IsMamanEnabled" style="text-align:right" (click)="SendFTPMamanRequestMethod()">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
                                                     </div>
 
                                                 </div>
