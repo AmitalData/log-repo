@@ -290,12 +290,12 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
 
                 var documentName =  documentFiling.DocumentId;
-                var token = ServiceHelper.GetLDocumentDownloadToken();
-                let uri = ServiceHelper.GetLogitudeURL() + "WebPages/Downloadpage.aspx?id=" + documentName + "&tempId=" + token;
-                if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-                    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(uri);
-                    return;
-                }
+                //var token = ServiceHelper.GetLDocumentDownloadToken();
+                //let uri = ServiceHelper.GetLogitudeURL() + "WebPages/Downloadpage.aspx?id=" + documentName + "&tempId=" + token;
+                //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+                //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(uri);
+                //    return;
+                //}
                 DownloadManager.DownloadPage(documentName);
 
 

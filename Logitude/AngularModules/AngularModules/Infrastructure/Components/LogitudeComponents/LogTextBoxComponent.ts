@@ -1506,28 +1506,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         //this.isExpanded = !this.isExpanded;
 
-
-
-        // show window
-        var windowArgs: any = {};
-        windowArgs.ObjectTableName = this.ObjectTableName;
-        windowArgs.ObjectFieldName = this.ObjectFieldName;
-        windowArgs.TextValue = this.TextValue;
-
-        var wind = new LogitudeWindow();
-        // wind.IsFullScreen = true;
-        wind.Width = 960;
-        wind.Height = 570;
-        wind.WindowArgs = windowArgs;
-        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText : this.ObjectField.FullNameTextCodeDefaultText;
-        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
-        wind.WindowClosed.subscribe(res => {
-            console.log("Rsukt--", res);
-            if (res)
-                this.TextValue = res;
-            this.TextValueChanges(this.TextValue);
-        });
-
+        this.showMultiLineWindow();
 
 
         // if(SessionLocator.CurrentSession.CurrentWindow){
@@ -1556,5 +1535,33 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
+    }
+
+    showMultiLineWindow() {
+        // show window
+        var windowArgs: any = {};
+        // windowArgs.ObjectTableName = this.ObjectTableName;
+        // windowArgs.ObjectFieldName = this.ObjectFieldName;
+        windowArgs.TextValue = this.TextValue;
+
+        var wind = new LogitudeWindow();
+        // wind.IsFullScreen = true;
+        wind.Width = 960;
+        wind.Height = 570;
+        wind.WindowArgs = windowArgs;
+
+        if (this.ObjectField)
+            wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText : this.ObjectField.FullNameTextCodeDefaultText;
+        else
+            wind.Title = "";
+
+        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
+        wind.WindowClosed.subscribe(res => {
+            console.log("Rsukt--", res);
+            if (res != "<!#cancelled>") {
+                this.TextValue = res;
+                this.TextValueChanges(this.TextValue);
+            }
+        });
     }
 }
