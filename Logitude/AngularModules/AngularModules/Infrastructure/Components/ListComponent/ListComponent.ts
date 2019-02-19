@@ -2520,7 +2520,18 @@ export class ListComponent implements OnInit, AfterViewInit {
                             SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({ DWQueryId: s.QID, ObjectTableName: 'BIReport', EntityId: null, FolderId: this.listArgs.BIReportFolderId });
+                                    cmpRef.instance.Run({
+                                        DWQueryId: s.QID,
+                                        ObjectTableName: 'BIReport',
+                                        EntityId: null,
+                                        FolderId: this.listArgs.BIReportFolderId
+                                    });
+
+                                    cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                                        //this.isEditControlOpened = false;
+                                        //this.OnBackFromEdit(selectedEntityId, $event);
+                                        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
+                                    });
                                 });
                         }
                     });
