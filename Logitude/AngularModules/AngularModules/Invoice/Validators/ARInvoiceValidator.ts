@@ -182,9 +182,10 @@ export class ARInvoiceValidator {
     private ValidateConsolidationInvoice() {
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
-            if (!this.EntityPM.IsBillToAllowConsolidation) {
-                this.Errors.push(InvoiceTool.GetBillToNotAllowConsolidation());
-            }
+
+            //if (!this.EntityPM.IsBillToAllowConsolidation) {
+            //    this.Errors.push(InvoiceTool.GetBillToNotAllowConsolidation());
+            //}
         }
 
         if (this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
