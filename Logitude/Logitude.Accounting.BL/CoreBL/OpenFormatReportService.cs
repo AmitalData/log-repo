@@ -750,12 +750,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.TotalCredit = trailReportM.Select(d => d.LocalCredit).Sum();
                     if (item.OpeningBalance != null)
                     {
-                        string OpeningBalance = item.OpeningBalance.ToString();
+                        string OpeningBalance = Math.Abs((decimal)item.OpeningBalance).ToString();
                         if (item.OpeningBalance < 0)
                         {
                             myStringBuilder.Append("a");
                             myStringBuilder.Append("-");
-
+                         
                             if (OpeningBalance.Length > 14) { OpeningBalance = OpeningBalance.Substring(0, 14); }
                             myStringBuilder.Append( OpeningBalance.PadLeft(14, '0'));
                         }
@@ -782,7 +782,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     if (item.TotalDebit != null)
                     {
-                        string totalDebit = item.TotalDebit.ToString();
+                        string totalDebit =Math.Abs((decimal)item.TotalDebit).ToString();
                         if(item.TotalDebit < 0)
                         {
                             myStringBuilder.Append("a");
@@ -812,7 +812,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     if (item.TotalCredit != null)
                     {
-                        string totalCredit = item.TotalCredit.ToString();
+                        string totalCredit = Math.Abs((decimal)item.TotalCredit).ToString();
 
                         if(item.TotalCredit < 0)
                         {
@@ -866,7 +866,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.OpeningBalanceInForegnCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignOpenBalance).Sum() : null;
                     if (item.OpeningBalanceInForegnCurrency != null)
                     {
-                        string OpeningBalanceInForegnCurrency = item.OpeningBalanceInForegnCurrency.ToString();
+                        string OpeningBalanceInForegnCurrency =Math.Abs((decimal) item.OpeningBalanceInForegnCurrency).ToString();
                         if(item.OpeningBalanceInForegnCurrency < 0)
                         {
                             myStringBuilder.Append("a");
@@ -898,7 +898,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.TotalDebitInForeignCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignDebit).Sum() : null;
                     if (item.TotalDebitInForeignCurrency != null)
                     {
-                        string TotalDebitInForeignCurrency = item.TotalDebitInForeignCurrency.ToString();
+                        string TotalDebitInForeignCurrency = Math.Abs((decimal) item.TotalDebitInForeignCurrency).ToString();
                         if(item.TotalDebitInForeignCurrency < 0)
                         {
                             myStringBuilder.Append("a");
@@ -924,7 +924,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.TotalCreditInForeignCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignCredit).Sum() : null;
                     if (item.TotalCreditInForeignCurrency != null)
                     {
-                        string TotalCreditInForeignCurrency = item.TotalCreditInForeignCurrency.ToString();
+                        string TotalCreditInForeignCurrency = Math.Abs((decimal)item.TotalCreditInForeignCurrency).ToString();
 
                         if(item.TotalCreditInForeignCurrency < 0)
                         {
