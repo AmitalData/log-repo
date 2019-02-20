@@ -310,7 +310,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if(item.LocalAmountCredit > 0)
                     {
-                        var LocalAmountCredit = Math.Abs(item.LocalAmountCredit).ToString();
+                        var LocalAmountCredit = Math.Abs(item.LocalAmountCredit).ToString().Replace(".", string.Empty);
 
                         myStringBuilder.Append("+");
                         if (LocalAmountCredit.Length > 14) { LocalAmountCredit.Substring(0, 14); }
@@ -319,7 +319,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     else if (item.LocalAmountCredit < 0)
                     {
-                        var LocalAmountCredit = Math.Abs(item.LocalAmountCredit).ToString();
+                        var LocalAmountCredit = Math.Abs(item.LocalAmountCredit).ToString().Replace(".", string.Empty);
 
                         myStringBuilder.Append("-");
                         if (LocalAmountCredit.Length > 14) { LocalAmountCredit.Substring(0, 14); }
@@ -333,7 +333,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (item.ForeignAmountDebit > 0)
                     {
-                        string ForeignAmountDebit = Math.Abs(item.ForeignAmountDebit).ToString();
+                        string ForeignAmountDebit = Math.Abs(item.ForeignAmountDebit).ToString().Replace(".", string.Empty);
                         myStringBuilder.Append("+");
                         if (ForeignAmountDebit.Length > 14) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 14); }
                         myStringBuilder.Append(ForeignAmountDebit.PadLeft(14, '0'));
@@ -343,7 +343,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     else if(item.ForeignAmountDebit< 0)
                     {
 
-                        string ForeignAmountDebit = Math.Abs(item.ForeignAmountDebit).ToString();
+                        string ForeignAmountDebit = Math.Abs(item.ForeignAmountDebit).ToString().Replace(".", string.Empty);
                         myStringBuilder.Append("-");
                         if (ForeignAmountDebit.Length > 14) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 14); }
                         myStringBuilder.Append(ForeignAmountDebit.PadLeft(14, '0'));
@@ -354,7 +354,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (item.ForeignAmountCredit > 0)
                     {
-                        string ForeignAmountCredit = Math.Abs(item.ForeignAmountCredit).ToString();
+                        string ForeignAmountCredit = Math.Abs(item.ForeignAmountCredit).ToString().Replace(".", string.Empty);
                         myStringBuilder.Append("+");
                         if (ForeignAmountCredit.Length > 14) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 14); }
                         myStringBuilder.Append(ForeignAmountCredit.PadLeft(14, '0'));
@@ -364,7 +364,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     else if (item.ForeignAmountCredit < 0)
                     {
 
-                        string ForeignAmountCredit = Math.Abs(item.ForeignAmountCredit).ToString();
+                        string ForeignAmountCredit = Math.Abs(item.ForeignAmountCredit).ToString().Replace(".", string.Empty);
                         myStringBuilder.Append("-");
                         if (ForeignAmountCredit.Length > 14) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 14); }
                         myStringBuilder.Append(ForeignAmountCredit.PadLeft(14, '0'));
@@ -3269,9 +3269,9 @@ namespace Logitude.Accounting.BL.CoreBL
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
             ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
-            bool showLocals = !contact.DontShowLocal;
           
-            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, showLocals);
+          
+            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, !contact.DontShowLocal);
            
             if (error  != null)
             {
@@ -3320,20 +3320,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private static ContactPM GetLoggedContact(int tenant)
         {
-        //    ContactRepository contactRepository = new ContactRepository(tenant);
-        //    Contact loggedContact;
-        //    if (HttpContext.Current != null)
-        //    {
-        //        string email = HttpContext.Current.User.Identity.Name;
-        //        loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-        //    }
-        //    else
-        //    {
-        //        string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
-        //        loggedContact = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
+            //ContactQuery contactQuery = new ContactQuery(tenant);
+            //ContactPM loggedContact;
+            //if (HttpContext.Current != null)
+            //{
+            //    string email = HttpContext.Current.User.Identity.Name;
+            //    loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
+            //}
+            //else
+            //{
+            //    string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
+            //    loggedContact = contactQuery.GetContactByEmailOnly(systemContactEmail, tenant);
 
-        //    }
-        //    return loggedContact;
+            //}
+            //return loggedContact;
 
 
 
@@ -3787,9 +3787,9 @@ namespace Logitude.Accounting.BL.CoreBL
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("INI", tenant);
 
             ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
-            bool showLocals = !contact.DontShowLocal;
+       
 
-            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, showLocals);
+            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, !contact.DontShowLocal);
 
             if (error != null)
             {
