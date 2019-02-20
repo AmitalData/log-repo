@@ -23,7 +23,7 @@ namespace Logitude.XSD.Simulators
         public string ShipmentLevelCode { get; set; }
         public bool IsViaColoader { get; set; }
         public string ColoaderReference { get; set; }
-
+        public string AnalyzeQueueId { get; set; }
         public string XmlText { get; set; }
         public bool IsGLSHKISAC { get; set; }
         public string ISAC_Sender { get; set; }

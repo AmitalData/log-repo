@@ -39,8 +39,17 @@ namespace Logitude.XSD.Simulators
             this.Args = args;
             this.Tenant = args.Tenant;
             this.Result = new SimulatorResult() { Id = Tenant };
-            this.GetGlobalVariables();
-            this.DefineSimulatorType();
+
+            if (args.MessageIdentifier == "AnalyzeQueueId")
+            {
+
+            }
+
+            else
+            {
+                this.GetGlobalVariables();
+                this.DefineSimulatorType();
+            }
         }
 
         public void Run()
@@ -49,35 +58,50 @@ namespace Logitude.XSD.Simulators
 
             if (Result.IsValid)
             {
-                string xmlString = null;
 
-                if (Args.MessageIdentifier == "XML")
+                if (Args.MessageIdentifier == "AnalyzeQueueId")
                 {
-                    xmlString = Args.XmlText;
+                    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+                    AnalyzeQueue analyzeQueue = analyzeQueueReposiory.GetSingleAnalyzeQueue(Args.AnalyzeQueueId);
+                    if (analyzeQueue != null)
+                    {
+                        CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueReposiory);
+                        analyzer.Run();
+                    }
                 }
 
                 else
                 {
-                    if (IsChampSimulator)
-                    {
-                        CHAMPSimulator mySimulator = new CHAMPSimulator(Args, TTY, AirlineTTY);
-                        mySimulator.Run();
+                    string xmlString = null;
 
-                        xmlString = this.BuildXML(mySimulator.Envelope);
+                    if (Args.MessageIdentifier == "XML")
+                    {
+                        xmlString = Args.XmlText;
                     }
 
                     else
                     {
-                        GLSHKSimulator mySimulator = new GLSHKSimulator(Args, PIMA, AirlinePIMA);
-                        mySimulator.Run();
+                        if (IsChampSimulator)
+                        {
+                            CHAMPSimulator mySimulator = new CHAMPSimulator(Args, TTY, AirlineTTY);
+                            mySimulator.Run();
 
-                        xmlString = this.BuildXML(mySimulator.Message);
+                            xmlString = this.BuildXML(mySimulator.Envelope);
+                        }
+
+                        else
+                        {
+                            GLSHKSimulator mySimulator = new GLSHKSimulator(Args, PIMA, AirlinePIMA);
+                            mySimulator.Run();
+
+                            xmlString = this.BuildXML(mySimulator.Message);
+                        }
                     }
-                }
 
-                if (!string.IsNullOrEmpty(xmlString))
-                {
-                    this.BuildAnalyzeQueue(xmlString);
+                    if (!string.IsNullOrEmpty(xmlString))
+                    {
+                        this.BuildAnalyzeQueue(xmlString);
+                    }
                 }
             }
         }
@@ -86,7 +110,15 @@ namespace Logitude.XSD.Simulators
         {
             List<string> errors = new List<string>();
 
-            if (Args.MessageIdentifier == "XML")
+            if (Args.MessageIdentifier == "AnalyzeQueueId")
+            {
+                if (string.IsNullOrEmpty(Args.AnalyzeQueueId))
+                {
+                    errors.Add("AnalyzeQueueId is missing");
+                }
+            }
+
+            else if (Args.MessageIdentifier == "XML")
             {
                 if (string.IsNullOrEmpty(Args.XmlText))
                 {
