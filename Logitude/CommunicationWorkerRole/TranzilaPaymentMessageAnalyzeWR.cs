@@ -168,10 +168,10 @@ namespace CommunicationWorkerRole
             ServicePointManager.DefaultConnectionLimit = 12;
 
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "MessageAnalyze";
+            BatchServiceCode = "TranzilaPaymentMessageAnalyze";
             DoneItemsInRange = new Dictionary<DateTime, int>();
 
-            queueName = "ChampAnalyzer";
+            //queueName = "ChampAnalyzer";
             ConnectClient();
 
             //DiagnosticMonitor.Start("DiagnosticsConnectionString");
