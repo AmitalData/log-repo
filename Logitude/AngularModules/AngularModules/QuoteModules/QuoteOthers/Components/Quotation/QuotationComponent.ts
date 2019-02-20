@@ -378,7 +378,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     }
 
 
-    public IsShowTemplateList: boolean = true;
+    public IsShowTemplateList: boolean = false;
     public AttrTitleShowTemplateList: string = TextCodeTranslator.Translate("Quote.Quotation.B.Expand")  ;
     ShowHideTemplateList() {
         if (this.IsShowTemplateList) {

@@ -1,0 +1,184 @@
+
+/* footer styles */
+
+.arp-footer{
+
+}
+
+    .arp-footer .amount-div{
+        display:block;
+        min-width: 120px;
+    }
+
+        .arp-footer .amount-div > .amount{
+            font-size: 20px;
+            color:#282E30;
+            margin: 0 0 10px 0px;
+            font-family: sans-serif;
+            text-align: center;
+
+        }
+
+
+        .arp-footer .amount-div > .label{
+            font-size: 11px;
+            margin-top:-5px;
+            text-align:center !important;
+            color: gray;
+
+        }
+
+    .arp-footer .seperator{
+        display:block;
+        text-align:center;
+    }
+
+    .arp-footer .seperator > div{
+        font-size: 24px;
+        text-align: center;
+        color:#282E30;
+        margin: 0 15px;
+
+    }
+
+/* eof footer styles */
+
+/* line validation styles */
+
+
+.exc-remark-button {
+    cursor: pointer;
+    width: 16px;
+    margin-right: 5px;
+    margin-top: 1px;
+    position: absolute;
+    top: 1px;
+    right: 0;
+}
+
+    .exc-remark-button:hover {
+        background: #fdecd2;
+        border-radius: 50%;
+    }
+    .exc-remark-button-red:hover {
+        background: #fdd2d2;
+    }
+
+.speech-bubble {
+    width: 200px;
+    height: 100px;
+    position: relative;
+    border-radius: .6em;
+    border: 1px solid #e8b26f;
+    background: #e8b26f;
+    cursor: default;
+    padding: 0px 10px;
+    padding-bottom: 6px;
+
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefff7+0,f2d4a4+100 */
+    background: #fefff7; /* Old browsers */
+    background: -moz-linear-gradient(top, #fefff7 0%, #f2d4a4 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #fefff7 0%,#f2d4a4 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #fefff7 0%,#f2d4a4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefff7', endColorstr='#f2d4a4',GradientType=0 ); /* IE6-9 */
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.10196078431372549);
+}
+
+    .speech-bubble:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 16%;
+        width: 0;
+        height: 0;
+        border: 17px solid transparent;
+        border-top-color: #f2d4a5;
+        border-bottom: 0;
+        border-left: 0;
+        margin-left: -15px;
+        margin-bottom: -17px;
+    }
+
+    .speech-bubble .TooltipContent {
+        width: 100%;
+        text-align: right;
+        float: right;
+        white-space: normal;
+        word-break: break-all;
+        height: calc(100% - 30px);
+        line-height: 1.2;
+        font-size: 11px;
+        overflow: auto;
+    }
+
+.CloseButtonWrapper {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+    .CloseButtonWrapper:hover {
+    }
+
+    .CloseButtonWrapper:active {
+    }
+
+.CloseButton {
+    cursor: pointer;
+    background: url('./Images/Tab.X.Black.png') no-repeat;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 10px;
+    height: 10px;
+    font-size: 12px;
+    color: #717171;
+    border-radius: 50%;
+    opacity: 0.6;
+}
+
+
+.scroll1::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scroll1::-webkit-scrollbar-track {
+  background: #ddd;
+    border-radius: 15px;
+}
+
+.scroll1::-webkit-scrollbar-thumb {
+  background: #818181;
+    border-radius: 15px;
+}
+.scroll1::-webkit-scrollbar:hover {
+  background: #818181;
+    border-radius: 15px;
+  width: 8px;
+
+}
+
+.red-bubble {
+    border: 1px solid #e86f6f;
+    background: #e86f6f;
+    background: #fefff7; /* Old browsers */
+    background: -moz-linear-gradient(top, #fefff7 0%, #fa8d8d 100%) !important; /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #fefff7 0%,#fa8d8d 100%) !important; /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #fefff7 0%,#fa8d8d 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefff7', endColorstr='#f2a4a4',GradientType=0 ) !important; /* IE6-9 */
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.10196078431372549);
+}
+    .red-bubble:after {
+            border-top-color: #f2a5a5;
+    }
+.red-bubble .TooltipContent{
+    font-size: 12px !important;
+}
+
+/*end remark tooltip styles*/
+
+/* eof line validation styles */
