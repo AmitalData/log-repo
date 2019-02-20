@@ -181,6 +181,7 @@
     <Content Include="2018.R5\12 - 2018\Day 05 [Samar] Update license management report.sql" />
     <Content Include="2019.R1\02 - 2019\Day 13 [Samar] Add New Help Resources.sql" />
     <Content Include="2019.R1\02 - 2019\Day 13 [Samar] Fill FirstAccountingCloseDate backward.sql" />
+    <Content Include="2019.R1\02 - 2019\Day 20 [Khalid] Calculate AgentComputed Old Shipments.sql" />
     <Content Include="2019.R1\02 - 2019\Day 14 [Samar] Update Shipment query columns.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />

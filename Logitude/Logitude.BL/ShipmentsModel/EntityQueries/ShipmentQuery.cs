@@ -812,6 +812,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             #region Agent
             shipmentPM.AgentId = shipment.AgentId;
+            shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.AgentAddressId = shipment.AgentAddressId;
             shipmentPM.AgentContactId = shipment.AgentContactId;
             shipmentPM.AgentReference1 = shipment.AgentReference1;
@@ -1198,6 +1199,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AgentAddressId = shipment.AgentAddressId;
             shipmentPM.AgentContactId = shipment.AgentContactId;
             shipmentPM.AgentId = shipment.AgentId;
+            shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.BranchId = shipment.BranchId;
             shipmentPM.FreelancerId = shipment.FreelancerId;
             shipmentPM.FreelancerAddressId = shipment.FreelancerAddressId;
@@ -1474,6 +1476,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.From = shipment.From;
             shipmentPM.To = shipment.To;
             shipmentPM.Origin = shipment.Origin;
+            shipmentPM.AgentComputed = shipment.AgentComputed;
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
@@ -2624,6 +2627,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             #region Agent
             shipmentPM.AgentId = shipment.AgentId;
+            shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.AgentAddressId = shipment.AgentAddressId;
             shipmentPM.AgentContactId = shipment.AgentContactId;
             shipmentPM.AgentReference1 = shipment.AgentReference1;
@@ -3064,6 +3068,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.CustomerId = shipment.CustomerId;
             shipmentPM.DirectionId = shipment.DirectionId;
             shipmentPM.AgentId = shipment.AgentId;
+            shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.BranchId = shipment.BranchId;
             shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
             shipmentPM.SalesmanUserId = shipment.SalesmanUserId;
@@ -3490,6 +3495,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         AgentAddressId = s.AgentAddressId,
                                                         AgentContactId = s.AgentContactId,
                                                         AgentId = s.AgentId,
+                                                        AgentComputed = s.AgentComputed,
                                                         AgentName = s.AgentCard != null ? s.AgentCard.EnglishName : null,
                                                         AgentNote = s.AgentCard != null ? s.AgentCard.Notes : null,
                                                         AgentReference1 = s.AgentReference1,
@@ -3941,6 +3947,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         BranchId = s.BranchId,
                                                         DepartmentId = s.DepartmentId,
                                                         AgentId = s.AgentId,
+                                                        AgentComputed=s.AgentComputed,
                                                         IsAccountingClosed = s.IsAccountingClosed,
                                                         IsOperationalClosed = s.IsOperationalClosed,
                                                         OriginShipmentId = s.OriginShipmentId,
@@ -4042,6 +4049,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         AgentAddressId = s.AgentAddressId,
                                                         AgentContactId = s.AgentContactId,
                                                         AgentId = s.AgentId,
+                                                        AgentComputed=s.AgentComputed,
                                                         AgentName = s.AgentCard != null ? s.AgentCard.EnglishName : null,
                                                         AgentNote = s.AgentCard != null ? s.AgentCard.Notes : null,
                                                         AgentReference1 = s.AgentReference1,
@@ -10019,7 +10027,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      ContainerCode = jd.PackageType != null ? jd.PackageType.PrintAs : null,
                      TransportModeId = shipment.TransportModeId,
                      MainCarriageCarrierPrefix = m.MainCarriageCarrierPrefix,
-                     AgentId = shipment.AgentId,
+                     AgentId = shipment.AgentId,                     
                      ShipmentLevelCode = shipment.ShipmentLevelCode,
                      VesselId = m.MainCarriageVesselId,
                      Field1 = shipment.Field1,
@@ -10359,6 +10367,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          AccountedReceivablesInProfitCurrency = s.AccountedReceivablesInProfitCurrency,
                                                          ProfitInProfitCurrency = s.ProfitInProfitCurrency,
                                                          AgentId = s.AgentId,
+                                                         AgentComputed=s.AgentComputed,
                                                          AgentName = s.AgentCard != null ? s.AgentCard.EnglishName : null,
                                                          AgentReference1 = s.AgentReference1,
                                                          AgentReference2 = s.AgentReference2,
@@ -10910,7 +10919,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ToPortCountryCode = f.ToPortCountryCode,
                                ToPortCountryName = f.ToPortCountryName,
                                CarrierNumber = f.CarrierNumber,
-                               AgentId = f.AgentId,
+                               AgentId = f.AgentId,    
+                               AgentComputed=f.AgentComputed,
                                ARInvoiceIssued = f.ARInvoiceIssued,
                                CreditNoteIssued = f.CreditNoteIssued,
                                CustomFileNumber = f.CustomFileNumber,
@@ -11250,6 +11260,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ToPortCountryName = f.ToPortCountryName,
                     CarrierNumber = f.CarrierNumber,
                     AgentId = f.AgentId,
+                    AgentComputed = f.AgentComputed,
                     ARInvoiceIssued = f.ARInvoiceIssued,
                     CreditNoteIssued = f.CreditNoteIssued,
                     CustomFileNumber = f.CustomFileNumber,
@@ -11564,6 +11575,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     FollowUpTypeId = f.FollowUpTypeId,
                     VolumeInCBM = f.VolumeInCBM,
                     AgentId = f.AgentId,
+                    AgentComputed = f.AgentComputed,
                     ARInvoiceIssued = f.ARInvoiceIssued,
                     CreditNoteIssued = f.CreditNoteIssued,
                     FreightForwarderId = f.FreightForwarderId,
@@ -11946,6 +11958,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          AccountedReceivablesInProfitCurrency = s.AccountedReceivablesInProfitCurrency,
                                                          ProfitInProfitCurrency = s.ProfitInProfitCurrency,
                                                          AgentId = s.AgentId,
+                                                         AgentComputed=s.AgentComputed,
                                                          AgentName = s.AgentCard != null ? s.AgentCard.EnglishName : null,
                                                          AgentReference1 = s.AgentReference1,
                                                          AgentReference2 = s.AgentReference2,
