@@ -1020,15 +1020,21 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             }
         }
 
-        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapContractQTY;
-        var link = "https://cp.bluesnap.com/buynow/checkout?storeId=" + storeid + "&sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://cp.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
 
+        }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeid;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeid;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;;
             }
         }
 
@@ -1054,15 +1060,21 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             contractId = "3285402";
         }
 
-        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBContractQTY;
-        var link = "https://cp.bluesnap.com/buynow/checkout?storeId="+storeId+"&sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://cp.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
 
+        }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeId;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeId;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1089,16 +1101,21 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
 
             contractId = "3233898";
         }
-
+        var link = "";
         var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
-        var link = "https://cp.bluesnap.com/buynow/checkout?storeId=" + storeId + "&sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://cp.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
 
+        }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeId;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeId;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1128,15 +1145,21 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         }
 
 
-        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapOneTimeContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapOneTimeContractQTY;
-        var link = "https://cp.bluesnap.com/buynow/checkout?storeId=" + storeId + "&sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://cp.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
 
+        }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeId;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeId;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1165,15 +1188,21 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             }
         }
 
-        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapCRMContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapCRMContractQTY;
-        var link = "https://cp.bluesnap.com/buynow/checkout?storeId=" + storeId + "&sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://cp.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
 
+        }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeId;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 & storeid=" + storeId;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 

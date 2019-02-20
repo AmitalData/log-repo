@@ -433,7 +433,7 @@ export class BIReportPreviewComponent implements OnInit {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     // save
-                    this.SaveBIReport();
+                    this.SaveBIReport(true);
                 }
                 else if (confirmWindow.No) {
                     if (this.ComponentRef) {
@@ -454,12 +454,12 @@ export class BIReportPreviewComponent implements OnInit {
             }
         }
     }
-    SaveBIReport() {
+    SaveBIReport(isBackBtn = false) {
         if (this.EntityId == null) {
             this.NewBIReport();
         }
         else {
-            this.UpdateBIReport(false);
+            this.UpdateBIReport(false, isBackBtn);
         }
     }
     NewBIReport() {
@@ -472,7 +472,6 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.DWQueryId = this.DWQueryId;
         windowArgs.FolderId = this.FolderId;
         logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
@@ -485,7 +484,7 @@ export class BIReportPreviewComponent implements OnInit {
             });
         });
     }
-    UpdateBIReport(arg: boolean) {
+    UpdateBIReport(arg: boolean, isBackBtn = false) {
         // call method in server side to build xml 
         var sorting = this.agGrid.api.getSortModel();
         var coulmns = this.agGrid.columnApi.getColumnState();
@@ -545,22 +544,19 @@ export class BIReportPreviewComponent implements OnInit {
                 this.hasChanged = false;
                 this.StopBusyIndicator();
 
-                if (this.ComponentRef) {
+                if (arg) {
+                    this.ShowQueryBuilder();
+                }
+
+                if (this.ComponentRef && isBackBtn) {
                     this.BackCompleted.emit(true);
                     this.ComponentRef.destroy();
                 }
 
-                if (arg) {
-                    this.ShowQueryBuilder();
-                }
             }
         });
     }
-    OnNewBIReportWindowClosed(arg: string) {
-        if (arg != 'cancel') {
-            this.EntityId = arg;
-        }
-    }
+   
     ShowQueryBuilderClicked() {
         if (this.HasChanges) {
             this.UpdateBIReport(true);
