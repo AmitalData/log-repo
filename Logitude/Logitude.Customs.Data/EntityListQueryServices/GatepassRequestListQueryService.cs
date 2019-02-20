@@ -26,9 +26,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 											{
                      
 					                          MasterCourierId = a.MasterCourierId,
-					
+					                          Tenant = a.Tenant,
 					                          GatepassNumber = a.GatepassNumber,
-					
+					                            
 					                          OriginSiteCode = a.OriginSiteCode,
 					
 					                          UpdateCode = a.UpdateCode,

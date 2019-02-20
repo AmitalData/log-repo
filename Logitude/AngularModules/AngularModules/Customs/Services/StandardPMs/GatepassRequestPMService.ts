@@ -30,14 +30,14 @@ export class GatepassRequestPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/gatepassrequests';      
     }
 
- get(mastercourierid: string, gatepassnumber: number) {
+ get(mastercourierid: string) {
          
          
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
 		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'mastercourierid=' + mastercourierid+'&'+'gatepassnumber=' + gatepassnumber, {
+                return this._http.get(this._apiUrl+'/getsingle?'+'mastercourierid=' + mastercourierid, {
                     headers: authHeader
                 }).map(response => {
                     var pm = response.json();
@@ -55,7 +55,7 @@ export class GatepassRequestPMService {
                 serviceResponse.Result = entity;
               
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GatepassRequest", "GetSinglePM", 'mastercourierid=' + mastercourierid+'&'+'gatepassnumber=' + gatepassnumber);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GatepassRequest", "GetSinglePM", 'mastercourierid=' + mastercourierid);
 				 
                 return serviceResponse;
 

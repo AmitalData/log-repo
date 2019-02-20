@@ -18,10 +18,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string MasterCourierId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
-
-       [Key]
        [DataMember]
-       public int GatepassNumber  { get; set; }
+       public int? GatepassNumber  { get; set; }
        [DataMember]
        public string OriginSiteCode  { get; set; }
        [DataMember]

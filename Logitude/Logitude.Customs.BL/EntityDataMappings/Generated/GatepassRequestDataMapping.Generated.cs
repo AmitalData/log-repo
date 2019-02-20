@@ -63,6 +63,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassNumber))
+            {
+				entityPOCO.GatepassNumber = entityPM.GatepassNumber;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginSiteCode))
             {
 				entityPOCO.OriginSiteCode = entityPM.OriginSiteCode;
@@ -151,6 +156,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassNumber))
+            {
+                oldEntityPM.GatepassNumber = entityPM.GatepassNumber;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginSiteCode))

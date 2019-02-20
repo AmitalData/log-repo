@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string mastercourierid, int gatepassnumber)
+        public HttpResponseMessage GetSingle(string mastercourierid)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 GatepassRequestListQueryService gatepassRequestQuery = new GatepassRequestListQueryService(MyContext);
-                GatepassRequestList gatepassRequestList = gatepassRequestQuery.GetSingle(mastercourierid, gatepassnumber);
+                GatepassRequestList gatepassRequestList = gatepassRequestQuery.GetSingle(mastercourierid);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  gatepassRequestList);

@@ -66,14 +66,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int gatepassNumber ;
-	  
-       [Key]
-	  
+	  private int? gatepassNumber ;
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int GatepassNumber  
+       public int? GatepassNumber  
 	   {
 	    
 	     get
@@ -84,7 +82,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(gatepassNumber != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GatepassNumber",OldValue=gatepassNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GatepassNumber",OldValue=gatepassNumber,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   gatepassNumber=value;
 		   }

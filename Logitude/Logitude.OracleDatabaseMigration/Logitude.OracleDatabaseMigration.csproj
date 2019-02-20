@@ -228,6 +228,22 @@
     <Compile Include="Migrations\201902111428378_inframissing.Designer.cs">
       <DependentUpon>201902111428378_inframissing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902201345347_AddMigrationGatepassnumber.cs" />
+    <Compile Include="Migrations\201902201345347_AddMigrationGatepassnumber.Designer.cs">
+      <DependentUpon>201902201345347_AddMigrationGatepassnumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902201357336_AddMigrationGatepassNumberChange.cs" />
+    <Compile Include="Migrations\201902201357336_AddMigrationGatepassNumberChange.Designer.cs">
+      <DependentUpon>201902201357336_AddMigrationGatepassNumberChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902201418045_AddMigrationGatepassNumberKey.cs" />
+    <Compile Include="Migrations\201902201418045_AddMigrationGatepassNumberKey.Designer.cs">
+      <DependentUpon>201902201418045_AddMigrationGatepassNumberKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902201936149_AddMigGatepassRequest.cs" />
+    <Compile Include="Migrations\201902201936149_AddMigGatepassRequest.Designer.cs">
+      <DependentUpon>201902201936149_AddMigGatepassRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -385,6 +401,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111428378_inframissing.resx">
       <DependentUpon>201902111428378_inframissing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201345347_AddMigrationGatepassnumber.resx">
+      <DependentUpon>201902201345347_AddMigrationGatepassnumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201357336_AddMigrationGatepassNumberChange.resx">
+      <DependentUpon>201902201357336_AddMigrationGatepassNumberChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201418045_AddMigrationGatepassNumberKey.resx">
+      <DependentUpon>201902201418045_AddMigrationGatepassNumberKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201936149_AddMigGatepassRequest.resx">
+      <DependentUpon>201902201936149_AddMigGatepassRequest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

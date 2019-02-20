@@ -1320,7 +1320,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FaultInspectionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FreightPaymentMethodViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FuelTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GatepassRequestsViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GatepassRequestViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GatepassReturnCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GenderViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GovernmentProcedureTypeViewsController.Generated.cs" />
@@ -1491,7 +1491,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeficitController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DepositController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DocumentTypeCustomsDataController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GatepassRequestsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GatepassRequestController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GovernmentProcedureTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GuaranteeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ImporterDespositionController.Generated.cs" />
@@ -2485,7 +2485,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FeatureToggleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FreightPaymentMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FullAccountingSettingUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GatepassRequestsUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GatepassRequestUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GatepassReturnCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountMoreDataUpdateClass.cs" />

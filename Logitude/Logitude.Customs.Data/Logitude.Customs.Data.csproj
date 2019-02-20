@@ -125,7 +125,7 @@
     <Compile Include="EntityKeys\DeclarationMamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
-    <Compile Include="EntityKeys\GatepassRequestsKeys.cs" />
+    <Compile Include="EntityKeys\GatepassRequestKeys.cs" />
     <Compile Include="EntityKeys\GatepassReturnCodeKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionStatusKeys.cs" />
@@ -175,7 +175,7 @@
     <Compile Include="EntityListQueryServices\DeclarationMamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FreightPaymentMethodListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\GatepassRequestsListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\GatepassRequestListQueryService.cs" />
     <Compile Include="EntityListQueryServices\GatepassReturnCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AcceptanceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ActionCodeListQueryService.Generated.cs" />
@@ -208,7 +208,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationMamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FreightPaymentMethodListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\GatepassRequestsListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\GatepassRequestListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GatepassReturnCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionStatusListQueryService.Generated.cs" />
@@ -275,7 +275,7 @@
     <Compile Include="EntityLists\Generated\DeclarationMamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DocumentTypeCustomsDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FreightPaymentMethodList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GatepassRequestsList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\GatepassRequestList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GatepassReturnCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionStatusList.Generated.cs" />
@@ -325,7 +325,7 @@
     <Compile Include="EntityMapping\DeclarationMamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
     <Compile Include="EntityMapping\FreightPaymentMethodMap.cs" />
-    <Compile Include="EntityMapping\GatepassRequestsMap.cs" />
+    <Compile Include="EntityMapping\GatepassRequestMap.cs" />
     <Compile Include="EntityMapping\GatepassReturnCodeMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionStatusMap.cs" />
@@ -375,7 +375,7 @@
     <Compile Include="EntityPOCOs\DeclarationMamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
     <Compile Include="EntityPOCOs\FreightPaymentMethod.cs" />
-    <Compile Include="EntityPOCOs\GatepassRequests.cs" />
+    <Compile Include="EntityPOCOs\GatepassRequest.cs" />
     <Compile Include="EntityPOCOs\GatepassReturnCode.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialActionStatus.cs" />
@@ -425,7 +425,7 @@
     <Compile Include="Repsitories\DeclarationMamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
     <Compile Include="Repsitories\FreightPaymentMethodRepository.cs" />
-    <Compile Include="Repsitories\GatepassRequestsRepository.cs" />
+    <Compile Include="Repsitories\GatepassRequestRepository.cs" />
     <Compile Include="Repsitories\GatepassReturnCodeRepository.cs" />
     <Compile Include="Repsitories\Generated\AcceptanceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ActionCodeRepository.Generated.cs" />
@@ -458,7 +458,7 @@
     <Compile Include="Repsitories\Generated\DeclarationMamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FreightPaymentMethodRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\GatepassRequestsRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\GatepassRequestRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\GatepassReturnCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionStatusRepository.Generated.cs" />

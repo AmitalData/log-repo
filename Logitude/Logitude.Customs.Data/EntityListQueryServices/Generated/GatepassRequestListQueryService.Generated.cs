@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public GatepassRequestList GetSingle(string mastercourierid, int gatepassnumber)
+        public GatepassRequestList GetSingle(string mastercourierid)
         {
             IQueryable<GatepassRequest> GatepassRequestQuery = (from a in context.GatepassRequests
-                                                       where a.MasterCourierId == mastercourierid && a.GatepassNumber == gatepassnumber
+                                                       where a.MasterCourierId == mastercourierid
                                                        select a);
 
              

@@ -30,13 +30,13 @@ export class GatepassRequestListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/gatepassrequestviews';  
     }
 
-    getSingle(mastercourierid: string, gatepassnumber: number) {
+    getSingle(mastercourierid: string) {
 	   
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'mastercourierid=' + mastercourierid+'&'+'gatepassnumber=' + gatepassnumber, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'mastercourierid=' + mastercourierid, { headers: authHeader }).map(response => {
 
                 var list = response.json();
                     
@@ -51,7 +51,7 @@ export class GatepassRequestListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GatepassRequest", "GetSingleList", 'mastercourierid=' + mastercourierid+'&'+'gatepassnumber=' + gatepassnumber); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GatepassRequest", "GetSingleList", 'mastercourierid=' + mastercourierid); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);

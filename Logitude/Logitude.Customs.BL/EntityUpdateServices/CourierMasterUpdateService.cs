@@ -46,6 +46,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             entityPM.Id = IdCounter.GetNumber("Customs.CourierMaster", entityPM.Tenant);
             entityPM.CreateDateTime = DateTime.Now;
+            entityPM.IsOpen = true;
+            entityPM.IsCancelled = false;
         }
 
         protected override void OnUpdating(CourierMasterPM entityPM, CourierMaster entityPOCO)

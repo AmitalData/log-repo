@@ -392,7 +392,7 @@
     <Compile Include="EntityDataMappings\FaultInspectionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FreightPaymentMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\FuelTypeDataMapping.cs" />
-    <Compile Include="EntityDataMappings\GatepassRequestsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GatepassRequestDataMapping.cs" />
     <Compile Include="EntityDataMappings\GatepassReturnCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\GenderDataMapping.cs" />
     <Compile Include="EntityDataMappings\Generated\AcceptanceStatusDataMapping.Generated.cs" />
@@ -549,7 +549,7 @@
     <Compile Include="EntityDataMappings\Generated\FaultInspectionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FreightPaymentMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FuelTypeDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\GatepassRequestsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GatepassRequestDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GatepassReturnCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GenderDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GovernmentProcedureTypeDataMapping.Generated.cs" />
@@ -888,7 +888,7 @@
     <Compile Include="EntityQueryServices\Generated\DocumentTypeCustomsDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FacilitationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FreightPaymentMethodQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\GatepassRequestsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GatepassRequestQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GatepassReturnCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ImporterDeclarationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MamanSpecialActionQueryService.Generated.cs" />
@@ -1258,6 +1258,7 @@
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\GatepassRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AcceptanceStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AccumalationStateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ActionCodeUpdateService.Generated.cs" />
@@ -1293,7 +1294,7 @@
     <Compile Include="EntityUpdateServices\Generated\DocumentTypeCustomsDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FacilitationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FreightPaymentMethodUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\GatepassRequestsUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GatepassRequestUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GatepassReturnCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ImporterDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MamanSpecialActionStatusUpdateService.Generated.cs" />
