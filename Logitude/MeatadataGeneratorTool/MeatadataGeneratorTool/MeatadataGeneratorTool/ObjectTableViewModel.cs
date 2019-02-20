@@ -962,6 +962,7 @@ namespace MeatadataGeneratorTool
 
             if (selected != null)
             {
+				selected.DisplayInSearchWindowList = false;
                 selected.DisplayOnLookUp = false;
                 ToBeDisplayOnLookUpList.Add(selected);
                 DisplayLookUpFieldsList.Remove(selected);
@@ -1015,7 +1016,8 @@ namespace MeatadataGeneratorTool
 
             if (selected != null)
             {
-                selected.DisplayOnLookUpLocal = false;
+				selected.DisplayInSearchWindowList = false;
+				selected.DisplayOnLookUpLocal = false;
                 ToBeDisplayOnLookUpLocalList.Add(selected);
                 DisplayLocalLookUpFieldsList.Remove(selected);
 
@@ -2343,7 +2345,12 @@ namespace MeatadataGeneratorTool
                     foreach (var item in ObsList)
                     {
                         this.ValidateObjectField(item);
-                    }
+
+						if (!DisplayLookUpFieldsList.Any(f => f.FieldName == item.FieldName) && !DisplayLocalLookUpFieldsList.Any(f => f.FieldName == item.FieldName))
+						{
+							item.DisplayInSearchWindowList = false;
+						}
+					}
                 }
                 else
                 {
