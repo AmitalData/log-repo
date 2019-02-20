@@ -3521,7 +3521,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         TotalDocumentsAmountBeforeDiscount = null,
                                         TotalDocumentsAmountAfterDiscount = null,
                                         DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
-                                        DocuemntsReferenceDate = a.ValueDate,
+                                        DocuemntsReferenceDate = a.RegisterDate,
                                         CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.BillToCard.GLAccountId,
                                         IsCancelled = a.StatusCode == "VD" ? true : false,
