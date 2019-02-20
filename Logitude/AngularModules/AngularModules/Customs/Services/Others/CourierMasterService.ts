@@ -327,7 +327,33 @@ export class CourierMasterService {
 
         });
     }
+    PostSendALLTerminal(requestParams: SendALLCorrectRequestParams) {
 
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendALLTerminal/', JSON.stringify(requestParams), { headers: authHeader })
+                .map((res) => {
+                    var messString = res.json();
+
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+            ;
+
+        });
+    }
     PostSendALLCorrectDec(requestParams: SendALLCorrectRequestParams) {
 
         return Observable.defer(() => {
