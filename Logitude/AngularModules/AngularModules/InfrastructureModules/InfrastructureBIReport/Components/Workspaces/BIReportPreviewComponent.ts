@@ -53,9 +53,14 @@ export class BIReportPreviewComponent implements OnInit {
     public HasDeletionFeature = false;
     public columnTypes;
     public context;
-    public CountText: string; 
+    public CountText: string;
+    public IsFilterValueChanged: boolean = false;
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
+        this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
+            //alert("Hi yea");
+            this.IsFilterValueChanged = true;
+        });
     }
     ngOnInit() {
         this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
@@ -433,6 +438,7 @@ export class BIReportPreviewComponent implements OnInit {
                 }
                 else if (confirmWindow.No) {
                     if (this.ComponentRef) {
+                        this.BackCompleted.emit(false);
                         this.ComponentRef.destroy();
                     }
                 }
@@ -443,6 +449,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
         else {
             if (this.ComponentRef) {
+                this.BackCompleted.emit(false);
                 SessionLocator.CurrentSession.FireEvent("BIRefresh");
                 this.ComponentRef.destroy();
             }
@@ -474,7 +481,6 @@ export class BIReportPreviewComponent implements OnInit {
                 this.EntityId = s.EntityPM.Id;
                 this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                 this.UpdateBIReport(false);
-                this.BackCompleted.emit(true);
             });
         });
     }
@@ -537,9 +543,14 @@ export class BIReportPreviewComponent implements OnInit {
                 this.EntityId = this.BIReportXMLData.BIReportId;
                 this.hasChanged = false;
                 this.StopBusyIndicator();
+
+                if (this.ComponentRef) {
+                    this.BackCompleted.emit(true);
+                    this.ComponentRef.destroy();
+                }
+
                 if (arg) {
                     this.ShowQueryBuilder();
-                    this.BackCompleted.emit(true);
                 }
             }
         });
@@ -599,6 +610,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     RunReportButtonClicked() {
+        this.IsFilterValueChanged = false;
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
     public  HasValidationError = false; 
@@ -651,7 +663,7 @@ export class BIReportPreviewComponent implements OnInit {
             confirmWindow.Height = 190;
             confirmWindow.NoButtonText = "Cancel";
             confirmWindow.YesButtonText = "Delete";
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+            confirmWindow.Title = "Confirm Deletion";
             confirmWindow.Show("Deleting this report will remove it from the BI reports list Once deleted it can't be restored");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {

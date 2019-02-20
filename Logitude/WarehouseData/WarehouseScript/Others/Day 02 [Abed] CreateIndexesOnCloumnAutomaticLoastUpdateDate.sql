@@ -161,12 +161,25 @@ IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_DWHSettings_AutomaticL
 ON [dbo].[DWHSettings]([AutomaticLastUpdateDate])
   end
 
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_MoveTypes_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[MoveTypes]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_MoveTypes_AutomaticLastUpdateDate]
+ON [dbo].[MoveTypes]([AutomaticLastUpdateDate])
+  end  
 
---  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_ObjectField_CopyToDW' 
---    AND object_id = OBJECT_ID('[dbo].[ObjectFields]'))
---  begin
---    CREATE NONCLUSTERED INDEX [IX_ObjectField_CopyToDW]
---ON [dbo].[ObjectFields]([CopyToDW])
---  end
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_Vessels_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[Vessels]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_Vessels_AutomaticLastUpdateDate]
+ON [dbo].[Vessels]([AutomaticLastUpdateDate])
+  end  
 
+
+    IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_SpecialServicesTypes_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[SpecialServicesTypes]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_SpecialServicesTypes_AutomaticLastUpdateDate]
+ON [dbo].[SpecialServicesTypes]([AutomaticLastUpdateDate])
+  end  
   

@@ -45,7 +45,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="EmailBoxMultiLinesText" style="white-space: normal;">
-                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete($event)" [ComputeFiltersCommand]="ComputeFiltersCommand" (ComputeFiltersComplete)="OnComputeFiltersComplete($event)"></DWAskUserFiltersComponent>
+                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete($event)" [ComputeFiltersCommand]="ComputeFiltersCommand" (ComputeFiltersComplete)="OnComputeFiltersComplete($event)" [IsFirstTime]="true"></DWAskUserFiltersComponent>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -82,7 +82,7 @@
                             </td>
 
                             <td *ngIf="SelectedFiltersDataSource" style="width: 57px;">
-                                <button class="GreenButton" (click)="RunReportButtonClicked()">Run Report</button>
+                                <button [class.RedButton]="IsFilterValueChanged == true" [class.GreenButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">Run Report</button>
                             </td>
 
                             <td style="width: 5px;">

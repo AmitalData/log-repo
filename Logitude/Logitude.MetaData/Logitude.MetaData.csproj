@@ -380,7 +380,9 @@
     <None Include="EntityFiles\GlobalModel\AnalyzeQueue.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml" />
+    <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\GlobalModel\WebhookKeys.lxml">
       <SubType>Designer</SubType>
     </None>
