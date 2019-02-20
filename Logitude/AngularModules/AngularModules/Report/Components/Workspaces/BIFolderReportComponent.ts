@@ -5,10 +5,13 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { BIReportList } from '../../../Infrastructure/EntityLists/BIReportList';
 import { BIReportListService } from '../../../Infrastructure/Services/StandardLists/BIReportListService';
+import { InfrastructureDomainService } from '../../../Infrastructure/Services/InfrastructureDomainService';
 import { BIReportFolderList } from '../../../Infrastructure/EntityLists/BIReportFolderList';
 import { BIReportFolderListService } from '../../../Infrastructure/Services/StandardLists/BIReportFolderListService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow'; 
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -19,10 +22,12 @@ export class BIFolderReportComponent {
     public ItemsSource: BIFolderClass[] = [];
     private folderListService: BIReportFolderListService;
     private reportListService: BIReportListService;
+    public _InfrastructureDomainService: InfrastructureDomainService;
+
     constructor() {
         this.folderListService = new BIReportFolderListService();
         this.reportListService = new BIReportListService();
-
+        this._InfrastructureDomainService = new InfrastructureDomainService();
         this.LoadData();
         this.Listen();
     }
@@ -49,7 +54,6 @@ export class BIFolderReportComponent {
                 this.reportListService.getAll().subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.reportList = myResponse.Result;
-
                         this.FillItemsSource();
                     }
                 });                
@@ -87,6 +91,39 @@ export class BIFolderReportComponent {
             }
         });
     }
+
+    DeleteFolderClicked(item: BIFolderClass) {
+        if (item != null) {
+            if (item.reportsList != null && item.reportsList.length > 0) {
+                var msg = new MessageWindow();
+                msg.Width = 450;
+                msg.Show("Can't delete this folder since it contains reports, please delete them first");
+            }
+            else {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 450;
+                confirmWindow.Height = 190;
+                confirmWindow.NoButtonText = "No";
+                confirmWindow.YesButtonText = "Yes";
+                confirmWindow.Title = "Confirm Deletion";
+                confirmWindow.Show("Are you sure you want to delete this folder?");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        // save
+                        this._InfrastructureDomainService.DeleteFolder(item.FolderId).subscribe(myResult => {
+                            if (!myResult.HasError) {
+                                this.LoadData();
+                            }
+                        });
+                    }
+                    else if (confirmWindow.No) {
+                        //nth
+                    }
+                });
+
+            }
+        }
+    }
         
     ViewFolderClicked(folder: BIFolderClass) {
         var objectTableName = "BIReport";
@@ -120,7 +157,7 @@ export class BIFolderReportComponent {
 
 export class BIFolderClass {
     private folder: BIReportFolderList;
-    private reportsList: BIReportList[];
+    public reportsList: BIReportList[];
     public Title: string;
     public FolderId: string;
     public Name: string;
@@ -152,4 +189,6 @@ export class BIFolderClass {
 
         this.LinkColor = "#282E30";
     }
+
+
 }
