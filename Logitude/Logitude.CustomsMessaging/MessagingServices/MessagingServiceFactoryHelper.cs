@@ -419,6 +419,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             GP_1030_GatepassRequestMessageMessagingService>
                             ((new GP_1030_GatepassRequestMessageMessagingService()).MainInterfaceCode);
 
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCBCTML_MsgMessagingService>
+                ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
+
         }
         public static void InitContainer()
         {

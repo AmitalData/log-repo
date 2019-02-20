@@ -185,6 +185,7 @@
     <Compile Include="MessagingServices\DCAInUCB2750_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2755_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB8250_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBCTML_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniCustomTableZip_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniDebug01_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
@@ -405,6 +406,7 @@
     <Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCBCTML_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomTableZip_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniDebug01_MsgResponseService.cs" />
     <Compile Include="ResponseServices\Unifreight_LOGISIVUGResponseService.cs" />
