@@ -105,7 +105,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     storageActivitiy.StorageActionPackagesQuantity = storageAction.StorageActionPackagesQuantity.ToString("N");
                     storageActivitiy.PackagesQuantityAfterStorageAction = storageAction.PackagesQuantityAfterStorageAction.ToString("N2");
                     storageActivitiy.StorageReferenceType = storageAction.StorageReferenceType;
-                    //storageActivitiy.CargoMovementReference = storageAction.CargoMovementReference;
+                    storageActivitiy.CargoMovementReference = storageAction.CargoMovementReference;
                     
                     storageActivitiy.PackingDetailsList = new List<PackingDetails>();
                     if (storageAction.PackingDetailsList != null)//Eitan H 5/2/18 CALL 302799
