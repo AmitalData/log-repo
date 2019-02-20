@@ -91,6 +91,7 @@ implements OnDestroy
     IsLoaded: boolean = false;
     IsFiltered: boolean = false;
     IsMamanEnabled: boolean = false;
+    IsILOVLEnabled: boolean = false;
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -1518,15 +1519,42 @@ implements OnDestroy
             //}
         //});
     }
+    SendALLTerminal() {
+        var currRequestParams = new SendALLCorrectRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.CourierMasterId = this.entityPM.Id;
+        currRequestParams.HAWB = this.entityPM.HAWB;
+       
+        
+        this._CourierMasterService.PostSendALLTerminal(currRequestParams)
+            .subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+                myMessageWindow.WindowClosed.subscribe(s => {
+                    this.RefreshButtonClicked();
+                });
+            });
 
-    private GetMamanPUR() {
+    }
+    private GetMamanPUR() {//ILMMN;ILOVL 
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
             .subscribe(response => {
                 this.IsMamanEnabled = false;
-                if (!response.HasError && response.Result != null && response.Result.DefaultValue.includes("ILMMN")) {
-                    this.IsMamanEnabled = true;
-                    this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman = response.Result.DefaultValue;
+                if (!response.HasError) {// reEdit this default !!!
+                    if (response.Result != null) {
+                        if (response.Result.DefaultValue.includes("ILMMN")) {
+                            this.IsMamanEnabled = true;
+                            this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman = response.Result.DefaultValue;//should ask MIRI >why only if mamamn?
+                        }
+                        if (response.Result.DefaultValue.includes("ILOVL")) {
+                            this.IsILOVLEnabled = true;
+                        }
+
+                    }
                 }
             });
         }

@@ -64,7 +64,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
             }
-            return "המסר נבנה בהצלחה וישלח בתהליך רקע";
+            return "המסר לממן נבנה בהצלחה וישלח בתהליך רקע ";
         }
 
         private GWMessageECTHRData CreateCourierHawbMamanMessage()

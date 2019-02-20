@@ -119,8 +119,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        
-        
+
+        public List<KeyValuePair<string,string>> GetByMasterIDStorageSiteCode(int tenant, string CourierMasterId,
+         List<string> storageSiteCodeList)
+        {
+            var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
+            var repoDecConsignment = new ConsignmentRepository(this.context);
+            var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
+                     join rDecConsignment in repoDecConsignment.GetAll(tenant).Where( r=> storageSiteCodeList .Contains(r.StorageSiteCode)) 
+                     on dec.DeclarationId equals rDecConsignment.DeclarationId
+                     select new { rDecConsignment.StorageSiteCode, rDecConsignment.DeclarationId });
+            var anyList = q.ToList();
+            var res = new List<KeyValuePair<string, string>>();
+            res = anyList.Select(r => new KeyValuePair<string, string>(r.DeclarationId, r.StorageSiteCode)).ToList();
+            return res;
+        }
+
+
         public List<DeclarationCourierStatusPM> GetByMasterIDCourierPaymentStatusCode(int tenant, string CourierMasterId, 
                  string CourierPaymentStatusCode,string HighLowValue)
         {
