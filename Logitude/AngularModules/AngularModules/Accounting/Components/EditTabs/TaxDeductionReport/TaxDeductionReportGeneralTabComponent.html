@@ -49,20 +49,24 @@
                                                 </td>
                                                 <td></td>
                                             </tr>
-
                                             <tr class="FormFieldRow">
-                                             
 
-                                                <td *ngIf="Faild" [style.text-align]="isRTL ? 'right' : 'left'" style="width:180px;" >
-                                                    <button style="display: inline-block;" class="Button" (click)="RunService(true)">{{'General.O.CreateFile' | TextCodeTranslationPipe}}</button>
+
+                                                <td *ngIf="Faild" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                                    <button style="display: inline-block;width:100px;" class="Button" [disabled]="Building" (click)="RunService(true)">{{'Accounting.O.Rebuild' | TextCodeTranslationPipe}}</button>
                                                 </td>
                                                 <td></td>
                                             </tr>
+
                                             <tr><td><div></div></td></tr>
                                         </table>
 
                                     </td>
                                 </tr>
+                         
+
+                        
+                                
                             </table>
                         </td>
                     </tr>
