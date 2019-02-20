@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .subTitle {
         color: #1b90cb;
@@ -35,7 +35,6 @@
                                                     [ItemSource]="DeclarationCargoSplitList">
 
                                     <!--(SelectedItemChanged)="EditButtonClicked($event)"-->
-
                                     <!-- RequestNumber -->
                                     <log-column [header]="'Customs.DeclarationCargoSplit.F.RequestNumber' | TextCodeTranslationPipe" [binding]="'RequestNumber'" [width]="'110'" [Alignment]="'right'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
@@ -104,6 +103,16 @@
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.CustomFileNo}}</span>
+                                            </div>
+
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- ResponseStatusName -->
+                                    <log-column [header]="'Customs.DeclarationCargoSplit.F.ResponseStatusName' | TextCodeTranslationPipe" [binding]="'ResponseStatusName'" [width]="'120'" [Alignment]="'right'">
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.ResponseStatusName}}</span>
                                             </div>
 
                                         </log-cell-template>
