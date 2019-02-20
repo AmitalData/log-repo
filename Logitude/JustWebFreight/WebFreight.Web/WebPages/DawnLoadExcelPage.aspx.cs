@@ -76,11 +76,11 @@ namespace WebFreight.Web.WebPages
         int? tenant = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-         
+
             string token = Request["tempId"] ?? "";
             string FileName = Request["fileName"] ?? "";
             string QName = Request["qname"] ?? "";
-
+            string Type = Request["Type"] ?? "";
 
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
             bool isValid = securityDocumentResult.IsValid;
@@ -97,7 +97,7 @@ namespace WebFreight.Web.WebPages
             if (isValid)
             {
                 ICommonDataContext context = CommonDataContext.GetContext(0);
-           
+
 
                 //StiReport stiReport = new StiReport();
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
@@ -110,6 +110,10 @@ namespace WebFreight.Web.WebPages
                     Tenant = (int)tenant,
 
                 };
+                if (!string.IsNullOrEmpty(Type) && Type == "SaveToMicrosoftExcel2007")
+                {
+                    fileInfo.Extension = "xlsx";
+                }
 
                 byte[] result = storageservice.Read(fileInfo);
 
@@ -144,8 +148,17 @@ namespace WebFreight.Web.WebPages
                     //    case "SaveToMicrosoftExcel":
                     //        {
                     //stiReport.ExportDocument(StiExportFormat.Excel, memoryStream);
-                    HttpContext.Current.Response.ContentType = "application/" + "vnd.ms-excel";
-                    documentName = QName + ".xls";
+                    if (Type == "SaveToMicrosoftExcel2007")
+                    {
+                        HttpContext.Current.Response.ContentType = "application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        documentName = FileName + ".xlsx";
+                    }
+                    else
+                    {
+                        HttpContext.Current.Response.ContentType = "application/" + "vnd.ms-excel";
+                        documentName = QName + ".xls";
+                    }
+
                     //break;
                     //        }
                     //    case "PrintToPDF":
@@ -177,7 +190,11 @@ namespace WebFreight.Web.WebPages
                     if (HttpContext.Current.Response.IsClientConnected)
                     {
                         HttpContext.Current.Response.Flush();
-                        //HttpContext.Current.Response.Close();
+                        if (Type == "SaveToMicrosoftExcel2007")
+                        {
+                            HttpContext.Current.Response.Close();
+                        }
+
                         HttpContext.Current.ApplicationInstance.CompleteRequest();
 
                     }
@@ -191,7 +208,7 @@ namespace WebFreight.Web.WebPages
                 var message = exceptionMessage;
                 if (string.IsNullOrEmpty(exceptionMessage)) message = "Sorry you’re not authenticated to view this excel.";
                 Response.Output.Write(message);
-              //  throw new ApplicationException(message);
+                //  throw new ApplicationException(message);
 
             }
         }

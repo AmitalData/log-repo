@@ -419,7 +419,7 @@ execute usp_GetNextTableIdValue @DIM_VesselsIdNewId OUTPUT,'DWObjectField'
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_VesselsIdNewId,0,'DIM_Vessels','[Id]','Id','Text','true',0,15,'false','false','false','false')  
 declare @DIM_VesselsCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_VesselsCodeNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_VesselsCodeNewId,0,'DIM_Vessels','[Code]','Code','Text','true',0,5,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_VesselsCodeNewId,0,'DIM_Vessels','[Code]','Code','Text','false',0,5,'false','false','true','false')  
 declare @DIM_VesselsEnglishNameNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_VesselsEnglishNameNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_VesselsEnglishNameNewId,0,'DIM_Vessels','[English Name]','English Name','Text','true',0,40,'false','false','true','false')  

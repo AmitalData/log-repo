@@ -1860,6 +1860,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\TaxScreenComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelShipmentComponent.html" />
+    <Content Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.html" />
     <Content Include="Shipment\Components\MenuButtons\MasterActionConfirmationComponent.html" />
     <Content Include="Images\ShipmentArrow.png" />
     <Content Include="Shipment\Components\SplitShipment\SplitPartialPackageComponent.html" />
@@ -6099,6 +6100,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Tariffs\TariffsComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleShipmentTabs.ts" />
+    <TypeScriptCompile Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\EditShipmentButtonListTemplate.ts" />

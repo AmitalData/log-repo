@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {AWBOCIPM} from '../../../../../Shipment/EntityPMs/AWBOCIPM';
@@ -203,6 +203,8 @@ export class AWBWizardOCIItem extends BaseComponent {
     }
 
     private OnDataChanged() {
+
+        this.SetUIProperties();
 
         if (!this.IsWindowMode) {
 
