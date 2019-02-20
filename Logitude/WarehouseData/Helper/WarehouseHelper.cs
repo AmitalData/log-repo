@@ -52,7 +52,8 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Incoterm", DBTableName = "Incoterms", Dw_TableName = "dw_Incoterms", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Incoterms", BuildScriptName = "BuildIncotermDimensionTable", IncrementalScriptName = "UpdateIncotermDimensionTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Currency", DBTableName = "Currencies", Dw_TableName = "dw_Currencies", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Currencies", BuildScriptName = "BuildCurrencyDimensionTable", IncrementalScriptName = "UpdateCurrencyDimensionTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "MoveType", DBTableName = "MoveTypes", Dw_TableName = "dw_MoveTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_MoveTypes", BuildScriptName = "BuildMoveTypeDimensionTable", IncrementalScriptName = "UpdateMoveTypeDimensionTable", HasConstraint = true  });
-
+            tableNameLists.Add(new TableClass() { TableName = "Vessel", DBTableName = "Vessels", Dw_TableName = "dw_Vessels", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Vessels", BuildScriptName = "BuildVesselDimensionTable", IncrementalScriptName = "UpdateVesselDimensionTable", HasConstraint = true });
+            tableNameLists.Add(new TableClass() { TableName = "SpecialServicesType", DBTableName = "SpecialServicesTypes", Dw_TableName = "dw_SpecialServicesTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_SpecialServicesTypes", BuildScriptName = "BuildSpecialServicesTypeDimensionTable", IncrementalScriptName = "UpdateSpecialServicesTypeDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName", FieldsDBName = "TableName,LastUpdateDate" });
 
             tableLists = tableNameLists;
@@ -261,7 +262,7 @@ namespace WarehouseData.Helper
 
             if (forderName == "BuildWarehouse" && table != null)
             {
-                if (table.DBTableName == "Shipments")
+                if (table.DBTableName == "Vessels")
                 {
 
                 }
@@ -927,7 +928,10 @@ namespace WarehouseData.Helper
                             + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "WarehouseLegWarehouseId DEFAULT '-1' FOR WarehouseLegWarehouseId"
                             + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CreatedByUserId DEFAULT '-1' FOR CreatedByUserId"
                             + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ValueOfGoodsCurrencyId DEFAULT '-1' FOR ValueOfGoodsCurrencyId"
-                           +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MoveTypeId DEFAULT '-1' FOR MoveTypeId";
+                            +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MoveTypeId DEFAULT '-1' FOR MoveTypeId"
+                            +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SpecialServicesTypeId DEFAULT '-1' FOR SpecialServicesTypeId";
+                        
+
 
 
                         break;
@@ -962,7 +966,11 @@ namespace WarehouseData.Helper
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1ToPortId DEFAULT '-1' FOR Transshipment1ToPortId;"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2ToPortId DEFAULT '-1' FOR Transshipment2ToPortId;"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3ToPortId DEFAULT '-1' FOR Transshipment3ToPortId;"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageCarrierId DEFAULT '-1' FOR MainCarriageCarrierId;";
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageCarrierId DEFAULT '-1' FOR MainCarriageCarrierId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageVesselId DEFAULT '-1' FOR MainCarriageVesselId;"; 
+
+                        
+
                         break;
 
                     case "DWHSettings":

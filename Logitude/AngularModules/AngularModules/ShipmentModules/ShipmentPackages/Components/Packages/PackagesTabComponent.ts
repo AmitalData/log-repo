@@ -23,6 +23,7 @@ import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliver
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
 import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: module.id,
@@ -79,6 +80,10 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.SetUIProperties();
                     this.SetGenerateData();
                     this.BuildItemsSource();
+
+                    if (this.dowonload) {
+                        this.DownloadPackages();
+                    }
                 }
             });
 
@@ -694,7 +699,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     // Generate
-
     public IsGenerateControlVisible: boolean = false;
     public GenerateButtonLabel: string;
     public IsGenerateButtonVisible: boolean = false;
@@ -738,8 +742,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }); 
     }
-
-
+    
     SetGenerateData() {
         this.IsGenerateControlVisible = this.EntityPM.ShipmentPackages.length == 0 ? true : false;
         if (this.IsGenerateControlVisible) {
@@ -812,10 +815,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.RefreshPackages();
      
     }
-
-
-
-
+    
     Generate_LCL() {
         if (this.EntityPM.ShipmentOrderPackages.length > 0) {
             this.EntityPM.ShipmentOrderPackages.forEach(item => {
@@ -892,8 +892,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.RefreshPackages();
         }
     }
-
-
+    
     RefreshPackages() {
 
         this.BuildItemsSource();
@@ -918,9 +917,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
-
-
-
+       
     BuildButtonClicked() {
 
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
@@ -1349,7 +1346,24 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             logitudeWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/LastStatusComponent");
         }
     }
+
+    private dowonload: boolean = false;
+    DownloadPackagesClicked() {
+        this.dowonload = true;
+        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+    }
+    private DownloadPackages() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Downloading Packahes";
+        logWindow.Width = 500;
+        logWindow.Height = 200;
+        logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/DownloadPackagesFileComponent');
+        logWindow.ComponentLoaded.subscribe(comp => {
+            comp.Download(this.EntityPM.Id);
+        });
+    }
 }
+
 export class ShipmentPackageItem extends BaseComponent {
     public EntityPM: ShipmentPackagePM;
     public ShipmentPM: ShipmentPM;

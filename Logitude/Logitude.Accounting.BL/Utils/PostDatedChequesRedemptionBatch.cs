@@ -163,7 +163,7 @@ namespace Logitude.Accounting.BL.Utils
                         if (aRPaymentCheque != null && aRPaymentCheque.ValueDate != null)
                         {
 
-                            WriteJournal(journalUpdateService, lineList, aRPaymentCheque);
+                            WriteJournal(journalUpdateService, lineList, aRPaymentCheque, bankDeposit);
                             lineList.Clear();
 
                         }
@@ -212,7 +212,7 @@ namespace Logitude.Accounting.BL.Utils
         }
 
 
-        private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, ARPaymentChequeList aRPaymentCheque)
+        private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, ARPaymentChequeList aRPaymentCheque, BankDepositList bankDeposit)
         {
             // Start
             JournalPM newJournal = new JournalPM();
@@ -233,8 +233,8 @@ namespace Logitude.Accounting.BL.Utils
                     newJournal.CreatedByUserId = aRPayment.CreatedByUserId;
                 }
             }
-            newJournal.AccountingEntityCode = "1"; //Journal
-            // newJournal.AccountingEntityId = "";
+            newJournal.AccountingEntityCode = "6";// Cheque Deposit [former value is "1"; //Journal ]
+            newJournal.AccountingEntityId = bankDeposit.Id;
             newJournal.ExternalNo = null;
             newJournal.UpdateDate = DateTime.Now;
             newJournal.UpdatedByUserId = newJournal.CreatedByUserId;
