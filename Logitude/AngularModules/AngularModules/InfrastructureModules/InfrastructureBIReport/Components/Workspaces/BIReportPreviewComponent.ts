@@ -53,9 +53,14 @@ export class BIReportPreviewComponent implements OnInit {
     public HasDeletionFeature = false;
     public columnTypes;
     public context;
-    public CountText: string; 
+    public CountText: string;
+    public IsFilterValueChanged: boolean = false;
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
+        this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
+            //alert("Hi yea");
+            this.IsFilterValueChanged = true;
+        });
     }
     ngOnInit() {
         this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
@@ -605,6 +610,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     RunReportButtonClicked() {
+        this.IsFilterValueChanged = false;
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
     public  HasValidationError = false; 

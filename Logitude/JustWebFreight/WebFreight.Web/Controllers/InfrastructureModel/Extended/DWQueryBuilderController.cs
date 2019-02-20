@@ -123,10 +123,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     string dbConnectionInfo = currentDb.SharedDWConnection;
                     DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
                     var dataTable = new DataTable();
-
+                    string TenantWhere = ".[Parent Tenant] = ";
+                    var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                    var temp = DWSettings.GetSingleDWHSetting(authToken.Tenant);
+                    if (temp != null && temp.Tenant != temp.ParentTenant)
+                    {
+                        TenantWhere = ".[Source Tenant] = ";
+                    }
                     using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
                     {
-                        var SQL = "select DISTINCT top 10 " + Field + " from " + Tabel + " where " + (!IsClosed ? (Tabel + ".[Parent Tenant] = " + authToken.Tenant + " and " + Field + " like '%" + SearchData + "'") : (Field + " like '%" + SearchData + "'"));
+                        var SQL = "select DISTINCT top 10 " + Field + " from " + Tabel + " where " + (!IsClosed ? (Tabel + TenantWhere + authToken.Tenant + " and " + Field + " like '%" + SearchData + "'") : (Field + " like '%" + SearchData + "'"));
                         sourceConnection.Open();
                         SqlCommand commandSourceData = new SqlCommand(SQL, sourceConnection);
                         SqlDataReader reader = commandSourceData.ExecuteReader();
