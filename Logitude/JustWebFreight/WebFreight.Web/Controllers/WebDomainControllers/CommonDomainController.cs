@@ -195,7 +195,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         string apicreditionals = "API_15408257301181065689979";
                         var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
-                        if (LogitudeSettings.DeploymentStage == "logitudepreproduction" && countryname!="Israel")
+                        if ((LogitudeSettings.DeploymentStage == "logitudepreproduction" || LogitudeSettings.DeploymentStage == "Dev") && countryname != "Israel")
                         {
                             apicreditionals = "API_1516630314047705132569";
                             bluesnapParameters.ContractId = "2261197";
@@ -310,7 +310,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         new MediaTypeWithQualityHeaderValue("application/xml"));
                         string apicreditionals = "API_15408257301181065689979";
                         var request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
-                        if (LogitudeSettings.DeploymentStage == "logitudepreproduction" && countryname != "Israel")
+                        if ((LogitudeSettings.DeploymentStage == "logitudepreproduction" || LogitudeSettings.DeploymentStage == "Dev") && countryname != "Israel")
                         {
                             apicreditionals = "API_1516630314047705132569";
                             bluesnapParameters.ContractId = "2261197";
@@ -357,7 +357,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                         catch (Exception EX1)
                         {
-                            bluesnapParameters=new BluesnapParameters();
                             authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
                             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
