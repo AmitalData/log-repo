@@ -537,7 +537,7 @@
                                     <!-- Source -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'Accounting.O.ARP.InvoiceNumber' | TextCodeTranslationPipe" [width]="'100'" [binding]="'Source'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" style="text-align: center;">
+                                            <div class="TextTrimming"  text-start>
                                                 <!-- <span title="{{item.SourceType}}" *ngIf="item.IconCode" (click)="OpenSource(item.SourceId,item.SourceTypeCode)"
                                                     [class]="'SourceTypeIcon color-' + item.SourceTypeCode">{{item.IconCode}}</span> -->
                                                 <a href="javascript:;" (click)="OpenSource(item.SourceId,item.SourceTypeCode)">{{item.SourceNumber}}</a>
@@ -583,7 +583,7 @@
                                     <!-- DueDate -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="'Accounting.O.ARP.Duedate' | TextCodeTranslationPipe" >
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" >
-                                            <div style="width: 100%;" style="text-align: center;">
+                                            <div style="width: 100%;" style="text-align: center;" [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}">
                                                 {{item.DueDate | DateTimeToDatePipe}}
                                             </div>
                                         </log-cell-template>
@@ -601,27 +601,11 @@
                                     <!-- Reconciliation Number -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="'Accounting.O.ARP.ReconciliationNumber' | TextCodeTranslationPipe" >
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" >
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-
-                                                    <td style="width: 1px;">
-                                                        <div style="padding-left:2px;padding-right:2px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.Status | StringToColorPipe, background: item.StatusBackground}">
-                                                            <!-- {{item.RecoNumber}} -->
-                                                            <a href="javascript:;" (click)="OpenReco(item.ReconciliationId)">{{item.RecoNumber}}</a>
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                            <div class="TextTrimming"  text-start>
+                                                <a href="javascript:;" (click)="OpenReco(item.ReconciliationId)">{{item.RecoNumber}}</a>
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
-
 
                                 </logitude-edit-grid>
 
