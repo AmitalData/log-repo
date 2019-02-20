@@ -3269,9 +3269,9 @@ namespace Logitude.Accounting.BL.CoreBL
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
             ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
-            bool showLocals = !contact.DontShowLocal;
           
-            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, showLocals);
+          
+            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, !contact.DontShowLocal);
            
             if (error  != null)
             {
@@ -3320,20 +3320,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private static ContactPM GetLoggedContact(int tenant)
         {
-        //    ContactRepository contactRepository = new ContactRepository(tenant);
-        //    Contact loggedContact;
-        //    if (HttpContext.Current != null)
-        //    {
-        //        string email = HttpContext.Current.User.Identity.Name;
-        //        loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-        //    }
-        //    else
-        //    {
-        //        string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
-        //        loggedContact = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
+            //ContactQuery contactQuery = new ContactQuery(tenant);
+            //ContactPM loggedContact;
+            //if (HttpContext.Current != null)
+            //{
+            //    string email = HttpContext.Current.User.Identity.Name;
+            //    loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
+            //}
+            //else
+            //{
+            //    string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
+            //    loggedContact = contactQuery.GetContactByEmailOnly(systemContactEmail, tenant);
 
-        //    }
-        //    return loggedContact;
+            //}
+            //return loggedContact;
 
 
 
@@ -3787,9 +3787,9 @@ namespace Logitude.Accounting.BL.CoreBL
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("INI", tenant);
 
             ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
-            bool showLocals = !contact.DontShowLocal;
+       
 
-            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, showLocals);
+            string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, !contact.DontShowLocal);
 
             if (error != null)
             {
