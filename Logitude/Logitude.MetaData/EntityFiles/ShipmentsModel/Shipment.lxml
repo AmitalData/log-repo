@@ -2035,8 +2035,8 @@
     <TextCode Code="&quot;Shipment.S.Partners.Name&quot;" DefaultText="&quot;Name&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.Partners.Address&quot;" DefaultText="&quot;Address&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.Partners.Contact&quot;" DefaultText="&quot;Contact&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Shipment.S.Partners.Reference1&quot;" DefaultText="&quot;Reference1&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Shipment.S.Partners.Reference2&quot;" DefaultText="&quot;Reference2&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.S.Partners.Reference1&quot;" DefaultText="&quot;Reference 1&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.S.Partners.Reference2&quot;" DefaultText="&quot;Reference 2&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.Partners.MyCustomer&quot;" DefaultText="&quot;My Customer&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.Partners.AddShipper&quot;" DefaultText="&quot;Add Shipper&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.Partners.AddConsignee&quot;" DefaultText="&quot;Add Consignee&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
@@ -2058,14 +2058,14 @@
     <TextCode Code="&quot;Shipment.S.Partners.EditShipperNotExporter&quot;" DefaultText="&quot;Edit Shipper Not Exporter&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.Partners.EditConsigneeNotImporter&quot;" DefaultText="&quot;Edit Consignee Not Importer&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.Partners.EditFreightForwarder&quot;" DefaultText="&quot;Edit Freight Forwarder&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Shipment.O.Routings.Pickup&quot;" DefaultText="&quot;Pick Up&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.Routings.Pickup&quot;" DefaultText="&quot;Pickup&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.Routings.Delivery&quot;" DefaultText="&quot;Delivery&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.Routings.PreCarriage&quot;" DefaultText="&quot;Pre Carriage&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.Routings.OnCarriage&quot;" DefaultText="&quot;On Carriage&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Shipment.O.Routings.MainCarriageLeg1&quot;" DefaultText="&quot;Main Carriage Leg1&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Shipment.O.Routings.MainCarriageLeg2&quot;" DefaultText="&quot;Main Carriage Leg2&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Shipment.O.Routings.MainCarriageLeg3&quot;" DefaultText="&quot;Main Carriage Leg3&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Shipment.O.Routings.MainCarriageLeg4&quot;" DefaultText="&quot;Main Carriage Leg4&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.Routings.MainCarriageLeg1&quot;" DefaultText="&quot;Main Carriage Leg 1&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.Routings.MainCarriageLeg2&quot;" DefaultText="&quot;Main Carriage Leg 2&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.Routings.MainCarriageLeg3&quot;" DefaultText="&quot;Main Carriage Leg 3&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.Routings.MainCarriageLeg4&quot;" DefaultText="&quot;Main Carriage Leg 4&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.Routings.Transshipment1&quot;" DefaultText="&quot;Transshipment1&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.Routings.Transshipment2&quot;" DefaultText="&quot;Transshipment2&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.Routings.Transshipment3&quot;" DefaultText="&quot;Transshipment3&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
@@ -2163,7 +2163,7 @@
     <TextCode Code="&quot;Shipment.B.Receivables.DeleteReceivable&quot;" DefaultText="&quot;Delete Receivable&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.B.Receivables.NewInvoice&quot;" DefaultText="&quot;New Invoice&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.B.Receivables.NewTaxInvoice&quot;" DefaultText="&quot;New Tax Invoice&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Shipment.B.Receivables.NewCreditNote&quot;" DefaultText="&quot;New Credit&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.B.Receivables.NewCreditNote&quot;" DefaultText="&quot;New Credit Note&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.B.Receivables.ShowQuote&quot;" DefaultText="&quot;Show Quote&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.B.Receivables.GenerateAutoDisplay&quot;" DefaultText="&quot;Generate Auto Display&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.B.Receivables.GenerateFromPayables&quot;" DefaultText="&quot;Generate From Payables&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
