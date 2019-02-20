@@ -5,7 +5,7 @@
             <ul class="PagesMenu">
                 <li id="{{'Report' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'Report'" (click)="SelectedItem = 'Report'">Reports</li>
 
-                <li id="{{'BI' | IdGeneratorPipe}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BI'" (click)="SelectedItem = 'BI'">BI</li>
+                <li id="{{'BI' | IdGeneratorPipe}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BI'" (click)="SelectedItem = 'BI'">BI</li>               
             </ul>
         </td>
     </tr>
@@ -25,6 +25,7 @@
             <div class="CellContent" [hidden]="SelectedItem != 'BI'">
                 <div LocationDirective Code="BI"></div>
             </div>
+
         </td>
     </tr>
 </table>

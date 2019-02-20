@@ -1132,6 +1132,9 @@ namespace WebFreight.Web
                 pm.IsSharedLogisticsMoneyTabEnabled = sharedLogisticsSetting.IsMoneyTabEnabled;
                 pm.IsSharedLogisticsMainCarrierVisible = sharedLogisticsSetting.IsMainCarrierShared;
                 pm.IsSharedLogisticsPickDelvCarrierVisible = sharedLogisticsSetting.IsPickDelivCarriesShared;
+                pm.IsSharedLogisticsAgentVisible = sharedLogisticsSetting.IsAgentShared;
+                pm.IsSharedLogisticsShipperVisible = sharedLogisticsSetting.IsShipperShared;
+                pm.IsSharedLogisticsConsigneeVisible = sharedLogisticsSetting.IsConsigneeShared;
             }
 
             return pm;

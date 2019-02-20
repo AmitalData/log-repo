@@ -397,7 +397,7 @@ foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
 				    var Code = featureElement.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value.Trim('"');
 					var FeatureTypeCode = featureElement.Attributes().Where(a => a.Name == "FeatureTypeCode").FirstOrDefault().Value.Trim('"');
 					var FeatureTextCodeCode = featureElement.Attributes().Where(a => a.Name == "FeatureTextCodeCode").FirstOrDefault().Value.Trim('"');
-					var FeatureDefaultText = featureElement.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "''").Replace("\n",  "\\n");
+					var FeatureDefaultText = TrimCharacter(featureElement.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault().Value,'"').Replace("\"",  "''").Replace("\n",  "\\n");
  					var IsPackagable = featureElement.Attributes().Where(a => a.Name == "IsPackagable").FirstOrDefault().Value;
 					var IsBusinessUnitEnabled = featureElement.Attributes().Where(a => a.Name == "IsBusinessUnitEnabled").FirstOrDefault().Value;
 					var IsOld = featureElement.Attributes().Where(a => a.Name == "IsOld").FirstOrDefault().Value;
@@ -491,8 +491,8 @@ foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
 <#+
 foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
 				    var Code = textCodeElement.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value.Trim('"');
-					var DefaultText = (textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null? '"'  + textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "''").Replace("\n",  "\\n") + '"' :"null");
-					var LocalDefaultText = (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault() != null?   (!textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value.Trim('"').Contains("\"")? "@":"") +'"' + (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "''").Replace("\n",  "\\n")) +'"'  :"null");
+					var DefaultText = (textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null? '"'  + TrimCharacter(textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value,'"').Replace("\"",  "''").Replace("\n",  "\\n") + '"' :"null");
+					var LocalDefaultText = (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault() != null?   (!TrimCharacter(textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value,'"').Contains("\"")? "@":"") +'"' + (TrimCharacter(textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value,'"').Replace("\"",  "''").Replace("\n",  "\\n")) +'"'  :"null");
 					var TextCodeTypeCode = textCodeElement.Attributes().Where(a => a.Name == "TextCodeTypeCode").FirstOrDefault().Value;
  					var IsSpellChecked = textCodeElement.Attributes().Where(a => a.Name == "IsSpellChecked").FirstOrDefault().Value;
 		
@@ -592,7 +592,9 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 					   var propValue = p.Value.Replace("\n",@"\n");
 					   if(propValue.StartsWith("\"") && propValue.EndsWith("\"") && p.Name.ToString().Contains("DefaultText"))
 					   {
-					     propValue =  (!propValue.Trim('"').Contains("\"")? "@":"") + '"'  + propValue.Trim('"').Replace("\"",  "''") + '"';
+                        //&quot;Allows recording AR Payments in negative amounts using payment method &quot;Offset&quot;&quot;
+					     //propValue =  (!propValue.Trim('"').Contains("\"")? "@":"") + '"'  + propValue.Trim('"').Replace("\"",  "''") + '"';
+                           propValue = '"'  + FixSpecialCharacters(TrimCharacter(propValue,'"')) + '"';
 					   }
 						if(p.Name == "IsRequired" ||p.Name == "SystemRequired")
 						{
@@ -653,7 +655,7 @@ private void WriteAddFeaturesAndTextCodesMethod(XElement entity,XElement QueryAt
 
 			 string FeatureDefaultText = Code.Trim('"');
 	    if(FeatureDefaultTextCodeAtt != null)
-			FeatureDefaultText = FeatureDefaultTextCodeAtt.Value.ToString().Trim('"');
+			FeatureDefaultText = TrimCharacter(FeatureDefaultTextCodeAtt.Value.ToString(),'"');
 
 			var FeatureIsPackagableAttr = QueryAtt.Attributes().Where(a => a.Name == "IsPackagable").FirstOrDefault();
 	   string Packagable;
@@ -783,7 +785,7 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
 { 
 		var MenuButtonTypeAtt = MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value != null ?MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value.Trim('"'):"";
 	   var EventCode = MButtonAtt.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value;
-	   var DefaultText = MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"'); 
+	   var DefaultText = TrimCharacter(MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value,'"'); 
 
 	   var TextCodeAtt = MButtonAtt.Attributes().Where(a => a.Name == "FeatureTextCodeCode").FirstOrDefault();
 	   var FeatureCodeAtt = MButtonAtt.Attributes().Where(a => a.Name == "FeatureCode").FirstOrDefault();
@@ -848,7 +850,7 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
 			ItemFeatureCode = ItemFeatureCodeAtt.Value.ToString();
 
 			 if(ItemFeatureDefaultTextCodeAtt != null)
-			ItemDefaultText = ItemFeatureDefaultTextCodeAtt.Value.ToString().Trim('"');
+			ItemDefaultText = TrimCharacter(ItemFeatureDefaultTextCodeAtt.Value.ToString(),'"');
 
 						var ItemFeatureIsPackagableAttr = item.Attributes().Where(a => a.Name == "IsPackagable").FirstOrDefault();
 	   string ItemIsPackagable;

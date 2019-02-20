@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, ComponentRef, Output, EventEmitter, ViewChildren, QueryList, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, ComponentRef, Output, EventEmitter, ViewChildren, QueryList, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {LocationDirective} from '../../Utilities/LocationDirective';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -123,6 +123,24 @@ export class SessionComponent {
         }
 
         return this.SessionIndex + "_" + idCounter.Counter;
+    }
+
+    GetNewCounter(Name: string) {
+        if (this.IdCounters == null) {
+            this.IdCounters = new Array<SessionIdCounter>();
+        }
+
+        var idCounter = this.IdCounters.filter(f => f.Name == Name)[0];
+        if (idCounter) {
+            idCounter.Counter = idCounter.Counter + 1;
+        }
+
+        else {
+            idCounter = new SessionIdCounter(Name);
+            this.IdCounters.push(idCounter);
+        }
+
+        return idCounter.Counter;
     }
 
 
