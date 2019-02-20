@@ -61,7 +61,7 @@ export class ExportBI2ExcelControl {
     SaveExcelFile(tenant: number, FileName: string, OTName: string) {
         var tempDate = new Date();
         var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + this.queryName + "_" + MyDate; //+ "&bireport=" + "bireport";
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + this.queryName + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007"; //+ "&bireport=" + "bireport";
         {
             window.open(url);
         }
