@@ -681,8 +681,9 @@ namespace WebFreight.Web.Helpers
             //    }
             //    cellRow++;
             //}
-            workbook.Version = ExcelVersion.Excel2010;
+            workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);
+            //workbook.Close();
             return memory.ToArray();
         }
 
