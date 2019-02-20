@@ -20,6 +20,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
+using Stimulsoft.Report.Dictionary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,8 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
-using WebFreight.Web.Helpers;
+
+//using WebFreight.Web.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -42,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
             TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(taxDeductionReportId, false, false);
 
             List<string> linesArray = new List<string>();
-
+          
             GLAccountQueryService queryService = new GLAccountQueryService(tenant);
             TaxDeductionReportData data = queryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
 
@@ -740,8 +742,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     documentTypeOutId = documentType.DocumentTypeCopies.FirstOrDefault().Id;
                 }
-                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                exportDocumentHelper.ExportDocument2Pdf(documentType.Id, entityId, objectTableId, null, null, newDocument.Id, tenant, documentTypeOutId);
+                //ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                //exportDocumentHelper.ExportDocument2Pdf(documentType.Id, entityId, objectTableId, null, null, newDocument.Id, tenant, documentTypeOutId);
 
                 DocumentOutPM docPM = documentOutQuery.GetSinglePM(newDocument.Id, newDocument.Tenant);
                 return docPM;
