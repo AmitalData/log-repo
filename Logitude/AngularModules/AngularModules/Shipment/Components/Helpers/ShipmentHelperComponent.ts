@@ -1,13 +1,11 @@
-﻿import {Component, OnDestroy, ChangeDetectorRef} from '@angular/core';
+import {Component, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import {ShipmentTool} from '../../Tools';
-import {AWBWizardArgs, FSRWizardArgs, CustomsWizardArgs} from '../../Args';
+import {AWBWizardArgs, FSRWizardArgs} from '../../Args';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import { SharedAgentManifestService } from '../../Services/Others/SharedAgentManifestService';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
@@ -26,6 +24,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     public EntityTitle: string;
     public NotesList: NotesClass[] = [];
     public IsFollowupsVisible: boolean = false;
+    public IsAnalyzeChampXMLButtonVisible: boolean = false;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
 
@@ -46,7 +45,13 @@ export class ShipmentHelperComponent implements OnDestroy {
                     }
                 }
             }
-           
+
+            if (this.EntityPM.DirectionId == "E" && this.EntityPM.TransportModeId == "A") {
+                if (FeatureLocator.IsPackage_DVMT()) {
+                    this.IsAnalyzeChampXMLButtonVisible = true;
+                }
+            }
+
             this.Listen();
             this.BuildComponent();
         }
@@ -436,6 +441,12 @@ export class ShipmentHelperComponent implements OnDestroy {
         logWindow.Title = "INTTRA Wizard";
         logWindow.WindowArgs = { Shipment: this.EntityPM, EntityArgs: this.entityArgs };
         logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/WizardComponent');
+    }
+
+    AnalyzeChampXMLClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Simulate Champ Message";
+        logWindow.Show('./Shipment/Components/Helpers/AnalyzeChampXMLComponent');
     }
 }
 
