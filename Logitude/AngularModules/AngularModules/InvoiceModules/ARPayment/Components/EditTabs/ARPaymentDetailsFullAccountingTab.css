@@ -1,0 +1,38 @@
+.arp-footer{
+
+}
+
+    .arp-footer .amount-div{
+        display:block;
+        min-width: 120px;
+    }
+
+        .arp-footer .amount-div > .amount{
+            font-size: 20px;
+            color:#282E30;
+            margin: 0 0 10px 0px;
+            font-family: sans-serif;
+            text-align: center;
+
+        }
+
+
+        .arp-footer .amount-div > .label{
+            font-size: 11px;
+            margin-top:-5px;
+            text-align:center !important;
+
+        }
+
+    .arp-footer .seperator{
+        display:block;
+        text-align:center;
+    }
+
+    .arp-footer .seperator > div{
+        font-size: 24px;
+        text-align: center;
+        color:#282E30;
+        margin: 0 15px;
+
+    }

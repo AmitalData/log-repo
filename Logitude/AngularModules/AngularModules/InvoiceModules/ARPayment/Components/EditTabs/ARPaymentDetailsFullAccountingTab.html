@@ -630,7 +630,7 @@
         </td>
     </tr>
 
-    <!-- <tr style="height: 1px;">
+    <tr style="height: 1px;">
         <td>
             <TabSummary [Height]="90">
                 <table>
@@ -642,34 +642,31 @@
                                 </tr>
 
                                 <tr style="width:100%;">
-                                    <td style="vertical-align: middle;">
+                                    <td style="vertical-align: middle;" class="arp-footer">
 
-                                        <div float-start style="display:block; text-align:center;">
-                                            <div style="font-size: 24px; text-align: center;color:#282E30">{{Summary_Amount | NumbersPipe:'N2'}}</div>
-                                            <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'ARPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe}}</div>
+                                        <div float-start class="amount-div">
+                                            <div class="amount">{{paymentAmountTotal | NumbersPipe:'N2'}}</div>
+                                            <div class="label">{{'ARPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe}}</div>
                                         </div>
 
-                                        <div float-start style="display:block; text-align:center;">
-                                            <div style="font-size: 24px; text-align: center;color:#282E30; margin-left:15px;margin-right:15px;">  -  </div>
-                                            <div></div>
+                                        <div float-start class="seperator">
+                                            <div>-</div>
                                         </div>
 
-                                        <div float-start style="display:block;text-align:center;">
-                                            <div style="font-size: 24px; text-align: center;" [ngStyle]="{color: Summary_AmountPaidColor}">{{Summary_AmountPaid | NumbersPipe:'N2'}}</div>
-                                            <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'ARPayment.S.Details.AmountToPay' | TextCodeTranslationPipe}}</div>
+                                        <div float-start class="amount-div">
+                                            <div class="amount">{{amount2reconcileTotal | NumbersPipe:'N2'}}</div>
+                                            <div class="label">{{'ARPayment.S.Details.AmountToPay' | TextCodeTranslationPipe}}</div>
                                         </div>
 
-                                        <div float-start style="display:block;  text-align:center;">
-                                            <div style="font-size: 24px; text-align: center;color:#282E30;margin-left:15px;margin-right:15px;"> = </div>
-                                            <div></div>
+
+                                        <div float-start class="seperator">
+                                            <div>=</div>
                                         </div>
 
-                                        <div float-start style="display:block;">
-                                            <div style="font-size: 24px;color:#282E30">{{OpenAmount | NumbersPipe:'N2'}}</div>
-                                            <div style="vertical-align:top;">
-                                                <div class="Label" style="vertical-align:top;margin-top:-5px;display:inline-block;font-size:11px;color:#282E30;width:auto;color:#6E7172;">{{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}</div>
-                                                <div class="Label" style="vertical-align:top;margin-top:-5px;margin-left:5px;margin-right:5px; display:inline-block;font-size: 14px;width:auto;color:#282E30;">({{PaymentCurrencyCode}})</div>
-                                            </div>
+
+                                        <div float-start class="amount-div">
+                                            <div class="amount">{{OpenAmount | NumbersPipe:'N2'}}</div>
+                                            <div class="label">{{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}</div>
                                         </div>
 
                                     </td>
@@ -709,6 +706,6 @@
                 </table>
             </TabSummary>
         </td>
-    </tr> -->
+    </tr>
 
 </table>

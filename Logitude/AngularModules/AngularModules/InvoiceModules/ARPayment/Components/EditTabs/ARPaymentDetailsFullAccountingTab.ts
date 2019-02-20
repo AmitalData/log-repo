@@ -43,6 +43,7 @@ import { LineModel } from '../../../../Accounting/Components/Others/ReconcileCom
 @Component({
     moduleId: module.id,
     templateUrl: './ARPaymentDetailsFullAccountingTab.html',
+    styleUrls: ['./ARPaymentDetailsFullAccountingTab.css']
 })
 
 export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements OnInit, OnDestroy {
@@ -80,9 +81,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.EntityPM = entityArgs.EntityPM;
         this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
-
-
+        this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
         this.TransactionsList = new ObservableCollection([]);
+
+
+        //#region old
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
 
@@ -117,6 +120,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.LoadData();
         }
 
+        //#endregion
+
         this.GetData();
 
 
@@ -128,6 +133,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     //#region abdullah code
     originalPaymentOpenAmount:number;
+    paymentAmountTotal:number = 0;
+    amount2reconcileTotal:number = 0;;
+
     _loading: boolean = false;
     GetData(){
         if(this.EntityPM.GLAccountId){
@@ -167,13 +175,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     CalculateTotals(){
 
         // payment open amount
-        var linesAmount2reco = 0;
+        var _linesAmount2reco = 0;
         this.TransactionsList.Collection.forEach((line:TransactionLineModel)=>{
             if(line && line.AmountToReconcile >= 0){
-                linesAmount2reco += line.AmountToReconcile;
+                _linesAmount2reco += line.AmountToReconcile;
             }
         });
-        this.EntityPM.OpenAmount = this.originalPaymentOpenAmount - linesAmount2reco;
+        this.amount2reconcileTotal = _linesAmount2reco;
+
+        if(_linesAmount2reco <= this.originalPaymentOpenAmount)
+            this.EntityPM.OpenAmount = this.originalPaymentOpenAmount - _linesAmount2reco;
+        else
+            this.EntityPM.OpenAmount = 0;
 
         //
 
