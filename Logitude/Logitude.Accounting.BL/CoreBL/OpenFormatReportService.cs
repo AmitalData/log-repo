@@ -1154,7 +1154,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (partnerCode != null)
                     {
-                        if (partnerCode.Length > 2) { partnerCode.Substring(0, 2); }
+                        if (partnerCode.Length > 2) { partnerCode= partnerCode.Substring(0, 2); }
                         myStringBuilder.Append("a" + partnerCode.PadLeft(2, ' '));
                     }
 
@@ -1629,7 +1629,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         if (partnerCode != null)
                         {
-                            if (partnerCode.Length > 2) { partnerCode.Substring(0, 2); }
+                            if (partnerCode.Length > 2) { partnerCode= partnerCode.Substring(0, 2); }
                             myStringBuilder.Append("a" + partnerCode.PadLeft(2, ' '));
                         }
 
@@ -1723,7 +1723,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         if (partnerCode != null)
                         {
-                            if (partnerCode.Length > 2) { partnerCode.Substring(0, 2); }
+                            if (partnerCode.Length > 2) { partnerCode= partnerCode.Substring(0, 2); }
                             myStringBuilder.Append("a" + partnerCode.PadLeft(2, ' '));
                         }
 
@@ -2317,7 +2317,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         if (partnerCode != null)
                         {
-                            if (partnerCode.Length > 2) { partnerCode.Substring(0, 2); }
+                            if (partnerCode.Length > 2) { partnerCode= partnerCode.Substring(0, 2); }
                             myStringBuilder.Append("a" + partnerCode.PadLeft(2, ' '));
                         }
 
