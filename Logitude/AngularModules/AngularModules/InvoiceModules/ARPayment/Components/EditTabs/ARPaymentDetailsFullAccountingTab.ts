@@ -135,6 +135,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     originalPaymentOpenAmount:number;
     paymentAmountTotal:number = 0;
     amount2reconcileTotal:number = 0;;
+    IsEntityValid: boolean = true;
 
     _loading: boolean = false;
     GetData(){
@@ -1538,6 +1539,9 @@ export class TextStore{
     static Closed: string =  TextCodeTranslator.Translate('Accounting.O.ARP.Closed');
     static partiallyOpened: string =  TextCodeTranslator.Translate('Accounting.O.ARP.partiallyOpened');
 
+    static ErrorsInSelectedLines: string =  TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines');
+    static AmountMustBSmaller2OpenAmount: string =  TextCodeTranslator.Translate('Reconciliations.O.AmountMustBSmaller2OpenAmount');
+
 
 }
 
@@ -1546,6 +1550,8 @@ export class TransactionLineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
     public ObjectTableName = "LedgerTransaction";
     public isRTL: boolean = false;
+    isLineValid: boolean = true;
+
 
     constructor(
         private ledgerTransaction: LedgerTransactionPM,
@@ -1618,12 +1624,28 @@ export class TransactionLineModel extends BaseComponent {
         if (this.LedgerTransactionPM.AmountToReconcile != value) {
             this.LedgerTransactionPM.AmountToReconcile = value;
 
+            //set amount
             if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount){
                 this.OpenAmount = this.originalOpenAmount - this.AmountToReconcile;
             }else{
                 this.OpenAmount = this.originalOpenAmount;
             }
 
+            //validate line
+            // if (this.parent.IsEntityValid) {
+                if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
+                    this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, TextStore.AmountMustBSmaller2OpenAmount);
+                    this.parent.IsEntityValid = true;
+                    this.isLineValid = true;
+
+                } else {
+                    this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, true, "valid");
+                    this.parent.IsEntityValid = false;
+                    this.isLineValid = false;
+                }
+            // }
+
+            //update parent totals
             this.parent.CalculateTotals();
         }
 
