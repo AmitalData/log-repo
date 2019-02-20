@@ -263,6 +263,20 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             }, 1);
 
         }
+
+        //check rowscount
+        if(this.IsMultiline){
+            var _element = document.getElementById(this.InputId)
+            var elHeight = _element.clientHeight;
+            var calculatedRowsCount = (elHeight / 18);
+            var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+
+            if(this.RowsCount != ___roundedCalculatedRowsCountHaha)
+                this.RowsCount = ___roundedCalculatedRowsCountHaha;
+
+
+        }
+
     }
 
     RunComponent() {
