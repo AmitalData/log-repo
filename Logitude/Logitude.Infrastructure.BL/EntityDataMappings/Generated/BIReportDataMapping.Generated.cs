@@ -34,7 +34,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         DWQueryId, 
 	         Inactive, 
 	         TypeCode, 
-	         AGGridOptionsXML,
+	         AGGridOptionsXML, 
+	         BIReportFolderId,
 	      }
 
 
@@ -53,7 +54,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         DWQueryId, 
 	         Inactive, 
 	         TypeCode, 
-	         AGGridOptionsXML,
+	         AGGridOptionsXML, 
+	         BIReportFolderId, 
+	         CreatedByUserName, 
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -120,6 +124,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AGGridOptionsXML))
             {
 				entityPOCO.AGGridOptionsXML = entityPM.AGGridOptionsXML;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BIReportFolderId))
+            {
+				entityPOCO.BIReportFolderId = entityPM.BIReportFolderId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -193,6 +202,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.AGGridOptionsXML = entityPOCO.AGGridOptionsXML;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BIReportFolderId))
+            {
+					entityPM.BIReportFolderId = entityPOCO.BIReportFolderId;
+            }
+
 		}
 
 		public void PMToOldPM(BIReportPM entityPM, BIReportPM oldEntityPM)
@@ -257,6 +271,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AGGridOptionsXML))
             {
                 oldEntityPM.AGGridOptionsXML = entityPM.AGGridOptionsXML;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BIReportFolderId))
+            {
+                oldEntityPM.BIReportFolderId = entityPM.BIReportFolderId;
             }
 			
 		}

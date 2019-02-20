@@ -55,6 +55,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     HasChanges: boolean = false;
     IsBIReportWorkspace: boolean = false;
     IsBIReportEditScreen: boolean = false;
+    FolderId: string;
     public SelectedFiltersDataSourceChanged: any;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper;
 
@@ -181,6 +182,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.QID = args.DWQueryId;
         this.IsBIReportWorkspace = args.IsBIReportWorkspace;
         this.IsBIReportEditScreen = args.IsBIReportEditScreen;
+        this.FolderId = args.FolderId;
+
         if (this.QID) {
             this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
                 if (!myResult.HasError) {
@@ -424,7 +427,10 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.SelectedItem = item;
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
         if (this.SelectedItem && myCurrentItem && myCurrentItem.length == 0) {
-
+            if (this.SelectedItem.Code == '[Full Date]') {
+                this.SelectedItem.ParentDataTypeCode = "LookUp";
+                this.SelectedItem.DataTypeCode = "DateTime";
+            } 
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
             this.SelectedFieldsDataSource = this.ResetIndexes(tempData);
@@ -498,9 +504,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 this.SelectedFiltersDataSource = tempDataNew;
             }
 
-            if (this.CD) {
-                this.CD.detectChanges();
-            }
+            this.RunDetectChanges();
+
             if (this.SelectedItem.DataTypeCode == "Boolean") {
                 //this.SaveChanges();
                 this.ClearData();
@@ -862,7 +867,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public StartBusyIndicator(myText: string) {
         this.BusyIndicatorText = myText;
         this.ShowBusyIndicator = true;
-        this.CD.detectChanges();
+        this.RunDetectChanges();
     }
 
     public StopBusyIndicator() {
@@ -875,7 +880,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public StartFiltersBusyIndicator(myText: string) {
         this.FiltersBusyIndicatorText = myText;
         this.FiltersShowBusyIndicator = true;
-        this.CD.detectChanges();
+        this.RunDetectChanges();
     }
 
     public StopFiltersBusyIndicator() {
@@ -928,7 +933,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace) {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
                         }
                     });
                 }
@@ -946,7 +951,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace || this.IsBIReportEditScreen) {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
                         }
                     });
                 }
@@ -1090,6 +1095,15 @@ export class DWQueryBuilderComponent extends BaseComponent {
             return result;
         }
     }
+
+    RunDetectChanges() {
+        if (this.CD) {
+            var isDestroyed: boolean = this.CD['destroyed'];
+            if (!isDestroyed) {
+                this.CD.detectChanges();
+            }
+        }
+    }
 }
 
 export class DWObjectFieldsDetails extends BaseComponent {
@@ -1120,7 +1134,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
-            this.DisplayName = this.ComputeDisplayName(DWObjectField);
+            //if (DWObjectField.FilterItems && DWObjectField.FilterItems.length == 0) {
+                this.DisplayName = this.ComputeDisplayName(DWObjectField);
+            //}
+           
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
@@ -1145,7 +1162,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         //(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
         var Displayname = DWObjectField.DisplayName;
         if (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
-            if (DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
+            if (DWObjectField.DWObjectTableCode && DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
                 Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Code;
             }
             else {
@@ -1509,6 +1526,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
                                 if (field.Code == '[Full Date]') {
                                     view.ParentDataTypeCode = field.DataTypeCode;
+                                    view.DataTypeCode = "DateTime";
                                 }
                                 else {
                                     view.ParentDataTypeCode = DWObjectField.DataTypeCode;

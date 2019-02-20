@@ -89,6 +89,21 @@ export class BIReportPM {
     public set AGGridOptionsXML(newValue: string) { if (this.aGGridOptionsXML != newValue) { this.aGGridOptionsXML = newValue; this.MarkAsDirty("AGGridOptionsXML"); } }
        
 	 
+    private bIReportFolderId: string;
+    public get BIReportFolderId() { return this.bIReportFolderId; }
+    public set BIReportFolderId(newValue: string) { if (this.bIReportFolderId != newValue) { this.bIReportFolderId = newValue; this.MarkAsDirty("BIReportFolderId"); } }
+       
+	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
 
     public OldEntityPM: BIReportPM;
 		

@@ -657,5 +657,35 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
 
         }
+
+
+        public HttpResponseMessage getSingleByShipmentNumber(string number)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePMByShipmentNumber(number, tenant);
+                string Id = "";
+                if (shipmentPM != null)
+                    Id = shipmentPM.Id;
+                return Request.CreateResponse(HttpStatusCode.OK, Id); ;
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+       
     }
 }

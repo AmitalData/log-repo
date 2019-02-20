@@ -83,6 +83,23 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.OppositeAccountDisplayNumber = gla.DisplayNumber;
             }
 
+            // GET reconciliation no. of reconciled LT
+            ReconciliationQueryService recoQuery = new ReconciliationQueryService(entityPM.Tenant);
+            ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(entityPM.Tenant);
+            if (entityPM.IsReconciled)
+            {
+                // get reco. line
+                CustomMappedPMProperties.Add(PMPropertyNames.RecoNumber);
+                ReconciliationLine recoLine = recoLineQuery.GetLineByTransactionId(entityPM.Id, entityPM.Tenant);
+                
+                // get reconciliaiton
+                if (recoLine != null)
+                {
+                    var reco = recoQuery.GetSingle(recoLine.ReconciliationId, false, false);
+                    entityPM.RecoNumber = reco.Number;
+                    entityPM.ReconciliationId = reco.Id;
+                }
+            }
 
         }
 

@@ -90,13 +90,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else if(entityPM.VatNumber != null)
                 {
-                    var chars = Regex.Matches(entityPM.VatNumber, @"[1-9]");
+                    var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
                     if (chars.Count == 0)
                     {
                         var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
                         if ( digit != 0)
                         {
                             entityPM.StatusCode = "2";
+                        }
+                        else
+                        {
+                            entityPM.StatusCode = "6";
                         }
                     }
                     else

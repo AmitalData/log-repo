@@ -3949,13 +3949,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         TransportModeId = s.TransportModeId,
                                                         MainCarriageTransportModeId = s.TransportModeId,
                                                         IncotermId = s.IncotermId,
-
+                                                        CustomerContactId = s.CustomerContactId,
+                                                        AgentContactId = s.AgentContactId,
                                                         MainCarriageETD = m.MainCarriageETD,
                                                         MainCarriageATD = m.MainCarriageATD,
                                                         MainCarriageETA = m.MainCarriageETA,
                                                         MainCarriageATA = m.MainCarriageATA,
                                                         MainCarriageCarrierId = m.MainCarriageCarrierId,
                                                         FinalDistenationPortId = m.Transshipment3ToPortId != null ? m.Transshipment3ToPortId : m.Transshipment2ToPortId != null ? m.Transshipment2ToPortId : m.Transshipment1ToPortId != null ? m.Transshipment1ToPortId : m.MainCarriageToPortId,
+
 
 
                                                     };

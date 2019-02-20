@@ -941,9 +941,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-
-
-
+        
         public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers,string directionid,string transportmodeId)
         {
             try
@@ -1639,6 +1637,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDownloadShipmentPackages(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Done");
             }
 
             catch (Exception ex)

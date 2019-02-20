@@ -158,7 +158,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PackageTypeId",
-					  						DefaultText =  @"Package Type",
+					  						DefaultText =  "Package Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -216,7 +216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PackageTypeName",
-					  						DefaultText =  @"Package Type",
+					  						DefaultText =  "Package Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -235,7 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						ListFieldLable =  "PackageTypeNameListLable",
-					  						ListLableDefaultText =  @"Package Type",
+					  						ListLableDefaultText =  "Package Type",
 					  						HelpTextCode =  "PackageTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Quantity",
-					  						DefaultText =  @"Pieces",
+					  						DefaultText =  "Pieces",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -295,7 +295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						ListFieldLable =  "QuantityListLable",
-					  						ListLableDefaultText =  @"Quantity",
+					  						ListLableDefaultText =  "Quantity",
 					  						HelpTextCode =  "Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -336,7 +336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GrossWeight",
-					  						DefaultText =  @"Gross Weight (%WeightCode)",
+					  						DefaultText =  "Gross Weight (%WeightCode)",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -355,7 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						ListFieldLable =  "GrossWeightListLable",
-					  						ListLableDefaultText =  @"Gross Weight",
+					  						ListLableDefaultText =  "Gross Weight",
 					  						HelpTextCode =  "GrossWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -396,7 +396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Volume",
-					  						DefaultText =  @"Volume (%VolumeCode)",
+					  						DefaultText =  "Volume (%VolumeCode)",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -415,7 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						ListFieldLable =  "VolumeListLable",
-					  						ListLableDefaultText =  @"Volume",
+					  						ListLableDefaultText =  "Volume",
 					  						HelpTextCode =  "Volume",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -456,7 +456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Height",
-					  						DefaultText =  @"Height",
+					  						DefaultText =  "Height",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -514,7 +514,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Width",
-					  						DefaultText =  @"Width",
+					  						DefaultText =  "Width",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -572,7 +572,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Length",
-					  						DefaultText =  @"Length",
+					  						DefaultText =  "Length",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -630,7 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VolumetricWeight",
-					  						DefaultText =  @"Volumetric Weight (%WeightCode)",
+					  						DefaultText =  "Volumetric Weight (%WeightCode)",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -649,7 +649,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						ListFieldLable =  "VolumetricWeightListLable",
-					  						ListLableDefaultText =  @"Volumetric Weight",
+					  						ListLableDefaultText =  "Volumetric Weight",
 					  						HelpTextCode =  "VolumetricWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -704,9 +704,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Dimensions",
-					  						DefaultText =  @"Dimensions (L-W-H) (%UnitCode)",
+					  						DefaultText =  "Dimensions (L-W-H) (%UnitCode)",
 					  						ListFieldLable =  "DimensionsListLable",
-					  						ListLableDefaultText =  @"Dimensions (L-W-H)",
+					  						ListLableDefaultText =  "Dimensions (L-W-H)",
 					  						HelpTextCode =  "Dimensions",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);

@@ -59,6 +59,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private VatTypeRepository vatTypeRepository;
         private AccountingSettingRepository accountingSettingRepository;
         private AccountingSystemRepository accountingSystemRepository;
+        private Shipment MainShipment;
+        private string MainShipmentConcurrencyGUID;
         private List<string> allShipmentIds;
         private List<string> allPayablesIds;
         private List<Shipment> allShipments;
@@ -198,7 +200,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, this.objectContext);
+            APInvoiceValidator.Validate(entityPM, this.objectContext, this.MainShipmentConcurrencyGUID);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
             if (!entityPM.IsGeneralInvoice)
@@ -278,7 +280,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, this.objectContext);
+            APInvoiceValidator.Validate(entityPM, this.objectContext, this.MainShipmentConcurrencyGUID);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
             if (!entityPM.IsGeneralInvoice)
@@ -438,6 +440,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.InternalNumber = TableCounter.GetNumber(entityPM.Tenant, "APIC", "IN", null);
             }
 
+            if (!string.IsNullOrEmpty(this.entityPM.MainEntityId))
+            {
+                this.MainShipment = shipmentRepository.GetSingleShipment(this.entityPM.MainEntityId, tenant);
+
+                if (this.MainShipment != null)
+                {
+                    this.MainShipmentConcurrencyGUID = this.MainShipment.ConcurrencyGUID;
+                }
+            }
+
             if (entityPM.SetApproved)
             {
                 entityPM.StatusCode = "AD";
@@ -446,40 +458,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (string.IsNullOrEmpty(this.entityPM.MasterNumber) || string.IsNullOrEmpty(this.entityPM.HouseNumber))
                 {
-                    if (!string.IsNullOrEmpty(this.entityPM.MainEntityId))
+                    if (this.MainShipment != null)
                     {
-                        Shipment myShipment = shipmentRepository.GetSingleShipment(this.entityPM.MainEntityId, tenant);
-                        if (myShipment != null)
+                        if (string.IsNullOrEmpty(this.entityPM.MasterNumber))
                         {
-                            if (string.IsNullOrEmpty(this.entityPM.MasterNumber))
+                            if (!string.IsNullOrEmpty(this.MainShipment.MasterShipmentDataId))
                             {
-                                if (!string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+                                ShipmentMasterData myMaster = shipmentRepository.GetSingleShipmentMasterData(this.MainShipment.MasterShipmentDataId, tenant);
+                                if (myMaster != null)
                                 {
-                                    ShipmentMasterData myMaster = shipmentRepository.GetSingleShipmentMasterData(myShipment.MasterShipmentDataId, tenant);
-                                    if (myMaster != null)
+                                    if (!string.IsNullOrEmpty(myMaster.Master))
                                     {
-                                        if (!string.IsNullOrEmpty(myMaster.Master))
+                                        if (!string.IsNullOrEmpty(myMaster.AirlinePrefix))
                                         {
-                                            if (!string.IsNullOrEmpty(myMaster.AirlinePrefix))
-                                            {
-                                                this.entityPM.MasterNumber = myMaster.AirlinePrefix + "-" + myMaster.Master;
-                                            }
+                                            this.entityPM.MasterNumber = myMaster.AirlinePrefix + "-" + myMaster.Master;
+                                        }
 
-                                            else
-                                            {
-                                                this.entityPM.MasterNumber = myMaster.Master;
-                                            }
+                                        else
+                                        {
+                                            this.entityPM.MasterNumber = myMaster.Master;
                                         }
                                     }
                                 }
                             }
+                        }
 
-                            if (string.IsNullOrEmpty(this.entityPM.HouseNumber))
-                            {
-                                this.entityPM.HouseNumber = myShipment.House;
-                            }
+                        if (string.IsNullOrEmpty(this.entityPM.HouseNumber))
+                        {
+                            this.entityPM.HouseNumber = this.MainShipment.House;
                         }
                     }
+
                 }
             }
 

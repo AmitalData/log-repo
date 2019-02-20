@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -342,11 +342,11 @@ export class QuoteDomainService {
         return entity;
     }
 
-    GetQuoteConnectedEntities(quoteId: string) {
+    GetQuoteConnectedEntities(quoteId: string, opportunityId: string ) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetQuoteConnectedEntities?quoteId=' + quoteId;
+        var url = this._apiUrl + '/GetQuoteConnectedEntities?quoteId=' + quoteId + '&opportunityId=' + opportunityId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
@@ -426,4 +426,6 @@ export class QuoteConnectedEntity {
     public Customer: string;
     public GrossWeight: number;
     public VolumeInKG: number;
+    public EntityOwner: string;
+    public EntityClosingDate: Date;
 }

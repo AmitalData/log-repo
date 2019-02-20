@@ -837,7 +837,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                         datetimeformat = currentTenant.DateTimeFormat;
                                     }
 
-                                    string dateString = lastApprovedInvoice.ApprovedDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
+                                    string dateString = lastApprovedInvoice.InvoiceDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
 
                                     bool useLocal = true;
                                     var user = GetLoggedContact(entityPM.Tenant);

@@ -193,7 +193,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
 
                 temp.AccountingEntityId = MyEntity.AccountingEntityId;
-
+             
 
 
                 return temp;
