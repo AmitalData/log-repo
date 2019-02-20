@@ -33,6 +33,8 @@ import {SpotLightDateComponent} from './Components/Spotlight/SpotLightDateCompon
 import {SplitShipmentComponent} from './Components/SplitShipment/SplitShipmentComponent';
 import { SplitPartialPackageComponent } from './Components/SplitShipment/SplitPartialPackageComponent';
 import { RemoveTasksButtonListTemplate } from './Components/ListTemplates/RemoveTasksButtonListTemplate';
+import { AnalyzeChampXMLComponent } from './Components/Helpers/AnalyzeChampXMLComponent';
+
 
 
 export const Components =
@@ -70,7 +72,7 @@ export const Components =
         SplitShipmentComponent,
         SplitPartialPackageComponent,
         RemoveTasksButtonListTemplate,
-
+        AnalyzeChampXMLComponent,
     ];
 
 export const ControlsComponents =
@@ -118,6 +120,7 @@ export class ModuleDeclarations {
             case "SplitShipmentComponent": { myResult = SplitShipmentComponent; break; }
             case "SplitPartialPackageComponent": { myResult = SplitPartialPackageComponent; break; }
             case "RemoveTasksButtonListTemplate": { myResult = RemoveTasksButtonListTemplate; break; }
+            case "AnalyzeChampXMLComponent": { myResult = AnalyzeChampXMLComponent; break; }                
         }
 
         return myResult;
