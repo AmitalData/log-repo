@@ -75,6 +75,8 @@ export class DWAskUserFiltersComponent implements OnInit {
         this.ValidationErrorsList = [];
         this.PageIndex = 0;
         this.PageSize = 10000;
+        this.count = 0;
+        this.rowData = []; 
         if (MyDWQueryData.FirstTime == true) {
             this.DWQueryData = MyDWQueryData.MyData;
         }
@@ -109,7 +111,7 @@ export class DWAskUserFiltersComponent implements OnInit {
         }
         else {
             SessionLocator.CurrentSession.StopBusyIndicator();
-            this.RunReportComplete.emit({rowData : this.rowData});
+            this.RunReportComplete.emit({ rowData: this.rowData, Count: this.count});
         }
     }
     GetRowData(QueryData: DWQueryData) {
@@ -120,7 +122,7 @@ export class DWAskUserFiltersComponent implements OnInit {
                 var dataSize = myResult.Result.SQLDataResult.length;
                 if (dataSize == 0) {
                     SessionLocator.CurrentSession.StopBusyIndicator();
-                    this.RunReportComplete.emit({ rowData: this.rowData});
+                    this.RunReportComplete.emit({ rowData: this.rowData , Count: this.count});
                 }
                 else {
                     this.count = this.count + dataSize;
@@ -129,7 +131,7 @@ export class DWAskUserFiltersComponent implements OnInit {
                         this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
                             if (!myResult.HasError) {
                                 SessionLocator.CurrentSession.StopBusyIndicator();
-                                this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000" });// more than 50000
+                                this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count});// more than 50000
                             }
                             else {
                                 SessionLocator.CurrentSession.StopBusyIndicator();

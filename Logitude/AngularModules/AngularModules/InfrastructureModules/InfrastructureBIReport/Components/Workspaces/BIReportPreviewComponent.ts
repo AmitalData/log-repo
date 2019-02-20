@@ -58,7 +58,6 @@ export class BIReportPreviewComponent implements OnInit {
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
-            //alert("Hi yea");
             this.IsFilterValueChanged = true;
         });
     }
@@ -110,7 +109,7 @@ export class BIReportPreviewComponent implements OnInit {
             });
         }
     }
-    public UpdateAGGrid(arg: BIReportXMLData, msg = null) {
+    public UpdateAGGrid(arg: BIReportXMLData, msg = null, count = 0) {
         var sortsList = [];
         if (arg.BITabularViewSettings != null && arg.BITabularViewSettings.Columns != null) {
             arg.BITabularViewSettings.Columns.forEach(item => {
@@ -133,7 +132,7 @@ export class BIReportPreviewComponent implements OnInit {
             //    force: true,
             //};
             this.agGrid.api.refreshCells();
-            var count = this.agGrid.api.getDisplayedRowCount();
+            //var count = this.agGrid.api.getDisplayedRowCount();
             if (count > 50000 || msg == "MT5000") {
                 this.CountText = "Showing the first 50,000 rows, scroll down or download the excel to view all."
             }
@@ -477,10 +476,12 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                this.EntityPM = s.EntityPM;
-                this.EntityId = s.EntityPM.Id;
-                this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
-                this.UpdateBIReport(false);
+                if (d != "cancel") {
+                    this.EntityPM = s.EntityPM;
+                    this.EntityId = s.EntityPM.Id;
+                    this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
+                    this.UpdateBIReport(false);
+                }
             });
         });
     }
@@ -623,7 +624,7 @@ export class BIReportPreviewComponent implements OnInit {
         else {
             this.HasValidationError = false;
             this.rowData = MyData.rowData;
-            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg), 500);
+            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg, MyData.Count), 500);
             this.StopBusyIndicator();
         }
        
