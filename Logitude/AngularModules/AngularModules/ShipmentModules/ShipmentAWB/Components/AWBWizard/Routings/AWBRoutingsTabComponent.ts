@@ -168,15 +168,15 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
         return myResult;
     }
-    get IsCloseMasterInfoVisible() {
-        var myResult = false;
+    //get IsCloseMasterInfoVisible() {
+    //    var myResult = false;
 
-        if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-            myResult = true;
-        }
+    //    if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+    //        myResult = true;
+    //    }
 
-        return myResult;
-    }
+    //    return myResult;
+    //}
     public IsEditingEnabled: boolean = false;
     public IsMainCarrierFieldsEnabled: boolean = false;
     private SetUIProperties() {
@@ -214,7 +214,9 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
         if (isPortsEnabled) {
             if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-                isPortsEnabled = false;
+                if (this.EntityPM.StatusWeight >= 60) {
+                    isPortsEnabled = false;
+                }
             }
         }
 
@@ -222,6 +224,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Transshipment1FromPortId", this.ObjectTableName, isPortVia1Enabled);
         this.UIProperties.SetEnabled("Transshipment2FromPortId", this.ObjectTableName, isPortVia2Enabled);
         this.UIProperties.SetEnabled("MainCarriageFinalDestinationPortId", this.ObjectTableName, isPortsEnabled);
+
         this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPortId) ? true : false);
         this.UIProperties.SetRequired("MainCarriageFinalDestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFinalDestinationPortId) ? true : false);
     }
