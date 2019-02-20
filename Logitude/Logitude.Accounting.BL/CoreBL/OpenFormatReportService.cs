@@ -1438,16 +1438,40 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (line.LocalCurrencyAmount != null)
                     {
-                        string LocalCurrencyAmount = line.LocalCurrencyAmount.ToString();
+                        string LocalCurrencyAmount = Math.Abs((decimal)line.LocalCurrencyAmount).ToString().Replace(".", string.Empty);
                         if (LocalCurrencyAmount.Length > 15) { LocalCurrencyAmount = LocalCurrencyAmount.Substring(0, 15); }
-                        myStringBuilder.Append("a" + LocalCurrencyAmount.PadLeft(15, '0'));
+
+
+                        if (line.LocalCurrencyAmount > 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("+");
+                            myStringBuilder.Append("a" + LocalCurrencyAmount.PadLeft(14, '0'));
+                        }
+
+                        else if (line.LocalCurrencyAmount < 0)
+                        {
+                            myStringBuilder.Append("a");
+
+                            myStringBuilder.Append("-");
+                            myStringBuilder.Append(LocalCurrencyAmount.PadLeft(14, '0'));
+                        }
+
+
+
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+                        }
                     }
+
                     else
                     {
                         myStringBuilder.Append("a");
                         myStringBuilder.Append('0', 15);
-                    }
 
+                    }
 
 
                     if (line.VatPercentage != null)
@@ -1992,9 +2016,32 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("1");
                     if (line.LocalCurrencyAmount != null)
                     {
-                        string LocalCurrencyAmount = line.LocalCurrencyAmount.ToString();
+                        string LocalCurrencyAmount =Math.Abs((decimal) line.LocalCurrencyAmount).ToString().Replace(".", string.Empty);
                         if (LocalCurrencyAmount.Length > 15) { LocalCurrencyAmount = LocalCurrencyAmount.Substring(0, 15); }
-                        myStringBuilder.Append("a" + LocalCurrencyAmount.PadLeft(15, '0'));
+
+                        if(line.LocalCurrencyAmount > 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("+");
+                            myStringBuilder.Append(LocalCurrencyAmount.PadLeft(14, '0'));
+
+                        }
+
+                        else if (line.LocalCurrencyAmount < 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("-");
+                            myStringBuilder.Append(LocalCurrencyAmount.PadLeft(14, '0'));
+
+                        }
+
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+                        }
+
+                       
                     }
                     else
                     {
@@ -2021,11 +2068,33 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0', 15);
 
-                    if (line.LocalCurrencyAmount != null)
-                    {
-                        string LocalCurrencyAmount = line.LocalCurrencyAmount.ToString();
+                    if (line.LocalCurrencyAmount != null) { 
+                    
+                        string LocalCurrencyAmount =Math.Abs((decimal)line.LocalCurrencyAmount).ToString().Replace(".", string.Empty);
                         if (LocalCurrencyAmount.Length > 15) { LocalCurrencyAmount = LocalCurrencyAmount.Substring(0, 15); }
-                        myStringBuilder.Append("a" + LocalCurrencyAmount.PadLeft(15, '0'));
+
+                    if (line.LocalCurrencyAmount < 0) {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("-");
+                            myStringBuilder.Append("a" + LocalCurrencyAmount.PadLeft(14, '0'));
+
+                        }
+
+                    else if(line.LocalCurrencyAmount > 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("+");
+                            myStringBuilder.Append("a" + LocalCurrencyAmount.PadLeft(14, '0'));
+
+                        }
+
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+
+                        }
+                      
                     }
                     else
                     {
