@@ -1353,18 +1353,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
     }
     private DownloadPackages() {
-        var myDomainService = new ShipmentDomainService();
-
-        myDomainService.DownloadShipmentPackages(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    var window: MessageWindow = new MessageWindow();
-
-                    window.Show("Download Packages Completed Successfully");
-                }
-            }
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Downloading Packahes";
+        logWindow.Width = 500;
+        logWindow.Height = 200;
+        logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/DownloadPackagesFileComponent');
+        logWindow.ComponentLoaded.subscribe(comp => {
+            comp.Download(this.EntityPM.Id);
         });
     }
 }
