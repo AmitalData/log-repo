@@ -444,6 +444,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
     ClearData() {
         this.SampleData = [];
         this.Notes = "";
+        this.IsPreview = true;
+        this.IsDataReturened = true;
     }
 
     btnRemove_Click(item) {
@@ -817,12 +819,19 @@ export class DWQueryBuilderComponent extends BaseComponent {
         SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
     IsPreview: boolean = true;
+    IsDataReturened: boolean = true;
     PreviewData(StopPreview: boolean = false, Data: any[]) {
         //if (this.Notes) {
         if (StopPreview == true) {
             this.SampleData = [];
             this.IsPreview = false;
             return;
+        }
+        if (Data.length > 0) {
+            this.IsDataReturened = true;
+        }
+        else {
+            this.IsDataReturened = false;
         }
         this.IsPreview = true;
         this.SampleData = Data;
@@ -1017,7 +1026,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     if (SessionLocator.CurrentSession.CurrentWindow) {
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
-                    this.SaveChanges();
+                    this.PreviewData(true,[]);
                     //////////////////////////////////////////
                 }
             });
