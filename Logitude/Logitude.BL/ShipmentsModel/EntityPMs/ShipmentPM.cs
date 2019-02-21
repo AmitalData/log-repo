@@ -703,6 +703,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string AgentId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string AgentComputed { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AgentAddressId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

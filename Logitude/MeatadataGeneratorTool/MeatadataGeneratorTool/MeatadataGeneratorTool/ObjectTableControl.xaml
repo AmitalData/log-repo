@@ -309,10 +309,12 @@
                                             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Has Api Helper:" />
                                             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Has Custom Fields:" />
                                             <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="No TS :" />
+											<TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="No Default Features :" />
 
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasApiHelper, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomFields, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NoTS, Mode=TwoWay}" />
+											<CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NoDefaultFeatures, Mode=TwoWay}" />
                                         </Grid>
 
                                     </Grid>

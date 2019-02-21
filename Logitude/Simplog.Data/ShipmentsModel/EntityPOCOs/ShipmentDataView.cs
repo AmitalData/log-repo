@@ -493,7 +493,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? Volume { get; set; }
         public string BranchName { get; set; }
         public string CustomsDeclarationNumber { get; set; }
-        
+        public string AgentComputed { get; set; }
+
+
         #region Booking
         public double? OrderGrossWeight { get; set; }
         public double? BookingVolume { get; set; }

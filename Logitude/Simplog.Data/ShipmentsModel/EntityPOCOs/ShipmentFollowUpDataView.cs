@@ -503,6 +503,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? Volume { get; set; }
         public string BranchName { get; set; }
         public string MoveTypeName { get; set; }
+        public string AgentComputed { get; set; }
 
         public string LocalCustomsTransmissionsStatusCode { get; set; }
         public string LocalCustomsTransmissionsStatusName { get; set; }
