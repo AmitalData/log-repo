@@ -2180,10 +2180,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            if (toDate == null)
-            {
-                toDate= TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            }
+
 
             //FromDate
             DateTime? FromDate = null;
@@ -2291,11 +2288,16 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem item = new QueryFilterItem();
             item.DisplayInList = true;
             item.FieldDataType = "Date";
-            item.FieldName = "Field2";
+            item.FieldName = "Field4";
             item.FieldValue = FromDate;
             item.FieldValue2 = toDate;
             item.IsCustomField = true;
-            item.Operator = "Between";
+            if (toDate == null)
+            {
+                item.Operator = "GreaterThanOrEqual";
+            }
+            else
+                item.Operator = "Between";
             queryOperations2.QueryFilterItems.Add(item);
 
             shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations2, shipments);
@@ -2354,8 +2356,15 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Unit = Item.PackageType!=null?Item.PackageType.EnglishName:null;
                     shipment.RequestETD = dataView.FirstPickupETD;
                     shipment.EstimateETD = dataView.FirstPickupETA;
-               //    if (!String.IsNullOrEmpty(dataView.Field2))
-                      //  shipment.RequestETA = Convert.ToDateTime(dataView.Field2);
+                    if (!String.IsNullOrEmpty(dataView.Field4))
+                    {
+                        string year= dataView.Field4.Substring(0,4);
+                        string month = dataView.Field4.Substring(5, 6);
+                        string day = dataView.Field4.Substring(6, 7);
+
+                        shipment.RequestETA = DateTime.Parse(year+"/"+month+"/"+day);
+
+                    }
                     shipment.EstimateETA = dataView.MainCarriageFinalDestinationETA;
                     shipment.Shipper = dataView.ShipperName;
                     shipment.Pieces = Item.Quantity;

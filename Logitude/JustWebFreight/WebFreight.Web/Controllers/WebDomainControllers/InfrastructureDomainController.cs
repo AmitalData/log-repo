@@ -1834,6 +1834,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DWQueryData.Columns = Columns;
                         DWQueryData.Filters = Filters;
                     }
+                    var sortingList = new List<Column>();
+                    foreach (Column item in bITabularViewSettings.Columns.ToList())
+                    {
+                        if (item.SortDirction != null)
+                        {
+                            sortingList.Add(item);
+                        }
+
+                    }
+                    if (sortingList != null && sortingList.Count() > 0)
+                    {
+                        foreach (Column item in sortingList.OrderBy(o => o.SortOrder).ToList())
+                        {
+                            DWQueryData.ColumnsSort += "[" + item.Code + "]" + " " + item.SortDirction + ",";
+                        }
+                        DWQueryData.ColumnsSort = QueryData.DWQueryData.ColumnsSort.TrimEnd(',');
+                    }
+
                     QueryData_Updated.BIReportPM = entityPM;
                     QueryData_Updated.BIReportId = entityPM.Id;
                     QueryData_Updated.DWQueryData = DWQueryData;
