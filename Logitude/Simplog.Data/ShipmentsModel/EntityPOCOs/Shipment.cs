@@ -263,6 +263,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }
 
+        // Computed Agent
+        public string AgentComputed { get; set; }
+
         public string CustomAgentExportId { get; set; }
         public string CustomAgentExportAddressId { get; set; }
         public string CustomAgentExportContactId { get; set; }

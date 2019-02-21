@@ -1211,7 +1211,16 @@ namespace MeatadataGeneratorTool
             set { noTS = value; FirePropertyChanged("NoTS"); }
         }
 
-        bool noViewController;
+		bool noDefaultFeatures;
+		public bool NoDefaultFeatures
+		{
+			get { return noDefaultFeatures; }
+			set { noDefaultFeatures = value; FirePropertyChanged("NoDefaultFeatures"); }
+		}
+
+		
+
+		bool noViewController;
         public bool NoViewController
         {
             get { return noViewController; }
