@@ -244,6 +244,10 @@
     <Compile Include="Migrations\201902201936149_AddMigGatepassRequest.Designer.cs">
       <DependentUpon>201902201936149_AddMigGatepassRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902211453579_INFRASTRUCTUREBLABLA.cs" />
+    <Compile Include="Migrations\201902211453579_INFRASTRUCTUREBLABLA.Designer.cs">
+      <DependentUpon>201902211453579_INFRASTRUCTUREBLABLA.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -413,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902201936149_AddMigGatepassRequest.resx">
       <DependentUpon>201902201936149_AddMigGatepassRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902211453579_INFRASTRUCTUREBLABLA.resx">
+      <DependentUpon>201902211453579_INFRASTRUCTUREBLABLA.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
