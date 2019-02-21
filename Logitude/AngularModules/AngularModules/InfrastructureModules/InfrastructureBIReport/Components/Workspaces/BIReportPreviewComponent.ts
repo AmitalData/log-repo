@@ -127,7 +127,7 @@ export class BIReportPreviewComponent implements OnInit {
             if (sortsList != null) {
                 sortsList = sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 });
                 this.IsSorting = true;
-                this.agGrid.api.setSortModel(sortsList);
+              //  this.agGrid.api.setSortModel(sortsList);
             }
             //var params = {
             //    force: true,
