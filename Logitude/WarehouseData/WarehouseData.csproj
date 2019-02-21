@@ -251,7 +251,7 @@
     <Content Include="WarehouseScript\Others\Day 01[Abed] AddColumnAutomaticLastUpdateDate.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\Day 02 [Abed] CreateIndexesOnCloumnAutomaticLoastUpdateDate.sql">
+    <Content Include="WarehouseScript\Others\Day 02 [Abed] CreateIndexesOnCloumnAutomaticLastUpdateDate.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\Others\Day 03 [Abed] SetValueToColumnAutomaticLastUpdateDate.sql">
@@ -263,7 +263,6 @@
     <Content Include="WarehouseScript\Others\Day 06 [Abed]Add Function Date.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\Day 07 [Abed] UpdateDWObjectFieldHideTree.sql" />
     <Content Include="WarehouseScript\Others\Day 08[Abed] UpdateObjectFieldCopyToDW.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
