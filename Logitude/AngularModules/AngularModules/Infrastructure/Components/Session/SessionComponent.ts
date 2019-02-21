@@ -22,16 +22,13 @@ import {EntityResourceService} from '../../Services/EntityResourceService';
 
 export class SessionComponent {
     public SessionIndex: number;
-    public SessionTabItem: SessionTabItem;
-    public SessionLocation: LocationDirective;
-    public SessionMenuLocation: LocationDirective;    
+    public SessionTabItem: SessionTabItem; 
     public Sessionkey: string;    
     public Imgs: any[];
     public LogitudeGridHelper: LogitudeGridHelper;
     public CopiedCell: any;
     public ComponentRef: ComponentRef<SessionComponent>
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    @ViewChild('SessionContainer', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     @Output() SessionEvent: EventEmitter<any> = new EventEmitter();
     @Output() SessionInitialize: EventEmitter<any> = new EventEmitter();
     public MainMenuComponent: MainMenuComponent;
@@ -49,6 +46,34 @@ export class SessionComponent {
         window.onresize = this.onWindowResized.bind(this);
         //window.onmouseup = this.onMouseUp.bind(this);
         window.onmousedown = this.onMouseDown.bind(this); 
+    }
+
+    private iSessionLocation: LocationDirective;
+    public get SessionLocation() { return this.iSessionLocation; }
+    public set SessionLocation(value: LocationDirective) {
+        if (this.iSessionLocation != value) {
+            if (value) {
+                this.iSessionLocation = value;
+            }
+
+            else if (this.isDestroingSession) {
+                this.iSessionLocation = value;
+            }
+        }
+    }
+
+    private iSessionMenuLocation: LocationDirective;
+    public get SessionMenuLocation() { return this.iSessionMenuLocation; }
+    public set SessionMenuLocation(value: LocationDirective) {
+        if (this.iSessionMenuLocation != value) {
+            if (value) {
+                this.iSessionMenuLocation = value;
+            }
+
+            else if (this.isDestroingSession) {
+                this.iSessionMenuLocation = value;
+            }
+        }
     }
 
     OnSessionMouseUp($event) {
@@ -509,8 +534,9 @@ export class SessionComponent {
 
     //public DestroyS
 
-
+    private isDestroingSession: boolean = false;
     public DestroySession() {
+        this.isDestroingSession = true;
 
         this.DestroyWindows();
         this.DestroyEditControls();

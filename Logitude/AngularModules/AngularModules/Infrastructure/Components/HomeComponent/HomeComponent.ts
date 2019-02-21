@@ -485,7 +485,7 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                         let locs = this.AllLocations.toArray().filter(f => f.Code == 'SessionLocation');
                         let myLocation: LocationDirective = locs.filter(f => f.Index == myCA23EditTab.Index)[0];
 
-                        let viewContainerRef = myCA23EditTab.SessionComponent.viewContainerRef
+                        //let viewContainerRef = myCA23EditTab.SessionComponent.viewContainerRef
                         if (myLocation != null) {
                             SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Session/SessionComponent", myLocation.viewContainerRef).then(cmpRef => {
                                 cmpRef.instance.SessionIndex = myCA23EditTab.Index;
