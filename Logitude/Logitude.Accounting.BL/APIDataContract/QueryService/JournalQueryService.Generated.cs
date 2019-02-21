@@ -57,27 +57,8 @@ using Logitude.Accounting.Data;
                 throw ex;
             }
         }
-
-        public Journal GetJournalByNumber(string number, int Tenant)
-        {
-            try
-            {
-
-
-                var temp = query.GetSingleJournalByNumber(number, Tenant);
-                if (temp == null)
-                    throw new ApplicationException("Journal with number " + number + " doesn't exist");
-
-                return JournalDataMapping(temp, Tenant);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public Journal JournalDataMapping(JournalPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		
+		public Journal JournalDataMapping(JournalPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {

@@ -244,6 +244,23 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
         }
 
+        public Journal GetJournalByNumber(string number, int Tenant)
+        {
+            try
+            {
 
+
+                var temp = query.GetSingleJournalByNumber(number, Tenant);
+                if (temp == null)
+                    throw new ApplicationException("Journal with number " + number + " doesn't exist");
+
+                return JournalDataMapping(temp, Tenant);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }
