@@ -57,6 +57,8 @@ import {CustomsSettingExtendedListService} from '../../../../../Customs/Services
 import {ErrorLogPMFileLoggerService} from '../../../../../Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
 import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
 import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
+import { DeclarationCourierStatusList } from '../../../../../Customs/EntityLists/DeclarationCourierStatusList';
+import { DeclarationCourierStatusListService } from '../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 
 
 @Component({
@@ -94,6 +96,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _ErrorLogPMFileLoggerService: ErrorLogPMFileLoggerService;
     _2LogBankList: boolean = false;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
+    _CourierWorksheet: DeclarationCourierStatusList;
     constructor() {
         super();
         this.PaymentMethodsList = new ObservableCollection([]);
@@ -125,6 +128,24 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
                                     this.DeclarationPM = args.EntityPM;
+                                    if (this.DeclarationPM.IsCourierDeclaration) {
+                                        let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
+                                        
+                                        let filters = new ApiQueryFilters();
+                                        
+                                        filters.addAdditionalFilter("DeclarationId", this.DeclarationPM.Id, null, null, "Equals", false, false, false, "string");
+                                        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+                                        filters.PageSize = 1;
+                                        myDeclarationCourierStatusListService.getByFilters(filters)
+                                            .subscribe((serviceResponse1: ServiceResponse) => {
+                                                let mappedDeclarationCourierStatusList: Array<DeclarationCourierStatusList> = serviceResponse1.Result;
+                                                if (mappedDeclarationCourierStatusList != null && mappedDeclarationCourierStatusList.length>0) {
+                                                    this._CourierWorksheet = mappedDeclarationCourierStatusList[0];
+                                                }
+                                                
+                                            });
+                                        
+                                    }
 
                                     this.LoadPayment();
 
@@ -1340,7 +1361,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     Option: string;
     // Before send
     SendButtonClicked(event) {
-
+        if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
+            var myMessageWindow = new MessageWindow
+            myMessageWindow.Show(/*"לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. "*/
+                TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold"));
+            return;
+        }
         this.customSendOptions = event;
         this.Option = event.Option;
 

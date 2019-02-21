@@ -14459,7 +14459,12 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.NoResults", DefaultText = "No Results", LocalDefaultText = "אין נתונים לשליחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.SendMamanSpecialAction", DefaultText = "Send Maman Special Action", LocalDefaultText = "שלח מסר פעולות מיוחדות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.StickerDetails", DefaultText = "Sticker Details", LocalDefaultText = "פרטי מדבקה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.M.PaymentPendingHold", DefaultText = "Payment can not be made when there is Pending with a hold-off type.", LocalDefaultText = "לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
         }
+
+
+
 
 
 
