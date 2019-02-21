@@ -1,3 +1,4 @@
+import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { TenantPM } from './../../../../Common/EntityPMs/TenantPM';
 import {Component, AfterViewInit, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -50,6 +51,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public IsCreatedFromInvoiceSide: boolean = false;
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
     public isRTL: boolean = false;
+
+    private _glaService: GLAccountListService = new GLAccountListService();
+
     constructor(private _entityResourceService: EntityResourceService) {
         super();
 
@@ -481,6 +485,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
   }
 
+    billtoCard:CardList;
     GetCardProperties() {
         if (AppTool.IsNullOrEmpty(this.newARPaymentPM.BillToId)) {
             this.FillDataFromCardList(new CardList());
@@ -493,6 +498,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                     if (!resp.HasError) {
                         var cardList = resp.Result;
                         if (cardList != null) {
+                            this.billtoCard = cardList;
                             this.FillDataFromCardList(cardList);
                         }
                     }
@@ -908,7 +914,18 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.ConnectARInvoiceToPayment(this.newARPaymentPM, this.invoicePm);
             }
 
-            this.RunEditWindow();
+            if (SessionLocator.TenantPM.AccountingActivated) {
+                this.fetchGLAccount()
+                    .then((res:any) => {
+                        this.newARPaymentPM.GLAccountId = res.Id;
+                        this.RunEditWindow();
+                    }, err => {
+                        this.ValidationErrorsList = ['Somthing wrong! no gl account found for this bill to account'];
+                        return;
+                    })
+            } else {
+                this.RunEditWindow();
+            }
         }
     }
     ConnectARInvoiceToPayment(entityPM: ARPaymentPM, invoicePM: ARInvoicePM) {
@@ -985,6 +1002,34 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
+
+    fetchGLAccount() {
+        return new Promise((resolve, reject) => {
+
+            var _glaId = this.billtoCard.GLAccountId;
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this._glaService.getSingle(_glaId)
+                .subscribe(response => {
+
+                    var res: ServiceResponse = response;
+                    if (!res.HasError) {
+                        var glaccount = res.Result;
+
+                        resolve(glaccount);
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
+                    else {
+                        reject();
+
+                        this.ValidationErrorsList = res.ErrorsArray;
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
+                });
+
+        });
+    }
+
+
 }
 
 class TipoCadenaPagoClass {
