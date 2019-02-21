@@ -1,3 +1,21 @@
+<style type="text/css">
+    .ItemBox {
+        height: 25px;
+    }
+
+    .DeleteButton {
+        display: none;
+    }
+
+    .ItemBox:hover .DeleteButton {
+        display: block;
+    }
+
+    .ItemBox:hover .DeleteButtonDisabled {
+        display: block;
+    }
+</style>
+
 
 <table>
     <tr style="height: 1px;">
@@ -32,9 +50,16 @@
                 <ScrollViewer>
                     <div *ngFor="let item of ItemsSource">                       
                         <table>
-                            <tr style="height:25px;" (mouseover)="item.FolderIconMouseOver()" (mouseleave)="item.FolderIconMouseLeave()">
+                            <tr class="ItemBox" style="height:25px;" (mouseover)="item.FolderIconMouseOver()" (mouseleave)="item.FolderIconMouseLeave()">
+
+                                <td style="width:18px;">
+                                    <div class="DeleteButton" style="width: 18px; height: 18px;">
+                                        <img class="CenterCenter" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="DeleteFolderClicked(item)" width="18" height="18" />
+                                    </div>
+                                </td>
+                                <td style="width:2px;"><div></div></td>
                                 <td style="width:25px;">
-                                    <img [attr.id]="item.FolderIcon" class="CenterCenter" src="./Images/Icons/Folder_B.png" width="20" height="20"/>
+                                    <img [attr.id]="item.FolderIcon" class="CenterCenter" src="./Images/Icons/Folder_B.png" width="20" height="20" />
                                 </td>
 
                                 <td style="width:230px; top:2px;">

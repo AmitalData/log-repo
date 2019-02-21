@@ -8,318 +8,318 @@
     </tr>
 
     <tr>
-      <td>
-        <ScrollViewer>
-          <table *ngIf="IsResourcesReady">
+        <td>
+            <ScrollViewer>
+                <table *ngIf="IsResourcesReady">
 
-            <tr class="FormFieldRow">
-              <td style="width:140px;">
-                <LogLabel [ObjectFieldName]="'PartnerType'" [NoObjectField]="true" [DataContext]="DataContext" [TextCode]="'ARInvoice.F.PartnerType'"></LogLabel>
-              </td>
+                    <tr class="FormFieldRow">
+                        <td style="width:140px;">
+                            <LogLabel [ObjectFieldName]="'PartnerType'" [NoObjectField]="true" [DataContext]="DataContext" [TextCode]="'ARInvoice.F.PartnerType'"></LogLabel>
+                        </td>
 
-              <td style="width:230px;">
-                <table>
-                  <tr>
-                    <td>
-                      <ComboBox [ItemsSource]="InvoicePartners" [Binding]="'Name'" [SelectedItem]="SelectedPartnerType" (SelectedItemChanged)="PartnersTypeSelectionMethod($event)"></ComboBox>
-                    </td>
+                        <td style="width:230px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <ComboBox [ItemsSource]="InvoicePartners" [Binding]="'Name'" [SelectedItem]="SelectedPartnerType" (SelectedItemChanged)="PartnersTypeSelectionMethod($event)"></ComboBox>
+                                    </td>
 
-                    <td style="width: 36px;">
-                      <div></div>
-                    </td>
-                  </tr>
+                                    <td style="width: 36px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- BillToId -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'BillToId'"
+                                    [SelectedValue]="BillToId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Card'"
+                                    [DependencyFilter1Value]="BillToDependencyValue1"
+                                    [DependencyFilter1IsList]="BillToDependencyValue1IsList">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+
+                    <!-- BillToAddressId -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'BillToAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'BillToAddressId'"
+                                    [SelectedValue]="BillToAddressId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Address'"
+                                    [DependencyFilter1Value]="BillToId">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+
+                    <!-- CustomerRef -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'CustomerRef'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'CustomerRef'" [Text]="CustomerRef" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+
+                    <!-- InvoiceCurrencyId -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'InvoiceCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'InvoiceCurrencyId'"
+                                    [SelectedValue]="InvoiceCurrencyId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Currency'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- InvoiceCurrencyExchangeRate -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td colspan="2">
+                            <table class="FixedTable">
+                                <tr>
+                                    <td style="width: 194px">
+                                        <LogTextBox [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5"></LogTextBox>
+                                    </td>
+
+                                    <td style="width: 20px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 18px;" *ngIf="IsEditExchangeRateVisible">
+                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [disabled]="!RateIsEnabled"></IconButton>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
+                                        {{RelativeRateDate}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- InvoiceDate -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'InvoiceDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+
+                    <!-- MetodoPagoCode -->
+                    <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'MetodoPagoCode'"
+                                    [SelectedValue]="MetodoPagoCode"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'MetodoPago'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- SATPaymentMethodCode -->
+                    <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
+                        <td [title]="'ARInvoice.F.SATPaymentMethodCode' | TextCodeTranslationPipe">
+                            <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [SelectedValue]="SATPaymentMethodCode"
+                                    [LookUpTableName]="'SATPaymentMethod'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- UsoCFDICode -->
+                    <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
+                        <td [title]="'ARInvoice.F.UsoCFDICode' | TextCodeTranslationPipe">
+                            <LogLabel [ObjectFieldName]="'UsoCFDICode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'UsoCFDICode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [SelectedValue]="UsoCFDICode"
+                                    [LookUpTableName]="'UsoCFDI'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- PaymentTermId -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'PaymentTermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'PaymentTermId'"
+                                    [SelectedValue]="PaymentTermId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'PaymentTerm'"
+                                    [DependencyFilter1Value]="PaymentTermDisplayInLOV">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+
+                    <!-- DueDate -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogDatePicker [ObjectFieldName]="'DueDate'" [SelectedDateValue]="DueDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+
+                    <!-- VatNumber -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'VatNumber'" [Text]="VatNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- IsConstituentInvoice -->
+                    <tr class="FormFieldRow" *ngIf="IsConstituentInvoiceVisible">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'IsConstituentInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'IsConstituentInvoice'" [Checked]="IsConstituentInvoice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Intercompany -->
+                    <tr class="FormFieldRow" *ngIf="IsIntercompanyVisible">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'Intercompany'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'Intercompany'" [Checked]="Intercompany" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+
                 </table>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-            </tr>
-
-            <!-- BillToId -->
-            <tr class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogLov [ObjectFieldName]="'BillToId'"
-                        [SelectedValue]="BillToId"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [LookUpTableName]="'Card'"
-                        [DependencyFilter1Value]="BillToDependencyValue1"
-                        [DependencyFilter1IsList]="BillToDependencyValue1IsList">
-                </LogLov>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-
-            </tr>
-
-            <!-- BillToAddressId -->
-            <tr class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'BillToAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogLov [ObjectFieldName]="'BillToAddressId'"
-                        [SelectedValue]="BillToAddressId"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [LookUpTableName]="'Address'"
-                        [DependencyFilter1Value]="BillToId">
-                </LogLov>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-
-            </tr>
-
-            <!-- CustomerRef -->
-            <tr class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'CustomerRef'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogTextBox [ObjectFieldName]="'CustomerRef'" [Text]="CustomerRef" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-
-            </tr>
-
-            <!-- InvoiceCurrencyId -->
-            <tr class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'InvoiceCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogLov [ObjectFieldName]="'InvoiceCurrencyId'"
-                        [SelectedValue]="InvoiceCurrencyId"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [LookUpTableName]="'Currency'">
-                </LogLov>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-            </tr>
-
-            <!-- InvoiceCurrencyExchangeRate -->
-            <tr class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td colspan="2">
-                <table class="FixedTable">
-                  <tr>
-                    <td style="width: 194px">
-                      <LogTextBox [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5"></LogTextBox>
-                    </td>
-
-                    <td style="width: 20px;">
-                      <div></div>
-                    </td>
-
-                    <td style="width: 18px;" *ngIf="IsEditExchangeRateVisible">
-                      <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [disabled]="!RateIsEnabled"></IconButton>
-                    </td>
-
-                    <td style="width: 5px;">
-                      <div></div>
-                    </td>
-
-                    <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
-                      {{RelativeRateDate}}
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-
-            <!-- InvoiceDate -->
-            <tr class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'InvoiceDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-
-            </tr>
-
-            <!-- MetodoPagoCode -->
-            <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogLov [ObjectFieldName]="'MetodoPagoCode'"
-                        [SelectedValue]="MetodoPagoCode"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [LookUpTableName]="'MetodoPago'">
-                </LogLov>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-
-            </tr>
-
-
-            <!-- SATPaymentMethodCode -->
-            <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
-              <td [title]="'ARInvoice.F.SATPaymentMethodCode' | TextCodeTranslationPipe">
-                <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [SelectedValue]="SATPaymentMethodCode"
-                        [LookUpTableName]="'SATPaymentMethod'">
-                </LogLov>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-            </tr>
-
-            <!-- UsoCFDICode -->
-            <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
-              <td [title]="'ARInvoice.F.UsoCFDICode' | TextCodeTranslationPipe">
-                <LogLabel [ObjectFieldName]="'UsoCFDICode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogLov [ObjectFieldName]="'UsoCFDICode'"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [SelectedValue]="UsoCFDICode"
-                        [LookUpTableName]="'UsoCFDI'">
-                </LogLov>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-            </tr>
-
-            <!-- PaymentTermId -->
-            <tr class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'PaymentTermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogLov [ObjectFieldName]="'PaymentTermId'"
-                        [SelectedValue]="PaymentTermId"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [LookUpTableName]="'PaymentTerm'"
-                        [DependencyFilter1Value]="PaymentTermDisplayInLOV">
-                </LogLov>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-
-            </tr>
-
-            <!-- DueDate -->
-            <tr class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogDatePicker [ObjectFieldName]="'DueDate'" [SelectedDateValue]="DueDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-
-            </tr>
-
-            <!-- VatNumber -->
-            <tr class="FormFieldRow">
-              <td>
-                <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogTextBox [ObjectFieldName]="'VatNumber'" [Text]="VatNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-            </tr>
-
-            <!-- IsConstituentInvoice -->
-            <tr class="FormFieldRow" *ngIf="IsConstituentInvoiceVisible">
-              <td>
-                <LogLabel [ObjectFieldName]="'IsConstituentInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogCheckBox [ObjectFieldName]="'IsConstituentInvoice'" [Checked]="IsConstituentInvoice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-            </tr>
-
-            <!-- Intercompany -->
-            <tr class="FormFieldRow" *ngIf="IsIntercompanyVisible">
-              <td>
-                <LogLabel [ObjectFieldName]="'Intercompany'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-              </td>
-
-              <td>
-                <LogCheckBox [ObjectFieldName]="'Intercompany'" [Checked]="Intercompany" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-            </tr>
-
-            <tr>
-              <td colspan="3">
-                <div></div>
-              </td>
-            </tr>
-
-          </table>
-          </ScrollViewer>
-      </td>
+            </ScrollViewer>
+        </td>
     </tr>
 
     <tr style="height: 32px;">

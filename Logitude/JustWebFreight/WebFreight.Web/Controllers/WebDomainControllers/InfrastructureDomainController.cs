@@ -1880,6 +1880,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetDeleteFolder(string Id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                IWebFreightContext webContext = WebFreightContext.GetContext(authToken.Tenant);
+                BIReportFolderRepository repository = new BIReportFolderRepository(objectContext);
+            
+                BIReportFolder bIReportFolder = repository.GetSingle(Id, authToken.Tenant);
+                if (bIReportFolder != null)
+                {
+                    repository.Remove(bIReportFolder);
+                    repository.SubmitChanges();
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+       
 
         public HttpResponseMessage GetFeatureToggles()
         {
