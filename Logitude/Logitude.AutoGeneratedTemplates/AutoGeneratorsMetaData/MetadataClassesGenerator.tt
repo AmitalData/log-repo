@@ -364,11 +364,17 @@ namespace <#= UpdateClassnamespacestring #>
 	    var IsClosed = entity.Attributes().Where(a => a.Name == "IsClosed").FirstOrDefault().Value;
         var NoDefaultFeatures = (entity.Attributes().Where(a => a.Name == "NoDefaultFeatures").FirstOrDefault()!= null?entity.Attributes().Where(a => a.Name == "NoDefaultFeatures").FirstOrDefault().Value.ToLower():"false");
 		var DownloadToExcelFeatureCodeAttr = entity.Attributes().Where(a => a.Name == "DownloadToExcelFeatureCode").FirstOrDefault();
-        if (IsComposition.ToLower() == "false" && IsClosed.ToLower() == "false" && NoDefaultFeatures.ToLower() == "false" )
+         if (IsComposition.ToLower() == "false" && IsClosed.ToLower() == "false")
         {
 	 #>
 
 		   ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault(); 
+<#+	
+	    }
+        if (IsComposition.ToLower() == "false" && IsClosed.ToLower() == "false" && NoDefaultFeatures.ToLower() == "false" )
+        {
+	 #>
+
 		   Feature <#= ObjectTbl.Trim('"') #>FeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= ObjectTbl.Trim('"') #>.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature <#= ObjectTbl.Trim('"') #>FeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= ObjectTbl.Trim('"') #>.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature <#= ObjectTbl.Trim('"') #>FeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= ObjectTbl.Trim('"') #>.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
@@ -1392,7 +1398,7 @@ namespace <#= UpdateClassnamespacestring #>
 			FeaturesRepository = new FeatureRepository(CommonContext);
 			EntityStatusRepository = new EntityStatusRepository(context);
 
-            TextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a);
+            TextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
             ObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
             ObjectFields = ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
 			Queries = queriesRepository.GetQueriesByTenantSystemLevel(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
