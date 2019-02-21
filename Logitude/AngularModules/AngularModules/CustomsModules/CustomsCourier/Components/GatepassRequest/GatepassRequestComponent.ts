@@ -49,11 +49,12 @@ export class GatepassRequestComponent extends BaseComponent {
 
             let myGatepassRequestPMService: GatepassRequestPMService = new GatepassRequestPMService()
             myGatepassRequestPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
-                let entityPM = rsptPMget.Result;
-                if (entityPM != null) {
-                    this.EntityPM = entityPM;
-                    //this.SetGatepassRequestStatus();
+                let entityPMResult = rsptPMget.Result;
+                if (entityPMResult != null) {
+                    this.EntityPM = entityPMResult;
+                    //
                 }
+                this.SetGatepassRequestStatus();
             });
             //this.SetScreenFieldsEditability(true);
         }
@@ -115,6 +116,10 @@ export class GatepassRequestComponent extends BaseComponent {
     _ShowUpdateCode;
     ResetUpdateCodeListChangeSelected(enumvalue) {
         this._ShowUpdateCode = enumvalue;
+
+    }
+
+    SetGatepassRequestStatus(){
 
     }
 
