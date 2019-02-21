@@ -44,7 +44,7 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                    if (Myfilter.ParentDimTabelName != null)// && InnerTables.Where(a => a.ParentDimTabelName == Myfilter.ParentDimTabelName).Count() == 0
+                    if (Myfilter.ParentDimTabelName != null && InnerTables.Where(a => a.ParentDimTabelName == Myfilter.ParentDimTabelName).Count() == 0)
                     {
                         InnerTables.Add(Myfilter);
                     }
@@ -94,7 +94,8 @@ namespace WebFreight.Web.Helpers
                             filter.Operation.Code = filter.OperationCode;
                             filter.Operation.Name = filter.OperationName;
                         }
-                        if(filter.DataTypeCode!="Date" && filter.DataTypeCode != "DateTime"){
+                        if (filter.DataTypeCode != "Date" && filter.DataTypeCode != "DateTime")
+                        {
                             if (filter.Operation.Code == "Equals")
                             {
                                 if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
@@ -155,35 +156,31 @@ namespace WebFreight.Web.Helpers
                             {
                                 OperationSimpol = " <= @@ ";
                             }
-                            var PDim = "[" + filter.ParentDimTabelName + filter.DisplayName.Replace("[", "").Replace("]", "").Split(' ')[0] + "]";
-                            var OTBL = "[" + filter.DWObjectTableCode + filter.DisplayName.Replace("[", "").Replace("]", "").Split(' ')[0] + "]";
+
                             if (filter.Operation.Code == "IsNull")
                             {
-                               
-                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ?PDim : OTBL) + "." + filter.Code + " = '' " + " " + AndOr + " ";
+                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
                             }
                             else if (filter.Operation.Code == "IsNotNull")
                             {
-                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
+                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
                             }
                             else
                             {
                                 var operation = !isHaveMultiSelect ? OperationSimpol.Replace("@@", filter.TextValue.ToString()) : OperationSimpol;
-                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
                             }
                         }
                         else
                         {
-                            var PDim = "[" + filter.ParentDimTabelName + filter.DisplayName.Replace("[", "").Replace("]", "").Split(' ')[0] + "]";
-                            var OTBL = "[" + filter.DWObjectTableCode + filter.DisplayName.Replace("[", "").Replace("]", "").Split(' ')[0] + "]";
                             DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
-                            var fieldName =   (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) +"." + filter.Code;
-                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName , filter.OperationCode, filter.TextValue.ToString(), Tenant) + " " + AndOr + " ";
-     
+                            var fieldName = (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code;
+                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName, filter.OperationCode, filter.TextValue.ToString(), Tenant) + " " + AndOr + " ";
+
                         }
 
 
-                       
+
                     }
                     else
                     {
@@ -245,7 +242,7 @@ namespace WebFreight.Web.Helpers
             var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(DWQueryParam.Filters);
             var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(ColumnsXML);
             var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
-            
+
             bool HasMeasurement = Columns.Where(a => a.IsMeasurement == true).Count() > 0;
             var InnerTables = new List<DWObjectFieldsDetails>();
             //this.SampleData = [];
@@ -262,36 +259,19 @@ namespace WebFreight.Web.Helpers
             {
                 if (field.IsMeasurement)
                 {
-                    if (field.ParentDimTabelName != null)
-                    {
-                        SelectStmt.Append(field.AggregationTypeCode + "(" + "[" + field.DWObjectTableCode + field.DisplayName.Replace("[","").Replace("]","").Split(' ')[0] + "]" + "." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
-                    }
-                    else
-                    {
-                        SelectStmt.Append(field.AggregationTypeCode + "(" + field.DWObjectTableCode + "." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
-
-                    }
+                    SelectStmt.Append(field.AggregationTypeCode + "(" + field.DWObjectTableCode + "." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
                 }
                 else
                 {
-                    if (field.ParentDimTabelName != null)
-                    {
-                        SelectStmt.Append("[" + field.DWObjectTableCode + field.DisplayName.Replace("[", "").Replace("]", "").Split(' ')[0] + "]" + "." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
-                        GroupByStmt.Append(field.DWObjectTableCode + field.Code + "." + field.Code + ",");
-                    }
-                    else
-                    {
-                        SelectStmt.Append(field.DWObjectTableCode + "." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
-                        GroupByStmt.Append(field.DWObjectTableCode + "." + field.Code + ",");
-                    }
-                   
+                    SelectStmt.Append(field.DWObjectTableCode + "." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                    GroupByStmt.Append(field.DWObjectTableCode + "." + field.Code + ",");
                 }
 
                 if (FromTables.Where(a => a == field.DWObjectTableCode).Count() == 0)
                 {
                     FromTables.Add(field.DWObjectTableCode);
                 }
-                if (field.ParentDimTabelName != null)// && InnerTables.Where(a => a.ParentDimTabelName == field.ParentDimTabelName).Count() == 0
+                if (field.ParentDimTabelName != null && InnerTables.Where(a => a.ParentDimTabelName == field.ParentDimTabelName).Count() == 0)
                 {
                     InnerTables.Add(field);
                 }
@@ -324,24 +304,15 @@ namespace WebFreight.Web.Helpers
                 //var Key = this.AllFieldsObsList.filter(a => a.DWObjectTableCode == mytbl.ParentDimTabelName && a.IsPrimaryKey == true)[0];
                 var Key = OFieldQuery.GetPrimaryKeyFieldForDWObjectTable(mytbl.ParentDimTabelName);
                 //MeFactName = OFieldQuery.GetFactTableCode(mytbl.ParentDimTabelName);
-                var FactKey = mytbl.DisplayName;//.Split(' ')[0];
-                if (mytbl.ParentDataTypeCode == "Dimension")
-                {
-                    FactKey = mytbl.DisplayName.Split(' ')[0];//OFieldQuery.GetFactKeyFieldForDWDimTable(Fact, mytbl.ParentDimTabelName);
-                    if (!FactKey.Contains("]"))
-                    {
-                        FactKey = FactKey + "]";
-                    }
-                }
-                
+                var FactKey = OFieldQuery.GetFactKeyFieldForDWDimTable(Fact, mytbl.ParentDimTabelName);
                 //this.AllFieldsDataSource.filter(a => a.DimensionTableCode == mytbl.ParentDimTabelName)[0];
                 //(FactKey.DataTypeCode.ToLower() == "lookup" || FactKey.DataTypeCode.ToLower() == "dimension") ? FactKey.DisplayName : 
-                FinalSelectStmt += " inner join "  + mytbl.ParentDimTabelName + " " + "[" + mytbl.ParentDimTabelName + mytbl.DisplayName.Replace("[", "").Replace("]", "").Split(' ')[0] + "]" + " on " + Fact + "." + (FactKey) + " = " + "[" + mytbl.ParentDimTabelName + mytbl.DisplayName.Replace("[", "").Replace("]", "").Split(' ')[0] + "]" + "." + Key.Code;
+                FinalSelectStmt += " inner join " + mytbl.ParentDimTabelName + " on " + Fact + "." + (FactKey.Code) + " = " + mytbl.ParentDimTabelName + "." + Key.Code;
 
 
             }
             var OrderByString = "" + Fact + ".Id_Number";
-            
+
             //var HasAggregate = false;
             if (DWQueryParam.Columns.Where(a => a.IsMeasurement).Count() > 0)
             {
@@ -365,7 +336,7 @@ namespace WebFreight.Web.Helpers
             string TenantWhere = ".[Parent Tenant] = ";
             var DWSettings = new DWHSettingRepository(Tenant);
             var temp = DWSettings.GetSingleDWHSetting(Tenant);
-            if (temp != null &&  temp.Tenant != temp.ParentTenant)
+            if (temp != null && temp.Tenant != temp.ParentTenant)
             {
                 TenantWhere = ".[Source Tenant] = ";
             }
@@ -389,7 +360,7 @@ namespace WebFreight.Web.Helpers
             {
                 FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
             }
-            
+
             return FinalQuery;
         }
 
