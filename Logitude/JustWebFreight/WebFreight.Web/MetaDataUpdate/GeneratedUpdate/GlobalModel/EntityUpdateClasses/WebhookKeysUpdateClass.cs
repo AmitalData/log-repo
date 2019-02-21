@@ -142,6 +142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -189,6 +190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccessKey",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -205,6 +207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -251,6 +254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PartnerName",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -267,6 +271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -311,6 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreateDate",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -327,6 +333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -371,6 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdateDate",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -387,6 +395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -433,6 +442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -449,6 +459,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -495,6 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreatedByUserName",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -511,6 +523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -557,6 +570,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdatedByUserName",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -573,6 +587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -619,6 +634,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Description",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -676,10 +692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable WebhookKeysObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WebhookKeys" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature WebhookKeysFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WebhookKeysFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WebhookKeysFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WebhookKeysFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.PackageFeature", NameTextCodeDefaultText = "WebhookKeys Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
 
 		   		   //--------------> Additional Features <--------------\\
 

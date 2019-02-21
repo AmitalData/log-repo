@@ -1966,10 +1966,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable LogitudeMessagesTransmissionLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeMessagesTransmissionLog" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature LogitudeMessagesTransmissionLogFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LogitudeMessagesTransmissionLogFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LogitudeMessagesTransmissionLogFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LogitudeMessagesTransmissionLogFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.PackageFeature", NameTextCodeDefaultText = "LogitudeMessagesTransmissionLog Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
 
 		   		   //--------------> Additional Features <--------------\\
 

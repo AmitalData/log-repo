@@ -111,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "FTP Detail",
-			      				    Code =  "5b90",
+			      				    Code =  "a319",
 			      				    Name =  "FTPDetail",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -140,13 +140,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -162,10 +165,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "InActive",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InActive",
@@ -183,12 +189,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "InActive",
-					  						Operator =  "StartsWith",
-					  						DigitsAfterPoint =  0,
-					  						NumberOfDigits =  0,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "InActive",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -203,7 +205,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -225,6 +229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UserName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -245,8 +250,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UserName",
-					  						Code =  "UserName",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -261,7 +265,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -283,6 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Password",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -303,8 +310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Password",
-					  						Code =  "Password",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -319,7 +325,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -341,6 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Host",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -361,8 +370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Host",
-					  						Code =  "Host",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -377,7 +385,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -399,6 +409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Folder",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -419,8 +430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Folder",
-					  						Code =  "Folder",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -435,13 +445,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -457,6 +470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UseSFTP",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -481,9 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UseSFTP",
-					  						Code =  "UseSFTP",
-					  						Operator =  "StartsWith",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -505,16 +517,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable FTPDetailObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FTPDetail" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature FTPDetailFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = FTPDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "FTPDetail.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature FTPDetailFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = FTPDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "FTPDetail.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature FTPDetailFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = FTPDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "FTPDetail.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature FTPDetailFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = FTPDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "FTPDetail.Features.PackageFeature", NameTextCodeDefaultText = "FTPDetail Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+   
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable FTPDetailObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FTPDetail" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = FTPDetailObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = FTPDetailObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)

@@ -22,12 +22,12 @@
 
     }
     .RunBIButtonShake {
-        border: 1px solid #009161;
-        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(0, 145, 97, 0.6) 100%);
-        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
-        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(0, 145, 97, 0.6) ));
-        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+        border: 1px solid #EDC093;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 0.85) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 0.85) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
         cursor: pointer;
         animation: shake 1s;
     }
@@ -210,6 +210,7 @@
                                          [rowData]="rowData"
                                          [columnDefs]="columnDefs"
                                          [rowSelection]="'multiple'"
+                         
                                          (gridReady)="onGridReady($event)"
                                          (sortChanged)="onSortChanged($event)"
                                          (columnResized)="onColumnResized($event)"
