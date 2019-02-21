@@ -2766,12 +2766,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         if (line.BankAccount != null )
                         {
-                            if (line.BankAccount.Length > 10)
+                            if (line.BankAccount.Length > 15)
                             {
-                                line.BankAccount = line.BankAccount.Substring(0, 10);
+                                line.BankAccount = line.BankAccount.Substring(0, 15);
                             }
 
-                            myStringBuilder.Append("a" + line.BankAccount.PadLeft(10, '0'));
+                            myStringBuilder.Append("a" + line.BankAccount.PadLeft(15, '0'));
                         }
                         if (line.ChequeNumber != null )
                         {
@@ -2782,16 +2782,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
                             myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
                         }
-                        if (line.ChequeNumber != null)
-                        {
-                            if (line.ChequeNumber.Length > 10)
-                            {
+                        //if (line.ChequeNumber != null)
+                        //{
+                        //    if (line.ChequeNumber.Length > 10)
+                        //    {
 
-                                line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
-                            }
+                        //        line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
+                        //    }
 
-                            myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
-                        }
+                        //    myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
+                        //}
                             var valueDate = String.Format("{0:yyyyMMdd}", line.ValueDate);
                             if (valueDate != null)
                             {
@@ -2820,7 +2820,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append("a");
                         myStringBuilder.Append('0', 10);
                         myStringBuilder.Append("a");
-                        myStringBuilder.Append('0', 10);
+                        myStringBuilder.Append('0', 15);
                         myStringBuilder.Append("a");
                         myStringBuilder.Append('0', 10);
                         myStringBuilder.Append("a");
