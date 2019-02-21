@@ -1725,7 +1725,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.AWBPrintingRANumberEdited = entityPM.AWBPrintingRANumberEdited;
                     entityMasterData.AdditionalHandlingInfoEdited = entityPM.AdditionalHandlingInfoEdited;
                     entityMasterData.InterlineId = entityPM.InterlineId;
-
                     ComputeDepartureArrivalDates(entityMasterData, entityPM);
                 }
             }
@@ -1854,6 +1853,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ConsigneeReference2 = entityPM.ConsigneeReference2;
 
             entityPoco.AgentId = entityPM.AgentId;
+
+        
             entityPoco.AgentAddressId = entityPM.AgentAddressId;
             entityPoco.AgentContactId = entityPM.AgentContactId;
             entityPoco.AgentReference1 = entityPM.AgentReference1;
