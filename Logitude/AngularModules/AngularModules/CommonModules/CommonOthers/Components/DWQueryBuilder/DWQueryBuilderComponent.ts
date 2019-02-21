@@ -909,6 +909,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.iD = newValue;
     }
     private messageWindow: MessageWindow = new MessageWindow();
+    public QueryData: DWQueryData;
     SaveButtonClicked() {
 
         if (this.SelectedFieldsDataSource.length == 0) {
@@ -927,12 +928,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 MySubQuery.DWFactTableCode = myResult.Result.Code;
                 //MySubQuery.DWQueryId = '1-1';
                 MySubQuery.SQLString = this.Notes;
-                var QueryData = new DWQueryData();
-                QueryData.SubQueryData = MySubQuery;
-                QueryData.Columns = this.SelectedFieldsDataSource;
-                QueryData.Filters = this.SelectedFiltersDataSource[0];
+                this.QueryData = new DWQueryData();
+                this.QueryData.SubQueryData = MySubQuery;
+                this.QueryData.Columns = this.SelectedFieldsDataSource;
+                this.QueryData.Filters = this.SelectedFiltersDataSource[0];
                 if (AppTool.IsNullOrEmpty(this.ID)) {
-                    this._DWSubQueryPMService.insertDWQueryData(QueryData).subscribe(myResult => {
+                    this._DWSubQueryPMService.insertDWQueryData(this.QueryData).subscribe(myResult => {
                         //if (!myResult.HasError) {
 
                         //}
@@ -956,7 +957,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.messageWindow.Show(this.messageWindow.Message);
                         this.NotExist = true;
                     }
-                    this._DWSubQueryPMService.UpdateDWQueryData(QueryData).subscribe(myResult => {
+                    this._DWSubQueryPMService.UpdateDWQueryData(this.QueryData).subscribe(myResult => {
 
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace || this.IsBIReportEditScreen) {

@@ -2338,7 +2338,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             switch (this.ObjectTableName) {
                 case "BIReport": {
                     logWindow.Width = 1200;
-                    logWindow.Height = 820;
+                    logWindow.Height = 790;
                     break;
                 }
 
