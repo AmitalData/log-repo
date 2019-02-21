@@ -1,6 +1,9 @@
-﻿using Logitude.Customs.BL.CloseTables;
+﻿//https://docs.google.com/document/d/1cjjeORaFsWMS32LhIxmEqNza3q7s7ZAr_PQVQOlwupw/edit#bookmark=id.aszvu5fuahta
+
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
@@ -19,37 +22,50 @@ namespace Logitude.Customs.BL.Messaging.Maman
 {
     public class CourierGWMessageECTHRDataMamanRequestService
     {
-        private DeclarationPM _DeclarationPM;
-        private CourierMasterPM _CourierMasterPM;
-
-        public string BuildQueueSendWebAPI(string declarationId, int tenant, CourierMasterPM courierMasterPM = null)
+        //private DeclarationPM _DeclarationPM;
+        //private CourierMasterPM _CourierMasterPM;
+        public CourierGWMessageECTHRDataMamanRequestService()
         {
-            
-            var context = CustomContext.GetContext(tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            var myCourierMasterQueryService = new CourierMasterQueryService(context);
-            _DeclarationPM = myDeclarationQueryService.GetSingle(declarationId, true, false);
-            if (_DeclarationPM == null)
-            {
-                throw new Exception($"Declaration not in DB declarationId={declarationId}");
-            }
-            if (!_DeclarationPM.IsCourierDeclaration)
-            {
-                throw new Exception($"Declaration Is not CourierDeclaration  declarationId={declarationId}");
-            }
-            //CourierDeclarations
-            //myCourierMasterQueryService.GetNotConnectedDeclaratins
 
-            _CourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
-            if (_CourierMasterPM == null)
+        }
+        public string BuildQueueSendWebAPI(string declarationId, int tenant, DeclarationPM declarationPM=null, CourierMasterPM courierMasterPM = null)
+        {
+            string messageToMaman = GetMessage2Maman(declarationId, tenant, declarationPM, courierMasterPM);
+            List<string> requiredField = GetRequiredField(messageToMaman);
+            if (requiredField.Count > 0)
             {
-                //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
-                throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
+                return $"חסרים שדות חובה :{String.Join(",", requiredField)}";
             }
+            return BuildComm2Maman(declarationId, tenant, messageToMaman);
+        }
 
-            GWMessageECTHRData myGWMessageECTHRData = CreateCourierHawbMamanMessage();
-            string messageToMaman = "";
-            messageToMaman = ProxyUtil.JsonConvertSerialize(myGWMessageECTHRData);
+        public  List<string> GetRequiredField(string messageToMaman)
+        {
+            return ProxyUtil.GetRequiredField(messageToMaman,
+                            new List<string>()
+                            {
+                    "BaldarCode",
+                    "BaldarAwb",
+                    "AirlineAwbPref",
+                    "Master",
+                    "DecNoOfPackags",
+                    "DecWeight",
+                    "DolarValue",
+                    "StoreTypeReq",
+                    "Description",
+                    "CustomerName",
+                    "CustomerAddress",
+                    "DestLineDesc",
+                    "DestLineCode",
+                    "DeclarationId",
+                    "BaldarHp",
+                    "OpenBaldarAwbDate"
+                            }
+                            );
+        }
+
+        public string BuildComm2Maman(string declarationId, int tenant, string messageToMaman)
+        {
             using (var scop = TransactionFactory.GetTransaction())
             {
                 byte[] bytearray = Encoding.UTF8.GetBytes(messageToMaman);
@@ -67,9 +83,40 @@ namespace Logitude.Customs.BL.Messaging.Maman
             return "המסר לממן נבנה בהצלחה וישלח בתהליך רקע ";
         }
 
-        private GWMessageECTHRData CreateCourierHawbMamanMessage()
+        public string GetMessage2Maman(string declarationId, int tenant, DeclarationPM paramDeclarationPM, CourierMasterPM courierMasterPM)
         {
-            var ConsignmentPackageQualifierCode2 = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
+            var context = CustomContext.GetContext(tenant);
+            var myDeclarationQueryService = new DeclarationQueryService(context);
+            var myCourierMasterQueryService = new CourierMasterQueryService(context);
+            var myDeclarationPM = paramDeclarationPM ?? myDeclarationQueryService.GetSingle(declarationId, true, false);
+            if (myDeclarationPM == null)
+            {
+                throw new Exception($"Declaration not in DB declarationId={declarationId}");
+            }
+            if (!myDeclarationPM.IsCourierDeclaration)
+            {
+                throw new Exception($"Declaration Is not CourierDeclaration  declarationId={declarationId}");
+            }
+            //CourierDeclarations
+            //myCourierMasterQueryService.GetNotConnectedDeclaratins
+
+            var myCourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
+            if (myCourierMasterPM == null)
+            {
+                //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
+                throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
+            }
+
+            GWMessageECTHRData myGWMessageECTHRData = CreateCourierHawbMamanMessage(myDeclarationPM, myCourierMasterPM);
+            string messageToMaman = "";
+            messageToMaman = ProxyUtil.JsonConvertSerialize(myGWMessageECTHRData);
+            return messageToMaman;
+        }
+
+        private GWMessageECTHRData CreateCourierHawbMamanMessage(
+            DeclarationPM myDeclarationPM,CourierMasterPM myCourierMasterPM)
+        {
+            var ConsignmentPackageQualifierCode2 = myDeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
                 .Where(r1 => r1.PackageMeasureQualifierCode == "2")
                 .ToList();
             decimal DecWeight = 0;
@@ -82,49 +129,49 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DecNoOfPackags = ConsignmentPackageQualifierCode2.Sum(r => r.PackageQuantity.GetValueOrDefault());
 
             }
-            if (_DeclarationPM.SupplierInvoices.Count > 0)
+            if (myDeclarationPM.SupplierInvoices.Count > 0)
             {
-                DolarValue = _DeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD.GetValueOrDefault());
+                DolarValue = myDeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD.GetValueOrDefault());
             }
 
             string defBaldarCodeValue =
                 //GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _DeclarationPM.Tenant);
-                GetDefault("ISRAEL", "CGO_MMN_FORW", "NON", "NON", _DeclarationPM.Tenant);
-            var rep = new CustomsAirlineRepository(_CourierMasterPM.Tenant);
-            var customsAirline = rep.GetSingle(_CourierMasterPM.AirlineId, _CourierMasterPM.Tenant);
+                GetDefault("ISRAEL", "CGO_MMN_FORW", "NON", "NON", myDeclarationPM.Tenant);
+            var rep = new CustomsAirlineRepository(myCourierMasterPM.Tenant);
+            var customsAirline = rep.GetSingle(myCourierMasterPM.AirlineId, myCourierMasterPM.Tenant);
 
             var courierHawbMamanModel = new GWMessageECTHRData()
             {
                 BaldarCode = defBaldarCodeValue,//"לקחת מדיפולט קוד משלח בלדר",
-                BaldarAwb = _DeclarationPM.CourierHAWB??"",
+                BaldarAwb = myDeclarationPM.CourierHAWB??"",
                 //AirlineAwbPref = _CourierMasterPM.AirlineId,//יש לשלוח את Airline PRFIX)- 114
-                AirlineAwbPref = _CourierMasterPM.AirlinePrefix??"",//יש לשלוח את Airline PRFIX)- 114
+                AirlineAwbPref = myCourierMasterPM.AirlinePrefix??"",//יש לשלוח את Airline PRFIX)- 114
 
-                Master = CInt(_CourierMasterPM.MAWB),
-                Awb8 = CInt(_CourierMasterPM.ShortHAWB),
-                HawbExtnd = _CourierMasterPM.HAWB??"",
+                Master = CInt(myCourierMasterPM.MAWB),
+                Awb8 = CInt(myCourierMasterPM.ShortHAWB),
+                HawbExtnd = myCourierMasterPM.HAWB??"",
                 AirlineCode = customsAirline.AirlineCode??"",
-                FltNo = CInt(_CourierMasterPM.FlightNumber),
+                FltNo = CInt(myCourierMasterPM.FlightNumber),
                 //FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date,// fltdate is not nullable ??
-                LandTime = _CourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
+                LandTime = myCourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
                 DecNoOfPackags = DecNoOfPackags,
                 DecWeight = DecWeight,
                 DolarValue = DolarValue,
                 StoreTypeReq = "67",//לפי טבלה B1                יש לשלוח תמיד 67
-                Description = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription??"",
-                CustomerName = _DeclarationPM.ImporterName??"",
-                CustomerAddress = _DeclarationPM.ImporterAddress??"",
-                CustomerPhone = _DeclarationPM.CasualImporterTel??"",
+                Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription??"",
+                CustomerName = myDeclarationPM.ImporterName??"",
+                CustomerAddress = myDeclarationPM.ImporterAddress??"",
+                CustomerPhone = myDeclarationPM.CasualImporterTel??"",
 //                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
                 DestLineDesc = "כללי",// - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
                 BaldarMessageTime = DateTime.Now,
-                BaldarHp = _DeclarationPM.AgentId??"",
-                OpenBaldarAwbDate = GetOpenBaldarAwbDate(this._DeclarationPM),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
+                BaldarHp = myDeclarationPM.AgentId??"",
+                OpenBaldarAwbDate = GetOpenBaldarAwbDate(myDeclarationPM),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
 
                 //Task 46455:
                 DestLineCode = "9999999999",
-                DeclarationId = this._DeclarationPM.DeclarationNumber,
-                CustomIkuv = this._DeclarationPM.CourierSuspentionReasonCode,
+                DeclarationId = myDeclarationPM.DeclarationNumber,
+                CustomIkuv = myDeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
 
 
@@ -133,9 +180,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             };
 
-            if (_CourierMasterPM.DepartureDate.HasValue)
+            if (myCourierMasterPM.DepartureDate.HasValue)
             {
-                courierHawbMamanModel.FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date;// fltdate is not nullable ??
+                courierHawbMamanModel.FltDate = myCourierMasterPM.DepartureDate.GetValueOrDefault().Date;// fltdate is not nullable ??
             }
             return courierHawbMamanModel;
         }
@@ -185,8 +232,6 @@ namespace Logitude.Customs.BL.Messaging.Maman
             int.TryParse(string_Maybe_mAWB, out res);
             return res;
         }
-
-
 
         
     }

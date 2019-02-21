@@ -1,4 +1,5 @@
 ﻿//http://81.218.57.34:9094/Help/Api/POST-api-Courier-UpdateHawbStatus
+//https://docs.google.com/document/d/1bFMdrDnByDpvLcvE9H5eOfCAzbVdeoUypbzhwxbr0Po/edit#
 
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
@@ -21,43 +22,46 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 {
     public class CourierOVSECTHMessageRequestService
     {
-        private DeclarationPM _DeclarationPM;
-        private CourierMasterPM _CourierMasterPM;
+        //private DeclarationPM _DeclarationPM;
+        //private CourierMasterPM _CourierMasterPM;
 
-        public string BuildQueueSendWebAPI(string declarationId, int tenant, CourierMasterPM courierMasterPM = null)
+        public string BuildQueueSendWebAPI(string declarationId, int tenant,  DeclarationPM declarationPM = null, CourierMasterPM courierMasterPM = null)
         {
-
-            var context = CustomContext.GetContext(tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            var myCourierMasterQueryService = new CourierMasterQueryService(context);
-            _DeclarationPM = myDeclarationQueryService.GetSingle(declarationId, true, false);
-            if (_DeclarationPM == null)
+            string messageToMaman = GetMessageUpdateHawbStatus(declarationId, tenant, declarationPM, courierMasterPM);
+            List<string> requiredField = GetRequiredField(messageToMaman);
+            if (requiredField.Count > 0)
             {
-                throw new Exception($"Declaration not in DB declarationId={declarationId}");
+                return $"חסרים שדות חובה :{String.Join(",", requiredField)}";
             }
-            if (!_DeclarationPM.IsCourierDeclaration)
-            {
-                throw new Exception($"Declaration Is not CourierDeclaration  declarationId={declarationId}");
-            }
-            //CourierDeclarations
-            //myCourierMasterQueryService.GetNotConnectedDeclaratins
+            return BuildUpdateHawbStatus(declarationId, tenant, messageToMaman);
+        }
 
-            _CourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
-            if (_CourierMasterPM == null)
-            {
-                //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
-                throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
-            }
+        public List<string> GetRequiredField(string messageToMaman)
+        {
+            return ProxyUtil.GetRequiredField(messageToMaman,
+                      new List<string>()
+                      {
+                    "CourierHawbDate",
+                    "MawbPrefix",
+                    "Mawb",
+                    "PackageQuantity",
+                    //"DecNoOfPackgs",
+                    "Weight",
+                    "GoodValueInUSD",
+                    "ImporterName",
+                    "ImporterAddress",
+                      }
+                      );
+        }
 
-            CourierOVSHAWBRequest myGWMessageECTHRData = CreateCourierOVSHawbMessage();
-            string messageToMaman = "";
-            messageToMaman = ProxyUtil.JsonConvertSerialize(myGWMessageECTHRData);
+        public  string BuildUpdateHawbStatus(string declarationId, int tenant, string messageToMaman)
+        {
             using (var scop = TransactionFactory.GetTransaction())
             {
                 byte[] bytearray = Encoding.UTF8.GetBytes(messageToMaman);
 
 
-                
+
 
                 var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
                 webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR, CustomsPartnerFtpDetails.PartnerCode_ILOVS);
@@ -68,9 +72,39 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             return "המסר לאוברסיז נבנה בהצלחה וישלח בתהליך רקע ";
         }
 
-        private CourierOVSHAWBRequest CreateCourierOVSHawbMessage()
+        public string GetMessageUpdateHawbStatus(string declarationId, int tenant,  DeclarationPM declarationPM , CourierMasterPM courierMasterPM)
         {
-            var ConsignmentPackageQualifierCode2 = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
+            var context = CustomContext.GetContext(tenant);
+            var myDeclarationQueryService = new DeclarationQueryService(context);
+            var myCourierMasterQueryService = new CourierMasterQueryService(context);
+            var myDeclarationPM = declarationPM??myDeclarationQueryService.GetSingle(declarationId, true, false);
+            if (myDeclarationPM == null)
+            {
+                throw new Exception($"Declaration not in DB declarationId={declarationId}");
+            }
+            if (!myDeclarationPM.IsCourierDeclaration)
+            {
+                throw new Exception($"Declaration Is not CourierDeclaration  declarationId={declarationId}");
+            }
+            //CourierDeclarations
+            //myCourierMasterQueryService.GetNotConnectedDeclaratins
+
+            var myCourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
+            if (myCourierMasterPM == null)
+            {
+                //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
+                throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
+            }
+
+            CourierOVSHAWBRequest myGWMessageECTHRData = CreateCourierOVSHawbMessage(myDeclarationPM, myCourierMasterPM);
+            string messageToMaman = "";
+            messageToMaman = ProxyUtil.JsonConvertSerialize(myGWMessageECTHRData);
+            return messageToMaman;
+        }
+
+        private CourierOVSHAWBRequest CreateCourierOVSHawbMessage(DeclarationPM myDeclarationPM, CourierMasterPM myCourierMasterPM)
+        {
+            var ConsignmentPackageQualifierCode2 = myDeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
                 .Where(r1 => r1.PackageMeasureQualifierCode == "2")
                 .ToList();
             decimal DecWeight = 0;
@@ -83,45 +117,45 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 DecNoOfPackags = ConsignmentPackageQualifierCode2.Sum(r => r.PackageQuantity.GetValueOrDefault());
 
             }
-            if (_DeclarationPM.SupplierInvoices.Count > 0)
+            if (myDeclarationPM.SupplierInvoices.Count > 0)
             {
-                DolarValue = _DeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD.GetValueOrDefault());
+                DolarValue = myDeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD.GetValueOrDefault());
             }
 
             //string defBaldarCodeValue = GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _DeclarationPM.Tenant);
-            var rep = new CustomsAirlineRepository(_CourierMasterPM.Tenant);
-            var customsAirline = rep.GetSingle(_CourierMasterPM.AirlineId, _CourierMasterPM.Tenant);
+            var rep = new CustomsAirlineRepository(myCourierMasterPM.Tenant);
+            var customsAirline = rep.GetSingle(myCourierMasterPM.AirlineId, myCourierMasterPM.Tenant);
 
             var courierHawbMamanModel = new CourierOVSHAWBRequest()
             {
 
                 //BaldarCode = defBaldarCodeValue,//"לקחת מדיפולט קוד משלח בלדר",
-                CourierCompanyVat = _DeclarationPM.AgentId ?? "",
-                CourierHawbNumber = _DeclarationPM.CourierHAWB ?? "",
-                CourierHawbDate = GetOpenBaldarAwbDate(this._DeclarationPM),
-                MawbPrefix = _CourierMasterPM.AirlinePrefix ?? "",//יש לשלוח את Airline PRFIX)- 114
-                Mawb = CInt(_CourierMasterPM.MAWB),
+                CourierCompanyVat = myDeclarationPM.AgentId ?? "",
+                CourierHawbNumber = myDeclarationPM.CourierHAWB ?? "",
+                CourierHawbDate = GetOpenBaldarAwbDate(myDeclarationPM),
+                MawbPrefix = myCourierMasterPM.AirlinePrefix ?? "",//יש לשלוח את Airline PRFIX)- 114
+                Mawb = CInt(myCourierMasterPM.MAWB),
                 
-                Hawb = _CourierMasterPM.HAWB ?? "",
+                Hawb = myCourierMasterPM.HAWB ?? "",
                 
-                FlightNumber = CInt(_CourierMasterPM.FlightNumber),
-                DepartureDate= _CourierMasterPM.DepartureDate,// LandTime is not nullable ??
-                EstimatedArrivalDate = _CourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
+                FlightNumber = CInt(myCourierMasterPM.FlightNumber),
+                DepartureDate= myCourierMasterPM.DepartureDate,// LandTime is not nullable ??
+                EstimatedArrivalDate = myCourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
                 PackageQuantity = DecNoOfPackags,
                 Weight = DecWeight,
                 GoodValueInUSD = DolarValue,
 
                 
-                Description = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
-                ImporterName = _DeclarationPM.ImporterName ?? "",
-                ImporterAddress = _DeclarationPM.ImporterAddress ?? "",
+                Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
+                ImporterName = myDeclarationPM.ImporterName ?? "",
+                ImporterAddress = myDeclarationPM.ImporterAddress ?? "",
                 DistributionLine = "",
                 DistributionCompanyVat = "",
 
 
-                DeclarationNumber = this._DeclarationPM.DeclarationNumber??"",
-                CustomsSuspention = this._DeclarationPM.CourierSuspentionCode??"",
-                Preclearence = this._DeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
+                DeclarationNumber = myDeclarationPM.DeclarationNumber??"",
+                CustomsSuspention = myDeclarationPM.CourierSuspentionCode??"",
+                Preclearence = myDeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
 
 
