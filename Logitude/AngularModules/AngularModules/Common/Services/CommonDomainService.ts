@@ -45,11 +45,11 @@ export class CommonDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
     }
 
-    GetBlueSnapToken(VaultedShopperId:string) {
+    GetBlueSnapToken(VaultedShopperId:string,countryName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetBlueSnapToken?VaultedShopperId=' + VaultedShopperId, {
+            return this._http.get(this._apiUrl + '/GetBlueSnapToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName, {
                 headers: authHeader
             }).map(response => {
                 var myResult = response.json();
@@ -62,11 +62,11 @@ export class CommonDomainService {
     }
 
 
-    GetBlueSnapSecretToken(VaultedShopperId: string) {
+    GetBlueSnapSecretToken(VaultedShopperId: string,countryName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetBlueSnapSecretToken?VaultedShopperId=' + VaultedShopperId, {
+            return this._http.get(this._apiUrl + '/GetBlueSnapSecretToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName, {
                 headers: authHeader
             }).map(response => {
                 var myResult = response.json();
