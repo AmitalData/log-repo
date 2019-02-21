@@ -53,9 +53,13 @@ export class BIReportPreviewComponent implements OnInit {
     public HasDeletionFeature = false;
     public columnTypes;
     public context;
-    public CountText: string; 
+    public CountText: string;
+    public IsFilterValueChanged: boolean = false;
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
+        this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
+            this.IsFilterValueChanged = true;
+        });
     }
     ngOnInit() {
         this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
@@ -105,7 +109,7 @@ export class BIReportPreviewComponent implements OnInit {
             });
         }
     }
-    public UpdateAGGrid(arg: BIReportXMLData, msg = null) {
+    public UpdateAGGrid(arg: BIReportXMLData, msg = null, count = 0) {
         var sortsList = [];
         if (arg.BITabularViewSettings != null && arg.BITabularViewSettings.Columns != null) {
             arg.BITabularViewSettings.Columns.forEach(item => {
@@ -128,7 +132,7 @@ export class BIReportPreviewComponent implements OnInit {
             //    force: true,
             //};
             this.agGrid.api.refreshCells();
-            var count = this.agGrid.api.getDisplayedRowCount();
+            //var count = this.agGrid.api.getDisplayedRowCount();
             if (count > 50000 || msg == "MT5000") {
                 this.CountText = "Showing the first 50,000 rows, scroll down or download the excel to view all."
             }
@@ -429,7 +433,7 @@ export class BIReportPreviewComponent implements OnInit {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     // save
-                    this.SaveBIReport();
+                    this.SaveBIReport(true);
                 }
                 else if (confirmWindow.No) {
                     if (this.ComponentRef) {
@@ -450,12 +454,12 @@ export class BIReportPreviewComponent implements OnInit {
             }
         }
     }
-    SaveBIReport() {
+    SaveBIReport(isBackBtn = false) {
         if (this.EntityId == null) {
             this.NewBIReport();
         }
         else {
-            this.UpdateBIReport(false);
+            this.UpdateBIReport(false, isBackBtn);
         }
     }
     NewBIReport() {
@@ -468,18 +472,19 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.DWQueryId = this.DWQueryId;
         windowArgs.FolderId = this.FolderId;
         logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                this.EntityPM = s.EntityPM;
-                this.EntityId = s.EntityPM.Id;
-                this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
-                this.UpdateBIReport(false);
+                if (d != "cancel") {
+                    this.EntityPM = s.EntityPM;
+                    this.EntityId = s.EntityPM.Id;
+                    this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
+                    this.UpdateBIReport(false);
+                }
             });
         });
     }
-    UpdateBIReport(arg: boolean) {
+    UpdateBIReport(arg: boolean, isBackBtn = false) {
         // call method in server side to build xml 
         var sorting = this.agGrid.api.getSortModel();
         var coulmns = this.agGrid.columnApi.getColumnState();
@@ -539,22 +544,19 @@ export class BIReportPreviewComponent implements OnInit {
                 this.hasChanged = false;
                 this.StopBusyIndicator();
 
-                if (this.ComponentRef) {
+                if (arg) {
+                    this.ShowQueryBuilder();
+                }
+
+                if (this.ComponentRef && isBackBtn) {
                     this.BackCompleted.emit(true);
                     this.ComponentRef.destroy();
                 }
 
-                if (arg) {
-                    this.ShowQueryBuilder();
-                }
             }
         });
     }
-    OnNewBIReportWindowClosed(arg: string) {
-        if (arg != 'cancel') {
-            this.EntityId = arg;
-        }
-    }
+   
     ShowQueryBuilderClicked() {
         if (this.HasChanges) {
             this.UpdateBIReport(true);
@@ -605,6 +607,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     RunReportButtonClicked() {
+        this.IsFilterValueChanged = false;
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
     public  HasValidationError = false; 
@@ -617,7 +620,7 @@ export class BIReportPreviewComponent implements OnInit {
         else {
             this.HasValidationError = false;
             this.rowData = MyData.rowData;
-            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg), 500);
+            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg, MyData.Count), 500);
             this.StopBusyIndicator();
         }
        

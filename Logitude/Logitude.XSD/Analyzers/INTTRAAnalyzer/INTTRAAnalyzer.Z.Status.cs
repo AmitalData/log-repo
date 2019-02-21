@@ -671,7 +671,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             }
         }
         private void UpdateContainerFields()
-        {            
+        {
             if (this.DepartureDateIndicator == "E")
             {
                 iContainer.ETD = this.DepartureDate;
@@ -712,14 +712,14 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                     foreach (ShipmentPackagePM item in AllContainers.Where(d => d.VoyageTripNumber != null && d.Routing != null))
                     {
-                        bool iHasContainerException = false;                       
+                        bool iHasContainerException = false;
 
                         if (item.RoutingIds == iRouting_Main)
                         {
                             if (item.ETD != shipmentPM.MainCarriageETD || item.ETA != shipmentPM.MainCarriageETA)
                             {
                                 iHasContainerException = true;
-                            }                            
+                            }
                         }
 
                         else if (item.RoutingIds == iRouting_Trs1)
@@ -774,6 +774,59 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             else
             {
                 shipmentPM.HasContainerException = false;
+
+                var AllVoyageNumber = (from a in AllContainers
+                                       where
+                                       a.VoyageTripNumber != null
+                                       && a.RoutingIds != null
+                                       && a.ETD != null
+                                       && a.ETA != null
+
+                                       group a by new
+                                       {
+                                           a.VoyageTripNumber,
+                                           a.RoutingIds,
+                                           a.ETD,
+                                           a.ETA
+                                       } into g
+
+                                       select g.Key).ToList();
+
+                if (AllVoyageNumber.Count == 1)
+                {
+                    string iRouting_Main = this.shipmentPM.MainCarriageFromPortId + "," + this.shipmentPM.MainCarriageToPortId;
+                    string iRouting_Trs1 = this.shipmentPM.Transshipment1FromPortId + "," + this.shipmentPM.Transshipment1ToPortId;
+                    string iRouting_Trs2 = this.shipmentPM.Transshipment2FromPortId + "," + this.shipmentPM.Transshipment2ToPortId;
+                    string iRouting_Trs3 = this.shipmentPM.Transshipment3FromPortId + "," + this.shipmentPM.Transshipment3ToPortId;
+
+                    string iRoutingIds = AllVoyageNumber.FirstOrDefault().RoutingIds;
+                    DateTime? iETD = AllVoyageNumber.FirstOrDefault().ETD;
+                    DateTime? iETA = AllVoyageNumber.FirstOrDefault().ETA;
+
+                    if (iRoutingIds == iRouting_Main)
+                    {
+                        this.shipmentPM.MainCarriageETD = iETD;
+                        this.shipmentPM.MainCarriageETA = iETA;
+                    }
+
+                    else if (iRoutingIds == iRouting_Trs1)
+                    {
+                        this.shipmentPM.Transshipment1ETD = iETD;
+                        this.shipmentPM.Transshipment1ETA = iETA;
+                    }
+
+                    else if (iRoutingIds == iRouting_Trs2)
+                    {
+                        this.shipmentPM.Transshipment2ETD = iETD;
+                        this.shipmentPM.Transshipment2ETA = iETA;
+                    }
+
+                    else if (iRoutingIds == iRouting_Trs3)
+                    {
+                        this.shipmentPM.Transshipment3ETD = iETD;
+                        this.shipmentPM.Transshipment3ETA = iETA;
+                    }
+                }
             }
         }
         private DateTime? GetDateFromString(INTTRA_Status.LocationType iLocation)

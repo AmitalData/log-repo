@@ -676,14 +676,19 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     get BluesnapContractQTYs() { return this.EntityPM.BluesnapContractQTY; }
     set BluesnapContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapContractQTY != newValue) {
+            if (newValue == null)
+                newValue = 0;
             this.EntityPM.BluesnapContractQTY = newValue;
         }
+
     }
 
 
     get BluesnapCRMContractQTYs() { return this.EntityPM.BluesnapCRMContractQTY; }
     set BluesnapCRMContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapCRMContractQTY != newValue) {
+            if (newValue == null)
+                newValue = 0;
             this.EntityPM.BluesnapCRMContractQTY = newValue;
         }
     }
@@ -692,6 +697,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     get BluesnapEAWBContractQTYs() { return this.EntityPM.BluesnapEAWBContractQTY; }
     set BluesnapEAWBContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapEAWBContractQTY != newValue) {
+            if (newValue == null)
+                newValue = 0;
             this.EntityPM.BluesnapEAWBContractQTY = newValue;
         }
     }
@@ -700,6 +707,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     get BluesnapEAWBSContractQTYs() { return this.EntityPM.BluesnapEAWBSContractQTY; }
     set BluesnapEAWBSContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapEAWBSContractQTY != newValue) {
+            if (newValue == null)
+                newValue = 0;
             this.EntityPM.BluesnapEAWBSContractQTY = newValue;
         }
     }
@@ -708,6 +717,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     get BluesnapOneTimeContractQTYs() { return this.EntityPM.BluesnapOneTimeContractQTY; }
     set BluesnapOneTimeContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapOneTimeContractQTY != newValue) {
+            if (newValue == null)
+                newValue = 0;
             this.EntityPM.BluesnapOneTimeContractQTY = newValue;
         }
     }

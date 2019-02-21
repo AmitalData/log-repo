@@ -69,7 +69,7 @@ namespace WebFreight.Web.Helpers
                     {
                         WhereStmt = "";
                     }
-                    else if (WhereStmt.Substring(WhereStmt.Length - 4).Contains("And") || WhereStmt.Substring(WhereStmt.Length - 4).Contains("Or"))
+                    else if (WhereStmt.Length >= 4 && (WhereStmt.Substring(WhereStmt.Length - 4).Contains("And") || WhereStmt.Substring(WhereStmt.Length - 4).Contains("Or")))
                     {
                         WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
                     }

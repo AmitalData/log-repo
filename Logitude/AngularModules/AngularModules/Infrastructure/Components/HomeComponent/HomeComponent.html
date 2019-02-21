@@ -243,7 +243,7 @@
 
                                     </td>
                                     <td style="width: 20px;">
-                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" *ngIf="IfBlueSnapContracts">
+                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" >
                                             <IconButton [Name]="'payments'" [IsIconOnly]="true"></IconButton>
                                             <div class="ToggleButtonMenu" style="right:-50px">
                                                 <button *ngIf="IsLogBox == false && IsBluesnapAccount" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
@@ -256,7 +256,7 @@
                                                 <hr />
                                                 <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
                                                 <hr />
-                                                <button *ngIf="IsLogBox == false && IsOneTimeContract" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
+                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
 
                                             </div>
                                         </div>

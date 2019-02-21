@@ -2354,8 +2354,8 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Unit = Item.PackageType!=null?Item.PackageType.EnglishName:null;
                     shipment.RequestETD = dataView.FirstPickupETD;
                     shipment.EstimateETD = dataView.FirstPickupETA;
-                    if (!String.IsNullOrEmpty(dataView.Field2))
-                        shipment.RequestETA = Convert.ToDateTime(dataView.Field2);
+               //    if (!String.IsNullOrEmpty(dataView.Field2))
+                      //  shipment.RequestETA = Convert.ToDateTime(dataView.Field2);
                     shipment.EstimateETA = dataView.MainCarriageFinalDestinationETA;
                     shipment.Shipper = dataView.ShipperName;
                     shipment.Pieces = Item.Quantity;
