@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new GatepassRequestDataMapping();
         }
 		 
-		public  GatepassRequestPM GetSingle(string mastercourierid, int gatepassnumber,bool getComposition, bool getFromCache)
+		public  GatepassRequestPM GetSingle(string mastercourierid,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new GatepassRequestKeys(){ MasterCourierId = mastercourierid, GatepassNumber = gatepassnumber };
+             EntityKeys = new GatepassRequestKeys(){ MasterCourierId = mastercourierid };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(GatepassRequest entityPOCO)
         {
-            GatepassRequestKeys entityKeys = new GatepassRequestKeys() { MasterCourierId = entityPOCO.MasterCourierId, GatepassNumber = entityPOCO.GatepassNumber,  };
+            GatepassRequestKeys entityKeys = new GatepassRequestKeys() { MasterCourierId = entityPOCO.MasterCourierId,  };
             return entityKeys;
         }
      

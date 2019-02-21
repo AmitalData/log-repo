@@ -19,13 +19,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	 string dbms;
 
         [Key]
-        [Column("MasterCourierId" ,Order = 1)]
+        [Column("MasterCourierId")]
 	    public string MasterCourierId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-     [Key]
-        [Column("GatepassNumber" ,Order = 2)]
-	    public int GatepassNumber { get; set; }
+        [Column("GatepassNumber")]
+	    public int? GatepassNumber { get; set; }
         [ForeignKey("OriginSiteType")]
         [Column("OriginSiteCode")]
 	    public string OriginSiteCode { get; set; }

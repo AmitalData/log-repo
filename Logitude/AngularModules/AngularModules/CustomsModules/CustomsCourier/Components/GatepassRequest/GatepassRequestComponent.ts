@@ -5,10 +5,12 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
 import { GatepassRequestPM } from '../../../../Customs/EntityPMs/GatepassRequestPM';
+import { GatepassRequestPMService } from '../../../../Customs/Services/StandardPMs/GatepassRequestPMService';
 import { CourierMasterService } from '../../../../Customs/Services/others/CourierMasterService';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { GatepassRequestMessageRequestParams } from '../../../../Customs/DataContract/RequestParams/GatepassRequestMessageRequestParams';
 import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: module.id,
@@ -34,6 +36,25 @@ export class GatepassRequestComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.CourierMasterPM = args.CourierMasterPM;
+            this.EntityPM = new GatepassRequestPM();
+            this.UpdateCode = "1";
+
+            if (AppTool.IsNullOrEmpty(this.CourierMasterPM.MAWB)) {
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Width = 250;
+                myMessageWindow.Height = 150;
+                myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען");
+                this.CancelButtonClicked();
+            }
+
+            let myGatepassRequestPMService: GatepassRequestPMService = new GatepassRequestPMService()
+            myGatepassRequestPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
+                let entityPM = rsptPMget.Result;
+                if (entityPM != null) {
+                    this.EntityPM = entityPM;
+                    //this.SetGatepassRequestStatus();
+                }
+            });
             //this.SetScreenFieldsEditability(true);
         }
     }
@@ -45,44 +66,49 @@ export class GatepassRequestComponent extends BaseComponent {
     }
 
     //#region Properties
-    //private _CourierHawb: string;
-    //public get CourierHawb() { return this.CourierMasterPM.HAWB; }
-    //public set CourierHawb(newValue: string) {
-    //    this.CourierMasterPM.HAWB = newValue;
-    //}
+    private _UpdateCode: string;
+    public get UpdateCode() { return this._UpdateCode; }
+    public set UpdateCode(newValue: string) {
+        this._UpdateCode = newValue;
+    }
 
     public get GatepassNumber() { return this.EntityPM.GatepassNumber; }
     public set GatepassNumber(newValue: number) {
         this.EntityPM.GatepassNumber = newValue;
     }
 
-    //public get OriginSiteCode() { return this.EntityPM.OriginSiteCode; }
-    //public set OriginSiteCode(newValue: string) {
-    //    this.EntityPM.OriginSiteCode = newValue;
-    //}
-
-    private _OriginSiteCode: string;
-    public get OriginSiteCode() { return this._OriginSiteCode; }
+    public get OriginSiteCode() { return this.EntityPM.OriginSiteCode; }
     public set OriginSiteCode(newValue: string) {
-        this._OriginSiteCode = newValue;
+        this.EntityPM.OriginSiteCode = newValue;
     }
 
-    //public get DesignateSiteCode() { return this.EntityPM.DesignateSiteCode; }
-    //public set DesignateSiteCode(newValue: string) {
-    //    this.EntityPM.DesignateSiteCode = newValue;
+    //private _OriginSiteCode: string;
+    //public get OriginSiteCode() { return this._OriginSiteCode; }
+    //public set OriginSiteCode(newValue: string) {
+    //    this._OriginSiteCode = newValue;
     //}
 
-    private _DesignateSiteCode: string;
-    public get DesignateSiteCode() { return this._DesignateSiteCode; }
+    public get DesignateSiteCode() { return this.EntityPM.DesignateSiteCode; }
     public set DesignateSiteCode(newValue: string) {
-        this._DesignateSiteCode = newValue;
+        this.EntityPM.DesignateSiteCode = newValue;
     }
 
-    private _TransportationTypeCode: string;
-    public get TransportationTypeCode() { return this._TransportationTypeCode; }
+    //private _DesignateSiteCode: string;
+    //public get DesignateSiteCode() { return this._DesignateSiteCode; }
+    //public set DesignateSiteCode(newValue: string) {
+    //    this._DesignateSiteCode = newValue;
+    //}
+
+    public get TransportationTypeCode() { return this.EntityPM.TransportationTypeCode; }
     public set TransportationTypeCode(newValue: string) {
-        this._TransportationTypeCode = newValue;
+        this.EntityPM.TransportationTypeCode = newValue;
     }
+
+    //private _TransportationTypeCode: string;
+    //public get TransportationTypeCode() { return this._TransportationTypeCode; }
+    //public set TransportationTypeCode(newValue: string) {
+    //    this._TransportationTypeCode = newValue;
+    //}
 
     //#endregion\
 

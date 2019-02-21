@@ -248,7 +248,7 @@
     <Compile Include="EntityPMs\Generated\FaultInspectionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FreightPaymentMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FuelTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\GatepassRequestsPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GatepassRequestPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GatepassReturnCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GenderPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GovernmentProcedureTypePM.Generated.cs" />

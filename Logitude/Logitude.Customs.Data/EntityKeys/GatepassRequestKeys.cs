@@ -16,15 +16,11 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
-	  public int GatepassNumber  { get; set; }
-	  
-				 
-	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-          return MasterCourierId+'_'+GatepassNumber;
+          return MasterCourierId;
       }
 
       public override string GetEntityPMName()

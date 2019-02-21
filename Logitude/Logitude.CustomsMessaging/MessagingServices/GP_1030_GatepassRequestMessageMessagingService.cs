@@ -45,5 +45,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             return response;
         }
+
+        protected override bool? IsOurEnvironment(GP_NG_1035_MSG2_GatepassFeedbackMessage customsResponse, GatepassRequestMessageRequestParams RequestParams)
+        {
+            return false;
+        }
     }
 }

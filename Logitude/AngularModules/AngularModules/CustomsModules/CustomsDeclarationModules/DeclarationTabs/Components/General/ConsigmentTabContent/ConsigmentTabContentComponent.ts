@@ -763,6 +763,12 @@ export class ConsigmentPackageModel extends BaseComponent {
     public get GrossMassMeasure() { return this.EntityPM.GrossMassMeasure; }
     public set GrossMassMeasure(newValue: number) { this.EntityPM.GrossMassMeasure = newValue; }
 
+    public get GrossMassMeasureTypeCode() { return this.EntityPM.GrossMassMeasureTypeCode; }
+    public set GrossMassMeasureTypeCode(newValue: string) { this.EntityPM.GrossMassMeasureTypeCode = newValue; }
+
+    public get GrossMassMeasureTypeName() { return this.EntityPM.GrossMassMeasureTypeName; }
+    public set GrossMassMeasureTypeName(newValue: string) { this.EntityPM.GrossMassMeasureTypeName = newValue; }
+
     public get PackageQuantity() { return this.EntityPM.PackageQuantity; }
     public set PackageQuantity(newValue: number) { this.EntityPM.PackageQuantity = newValue; }
     //#endregion

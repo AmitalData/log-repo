@@ -491,6 +491,26 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- GrossMassMeasureTypeCode -->
+                                    <log-column [header]="'Customs.ConsignmentPackage.F.GrossMassMeasureTypeCode' | TextCodeTranslationPipe" [width]="'200'" [Alignment]="'right'" [binding]="'GrossMassMeasureTypeCode'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.GrossMassMeasureTypeName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'GrossMassMeasureTypeCode'"
+                                                        [ObjectTableName]="'Customs.ConsignmentPackage'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Customs.MeasurmentUnit'"
+                                                        [HideColumns]="true"
+                                                        (SelectedItemChanged)="item.SetLocalName($event, 'GrossMassMeasureTypeName')"
+                                                        [FocusOnMe]="'true'">
+                                                </LogLov>
+
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
                                     <!-- MarksNumbers -->
                                     <log-column [width]="'100'" [binding]="'MarksNumbers'" [Alignment]="'right'" [header]="'Customs.ConsignmentPackage.F.MarksNumbers' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate>

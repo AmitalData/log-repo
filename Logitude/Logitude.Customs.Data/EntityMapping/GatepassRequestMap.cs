@@ -21,13 +21,13 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("GatepassRequests", "Customs");
 		
-		    this.HasKey(t => new { t.MasterCourierId, t.GatepassNumber });
+		    this.HasKey(t => new { t.MasterCourierId });
 	 
             this.Property(t => t.MasterCourierId).HasColumnName("MasterCourierId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.GatepassNumber).HasColumnName("GatepassNumber").IsRequired().HasDatabaseGeneratedOption(null);
+            this.Property(t => t.GatepassNumber).HasColumnName("GatepassNumber");
 
             this.Property(t => t.OriginSiteCode).HasColumnName("OriginSiteCode").HasMaxLength(17).IsUnicode(false);
 
