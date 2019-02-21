@@ -309,10 +309,12 @@
                                             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Has Api Helper:" />
                                             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Has Custom Fields:" />
                                             <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="No TS :" />
+											<TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="No Default Features :" />
 
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasApiHelper, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomFields, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NoTS, Mode=TwoWay}" />
+											<CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NoDefaultFeatures, Mode=TwoWay}" />
                                         </Grid>
 
                                     </Grid>
@@ -3074,88 +3076,105 @@
                                     <ColumnDefinition Width="16" />
                                     <ColumnDefinition Width="19" />
                                     <ColumnDefinition Width="39" />
-                                    <ColumnDefinition Width="361"/>
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
 
-                                <ListBox x:Name="AdditionalTextCodesListBox"
-                                         Grid.Column="0"
-                                         Grid.ColumnSpan="4"
-                                         ItemsSource="{Binding AdditionalTextCodesList}"
+								<Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">
+									<Grid.RowDefinitions>
+										<RowDefinition Height="30px"/>
+										<RowDefinition Height="*"/>
+									</Grid.RowDefinitions>
+
+									<TextBox x:Name="AdditionalTextCodesFilter"
+                                             Grid.Row="0" 
+                                             Height="22"
+                                             VerticalAlignment="Center"
+                                             Text="{Binding AdditionalTextCodesFilter,
+                                                            Mode=TwoWay}" >
+										<i:Interaction.Triggers>
+											<i:EventTrigger EventName="TextChanged">
+												<cmd:EventToCommand Command="{Binding AdditionalTextCodesFilterTextChanged}" CommandParameter="{Binding Text, ElementName=AdditionalTextCodesFilter}" />
+											</i:EventTrigger>
+										</i:Interaction.Triggers>
+									</TextBox>
+									<ListBox x:Name="AdditionalTextCodesListBox"
+                                        Grid.Row="1"
+                                         ItemsSource="{Binding AdditionalTextCodesTempList}"
                                          SelectedIndex="0"
                                          SelectedItem="{Binding SelectedTextCode,
                                                                 Mode=TwoWay}">
 
-                                    <ListBox.ItemContainerStyle>
-                                        <Style TargetType="ListBoxItem">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="ListBoxItem">
-                                                        <Grid MinWidth="25" Margin="3">
-                                                            <VisualStateManager.VisualStateGroups>
-                                                                <VisualStateGroup x:Name="CommonStates">
-                                                                    <VisualState x:Name="Normal" />
-                                                                    <VisualState x:Name="MouseOver">
-                                                                        <Storyboard>
-                                                                            <ObjectAnimationUsingKeyFrames Duration="0"
+										<ListBox.ItemContainerStyle>
+											<Style TargetType="ListBoxItem">
+												<Setter Property="Template">
+													<Setter.Value>
+														<ControlTemplate TargetType="ListBoxItem">
+															<Grid MinWidth="25" Margin="3">
+																<VisualStateManager.VisualStateGroups>
+																	<VisualStateGroup x:Name="CommonStates">
+																		<VisualState x:Name="Normal" />
+																		<VisualState x:Name="MouseOver">
+																			<Storyboard>
+																				<ObjectAnimationUsingKeyFrames Duration="0"
                                                                                                            Storyboard.TargetName="ItemBorder"
                                                                                                            Storyboard.TargetProperty="Background">
-                                                                                <DiscreteObjectKeyFrame KeyTime="0">
-                                                                                    <DiscreteObjectKeyFrame.Value>
-                                                                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                                                            <GradientStop Offset="0" Color="White" />
-                                                                                            <GradientStop Offset="1" Color="#FFBACEE3" />
-                                                                                        </LinearGradientBrush>
-                                                                                    </DiscreteObjectKeyFrame.Value>
-                                                                                </DiscreteObjectKeyFrame>
-                                                                            </ObjectAnimationUsingKeyFrames>
-                                                                            <!--
+																					<DiscreteObjectKeyFrame KeyTime="0">
+																						<DiscreteObjectKeyFrame.Value>
+																							<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+																								<GradientStop Offset="0" Color="White" />
+																								<GradientStop Offset="1" Color="#FFBACEE3" />
+																							</LinearGradientBrush>
+																						</DiscreteObjectKeyFrame.Value>
+																					</DiscreteObjectKeyFrame>
+																				</ObjectAnimationUsingKeyFrames>
+																				<!--
                                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ItemContent" Storyboard.TargetProperty="Foreground" Duration="0">
                                                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="#FF1782B8" />
                                                                                 </ObjectAnimationUsingKeyFrames>
                                                                             -->
-                                                                        </Storyboard>
-                                                                    </VisualState>
-                                                                    <VisualState x:Name="Selected">
-                                                                        <Storyboard>
-                                                                            <ObjectAnimationUsingKeyFrames Duration="0"
+																			</Storyboard>
+																		</VisualState>
+																		<VisualState x:Name="Selected">
+																			<Storyboard>
+																				<ObjectAnimationUsingKeyFrames Duration="0"
                                                                                                            Storyboard.TargetName="ItemBorder"
                                                                                                            Storyboard.TargetProperty="Background">
-                                                                                <DiscreteObjectKeyFrame KeyTime="0">
-                                                                                    <DiscreteObjectKeyFrame.Value>
-                                                                                        <LinearGradientBrush StartPoint="0.5,1.619" EndPoint="0.5,-0.19">
-                                                                                            <GradientStop Offset="0" Color="#FF1782B8" />
-                                                                                            <GradientStop Offset="0.521087646484375" Color="sc#1, 0.07436104, 0.285719752, 0.5282723" />
-                                                                                            <GradientStop Offset="0.71199202537536621" Color="sc#1, 0.212689176, 0.417107344, 0.6311929" />
-                                                                                            <GradientStop Offset="0.8492809534072876" Color="sc#1, 0.395504266, 0.590749741, 0.767213345" />
-                                                                                            <GradientStop Offset="0.960737943649292" Color="sc#1, 0.613748252, 0.7980435, 0.92959404" />
-                                                                                            <GradientStop Offset="1" Color="sc#1, 0.708375752, 0.8879231, 1" />
-                                                                                            <GradientStop Offset="1" Color="#FFDBF2FF" />
-                                                                                        </LinearGradientBrush>
-                                                                                    </DiscreteObjectKeyFrame.Value>
-                                                                                </DiscreteObjectKeyFrame>
-                                                                            </ObjectAnimationUsingKeyFrames>
-                                                                            <!--
+																					<DiscreteObjectKeyFrame KeyTime="0">
+																						<DiscreteObjectKeyFrame.Value>
+																							<LinearGradientBrush StartPoint="0.5,1.619" EndPoint="0.5,-0.19">
+																								<GradientStop Offset="0" Color="#FF1782B8" />
+																								<GradientStop Offset="0.521087646484375" Color="sc#1, 0.07436104, 0.285719752, 0.5282723" />
+																								<GradientStop Offset="0.71199202537536621" Color="sc#1, 0.212689176, 0.417107344, 0.6311929" />
+																								<GradientStop Offset="0.8492809534072876" Color="sc#1, 0.395504266, 0.590749741, 0.767213345" />
+																								<GradientStop Offset="0.960737943649292" Color="sc#1, 0.613748252, 0.7980435, 0.92959404" />
+																								<GradientStop Offset="1" Color="sc#1, 0.708375752, 0.8879231, 1" />
+																								<GradientStop Offset="1" Color="#FFDBF2FF" />
+																							</LinearGradientBrush>
+																						</DiscreteObjectKeyFrame.Value>
+																					</DiscreteObjectKeyFrame>
+																				</ObjectAnimationUsingKeyFrames>
+																				<!--
                                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ItemContent" Storyboard.TargetProperty="Foreground" Duration="0">
                                                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="White" />
                                                                                 </ObjectAnimationUsingKeyFrames>
                                                                             -->
-                                                                        </Storyboard>
-                                                                    </VisualState>
-                                                                    <VisualState x:Name="Disabled" />
-                                                                </VisualStateGroup>
-                                                            </VisualStateManager.VisualStateGroups>
+																			</Storyboard>
+																		</VisualState>
+																		<VisualState x:Name="Disabled" />
+																	</VisualStateGroup>
+																</VisualStateManager.VisualStateGroups>
 
-                                                            <Border x:Name="ItemBorder"
+																<Border x:Name="ItemBorder"
                                                                     BorderThickness="0"
                                                                     CornerRadius="5">
-                                                                <Border.Background>
-                                                                    <LinearGradientBrush StartPoint="0.5,1.643" EndPoint="0.5,0.067">
-                                                                        <GradientStop Offset="0" Color="#FFBCBDBF" />
-                                                                        <GradientStop Offset="1" Color="#FFE6E7E8" />
-                                                                    </LinearGradientBrush>
-                                                                </Border.Background>
-                                                                <TextBlock x:Name="ItemContent"
+																	<Border.Background>
+																		<LinearGradientBrush StartPoint="0.5,1.643" EndPoint="0.5,0.067">
+																			<GradientStop Offset="0" Color="#FFBCBDBF" />
+																			<GradientStop Offset="1" Color="#FFE6E7E8" />
+																		</LinearGradientBrush>
+																	</Border.Background>
+																	<TextBlock x:Name="ItemContent"
                                                                            Margin="10 5 5 5"
                                                                            HorizontalAlignment="Left"
                                                                            VerticalAlignment="Center"
@@ -3163,19 +3182,19 @@
                                                                            FontSize="14"
                                                                            Foreground="#FF6E7172"
                                                                            Text="{Binding Code}" />
-                                                            </Border>
+																</Border>
 
-                                                        </Grid>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </ListBox.ItemContainerStyle>
-                                </ListBox>
+															</Grid>
+														</ControlTemplate>
+													</Setter.Value>
+												</Setter>
+											</Style>
+										</ListBox.ItemContainerStyle>
+									</ListBox>
 
+								</Grid>
 
-
-                                <Grid Grid.Column="4"
+								<Grid Grid.Column="4"
                                       Margin="5,0,5,0"
                                       Visibility="{Binding TextCodesEditControlVisibility}">
                                     <textcodes:TextCodesControl DataContext="{Binding SelectedItem, ElementName=AdditionalTextCodesListBox, Mode=TwoWay}" />
@@ -3219,88 +3238,106 @@
                                     <ColumnDefinition Width="16" />
                                     <ColumnDefinition Width="19" />
                                     <ColumnDefinition Width="39" />
-                                    <ColumnDefinition Width="361"/>
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
 
-                                <ListBox x:Name="AdditionalFeaturesListBox"
-                                         Grid.Column="0"
-                                         Grid.ColumnSpan="4"
-                                         ItemsSource="{Binding AdditionalFeaturesList}"
+								<Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">
+									<Grid.RowDefinitions>
+										<RowDefinition Height="30px"/>
+										<RowDefinition Height="*"/>
+									</Grid.RowDefinitions>
+
+									<TextBox x:Name="AdditionalFeaturesFilter"
+                                             Grid.Row="0" 
+                                             Height="22"
+                                             VerticalAlignment="Center"
+                                             Text="{Binding AdditionalFeaturesFilter,
+                                                            Mode=TwoWay}" >
+										<i:Interaction.Triggers>
+											<i:EventTrigger EventName="TextChanged">
+												<cmd:EventToCommand Command="{Binding AdditionalFeaturesFilterTextChanged}" CommandParameter="{Binding Text, ElementName=AdditionalFeaturesFilter}" />
+											</i:EventTrigger>
+										</i:Interaction.Triggers>
+									</TextBox>
+
+									<ListBox x:Name="AdditionalFeaturesListBox"
+                                         Grid.Row="1"
+                                         ItemsSource="{Binding AdditionalFeaturesTempList}"
                                          SelectedIndex="0"
                                          SelectedItem="{Binding SelectedFeature,
                                                                 Mode=TwoWay}">
 
-                                    <ListBox.ItemContainerStyle>
-                                        <Style TargetType="ListBoxItem">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="ListBoxItem">
-                                                        <Grid MinWidth="25" Margin="3">
-                                                            <VisualStateManager.VisualStateGroups>
-                                                                <VisualStateGroup x:Name="CommonStates">
-                                                                    <VisualState x:Name="Normal" />
-                                                                    <VisualState x:Name="MouseOver">
-                                                                        <Storyboard>
-                                                                            <ObjectAnimationUsingKeyFrames Duration="0"
+										<ListBox.ItemContainerStyle>
+											<Style TargetType="ListBoxItem">
+												<Setter Property="Template">
+													<Setter.Value>
+														<ControlTemplate TargetType="ListBoxItem">
+															<Grid MinWidth="25" Margin="3">
+																<VisualStateManager.VisualStateGroups>
+																	<VisualStateGroup x:Name="CommonStates">
+																		<VisualState x:Name="Normal" />
+																		<VisualState x:Name="MouseOver">
+																			<Storyboard>
+																				<ObjectAnimationUsingKeyFrames Duration="0"
                                                                                                            Storyboard.TargetName="ItemBorder"
                                                                                                            Storyboard.TargetProperty="Background">
-                                                                                <DiscreteObjectKeyFrame KeyTime="0">
-                                                                                    <DiscreteObjectKeyFrame.Value>
-                                                                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                                                            <GradientStop Offset="0" Color="White" />
-                                                                                            <GradientStop Offset="1" Color="#FFBACEE3" />
-                                                                                        </LinearGradientBrush>
-                                                                                    </DiscreteObjectKeyFrame.Value>
-                                                                                </DiscreteObjectKeyFrame>
-                                                                            </ObjectAnimationUsingKeyFrames>
-                                                                            <!--
+																					<DiscreteObjectKeyFrame KeyTime="0">
+																						<DiscreteObjectKeyFrame.Value>
+																							<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+																								<GradientStop Offset="0" Color="White" />
+																								<GradientStop Offset="1" Color="#FFBACEE3" />
+																							</LinearGradientBrush>
+																						</DiscreteObjectKeyFrame.Value>
+																					</DiscreteObjectKeyFrame>
+																				</ObjectAnimationUsingKeyFrames>
+																				<!--
                                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ItemContent" Storyboard.TargetProperty="Foreground" Duration="0">
                                                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="#FF1782B8" />
                                                                                 </ObjectAnimationUsingKeyFrames>
                                                                             -->
-                                                                        </Storyboard>
-                                                                    </VisualState>
-                                                                    <VisualState x:Name="Selected">
-                                                                        <Storyboard>
-                                                                            <ObjectAnimationUsingKeyFrames Duration="0"
+																			</Storyboard>
+																		</VisualState>
+																		<VisualState x:Name="Selected">
+																			<Storyboard>
+																				<ObjectAnimationUsingKeyFrames Duration="0"
                                                                                                            Storyboard.TargetName="ItemBorder"
                                                                                                            Storyboard.TargetProperty="Background">
-                                                                                <DiscreteObjectKeyFrame KeyTime="0">
-                                                                                    <DiscreteObjectKeyFrame.Value>
-                                                                                        <LinearGradientBrush StartPoint="0.5,1.619" EndPoint="0.5,-0.19">
-                                                                                            <GradientStop Offset="0" Color="#FF1782B8" />
-                                                                                            <GradientStop Offset="0.521087646484375" Color="sc#1, 0.07436104, 0.285719752, 0.5282723" />
-                                                                                            <GradientStop Offset="0.71199202537536621" Color="sc#1, 0.212689176, 0.417107344, 0.6311929" />
-                                                                                            <GradientStop Offset="0.8492809534072876" Color="sc#1, 0.395504266, 0.590749741, 0.767213345" />
-                                                                                            <GradientStop Offset="0.960737943649292" Color="sc#1, 0.613748252, 0.7980435, 0.92959404" />
-                                                                                            <GradientStop Offset="1" Color="sc#1, 0.708375752, 0.8879231, 1" />
-                                                                                            <GradientStop Offset="1" Color="#FFDBF2FF" />
-                                                                                        </LinearGradientBrush>
-                                                                                    </DiscreteObjectKeyFrame.Value>
-                                                                                </DiscreteObjectKeyFrame>
-                                                                            </ObjectAnimationUsingKeyFrames>
-                                                                            <!--
+																					<DiscreteObjectKeyFrame KeyTime="0">
+																						<DiscreteObjectKeyFrame.Value>
+																							<LinearGradientBrush StartPoint="0.5,1.619" EndPoint="0.5,-0.19">
+																								<GradientStop Offset="0" Color="#FF1782B8" />
+																								<GradientStop Offset="0.521087646484375" Color="sc#1, 0.07436104, 0.285719752, 0.5282723" />
+																								<GradientStop Offset="0.71199202537536621" Color="sc#1, 0.212689176, 0.417107344, 0.6311929" />
+																								<GradientStop Offset="0.8492809534072876" Color="sc#1, 0.395504266, 0.590749741, 0.767213345" />
+																								<GradientStop Offset="0.960737943649292" Color="sc#1, 0.613748252, 0.7980435, 0.92959404" />
+																								<GradientStop Offset="1" Color="sc#1, 0.708375752, 0.8879231, 1" />
+																								<GradientStop Offset="1" Color="#FFDBF2FF" />
+																							</LinearGradientBrush>
+																						</DiscreteObjectKeyFrame.Value>
+																					</DiscreteObjectKeyFrame>
+																				</ObjectAnimationUsingKeyFrames>
+																				<!--
                                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ItemContent" Storyboard.TargetProperty="Foreground" Duration="0">
                                                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="White" />
                                                                                 </ObjectAnimationUsingKeyFrames>
                                                                             -->
-                                                                        </Storyboard>
-                                                                    </VisualState>
-                                                                    <VisualState x:Name="Disabled" />
-                                                                </VisualStateGroup>
-                                                            </VisualStateManager.VisualStateGroups>
+																			</Storyboard>
+																		</VisualState>
+																		<VisualState x:Name="Disabled" />
+																	</VisualStateGroup>
+																</VisualStateManager.VisualStateGroups>
 
-                                                            <Border x:Name="ItemBorder"
+																<Border x:Name="ItemBorder"
                                                                     BorderThickness="0"
                                                                     CornerRadius="5">
-                                                                <Border.Background>
-                                                                    <LinearGradientBrush StartPoint="0.5,1.643" EndPoint="0.5,0.067">
-                                                                        <GradientStop Offset="0" Color="#FFBCBDBF" />
-                                                                        <GradientStop Offset="1" Color="#FFE6E7E8" />
-                                                                    </LinearGradientBrush>
-                                                                </Border.Background>
-                                                                <TextBlock x:Name="ItemContent"
+																	<Border.Background>
+																		<LinearGradientBrush StartPoint="0.5,1.643" EndPoint="0.5,0.067">
+																			<GradientStop Offset="0" Color="#FFBCBDBF" />
+																			<GradientStop Offset="1" Color="#FFE6E7E8" />
+																		</LinearGradientBrush>
+																	</Border.Background>
+																	<TextBlock x:Name="ItemContent"
                                                                            Margin="10 5 5 5"
                                                                            HorizontalAlignment="Left"
                                                                            VerticalAlignment="Center"
@@ -3308,16 +3345,18 @@
                                                                            FontSize="14"
                                                                            Foreground="#FF6E7172"
                                                                            Text="{Binding Code}" />
-                                                            </Border>
+																</Border>
 
-                                                        </Grid>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </ListBox.ItemContainerStyle>
-                                </ListBox>
+															</Grid>
+														</ControlTemplate>
+													</Setter.Value>
+												</Setter>
+											</Style>
+										</ListBox.ItemContainerStyle>
+									</ListBox>
 
+								</Grid>
+                             
 
 
                                 <Grid Grid.Column="4"

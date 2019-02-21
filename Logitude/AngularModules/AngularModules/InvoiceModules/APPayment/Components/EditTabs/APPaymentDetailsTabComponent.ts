@@ -1474,10 +1474,14 @@ export class APPaymentInvoiceArgs extends BaseComponent {
             if (this.isConnected) {
                 this.CheckBoxVisibility = true;
                 this.ConnectFeature = true;
+                this.UIProperties.SetEnabled("AmountPaid", this.ObjectTableName, true);
+
             }
             else {
                 this.CheckBoxVisibility = false;
                 this.ConnectFeature = false;
+                this.UIProperties.SetEnabled("AmountPaid", this.ObjectTableName, false);
+
             }
         }
 

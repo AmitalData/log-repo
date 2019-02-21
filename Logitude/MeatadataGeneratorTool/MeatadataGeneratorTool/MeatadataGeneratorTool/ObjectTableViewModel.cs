@@ -141,7 +141,24 @@ namespace MeatadataGeneratorTool
 
         }
 
-        public ObjectFieldsControl fieldsControl;
+	 
+		public ObservableCollection<TextCodesViewModel> AdditionalTextCodesTempList
+		{
+			get;
+			set;
+
+		}
+
+	 
+		public ObservableCollection<FeaturesViewModel> AdditionalFeaturesTempList
+		{
+			get;
+			set;
+
+		}
+
+
+		public ObjectFieldsControl fieldsControl;
         public ObservableCollection<ObjectFieldsViewModel> DisplayLookUpFieldsList { get; set; }
         public ObservableCollection<ObjectFieldsViewModel> DisplayLocalLookUpFieldsList { get; set; }
         public ObservableCollection<ObjectFieldsViewModel> ToBeDisplayOnLookUpList { get; set; }
@@ -208,7 +225,38 @@ namespace MeatadataGeneratorTool
             }
         }
 
-        public string dCFieldsFilter;
+
+		public string additionalTextCodesFilter;
+		public string AdditionalTextCodesFilter
+		{
+			get
+			{
+				return additionalTextCodesFilter;
+			}
+			set
+			{
+				additionalTextCodesFilter = value;
+				FirePropertyChanged("AdditionalTextCodesFilter");
+			}
+		}
+
+		public string additionalFeaturesFilter;
+		public string AdditionalFeaturesFilter
+		{
+			get
+			{
+				return additionalFeaturesFilter;
+			}
+			set
+			{
+				additionalFeaturesFilter = value;
+				FirePropertyChanged("AdditionalFeaturesFilter");
+			}
+		}
+
+
+
+		public string dCFieldsFilter;
         public string DCFieldsFilter
         {
             get
@@ -223,8 +271,53 @@ namespace MeatadataGeneratorTool
         }
 
 
+		public RelayCommand<string> AdditionalTextCodesFilterTextChanged
+		{
+			get { return new RelayCommand<string>(i => this.AdditionalTextCodesFilterTextChangedMethod(i)); }
+			set { }
+		}
 
-        private void DCFieldsFilterTextChangedMethod(string filter)
+
+
+		private void AdditionalTextCodesFilterTextChangedMethod(string filter)
+		{
+
+			AdditionalTextCodesTempList = new ObservableCollection<TextCodesViewModel>();
+			var temp = AdditionalTextCodesList.Where(a => a.Code.ToLower().Contains(filter.ToLower())).ToList();
+			foreach (var item in temp)
+			{
+				AdditionalTextCodesTempList.Add(item);
+			}
+
+			FirePropertyChanged("AdditionalTextCodesTempList");
+
+			this.SelectedTextCode = AdditionalTextCodesTempList.FirstOrDefault();
+		}
+
+		public RelayCommand<string> AdditionalFeaturesFilterTextChanged
+		{
+			get { return new RelayCommand<string>(i => this.AdditionalFeaturesFilterTextChangedMethod(i)); }
+			set { }
+		}
+
+
+
+		private void AdditionalFeaturesFilterTextChangedMethod(string filter)
+		{
+
+			AdditionalFeaturesTempList = new ObservableCollection<FeaturesViewModel>();
+			var temp = AdditionalFeaturesList.Where(a => a.Code.ToLower().Contains(filter.ToLower())).ToList();
+			foreach (var item in temp)
+			{
+				AdditionalFeaturesTempList.Add(item);
+			}
+
+			FirePropertyChanged("AdditionalFeaturesTempList");
+			this.SelectedFeature = AdditionalFeaturesTempList.FirstOrDefault();
+		}
+
+
+		private void DCFieldsFilterTextChangedMethod(string filter)
         {
 
             SelectedDataContract.DBFieldsTempObsList = new ObservableCollection<ObjectFieldsViewModel>();
@@ -287,6 +380,8 @@ namespace MeatadataGeneratorTool
             ObjectTableTypes = new List<ObjectTableType>() { new ObjectTableType { Code = "MD", Name = "Master Data" }, new ObjectTableType() { Code = "BR", Name = "Business Record" } };
             this.AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
             this.AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
+			this.AdditionalFeaturesTempList = new ObservableCollection<FeaturesViewModel>();
+			this.AdditionalTextCodesTempList = new ObservableCollection<TextCodesViewModel>();
         }
 
         public void BuildObsList(List<ObjectFieldsViewModel> fields)
@@ -480,22 +575,25 @@ namespace MeatadataGeneratorTool
             if (AdditionalTextCodesList == null)
             {
                 AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
-                 
-            }
+				AdditionalTextCodesTempList = new ObservableCollection<TextCodesViewModel>();
+			}
             if (AdditionalTextCodesList != null && AdditionalTextCodesList.Count > 0)
             {
                 AdditionalTextCodesList.Clear();
-            }
+				AdditionalTextCodesTempList.Clear();
+
+			}
             foreach (var item in textCodes)
             {
                 AdditionalTextCodesList.Add(item);
+				AdditionalTextCodesTempList.Add(item);
             }
 
 
 
-            TextCodesEditControlVisibility = (AdditionalTextCodesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+            TextCodesEditControlVisibility = (AdditionalTextCodesTempList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
 
-            this.SelectedTextCode = AdditionalTextCodesList.FirstOrDefault();
+            this.SelectedTextCode = AdditionalTextCodesTempList.FirstOrDefault();
 
         }
 
@@ -504,22 +602,26 @@ namespace MeatadataGeneratorTool
             if (AdditionalFeaturesList == null)
             {
                 AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
+				AdditionalFeaturesTempList = new ObservableCollection<FeaturesViewModel>();
 
             }
             if (AdditionalFeaturesList != null && AdditionalFeaturesList.Count > 0)
             {
                 AdditionalFeaturesList.Clear();
-            }
+				AdditionalFeaturesTempList.Clear();
+
+			}
             foreach (var item in features)
             {
                 AdditionalFeaturesList.Add(item);
-            }
+				AdditionalFeaturesTempList.Add(item);
+			}
 
 
 
-            FeaturesEditControlVisibility = (AdditionalFeaturesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+            FeaturesEditControlVisibility = (AdditionalFeaturesTempList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
 
-            this.SelectedFeature = AdditionalFeaturesList.FirstOrDefault();
+            this.SelectedFeature = AdditionalFeaturesTempList.FirstOrDefault();
 
         }
 
@@ -751,12 +853,16 @@ namespace MeatadataGeneratorTool
             if (AdditionalTextCodesList == null)
             {
                 AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
-            }
+				AdditionalTextCodesTempList = new ObservableCollection<TextCodesViewModel>();
+
+			}
             AdditionalTextCodesList.Add(item);
+			AdditionalTextCodesTempList.Add(item);
 
-            FirePropertyChanged("AdditionalTextCodesList");
+			FirePropertyChanged("AdditionalTextCodesList");
+			FirePropertyChanged("AdditionalTextCodesTempList");
 
-            TextCodesEditControlVisibility = (AdditionalTextCodesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+			TextCodesEditControlVisibility = (AdditionalTextCodesTempList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
 
             this.SelectedTextCode = item;
         }
@@ -766,12 +872,16 @@ namespace MeatadataGeneratorTool
             if (AdditionalFeaturesList == null)
             {
                 AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
-            }
+				AdditionalFeaturesTempList = new ObservableCollection<FeaturesViewModel>();
+
+			}
             AdditionalFeaturesList.Add(item);
+			AdditionalFeaturesTempList.Add(item);
 
-            FirePropertyChanged("AdditionalFeaturesList");
+			FirePropertyChanged("AdditionalFeaturesList");
+			FirePropertyChanged("AdditionalFeaturesTempList");
 
-            FeaturesEditControlVisibility = (AdditionalFeaturesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+			FeaturesEditControlVisibility = (AdditionalFeaturesTempList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
 
             this.SelectedFeature = item;
         }
@@ -962,6 +1072,7 @@ namespace MeatadataGeneratorTool
 
             if (selected != null)
             {
+				selected.DisplayInSearchWindowList = false;
                 selected.DisplayOnLookUp = false;
                 ToBeDisplayOnLookUpList.Add(selected);
                 DisplayLookUpFieldsList.Remove(selected);
@@ -1015,7 +1126,8 @@ namespace MeatadataGeneratorTool
 
             if (selected != null)
             {
-                selected.DisplayOnLookUpLocal = false;
+				selected.DisplayInSearchWindowList = false;
+				selected.DisplayOnLookUpLocal = false;
                 ToBeDisplayOnLookUpLocalList.Add(selected);
                 DisplayLocalLookUpFieldsList.Remove(selected);
 
@@ -1099,7 +1211,16 @@ namespace MeatadataGeneratorTool
             set { noTS = value; FirePropertyChanged("NoTS"); }
         }
 
-        bool noViewController;
+		bool noDefaultFeatures;
+		public bool NoDefaultFeatures
+		{
+			get { return noDefaultFeatures; }
+			set { noDefaultFeatures = value; FirePropertyChanged("NoDefaultFeatures"); }
+		}
+
+		
+
+		bool noViewController;
         public bool NoViewController
         {
             get { return noViewController; }
@@ -1758,7 +1879,10 @@ namespace MeatadataGeneratorTool
         {
             AdditionalTextCodesList.Remove(DelET);
             FirePropertyChanged("AdditionalTextCodesList");
-        }
+
+			AdditionalTextCodesTempList.Remove(DelET);
+			FirePropertyChanged("AdditionalTextCodesTempList");
+		}
 
 
         public FeaturesControl FeaturesControl;
@@ -1790,7 +1914,10 @@ namespace MeatadataGeneratorTool
         {
             AdditionalFeaturesList.Remove(item);
             FirePropertyChanged("AdditionalFeaturesList");
-        }
+
+			AdditionalFeaturesTempList.Remove(item);
+			FirePropertyChanged("AdditionalFeaturesTempList");
+		}
 
 
 
@@ -2343,7 +2470,12 @@ namespace MeatadataGeneratorTool
                     foreach (var item in ObsList)
                     {
                         this.ValidateObjectField(item);
-                    }
+
+						if (!DisplayLookUpFieldsList.Any(f => f.FieldName == item.FieldName) && !DisplayLocalLookUpFieldsList.Any(f => f.FieldName == item.FieldName))
+						{
+							item.DisplayInSearchWindowList = false;
+						}
+					}
                 }
                 else
                 {

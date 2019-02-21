@@ -226,21 +226,26 @@ export class NewARInvoiceComponent extends BaseComponent {
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_Constituent(isBillToHasConstituentEnabled: boolean) {
-        //var isFieldVisible = false;
+        var isFieldVisible = false;
         var isFieldtEnabled = false;
 
         if (FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent")) {
-            if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") {
-                //isFieldVisible = true;
-                this.IsConstituentInvoiceVisible = false;
+
+            isFieldVisible = true;
+            isFieldtEnabled = true;
+
+            if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") {                
+                isFieldVisible = false;
             }
 
-            isFieldtEnabled = isBillToHasConstituentEnabled;
+            //isFieldtEnabled = isBillToHasConstituentEnabled;
+
             if (AppTool.IsNullOrEmpty(this.BillToId)) {
                 isFieldtEnabled = false;
             }
         }
 
+        this.IsConstituentInvoiceVisible = isFieldVisible;
         this.UIProperties.SetEnabled("IsConstituentInvoice", this.ObjectTableName, isFieldtEnabled);
         //this.UIProperties.SetVisibility("IsConstituentInvoice", this.ObjectTableName, isFieldVisible);
     }
