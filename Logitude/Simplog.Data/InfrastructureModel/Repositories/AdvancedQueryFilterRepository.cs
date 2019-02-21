@@ -114,10 +114,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public List<AdvancedQueryFilter> GetAdvancedQueryFiltersByTenantAndUserAndQuery(int tenant, string userId, string queryId)
         {
             List<AdvancedQueryFilter> advancedFilters = (from a in context.AdvancedQueryFilters
-                                                        where (a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId) || a.Tenant == 0
+                                                        where (a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId) // || a.Tenant == 0
                                                         select a).ToList();                                  
             
             return advancedFilters;
         }
+         
     }
 }

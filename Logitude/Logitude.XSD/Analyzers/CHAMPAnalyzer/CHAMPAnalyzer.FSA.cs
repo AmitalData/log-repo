@@ -31,7 +31,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         private CHAMP17.StatusAnswer myFSA;
         private CHAMP17.SplitConsignment mySplitConsignment;
         private void AnalyzeBaseData_FSA()
-        {
+        {          
             this.myFSA = (CHAMP17.StatusAnswer)myEnvelope.Item;
             this.mySplitConsignment = myFSA.SplitConsignment[0];            
             this.myPrefix = mySplitConsignment.MasterAWBConsignmentDetail.AWBIdentification.AirlinePrefix;
@@ -61,7 +61,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             entityPM.IsUpdatedByChampAnalyzer = true;
 
             PortRepository portRepository = new PortRepository(myCommonContext);
-            DocumentRepository documentrepository = new DocumentRepository(myCommonContext);
+            //DocumentRepository documentrepository = new DocumentRepository(myCommonContext);
 
             string myFromPortCode = null;
             string myToPortCode = null;

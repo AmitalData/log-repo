@@ -59,6 +59,7 @@ export class BIReportPreviewComponent implements OnInit {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
             this.IsFilterValueChanged = true;
+            this.timerToken = setTimeout(() => this.IsFilterValueChanged = false, 500);
         });
     }
     ngOnInit() {
@@ -607,7 +608,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     RunReportButtonClicked() {
-        this.IsFilterValueChanged = false;
+        //this.IsFilterValueChanged = false;
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
     public  HasValidationError = false; 
