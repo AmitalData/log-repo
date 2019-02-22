@@ -105,6 +105,7 @@ namespace CommunicationWorkerRole
                 {
                     if (!General.IsUpdating())
                     {
+                        APILogsPM LogPM = null;
                         try
                         {
                             //int tenant = 0;
@@ -128,7 +129,7 @@ namespace CommunicationWorkerRole
                                 webFreightContext = WebFreightContext.GetContext(tenant);
                                 var aPILogsRepository = new APILogsRepository(webFreightContext);
                                 APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(CorrelationId, tenant);
-                                APILogsPM LogPM;
+                                
                                 bool IsNewLog = false;
                                 if (Log == null)
                                 {
@@ -182,6 +183,9 @@ namespace CommunicationWorkerRole
                                     DocumentsFilingPM DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingId, tenant);
                                     if (!string.IsNullOrEmpty(ShipmentId) && !DocumentFilingPM.IsDeleted)
                                     {
+                                        LogPM.Tenant = tenant;
+                                        LogPM.Subject = "Send New Document To Importer By ImporterShipmentDocuments Controller";
+                                        LogPM.Refrence = DocumentFilingPM.Code;
                                         ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                                         ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                                         ShipmentPM ForwarderShipment = shipmentQuery.GetSinglePM(ShipmentId, tenant);
@@ -881,8 +885,36 @@ namespace CommunicationWorkerRole
                         }
                         catch (Exception ex)
                         {
+                            if (LogPM != null)
+                            {
+                                //LogPM.CustomerId = CustomerId;
+                                //LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                try
+                                {
+                                    string errorMessage = ex.Message + Environment.NewLine;
+
+                                    if (ex.InnerException != null)
+                                    {
+
+                                        errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+
+                                    }
+
+                                    errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+                                    var msg = ex.Message + DateTime.Now;
+                                    LogPM.DiagnosticLog = msg;
+                                    LogPM.ExceptionsMessage = errorMessage;
+                                    LogPM.QueueType = "Document";
+                                    apiLogsService.Create(LogPM);
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionHandler.HandleException(e, DateTime.Now, 0, null, "importer Documents worker role start", null, null);
+                                }
+
+                            }
                             ConnectClient();
-                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
+                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer Documents worker role start", null, null);
                             Thread.Sleep(10000);
                         }
 
