@@ -577,22 +577,15 @@ namespace WebFreight.Web.Helpers
             int count = dataTable.Columns.Count;
             List<DataColumn> deletedColumns = new List<DataColumn>();
 
-            // Data Table Format - Index  
-            for (var i = 0; i < count; i++)
+            var columnNames = bITabularViewSettings.Columns.OrderBy(a => a.Index).Select(d=>d.Name).ToList(); 
+            int columnIndex = 0;
+            foreach (var columnName in columnNames)
             {
-                var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[i].ColumnName).FirstOrDefault();
-
-                if (agColumn != null)
-                {
-                    dataTable.Columns[i].SetOrdinal(agColumn.Index);
-                    if (!agColumn.IsChecked)
-                    {
-                        deletedColumns.Add(dataTable.Columns[i]);
-                    }
-                }
+                dataTable.Columns[columnName].SetOrdinal(columnIndex);
+                columnIndex++;
             }
 
-            if(deletedColumns.Count > 0)
+            if (deletedColumns.Count > 0)
             {
                 foreach(var item in deletedColumns)
                 {
