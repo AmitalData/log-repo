@@ -74,7 +74,7 @@ export class NewViewComponent {
    public SpotlightFeatureEnabled: boolean = false;
     GeneralEntitiesArgs: GeneralEntitiesArgs;
     pubSubAdvanceQueryFiltersService: PubSubService;
-    ValidationErrorsList: string[]; 
+    ValidationErrorsList: string[] = []; 
     CreateBtnText: string = TextCodeTranslator.Translate("General.B.Create");
     public serviceArgs: ServiceArgs;
     public _http: Http;
@@ -190,26 +190,37 @@ export class NewViewComponent {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
-                this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
-                this.SharedByUserName = this.EntityPM.SharedByUserName;
-                this.SharedByUserEmail = this.EntityPM.SharedByUserEmail;
 
-                this.FillSharedWithUsersItemsSource();
-                this.SetSelectedSharedValue();
-                this.CheckEditSharedViewsFeature();                
+                if (this.EntityPM) {
+                    this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
+                    this.SharedByUserName = this.EntityPM.SharedByUserName;
+                    this.SharedByUserEmail = this.EntityPM.SharedByUserEmail;
 
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId) && this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId) {
-                    this.IsSharedByVisible = true;
+                    this.FillSharedWithUsersItemsSource();
+                    this.SetSelectedSharedValue();
+                    this.CheckEditSharedViewsFeature();
+
+                    if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId) && this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId) {
+                        this.IsSharedByVisible = true;
+                    }
+
+                    if (FeatureLocator.HasFeaturePermession("Shipment", "CSPV") && (this.EntityPM.ObjectTableName == "Shipment" || this.EntityPM.ObjectTableName == "Master")) {
+                        this.SpotlightFeatureEnabled = true;
+                    }
+
+                    this.ShowInSpotLight = this.EntityPM.SpotlightModeActivated;
                 }
 
-                if (FeatureLocator.HasFeaturePermession("Shipment", "CSPV") && (this.EntityPM.ObjectTableName == "Shipment" || this.EntityPM.ObjectTableName == "Master")) {
-                    this.SpotlightFeatureEnabled = true;
+                else {
+                    this.ValidationErrorsList.push("This View was deleted");
                 }
 
-                this.ShowInSpotLight = this.EntityPM.SpotlightModeActivated;
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
-
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            else {
+                //show error
+                SessionLocator.CurrentSession.StopBusyIndicator();
+            }
         });
     }
 
@@ -287,92 +298,93 @@ export class NewViewComponent {
         var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
 
         var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
+
         this.addedQueryColumnList = [];
         this.removedQueryColumnList = [];
-        if (this.IsNew) {
-            if (FeatureLocator.HasFeaturePermession("Shipment", "CSPV") && (currentQuery.ObjectTableName == "Shipment" || currentQuery.ObjectTableName == "Master")) {
-                this.SpotlightFeatureEnabled = true;
-            }
 
-            this.ShowInSpotLight = currentQuery.SpotlightModeActivated;
-        }
-    
-        //queriesByUser = TenantContext.Current.Queries.Where(d => d.UserId == TenantContext.Current.LoggedContactId).ToList();
-        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
-            .subscribe((response : any) => {
-                this.queryColumnsList = response.json();
-                // this.queryColumnsList = TenantContext.Current.GeneralContext.QueryColumnPMs.Where(d => d.QueryId == QueryId && ((d.UserId == TenantContext.Current.LoggedContactId && d.Tenant == TenantContext.Current.Id)) && d.DisplayInList).OrderBy(d => d.IndexOrder).ToList();
-                this.queryColumnsList = this.queryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-
-                if (this.queryColumnsList.length == 0) // Copy query columns to my tenant
-                {
-                    var zeroColumnsList: any[] = [];
-                    this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
-                        .subscribe((response) => {
-                            zeroColumnsList = response.json();
-                            zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-                            zeroColumnsList.forEach((querycolumn, key) => {
-                                var newcolumn = new QueryColumnPM();
-
-                                newcolumn.Tenant = SessionInfo.LoggedUserTenant;
-                                newcolumn.UserId = SessionInfo.LoggedUserId;
-                                newcolumn.DisplayInList = querycolumn.DisplayInList;
-                                newcolumn.ObjectFieldName = querycolumn.ObjectFieldName;
-                                newcolumn.ColumnWidth = querycolumn.ColumnWidth;
-                                newcolumn.ConverterName = querycolumn.ConverterName;
-                                newcolumn.DataTemplateName = querycolumn.DataTemplateName;
-                                newcolumn.ColumnHeaderTemplateName = querycolumn.ColumnHeaderTemplateName;
-                                newcolumn.IndexOrder = querycolumn.IndexOrder;
-                                newcolumn.ObjectFieldDataTypeCode = querycolumn.ObjectFieldDataTypeCode;
-                                newcolumn.ObjectFieldFieldLableTextCodeDefaultText = querycolumn.ObjectFieldFieldLableTextCodeDefaultText;
-                                newcolumn.ObjectFieldId = querycolumn.ObjectFieldId;
-                                newcolumn.ObjectFieldListLabelTextCodeCode = querycolumn.ObjectFieldListLabelTextCodeCode;
-                                newcolumn.QueryCode = querycolumn.QueryCode;
-                                newcolumn.QueryId = querycolumn.QueryId;
-                                newcolumn.QueryObjectTableName = querycolumn.QueryObjectTableName;
-                                newcolumn.ObjectFieldFieldLableTextCodeCode = querycolumn.ObjectFieldFieldLableTextCodeCode;
-                                this.queryColumnsList.push(newcolumn);
-                                this.addedQueryColumnList.push(newcolumn);
-                            });
-                        });
+        if (currentQuery) {
+            if (this.IsNew) {
+                if (FeatureLocator.HasFeaturePermession("Shipment", "CSPV") && (currentQuery.ObjectTableName == "Shipment" || currentQuery.ObjectTableName == "Master")) {
+                    this.SpotlightFeatureEnabled = true;
                 }
 
+                this.ShowInSpotLight = currentQuery.SpotlightModeActivated;
+            }
 
-                this.staticColumnsList = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+            this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
+                .subscribe((response: any) => {
+                    this.queryColumnsList = response.json();
+                    this.queryColumnsList = this.queryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
-                var listColumns = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+                    if (this.queryColumnsList.length == 0) {
+                        var zeroColumnsList: any[] = [];
+                        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
+                            .subscribe((response) => {
+                                zeroColumnsList = response.json();
+                                zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+                                zeroColumnsList.forEach((querycolumn, key) => {
+                                    var newcolumn = new QueryColumnPM();
 
-
-                this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery.QuerySection || d.ValidForQuerySection2 == currentQuery.QuerySection) || d.IsCustom == true));
-
-
-                this.unselected = [];
-                this.unselectedObjectFields.forEach((field, key) => {
-                    var xx = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && q.ObjectFieldId == field.Id && field.FieldName != "TimeFrameFilter");
-                    if (xx.length == 0) {
-                        this.unselected.push(field);
+                                    newcolumn.Tenant = SessionInfo.LoggedUserTenant;
+                                    newcolumn.UserId = SessionInfo.LoggedUserId;
+                                    newcolumn.DisplayInList = querycolumn.DisplayInList;
+                                    newcolumn.ObjectFieldName = querycolumn.ObjectFieldName;
+                                    newcolumn.ColumnWidth = querycolumn.ColumnWidth;
+                                    newcolumn.ConverterName = querycolumn.ConverterName;
+                                    newcolumn.DataTemplateName = querycolumn.DataTemplateName;
+                                    newcolumn.ColumnHeaderTemplateName = querycolumn.ColumnHeaderTemplateName;
+                                    newcolumn.IndexOrder = querycolumn.IndexOrder;
+                                    newcolumn.ObjectFieldDataTypeCode = querycolumn.ObjectFieldDataTypeCode;
+                                    newcolumn.ObjectFieldFieldLableTextCodeDefaultText = querycolumn.ObjectFieldFieldLableTextCodeDefaultText;
+                                    newcolumn.ObjectFieldId = querycolumn.ObjectFieldId;
+                                    newcolumn.ObjectFieldListLabelTextCodeCode = querycolumn.ObjectFieldListLabelTextCodeCode;
+                                    newcolumn.QueryCode = querycolumn.QueryCode;
+                                    newcolumn.QueryId = querycolumn.QueryId;
+                                    newcolumn.QueryObjectTableName = querycolumn.QueryObjectTableName;
+                                    newcolumn.ObjectFieldFieldLableTextCodeCode = querycolumn.ObjectFieldFieldLableTextCodeCode;
+                                    this.queryColumnsList.push(newcolumn);
+                                    this.addedQueryColumnList.push(newcolumn);
+                                });
+                            });
                     }
+
+
+                    this.staticColumnsList = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+
+                    var listColumns = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+
+
+                    this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery.QuerySection || d.ValidForQuerySection2 == currentQuery.QuerySection) || d.IsCustom == true));
+
+
+                    this.unselected = [];
+                    this.unselectedObjectFields.forEach((field, key) => {
+                        var xx = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && q.ObjectFieldId == field.Id && field.FieldName != "TimeFrameFilter");
+                        if (xx.length == 0) {
+                            this.unselected.push(field);
+                        }
+                    });
+
+
+                    //this.UnSelectedQueryColumnsList.ItemsSource = unselected.OrderBy(c => c.FieldName);
+                    this.OrderedQueryColumnsList = [];
+                    this.unSelectedList = this.unselected.sort((a, b) => { return (a.FieldName.toLowerCase() === b.FieldName.toLowerCase()) ? 0 : (a.FieldName.toLowerCase() < b.FieldName.toLowerCase()) ? -1 : 1 });
+                    this.queryColumnsList.forEach((qc, key) => {
+                        this.OrderedQueryColumnsList.push(new QueryColumnDetails(qc));
+                    });
+
+                    this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+                    this.CD.detectChanges();
+                    //SelectedQueryColumnsList.ItemsSource = OrderedQueryColumnsList;
+                    this.Fixedunselected = this.unSelectedList;
+
+                    this.IsEnabled = true;
+                    this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
+                    this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
                 });
-
-
-                //this.UnSelectedQueryColumnsList.ItemsSource = unselected.OrderBy(c => c.FieldName);
-                this.OrderedQueryColumnsList = [];
-                this.unSelectedList = this.unselected.sort((a, b) => { return (a.FieldName.toLowerCase() === b.FieldName.toLowerCase()) ? 0 : (a.FieldName.toLowerCase() < b.FieldName.toLowerCase()) ? -1 : 1 });
-                this.queryColumnsList.forEach((qc, key) => {
-                    this.OrderedQueryColumnsList.push(new QueryColumnDetails(qc));
-                });
-
-                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-                this.CD.detectChanges();
-                //SelectedQueryColumnsList.ItemsSource = OrderedQueryColumnsList;
-                this.Fixedunselected = this.unSelectedList;
-
-                this.IsEnabled = true;
-                this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
-                this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
-            });
-        this.QueryFilterChangedAction(this.QueryId);
-        var xx = this.NEWallFilterFieldsClass;
+            this.QueryFilterChangedAction(this.QueryId);
+            var xx = this.NEWallFilterFieldsClass;
+        }
     }
 
     public IsChooseUsersVisible: boolean = false;
@@ -891,50 +903,57 @@ export class NewViewComponent {
         this.FieldsValues = new FieldsValues();
         this.currentQuery = window.Queries.filter(q => q.Id == QueryID)[0];
 
-        if (this.currentQuery.DisplayAsCustom) {
-            //btnEditView.IsEnabled = true;
+        if (!this.currentQuery) {
+            
         }
 
-        if (this.ObjectFields) {
-
-            this.allFilterFields = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
-
-            this.constantFilterFieldsList = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
-
-            this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection)), this.currentQuery.Id, myResult);
-
-            this.NEWallFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true)), this.currentQuery.Id, myResult);
-
-        }
         else {
-            this.allFilterFields = [];
-            this.constantFilterFieldsList = [];
 
-            this.NEWallFilterFieldsClass.AddFiltersList([], this.currentQuery.Id, myResult);
-        }
+            if (this.currentQuery.DisplayAsCustom) {
+                //btnEditView.IsEnabled = true;
+            }
+
+            if (this.ObjectFields) {
+
+                this.allFilterFields = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
+
+                this.constantFilterFieldsList = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
+
+                this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection)), this.currentQuery.Id, myResult);
+
+                this.NEWallFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true)), this.currentQuery.Id, myResult);
+
+            }
+            else {
+                this.allFilterFields = [];
+                this.constantFilterFieldsList = [];
+
+                this.NEWallFilterFieldsClass.AddFiltersList([], this.currentQuery.Id, myResult);
+            }
 
 
-        this.filterFields.AddFiltersList(this.allFilterFields, this.currentQuery.Id, myResult);
+            this.filterFields.AddFiltersList(this.allFilterFields, this.currentQuery.Id, myResult);
 
-        this.constantFilterFields.AddFiltersList(this.constantFilterFieldsList, this.currentQuery.Id, myResult);
+            this.constantFilterFields.AddFiltersList(this.constantFilterFieldsList, this.currentQuery.Id, myResult);
 
-        this.fieldsStaticList = this.NEWallFilterFieldsClass.FilterFields;
+            this.fieldsStaticList = this.NEWallFilterFieldsClass.FilterFields;
 
 
-        this.timeFrameFields = this.timeFilterFieldsClass.FilterFields;//fieldsStaticList.Where(d => d.ObjectField.IsTimeFrameFilter == true).ToList();
-        var OFPM = new ObjectFieldPM();
-        OFPM.FieldName = "NoFilter";
-        OFPM.FullNameTextCodeCode = "No Filter";
+            this.timeFrameFields = this.timeFilterFieldsClass.FilterFields;//fieldsStaticList.Where(d => d.ObjectField.IsTimeFrameFilter == true).ToList();
+            var OFPM = new ObjectFieldPM();
+            OFPM.FieldName = "NoFilter";
+            OFPM.FullNameTextCodeCode = "No Filter";
 
-        this.noFiltersField = new FilterField(OFPM, this.currentQuery.Id, true, myResult, this, this.pubSubAdvanceQueryFiltersService);
-        this.timeFrameFields.push(this.noFiltersField);
-        //if (!this.IsNew) {
+            this.noFiltersField = new FilterField(OFPM, this.currentQuery.Id, true, myResult, this, this.pubSubAdvanceQueryFiltersService);
+            this.timeFrameFields.push(this.noFiltersField);
+            //if (!this.IsNew) {
             this.advancedQueryFiltersList = myResult.filter(q => q.QueryId == QueryID);
-        //}
-        //else {
-        //    this.advancedQueryFiltersList = [];
-        //}
-        this.fillqueryfilters();
+            //}
+            //else {
+            //    this.advancedQueryFiltersList = [];
+            //}
+            this.fillqueryfilters();
+        }
     }
 
     fillqueryfilters() {

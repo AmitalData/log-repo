@@ -163,6 +163,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          AggregationTypeCode = a.AggregationTypeCode,
                                          DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                                          DisplayName = item.Name + " " + a.Name,
+                                         DimensionTableDisplayName = item.Name,
                                          //Category1 = a.Category1,
                                          //Category2 = a.Category2,
                                          LOVAdditionalColumns = a.LOVAdditionalColumns,

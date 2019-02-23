@@ -479,6 +479,13 @@ export class LoginComponent implements OnInit {
                     //2
                 });
 
+                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
+                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                        this.IncreaseProgressBar("General Resources");
+                        //26
+                    });
+                });
+
                 // LastFilters
                 this.loginService.GetLastFilters().subscribe(myResult => {
                     LastFilterClass.MapJSON(myResult);
@@ -709,12 +716,12 @@ export class LoginComponent implements OnInit {
                     });
                 }
 
-                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
-                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
-                        this.IncreaseProgressBar();
-                        //26
-                    });
-                });
+                //CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
+                //    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                //        this.IncreaseProgressBar();
+                //        //26
+                //    });
+                //});
             });
         });
 
@@ -867,10 +874,10 @@ export class LoginComponent implements OnInit {
     private LastLoadSize: number = 0;
     public LoadingCounter: number = 0;
     public CompletedLoadsCount = 0;
-    IncreaseProgressBar() {
-
+    IncreaseProgressBar(loadOPName:string = "") {
+        console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
         if (this.TotalNumberOfLoads == 0) {
-            this.TotalNumberOfLoads = 33;
+            this.TotalNumberOfLoads = 35;
 
             if (!SessionLocator.UseCachedData) {
                 this.TotalNumberOfLoads += 1;
@@ -907,6 +914,7 @@ export class LoginComponent implements OnInit {
             }
 
             if (this.CompletedLoadsCount == this.TotalNumberOfLoads) {
+                console.log("===============>Changing Page<==================");
                 ServiceLocator.RulesValidator = new RulesValidator();
                 this.timerToken = setTimeout(() => this.ChangePage(), 1000);
             }

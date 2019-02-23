@@ -59,6 +59,7 @@ export class BIReportPreviewComponent implements OnInit {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
             this.IsFilterValueChanged = true;
+            //this.timerToken = setTimeout(() => this.IsFilterValueChanged = false, 500);
         });
     }
     ngOnInit() {
@@ -126,7 +127,7 @@ export class BIReportPreviewComponent implements OnInit {
             if (sortsList != null) {
                 sortsList = sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 });
                 this.IsSorting = true;
-                this.agGrid.api.setSortModel(sortsList);
+              //  this.agGrid.api.setSortModel(sortsList);
             }
             //var params = {
             //    force: true,
@@ -572,13 +573,13 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.IsBIReportEditScreen = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
-        logWindow.Height = 820;
+        logWindow.Height = 780;
         logWindow.Title = "Query Builder";
         logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if ((d != null && d != "cancel")) {
-                    this.DWQueryData = s.DWQueryData;
+                    this.DWQueryData = s.QueryData;
                     if (this.DWQueryData.Filters) {
                         var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
                         var temp = [];

@@ -115,7 +115,7 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
 						 ConsolidatorCards.EnglishName AS ConsolidatorName, ConsolidatorCards.Notes AS ConsolidatorNote,
 						 FreightForwarderCards.EnglishName AS FreightForwarderName, 
                          FreightForwarderCards.Notes AS FreightForwarderNote, ShipperCards.EnglishName AS ShipperName, ShipperCards.Notes AS ShipperNote, 
-                         ConsigneeCards.EnglishName AS ConsigneeName, ConsigneeCards.Notes AS ConsigneeNote, AgentComputedCards.EnglishName AS AgentName, 
+                         ConsigneeCards.EnglishName AS ConsigneeName, ConsigneeCards.Notes AS ConsigneeNote, AgentCards.EnglishName AS AgentName, 
                          AgentCards.Notes AS AgentNote, CustomAgentExportCards.EnglishName AS CustomAgentExportName, CustomAgentExportCards.Notes AS CustomAgentExportNote, 
                          CustomAgentImportCards.EnglishName AS CustomAgentImportName, CustomAgentImportCards.Notes AS CustomAgentImportNote, 
                          Notify1Cards.EnglishName AS Notify1Name, Notify1Cards.Notes AS Notify1Note, Notify2Cards.EnglishName AS Notify2Name, Notify2Cards.Notes AS Notify2Note, 

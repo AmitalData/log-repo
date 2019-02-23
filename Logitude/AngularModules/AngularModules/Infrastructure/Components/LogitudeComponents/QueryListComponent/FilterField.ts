@@ -98,7 +98,7 @@ export class FilterField extends BaseComponent {
 
         var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
         if (currentQuery != null) {
-            if (currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
+            if (!AppTool.IsNullOrEmpty(currentQuery.SharedByUserId) && currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
                 if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
                     if (this.ObjectField) {
                         this.TextFiltersEnabled = true;
@@ -379,7 +379,7 @@ export class FilterField extends BaseComponent {
                 this.TextValue = event;
             }
             if (this.TextValue != null && this.Filterchangeevent) {
-                this.Filterchangeevent.Stream.emit(this);
+                //this.Filterchangeevent.Stream.emit(this);
             }
         }
         else {
