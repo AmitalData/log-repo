@@ -326,6 +326,10 @@ namespace CommunicationWorkerRole
 
                                                         };
                                                         datainByte = storageservice.Read(fileInfo);
+                                                        if (datainByte == null)
+                                                        {
+                                                            throw new Exception("The physical file for this Document may be Damaged or not exists. ");
+                                                        }
 
                                                     }
                                                     #endregion
@@ -654,7 +658,7 @@ namespace CommunicationWorkerRole
                                                                         APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                                                                         if (EXC != null)
                                                                         {
-                                                                            var Failmsg = EXC.ErrorType + " Fail To Send New Document To Importer " + DateTime.Now;
+                                                                            var Failmsg = EXC.ErrorType + " Fail To Send New Document To Importer - Customer Side " + DateTime.Now;
                                                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
                                                                             throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
                                                                         }
@@ -711,7 +715,7 @@ namespace CommunicationWorkerRole
                                                             APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                                                             if (EXC != null)
                                                             {
-                                                                var Failmsg = EXC.ErrorType + " Fail To Send Document Updates To Importer " + DateTime.Now;
+                                                                var Failmsg = EXC.ErrorType + " Fail To Send Document Updates To Importer - Customer Side" + DateTime.Now;
                                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
                                                                 throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
                                                             }
@@ -733,6 +737,18 @@ namespace CommunicationWorkerRole
                                         {
                                             //throw new Exception("Customer Has No Access To send Document");
                                             queueservice.CompleteAsFailed();
+                                            var Failmsg = "There is no Customer tenant to send this document to";
+                                            if (IsNewLog)
+                                            {
+                                                LogPM.Subject = "Send New Document To Importer By ImporterShipmentDocuments Controller";
+                                                LogPM.Tenant = tenant;
+                                                apiLogsService = new APILogsService(webFreightContext, tenant);
+                                                LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                                LogPM.QueueType = "Document";
+                                                apiLogsService.Create(LogPM);
+                                                IsNewLog = false;
+                                            }
+                                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, null, Failmsg, Failmsg);
                                         }
 
                                     }
@@ -807,7 +823,7 @@ namespace CommunicationWorkerRole
                                                 APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
                                                 if (EXC != null)
                                                 {
-                                                    var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
+                                                    var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant - Customer Side" + DateTime.Now;
                                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
                                                     throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
                                                 }
@@ -866,6 +882,10 @@ namespace CommunicationWorkerRole
                                                 apiLogsService.Create(LogPM);
                                                 IsNewLog = false;
                                             }
+                                            //else if ("The physical file for this Document may be Damaged or not exists. ")
+                                            //{
+
+                                            //}
                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
                                         }
 

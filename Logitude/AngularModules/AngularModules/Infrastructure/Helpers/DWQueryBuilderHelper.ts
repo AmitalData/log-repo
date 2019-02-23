@@ -51,6 +51,9 @@ export class DWQueryBuilderHelper   {
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field);
             view.FilterChanged = this.FilterValueChanged;
+            if (AppTool.IsNullOrEmpty(view.DimensionTableDisplayName)) {
+                view.DimensionTableDisplayName = field.ParentCode;
+            }
             if (field.FilterItems.length == 0) {
                 if (field.DWObjectTableCode.indexOf("DIM_") != -1) {
                     if (view.Code == '[Full Date]') {
@@ -386,6 +389,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.OperationCode = newValue.Code;
         this.OperationName = newValue.Name;
         this.operation = newValue;
+        this.FilterChanged.emit("FilterValueChanged");
     }
 
     private andOr: string;
@@ -470,6 +474,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                 this.MyParentClass.SaveChanges();
             }
         }
+       
     }
 
     LoadItems(DWObjectField: any) {
