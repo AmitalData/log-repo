@@ -37,6 +37,7 @@ using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.EntityMapping;
 using Logitude.TimeManagement.Data.EntityMapping;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.EntityMapping;
 
 namespace Logitude.OracleDatabaseMigration.LogitudeModel
 {
@@ -3335,13 +3336,93 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         #endregion
 
 
-        public IDbSet<SharedLogisticsSetting> SharedLogisticsSettings
+       
+
+
+        #region Infrastructure Generated
+        public IDbSet<Toggle> Toggles
         {
             get;
             set;
 
         }
 
+        public IDbSet<FeatureToggle> FeatureToggle
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<BIReport> BIReports
+        {
+            get;
+            set;
+
+        }
+        public IDbSet<BIReportsType> BIReportsTypes
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<BusinessRole> BusinessRoles
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<BusinessProcessQueue> BusinessProcessQueues
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<Team> Teams
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<LBPTeamMember> LBPTeamMembers
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<BatchTaskExecution> BatchTaskExecutions
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<BatchTaskExecutionStatus> BatchTaskExecutionStatus
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<SharedLogisticsSetting> SharedLogisticsSettings
+        {
+            get;
+            set;
+
+        }
+        #endregion
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             #region Social
@@ -4542,6 +4623,21 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Configurations.Add(new MetodoPagoMap());
+
+            #region Infrastructure Generated
+            modelBuilder.Configurations.Add(new ToggleMap());
+            modelBuilder.Configurations.Add(new FeatureToggleMap());
+            modelBuilder.Configurations.Add(new BIReportMap());
+            modelBuilder.Configurations.Add(new BIReportsTypeMap());
+            modelBuilder.Configurations.Add(new BusinessRoleMap());
+            modelBuilder.Configurations.Add(new BusinessProcessQueueMap());
+            modelBuilder.Configurations.Add(new TeamMap());
+            modelBuilder.Configurations.Add(new LBPTeamMemberMap());
+            modelBuilder.Configurations.Add(new TeamMemberBusinessRoleMap());
+            modelBuilder.Configurations.Add(new BatchTaskExecutionMap());
+            modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
+            #endregion
 
             base.OnModelCreating(modelBuilder);
         }

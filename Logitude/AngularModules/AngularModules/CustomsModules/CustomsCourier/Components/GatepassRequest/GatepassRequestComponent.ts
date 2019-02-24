@@ -25,6 +25,7 @@ export class GatepassRequestComponent extends BaseComponent {
     ValidationErrorsList: any[] = [];
     OriginPortCode: string;
     OkButtonEnabled: boolean;
+    HeaderScreenHeight: any;
 
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
