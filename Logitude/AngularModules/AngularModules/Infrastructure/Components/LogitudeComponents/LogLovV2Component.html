@@ -743,9 +743,10 @@
                                     </li>
                                 </ul>
 
-                                <a href="javascript:;" *ngIf="ShowAddLink" (click)="OnAddValue()" [style.float]="isRTL ? 'left' : 'right'">
+                                <a href="javascript:;" *ngIf="ShowAddLink && !IsAddTypesVisible" (click)="OnAddValue()" [style.float]="isRTL ? 'left' : 'right'">
                                     <img src="./Images/Icons/plus.png">
                                     {{'General.B.Add' | TextCodeTranslationPipe}}</a>
+
                                 <a href="javascript:;" *ngIf="ShowSearchButton"  [style.float]="isRTL ? 'left' : 'right'" (click)="SearchButtonClicked()" style="margin-left: 8px;">{{'General.O.ViewAll'| TextCodeTranslationPipe}}</a>
 
 

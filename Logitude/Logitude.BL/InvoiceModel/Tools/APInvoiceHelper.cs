@@ -296,6 +296,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOBill.TxnDateSpecified = true;
                     QBOBill.DocNumber = invoice.InvoiceNumber;
                     QBOBill.Id = invoice.Id;
+                    QBOBill.domain = invoice.ExternalAccountingEntityId;
                     string notes = "";
                     if (!String.IsNullOrEmpty(invoice.MainEntityReference))
                     {
@@ -389,6 +390,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     List<APInvoiceLinePM> lines = new List<APInvoiceLinePM>();
                     lines = invoice.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                     QBOBill.Id = invoice.Id;
+                    QBOBill.domain = invoice.ExternalAccountingEntityId;
                     for (int i = 0; i < lines.Count; i++)
                     {
                         Line line = new Line();
