@@ -670,7 +670,7 @@
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'"
                                         [header]="'Accounting.O.ARP.Duedate' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="width: 100%;" style="text-align: center;"
+                                            <div style="width: 100%;" text-start
                                                 [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}">
                                                 {{item.DueDate | DateTimeToDatePipe}}
                                             </div>

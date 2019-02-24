@@ -379,7 +379,7 @@ export class FilterField extends BaseComponent {
                 this.TextValue = event;
             }
             if (this.TextValue != null && this.Filterchangeevent) {
-                //this.Filterchangeevent.Stream.emit(this);
+                this.Filterchangeevent.Stream.emit(this);
             }
         }
         else {

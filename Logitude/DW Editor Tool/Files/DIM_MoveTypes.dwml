@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <entity Id="&quot;adc6a3f8-d0e4-4341-9788-eb37b9386bfa&quot;" Code="&quot;DIM_MoveTypes&quot;" Name="&quot;DIM_MoveTypes&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="false">
   <fields>
-    <field Id="&quot;423a3ef0-95c1-4f51-bbb5-1e2ccb8b2e0e&quot;" Code="&quot;[Id_Number]&quot;" Name="&quot;Id_Number&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" />
+    <field Id="&quot;423a3ef0-95c1-4f51-bbb5-1e2ccb8b2e0e&quot;" Code="&quot;[Id_Number]&quot;" Name="&quot;Id_Number&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="false" LOVAdditionalColumns="&quot;[Code],[Name]&quot;" HideTree="false" />
     <field Id="&quot;83002a60-d496-476f-918c-97e964c0e6a4&quot;" Code="&quot;[Id]&quot;" Name="&quot;Id&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="15" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" />
     <field Id="&quot;f56c6881-6ba8-4b55-be55-5cc9a5b71e12&quot;" Code="&quot;[English Name]&quot;" Name="&quot;English Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="40" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" />
     <field Id="&quot;9f028906-2aa9-43da-b8e7-7f4128613149&quot;" Code="&quot;[Local Name]&quot;" Name="&quot;Local Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="40" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" />

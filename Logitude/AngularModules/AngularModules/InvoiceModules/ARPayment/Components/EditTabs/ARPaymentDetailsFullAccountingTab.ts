@@ -1404,6 +1404,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.ComputeOpenAmount();
             this.UpdateSummary();
 
+            this.originalPaymentOpenAmount = this.EntityPM.AmountInPaymentCurrency;
+            this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
+
             this.ItemsSource.Collection.forEach(item => {
                 item.SetUIProperties();
             });
