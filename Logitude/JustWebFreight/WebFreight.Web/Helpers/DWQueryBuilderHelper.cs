@@ -313,12 +313,12 @@ namespace WebFreight.Web.Helpers
                     if (!string.IsNullOrEmpty(field.DimensionTableDisplayName))
                     {
                         SelectStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
-                        GroupByStmt.Append(field.DWObjectTableCode + field.Code + "." + field.Code + ",");
+                        GroupByStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ",");
                     }
                     else
                     {
                         SelectStmt.Append(field.DWObjectTableCode + "." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
-                        GroupByStmt.Append(field.DWObjectTableCode + "." + field.Code + ",");
+                        GroupByStmt.Append("[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code + ",");
                     }
                    
                 }
