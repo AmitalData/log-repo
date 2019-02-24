@@ -2288,7 +2288,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem item = new QueryFilterItem();
             item.DisplayInList = true;
             item.FieldDataType = "Date";
-            item.FieldName = "Field4";
+            item.FieldName = "Field2";
             item.FieldValue = FromDate;
             item.FieldValue2 = toDate;
             item.IsCustomField = true;
