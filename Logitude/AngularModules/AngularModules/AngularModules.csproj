@@ -388,6 +388,7 @@
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\NumberFormatListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
