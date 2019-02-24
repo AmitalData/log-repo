@@ -163,7 +163,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             }
         }
 
-        this.ConnectedMasterText = "This master is connected to house shipments, can't edit " + this.FromTextCodeLabel + " or " + this.ToTextCodeLabel;
+        this.ConnectedMasterText = "This master is departed and connected to house shipments, can't edit " + this.FromTextCodeLabel + " or " + this.ToTextCodeLabel;
     }
 
     get IsCloseHouseInfoVisible() {
@@ -187,6 +187,8 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     public IsEditingEnabled: boolean = true;
     public IsEditingEntityEnabled: boolean = true;
     public IsPortsEditingEnabled: boolean = true;
+    public IsCloseMasterInfoVisible: boolean = false;
+
     SetUIProperties() {
         var isEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         this.IsEditingEntityEnabled = isEditingEnabled;
@@ -228,6 +230,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         var isPortVia1Enabled = false;
         var isPortVia2Enabled = false;
         var isPortVia3Enabled = false;
+        this.IsCloseMasterInfoVisible = false;
 
         if (this.IsEditingEnabled) {
 
@@ -252,6 +255,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
                 if (this.EntityPM.StatusWeight >= 60) {
                     isMainPortsEnabled = false;
+                    this.IsCloseMasterInfoVisible = true;
                 }
             }
 
