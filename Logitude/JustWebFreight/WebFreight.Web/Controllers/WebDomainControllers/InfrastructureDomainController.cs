@@ -1876,6 +1876,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IWebFreightContext webContext = WebFreightContext.GetContext(authToken.Tenant);
                 BIReportRepository repository = new BIReportRepository(objectContext);
                 DWQueryRepository dWQueryRepository = new DWQueryRepository(webContext);
+                DWSubQueryRepository dWSubQueryRepository = new DWSubQueryRepository(webContext);
 
                 BIReport BIReport = repository.GetSingle(Id, authToken.Tenant);
                 if (BIReport != null)
@@ -1884,9 +1885,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     repository.Remove(BIReport);
                     repository.SubmitChanges();
 
+                    DWSubQuery DWSubQuery = dWSubQueryRepository.GetSingleDWSubQueryByDWQueryId(queryId, authToken.Tenant);
                     DWQuery DWQuery = dWQueryRepository.GetSingleDWQuery(queryId, authToken.Tenant);
                     if(DWQuery != null)
                     {
+                        if (DWSubQuery != null)
+                        {
+                            dWSubQueryRepository.Remove(DWSubQuery);
+                        }
+                        
                         dWQueryRepository.Remove(DWQuery);
                         dWQueryRepository.SubmitChanges();
                     }

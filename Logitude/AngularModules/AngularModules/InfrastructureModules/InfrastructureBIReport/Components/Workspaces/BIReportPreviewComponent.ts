@@ -59,7 +59,7 @@ export class BIReportPreviewComponent implements OnInit {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
             this.IsFilterValueChanged = true;
-            this.timerToken = setTimeout(() => this.IsFilterValueChanged = false, 500);
+            //this.timerToken = setTimeout(() => this.IsFilterValueChanged = false, 500);
         });
     }
     ngOnInit() {
@@ -127,7 +127,7 @@ export class BIReportPreviewComponent implements OnInit {
             if (sortsList != null) {
                 sortsList = sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 });
                 this.IsSorting = true;
-                this.agGrid.api.setSortModel(sortsList);
+              //  this.agGrid.api.setSortModel(sortsList);
             }
             //var params = {
             //    force: true,
@@ -608,7 +608,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     RunReportButtonClicked() {
-        //this.IsFilterValueChanged = false;
+        this.IsFilterValueChanged = false;
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
     public  HasValidationError = false; 
