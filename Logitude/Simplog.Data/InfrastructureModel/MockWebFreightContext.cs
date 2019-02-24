@@ -1525,6 +1525,11 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
+        public IDbSet<NumberFormat> NumberFormats
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public IDbSet<Vessel> Vessels
         {
             get { throw new NotImplementedException(); }

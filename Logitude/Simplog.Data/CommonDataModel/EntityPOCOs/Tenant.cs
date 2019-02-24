@@ -166,6 +166,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int TenantEmailSendingQuota { get; set; }
         public bool AutoArchiveOnInvoice { get; set; }
 
+        public string NumberFormatCode { get; set; }
+
+        [ForeignKey("NumberFormatCode")]
+        public virtual NumberFormat NumberFormat { get; set; }
+
 
     }
 }
