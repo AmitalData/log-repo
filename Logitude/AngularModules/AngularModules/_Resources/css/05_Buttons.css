@@ -212,7 +212,9 @@
     cursor: pointer;
 }
 
-button:not(.ag-paging-button):not(#cmdLogin), .Button, .RedButton, .GreenButton, .EntityChangesButton {
+
+
+button:not(.ag-paging-button), .Button, .RedButton, .GreenButton, .EntityChangesButton {
     height: 22px;
     padding: 0 5px;
     /*width: 100%;*/

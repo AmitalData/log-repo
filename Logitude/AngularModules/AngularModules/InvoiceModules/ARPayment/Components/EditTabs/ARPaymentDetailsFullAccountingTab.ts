@@ -135,7 +135,22 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     originalPaymentOpenAmount:number;
     paymentAmountTotal:number = 0;
     amount2reconcileTotal:number = 0;;
-    IsEntityValid: boolean = true;
+    // IsEntityValid: boolean = true;
+
+
+
+    public get IsEntityValid() : boolean {
+
+        var _valid = true;
+
+        _valid = this.TransactionsList.Collection.every(d => d.isLineValid == true);
+
+        return _valid;
+    }
+    SetEntityValidity(){
+            SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = this.IsEntityValid;
+    }
+
 
     _loading: boolean = false;
     GetData(){
@@ -149,8 +164,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError)
                 {
-
-                    console.log();
 
                     var transactions = mm.Result.Result;
                     var tempItemSource: any[] = [];
@@ -1574,8 +1587,8 @@ export class TransactionLineModel extends BaseComponent {
         this.OriginalAmount = this.CalculateOriginalAmount();
         this.OriginalAmountCurrency = this.CalculatOriginalCurruncy();
     }
-
     //#region Properties
+
     public IconCode: string;
     public ReconciliationNumber: string;
 
@@ -1632,18 +1645,17 @@ export class TransactionLineModel extends BaseComponent {
             }
 
             //validate line
-            // if (this.parent.IsEntityValid) {
-                if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
-                    this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, TextStore.AmountMustBSmaller2OpenAmount);
-                    this.parent.IsEntityValid = true;
-                    this.isLineValid = true;
+            if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
+                this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, TextStore.AmountMustBSmaller2OpenAmount);
+                this.isLineValid = true;
+                this.parent.SetEntityValidity();
 
-                } else {
-                    this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, true, "valid");
-                    this.parent.IsEntityValid = false;
-                    this.isLineValid = false;
-                }
-            // }
+            } else {
+                this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, true, "valid");
+                this.isLineValid = false;
+                this.parent.SetEntityValidity();
+
+            }
 
             //update parent totals
             this.parent.CalculateTotals();

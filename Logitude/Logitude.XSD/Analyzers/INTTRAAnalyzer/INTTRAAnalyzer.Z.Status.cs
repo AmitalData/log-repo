@@ -301,6 +301,30 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             this.ShipmentRoutingLegCode = "Main";
                             location_From = this.RoutingLocations.Where(d => d.LocationType == INTTRA_Status.LocationType1LocationType.PortOfLoading).FirstOrDefault();
                             location_To = this.RoutingLocations.Where(d => d.LocationType == INTTRA_Status.LocationType1LocationType.PortOfDischarge).FirstOrDefault();
+
+                            if (location_From != null)
+                            {
+                                string CountryCode = location_From.LocationCountry;
+                                string CombinedCode = location_From.LocationCode.Value;
+                                string PortCode = CombinedCode.Substring(CountryCode.Length);
+
+                                if (PortCode != this.shipmentPM.MainCarriageFromPortCode)
+                                {
+                                    throw new Exception("Invalid Port Of Loading");
+                                }
+                            }
+
+                            if (location_To != null)
+                            {
+                                string CountryCode = location_To.LocationCountry;
+                                string CombinedCode = location_To.LocationCode.Value;
+                                string PortCode = CombinedCode.Substring(CountryCode.Length);
+
+                                if (PortCode != this.shipmentPM.MainCarriageToPortCode)
+                                {
+                                    throw new Exception("Invalid Port Of Discharge");
+                                }
+                            }
                         }
 
                         else
@@ -544,7 +568,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     {
                                         if (this.EventLocationCode == "VD")
                                         {
-                                            this.shipmentPM.Transshipment1ATD = EventLocationeDate;
+                                            if (this.shipmentPM.Transshipment1ATD == null)
+                                            {
+                                                this.shipmentPM.Transshipment1ATD = EventLocationeDate;
+                                            }
                                         }
 
                                         break;
@@ -570,7 +597,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     {
                                         if (this.EventLocationCode == "VA")
                                         {
-                                            this.shipmentPM.Transshipment1ATA = EventLocationeDate;
+                                            if (this.shipmentPM.Transshipment1ATA == null)
+                                            {
+                                                this.shipmentPM.Transshipment1ATA = EventLocationeDate;
+                                            }
                                         }
 
                                         break;
@@ -611,7 +641,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     {
                                         if (this.EventLocationCode == "VD")
                                         {
-                                            this.shipmentPM.MainCarriageATD = EventLocationeDate;
+                                            if (this.shipmentPM.MainCarriageATD == null)
+                                            {
+                                                this.shipmentPM.MainCarriageATD = EventLocationeDate;
+                                            }
                                         }
 
                                         break;
@@ -637,7 +670,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     {
                                         if (this.EventLocationCode == "VA")
                                         {
-                                            this.shipmentPM.MainCarriageATA = EventLocationeDate;
+                                            if (this.shipmentPM.MainCarriageATA == null)
+                                            {
+                                                this.shipmentPM.MainCarriageATA = EventLocationeDate;
+                                            }
                                         }
 
                                         break;

@@ -79,9 +79,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  SpotlightModeActivated = a.SpotlightModeActivated,
              }).FirstOrDefault();
 
-            SharedUserQueryQuery sharedUserQueryQuery = new SharedUserQueryQuery(tenant);
-            result.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(result.Id, tenant).ToList();            
-            
+            if (result != null)
+            {
+                SharedUserQueryQuery sharedUserQueryQuery = new SharedUserQueryQuery(tenant);
+                result.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(result.Id, tenant).ToList();
+            }
+
             return result;
         }
 
