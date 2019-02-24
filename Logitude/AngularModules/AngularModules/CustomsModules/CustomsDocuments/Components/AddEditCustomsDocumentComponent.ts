@@ -1,32 +1,32 @@
 declare var window;
-import {Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output}  from '@angular/core';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {DocumentsFilingPM}  from '../../../Common/EntityPMs/DocumentsFilingPM';
-import {CustomsDocumentPM} from '../../../Customs/EntityPMs/CustomsDocumentPM';
-import {CustomsDocumentsTicketPM} from '../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
-import {CustomsDocumentPointerPM} from '../../../Customs/EntityPMs/CustomsDocumentPointerPM';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {CustomsDocumentsTicketPMService} from '../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
-import {CustomsDocumentPMService} from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {AppTool, ArrayTool} from '../../../Infrastructure/Tools';
-import {ICustomsDocumentsController} from './ICustomsDocumentsController';
-import {ConnectedToItem} from './ConnectedToItem';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {CustDocTypeMetaDataWebService} from '../../../Customs/Services/WebServices/CustDocTypeMetaDataWebService';
-import {CustomDocumentTypeMetaDataPM} from '../../../Customs/EntityPMs/CustomDocumentTypeMetaDataPM';
-import {CustomsDocumentMetaDataValuePM} from '../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
-import {CustomsClosedTableListService} from '../../../Customs/Services/StandardLists/CustomsClosedTableListService';
-import {CustomsClosedTableList} from '../../../Customs/EntityLists/CustomsClosedTableList';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output } from '@angular/core';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { DocumentsFilingPM } from '../../../Common/EntityPMs/DocumentsFilingPM';
+import { CustomsDocumentPM } from '../../../Customs/EntityPMs/CustomsDocumentPM';
+import { CustomsDocumentsTicketPM } from '../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
+import { CustomsDocumentPointerPM } from '../../../Customs/EntityPMs/CustomsDocumentPointerPM';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { CustomsDocumentsTicketPMService } from '../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
+import { CustomsDocumentPMService } from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
+import { ICustomsDocumentsController } from './ICustomsDocumentsController';
+import { ConnectedToItem } from './ConnectedToItem';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { CustDocTypeMetaDataWebService } from '../../../Customs/Services/WebServices/CustDocTypeMetaDataWebService';
+import { CustomDocumentTypeMetaDataPM } from '../../../Customs/EntityPMs/CustomDocumentTypeMetaDataPM';
+import { CustomsDocumentMetaDataValuePM } from '../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
+import { CustomsClosedTableListService } from '../../../Customs/Services/StandardLists/CustomsClosedTableListService';
+import { CustomsClosedTableList } from '../../../Customs/EntityLists/CustomsClosedTableList';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-import {CustomDocumentViewerService} from '../../../Customs/Services/WebServices/CustomDocumentViewerService';
-import {CustomsSettingListService} from '../../../Customs/Services/StandardLists/CustomsSettingListService';
-import {CustomDocumentTypeListService} from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
+import { CustomDocumentViewerService } from '../../../Customs/Services/WebServices/CustomDocumentViewerService';
+import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { CustomDocumentTypeListService } from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
 
-@Component({ 
+@Component({
     moduleId: module.id,
     templateUrl: './AddEditCustomsDocumentComponent.html',
 })
@@ -71,11 +71,11 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 //        }
                 //    });
                 //}
-               // else {
-                    this.CustomsDocument.DocumentTypeCode = value;
-                    this.ClearAllMetaDataValues();
-                    this.InitializeMetaData(this.previousValueList);
-               // }
+                // else {
+                this.CustomsDocument.DocumentTypeCode = value;
+                this.ClearAllMetaDataValues();
+                this.InitializeMetaData(this.previousValueList);
+                // }
             }
             if (this.CustomsDocumentsTicket) {
                 this.CustomsDocumentsTicket.DocumentTypeCode = value;
@@ -314,12 +314,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     //    this.DisplayOnlyMessage = " המסך לתצוגה בלבד - סטטוס המסמך " + this.CustomsDocument.DocumentStatusName;
                     //}
                     //else {
-                        this.IsEditEnabled = false;
-                        this.IsMetaDataEditEnabled = false;
-                        this.IsDocumentTypeEnabled = false;
-                        this.IsSendDocumentEnabled = false;
-                        this.ViewDisableMessageVisibility = true;
-                        this.DisplayOnlyMessage = " המסך לתצוגה בלבד - סטטוס המסמך " + this.CustomsDocument.DocumentStatusName;
+                    this.IsEditEnabled = false;
+                    this.IsMetaDataEditEnabled = false;
+                    this.IsDocumentTypeEnabled = false;
+                    this.IsSendDocumentEnabled = false;
+                    this.ViewDisableMessageVisibility = true;
+                    this.DisplayOnlyMessage = " המסך לתצוגה בלבד - סטטוס המסמך " + this.CustomsDocument.DocumentStatusName;
                     //}
                 }
             }
@@ -368,7 +368,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     this.IsDocumentTypeEnabled = true;
                 }
             }
-          
+
         }
         //-----mohamma bug 34085***********
 
@@ -399,9 +399,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             var one = "1";
             var seven = "7";
             var statusCodes = ['1', '7'];
-            if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode)>-1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
+            if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode) > -1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
                 && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)
-                && !this.IsEntityDisplayOnly  && this.CustomsDocument.CurrentEntityId == this.ParentEntityId) {
+                && !this.IsEntityDisplayOnly && this.CustomsDocument.CurrentEntityId == this.ParentEntityId) {
                 this.IsActionButtonsEnabled = true;
             }
             else {
@@ -428,7 +428,15 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.ViewDisableMessageVisibility = false;
         this.DisplayOnlyMessage = null;
         this.IsActionButtonsEnabled = false;
-        // document varification 
+        
+ /// moved by mohammad to here because of maintenance board: 48882 CALL#325385 yaron saw the code too.
+        if (this.CustomsDocument) {
+            if (this.CustomsDocument.CustomsDocId && !isSendWithCustomsDocId) {
+                this.IsMetaDataEditEnabled = false;
+                this.IsSendDocumentEnabled = false;
+            }
+        }
+// document varification 
         if (this.CustomsDocumentsTicket) {
             if (this.CustomsDocumentsTicket.VerificationStatusTypeCode == '4' || this.CustomsDocumentsTicket.VerificationStatusTypeCode == '5') {
                 this.IsEditEnabled = false;
@@ -522,13 +530,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
         if (this.CustomsDocument) {
 
-            if (this.CustomsDocument.CustomsDocId) {
-                this.IsMetaDataEditEnabled = false;
-                this.IsSendDocumentEnabled = false;
-            }
 
             var statusCodes = ['1', '7'];
-            if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode)>-1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
+            if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode) > -1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
                 && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)
                 && !this.IsEntityDisplayOnly && this.CustomsDocument.CurrentEntityId == this.ParentEntityId) {
                 this.IsActionButtonsEnabled = true;
@@ -809,7 +813,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.SelectionCompleted(s);
             });
             this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly);
-           
+
         }
 
     }
@@ -950,7 +954,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             customsClosedTableListService.getAll().subscribe((resp: ServiceResponse) => {
                 this.customsClosedTableList = resp.Result;
                 customDocumentTypeListService.getSingle(this.CustomsDocument.DocumentTypeCode).subscribe((docTypeRes: ServiceResponse) => {
-                  
+
                     if (this.previousValueList != null) {
                         this.customDocumentTypeMetaDataList.forEach((metaData) => {
                             var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
@@ -1019,7 +1023,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     SelectionCompleted(args) {
-        
+
         this.RefereshConnectedInvoices();
     }
 
@@ -1069,8 +1073,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                         this.ValidationErrorsList = docRes.ErrorsArray;
                     }
                 });
-               
-                
+
+
             }
             else {
                 confirmWindow.Close();
@@ -1081,9 +1085,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     OnTextAreaKeyDown(event) {
 
         event.preventDefault();
-        
+
     }
-    
+
 }
 
 export class MetaDataViewModel extends BaseComponent {
@@ -1105,7 +1109,7 @@ export class MetaDataViewModel extends BaseComponent {
         super();
         if (!this.MetaDataValue) {
             this.MetaDataValue = new CustomsDocumentMetaDataValuePM(CustomsDocument);
-           
+
             this.MetaDataValue.CustomsDocumentId = this.CustomsDocument.DocumentsFilingId;
             this.MetaDataValue.MetaDataTypeCode = this.MetaDataType.MetaDataTypeCode;
             this.MetaDataValue.Tenant = SessionLocator.Tenant;
@@ -1118,7 +1122,7 @@ export class MetaDataViewModel extends BaseComponent {
             var lookUpTable = window.ObjectTables.filter(d => d.Id === currentClosedTable.ObjectTableId)[0];
             this.ValuesTableName = lookUpTable.Name;
         }
-        
+
 
         switch (MetaDataType.Format.toLocaleLowerCase()) {
             case "string": {
@@ -1146,7 +1150,7 @@ export class MetaDataViewModel extends BaseComponent {
                 {
                     this.controlType = 'boolean';
                     break;
-                }    
+                }
         }
     }
 
@@ -1170,7 +1174,7 @@ export class MetaDataViewModel extends BaseComponent {
                 year = year + currentMillinium;
             }
 
-            this.dateMetaDataValue = year + "." + this.ApplyPadding(month + "") + "." + this.ApplyPadding(day+"");
+            this.dateMetaDataValue = year + "." + this.ApplyPadding(month + "") + "." + this.ApplyPadding(day + "");
         }
     }
 
@@ -1185,7 +1189,7 @@ export class MetaDataViewModel extends BaseComponent {
 
             this.MetaDataValue.MetaDataValue = this.ApplyPadding(day + "") + "." + this.ApplyPadding(month + "") + "." + shortYear
         }
-        
+
     }
 
     ApplyPadding(str: string) {
@@ -1195,6 +1199,6 @@ export class MetaDataViewModel extends BaseComponent {
     }
 
 
-    
+
 }
 
