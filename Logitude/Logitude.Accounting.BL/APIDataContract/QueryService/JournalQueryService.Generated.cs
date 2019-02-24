@@ -57,27 +57,8 @@ using Logitude.Accounting.Data;
                 throw ex;
             }
         }
-
-        public Journal GetJournalByNumber(string number, int Tenant)
-        {
-            try
-            {
-
-
-                var temp = query.GetSingleJournalByNumber(number, Tenant);
-                if (temp == null)
-                    throw new ApplicationException("Journal with number " + number + " doesn't exist");
-
-                return JournalDataMapping(temp, Tenant);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public Journal JournalDataMapping(JournalPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		
+		public Journal JournalDataMapping(JournalPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -91,8 +72,7 @@ using Logitude.Accounting.Data;
 				   temp.ExternalNo = MyEntityPM.ExternalNo;
 				   temp.UpdateDate = MyEntityPM.UpdateDate;
 				   temp.ApproveDate = MyEntityPM.ApproveDate;
-				   temp.AccountingEntityReference = MyEntityPM.AccountingEntityReference;
-				   temp.VoidDate = MyEntityPM.VoidDate;			  
+				   temp.AccountingEntityReference = MyEntityPM.AccountingEntityReference;			  
 				   if(MyEntityPM.UpdatedByUserId != null)
 				   {
 					   UserQueryService UserService0 = new UserQueryService(Tenant);
@@ -101,57 +81,47 @@ using Logitude.Accounting.Data;
 					   				   }
 				   
 				   temp.ExternalSystem = MyEntityPM.ExternalSystem;
-				   temp.QueueId = MyEntityPM.QueueId;
-				   temp.IsVoided = MyEntityPM.IsVoided;			  
-				   if(MyEntityPM.VoidedByUserId != null)
-				   {
-					   UserQueryService UserService1 = new UserQueryService(Tenant);
-					   					   temp.VoidedByUser = UserService1.GetUserById(MyEntityPM.VoidedByUserId,Tenant); 
-			       
-					   				   }
-				   
 				   temp.OriginalJournal = MyEntityPM.OriginalJournalId;			  
 				   if(MyEntityPM.ApprovedByUserId != null)
 				   {
-					   UserQueryService UserService2 = new UserQueryService(Tenant);
-					   					   temp.ApprovedByUser = UserService2.GetUserById(MyEntityPM.ApprovedByUserId,Tenant); 
+					   UserQueryService UserService1 = new UserQueryService(Tenant);
+					   					   temp.ApprovedByUser = UserService1.GetUserById(MyEntityPM.ApprovedByUserId,Tenant); 
 			       
 					   				   }
-				   
-				   temp.VoidedByJournal = MyEntityPM.VoidedByJournalId;			  
+				   			  
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
-					   UserQueryService UserService3 = new UserQueryService(Tenant);
-					   					   temp.CreatedByUser = UserService3.GetUserById(MyEntityPM.CreatedByUserId,Tenant); 
+					   UserQueryService UserService2 = new UserQueryService(Tenant);
+					   					   temp.CreatedByUser = UserService2.GetUserById(MyEntityPM.CreatedByUserId,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.TypeCode != null)
 				   {
-					   JournalTypeQueryService JournalTypeService4 = new JournalTypeQueryService(Tenant);
-					   					   temp.JournalType = JournalTypeService4.GetJournalTypeByCode(MyEntityPM.TypeCode,Tenant); 
+					   JournalTypeQueryService JournalTypeService3 = new JournalTypeQueryService(Tenant);
+					   					   temp.JournalType = JournalTypeService3.GetJournalTypeByCode(MyEntityPM.TypeCode,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.StatusCode != null)
 				   {
-					   JournalStatusTypeQueryService JournalStatusTypeService5 = new JournalStatusTypeQueryService(Tenant);
-					   					   temp.JournalStatusType = JournalStatusTypeService5.GetJournalStatusTypeByCode(MyEntityPM.StatusCode,Tenant); 
+					   JournalStatusTypeQueryService JournalStatusTypeService4 = new JournalStatusTypeQueryService(Tenant);
+					   					   temp.JournalStatusType = JournalStatusTypeService4.GetJournalStatusTypeByCode(MyEntityPM.StatusCode,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.AccountingEntityCode != null)
 				   {
-					   AccountingEntityQueryService AccountingEntityService6 = new AccountingEntityQueryService(Tenant);
-					   					   temp.AccountingEntity = AccountingEntityService6.GetAccountingEntityByCode(MyEntityPM.AccountingEntityCode,Tenant); 
+					   AccountingEntityQueryService AccountingEntityService5 = new AccountingEntityQueryService(Tenant);
+					   					   temp.AccountingEntity = AccountingEntityService5.GetAccountingEntityByCode(MyEntityPM.AccountingEntityCode,Tenant); 
 			       
 					   				   }
 				   
 				   temp.AccountingEntityId = MyEntityPM.AccountingEntityId;
 				if(MyEntityPM.JournalLines != null && MyEntityPM.JournalLines.Count > 0)
 				{
-					 JournalLineQueryService JournalLineService7 = new JournalLineQueryService(Tenant);
-					 temp.JournalLines = JournalLineService7.JournalLineCustomDataMapping(MyEntityPM,MyEntityPM.JournalLines,Tenant);
+					 JournalLineQueryService JournalLineService6 = new JournalLineQueryService(Tenant);
+					 temp.JournalLines = JournalLineService6.JournalLineCustomDataMapping(MyEntityPM,MyEntityPM.JournalLines,Tenant);
 				}
 
 							 					
@@ -193,7 +163,6 @@ using Logitude.Accounting.Data;
 					temp.UpdateDate = MyEntity.UpdateDate;
 					temp.ApproveDate = MyEntity.ApproveDate;
 					temp.AccountingEntityReference = MyEntity.AccountingEntityReference;
-					temp.VoidDate = MyEntity.VoidDate;
 					UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.UpdatedByUser != null)
 					{
@@ -207,20 +176,6 @@ using Logitude.Accounting.Data;
 			
 					
 					temp.ExternalSystem = MyEntity.ExternalSystem;
-					temp.QueueId = MyEntity.QueueId;
-					temp.IsVoided = MyEntity.IsVoided;
-					UserQueryService VoidedByUserUserService = new UserQueryService(Tenant);
-					if(MyEntity.VoidedByUser != null)
-					{
-						var myVoidedByUserPM = VoidedByUserUserService.UserDataMappingAndValidatin(MyEntity.VoidedByUser,Tenant,ComputingPartnerName);
-												if(myVoidedByUserPM != null)
-						{
-							temp.VoidedByUserId = myVoidedByUserPM.Id;
-						}
-						 
-					}
-			
-					
 					temp.OriginalJournalId = MyEntity.OriginalJournal;
 					UserQueryService ApprovedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.ApprovedByUser != null)
@@ -234,7 +189,6 @@ using Logitude.Accounting.Data;
 					}
 			
 					
-					temp.VoidedByJournalId = MyEntity.VoidedByJournal;
 					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
@@ -286,8 +240,8 @@ using Logitude.Accounting.Data;
 					temp.AccountingEntityId = MyEntity.AccountingEntityId;
 					if(MyEntity.JournalLines != null && MyEntity.JournalLines.Count > 0)
 					{
-						JournalLineQueryService JournalLineService7 = new JournalLineQueryService(Tenant);
-						temp.JournalLines = JournalLineService7.JournalLineCustomDataMappingAndValidatin(MyEntity,MyEntity.JournalLines,Tenant,ComputingPartnerName);
+						JournalLineQueryService JournalLineService6 = new JournalLineQueryService(Tenant);
+						temp.JournalLines = JournalLineService6.JournalLineCustomDataMappingAndValidatin(MyEntity,MyEntity.JournalLines,Tenant,ComputingPartnerName);
 					}
 
 								 					   
