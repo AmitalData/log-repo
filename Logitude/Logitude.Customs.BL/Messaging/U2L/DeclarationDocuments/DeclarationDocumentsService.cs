@@ -160,6 +160,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
                     CustomsDocumentPM customsDocumentPM;
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    myCustomsDocumentUpdateService.OnCreating_InsertPerfectCustomsDocumentMetaDataValues = true;
                     CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQuery = new CustomsDocumentMetaDataValueQueryService(_context);
                     List<CustomsDocumentMetaDataValuePM> CustomsDocumentMetaDataValues = customsDocumentMetaDataValueQuery.GetCustomsDocumentMetaDataValuesByConnectedEntity(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
                     //if(CustomsDocumentMetaDataValues.Where(r => r.MetaDataValue == "1" && r.MetaDataTypeCode == "380").FirstOrDefault() == null)
