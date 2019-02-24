@@ -1414,6 +1414,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 QuotationSections = entityPOCO.QuotationSections,
                 NumberOfFollowUps = entityPOCO.NumberOfFollowUps,
                 SameOrFixed = entityPOCO.IsSaleCurrencySameAsCost ? "Same as Cost Currency" : "Fixed",
+                QuoteLevel = entityPOCO.ShipmentTypeId,
             };
 
             int tenant = entityPOCO.Tenant;
@@ -1996,9 +1997,61 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
             #endregion
 
-            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);
-            entityPM.QuotePackages = quotePackageQuery.GetQuotePackagesForQuotePMIDTenant(entityId, tenant);
+            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);           
             entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(entityId, tenant);
+
+            if (entityPM.ShipmentTypeId == "FCLD")
+            {
+                if (entityPM.PackageType1Id != null)
+                {
+                    QuotePackagePM quotePackage1 = new QuotePackagePM();
+                    quotePackage1.QuoteId = entityId;
+                    quotePackage1.PackageTypeId = entityPM.PackageType1Id;
+                    quotePackage1.Quantity = entityPM.PackageType1Quantity;
+                    entityPM.QuotePackages.Add(quotePackage1);
+                }
+
+                if (entityPM.PackageType2Id != null)
+                {
+                    QuotePackagePM quotePackage2 = new QuotePackagePM();
+                    quotePackage2.QuoteId = entityId;
+                    quotePackage2.PackageTypeId = entityPM.PackageType2Id;
+                    quotePackage2.Quantity = entityPM.PackageType2Quantity;
+                    entityPM.QuotePackages.Add(quotePackage2);
+                }
+
+                if (entityPM.PackageType3Id != null)
+                {
+                    QuotePackagePM quotePackage3 = new QuotePackagePM();
+                    quotePackage3.QuoteId = entityId;
+                    quotePackage3.PackageTypeId = entityPM.PackageType3Id;
+                    quotePackage3.Quantity = entityPM.PackageType3Quantity;
+                    entityPM.QuotePackages.Add(quotePackage3);
+                }
+
+                if (entityPM.PackageType4Id != null)
+                {
+                    QuotePackagePM quotePackage4 = new QuotePackagePM();
+                    quotePackage4.QuoteId = entityId;
+                    quotePackage4.PackageTypeId = entityPM.PackageType4Id;
+                    quotePackage4.Quantity = entityPM.PackageType4Quantity;
+                    entityPM.QuotePackages.Add(quotePackage4);
+                }
+
+                if (entityPM.PackageType5Id != null)
+                {
+                    QuotePackagePM quotePackage5 = new QuotePackagePM();
+                    quotePackage5.QuoteId = entityId;
+                    quotePackage5.PackageTypeId = entityPM.PackageType5Id;
+                    quotePackage5.Quantity = entityPM.PackageType5Quantity;
+                    entityPM.QuotePackages.Add(quotePackage5);
+                }
+            }
+
+            else
+            {
+                entityPM.QuotePackages = quotePackageQuery.GetQuotePackagesForQuotePMIDTenant(entityId, tenant);
+            }
 
             #region Summery Fields
             if (entityPM.QuoteCharges != null)

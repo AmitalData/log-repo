@@ -51,6 +51,8 @@ export class CounterTableComponent extends BaseComponent {
                         this.InitializeDefinitions();
                         this.SetUIProperties();
                     }
+
+                    this.CalculateSampleValue();
                 }
 
                 this.IsResourcesReady = true;
@@ -87,6 +89,7 @@ export class CounterTableComponent extends BaseComponent {
     public set Prefix(value: string) {
         if (this.EntityPM.Prefix != value) {
             this.EntityPM.Prefix = value;
+            this.CalculateSampleValue();
         }
     }
 
@@ -94,6 +97,7 @@ export class CounterTableComponent extends BaseComponent {
     public set CounterSize(value: number) {
         if (this.EntityPM.CounterSize != value) {
             this.EntityPM.CounterSize = value;
+            this.CalculateSampleValue();
         }
     }
 
@@ -101,6 +105,8 @@ export class CounterTableComponent extends BaseComponent {
     public set StartNumber(value: number) {
         if (this.EntityPM.StartNumber != value) {
             this.EntityPM.StartNumber = value;
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -183,5 +189,12 @@ export class CounterTableComponent extends BaseComponent {
                 }
             }
         }
+    }
+
+    public SampleValue: string;
+    CalculateSampleValue() {
+
+        this.SampleValue = AppTool.GetCounterResolvedNumber(this.Prefix, this.StartNumber, "", this.CounterSize);
+
     }
 }

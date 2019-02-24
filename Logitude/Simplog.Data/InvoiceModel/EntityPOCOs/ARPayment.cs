@@ -134,6 +134,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         [ForeignKey("ApprovedByUserId")]
         public virtual User ApprovedByUser { get; set; }
         public DateTime? FirstApproveDate { get; set; }
+        public bool IsFullAccounting { get; set; }
 
     }
 }

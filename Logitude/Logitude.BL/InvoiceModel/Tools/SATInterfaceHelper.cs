@@ -185,14 +185,15 @@ namespace Logitude.BL.InvoiceModel.Tools
 			List<ARInvoiceTotalVATPM> FilteredArInvoicesTotalvats = new List<ARInvoiceTotalVATPM>();
 			VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(commonContext);
 			VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
+			ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(commonContext);
 
-
+			List<ChargesType> allChargesTypes = chargesTypeRepository.GetChargesTypes(ARInvoice.Tenant).ToList();
 			List<VatType> allVatTypes = commonContext.VatTypes.Where(d => d.Tenant == ARInvoice.Tenant).ToList();
 			List<VatTypePercentagePM> allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(ARInvoice.Tenant, TenantServerConfigration.GetCurrentDateTime(ARInvoice.Tenant).Date);
 			List<VATTypesGroup> allVatGroups = (from d in commonContext.VATTypesGroups
 												where d.Tenant == ARInvoice.Tenant
 												select d).ToList();
-			FilteredArInvoicesTotalvats = this.CalculateNoneExpenseTotalVats(ARInvoice, allVatTypes, allVatPercentages, allVatGroups);
+			FilteredArInvoicesTotalvats = this.CalculateNoneExpenseTotalVats(ARInvoice, allVatTypes, allVatPercentages, allVatGroups,allChargesTypes);
 
 			for (int i = 0; i < FilteredArInvoicesTotalvats.Count; i++)
 			{
@@ -367,11 +368,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 		private void SendProfactoXML33(ARInvoicePM entityPM, ARInvoice entityPoco, SATInterfaceSetting satSetting)
 		{
 
-			if (entityPM.InvoiceLines.All(l => l.IsExpense == true))
-			{
-				entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "ND";
-				return;
-			}
+			
 
 			ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(entityPM.Tenant);
 			ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
@@ -388,9 +385,14 @@ namespace Logitude.BL.InvoiceModel.Tools
 			IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(entityPM.Tenant);
 			ARInvoiceTotalVATQuery aRInvoiceTotalVATQuery = new ARInvoiceTotalVATQuery(entityPM.Tenant);
 
-			List<ChargesType> chargesTypes = chargesTypeRepository.GetChargesTypes(entityPM.Tenant).ToList();
+			List<ChargesType> allChargesTypes = chargesTypeRepository.GetChargesTypes(entityPM.Tenant).ToList();
 			//List<VatType> vatTypes = vatTypeRepository.GetVatTypes(entityPM.Tenant).ToList();
 
+			if (entityPM.InvoiceLines.All(l => allChargesTypes.First(c => c.Id == l.ChargesTypeId).IsExpense == true))//l.IsExpense == true &&
+			{
+				entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "ND";
+				return;
+			}
 
 			List<ARInvoiceTotalVATPM> totalNoneExpenseVats = new List<ARInvoiceTotalVATPM>();
 			VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(commonContext);
@@ -625,11 +627,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 			decimal TotalImpuestosRetenidos = 0;
 			decimal TotalImpuestosTrasladados = 0;
-			bool hasExpenses = entityPM.InvoiceLines.Any(l => l.IsExpense);
+			bool hasExpenses = entityPM.InvoiceLines.Any(l => allChargesTypes.First(c => c.Id == l.ChargesTypeId).IsExpense);
 			List<Profact.TimbraCFDI33.ComprobanteConcepto> conceptosList = new List<Profact.TimbraCFDI33.ComprobanteConcepto>();
 			foreach (ARInvoiceLinePM line in entityPM.InvoiceLines)
 			{
-				if (!line.IsExpense)
+				if (!allChargesTypes.First(c => c.Id == line.ChargesTypeId).IsExpense)
 				{
 					Profact.TimbraCFDI33.ComprobanteConcepto concepto = new Profact.TimbraCFDI33.ComprobanteConcepto();
 					concepto.Cantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0));
@@ -640,7 +642,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 					decimal valorUnitario = Math.Abs(concepto.Cantidad != 0 ? (concepto.Importe / concepto.Cantidad) : 0);
 					concepto.ValorUnitario = GetDecimalWith2DigitsAfterPoint(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
 
-					concepto.ClaveProdServ = chargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
+					concepto.ClaveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
 					concepto.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(line.MeasurementCode, "G-Profact", "Measurement");//"C81";
 																																					   //line.mea
 					if (string.IsNullOrEmpty(concepto.ClaveProdServ))
@@ -679,7 +681,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 			}
 			else
 			{
-				arTotalVats = this.CalculateNoneExpenseTotalVats(entityPM, allVatTypes, allVatPercentages, allVatGroups);
+				arTotalVats = this.CalculateNoneExpenseTotalVats(entityPM, allVatTypes, allVatPercentages, allVatGroups, allChargesTypes);
 				double? localAmountTotal = 0;
 				double? invoiceAmountTotal = 0;
 				double? profitAmountTotal = 0;
@@ -1528,12 +1530,12 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
 		private List<ARInvoiceTotalVATPM> CalculateNoneExpenseTotalVats(ARInvoicePM entityPM,
-			List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups)
+			List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups,List<ChargesType> chargesTypes)
 		{
 			int tenant = entityPM.Tenant;
 
 			List<ARInvoiceTotalVATPM> totalNoneExpenseVats = new List<ARInvoiceTotalVATPM>();
-			List<ARInvoiceLinePM> myDataLines = entityPM.InvoiceLines.Where(d => !d.IsExpense && d.VatTypeId != null).ToList();
+			List<ARInvoiceLinePM> myDataLines = entityPM.InvoiceLines.Where(d => !chargesTypes.First(c => c.Id == d.ChargesTypeId).IsExpense && d.VatTypeId != null).ToList();
 			if (myDataLines.Count > 0)
 			{
 

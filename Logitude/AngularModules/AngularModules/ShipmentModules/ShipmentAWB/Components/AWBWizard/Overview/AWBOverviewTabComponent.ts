@@ -422,6 +422,7 @@ export class AWBOverviewTabComponent {
                     this.RefreshTab();
 
                     if (this.AWBWizard.IsFSRRequestButtonClicked) {
+                        this.AWBWizard.IsFSRRequestButtonClicked = false;
                         this.RunSendWindow();
                     }
                 }
@@ -432,6 +433,11 @@ export class AWBOverviewTabComponent {
                     this.EntityPM = this.AWBWizard.EntityPM;
                     this.LoadCarrierStatuses();
                     this.RefreshTab();
+
+                    if (this.AWBWizard.IsFSRRequestButtonClicked) {
+                        this.AWBWizard.IsFSRRequestButtonClicked = false;
+                        this.RunSendWindow();
+                    }
                 }
             });
         }

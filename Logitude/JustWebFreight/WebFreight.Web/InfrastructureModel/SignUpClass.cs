@@ -1773,6 +1773,19 @@ namespace WebFreight.Web.InfrastructureModel
                     Tenant = newContact.Tenant,
                 };
                 contactTenantRolesRepository.Add(admincontactTenantRole);
+
+
+
+                RolePM BillingRole = roleQuery.GetSinglePMByName("Billing", 0);
+
+                ContactTenantRole billcontactTenantRole = new ContactTenantRole()
+                {
+                    ContactTenantId = newContactTenant.Id,
+                    Id = IdCounter.GetNumber("ContactTenantRole", newContact.Tenant).ToString(),
+                    RoleId = BillingRole.Id,
+                    Tenant = newContact.Tenant,
+                };
+                contactTenantRolesRepository.Add(billcontactTenantRole);
             }
             #endregion
 

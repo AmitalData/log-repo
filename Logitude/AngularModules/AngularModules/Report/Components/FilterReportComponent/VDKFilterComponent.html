@@ -37,12 +37,13 @@
                                 <td style="width:200px;">
                                     <div style="width:200px;">
 
-                                        <LogLov [ObjectFieldName]="'ShipmentCustomerTypeCode'"
-                                                [SelectedValue]="ShipmentCustomerTypeCode"
+                                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                                [SelectedValue]="CustomerId"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
-                                                [LookUpTableName]="'ShipmentCustomerType'"
-                                                [DependencyFilter1Value]="true">
+                                                [LookUpTableName]="'Card'"
+                                                [DependencyFilter1Value]="'AG,AL,CG,CS,SG,SL,TR,VD,WH'"
+                                                [DependencyFilter1IsList]="true">
                                         </LogLov>
 
                                     </div>
@@ -52,12 +53,12 @@
                                 <td style="width:200px;">
                                     <div style="width:200px;">
 
-                                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                        <LogLov [ObjectFieldName]="'SupplierId'"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Card'"
-                                                [DependencyFilter1IsList]="'true'"
-                                                [DependencyFilter1Value]="'CS,CG,AG,SG,SL,TR,VD,AL'"
-                                                [SelectedValue]="CustomerId">
+                                                [DependencyFilter1Value]="SupplierValues"
+                                                [DependencyFilter1IsList]="true"
+                                                [SelectedValue]="SupplierId">
                                         </LogLov>
 
                                     </div>
@@ -90,21 +91,21 @@
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Branch'"
-                                                [HideColumns]="true">
+                                                [HideColumns]="false">
                                         </LogLov>
                                     </div>
                                 </td>
                                 <td style="width:20px"><div></div></td>
                                 <td style="width:80px">Status</td>
 
-                                <td style="width:200px;">
+                                <td style="width:200px;">   
 
                                     <div style="width:200px;">
                                         <LogLov [ObjectFieldName]="'EntityStatus'"
-                                                [ObjectTableName]="ObjectTableName"
+                                                [ObjectTableName]="'Shipment'"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'EntityStatus'"
-                                                [HideColumns]="true">
+                                                [HideColumns]="false">
                                         </LogLov>
                                     </div>
                                 </td>

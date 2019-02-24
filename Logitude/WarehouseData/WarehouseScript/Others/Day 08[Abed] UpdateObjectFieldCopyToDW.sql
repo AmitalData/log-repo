@@ -6,7 +6,7 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentLevel')and (FieldName = 'Code' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentType')and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'Branch') and (FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Code' )
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Card') and (FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'CityName' or FieldName = 'ZipCode'  or FieldName='SalesmanUserId' or FieldName='PrimaryContactId' or FieldName='PartnerTypeId'  or  FieldName='CountryName' or FieldName = 'CountryId' or FieldName = 'ReceivablesAccountingCard' or FieldName = 'PayablesAccountingCard')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Card') and (FieldName = 'EnglishName' or FieldName = 'Code' or FieldName = 'LocalName' or FieldName = 'CityName' or FieldName = 'ZipCode'  or FieldName='SalesmanUserId' or FieldName='PrimaryContactId' or FieldName='PartnerTypeId'  or  FieldName='CountryName' or FieldName = 'CountryId' or FieldName = 'ReceivablesAccountingCard' or FieldName = 'PayablesAccountingCard')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'User') and (FieldName = 'BranchId' or FieldName = 'DepartmentId'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Contact') and (FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Email' )
 
@@ -31,17 +31,25 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'EntityStatus') and (FieldName = 'Name' or FieldName = 'Code' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Rank') and (FieldName = 'Name'  )
 
+
+
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Shipment') and (FieldName = 'DirectionId' or FieldName = 'TransportModeId' or FieldName = 'ShipmentLevelCode' or FieldName = 'ShipmentTypeId' or FieldName = 'DepartmentId' or FieldName = 'BranchId'or FieldName = 'MasterShipmentDataId' or FieldName = 'ShipperId'or FieldName = 'ConsigneeId' or FieldName = 'AgentId'or FieldName = 'CustomerId' or FieldName = 'IncotermId'or FieldName = 'SalesmanUserId' or FieldName = 'AccountManagerUserId'or FieldName = 'ProfitCurrencyId' or FieldName = 'StatusId'or FieldName = 'FromPortId' or FieldName = 'ToPortId'  
 or FieldName = 'ShipmentNumber' or FieldName = 'House' or FieldName = 'GrossWeightInKG' or FieldName = 'ChargeableWeightInKG' or FieldName = 'VolumeInCBM' or FieldName = 'NumberOfPackages'or FieldName = 'NumberOfContainers'  or FieldName = 'ProfitInLocalCurrency'or   FieldName = 'ProfitInProfitCurrency' or FieldName = 'IsOperationalClosed'or FieldName = 'IsAccountingClosed' or FieldName = 'StatusLocation'or FieldName = 'FinalArrivalDate' or FieldName = 'CustomsClearanceDate' or FieldName = 'CreateDateTime' or  FieldName = 'OperationalDate' 
 or  FieldName = 'OperationalCloseDate'or  FieldName = 'AccountingCloseDate'or  FieldName = 'LastUpdateDate' or  FieldName = 'OpenReceivablesInLocalCurrency'or  FieldName = 'OpenReceivablesInProfitCurrency'or  FieldName = 'AccountedReceivablesInLocalCurrency'
 or  FieldName = 'AccountedReceivablesInProfitCurrency'or  FieldName = 'OpenPayablesInLocalCurrency'or  FieldName = 'OpenPayablesInProfitCurrency' or  FieldName = 'AccountedPayablesInLocalCurrency'or  FieldName = 'AccountedPayablesInProfitCurrency' or    FieldName='TEU'or FieldName='ValueOfGoods'or FieldName='ValueOfGoodsCurrencyId' or FieldName='FirstPickupETA'or FieldName='FirstPickupETD'  
 or FieldName = 'ProjectNumber' or FieldName = 'CustomerReference1' or FieldName = 'CustomerReference2'  or FieldName = 'ShipperReference1' or FieldName = 'ShipperReference2'  or FieldName = 'ConsigneeReference1' or FieldName = 'ConsigneeReference2'  or FieldName = 'AgentReference1' or FieldName = 'AgentReference2'   or FieldName = 'AMSBL' or FieldName = 'FreightPrepaidCollectId'  or FieldName = 'OtherPrepaidCollectId'   or FieldName = 'MainHarmonize'
-or FieldName = 'ForwarderPartnerId' or FieldName = 'CreatedByUserId' or FieldName = 'CustomAgentExportId'  or FieldName = 'CustomAgentImportId'  or FieldName = 'CustomAgentExportId' or FieldName = 'WarehouseLegWarehouseId' 
-
+or FieldName = 'ForwarderPartnerId' or FieldName = 'CreatedByUserId' or FieldName = 'CustomAgentExportId'  or FieldName = 'CustomAgentImportId'  or FieldName = 'CustomAgentExportId' or FieldName = 'WarehouseLegWarehouseId' or FieldName = 'IsCancelled' 
+   or FieldName='StatusDate' or FieldName='CustomsDeclarationNumber' or  FieldName='FirstOperationalCloseDate'   or FieldName='EstimatedFinalArrivalDate' or FieldName='ActualFinalArrivalDate'  or FieldName='Routing' or FieldName='DescriptionOfGoods' or FieldName='PreCarriageETD' or FieldName='MoveTypeId' or FieldName='SpecialServicesTypeId' 
 )
 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Master') and (FieldName = 'MainCarriageATD' or FieldName = 'Master' or FieldName = 'MainCarriageToPortId' or FieldName = 'Transshipment1ToPortId' or FieldName = 'Transshipment2ToPortId' or FieldName = 'Transshipment3ToPortId' 
-or FieldName = 'MainCarriageETD' or FieldName = 'MainCarriageFinalDestinationATA' or FieldName = 'MainCarriageFinalDestinationETA' or FieldName = 'MainCarriageCarrierNumber'  or FieldName='MainCarriageCarrierId')
+or FieldName = 'MainCarriageETD' or FieldName = 'MainCarriageFinalDestinationATA' or FieldName = 'MainCarriageFinalDestinationETA' or FieldName = 'MainCarriageCarrierNumber'  or FieldName='MainCarriageCarrierId'  or FieldName = 'AirlinePrefix'
+or FieldName='BookingConfirmationNumber' or FieldName='MainCarriageATA' or FieldName='MAWBOBLDate'  or FieldName='MasterShipmentNumber' or FieldName='MainCarriageETA' or FieldName='MainCarriageVesselId'
+
+)
 
 
-
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'MoveType') and (FieldName = 'Code' or FieldName = 'MoveTypeEnglishName' or FieldName = 'MoveTypeLocalName' or FieldName = 'TransportModeId' )
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'Vessel') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Notes' or FieldName = 'IMOCode' )
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'SpecialServicesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' )
+Update ObjectFields  set CopyToDW = 0 where ObjectTableId = (select id from ObjectTables where Name = 'Shipment') and (FieldName = 'CancelledDate' or FieldName = 'GrossWeightPerTon')

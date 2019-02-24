@@ -4,6 +4,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -86,6 +87,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (entityPM.VatNumber == null)
                 {
                     entityPM.StatusCode = "1";
+                }
+                else if(entityPM.VatNumber != null)
+                {
+                    var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
+                    if (chars.Count == 0)
+                    {
+                        var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
+                        if ( digit != 0)
+                        {
+                            entityPM.StatusCode = "2";
+                        }
+                        else
+                        {
+                            entityPM.StatusCode = "6";
+                        }
+                    }
+                    else
+                    {
+                        entityPM.StatusCode = "2";
+                    }
                 }
                
 

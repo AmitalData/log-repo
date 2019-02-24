@@ -871,6 +871,17 @@ namespace MeatadataGeneratorTool.Helpers
                 DCField.IsCompositKey = false;
 
             }
+            try
+            {
+                DCField.CloseTableCode = GetAttributeStringValue(fieldNode.Attributes["CloseTableCode"]);
+
+            }
+            catch (Exception)
+            {
+                //DCField.CloseTableCode = false;
+
+            }
+
 
             return DCField;
         }
@@ -993,9 +1004,17 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.NoTS = false;
                 }
+				if (entity.Attributes["NoDefaultFeatures"] != null)
+				{
+					objectTable.NoDefaultFeatures = GetAttributeBoolValue(entity.Attributes["NoDefaultFeatures"]);
+				}
+				else
+				{
+					objectTable.NoDefaultFeatures = false;
+				}
 
 
-                if (entity.Attributes["HasCompactSearch"] != null)
+				if (entity.Attributes["HasCompactSearch"] != null)
                 {
                     objectTable.HasCompactSearch = GetAttributeBoolValue(entity.Attributes["HasCompactSearch"]);
                 }

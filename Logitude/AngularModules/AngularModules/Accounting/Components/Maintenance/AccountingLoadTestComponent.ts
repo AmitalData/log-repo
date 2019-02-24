@@ -70,10 +70,20 @@ export class AccountingLoadTestComponent extends BaseComponent implements AfterV
             this._SelectedIndexEveryMinuteItem = 3;
         }
     }
-    _SelectedEveryMinuteValue: number = 0;
+    _SelectedEveryMinuteValue: number = 1;
     EveryMinuteItemSelectionChanged(selectControl: any) {
         this._SelectedEveryMinuteValue = selectControl.value;
     }
+
+    private amount: number;
+    get Amount() { return this.amount; }
+    set Amount(value: number) {
+        if (this.amount != value) {
+            this.amount = value;
+
+        }
+    }
+
     private year: number;
     get Year() { return this.year; }
     set Year(value: number) {
@@ -164,7 +174,7 @@ export class AccountingLoadTestComponent extends BaseComponent implements AfterV
     ngAfterViewInit() {
         
     }
-    Amount: number
+    
 
    
 

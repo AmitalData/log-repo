@@ -11,8 +11,10 @@ using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.StorageService;
 using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.Data.EntityLists;
@@ -36,8 +38,10 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
+using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -941,9 +945,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-
-
-
+        
         public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers,string directionid,string transportmodeId)
         {
             try
@@ -1415,7 +1417,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
-                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId);
+                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d=>d.StockType == "Champ");
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -1644,6 +1646,96 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDownloadShipmentPackages(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+                List<ShipmentPackage> shipmentPackages = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(shipmentId, tenant).ToList();
+                
+                string fileName = "Shipment" + DateTime.Now.ToShortDateString();
+
+                if(shipmentPackages.Count > 0)
+                {
+                    byte[] data = this.CreateExcelFile();
+
+                    StringBuilder stringbuilder = new StringBuilder();
+                    Encoding encoding = new UTF8Encoding();
+                    
+                    Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+                    {
+                        FileName = fileName,
+                        Extension = "xls",
+                        Tenant = tenant,
+                        FileSize = data.Length,
+                        HasExternalContainer = true,
+                        ExternalContainerName = "tenant" + tenant
+                    };
+
+                    Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                    storageservice.Write(data, fileInfo);
+                }
+                
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private byte[] CreateExcelFile()
+        {
+            using (ExcelEngine excelEngine = new ExcelEngine())
+            {
+                IApplication application = excelEngine.Excel;                
+                application.DefaultVersion = ExcelVersion.Excel2010;
+
+                IWorkbook workbook = application.Workbooks.Create(2);
+                IWorksheet worksheet1 = workbook.Worksheets[0];
+
+                //Adding text data
+                worksheet1.Range["A1"].Text = "Container Type";
+                worksheet1.Range["B1"].Text = "Container#";
+                worksheet1.Range["C1"].Text = "Volume";
+                worksheet1.Range["D1"].Text = "Gross Weight";
+                worksheet1.Range["E1"].Text = "Tare";
+                worksheet1.Range["F1"].Text = "Shipper Seal";
+                worksheet1.Range["G1"].Text = "Carrier Seal";
+                worksheet1.Range["H1"].Text = "Marks & Numbers";
+                worksheet1.Range["I1"].Text = "Description";
+
+                ////Adding DateTime data
+                //worksheet.Range["A2"].DateTime = new DateTime(2015, 1, 10);
+                //worksheet.Range["A3"].DateTime = new DateTime(2015, 2, 10);
+                //worksheet.Range["A4"].DateTime = new DateTime(2015, 3, 10);
+
+                ////Applying number format for date value cells A2 to A4
+                //worksheet.Range["A2:A4"].NumberFormat = "mmmm, yyyy";
+
+                ////Auto-size the first column to fit the content
+                //worksheet.AutofitColumn(1);
+
+                ////Adding numeric data
+                //worksheet.Range["B2"].Number = 68878;
+                //worksheet.Range["B3"].Number = 71550;
+                //worksheet.Range["B4"].Number = 72808;
+
+                ////Adding formula
+                //worksheet.Range["B6"].Formula = "SUM(B2:B4)";
+                
+                MemoryStream memorystream = new MemoryStream();
+                workbook.SaveAs(memorystream);
+
+                return memorystream.ToArray();
             }
         }
     }

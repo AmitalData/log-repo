@@ -60,6 +60,14 @@ namespace Logitude.Accounting.BL
                 SearchFields = "6,Ready for transmit,מוכן לשידור", 
                 LocalName = "מוכן לשידור", 
 			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "2", 
+                EnglishName = "Wrong VAT Number", 
+                LocalName = "חפ שגוי", 
+                SearchFields = "2,Wrong VAT Number,חפ שגוי", 
+			});
 			
             return all;
        }

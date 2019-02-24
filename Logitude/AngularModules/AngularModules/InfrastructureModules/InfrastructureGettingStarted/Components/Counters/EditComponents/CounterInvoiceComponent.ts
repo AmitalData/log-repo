@@ -70,6 +70,8 @@ export class CounterInvoiceComponent extends BaseComponent {
                         this.InitializeDefinitions();
                         this.SetUIProperties();                        
                     }
+
+                    this.CalculateSampleValue();
                 }
 
                 this.IsResourcesReady = true;
@@ -201,6 +203,8 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.ItemsSource.forEach(item => {
                 item.Prefix = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -212,6 +216,8 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.ItemsSource.forEach(item => {
                 item.Suffix = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -223,6 +229,7 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.ItemsSource.forEach(item => {
                 item.CounterSize = value;
             });
+            this.CalculateSampleValue();
         }
     }
 
@@ -234,6 +241,8 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.ItemsSource.forEach(item => {
                 item.StartNumber = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -322,6 +331,13 @@ export class CounterInvoiceComponent extends BaseComponent {
                 }
             }
         }
+    }
+
+    public SampleValue: string;
+    CalculateSampleValue() {
+
+        this.SampleValue = AppTool.GetCounterResolvedNumber(this.Prefix, this.StartNumber, this.Suffix, this.CounterSize);
+
     }
 }
 export class CounterInvoiceDefinitionItem extends BaseComponent {

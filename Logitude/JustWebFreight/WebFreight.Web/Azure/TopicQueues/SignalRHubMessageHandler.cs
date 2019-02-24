@@ -17,8 +17,8 @@ namespace WebFreight.Web.Azure.TopicQueues
         SubscriptionClient subscriptionClient;
         public SignalRHubMessageHandler()
         {
-            string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-            string subscribtionName = roleId[roleId.Length - 1];
+            //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+            string subscribtionName = Environment.MachineName; //roleId[roleId.Length - 1];
             subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), StorageAcountDetails.SignalRHubTopicName, subscribtionName);
         }
 

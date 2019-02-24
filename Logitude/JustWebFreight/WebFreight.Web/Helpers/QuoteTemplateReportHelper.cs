@@ -1811,49 +1811,44 @@ namespace Logitude.BL.Helpers
         private string GetQuoteTemplateDetailsFieldValue(string fieldname, QuotePM quotePM)
         {
             string FieldValue = "";
-
-            AddressRepository addressRep = new AddressRepository(quotePM.Tenant);
-            ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
-            CardRepository cardRep = new CardRepository(quotePM.Tenant);
-
             if (fieldname == "EXPIRATIONDAYS")
             {
-                FieldValue = quotePM.ExpirationDays.ToString();
+                FieldValue = quotePM.ExpirationDays != null ? quotePM.ExpirationDays.ToString() : "";
             }
             else if (fieldname == "EXPIRATIONDATE")
             {
-                FieldValue = ConvertToShortDate((DateTime)quotePM.ExpirationDate, quotePM.Tenant);
+                FieldValue = quotePM.ExpirationDate != null ? ConvertToShortDate((DateTime)quotePM.ExpirationDate, quotePM.Tenant) : "";
             }
-            else
-                if (fieldname == "SHIPPERNAME")
+            else if(fieldname == "SHIPPERNAME")
             {
                 FieldValue = quotePM.ShipperName;
             }
             else if (fieldname == "SHIPPERADDRESS")
             {
-                Address address = addressRep.GetSingleAddress(quotePM.ShipperMainAddressId, quotePM.Tenant);
-
-                if (address != null)
+                if (!string.IsNullOrEmpty(quotePM.ShipperMainAddressId))
                 {
-                    FieldValue = General.GetAddress(address);
+                    AddressRepository addressRep = new AddressRepository(quotePM.Tenant);
+                    Address address = addressRep.GetSingleAddress(quotePM.ShipperMainAddressId, quotePM.Tenant);
+
+                    if (address != null)
+                    {
+                        FieldValue = General.GetAddress(address);
+                    }
                 }
             }
             else if (fieldname == "SHIPPERCONTACT")
             {
-                Contact contact = contactRep.GetSingleContact(quotePM.ShipperContactId, quotePM.Tenant);
-
-                if (contact != null)
+                if (!string.IsNullOrEmpty(quotePM.ShipperContactId))
                 {
-                    FieldValue = contact.EnglishName;
+                    ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
+                    FieldValue = contactRep.GetContactNameById(quotePM.ShipperContactId, quotePM.Tenant);
                 }
             }
-
             else if (fieldname == "SHIPPERREFERENCES")
             {
-         
-                FieldValue = CombinedReferences(quotePM.ShipperReference1 , quotePM.ShipperReference2);
-            }
 
+                FieldValue = CombinedReferences(quotePM.ShipperReference1, quotePM.ShipperReference2);
+            }
             // Consignee
             else if (fieldname == "CONSIGNEENAME")
             {
@@ -1861,29 +1856,31 @@ namespace Logitude.BL.Helpers
             }
             else if (fieldname == "CONSIGNEEADDRESS")
             {
-                Address address = addressRep.GetSingleAddress(quotePM.ConsigneeMainAddressId, quotePM.Tenant);
-
-                if (address != null)
+                if (!string.IsNullOrEmpty(quotePM.ConsigneeMainAddressId))
                 {
-                    FieldValue = General.GetAddress(address);
+                    AddressRepository addressRep = new AddressRepository(quotePM.Tenant);
+                    Address address = addressRep.GetSingleAddress(quotePM.ConsigneeMainAddressId, quotePM.Tenant);
+
+                    if (address != null)
+                    {
+                        FieldValue = General.GetAddress(address);
+                    }
                 }
             }
             else if (fieldname == "CONSIGNEECONTACT")
             {
-                Contact contact = contactRep.GetSingleContact(quotePM.ConsigneeContactId, quotePM.Tenant);
-
-                if (contact != null)
+                if (!string.IsNullOrEmpty(quotePM.ConsigneeContactId))
                 {
-                    FieldValue = contact.EnglishName;
+                    ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
+                    FieldValue = contactRep.GetContactNameById(quotePM.ConsigneeContactId, quotePM.Tenant);
+
                 }
             }
-
             else if (fieldname == "CONSIGNEEREFERENCES")
             {
- 
+
                 FieldValue = CombinedReferences(quotePM.ConsigneeReference1, quotePM.ConsigneeReference2);
             }
-
             else if (fieldname == "CUSTOMERNAME")
             {
                 FieldValue = quotePM.CustomerName;
@@ -1894,55 +1891,41 @@ namespace Logitude.BL.Helpers
             }
             else if (fieldname == "CUSTOMERCONTACT")
             {
-                Contact contact = contactRep.GetSingleContact(quotePM.CustomerContactId, quotePM.Tenant);
-
-                if (contact != null)
+                if (!string.IsNullOrEmpty(quotePM.CustomerContactId))
                 {
-                    FieldValue = contact.EnglishName;
+                    ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
+                    FieldValue = contactRep.GetContactNameById(quotePM.CustomerContactId, quotePM.Tenant);
                 }
             }
-            else if (fieldname == "TRANSITTIME")
+            else if (fieldname == "CUSTOMERREFERENCES")
             {
-                FieldValue = quotePM.TransitTime;
-            }
 
-            else if(fieldname == "CUSTOMERREFERENCES")
-            {
-     
                 FieldValue = CombinedReferences(quotePM.CustomerReference1, quotePM.CustomerReference2);
             }
-
-            else
-                    if (fieldname == "QUOTENUMBER")
+            else if (fieldname == "QUOTENUMBER")
             {
                 FieldValue = quotePM.QuoteNumber;
             }
-
             else if (fieldname == "PICKUPFROM")
             {
                 FieldValue = quotePM.PickupLocation;
             }
-
             else if (fieldname == "DELIVERYTO")
             {
                 FieldValue = quotePM.DeliveryLocation;
             }
-
             else if (fieldname == "FROMPORT" || fieldname == "FROMLOCATION")
             {
                 FieldValue = quotePM.FromPortName;
             }
-
             else if (fieldname == "TOPORT" || fieldname == "TOLOCATION")
             {
                 FieldValue = quotePM.ToPortName;
             }
-
             else if (fieldname == "INCOTERMS")
             {
                 FieldValue = quotePM.IncotermName;
             }
-
             else if (fieldname == "SERVICE")
             {
                 // FieldValue = quotePM.
@@ -1956,38 +1939,35 @@ namespace Logitude.BL.Helpers
                     }
                 }
             }
-
-            else if (fieldname == "SALESMAN")
+            else if (fieldname == "TRANSITTIME")
             {
-                FieldValue = quotePM.SalesmanName;
+                FieldValue = quotePM.TransitTime;
             }
-
+            else if (fieldname == "MOVETYPE")
+            {
+                if (!string.IsNullOrEmpty(quotePM.MoveTypeId))
+                {
+                    MoveTypeQuery moveTypeQuery = new MoveTypeQuery(quotePM.Tenant);
+                    FieldValue = moveTypeQuery.GetMoveTypeNameById(quotePM.MoveTypeId, quotePM.Tenant);
+                }
+            }
             else if (fieldname == "DESCRIPTIONOFGOODS")
             {
                 FieldValue = quotePM.DescriptionOfGoods;
             }
-
             else if (fieldname == "DANGEROUSGOODS")
             {
-                if (quotePM.IsDangerous)
-                {
-                    FieldValue = "Yes";
-                }
-                else
-                {
-                    FieldValue = "No";
-                }
+                if (quotePM.IsDangerous) FieldValue = "Yes";
+                else FieldValue = "No";
             }
-
             else if (fieldname == "TRUCKER" || fieldname == "SHIPINGLINE" || fieldname == "AIRLINE")
             {
-                Card card = cardRep.GetSingleCard(quotePM.MainCarriageCarrierId, quotePM.Tenant);
-                if (card != null)
+                if (!string.IsNullOrEmpty(quotePM.MainCarriageCarrierId))
                 {
-                    FieldValue = card.EnglishName;
+                    CardRepository cardRep = new CardRepository(quotePM.Tenant);
+                    FieldValue = cardRep.GetEnglishNameCardById(quotePM.MainCarriageCarrierId, quotePM.Tenant);
                 }
             }
-
             else if (fieldname == "CHARGEABLEWEIGHT")
             {
                 if (quotePM.ChargeableWeight != null)
@@ -1995,7 +1975,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.ChargeableWeight.ToString() + " " + quotePM.ChargeableWeightUnitCode.ToString();
                 }
             }
-
             else if (fieldname == "GROSSWEIGHT")
             {
                 if (quotePM.GrossWeight != null)
@@ -2003,7 +1982,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.GrossWeight.ToString() + " " + quotePM.GrossWeightUnitCode.ToString();
                 }
             }
-
             else if (fieldname == "VOLUME")
             {
                 if (quotePM.Volume != null)
@@ -2011,7 +1989,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.Volume.ToString() + " " + quotePM.VolumeUnitCode.ToString();
                 }
             }
-
             else if (fieldname == "VOLUMETRICWEIGHT")
             {
                 if (quotePM.VolumetricWeight != null)
@@ -2019,7 +1996,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.VolumetricWeight.ToString() + " " + quotePM.VolumeUnitCode.ToString();
                 }
             }
-
             else if (fieldname == "NUMBEROFPACKAGES")
             {
                 if (quotePM.NumberOfPackages != null)
@@ -2027,7 +2003,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.NumberOfPackages.ToString();
                 }
             }
-
             else if (fieldname == "NUMBEROFCONTAINERS")
             {
                 if (quotePM.NumberOfContainers != null)
@@ -2035,37 +2010,32 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.NumberOfContainers.ToString();
                 }
             }
-
             else if (fieldname == "NOTIFYNAME")
             {
                 FieldValue = quotePM.NotifyName;
             }
-
             else if (fieldname == "NOTIFYADDRESS")
             {
-                Address address = addressRep.GetSingleAddress(quotePM.NotifyAddressId, quotePM.Tenant);
-
-                if (address != null)
+                if (!string.IsNullOrEmpty(quotePM.NotifyAddressId))
                 {
-                    FieldValue = General.GetAddress(address);
+                    AddressRepository addressRep = new AddressRepository(quotePM.Tenant);
+                    Address address = addressRep.GetSingleAddress(quotePM.NotifyAddressId, quotePM.Tenant);
+
+                    if (address != null)
+                    {
+                        FieldValue = General.GetAddress(address);
+                    }
                 }
             }
-
             else if (fieldname == "NOTIFYCONTACT")
             {
-                Contact contact = contactRep.GetSingleContact(quotePM.NotifyContactId, quotePM.Tenant);
-
-                if (contact != null)
+                if (!string.IsNullOrEmpty(quotePM.NotifyContactId))
                 {
-                    FieldValue = contact.EnglishName;
+                    ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
+                    FieldValue = contactRep.GetContactNameById(quotePM.NotifyContactId, quotePM.Tenant);
                 }
             }
-
-            else
-            {
-                FieldValue = "CustomField";
-            }
-
+            else FieldValue = "CustomField";
             return FieldValue;
         }
 

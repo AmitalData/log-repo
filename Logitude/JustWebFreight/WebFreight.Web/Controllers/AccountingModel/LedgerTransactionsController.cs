@@ -4,6 +4,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -402,6 +403,45 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ServiceResponse response = new ServiceResponse();
                 response.Result = MyTrans;
 
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+        [HttpGet]
+        public HttpResponseMessage GetTransactionsForARPayment(string arpaymentId, string billToGLAccountId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+                SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("ARPayment", "READ", authToken.Tenant);
+
+
+                var accountingContext = AccountingContext.GetContext(tenant);
+                //LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
+                LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
+                List<LedgerTransactionPM> openTransactions = query.GetARPaymentOpenTransactions(billToGLAccountId, tenant);
+                List<LedgerTransactionPM> reconciledTransactions = query.GetARPaymentReconciledTransactions(arpaymentId,billToGLAccountId, tenant);
+
+                IEnumerable<LedgerTransactionPM> finalTransactionsList 
+                    = openTransactions
+                    .Concat(reconciledTransactions)
+                    .OrderByDescending(d => d.IsReconciled).ToList();
+
+
+                ServiceResponse response = new ServiceResponse();
+                response.Result = finalTransactionsList;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;

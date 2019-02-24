@@ -91,20 +91,20 @@
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
     <tr *ngIf="IsDateFilter == false">
         <td>
-            <div *ngFor="let item of SelectedFiltersDataSource; let i=index;">
-                <div style="float:left;margin-left:15px;width: 300px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode != 'DateTime' && item.ParentDataTypeCode != 'Date')">
+            <div *ngFor="let item of SelectedFiltersDataSource; let i=index;" style="float:left;">
+                <div  style="float:left;margin-left:15px;width:413px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode != 'DateTime' && item.ParentDataTypeCode != 'Date')">
                     <div>
                         <table style="height:30px;">
                             <tr style="height:30px;" class="MyFilterItem">
-                                <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;">
+                                <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;width:7px;">
                                     <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                 </td>
-                                <td *ngIf="!item.IsMandatoryFilter" style="height: 22px;">
+                                <td *ngIf="!item.IsMandatoryFilter" style="height: 22px;width:7px;">
                                     <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                 </td>
                                 <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
@@ -113,7 +113,13 @@
                                 <td style="width:7px;">
                                     <div style="width:7px;"></div>
                                 </td>
-                                <td style="width:150px;" [ngSwitch]="item.ParentDataTypeCode">
+                                <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
+                                    <ComboBox style="width:130px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
+                                </td>
+                                <td style="width:7px;">
+                                    <div style="width:7px;"></div>
+                                </td>
+                                <td style="width:180px;" [ngSwitch]="item.ParentDataTypeCode">
 
                                     <!-- Text -->
                                     <div *ngSwitchCase="'Text'">
@@ -198,8 +204,8 @@
                                     </div>
                                 </td>
                                 <!--<td *ngIf="item.FilterType == 'Ask User'" [style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310">
-        <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
-    </td>-->
+                            <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
+                        </td>-->
                             </tr>
                         </table>
                         <!-------------------------->
@@ -222,12 +228,13 @@
                     </div>
 
                 </div>
-                <div style="width:100%;" *ngIf="item && item.IsGroup == true">
-                    <DWAskUserFiltersComponent [SelectedFiltersDataSource]="item.FilterItems"></DWAskUserFiltersComponent>
-                </div>
+                <!--<div>-->
+                    <DWAskUserFiltersComponent *ngIf="item && item.IsGroup == true" [SelectedFiltersDataSource]="item.FilterItems"></DWAskUserFiltersComponent>
+                <!--</div>-->
 
-            </div>
+            </div> 
         </td>
+        <!--<td><div></div></td>-->
 
     </tr>
     <tr>
@@ -238,10 +245,10 @@
                         <div>
                             <table style="height:30px;">
                                 <tr style="height:30px;" class="MyFilterItem">
-                                    <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;">
+                                    <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;width:7px;">
                                         <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                     </td>
-                                    <td *ngIf="!item.IsMandatoryFilter" style="height: 22px;">
+                                    <td *ngIf="!item.IsMandatoryFilter" style="height: 22px;width:7px;">
                                         <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                     </td>
                                     <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
@@ -251,13 +258,12 @@
                                         <div style="width:7px;"></div>
                                     </td>
                                     <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
-                                        <!--<span>{{item.Operation.Name}}</span>-->
                                         <ComboBox style="width:130px;" [ItemsSource]="Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
                                     </td>
                                     <td style="width:7px;">
                                         <div style="width:7px;"></div>
                                     </td>
-                                    <td [ngSwitch]="item.ParentDataTypeCode">
+                                    <td style="width:180px;" [ngSwitch]="item.ParentDataTypeCode">
 
                                         <!--Date-->
                                         <div *ngSwitchCase="'DateTime' || 'Date'">
@@ -284,12 +290,12 @@
 
                         </div>
 
-                    </td> 
+                    </td>
 
                 </tr>
             </table>
         </td>
-
+        
     </tr>
      
 

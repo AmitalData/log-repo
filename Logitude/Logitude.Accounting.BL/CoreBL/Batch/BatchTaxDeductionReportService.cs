@@ -5,6 +5,10 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -38,10 +42,16 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(parameterArgs.Tenant);
             TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(parameterArgs.ReportId, false, false);
+            ObjectTableRepository tableRep = new ObjectTableRepository(parameterArgs.Tenant);
+
+            DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(parameterArgs.Tenant);
+            DocumentType documentType = documentTypeRepository.GetDocumentTypeByCode("TDDP", parameterArgs.Tenant);
+            ObjectTable table = tableRep.GetObjectTableByName("TaxDeductionReport", 0, true);
             try
             {
                 DocumentsFilingPM docFilingPM = TaxDeductionReportService.Create856File(parameterArgs.ReportId, parameterArgs.Tenant);
-
+               
+                DocumentOutPM documentOutPM = TaxDeductionReportService.CreateDocumentOut(documentType.Id, parameterArgs.ReportId, null, null, table.Id, parameterArgs.Tenant);
                 taxDeductionReportPM.StatusTypeCode = "3";
                 taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
                 taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);

@@ -21,6 +21,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.Data.Repositories;
+using Simplog.Data.ShipmentsModel;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -358,6 +359,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 APInvoiceLineQuery apInvoiceLineQuery = new APInvoiceLineQuery(invoiceLineRepository);
                 allInvoiceLinesPM = apInvoiceLineQuery.GetInvoiceLinesByInvoiceId(id, tenant);
                 entityPM.InvoiceLines = allInvoiceLinesPM;
+
+                //if (!string.IsNullOrEmpty(entityPM.MainEntityId))
+                //{
+                //    IShipmentsContext iShipmentsContext = ShipmentsContext.GetContext(tenant);
+                //    entityPM.ShipmentConcurrencyGUID = (from d in iShipmentsContext.Shipments where d.Id == entityPM.MainEntityId select d.ConcurrencyGUID).FirstOrDefault();
+                //    entityPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
+                //}
             }
 
             foreach (APInvoiceEntityPM item in entityPM.InvoiceEntities)

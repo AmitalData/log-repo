@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
@@ -141,6 +141,12 @@ export class IconButton implements OnInit {
                 case "settings": {
                     this.mySource = './Images/Icons/Settings.png';
                     this.mySourceOver = './Images/Icons/Settings_Blue.png';
+                    break;
+                }
+
+                case "payments": {
+                    this.mySource = './Images/Icons/payments.png';
+                    this.mySourceOver = './Images/Icons/payments_Blue.png';
                     break;
                 }
 

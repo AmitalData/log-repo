@@ -107,6 +107,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TransmissionError).HasColumnName("TransmissionError");
             this.Property(t => t.BankAccountLiteId).HasColumnName("BankAccountLiteId");
             this.Property(t => t.MetodoPagoCode).HasColumnName("MetodoPagoCode");
+            this.Property(t => t.IsFullAccounting).HasColumnName("IsFullAccounting");
 
             this.Property(t => t.TipoCadenaPago).HasColumnName("TipoCadenaPago");
             this.Property(t => t.CadPago).HasColumnName("CadPago");

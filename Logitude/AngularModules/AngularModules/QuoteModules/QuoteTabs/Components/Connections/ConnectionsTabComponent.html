@@ -63,7 +63,7 @@
                                                                         <td class="GridViewCell" style="width: 125px; min-width:125px; max-width:125px;">{{item.VolumeInKG}}</td>
                                                                         <td>
                                                                             <div></div>
-                                                                        </td>                                                                  
+                                                                        </td>
 
                                                                     </tr>
 
@@ -125,7 +125,78 @@
 
                                                                         <td>
                                                                             <div></div>
-                                                                        </td> 
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="3">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:10px;" *ngIf="IsOpportunitiesGridVisible">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--Opportunities-->
+                                <tr *ngIf="IsOpportunitiesGridVisible" [style.height.px]="OpportunitiesGridHeight" style="max-height:250px;">
+                                    <td>
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="font-size:14px; color:#1B90CB;">Opportunities</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 320px; max-width:320px; min-width:320px;">Subject</td>
+                                                                        <td style="width: 230px; max-width:230px; min-width:230px;">Owner</td>
+                                                                        <td style="width: 120px; max-width:120px; min-width:120px;">Stage</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Est. Closing Date</td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of OpportunitiesItemsSource">
+                                                                        <td class="GridViewCell" style="width: 320px; min-width:320px; max-width:320px;">
+                                                                            {{item.EntityNumber}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 230px; max-width:230px; min-width:230px;">
+                                                                            {{item.EntityOwner}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 120px; max-width:120px; min-width:120px;" [ngStyle]="{color: item.EntityStatus | StringToColorPipe:'OpportunityStage'}">
+                                                                            {{item.EntityStatus}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 120px; max-width:120px; min-width:120px;">
+                                                                            {{item.EntityClosingDate | DateTimeToDatePipe}}
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr>

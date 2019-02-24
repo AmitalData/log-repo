@@ -73,6 +73,11 @@ export class QuotePM {
     public set LastVersionNumber(newValue: number) { if (this.lastVersionNumber != newValue) { this.lastVersionNumber = newValue; this.MarkAsDirty("LastVersionNumber"); } }
        
 	 
+    private quoteLevel: string;
+    public get QuoteLevel() { return this.quoteLevel; }
+    public set QuoteLevel(newValue: string) { if (this.quoteLevel != newValue) { this.quoteLevel = newValue; this.MarkAsDirty("QuoteLevel"); } }
+       
+	 
     private quoteNumber: string;
     public get QuoteNumber() { return this.quoteNumber; }
     public set QuoteNumber(newValue: string) { if (this.quoteNumber != newValue) { this.quoteNumber = newValue; this.MarkAsDirty("QuoteNumber"); } }

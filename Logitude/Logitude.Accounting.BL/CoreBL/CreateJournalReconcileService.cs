@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     throw new Exception("שער המטבע לא קיים בטבלת שערי המטבעות");
                 }
-                var totForeign = totReconciliationAmount * (decimal)rate.Rate.GetValueOrDefault();
+                var totForeign = totReconciliationAmount / (decimal)rate.Rate.GetValueOrDefault();
                 JournalPM journal = new JournalPM()
                 {
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,

@@ -91,7 +91,9 @@ export class DocumentsFilingViewsExtService {
 
             }).catch(ServiceHelper.HandleServiceError);
     }
-     
+
+
+   
     MapJsonToEntityList(jsonList: any) {
 
         var entityList: DocumentsFilingList;

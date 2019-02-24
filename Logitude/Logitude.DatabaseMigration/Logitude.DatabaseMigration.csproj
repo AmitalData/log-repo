@@ -686,6 +686,34 @@
     <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.Designer.cs">
       <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs" />
+    <Compile Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.Designer.cs">
+      <DependentUpon>201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902121710035_NewField_IsFullAccounting_ARPayment.cs" />
+    <Compile Include="Migrations\201902121710035_NewField_IsFullAccounting_ARPayment.Designer.cs">
+      <DependentUpon>201902121710035_NewField_IsFullAccounting_ARPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902170955193_AddBIReportFolder_Samar.cs" />
+    <Compile Include="Migrations\201902170955193_AddBIReportFolder_Samar.Designer.cs">
+      <DependentUpon>201902170955193_AddBIReportFolder_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171033526_AddBIReportFolderIdToBIReport.cs" />
+    <Compile Include="Migrations\201902171033526_AddBIReportFolderIdToBIReport.Designer.cs">
+      <DependentUpon>201902171033526_AddBIReportFolderIdToBIReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171042304_SetBIReportFolderIdToBeRequired_Samar.cs" />
+    <Compile Include="Migrations\201902171042304_SetBIReportFolderIdToBeRequired_Samar.Designer.cs">
+      <DependentUpon>201902171042304_SetBIReportFolderIdToBeRequired_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171020578_IsUnicodeDescriptionChargesType_Maheera.cs" />
+    <Compile Include="Migrations\201902171020578_IsUnicodeDescriptionChargesType_Maheera.Designer.cs">
+      <DependentUpon>201902171020578_IsUnicodeDescriptionChargesType_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902202034350_add_AgentComputed_Shipments.cs" />
+    <Compile Include="Migrations\201902202034350_add_AgentComputed_Shipments.Designer.cs">
+      <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1144,6 +1172,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.resx">
       <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902130911102_AddFirstAccountingCloseDateToShipment_Samar.resx">
+      <DependentUpon>201902130911102_AddFirstAccountingCloseDateToShipment_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902121710035_NewField_IsFullAccounting_ARPayment.resx">
+      <DependentUpon>201902121710035_NewField_IsFullAccounting_ARPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171020578_IsUnicodeDescriptionChargesType_Maheera.resx">
+      <DependentUpon>201902171020578_IsUnicodeDescriptionChargesType_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902170955193_AddBIReportFolder_Samar.resx">
+      <DependentUpon>201902170955193_AddBIReportFolder_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171033526_AddBIReportFolderIdToBIReport.resx">
+      <DependentUpon>201902171033526_AddBIReportFolderIdToBIReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171042304_SetBIReportFolderIdToBeRequired_Samar.resx">
+      <DependentUpon>201902171042304_SetBIReportFolderIdToBeRequired_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902202034350_add_AgentComputed_Shipments.resx">
+      <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

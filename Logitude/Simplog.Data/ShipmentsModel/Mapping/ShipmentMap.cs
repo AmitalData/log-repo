@@ -56,6 +56,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnCarriageToPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnCarriageCarrierNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AgentId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.AgentComputed).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Notify1AddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Notify2AddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Notify1ContactId).HasMaxLength(15).IsUnicode(false);
@@ -359,6 +360,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnCarriageATA).HasColumnName("OnCarriageATA");
             this.Property(t => t.OnCarriageCarrierNumber).HasColumnName("OnCarriageCarrierNumber");
             this.Property(t => t.AgentId).HasColumnName("AgentId");
+            this.Property(t => t.AgentComputed).HasColumnName("AgentComputed");            
             this.Property(t => t.OnCarriageETD).HasColumnName("OnCarriageETD");
             this.Property(t => t.OnCarriageETA).HasColumnName("OnCarriageETA");
             this.Property(t => t.PreCarriageETA).HasColumnName("PreCarriageETA");
@@ -654,6 +656,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AWBPrintingComments).HasColumnName("AWBPrintingComments");
             this.Property(t => t.LocalCustomsSentByUserId).HasColumnName("LocalCustomsSentByUserId");
             this.Property(t => t.FirstOperationalCloseDate).HasColumnName("FirstOperationalCloseDate");
+            this.Property(t => t.FirstAccountingCloseDate).HasColumnName("FirstAccountingCloseDate");
             this.Property(t => t.AMSClosingDate).HasColumnName("AMSClosingDate");
             this.Property(t => t.UpdatedByPartner).HasColumnName("UpdatedByPartner");
             this.Property(t => t.INTTRASIStatusCode).HasColumnName("INTTRASIStatusCode");

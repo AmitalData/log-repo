@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
 {
     [TestClass]
-     public class PaymentChequeDataMappingUnitTest
+     public class PaymentChequeDataMappingUnitTest: TestBase
     {
 
         [TestMethod]
@@ -45,9 +45,91 @@ namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
         [TestMethod]
         public void POCOToPM_CheckCustomMappedFieldsMatchExpected_Success()
         {
-           
+
+            JournalPM journal = new JournalPM()
+            {
+                Id = "115",
+                JournalNumber ="1",
+             
+                Tenant = 1,
+            };
+            GLAccountPM PayToGLAccount = new GLAccountPM()
+            {
+                Id = "GLA1",
+                IsMultiCurrency = false,
+                CurrencyId = "CUR1",
+                DisplayNumber = "123456",
+                Tenant = 1,
+            };
+
+            GLAccountPM BankAccountGLAccountPM = new GLAccountPM()
+            {
+                Id = "GLA2",
+                IsMultiCurrency = false,
+                CurrencyId = "CUR1",
+                DisplayNumber = "654321",
+                Tenant = 1,
+            };
+
+            BankAccountPM BankAccount = new BankAccountPM()
+            {
+                Id = "BA1",
+               BankId="11",
+                Tenant = 1,
+            };
+
+
+
+            PaymentChequeStatusPM PaymentChequeStatusPM = new PaymentChequeStatusPM()
+            {
+              Code ="1",
+              LocalName = "Draft"
+              
+            };
+
+            PaymentChequePM paymentChequePM = new PaymentChequePM()
+            {
+                Tenant = 1,
+                PayToGLAccountId = PayToGLAccount.Id,
+                BankAccountGLAccountId = BankAccountGLAccountPM.Id,
+                BankAccountId = BankAccount.Id,
+                PaymentChequeStatusCode = PaymentChequeStatusPM.Code,
+                JournalId = journal.Id
+            };
+
+
+            PaymentCheque paymentCheque = new PaymentCheque()
+            {
+                Tenant = 1,
+                PayToGLAccountId = PayToGLAccount.Id,
+                BankAccountGLAccountId = BankAccountGLAccountPM.Id,
+                BankAccountId = BankAccount.Id,
+               
+            };
+            var paymentChequeCustomDataMapping = A.Fake<PaymentChequeCustomDataMapping>(option => option.CallsBaseMethods());
+            A.CallTo(() => paymentChequeCustomDataMapping.GetSingleBankAccountPM(paymentChequePM.BankAccountId, BankAccount.Tenant, A<bool>.Ignored)).Returns(BankAccount);
+            A.CallTo(() => paymentChequeCustomDataMapping.GetSingleGLAccountPM(paymentChequePM.PayToGLAccountId, paymentChequePM.Tenant)).Returns(PayToGLAccount);
+            A.CallTo(() => paymentChequeCustomDataMapping.GetSingleGLAccountPM(paymentChequePM.BankAccountGLAccountId, paymentChequePM.Tenant)).Returns(BankAccountGLAccountPM);
+            A.CallTo(() => paymentChequeCustomDataMapping.GetSingleJournalPM(paymentChequePM.JournalId, paymentChequePM.Tenant)).Returns(journal);
+
+            paymentChequeCustomDataMapping.POCOToPM(paymentChequePM, paymentCheque, new List<PaymentChequeDataMapping.PMPropertyNames>());
+
+
+            Aggregate(
+          () => Assert.AreEqual(PayToGLAccount.CurrencyId, paymentChequePM.GLAccountCurrencyId, "CurrencyId not matches expected CurrencyId "),
+          () => Assert.AreEqual(PayToGLAccount.DisplayNumber, paymentChequePM.GLAccountNumber, "GLAccountNumber not matches expected GLAccountNumber "),
+          () => Assert.AreEqual(BankAccountGLAccountPM.DisplayNumber, paymentChequePM.BankGLAccountCurrencyId, "BankGLAccountCurrencyId not matches expected BankGLAccountCurrencyId "),
+          () => Assert.AreEqual(BankAccount.LocalName, paymentChequePM.BankLocalName, "BankLocalName not matches expected BankLocalName "),
+          () => Assert.AreEqual(BankAccount.EnglishName, paymentChequePM.BankEnglishName, "BankEnglishName not matches expected BankEnglishName "),
+          () => Assert.AreEqual(journal.Id, paymentChequePM.JournalId, "JournalId not matches expected JournalId "),
+          () => Assert.AreEqual(journal.JournalNumber, paymentChequePM.JournalNumber, "JournalNumber not matches expected JournalNumber ")
+          );
+
+            
 
         }
+
+   
 
 
 

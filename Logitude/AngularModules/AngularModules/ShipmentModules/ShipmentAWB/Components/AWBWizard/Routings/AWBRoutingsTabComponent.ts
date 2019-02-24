@@ -1,7 +1,5 @@
-﻿import {Component} from '@angular/core';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {AppTool, FormatTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -94,71 +92,70 @@ export class AWBRoutingsTabComponent extends BaseComponent {
     }
 
     private isSaveRequested: boolean = false;
-    private isReloadRequested: boolean = false;
     private Listen() {
         if (this.Wizard != null) {
             this.Wizard.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.Wizard.EntityPM;
                     this.SetUIProperties();
-
-                    if (this.isFlightSchedulesRequested) {
-                        this.RunFlightSchedules();
-                    }
+                    this.OnEntityListenSuccess();
                 }
 
-                else {
-                    this.isSaveRequested = false;
-                    this.isReloadRequested = false;
-                    this.isFlightSchedulesRequested = false;
-                }
-
-                if (this.isSaveRequested) {
-                    this.isSaveRequested = false;
-
-                    if (isSaveSuccess) {
-                        this.Reload();
-                    }
-
-                    else {
-                        if (this.isGetFromStock) {
-                            this.EntityPM.MAWBTakenFromStack = false;
-                            this.EntityPM.MAWBStackNumber = this.myOldMAWBStackNumber;
-                            this.MAWBOBLDate = this.myOldMAWBOBLDate;
-                            this.isGetFromStock = false;
-                        }
-
-                        this.FireWizardEvent();
-                        this.SetUIProperties_Carriers(); 
-                    }
-                }
-
-                this.isFlightSchedulesRequested = false;
+                this.StopListenFlags();
             });
-
             this.Wizard.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.Wizard.EntityPM;
-
-                    if (this.isReloadRequested) {
-                        this.isReloadRequested = false;
-
-                        this.IsInterlineAdded = AppTool.IsNullOrEmpty(this.InterlineId) ? false : true;
-                        this.Validate();
-                        this.FireWizardEvent();
-                        this.SetUIProperties_Carriers();
-                    }
+                    this.SetUIProperties();
+                    this.OnEntityListenSuccess();
                 }
+              
+                this.StopListenFlags();                
             });
         }
+    }
+    private OnEntityListenSuccess() {
+
+        if (this.isFlightSchedulesRequested) {
+            this.isFlightSchedulesRequested = false;
+            this.RunFlightSchedules();
+        }
+
+        else if (this.isSaveRequested) {
+
+            this.isSaveRequested = false;
+
+            //if (this.isGetFromStock) {
+
+            //    this.isGetFromStock = false;
+
+            //    this.EntityPM.MAWBTakenFromStack = false;
+            //    this.EntityPM.MAWBStackNumber = this.myOldMAWBStackNumber;
+            //    this.MAWBOBLDate = this.myOldMAWBOBLDate;
+            //}
+
+            this.FireWizardEvent();
+            this.SetUIProperties_Carriers();
+        }
+
+        //else if (this.isReloadRequested) {
+        //    this.isReloadRequested = false;
+
+        //    this.IsInterlineAdded = AppTool.IsNullOrEmpty(this.InterlineId) ? false : true;
+        //    this.Validate();
+        //    this.FireWizardEvent();
+        //    this.SetUIProperties_Carriers();
+        //}
+    }
+     
+    private StopListenFlags() {
+        //this.isGetFromStock = false;
+        this.isSaveRequested = false;
+        this.isFlightSchedulesRequested = false;
     }
     private Save() {
         this.isSaveRequested = true;
         this.Wizard.SaveClicked();
-    }
-    private Reload() {
-        this.isReloadRequested = true;
-        this.Wizard.ReloadEntity();
     }
 
     // SetUIProperties
@@ -171,17 +168,18 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
         return myResult;
     }
-    get IsCloseMasterInfoVisible() {
-        var myResult = false;
+    //get IsCloseMasterInfoVisible() {
+    //    var myResult = false;
 
-        if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-            myResult = true;
-        }
+    //    if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+    //        myResult = true;
+    //    }
 
-        return myResult;
-    }
+    //    return myResult;
+    //}
     public IsEditingEnabled: boolean = false;
     public IsMainCarrierFieldsEnabled: boolean = false;
+    public IsCloseMasterInfoVisible: boolean = false;
     private SetUIProperties() {
         this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         this.SetUIProperties_Ports();
@@ -191,6 +189,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
         var isPortsEnabled = this.IsEditingEnabled;
         var isPortVia1Enabled = false;
         var isPortVia2Enabled = false;
+        this.IsCloseMasterInfoVisible = false;
 
         if (isPortsEnabled) {
             if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
@@ -217,7 +216,10 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
         if (isPortsEnabled) {
             if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-                isPortsEnabled = false;
+                if (this.EntityPM.StatusWeight >= 60) {
+                    isPortsEnabled = false;
+                    this.IsCloseMasterInfoVisible = true;
+                }
             }
         }
 
@@ -225,6 +227,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Transshipment1FromPortId", this.ObjectTableName, isPortVia1Enabled);
         this.UIProperties.SetEnabled("Transshipment2FromPortId", this.ObjectTableName, isPortVia2Enabled);
         this.UIProperties.SetEnabled("MainCarriageFinalDestinationPortId", this.ObjectTableName, isPortsEnabled);
+
         this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPortId) ? true : false);
         this.UIProperties.SetRequired("MainCarriageFinalDestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFinalDestinationPortId) ? true : false);
     }
@@ -1163,7 +1166,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                                     this.EntityPM.MAWBStackNumber = AppTool.PadLeft(myStackPM.Number.toString(), 8, '0');
                                                     this.MAWBOBLDate = DateTool.GetCurrentDateTimeAsUtc();
                                                     this.SetMAWBAirline();
-                                                    this.isGetFromStock = true;
+                                                    //this.isGetFromStock = true;
                                                     this.Save();
                                                 }
 
@@ -1191,9 +1194,9 @@ export class AWBRoutingsTabComponent extends BaseComponent {
         }
     }
 
-    private isGetFromStock: boolean = false;
-    private myOldMAWBStackNumber: string;
-    private myOldMAWBOBLDate: Date;
+    //private isGetFromStock: boolean = false;
+    //private myOldMAWBStackNumber: string;
+    //private myOldMAWBOBLDate: Date;
     GetStockClicked() {
         var isValid = this.Wizard.ValidateShipment();
         if (isValid) {
@@ -1215,12 +1218,14 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                     if (windowArgs.SelectedStack != null) {
 
                         var stackNumber: number = windowArgs.SelectedStack.Number;
-                        this.myOldMAWBStackNumber = this.EntityPM.MAWBStackNumber;
-                        this.myOldMAWBOBLDate = this.EntityPM.MAWBOBLDate;
+                        //this.myOldMAWBStackNumber = this.EntityPM.MAWBStackNumber;
+                        //this.myOldMAWBOBLDate = this.EntityPM.MAWBOBLDate;
+
                         this.EntityPM.MAWBTakenFromStack = true;
                         this.EntityPM.MAWBStackNumber = AppTool.PadLeft(stackNumber.toString(), 8, '0');
                         this.MAWBOBLDate = DateTool.GetCurrentDateTimeAsUtc();
-                        this.isGetFromStock = true;
+
+                        //this.isGetFromStock = true;
                         this.Save();                        
                     }
                 }
@@ -1234,7 +1239,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                 this.SetMAWBAirline();
                 this.EntityPM.MAWBReturnedToStack = true;
                 this.EntityPM.MAWBStackNumber = this.Master;
-                this.isGetFromStock = false;
+                //this.isGetFromStock = false;
                 this.Save();
             }
         }

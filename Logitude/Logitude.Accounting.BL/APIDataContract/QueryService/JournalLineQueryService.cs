@@ -30,11 +30,11 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 {
 
                     var temp = new JournalLinePM();
-                    if (!string.IsNullOrEmpty(item.JournalId) && item.Line!= null)
+                    if (!string.IsNullOrEmpty(item.JournalId) && item.Line != null)
                     {
-                        temp = query.GetSingleJournalLine(item.JournalId,item.Line, Tenant);
+                        temp = query.GetSingleJournalLine(item.JournalId, item.Line, Tenant);
                     }
-                   
+
                     if (temp == null)
                     {
                         throw new ApplicationException("JournalLine with Line " + item.Line + " doesn't exist");
@@ -43,52 +43,55 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.JournalId = item.JournalId;
                     temp.Line = item.Line;
                     temp.Tenant = item.Tenant;
-                    GLAccountQueryService DebitControlAccountGLAccountService = new GLAccountQueryService(Tenant);
-                    if (item.DebitControlAccount != null)
+                    Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService gLAccoutQueryService = new EntityQueryServices.GLAccountQueryService(Tenant);
+                    if(item.CreditControlAccount != null)
                     {
-                        var myDebitControlAccountPM = DebitControlAccountGLAccountService.GLAccountDataMappingAndValidatin(item.DebitControlAccount, Tenant, ComputingPartnerName);
-                        if (myDebitControlAccountPM != null)
-                        {
-                            temp.DebitControlAccountId = myDebitControlAccountPM.Id;
-                        }
-
+                        GLAccountPM CreditControlAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.CreditControlAccount, Tenant);
+                        temp.CreditControlAccountId = CreditControlAccount.Id;
                     }
-
-
-                    GLAccountQueryService DebitAccountGLAccountService = new GLAccountQueryService(Tenant);
-                    if (item.DebitAccount != null)
-                    {
-                        var myDebitAccountPM = DebitAccountGLAccountService.GLAccountDataMappingAndValidatin(item.DebitAccount, Tenant, ComputingPartnerName);
-                        if (myDebitAccountPM != null)
-                        {
-                            temp.DebitAccountId = myDebitAccountPM.Id;
-                        }
-
-                    }
-
-
-                    GLAccountQueryService CreditControlAccountGLAccountService = new GLAccountQueryService(Tenant);
-                    if (item.CreditControlAccount != null)
-                    {
-                        var myCreditControlAccountPM = CreditControlAccountGLAccountService.GLAccountDataMappingAndValidatin(item.CreditControlAccount, Tenant, ComputingPartnerName);
-                        if (myCreditControlAccountPM != null)
-                        {
-                            temp.CreditControlAccountId = myCreditControlAccountPM.Id;
-                        }
-
-                    }
-
-
-                    GLAccountQueryService CreditAccountGLAccountService = new GLAccountQueryService(Tenant);
                     if (item.CreditAccount != null)
                     {
-                        var myCreditAccountPM = CreditAccountGLAccountService.GLAccountDataMappingAndValidatin(item.CreditAccount, Tenant, ComputingPartnerName);
-                        if (myCreditAccountPM != null)
-                        {
-                            temp.CreditAccountId = myCreditAccountPM.Id;
-                        }
-
+                        GLAccountPM CreditAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.CreditAccount, Tenant);
+                        temp.CreditAccountId = CreditAccount.Id;
                     }
+
+
+                    if (item.DebitControlAccount != null)
+                    {
+                        GLAccountPM DebitControlAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.DebitControlAccount, Tenant);
+                        temp.DebitControlAccountId = DebitControlAccount.Id;
+                    }
+
+
+                    if (item.DebitAccount != null)
+                    {
+                        GLAccountPM DebitAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.DebitAccount, Tenant);
+                        temp.DebitAccountId = DebitAccount.Id;
+                    }
+
+
+                    //GLAccountQueryService CreditControlAccountGLAccountService = new GLAccountQueryService(Tenant);
+                    //if (item.CreditControlAccount != null)
+                    //{
+                    //    var myCreditControlAccountPM = CreditControlAccountGLAccountService.GLAccountDataMappingAndValidatin(item.CreditControlAccount, Tenant, ComputingPartnerName);
+                    //    if (myCreditControlAccountPM != null)
+                    //    {
+                    //        temp.CreditControlAccountId = myCreditControlAccountPM.Id;
+                    //    }
+
+                    //}
+
+
+                    //GLAccountQueryService CreditAccountGLAccountService = new GLAccountQueryService(Tenant);
+                    //if (item.CreditAccount != null)
+                    //{
+                    //    var myCreditAccountPM = CreditAccountGLAccountService.GLAccountDataMappingAndValidatin(item.CreditAccount, Tenant, ComputingPartnerName);
+                    //    if (myCreditAccountPM != null)
+                    //    {
+                    //        temp.CreditAccountId = myCreditAccountPM.Id;
+                    //    }
+
+                    //}
 
 
                     temp.DocumentDate = item.DocumentDate;
@@ -112,12 +115,13 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.Reference1 = item.Reference1;
                     temp.Reference2 = item.Reference2;
                     temp.Reference3 = item.Reference3;
-                    temp.CreditAccountNumber = item.CreditAccountNumber;
-                    temp.DebitAccountNumber = item.DebitAccountNumber;
+                    //temp.CreditAccountNumber = item.CreditAccountNumber;
+                    //temp.DebitAccountNumber = item.DebitAccountNumber;
                     temp.Notes = item.Notes;
                     temp.ExternalOpenAmount = item.ExternalOpenAmount;
-                    temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
-                    temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
+                    //temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
+                    //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
+                    //temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
                     lines.Add(temp);
                 }
 
@@ -144,33 +148,33 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.JournalId = item.JournalId;
                     temp.Line = item.Line;
                     temp.Tenant = item.Tenant;
-                    if (item.DebitControlAccountId != null)
-                    {
-                        GLAccountQueryService GLAccountService0 = new GLAccountQueryService(Tenant);
-                        temp.DebitControlAccount = GLAccountService0.GetGLAccountById(item.DebitControlAccountId, Tenant);
+                    //if (item.DebitControlAccountId != null)
+                    //{
+                    //    GLAccountQueryService GLAccountService0 = new GLAccountQueryService(Tenant);
+                    //    temp.DebitControlAccount = GLAccountService0.GetGLAccountById(item.DebitControlAccountId, Tenant);
 
-                    }
+                    //}
 
-                    if (item.DebitAccountId != null)
-                    {
-                        GLAccountQueryService GLAccountService1 = new GLAccountQueryService(Tenant);
-                        temp.DebitAccount = GLAccountService1.GetGLAccountById(item.DebitAccountId, Tenant);
+                    //if (item.DebitAccountId != null)
+                    //{
+                    //    GLAccountQueryService GLAccountService1 = new GLAccountQueryService(Tenant);
+                    //    temp.DebitAccount = GLAccountService1.GetGLAccountById(item.DebitAccountId, Tenant);
 
-                    }
+                    //}
 
-                    if (item.CreditControlAccountId != null)
-                    {
-                        GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
-                        temp.CreditControlAccount = GLAccountService2.GetGLAccountById(item.CreditControlAccountId, Tenant);
+                    //if (item.CreditControlAccountId != null)
+                    //{
+                    //    GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
+                    //    temp.CreditControlAccount = GLAccountService2.GetGLAccountById(item.CreditControlAccountId, Tenant);
 
-                    }
+                    //}
 
-                    if (item.CreditAccountId != null)
-                    {
-                        GLAccountQueryService GLAccountService3 = new GLAccountQueryService(Tenant);
-                        temp.CreditAccount = GLAccountService3.GetGLAccountById(item.CreditAccountId, Tenant);
+                    //if (item.CreditAccountId != null)
+                    //{
+                    //    GLAccountQueryService GLAccountService3 = new GLAccountQueryService(Tenant);
+                    //    temp.CreditAccount = GLAccountService3.GetGLAccountById(item.CreditAccountId, Tenant);
 
-                    }
+                    //}
 
                     temp.DocumentDate = item.DocumentDate;
                     temp.AccountingDate = item.AccountingDate;
@@ -188,12 +192,19 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.Reference1 = item.Reference1;
                     temp.Reference2 = item.Reference2;
                     temp.Reference3 = item.Reference3;
-                    temp.CreditAccountNumber = item.CreditAccountNumber;
-                    temp.DebitAccountNumber = item.DebitAccountNumber;
+                    temp.CreditAccount = item.CreditAccountNumber;
+                    temp.CreditControlAccount = item.CreditControlAccountNumber;
+                    temp.DebitControlAccount = item.DebitControlAccountNumber;
+                    temp.DebitAccount = item.DebitAccountNumber;
+
+                    //temp.CreditAccountNumber = item.CreditAccountNumber;
+                    //temp.DebitAccountNumber = item.DebitAccountNumber;
                     temp.Notes = item.Notes;
                     temp.ExternalOpenAmount = item.ExternalOpenAmount;
-                    temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
-                    temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
+                    //temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
+                    //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
+                    //temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
+                 
                     MyList.Add(temp);
                 }
 

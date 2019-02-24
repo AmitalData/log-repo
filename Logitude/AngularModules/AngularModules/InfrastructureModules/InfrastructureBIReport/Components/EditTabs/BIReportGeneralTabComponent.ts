@@ -47,6 +47,13 @@ export class BIReportGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get BIReportFolderId() { return this.EntityPM.BIReportFolderId; }
+    set BIReportFolderId(newValue: string) {
+        if (this.EntityPM.BIReportFolderId != newValue) {
+            this.EntityPM.BIReportFolderId = newValue;
+        }
+    }
+
     get DWQueryId() { return this.EntityPM.DWQueryId; }
     set DWQueryId(newValue: string) {
         if (this.EntityPM.DWQueryId != newValue) {

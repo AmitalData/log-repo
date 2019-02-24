@@ -54,6 +54,7 @@ export class ShipmentList {
 		TruckNumber: string;
 		MainCarriageCarrierCode: string;
 		MainCarriageCarrierName: string;
+		AgentComputed: string;
 		CustomFieldId: string;
 		FromPortId: string;
 		FromPort: string;
@@ -383,6 +384,7 @@ export class ShipmentList {
 		WarehouseLegVGMCutOffDate: Date;
 		WarehouseLegCutOffDate: Date;
 		FirstOperationalCloseDate: Date;
+		FirstAccountingCloseDate: Date;
 		AMSClosingDate: Date;
 		UpdatedByPartner: string;
 		INTTRASIError: string;

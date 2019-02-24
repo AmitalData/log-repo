@@ -278,5 +278,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string JournalNumber { get; set; }
 
+        public string ShipmentConcurrencyGUID { get; set; }
+        public string ShipmentNewConcurrencyGUID { get; set; }
     }
 }

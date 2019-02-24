@@ -212,6 +212,8 @@
     cursor: pointer;
 }
 
+
+
 button:not(.ag-paging-button), .Button, .RedButton, .GreenButton, .EntityChangesButton {
     height: 22px;
     padding: 0 5px;

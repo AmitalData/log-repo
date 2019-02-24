@@ -480,6 +480,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.LastSharedEventNotes = entityPM.LastSharedEventNotes;
             entityPoco.LastSharedEventDate = entityPM.LastSharedEventDate;
             entityPoco.FirstOperationalCloseDate = entityPM.FirstOperationalCloseDate;
+            entityPoco.FirstAccountingCloseDate = entityPM.FirstAccountingCloseDate;
             entityPoco.AMSClosingDate = entityPM.AMSClosingDate;
             entityPoco.UpdatedByPartner = entityPM.UpdatedByPartner;
             entityPoco.EmergencyContactId = entityPM.EmergencyContactId;
@@ -1707,6 +1708,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         myFinalDestinationPortId = entityMasterData.MainCarriageToPortId;
                     }
 
+                    
                     entityMasterData.MainCarriageFinalDestinationPortId = myFinalDestinationPortId;
                     entityMasterData.MainCarriageCarrierPrefix = entityPM.MainCarriageCarrierPrefix;
                     entityMasterData.Transshipment1CarrierPrefix = entityPM.Transshipment1CarrierPrefix;
@@ -1724,8 +1726,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.AWBPrintingRANumberEdited = entityPM.AWBPrintingRANumberEdited;
                     entityMasterData.AdditionalHandlingInfoEdited = entityPM.AdditionalHandlingInfoEdited;
                     entityMasterData.InterlineId = entityPM.InterlineId;
-
                     ComputeDepartureArrivalDates(entityMasterData, entityPM);
+
+                    entityPM.OriginMainCarriageFromPortId = entityMasterData.MainCarriageFromPortId;
+                    entityPM.OriginFinalDestinationPortId = entityMasterData.MainCarriageFinalDestinationPortId;
                 }
             }
         }
@@ -1853,6 +1857,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ConsigneeReference2 = entityPM.ConsigneeReference2;
 
             entityPoco.AgentId = entityPM.AgentId;
+
+        
             entityPoco.AgentAddressId = entityPM.AgentAddressId;
             entityPoco.AgentContactId = entityPM.AgentContactId;
             entityPoco.AgentReference1 = entityPM.AgentReference1;
@@ -2733,6 +2739,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.MainCarriageTransportModeId = houseShipment.TransportModeId;
             shipmentPM.TransportModeId = houseShipment.TransportModeId;
             shipmentPM.IncotermId = houseShipment.IncotermId;
+            shipmentPM.CustomerContactId = houseShipment.CustomerContactId;
+            shipmentPM.AgentContactId = houseShipment.AgentContactId;
 
             shipmentPM.Field1 = houseShipment.Field1;
             shipmentPM.Field2 = houseShipment.Field2;

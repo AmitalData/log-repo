@@ -8,6 +8,7 @@ import { TaxDeductionReportExtendedPMService } from '../../../Services/ExtendedP
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { BatchTaskExecutionListService } from '../../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { TaxDeductionReportPMService } from '../../../Services/StandardPMs/TaxDeductionReportPMService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 
 @Component({
@@ -41,12 +42,14 @@ export class TaxDeductionReportGeneralTabComponent extends BaseComponent {
         }
     }
 
+    Building: boolean= false;
     get IsAdditionalReportExist() { return this.entityPM.IsAdditionalReportExist; }
 
     get Email() { return this.entityPM.Email; }
     RunService() {
         this.entityPM.StatusTypeCode = "2";
-        SessionLocator.CurrentSession.StartBusyIndicator("Accounting.General.O.Saving");
+        this.Building=true;
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
         this.taxDeductionReportPMService.update(this.entityPM).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {

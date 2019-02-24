@@ -17,7 +17,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ConcurrencyGUID { get; set; }
         public string QuoteTemplateId { get; set; }
         public int LastVersionNumber { get; set; }
-
+        public string QuoteLevel { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteNumber { get; set; }
 

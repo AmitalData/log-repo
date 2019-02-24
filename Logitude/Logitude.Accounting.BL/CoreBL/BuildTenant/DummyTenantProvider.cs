@@ -780,9 +780,10 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 DateTime DueDate = dueDate;//DateTime.Now.AddDays(_Rand.Next(-600, 180));
                 decimal localAm = _Rand.Next(201, 5000000) / 100m;
                 decimal foreignAm = localAm / 3 + ((int)accDate1.Subtract(forMonth).TotalDays / 100);
-
-                JLCreditDebitVatProfile journalLinesProfile = (JLCreditDebitVatProfile)Enum.ToObject(typeof(JLCreditDebitVatProfile), _Rand.Next(4));
-
+                
+                //Task 48370: Transactions service -Load Test & Performance - change logic - Create only journal lines 1 - credit or - 2 - debit
+                //JLCreditDebitVatProfile journalLinesProfile = (JLCreditDebitVatProfile)Enum.ToObject(typeof(JLCreditDebitVatProfile), _Rand.Next(4));
+                JLCreditDebitVatProfile journalLinesProfile = JLCreditDebitVatProfile.CreditDebitInTwoLine;
                 switch (journalLinesProfile)
                 {
                     case JLCreditDebitVatProfile.CreditDebitOneLine:

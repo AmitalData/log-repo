@@ -81,6 +81,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebFreight.Web">
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\WebFreight.Web.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
       <Private>True</Private>
@@ -104,6 +107,7 @@
     <Compile Include="APIDataContract\GLAccount.Generated.cs" />
     <Compile Include="APIDataContract\GLAccountType.Generated.cs" />
     <Compile Include="APIDataContract\Journal.Generated.cs" />
+    <Compile Include="APIDataContract\JournalActionType.Generated.cs" />
     <Compile Include="APIDataContract\JournalLine.Generated.cs" />
     <Compile Include="APIDataContract\JournalStatusType.Generated.cs" />
     <Compile Include="APIDataContract\JournalType.Generated.cs" />
@@ -120,6 +124,7 @@
     <Compile Include="APIDataContract\QueryService\GLAccountQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\JournalActionTypeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalLineQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\JournalQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\JournalQueryService.Generated.cs" />

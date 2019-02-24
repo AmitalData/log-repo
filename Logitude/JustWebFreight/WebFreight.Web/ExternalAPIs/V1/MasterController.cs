@@ -513,6 +513,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 {
                                     item.IsAccountingClosed = true;
                                     item.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+
+                                    if (item.FirstAccountingCloseDate == null)
+                                    {
+                                        item.FirstAccountingCloseDate = item.AccountingCloseDate;
+                                    }
                                 }
 
                                 entityRepository.Update(item);

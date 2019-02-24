@@ -51,7 +51,7 @@ import { GLAccountMoreDataListService } from './Services/StandardLists/GLAccount
 import { TaxDeductionReportListService } from './Services/StandardLists/TaxDeductionReportListService';
 import { OpenFormatReportListService } from './Services/StandardLists/OpenFormatReportListService';
 //import { OpenFormatDateTypeListService } from './Services/StandardLists/OpenFormatDateTypeListService';
-
+import { TaxDeductionReportStatusListService } from './Services/StandardLists/TaxDeductionReportStatusListService';
 import { TaxReportPMService } from './Services/StandardPMs/TaxReportPMService';
 import { AccountingPeriodPMService } from './Services/StandardPMs/AccountingPeriodPMService';
 import { AutomaticReconcileMethodPMService } from './Services/StandardPMs/AutomaticReconcileMethodPMService';
@@ -223,6 +223,8 @@ export class ModuleProviders {
             case "VatReportStatusListService": { myResult = new VatReportStatusListService(); break; }
             case "GLAccountMoreDataListService": { myResult = new GLAccountMoreDataListService(); break; }
             // case "OpenFormatDateTypeListService": { myResult = new OpenFormatDateTypeListService(); break; }
+            case "TaxDeductionReportStatusListService": { myResult = new TaxDeductionReportStatusListService(); break; }
+        
             //#endregion
 
             //Extend Services

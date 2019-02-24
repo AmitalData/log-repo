@@ -82,5 +82,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
         public DateTime? FirstApproveDate { get; set; }
+        public bool IsFullAccounting { get; set; }
     }
 }

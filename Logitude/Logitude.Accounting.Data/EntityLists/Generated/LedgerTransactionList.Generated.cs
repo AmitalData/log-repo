@@ -110,6 +110,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string OppositeAccountLocalName  { get; set; }
        [DataMember]
        public string OppositeAccountDisplayNumber  { get; set; }
+       [DataMember]
+       public string RecoNumber  { get; set; }
+       [DataMember]
+       public string ReconciliationId  { get; set; }
    }
 
 }

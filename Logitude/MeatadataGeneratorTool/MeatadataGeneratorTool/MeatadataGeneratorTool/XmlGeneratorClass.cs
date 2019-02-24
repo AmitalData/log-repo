@@ -1038,7 +1038,8 @@ namespace MeatadataGeneratorTool
             SetAttribute("NoViewController", table.NoViewController.ToString().ToLower(), entityElement);
             SetAttribute("NoPMController", table.NoPMController.ToString().ToLower(), entityElement);
             SetAttribute("NoTS", table.NoTS.ToString().ToLower(), entityElement);
-            SetAttribute("HasCompactSearch", table.HasCompactSearch.ToString().ToLower(), entityElement);
+			SetAttribute("NoDefaultFeatures", table.NoDefaultFeatures.ToString().ToLower(), entityElement);
+			SetAttribute("HasCompactSearch", table.HasCompactSearch.ToString().ToLower(), entityElement);
             SetAttribute("ApplyDefaultValues", table.ApplyDefaultValues.ToString().ToLower(), entityElement);
             SetAttribute("HasMenuButtons", table.HasMenuButtons.ToString().ToLower(), entityElement);
             SetAttribute("ApplyOnPropertyChangedCode", table.ApplyOnPropertyChangedCode.ToString().ToLower(), entityElement);
@@ -1725,6 +1726,7 @@ namespace MeatadataGeneratorTool
                             SetAttribute("IgnoreCustomTypeCheck", item.IgnoreCustomTypeCheck.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("IsCloseField", item.IsCloseField.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("IsCompositKey", item.IsCompositKey.ToString().ToLower(), DCFieldElement, null);
+                            SetAttribute("CloseTableCode", GetStringValue(item.CloseTableCode), DCFieldElement, null);
 
                         }
                     }

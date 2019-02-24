@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -21,7 +21,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public ItemsSource: QuoteConnectedEntityItem[] = [];
     public ShipmentsItemsSource: QuoteConnectedEntityItem[];
     public TicketsItemsSource: QuoteConnectedEntityItem[];
-    
+    public OpportunitiesItemsSource: QuoteConnectedEntityItem[];
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -81,7 +81,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     LoadData() {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
 
-        this.myDomainService.GetQuoteConnectedEntities(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+        this.myDomainService.GetQuoteConnectedEntities(this.EntityPM.Id, this.EntityPM.OpportunityId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     var list: QuoteConnectedEntity[] = myResponse.Result;
@@ -94,9 +94,12 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
     public IsShipmentGridVisible: boolean = false;
     public IsTicketsGridVisible: boolean = false;
+    public IsOpportunitiesGridVisible: boolean = false;
 
     public ShipmentsGridHeight: number = 90;
     public TicketsGridHeight: number = 90;
+    public OpportunitiesGridHeight: number = 90;
+
     private FillItemSources(list: QuoteConnectedEntity[]) {
         this.ItemsSource = [];
         this.ShipmentsItemsSource = [];
@@ -108,12 +111,15 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
         this.ShipmentsItemsSource = this.ItemsSource.filter(d => d.ObjectTable == "Shipment");
         this.TicketsItemsSource = this.ItemsSource.filter(d => d.ObjectTable == "Ticket");
+        this.OpportunitiesItemsSource = this.ItemsSource.filter(d => d.ObjectTable == "Opportunity");
         
         this.IsShipmentGridVisible = this.ShipmentsItemsSource.length == 0 ? false : true;
-        this.IsTicketsGridVisible = this.TicketsItemsSource.length == 0 ? false : true;  
+        this.IsTicketsGridVisible = this.TicketsItemsSource.length == 0 ? false : true;
+        this.IsOpportunitiesGridVisible = this.OpportunitiesItemsSource.length == 0 ? false : true; 
 
         this.ShipmentsGridHeight = this.ComputeGridHeight(this.ShipmentsItemsSource);
-        this.TicketsGridHeight = this.ComputeGridHeight(this.TicketsItemsSource); 
+        this.TicketsGridHeight = this.ComputeGridHeight(this.TicketsItemsSource);
+        this.OpportunitiesGridHeight = this.ComputeGridHeight(this.OpportunitiesItemsSource); 
     }
 
     private ComputeGridHeight(list: any[]): number {
@@ -158,6 +164,8 @@ class QuoteConnectedEntityItem {
     get To() { return this.myEntity.To; }
     get GrossWeight() { return this.myEntity.GrossWeight; }
     get VolumeInKG() { return this.myEntity.VolumeInKG; }
+    get EntityOwner() { return this.myEntity.EntityOwner; }
+    get EntityClosingDate() { return this.myEntity.EntityClosingDate; }
 
     ViewEntitytClicked() {        
         if (!AppTool.IsNullOrEmpty(this.ObjectTable)) {

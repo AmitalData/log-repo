@@ -41,6 +41,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+      
+
         public List<ARPaymentChequePM>  GetListByPaymentId(string paymentId, int tenant)
         {
             List<ARPaymentChequePM> paymentCheques = (from a in context.ARPaymentCheques
