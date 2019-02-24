@@ -1,4 +1,4 @@
-﻿function attachmentUploader(id) {
+function attachmentUploader(id) {
     var file = document.querySelector('#' + id).files[0];
     return file;
 }
@@ -144,6 +144,7 @@ function keyBoardKey(keyboardEvent) {
 function selectionStart(input) {
     return input.selectionStart;
 }
+
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

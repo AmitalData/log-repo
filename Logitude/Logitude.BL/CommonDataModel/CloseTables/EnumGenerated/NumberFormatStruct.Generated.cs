@@ -10,9 +10,9 @@ namespace Logitude.BL.CommonDataModel.CloseTables
 {
     public struct NumberFormatValues
     {   
-       public const string CommaDot = "CD";  
-       public const string DotComma = "DC";  
-       public const string ApostropheDot = "AD";  
+       public const string CommaDot123450 = "CD";  
+       public const string DotComma123450 = "DC";  
+       public const string ApostropheDot123450 = "AD";  
     }
 }
 
