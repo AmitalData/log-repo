@@ -255,7 +255,7 @@ export class WarehouseBlockBalanceComponent
     }
 
     
-    get StorageEntryPortChargeBalance() { return this.ResponseData ? this.ResponseData.StorageEntryPortChargeBalance + "" + this.ResponseData.StorageEntryPortChargeCurrencyType : null; }
+    get StorageEntryPortChargeBalance() { return this.ResponseData ? this.ResponseData.StorageEntryPortChargeBalance : null; }
     set StorageEntryPortChargeBalance(value: string) {
         if (this.ResponseData.StorageEntryPortChargeBalance != value) {
             this.ResponseData.StorageEntryPortChargeBalance = value;
@@ -269,7 +269,7 @@ export class WarehouseBlockBalanceComponent
         }
     }
 
-    get StorageEntryTransportBalance() { return this.ResponseData ? this.ResponseData.StorageEntryTransportBalance + "" + this.ResponseData.StorageEntryTransportCurrencyType : null; }
+    get StorageEntryTransportBalance() { return this.ResponseData ? this.ResponseData.StorageEntryTransportBalance : null; }
     set StorageEntryTransportBalance(value: string) {
         if (this.ResponseData.StorageEntryTransportBalance != value) {
             this.ResponseData.StorageEntryTransportBalance = value;
@@ -283,7 +283,7 @@ export class WarehouseBlockBalanceComponent
         }
     }
 
-    get StorageEntryInsuranceBalance() { return this.ResponseData ? this.ResponseData.StorageEntryInsuranceBalance + "" + this.ResponseData.StorageEntryInsuranceCurrencyType : null; }
+    get StorageEntryInsuranceBalance() { return this.ResponseData ? this.ResponseData.StorageEntryInsuranceBalance : null; } 
     set StorageEntryInsuranceBalance(value: string) {
         if (this.ResponseData.StorageEntryInsuranceBalance != value) {
             this.ResponseData.StorageEntryInsuranceBalance = value;
