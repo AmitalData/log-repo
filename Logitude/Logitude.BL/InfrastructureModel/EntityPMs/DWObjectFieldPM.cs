@@ -29,6 +29,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Category { get; set; }
         public int CategoryIndex { get; set; }
         public bool HideTree { get; set; }
+        public string DimensionTableDisplayName { get; set; }
+
 
     }
 
