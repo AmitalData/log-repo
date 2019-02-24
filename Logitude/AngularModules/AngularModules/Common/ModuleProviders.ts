@@ -203,6 +203,8 @@ import {ContactMenuButtonsHandler} from './Components/MenuButtons/ContactMenuBut
 import {DocumentsFilingExtendedPMService} from './Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 
 import {PaymentTermDateTypeListService} from './Services/StandardLists/PaymentTermDateTypeListService';
+import { NumberFormatListService } from './Services/StandardLists/NumberFormatListService';
+
 
 
 // Extended Lists
@@ -471,7 +473,10 @@ export class ModuleProviders {
 
     
             case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }//                
-            case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }//                                
+            case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }//
+            case "NumberFormatListService": { myResult = new NumberFormatListService(); break; }
+
+                
         }
 
         return myResult;

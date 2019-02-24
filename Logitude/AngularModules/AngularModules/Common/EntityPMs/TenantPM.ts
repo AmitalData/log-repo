@@ -605,6 +605,11 @@ export class TenantPM {
     public set TemperatureUnitCode(newValue: string) { if (this.temperatureUnitCode != newValue) { this.temperatureUnitCode = newValue; this.MarkAsDirty("TemperatureUnitCode"); } }
        
 	 
+    private numberFormatCode: string;
+    public get NumberFormatCode() { return this.numberFormatCode; }
+    public set NumberFormatCode(newValue: string) { if (this.numberFormatCode != newValue) { this.numberFormatCode = newValue; this.MarkAsDirty("NumberFormatCode"); } }
+       
+	 
     private defaultSLAId: string;
     public get DefaultSLAId() { return this.defaultSLAId; }
     public set DefaultSLAId(newValue: string) { if (this.defaultSLAId != newValue) { this.defaultSLAId = newValue; this.MarkAsDirty("DefaultSLAId"); } }

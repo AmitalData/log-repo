@@ -98,6 +98,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string StorageEncryptionKey { get; set; }
         public string TemperatureUnitCode { get; set; }
         public string DefaultSLAId { get; set; }
- 
+        public string NumberFormatCode { get; set; }
+
+
     }
 }

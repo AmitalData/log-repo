@@ -142,6 +142,11 @@ export class EditComponent implements OnDestroy {
                 this.ShowWindowsOverEditComponent = true;
             }
         }
+
+        if (this.ObjectTableName == "ARPayment" && SessionLocator.TenantPM.AccountingActivated) {
+            this.IsSaveBtnVisible = false;
+        }
+
     }
 
     private LoadEntityPM() {
