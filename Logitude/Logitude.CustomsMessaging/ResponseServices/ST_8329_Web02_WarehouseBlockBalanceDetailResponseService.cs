@@ -42,17 +42,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.ImporterTitle = customResponse.BlockDetails.ImporterTitle;
             this.MyResponseData.OpeningDate = String.Format("{0:g}", customResponse.BlockDetails.OpeningDate);
             this.MyResponseData.OriginalOpeningDate = String.Format("{0:g}", customResponse.BlockDetails.OriginalOpeningDate);
-            this.MyResponseData.MaxStorageDate = String.Format("{0:g}", customResponse.BlockDetails.MaxStorageDate); 
-            this.MyResponseData.BlockClosureDate = String.Format("{0:g}",customResponse.BlockDetails.BlockClosureDate);
+            this.MyResponseData.MaxStorageDate = String.Format("{0:g}", customResponse.BlockDetails.MaxStorageDate);
+            this.MyResponseData.BlockClosureDate = String.Format("{0:g}", customResponse.BlockDetails.BlockClosureDate);
             this.MyResponseData.LogicalPackagesQuantityBalance = customResponse.BlockDetails.LogicalPackagesQuantityBalance.ToString("N");
             this.MyResponseData.PhysicalPackagesQuantityBalance = customResponse.BlockDetails.PhysicalPackagesQuantityBalance.ToString("N2"); ;
-            this.MyResponseData.Value = String.Format("{0:N2}", customResponse.BlockDetails.Value);
-            
+            this.MyResponseData.Value = string.Format("{0:N2}", customResponse.BlockDetails.Value);
+            this.MyResponseData.StorageEntryPortChargeBalance = string.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            if (!string.IsNullOrEmpty(customResponse.BlockDetails.StorageEntryPortChargeCurrencyType))
+            {
+                this.MyResponseData.StorageEntryPortChargeBalance += string.Concat(this.MyResponseData.StorageEntryPortChargeBalance, "(", customResponse.BlockDetails.StorageEntryPortChargeCurrencyType, ")");
+            }
+            this.MyResponseData.StorageEntryPortChargeCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
+            this.MyResponseData.StorageEntryTransportBalance = string.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            if (!string.IsNullOrEmpty(customResponse.BlockDetails.StorageEntryTransportCurrencyType))
+            {
+                this.MyResponseData.StorageEntryTransportBalance += string.Concat(this.MyResponseData.StorageEntryTransportBalance, "(", customResponse.BlockDetails.StorageEntryTransportCurrencyType, ")");
+            }
+            this.MyResponseData.StorageEntryTransportCurrencyType = customResponse.BlockDetails.StorageEntryTransportCurrencyType;
+            this.MyResponseData.StorageEntryInsuranceBalance = string.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            if (!string.IsNullOrEmpty(customResponse.BlockDetails.StorageEntryInsuranceCurrencyType))
+            {
+                this.MyResponseData.StorageEntryInsuranceBalance += string.Concat(this.MyResponseData.StorageEntryInsuranceBalance, "(", customResponse.BlockDetails.StorageEntryInsuranceCurrencyType, ")");
+            }
+            this.MyResponseData.StorageEntryInsuranceCurrencyType = customResponse.BlockDetails.StorageEntryInsuranceCurrencyType;
             //Get Block Special Activities
             if (customResponse.BlockDetails.BlockSpecialActivities != null)
             {
                 List<BlockSpecialActivities> blockSpecialActivitiesList = new List<BlockSpecialActivities>();
-                foreach(var SpecialActivitiy in customResponse.BlockDetails.BlockSpecialActivities)
+                foreach (var SpecialActivitiy in customResponse.BlockDetails.BlockSpecialActivities)
                 {
                     if (!string.IsNullOrWhiteSpace(SpecialActivitiy))
                     {
@@ -100,6 +117,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     storageActivitiy.StorageActionPackagesQuantity = storageAction.StorageActionPackagesQuantity.ToString("N");
                     storageActivitiy.PackagesQuantityAfterStorageAction = storageAction.PackagesQuantityAfterStorageAction.ToString("N2");
                     storageActivitiy.StorageReferenceType = storageAction.StorageReferenceType;
+                    storageActivitiy.CargoMovementReference = storageAction.CargoMovementReference;
+
                     storageActivitiy.PackingDetailsList = new List<PackingDetails>();
                     if (storageAction.PackingDetailsList != null)//Eitan H 5/2/18 CALL 302799
                     {
