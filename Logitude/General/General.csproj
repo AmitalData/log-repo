@@ -183,7 +183,9 @@
     <Content Include="2019.R1\02 - 2019\Day 13 [Samar] Fill FirstAccountingCloseDate backward.sql" />
     <Content Include="2019.R1\02 - 2019\Day 20 [Khalid] Calculate AgentComputed Old Shipments.sql" />
     <Content Include="2019.R1\02 - 2019\Day 14 [Samar] Update Shipment query columns.sql" />
+    <Content Include="2019.R1\02 - 2019\Day 24 [Khalid] Delete Noneused feature and textcodes.sql" />
     <Content Include="2019.R1\02 - 2019\Day 20 [Rabaia] TranzilaPaymentMessageAnalyzeWR.sql" />
+    <Content Include="2019.R1\02 - 2019\Day24[Abed] RenameDWCategoriesGeneral.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />

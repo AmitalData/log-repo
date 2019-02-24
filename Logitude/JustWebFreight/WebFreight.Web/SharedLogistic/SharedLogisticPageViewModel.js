@@ -7,6 +7,9 @@
     jQuery.TenantDateTimeFormat = null;
     jQuery.IsBrandingEnabled = "";
     jQuery.IsInvoicesMenuEnabled = false;
+    jQuery.IsAgentShared = false;
+    jQuery.IsShipperShared = false;
+    jQuery.IsConsigneeShared = false;
 
     jQuery.SearchText_SHI = null;
     jQuery.SearchText_INV = null;
@@ -78,13 +81,17 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-
+                        
             success: function (result) {
+                debugger;
                 $("#CompanyText").html(result.TenantCompany);
                 $("#MemberText").html(result.ContactName);
                 $("#MemberCardText").html(" (" + result.CardName + ")");
                 $.TenantDateTimeFormat = result.TenantDateTimeFormat;
                 $.IsInvoicesMenuEnabled = result.IsInvoicesMenuEnabled;
+                $.IsAgentShared = result.IsAgentShared;
+                $.IsShipperShared = result.IsShipperShared;
+                $.IsConsigneeShared = result.IsConsigneeShared;
 
                 $.SetTabsHidden($.IsInvoicesMenuEnabled);
                 $.SetSelectedTab();                
@@ -210,8 +217,8 @@
 
                 $("#ShipmentsListBox").kendoListView(
 		        {
-		            scrollable: true,
-		            dataSource: { data: BuildShipmentsList(result, $.TenantDateTimeFormat) },
+                        scrollable: true,
+                        dataSource: { data: BuildShipmentsList(result, $.TenantDateTimeFormat, $.IsAgentShared, $.IsShipperShared, $.IsConsigneeShared) },
 		            template: kendo.template($("#ShipmentListBoxItemDataTemplate").html())
 		        });
 
