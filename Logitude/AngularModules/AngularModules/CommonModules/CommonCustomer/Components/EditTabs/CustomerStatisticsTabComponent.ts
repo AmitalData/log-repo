@@ -973,7 +973,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
     MoreDetails() {
 
         this.CustomerOverViewTabHide = true;
-        SessionLocator.DynamicLoader.Load('./CommonModules/CommonCustomer/Components/EditTabs/CustomerOverviewTabDetailsComponent', SessionLocator.CurrentSession.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./CommonModules/CommonCustomer/Components/EditTabs/CustomerOverviewTabDetailsComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Customer = this.EntityPM;

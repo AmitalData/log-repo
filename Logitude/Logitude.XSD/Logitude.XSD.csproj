@@ -118,6 +118,7 @@
     <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FMA.cs" />
     <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FNA.cs" />
     <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FSA.cs" />
+    <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FSAShipment.cs" />
     <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FVA.cs" />
     <Compile Include="Analyzers\GLSHKAnalyzer\GLSHKAnalyzer.cs" />
     <Compile Include="Analyzers\GLSHKAnalyzer\GLSHKAnalyzer.FMA.cs" />

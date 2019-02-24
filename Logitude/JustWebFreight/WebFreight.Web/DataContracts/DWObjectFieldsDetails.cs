@@ -38,7 +38,8 @@ namespace WebFreight.Web.DataContracts
         public bool IsSetDefaults { get; set; }
         public bool IsMandatoryFilter { get; set; }
         public string FilterType { get; set; }
-        
+        public string DimensionTableDisplayName { get; set; }
+
 
         public List<MultiSelectedValue> MultiSelectedValueLists { get; set; }
       

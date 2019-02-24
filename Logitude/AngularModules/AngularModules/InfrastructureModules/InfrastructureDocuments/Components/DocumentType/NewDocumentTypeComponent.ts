@@ -19,7 +19,9 @@ import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/L
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { FormGroup, FormBuilder} from '@angular/forms';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
+
 declare var insertAtSubject: any;
 
 @Component({
@@ -255,6 +257,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
                          var myResult = pmResponse.Result;
                          if (myResult) {
                              SessionLocator.CurrentSession.CloseCurrentWindow();
+                             CachedDataManager.RefreshTableData("DocumentType", true);
                          }
                      }
                      else {
