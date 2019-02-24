@@ -3534,10 +3534,11 @@ namespace Logitude.Accounting.BL.CoreBL
             TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
 
             // user
-            User loggedUser = GetLoggedUser(tenant);
+            ContactQuery contactQuery = new ContactQuery(tenant);
+
+            ContactPM contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, tenant);
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
-            ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
           
           
             string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, !contact.DontShowLocal);
@@ -3563,10 +3564,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 EntityNumber = openFormatReport.ReportNumber != null ? openFormatReport.ReportNumber.ToString() : null,
                 ObjectTableId = table.Id,
                 Code = _code,
-                CreatedByUserId = loggedUser.Id,
-                OwnerId = loggedUser.Id,
+                CreatedByUserId = contact.Id,
+                OwnerId = contact.Id,
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                UpdatedByUserId = loggedUser.Id,
+                UpdatedByUserId = contact.Id,
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 FileExtension = "txt",
                 SecurityId = "100",
@@ -3575,7 +3576,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             byte[] bytearray = Encoding.Unicode.GetBytes(file);
             document.FileData = bytearray;
-            docService.Create(document, document.FileData, loggedUser.Id);
+            docService.Create(document, document.FileData, contact.Id);
 
 
             //get document out
@@ -4052,10 +4053,13 @@ namespace Logitude.Accounting.BL.CoreBL
             TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
 
             // user
-            User loggedUser = GetLoggedUser(tenant);
+            ContactQuery contactQuery = new ContactQuery(tenant);
+
+            ContactPM contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, tenant);
+
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("INI", tenant);
 
-            ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
+          //  ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
        
 
             string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, !contact.DontShowLocal);
@@ -4081,10 +4085,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 EntityNumber = openFormatReport.ReportNumber != null ? openFormatReport.ReportNumber.ToString() : null,
                 ObjectTableId = table.Id,
                 Code = _code,
-                CreatedByUserId = loggedUser.Id,
-                OwnerId = loggedUser.Id,
+                CreatedByUserId = contact.Id,
+                OwnerId = contact.Id,
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                UpdatedByUserId = loggedUser.Id,
+                UpdatedByUserId = contact.Id,
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 FileExtension = "txt",
                 SecurityId = "100",
@@ -4093,7 +4097,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             byte[] bytearray = Encoding.Unicode.GetBytes(file);
             document.FileData = bytearray;
-            docService.Create(document, document.FileData, loggedUser.Id);
+            docService.Create(document, document.FileData, contact.Id);
 
 
             //get document out
