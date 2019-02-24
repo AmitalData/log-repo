@@ -13,7 +13,9 @@
         white-space: nowrap;
     }
 </style>
-<div  style="vertical-align:central;text-align:left">
-    <a class="Link"  style="font-size:13px;" (click)="AddField(rowData)">Add</a>
+<div  style="margin-left:5px;margin-top:5px">
+    <!--<a class="Link"  style="font-size:13px;" (click)="AddField(rowData)">Add</a>-->
+    <IconButton [IsSmall]="true"  [Name]="'Add'"  (click)="AddField(rowData)"></IconButton>
+               
 </div>
 

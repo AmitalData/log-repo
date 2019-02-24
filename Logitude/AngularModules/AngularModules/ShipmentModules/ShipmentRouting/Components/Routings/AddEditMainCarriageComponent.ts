@@ -60,15 +60,11 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.myPartnersDomainService = new PartnersDomainService();
     }
 
-    private OriginMainCarriageFromPortId: string;
-    private OriginFinalDestinationPortId: string;
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
         this.LabelWidth = this.EntityPM.TransportModeId == "I" ? 115 : 100;
-        this.OriginMainCarriageFromPortId = this.EntityPM.MainCarriageFromPortId;
-        this.OriginFinalDestinationPortId = this.EntityPM.MainCarriageFinalDestinationPortId;
 
         if (this.EntityPM.TransportModeId == "A") {
             this.LabelWidth = 80;
@@ -163,7 +159,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             }
         }
 
-        this.ConnectedMasterText = "This master is connected to house shipments, can't edit " + this.FromTextCodeLabel + " or " + this.ToTextCodeLabel;
+        this.ConnectedMasterText = "This master is departed and connected to house shipments, can't edit " + this.FromTextCodeLabel + " or " + this.ToTextCodeLabel;
     }
 
     get IsCloseHouseInfoVisible() {
@@ -187,6 +183,8 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     public IsEditingEnabled: boolean = true;
     public IsEditingEntityEnabled: boolean = true;
     public IsPortsEditingEnabled: boolean = true;
+    public IsCloseMasterInfoVisible: boolean = false;
+
     SetUIProperties() {
         var isEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         this.IsEditingEntityEnabled = isEditingEnabled;
@@ -228,6 +226,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         var isPortVia1Enabled = false;
         var isPortVia2Enabled = false;
         var isPortVia3Enabled = false;
+        this.IsCloseMasterInfoVisible = false;
 
         if (this.IsEditingEnabled) {
 
@@ -252,6 +251,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
                 if (this.EntityPM.StatusWeight >= 60) {
                     isMainPortsEnabled = false;
+                    this.IsCloseMasterInfoVisible = true;
                 }
             }
 
@@ -1776,11 +1776,11 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
             var isConfirmingPorts: boolean = false;
             if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-                if (this.OriginMainCarriageFromPortId != this.EntityPM.MainCarriageFromPortId) {
+                if (this.EntityPM.OriginMainCarriageFromPortId != this.EntityPM.MainCarriageFromPortId) {
                     isConfirmingPorts = true;
                 }
 
-                else if (this.OriginFinalDestinationPortId != this.EntityPM.MainCarriageFinalDestinationPortId) {
+                else if (this.EntityPM.OriginFinalDestinationPortId != this.EntityPM.MainCarriageFinalDestinationPortId) {
                     isConfirmingPorts = true;
                 }                
             }

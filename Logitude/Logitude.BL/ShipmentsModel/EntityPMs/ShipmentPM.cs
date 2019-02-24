@@ -467,6 +467,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFinalDestinationPortId { get; set; }
+        public string OriginFinalDestinationPortId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFinalDestinationPortCode { get; set; }
@@ -991,6 +992,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFromPortId { get; set; }
         public string MainCarriageToPortId { get; set; }
+        public string OriginMainCarriageFromPortId { get; set; }
 
         public string MainCarriageFromPortCode { get; set; }
         public string MainCarriageFromPortName { get; set; }
