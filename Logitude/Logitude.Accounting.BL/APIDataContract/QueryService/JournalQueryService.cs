@@ -42,7 +42,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 temp.UpdateDate = MyEntity.UpdateDate;
                 temp.ApproveDate = MyEntity.ApproveDate;
                 temp.AccountingEntityReference = MyEntity.AccountingEntityReference;
-                temp.VoidDate = MyEntity.VoidDate;
+             
                 UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
                 if (MyEntity.UpdatedByUserId != null)
                 {
@@ -62,22 +62,8 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
 
                 temp.ExternalSystem = MyEntity.ExternalSystem;
-                temp.QueueId = MyEntity.QueueId;
-                temp.IsVoided = MyEntity.IsVoided;
-                UserQueryService VoidedByUserUserService = new UserQueryService(Tenant);
-                if (MyEntity.VoidedByUserId != null)
-                {
-                    var myVoidedByUserPM = VoidedByUserUserService.GetUserById(MyEntity.VoidedByUserId, Tenant);
-                    if (myVoidedByUserPM != null)
-                    {
-                        temp.VoidedByUser = new User();
-                        temp.VoidedByUser.EnglishName = myVoidedByUserPM.EnglishName;
-                        temp.VoidedByUser.LocalName = myVoidedByUserPM.LocalName;
-                        temp.VoidedByUser.PartnerCode = myVoidedByUserPM.PartnerCode;
-                        temp.VoidedByUser.ExternalCode = myVoidedByUserPM.ExternalCode;
-                    }
-
-                }
+            
+              
 
 
                 Logitude.Accounting.BL.EntityQueryServices.JournalQueryService OriginalJournalJournalService = new Logitude.Accounting.BL.EntityQueryServices.JournalQueryService(Tenant);
@@ -109,17 +95,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 }
 
 
-
-                if (MyEntity.VoidedByJournalId != null)
-                {
-                    var myVoidedByJournalIdPM = OriginalJournalJournalService.GetSinglePM(MyEntity.VoidedByJournalId, Tenant);
-                    if (myVoidedByJournalIdPM != null)
-                    {
-                        
-                        temp.VoidedByJournal = myVoidedByJournalIdPM.JournalNumber;
-                    }
-
-                }
 
 
 
@@ -205,24 +180,24 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             }
         }
 
-        public string SetVoidedByJournal(Journal MyEntity, int Tenant)
-        {
-            string voidedBy = null;
-            Logitude.Accounting.BL.EntityQueryServices.JournalQueryService JournalService = new Logitude.Accounting.BL.EntityQueryServices.JournalQueryService(Tenant);
-            if (MyEntity.VoidedByJournal != null)
-            {
-                var myVoidedByJournalIdPM =JournalService.GetSingleJournalByNumber(MyEntity.VoidedByJournal, Tenant);
-                if (myVoidedByJournalIdPM != null)
-                {
+        //public string SetVoidedByJournal(Journal MyEntity, int Tenant)
+        //{
+        //    string voidedBy = null;
+        //    Logitude.Accounting.BL.EntityQueryServices.JournalQueryService JournalService = new Logitude.Accounting.BL.EntityQueryServices.JournalQueryService(Tenant);
+        //    if (MyEntity.VoidedByJournal != null)
+        //    {
+        //        var myVoidedByJournalIdPM =JournalService.GetSingleJournalByNumber(MyEntity.VoidedByJournal, Tenant);
+        //        if (myVoidedByJournalIdPM != null)
+        //        {
 
-                    voidedBy = myVoidedByJournalIdPM.Id;
-                }
+        //            voidedBy = myVoidedByJournalIdPM.Id;
+        //        }
 
-            }
+        //    }
 
-            return voidedBy;
+        //    return voidedBy;
 
-        }
+        //}
 
 
         public string SetOriginalJournal(Journal MyEntity, int Tenant)
@@ -244,6 +219,23 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
         }
 
+        public Journal GetJournalByNumber(string number, int Tenant)
+        {
+            try
+            {
 
+
+                var temp = query.GetSingleJournalByNumber(number, Tenant);
+                if (temp == null)
+                    throw new ApplicationException("Journal with number " + number + " doesn't exist");
+
+                return JournalDataMapping(temp, Tenant);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

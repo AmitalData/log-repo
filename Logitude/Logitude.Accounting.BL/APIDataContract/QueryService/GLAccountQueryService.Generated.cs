@@ -58,25 +58,6 @@ using Logitude.Accounting.Data;
             }
         }
 		
-		public GLAccount GetGLAccountByInternalNumber(string InternalNumber,int Tenant)
-        { 
-		    try
-            {
-
-				
-				var temp = query.GetSinglePMByInternalNumber(InternalNumber,Tenant);				
-				 if (temp == null)
-                    throw new ApplicationException("GLAccount with InternalNumber " + InternalNumber + " doesn't exist");
-
-				return GLAccountDataMapping(temp,Tenant);
-			}
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-		
 		public GLAccount GLAccountDataMapping(GLAccountPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -277,13 +258,10 @@ using Logitude.Accounting.Data;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										if (!string.IsNullOrEmpty(MyEntity.InternalNumber))
-					{
-						temp = query.GetSinglePMByInternalNumber(MyEntity.InternalNumber, Tenant);
-					} 					   
+										   
 					if(temp == null)
 					{
-					    throw new ApplicationException("GLAccount with InternalNumber " + MyEntity.InternalNumber + " doesn't exist");
+					    throw new ApplicationException("GLAccount with Id " + MyEntity.Id + " doesn't exist");
 						
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

@@ -81,9 +81,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         JournalQueryService mappingService = new JournalQueryService(entity.Tenant);
                         JournalPM entityPM = mappingService.JournalDataMappingAndValidatin(entity, entity.Tenant);
 
-                        entityPM.VoidedByJournalId = mappingService.SetVoidedByJournal(entity, entity.Tenant);
+                       // entityPM.VoidedByJournalId = mappingService.SetVoidedByJournal(entity, entity.Tenant);
                         entityPM.OriginalJournalId = mappingService.SetOriginalJournal(entity, entity.Tenant);
-
+                      
                         entityPM.Tenant = entity.Tenant;
 
 
@@ -143,7 +143,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IAccountingContext MyContext = AccountingContext.GetContext(tenant);
                         JournalQueryService mappingService = new JournalQueryService(tenant);
                         JournalPM entityPM = mappingService.JournalDataMappingAndValidatin(entity, tenant);
-                        entityPM.VoidedByJournalId = mappingService.SetVoidedByJournal(entity, entity.Tenant);
+                       // entityPM.VoidedByJournalId = mappingService.SetVoidedByJournal(entity, entity.Tenant);
                         entityPM.OriginalJournalId = mappingService.SetOriginalJournal(entity, entity.Tenant);
 
 
