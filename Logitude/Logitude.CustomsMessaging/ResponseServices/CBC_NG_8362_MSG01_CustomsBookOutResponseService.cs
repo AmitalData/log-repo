@@ -48,6 +48,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private Dictionary<string, IList> _MyLocalCache = new Dictionary<string, IList>();
         private AmitalContext _AmitalContext;
         private int _Tenant;
+        List<CustomsItemPM> _DBListCustomsItemRows = new List<CustomsItemPM>();
 
         public override void Update(CBC_NG_8362_MSG01_CustomsBookOut customResponse, CustomsBookInRequestParams requestParams)
         {
@@ -56,6 +57,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             _Tenant = requestParams.Tenant;
             DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
             CustomsBookImport customsBookImport = new CustomsBook.CustomsBookImport();
+
+            var logContext = CustomContext.GetContext(requestParams.Tenant);
+            try
+            {
+                var customsItemQueryService = new CustomsItemQueryService(logContext);
+                _DBListCustomsItemRows = customsItemQueryService.GetAll();
+            }
+            catch
+            {
+            }
+
 
             this.MyResponseData = new CustomsBookInResponseData();
 
@@ -164,8 +176,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //string xml = XmlGenericUtil<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTables>.SerializeObject(customResponse.CustomsBookGeneralTables);
             //MyResponseData.ResponseStatusXML = xml;
 
-           // customResponse.CustomsBookGeneralTables.CustomsItem = customResponse.CustomsBookGeneralTables.CustomsItem ?? new CustomsBookInResponseData.CustomsItem[] { new CustomsBookInResponseData.CustomsItem() };
-           
+            // customResponse.CustomsBookGeneralTables.CustomsItem = customResponse.CustomsBookGeneralTables.CustomsItem ?? new CustomsBookInResponseData.CustomsItem[] { new CustomsBookInResponseData.CustomsItem() };
+
             MyResponseData.customsBookGeneralTables = MyResponseData.customsBookGeneralTables ?? new CustomsBookGeneralTables();
             if (requestParams.IsAngularClient)
             {
@@ -269,33 +281,84 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
         }
-        
+
 
         private List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory> GetMehesPropertiesDetailsHistoryRows(CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory[] cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory, List<string> customsItemIDList)
         {
-            List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory> mehesPropertiesDetailsHistoryRows = new List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory>();
+            /*List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory> mehesPropertiesDetailsHistoryRows = new List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory>();
             if (cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory != null)
             {
                 mehesPropertiesDetailsHistoryRows = cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory.ToList();
                 mehesPropertiesDetailsHistoryRows = mehesPropertiesDetailsHistoryRows.Where(rec => customsItemIDList.Contains(rec.CustomsItemID.ToString())).ToList();
+            }*/
+
+            List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory> mehesPropertiesDetailsHistoryRows = new List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory>();
+            List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory> mehesPropertiesDetailsHistoryRows_All = new List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory>();
+            List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory> mehesPropertiesDetailsHistoryRows_CustomsItemNOTExists = new List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory>();
+
+            if (cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory != null)
+            {
+                mehesPropertiesDetailsHistoryRows_All = cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesPropertiesDetailsHistory.ToList();
+                mehesPropertiesDetailsHistoryRows = mehesPropertiesDetailsHistoryRows_All.Where(rec => customsItemIDList.Contains(rec.CustomsItemID.ToString())).ToList();
+                mehesPropertiesDetailsHistoryRows_CustomsItemNOTExists = mehesPropertiesDetailsHistoryRows_All.Where(rec => !customsItemIDList.Contains(rec.CustomsItemID.ToString())).ToList();
+
+                if (mehesPropertiesDetailsHistoryRows_CustomsItemNOTExists != null && mehesPropertiesDetailsHistoryRows_CustomsItemNOTExists.Count() > 0)
+                {
+                    foreach (var mehesPropertiesDetailsHistoryRow_CustomsItemNOTExists in mehesPropertiesDetailsHistoryRows_CustomsItemNOTExists)
+                    {
+                        CustomsItemPM currentDBListCustomsItemRow = new CustomsItemPM();
+                        currentDBListCustomsItemRow = _DBListCustomsItemRows.FirstOrDefault(rec => rec.ID == mehesPropertiesDetailsHistoryRow_CustomsItemNOTExists.CustomsItemID.ToString() && rec.CustomsBookTypeID == 1);
+                        if (currentDBListCustomsItemRow != null && !string.IsNullOrWhiteSpace(currentDBListCustomsItemRow.ID))
+                        {
+                            mehesPropertiesDetailsHistoryRows.Add(mehesPropertiesDetailsHistoryRow_CustomsItemNOTExists);
+                        }
+                    }
+                }
             }
+
+
             return mehesPropertiesDetailsHistoryRows;
         }
 
         private List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory> GetMehesCustomsItemDetailsHistoryRows(CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory[] cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory, List<string> customsItemIDList)
         {
+            /*List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory> mehesCustomsItemDetailsHistoryRows = new List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory>();
+           if (cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory != null)
+           {
+               mehesCustomsItemDetailsHistoryRows = cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory.ToList();
+               mehesCustomsItemDetailsHistoryRows = mehesCustomsItemDetailsHistoryRows.Where(rec => customsItemIDList.Contains(rec.CustomsItemID.ToString())).ToList();
+           }*/
+
             List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory> mehesCustomsItemDetailsHistoryRows = new List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory>();
+            List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory> mehesCustomsItemDetailsHistoryRows_All = new List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory>();
+            List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory> mehesCustomsItemDetailsHistoryRows_CustomsItemNOTExists = new List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory>();
+
             if (cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory != null)
             {
-                mehesCustomsItemDetailsHistoryRows = cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory.ToList();
-                mehesCustomsItemDetailsHistoryRows = mehesCustomsItemDetailsHistoryRows.Where(rec => customsItemIDList.Contains(rec.CustomsItemID.ToString())).ToList();
+                mehesCustomsItemDetailsHistoryRows_All = cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItemDetailsHistory.ToList();
+                mehesCustomsItemDetailsHistoryRows = mehesCustomsItemDetailsHistoryRows_All.Where(rec => customsItemIDList.Contains(rec.CustomsItemID.ToString())).ToList();
+                mehesCustomsItemDetailsHistoryRows_CustomsItemNOTExists = mehesCustomsItemDetailsHistoryRows_All.Where(rec => !customsItemIDList.Contains(rec.CustomsItemID.ToString())).ToList();
+
+                if (mehesCustomsItemDetailsHistoryRows_CustomsItemNOTExists != null && mehesCustomsItemDetailsHistoryRows_CustomsItemNOTExists.Count() > 0)
+                {
+                    foreach (var mehesCustomsItemDetailsHistoryRow_CustomsItemNOTExists in mehesCustomsItemDetailsHistoryRows_CustomsItemNOTExists)
+                    {
+                        CustomsItemPM currentDBListCustomsItemRow = new CustomsItemPM();
+                        currentDBListCustomsItemRow = _DBListCustomsItemRows.FirstOrDefault(rec => rec.ID == mehesCustomsItemDetailsHistoryRow_CustomsItemNOTExists.CustomsItemID.ToString() && rec.CustomsBookTypeID == 1);
+                        if (currentDBListCustomsItemRow != null && !string.IsNullOrWhiteSpace(currentDBListCustomsItemRow.ID))
+                        {
+                            mehesCustomsItemDetailsHistoryRows.Add(mehesCustomsItemDetailsHistoryRow_CustomsItemNOTExists);
+                        }
+                    }
+                }
             }
+
             return mehesCustomsItemDetailsHistoryRows;
         }
 
         private List<CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItem> GetMehesCustomsItemRows(CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItem[] cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItem)
         {
-            if (cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItem==null)
+            if (cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItem == null)
             {
                 return null;
             }
