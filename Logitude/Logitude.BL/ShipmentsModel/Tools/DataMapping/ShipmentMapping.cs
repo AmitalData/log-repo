@@ -1708,6 +1708,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         myFinalDestinationPortId = entityMasterData.MainCarriageToPortId;
                     }
 
+                    
                     entityMasterData.MainCarriageFinalDestinationPortId = myFinalDestinationPortId;
                     entityMasterData.MainCarriageCarrierPrefix = entityPM.MainCarriageCarrierPrefix;
                     entityMasterData.Transshipment1CarrierPrefix = entityPM.Transshipment1CarrierPrefix;
@@ -1726,6 +1727,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.AdditionalHandlingInfoEdited = entityPM.AdditionalHandlingInfoEdited;
                     entityMasterData.InterlineId = entityPM.InterlineId;
                     ComputeDepartureArrivalDates(entityMasterData, entityPM);
+
+                    entityPM.OriginMainCarriageFromPortId = entityMasterData.MainCarriageFromPortId;
+                    entityPM.OriginFinalDestinationPortId = entityMasterData.MainCarriageFinalDestinationPortId;
                 }
             }
         }
