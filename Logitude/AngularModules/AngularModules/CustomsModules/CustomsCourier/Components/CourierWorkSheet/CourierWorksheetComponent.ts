@@ -1548,12 +1548,11 @@ implements OnDestroy
                     if (response.Result != null) {
                         if (response.Result.DefaultValue.includes("ILMMN")) {
                             this.IsMamanEnabled = true;
-                            this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman = response.Result.DefaultValue;//should ask MIRI >why only if mamamn?
                         }
                         if (response.Result.DefaultValue.includes("ILOVL")) {
                             this.IsILOVLEnabled = true;
                         }
-
+                        this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman = response.Result.DefaultValue;
                     }
                 }
             });
