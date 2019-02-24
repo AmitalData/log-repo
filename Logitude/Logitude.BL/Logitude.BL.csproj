@@ -281,6 +281,7 @@
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\INTTRASettingModeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\LoginPolicyDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\MetodoPagoDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\NumberFormatDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PartnerTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PaymentTermDateTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\ProductPeriodDetails.Generated.cs" />
@@ -310,6 +311,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\INTTRASettingModeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\LoginPolicyStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\MetodoPagoStruct.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\NumberFormatStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PartnerTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PaymentTermDateTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\ProductPeriodStruct.Generated.cs" />
@@ -341,6 +343,7 @@
     <Compile Include="CommonDataModel\EntityLists\FilingInboxAttachmentLogList.cs" />
     <Compile Include="CommonDataModel\EntityLists\FilingInboxList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HybridPartnersPermissionList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\NumberFormatList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CustomerDepositionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CustomsShipperPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\DepositionRequestPM.cs" />
@@ -354,6 +357,7 @@
     <Compile Include="CommonDataModel\EntityPMs\ImporterDepositionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\INTTRABranchRegisteredCarrierPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\INTTRASettingPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\NumberFormatPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CustomerDepositionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CustomsShipperQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\DocumentFilingBackupBatchQuery.cs" />
@@ -364,6 +368,7 @@
     <Compile Include="CommonDataModel\EntityQueries\HybridPartnersPermissionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\INTTRABranchRegisteredCarrierQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\INTTRASettingQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\NumberFormatQuery.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerDepositionMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomsShipperMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentFilingBackupBatchMapping.cs" />

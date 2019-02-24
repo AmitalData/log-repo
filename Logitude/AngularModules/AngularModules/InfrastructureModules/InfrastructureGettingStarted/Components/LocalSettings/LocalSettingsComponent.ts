@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {DateTimeZone, TimeZoneInfoClass, DateTimeFormat} from '../../../../Infrastructure/Utilities/DateTimeZone';
@@ -161,6 +161,17 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
             this.TenantPm.DayLightStartDate = value;
         }
     }
+
+
+    get NumberFormatCode() {
+        return this.TenantPm.NumberFormatCode;
+    }
+    set NumberFormatCode(value: string) {
+        if (this.TenantPm.NumberFormatCode != value) {
+            this.TenantPm.NumberFormatCode = value;
+        }
+    }
+
 
     get DayLightEndDate()
     {

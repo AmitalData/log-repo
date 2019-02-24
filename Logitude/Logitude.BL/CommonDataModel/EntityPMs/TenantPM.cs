@@ -353,6 +353,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string TemperatureUnitCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string NumberFormatCode { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string DefaultSLAId { get; set; }
         public string StockTypeCode { get; set; }
 
