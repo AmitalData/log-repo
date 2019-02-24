@@ -1,15 +1,15 @@
-<table >
+<table style="width: 650px; height: 350px;padding-top: 10px;">
 
-    <!--<tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
-    </tr>-->
+    </tr>
 
     <!-- HeaderScreen -->
-    <tr class="FormFieldRow" style="height: 60px; width:700px">
-        <td colspan="4" rowspan="2" style="height: 60px;">
-            <div style="height: 60px;" class="HeaderScreen">
+    <tr style="height: 30px; width:700px">
+        <td colspan="4" style="height: 30px;">
+            <div [style.height.px]="HeaderScreenHeight" class="HeaderScreen">
                 <table *ngIf="CourierMasterPM">
                     <tr>
                         <!-- col 1 -->
@@ -22,7 +22,7 @@
                                         <LogLabel [ObjectFieldName]="'MAWB'" [ObjectTableName]="'Customs.CourierMaster'" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td class="HeaderScreenValue">
-                                        <div class="TextTrimming" style="width: 100%; position: relative;">
+                                        <div class="TextTrimming" style="width: 100%; position: center;">
                                             {{CourierMasterPM.MAWB}}
                                         </div>
                                     </td>
@@ -50,7 +50,7 @@
                                         <LogLabel [ObjectFieldName]="'HAWB'" [ObjectTableName]="'Customs.CourierMaster'" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td class="HeaderScreenValue">
-                                        <div class="TextTrimming" style="width: 100%; position: relative;">
+                                        <div class="TextTrimming" style="width: 100%; position: center;">
                                             {{CourierMasterPM.HAWB}}
                                         </div>
                                     </td>
@@ -128,17 +128,19 @@
         </td>
     </tr>
 
-    <tr class="FormFieldRow" style="height: 30px; width:700px">
+    <tr style="height: 1px;"><td><div style="width: 15px;"></div></td></tr>
+
+    <tr style="height: 30px; width:700px">
         <td style="width:110px">
             <LogLabel [NoObjectField]="true"
-                        [ObjectFieldName]="'UpdateCode'"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [Text]="'קוד פעולה'"></LogLabel>
+                      [ObjectFieldName]="'UpdateCode'"
+                      [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"
+                      [Text]="'קוד פעולה'"></LogLabel>
         </td>
-        <td style="width: 150px; padding-right: 16px; ">
+        <td style="width: 150px; ">
             <select (change)="ResetUpdateCodeListChangeSelected($event.target.value)"
-                    style="width:150px;border:1px solid gray;border-radius:3px">
+                    style="width:150px; border:1px solid gray;border-radius:3px; float:right">
                 <option *ngFor="let item of UpdateCodeList" [value]="item.EnumId">{{item.Name}}</option>
             </select>
         </td>
@@ -146,15 +148,15 @@
         <td><div></div></td>
     </tr>
 
-    <tr class="FormFieldRow" style="width:700px">
+    <tr style="height: 30px; width:700px">
         <td style="width:110px">
             <LogLabel [ObjectFieldName]="'OriginPortCode'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
             <!--<LogLabel [NoObjectField]="true"
-                      [ObjectFieldName]="'OriginPortCode'"
-                      [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"
-                      [Text]="'אתר אחסון'"></LogLabel>-->
+                  [ObjectFieldName]="'OriginPortCode'"
+                  [ObjectTableName]="ObjectTableName"
+                  [DataContext]="DataContext"
+                  [Text]="'אתר אחסון'"></LogLabel>-->
         </td>
         <td style="width:150px">
             <LogLov [ObjectFieldName]="'OriginPortCode'"
@@ -168,12 +170,12 @@
 
         <td style="width:110px">
             <LogLabel [ObjectFieldName]="'DesignateSiteCode'" [ObjectTableName]="ObjectTableName"
-                [DataContext]="DataContext"></LogLabel>
+                      [DataContext]="DataContext"></LogLabel>
             <!--<LogLabel [NoObjectField]="true"
-                      [ObjectFieldName]="'DesignateSiteCode'"
-                      [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"
-                      [Text]="'לאתר אחסון'"></LogLabel>-->
+                  [ObjectFieldName]="'DesignateSiteCode'"
+                  [ObjectTableName]="ObjectTableName"
+                  [DataContext]="DataContext"
+                  [Text]="'לאתר אחסון'"></LogLabel>-->
         </td>
         <td style="width:150px">
             <LogLov [ObjectFieldName]="'DesignateSiteCode'"
@@ -189,15 +191,15 @@
         <td><div></div></td>
     </tr>
 
-    <tr class="FormFieldRow" style="width:700px">
+    <tr style="height: 30px; width:700px">
         <td style="width:110px">
             <LogLabel [ObjectFieldName]="'TransportationTypeCode'" [ObjectTableName]="ObjectTableName"
-                [DataContext]="DataContext"></LogLabel>
+                      [DataContext]="DataContext"></LogLabel>
             <!--<LogLabel [NoObjectField]="true"
-                      [ObjectFieldName]="'TransportationTypeCode'"
-                      [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"
-                      [Text]="'הובלה'"></LogLabel>-->
+                  [ObjectFieldName]="'TransportationTypeCode'"
+                  [ObjectTableName]="ObjectTableName"
+                  [DataContext]="DataContext"
+                  [Text]="'הובלה'"></LogLabel>-->
         </td>
         <td style="width:150px">
             <LogLov [ObjectFieldName]="'TransportationTypeCode'"
@@ -212,7 +214,7 @@
         <td><div></div></td>
     </tr>
 
-    <tr style="height: 40px;">
+    <tr style="height: 30px; width:700px">
         <td>
             <div></div>
         </td>
@@ -224,7 +226,7 @@
         </td>
         <td style="width: 67px;vertical-align: bottom; padding-right: 10px;">
             <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
-                                 (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"> </custom-send-options>
+                                 (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
         </td>
     </tr>
 

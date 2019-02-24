@@ -846,51 +846,58 @@ namespace WebFreight.Web.MetaDataUpdate
                 Dictionary<string, byte[]> cachedCloseTableJosnByte = new Dictionary<string, byte[]>();
 
 
-                foreach (ObjectTable objectTable in ObjectTableList)
+            foreach (ObjectTable objectTable in ObjectTableList)
+            {
+
+                List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
+                if (fieldsList != null)
                 {
+                    var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(fieldsList);
+                    var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
+                    cachedObjectFieldsJosnByte.Add(objectTable.Name, buffer);
+                }
 
-                    List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
-                    if (fieldsList != null)
+                List<TextCodePM> textcodes = new List<TextCodePM>();//textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
+                                                                    //Contact.O.TableDescription Contact.F.SearchFields
+                                                                    //string descritionTextCode = objectTable.Name + ".O.TableDescription";
+                                                                    //string searchFieldsTextCode = objectTable.Name + ".F.SearchFields";
+                if (objectTable.Name == "General")
+                    textcodes = textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id || ((d.TextCodeTypeCode == "T" || d.Code.Contains(".O.TableDescription") || d.Code.Contains(".F.SearchFields") || d.Code == d.ObjectTableName + "Description") && d.ObjectTableId != objectTable.Id)).ToList();
+                else
+                    textcodes = textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
+
+
+                if (textcodes != null)
+                {
+                    var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(textcodes);
+                    var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
+                    cachedTextCodesJosnByte.Add(objectTable.Name, buffer);
+                }
+
+                if (objectTable.IsClosed && objectTable.CacheOnClient)
+                {
+                    var data = TableQueryReflector.GetTableListData(objectTable.Name);//TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
+                    if (data != null)
                     {
-                        var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(fieldsList);
-                        var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
-                        cachedObjectFieldsJosnByte.Add(objectTable.Name, buffer);
-                    }
-
-                    List<TextCodePM> textcodes = new List<TextCodePM>();//textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
-                    //Contact.O.TableDescription Contact.F.SearchFields
-                    //string descritionTextCode = objectTable.Name + ".O.TableDescription";
-                    //string searchFieldsTextCode = objectTable.Name + ".F.SearchFields";
-                    if (objectTable.Name == "General")
-                        textcodes = textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id || ((d.TextCodeTypeCode == "T" || d.Code.Contains(".O.TableDescription") || d.Code.Contains(".F.SearchFields") || d.Code == d.ObjectTableName + "Description") && d.ObjectTableId != objectTable.Id)).ToList();
-                    else
-                        textcodes = textCodePMLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
-
-
-                    if (textcodes != null)
-                    {
-                        var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(textcodes);
-                        var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
-                        cachedTextCodesJosnByte.Add(objectTable.Name, buffer);
-                    }
-
-                    if (objectTable.IsClosed && objectTable.CacheOnClient)
-                    {
-                        var data = TableQueryReflector.GetTableListData(objectTable.Name);//TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
-                        if (data != null)
+                        try
                         {
                             var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(data);
                             var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
                             cachedCloseTableJosnByte.Add(objectTable.Name, buffer);
                         }
-                        else
+                        catch(Exception ex)
                         {
-                            //File.AppendAllText(@"C:\TestFolder\not_generated_closed.txt", objectTable.Name + Environment.NewLine);
-
+                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "BuildZipFiles", "ObjectTable name has a problem:"+ objectTable.Name, null);
                         }
                     }
+                    else
+                    {
+                        //File.AppendAllText(@"C:\TestFolder\not_generated_closed.txt", objectTable.Name + Environment.NewLine);
 
+                    }
                 }
+
+            }
 
 
                 foreach (ObjectTable objectTable in ObjectTableList)//Where(d => d.IsClosed == false && d.IsComposition == false)// 
