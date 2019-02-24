@@ -2288,7 +2288,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem item = new QueryFilterItem();
             item.DisplayInList = true;
             item.FieldDataType = "Date";
-            item.FieldName = "Field4";
+            item.FieldName = "Field2";
             item.FieldValue = FromDate;
             item.FieldValue2 = toDate;
             item.IsCustomField = true;
@@ -2356,11 +2356,11 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Unit = Item.PackageType!=null?Item.PackageType.EnglishName:null;
                     shipment.RequestETD = dataView.FirstPickupETD;
                     shipment.EstimateETD = dataView.FirstPickupETA;
-                    if (!String.IsNullOrEmpty(dataView.Field4))
+                    if (!String.IsNullOrEmpty(dataView.Field2))
                     {
-                        string year= dataView.Field4.Substring(0,4);
-                        string month = dataView.Field4.Substring(5, 6);
-                        string day = dataView.Field4.Substring(6, 7);
+                        string year= dataView.Field2.Substring(0,4);
+                        string month = dataView.Field2.Substring(4, 2);
+                        string day = dataView.Field2.Substring(6, 2);
 
                         shipment.RequestETA = DateTime.Parse(year+"/"+month+"/"+day);
 
