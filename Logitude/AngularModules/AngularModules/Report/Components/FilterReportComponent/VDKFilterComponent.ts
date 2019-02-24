@@ -96,7 +96,7 @@ export class VDKFilterComponent extends BaseComponent {
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
             }
-            if (this.ToDate == null) {
+            if (this.ToDate != null) {
                 if (this.FromDate > this.ToDate) {
                     this.ValidationErrorsList.push("From Date cannot be greater than To Date");
                 }
