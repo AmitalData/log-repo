@@ -4205,6 +4205,25 @@ export class ShipmentPM {
         }
     }
 
+
+    private originMainCarriageFromPortId: string;
+    public get OriginMainCarriageFromPortId() { return this.originMainCarriageFromPortId; }
+    public set OriginMainCarriageFromPortId(newValue: string) {
+        if (this.originMainCarriageFromPortId != newValue) {
+            this.originMainCarriageFromPortId = newValue;
+            this.MarkAsDirty("OriginMainCarriageFromPortId");
+        }
+    }
+
+    private originFinalDestinationPortId: string;
+    public get OriginFinalDestinationPortId() { return this.originFinalDestinationPortId; }
+    public set OriginFinalDestinationPortId(newValue: string) {
+        if (this.originFinalDestinationPortId != newValue) {
+            this.originFinalDestinationPortId = newValue;
+            this.MarkAsDirty("HasContainerException");
+        }
+    }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
