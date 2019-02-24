@@ -1317,16 +1317,41 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 7);
 
 
-                if (item.CreatedbyUser != null)
+
+                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
+                if (user != null)
                 {
-                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                    if (user.Code != null)
+                    {
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
+                    }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
+
+                    else
+                    {
+                        myStringBuilder.Append(' ', 9);
+                    }
+
                 }
-                else
-                {
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 9);
-                }
+
+
+
+
+                //if (item.CreatedbyUser != null)
+                //{
+                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                //    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                //}
+                //else
+                //{
+                //    myStringBuilder.Append("a");
+                //    myStringBuilder.Append(' ', 9);
+                //}
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
@@ -1400,8 +1425,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a");
                     myStringBuilder.Append(' ', 30);
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append("יחידה");
                     myStringBuilder.Append(' ', 15);
+                    myStringBuilder.Append("יחידה");
+                    
 
 
                     if (line.Quantity != null)
@@ -1896,15 +1922,36 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 7);
 
 
-                if (item.CreatedbyUser != null)
+                //if (item.CreatedbyUser != null)
+                //{
+                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                //    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                //}
+                //else
+                //{
+                //    myStringBuilder.Append("a");
+                //    myStringBuilder.Append(' ', 9);
+                //}
+
+                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
+                if (user != null)
                 {
-                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
-                }
-                else
-                {
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 9);
+                    if (user.Code != null)
+                    {
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
+                    }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
+
+                    else
+                    {
+                        myStringBuilder.Append(' ', 9);
+                    }
+
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -1981,8 +2028,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a");
                     myStringBuilder.Append(' ', 30);
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append("יחידה");
                     myStringBuilder.Append(' ', 15);
+                    myStringBuilder.Append("יחידה");
+                    
 
                     myStringBuilder.Append("a");
                  
@@ -2451,16 +2499,25 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append(' ', 7);
 
+                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
+                if (user != null)
+                {
+                    if (user.Code != null)
+                    {
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
+                    }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
 
-                if (item.CreatedbyUser != null)
-                {
-                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
-                }
-                else
-                {
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 9);
+                    else
+                    {
+                        myStringBuilder.Append(' ', 9);
+                    }
+
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -2822,16 +2879,39 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 7);
 
 
-                if (item.CreatedbyUser != null)
+
+                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
+                if (user != null)
                 {
-                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                    if (user.Code != null)
+                    {
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
+                    }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
+
+                    else
+                    {
+                        myStringBuilder.Append(' ', 9);
+                    }
+
+
+
                 }
-                else
-                {
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 9);
-                }
+                //if (item.CreatedbyUser != null)
+                //{
+                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                //    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                //}
+                //else
+                //{
+                //    myStringBuilder.Append("a");
+                //    myStringBuilder.Append(' ', 9);
+                //}
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
