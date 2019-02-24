@@ -1,4 +1,4 @@
-﻿<!-- WarehouseBlockBalanceComponent view  -->
+<!-- WarehouseBlockBalanceComponent view  -->
 <div>
 
     <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
@@ -240,9 +240,41 @@
                                                 <LogTextBox [ObjectFieldName]="'BlockClosureDate'" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
                                             </td>
 
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'StorageEntryPortChargeBalance'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.StorageEntryPortChargeBalance'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'StorageEntryPortChargeBalance'" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
                                             <td><div></div></td>
 
                                         </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'StorageEntryTransportBalance'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.StorageEntryTransportBalance'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'StorageEntryTransportBalance'" [Text]="StorageEntryTransportBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'StorageEntryInsuranceBalance'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.StorageEntryInsuranceBalance'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'StorageEntryInsuranceBalance'" [Text]="StorageEntryInsuranceBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
 
                                         <tr><td><div></div></td></tr>
                                     </table>
@@ -495,6 +527,20 @@
                                                 </div>
                                             </log-cell-template>
                                         </log-column>
+
+                                        <!-- CargoMovementReference -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.CargoMovementReference' | TextCodeTranslationPipe"
+                                                    [binding]="'CargoMovementReference'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CargoMovementReference }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
 
                                         <!-- StorageUnloadingExceptionTypeText -->
                                         <log-column [width]="'120'" [Alignment]="'right'"

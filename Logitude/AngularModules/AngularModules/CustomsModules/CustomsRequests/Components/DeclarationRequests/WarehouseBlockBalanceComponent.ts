@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -251,6 +251,48 @@ export class WarehouseBlockBalanceComponent
     set ImporterTitle(value: string) {
         if (this.ResponseData.ImporterTitle != value) {
             this.ResponseData.ImporterTitle = value;
+        }
+    }
+
+    get StorageEntryPortChargeBalance() { return this.ResponseData ? this.ResponseData.StorageEntryPortChargeBalance : null; }
+    set StorageEntryPortChargeBalance(value: string) {
+        if (this.ResponseData.StorageEntryPortChargeBalance != value) {
+            this.ResponseData.StorageEntryPortChargeBalance = value;
+        }
+    }
+
+    get StorageEntryPortChargeCurrencyType() { return this.ResponseData ? this.ResponseData.StorageEntryPortChargeCurrencyType : null; }
+    set StorageEntryPortChargeCurrencyType(value: string) {
+        if (this.ResponseData.StorageEntryPortChargeCurrencyType != value) {
+            this.ResponseData.StorageEntryPortChargeCurrencyType = value;
+        }
+    }
+
+    get StorageEntryTransportBalance() { return this.ResponseData ? this.ResponseData.StorageEntryTransportBalance : null; }
+    set StorageEntryTransportBalance(value: string) {
+        if (this.ResponseData.StorageEntryTransportBalance != value) {
+            this.ResponseData.StorageEntryTransportBalance = value;
+        }
+    }
+
+    get StorageEntryTransportCurrencyType() { return this.ResponseData ? this.ResponseData.StorageEntryTransportCurrencyType : null; }
+    set StorageEntryTransportCurrencyType(value: string) {
+        if (this.ResponseData.StorageEntryTransportCurrencyType != value) {
+            this.ResponseData.StorageEntryTransportCurrencyType = value;
+        }
+    }
+
+    get StorageEntryInsuranceBalance() { return this.ResponseData ? this.ResponseData.StorageEntryInsuranceBalance : null; }
+    set StorageEntryInsuranceBalance(value: string) {
+        if (this.ResponseData.StorageEntryInsuranceBalance != value) {
+            this.ResponseData.StorageEntryInsuranceBalance = value;
+        }
+    }
+
+    get StorageEntryInsuranceCurrencyType() { return this.ResponseData ? this.ResponseData.StorageEntryInsuranceCurrencyType : null; }
+    set StorageEntryInsuranceCurrencyType(value: string) {
+        if (this.ResponseData.StorageEntryInsuranceCurrencyType != value) {
+            this.ResponseData.StorageEntryInsuranceCurrencyType = value;
         }
     }
     //#endregion Response Properties
