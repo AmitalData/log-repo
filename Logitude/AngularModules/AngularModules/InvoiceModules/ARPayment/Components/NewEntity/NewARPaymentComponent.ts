@@ -29,6 +29,7 @@ import {AccountingPaymentMethodList} from '../../../../Invoice/EntityLists/Accou
 import {AccountingPaymentMethodListService} from '../../../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
 import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 
 @Component({
     moduleId: module.id,
@@ -918,6 +919,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.fetchGLAccount()
                     .then((res:any) => {
                         this.newARPaymentPM.GLAccountId = res.Id;
+                        this.newARPaymentPM.GLAccountRecoMethodCode = res.ReconcileMethodCode;
                         this.RunEditWindow();
                     }, err => {
                         this.ValidationErrorsList = ['Somthing wrong! no gl account found for this bill to account'];
