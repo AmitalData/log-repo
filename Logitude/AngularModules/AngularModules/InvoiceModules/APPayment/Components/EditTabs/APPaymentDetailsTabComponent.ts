@@ -1465,16 +1465,16 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         this.SetUIProperties_AmountPaidEnabled();
         this.SetLineColors();
 
-
+        var featureExist: boolean = false;
         if (FeatureLocator.HasFeaturePermession("APPayment", "APPaymentConnectInvoices")) {
             this.ConnectFeature = true;
+            featureExist = true;
 
         }
         else {
             if (this.isConnected) {
                 this.CheckBoxVisibility = true;
                 this.ConnectFeature = true;
-                this.UIProperties.SetEnabled("AmountPaid", this.ObjectTableName, true);
 
             }
             else {
@@ -1493,10 +1493,14 @@ export class APPaymentInvoiceArgs extends BaseComponent {
             if (this.isConnected) {
                 this.CheckBoxEnabled = false;
                 this.NoPermision = "You have no permission to disconnect invoices";
+                this.UIProperties.SetEnabled("AmountPaid", this.ObjectTableName, false);
+
             }
             else {
                 this.CheckBoxEnabled = true;
                 this.NoPermision = null;
+
+
             }
         }
     }
