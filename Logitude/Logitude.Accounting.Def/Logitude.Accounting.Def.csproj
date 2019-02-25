@@ -164,6 +164,7 @@
     <Compile Include="EntityUpdateServicesExt\IARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IBankCodeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\ICashBookLineUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServicesExt\IReconciliationUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\ICashBookUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IGLAccountUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IJournalUpdateServiceExt.cs" />
