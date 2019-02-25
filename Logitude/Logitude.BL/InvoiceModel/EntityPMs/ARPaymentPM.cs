@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
@@ -139,6 +140,27 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsFullAccounting { get; set; }
         public string GLAccountId { get; set; }
         public string GLAccountRecoMethodCode { get; set; }
+
+        private List<LedgerTransactionPM> invoicesTransactions;
+        public virtual List<LedgerTransactionPM> InvoicesTransactions
+        {
+            get
+            {
+                if (invoicesTransactions == null)
+                {
+                    invoicesTransactions = new List<LedgerTransactionPM>();
+                }
+
+                return invoicesTransactions;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    invoicesTransactions = value;
+                }
+            }
+        }
 
     }
 }
