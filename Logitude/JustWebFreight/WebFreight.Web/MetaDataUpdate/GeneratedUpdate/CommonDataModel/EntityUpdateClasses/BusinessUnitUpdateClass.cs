@@ -168,9 +168,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  						Code =  "Name",
 					  						DependencyFilter3IsList =  false,
@@ -228,7 +228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "ParentId",
-					  						DefaultText =  @"Parent",
+					  						DefaultText =  "Parent",
 					  						HelpTextCode =  "ParentId",
 					  						Code =  "ParentId",
 					  						DependencyFilter3IsList =  false,
@@ -286,9 +286,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "ParentName",
-					  						DefaultText =  @"Parent",
+					  						DefaultText =  "Parent",
 					  						ListFieldLable =  "ParentListLable",
-					  						ListLableDefaultText =  @"Parent",
+					  						ListLableDefaultText =  "Parent",
 					  						HelpTextCode =  "ParentName",
 					  						Code =  "ParentName",
 					  						DependencyFilter3IsList =  false,
@@ -346,9 +346,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"Inactive",
+					  						DefaultText =  "Inactive",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  @"Inactive",
+					  						ListLableDefaultText =  "Inactive",
 					  						HelpTextCode =  "InActive",
 					  						Code =  "InActive",
 					  						DependencyFilter3IsList =  false,
@@ -405,7 +405,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search..",
+					  						DefaultText =  "Search..",
 					  						HelpTextCode =  "SearchFields",
 					  						Code =  "SearchFields",
 					  						DependencyFilter3IsList =  false,
@@ -489,6 +489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable BusinessUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessUnit" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature BusinessUnitFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BusinessUnitFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BusinessUnitFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

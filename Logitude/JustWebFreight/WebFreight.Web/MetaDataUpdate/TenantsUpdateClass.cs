@@ -185,7 +185,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
 							updateClass.LoadUpdateTenantZero(context, false);
 
-                            updateClass.LoadOtherFields(context);
+                            //updateClass.LoadOtherFields(context);
                             updateClass.LoadTranslationHeaders();
                             updateClass.LoadMeasurements();
                             updateClass.LoadCreditCardTypes();

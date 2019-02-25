@@ -75,7 +75,7 @@ namespace WebFreight.Web.Security
 					{
 						foreach (string myRoleId in contactinfo.RolesIds)
 						{
-							Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant);
+							Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant, true);
 							if (features.Keys.Contains(featureCode + objectTable.Id))
 							{
 								FeaturePM feature = features[featureCode + objectTable.Id];
@@ -842,25 +842,25 @@ namespace WebFreight.Web.Security
             return myResult;
         }
 
-        private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant)
-        {
-            Dictionary<string, FeaturePM> features = null;
+		private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant, bool forceAPIFeaturesCheck = false)
+		{
+			Dictionary<string, FeaturePM> features = null;
 
-            if (CacheManager.CacheWrapper.Get(roleId) == null)
-            {
-                FeatureQuery featuresQuery = new FeatureQuery(tenant);
-                List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
-                features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
-                CacheManager.CacheWrapper.Insert(roleId, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-            }
+			if (CacheManager.CacheWrapper.Get(roleId) == null || forceAPIFeaturesCheck)
+			{
+				FeatureQuery featuresQuery = new FeatureQuery(tenant);
+				List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
+				features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
+				CacheManager.CacheWrapper.Insert(roleId, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+			}
 
-            else
-            {
-                features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleId);
-            }
+			else
+			{
+				features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleId);
+			}
 
-            return features;
-        }
+			return features;
+		}
         private static Dictionary<string, FeaturePM> GetFeaturesForRoleNotCached(string roleId, List<string> allowedPackages, int tenant)
         {
             Dictionary<string, FeaturePM> features = null;

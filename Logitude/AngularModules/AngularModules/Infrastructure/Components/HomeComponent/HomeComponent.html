@@ -243,8 +243,8 @@
 
                                     </td>
                                     <td style="width: 20px;">
-                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
-                                            <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
+                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" *ngIf="IfBlueSnapContracts" >
+                                            <IconButton [Name]="'payments'" [IsIconOnly]="true"></IconButton>
                                             <div class="ToggleButtonMenu" style="right:-50px">
                                                 <button *ngIf="IsLogBox == false && IsBluesnapAccount" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
                                                 <hr />
@@ -256,7 +256,7 @@
                                                 <hr />
                                                 <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
                                                 <hr />
-                                                <button *ngIf="IsLogBox == false && IsOneTimeContract" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
+                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
 
                                             </div>
                                         </div>
@@ -268,7 +268,7 @@
 
                                     <td style="width: 20px;">
                                         <!--*ngIf="SettingBtnVisibility"-->
-                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
+                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" >
                                             <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
                                             <div class="ToggleButtonMenu" style="right:-50px">
                                                 <!-- Please If you want to add a new button but this condition in that button *ngIf="IsLogBox == false"-->
@@ -284,7 +284,7 @@
                                                 <button *ngIf="IsDataBackupVisible" (click)="DataBackupClicked()">Data Backup</button>
                                                 <button *ngIf="IsDocumentsBackupVisible" (click)="DocumentsBackupClicked()">Documents Backup</button>
                                                 <button *ngIf="Tenant == 0" (click)="LoadSampleDataClicked()">Load Sample Data</button>
-                                                <button (click)="ShowQueryBuilderClicked()">Query Builder</button>
+                                                <!--<button (click)="ShowQueryBuilderClicked()">Query Builder</button>-->
                                                 <button *ngIf="IsFillLocalStorageVisible" (click)="FillStorageClicked()">Fill Local Storage</button>
 
                                                 <!--<button (click)="ConnectToDropBox()">Connect To DropBox</button>

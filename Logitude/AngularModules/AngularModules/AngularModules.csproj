@@ -239,6 +239,8 @@
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
     <Content Include="Images\Icons\BlueChecked.png" />
+    <Content Include="Images\Icons\Folder_B.png" />
+    <Content Include="Images\Icons\Folder_L.png" />
     <Content Include="Images\Icons\GreenV.png" />
     <Content Include="Images\Icons\OrangeV.png" />
     <Content Include="Images\Icons\RedX.png" />
@@ -259,7 +261,7 @@
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
-    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolder.html" />
+    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWAskUserFiltersComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
@@ -379,12 +381,14 @@
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomerDepositionList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomsShipperList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\NumberFormatList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\NumberFormatListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
@@ -649,7 +653,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.ts" />
-    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolder.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\AGGridCustomHeader.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\EditShipmentLinkRendererComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.ts" />
@@ -795,6 +799,7 @@
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
+    <Content Include="Report\Components\Workspaces\BIFolderReportComponent.html" />
     <Content Include="Report\Components\Workspaces\BIReportComponent.html" />
     <Content Include="Report\Components\Workspaces\MainReportsWorkspace.html" />
     <Content Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.html" />
@@ -805,6 +810,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.html" />
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.html" />
+    <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestEditAgentComponent.html" />
@@ -1856,6 +1862,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\TaxScreenComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelShipmentComponent.html" />
+    <Content Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.html" />
     <Content Include="Shipment\Components\MenuButtons\MasterActionConfirmationComponent.html" />
     <Content Include="Images\ShipmentArrow.png" />
     <Content Include="Shipment\Components\SplitShipment\SplitPartialPackageComponent.html" />
@@ -3189,6 +3196,7 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\Workspaces\BIFolderReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\MainReportsWorkspace.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
@@ -3199,6 +3207,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestEditAgentComponent.ts" />
@@ -6093,6 +6102,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Tariffs\TariffsComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleShipmentTabs.ts" />
+    <TypeScriptCompile Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\EditShipmentButtonListTemplate.ts" />

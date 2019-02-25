@@ -43,7 +43,7 @@ namespace Logitude.DatabaseMigration.Migrations
 		                BEGIN
 
 		                set @UserEmail = 'system@tenant' + CONVERT(varchar, @Tenant) +'.com'
-		                set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant)
+		                set @UserId = (select id from users where id in (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant))
 		
 		                if(@UserId is not null)
 		                begin

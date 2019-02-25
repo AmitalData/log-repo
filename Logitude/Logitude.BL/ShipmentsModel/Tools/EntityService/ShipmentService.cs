@@ -287,6 +287,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeFinalDestination();
 
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
+                this.ComputeAgentComputed(entityPM, entityPoco);
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
@@ -452,6 +453,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     RunAutomation("OnUpdate");
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
+                    this.ComputeAgentComputed(entityPM,entityPoco);
                     entityRepository.Update(entityPoco);
                     entityRepository.SubmitChanges();
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
@@ -521,6 +523,34 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         UpdateShipmentProfitClass.UpdateProfitFunction(myShipmentId, tenant, false);
                     }
+                }
+            }
+        }
+
+        private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+            {
+                entityPoco.AgentComputed = entityPM.AgentId;
+            }
+            else if (entityPM.ShipmentLevelCode == "H")
+            {
+                if (!string.IsNullOrEmpty(entityPM.AgentId))
+                {
+                    entityPoco.AgentComputed = entityPM.AgentId;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(entityPM.MasterShipmentDataId))
+                    {
+                        ShipmentRepository shipmentrepo = new ShipmentRepository(entityPM.Tenant);
+                        entityPoco.AgentComputed = shipmentrepo.GetSingleShipment(entityPM.MasterShipmentDataId, entityPM.Tenant).AgentId;
+                    }
+                    else
+                    {
+                        entityPoco.AgentComputed = null;
+                    }
+
                 }
             }
         }

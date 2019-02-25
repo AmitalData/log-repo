@@ -5,6 +5,7 @@ import { ReportFliter } from '../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { Component } from '@angular/core';
 import { DateTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     moduleId: module.id,
@@ -21,7 +22,7 @@ export class VDKFilterComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
-
+    public SupplierValues: string = "CS";
     ToDate: Date;
     FromDate: Date;
     private shipmentCustomerTypeCode: string;
@@ -72,6 +73,12 @@ export class VDKFilterComponent extends BaseComponent {
 
     constructor() {
         super();
+        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+            this.SupplierValues = "CS,AG";
+        }
+        else {
+            this.SupplierValues = "CS";
+        }
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
@@ -88,7 +95,12 @@ export class VDKFilterComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
-        }
+            }
+            if (this.ToDate != null) {
+                if (this.FromDate > this.ToDate) {
+                    this.ValidationErrorsList.push("From Date cannot be greater than To Date");
+                }
+            }
 
        
 

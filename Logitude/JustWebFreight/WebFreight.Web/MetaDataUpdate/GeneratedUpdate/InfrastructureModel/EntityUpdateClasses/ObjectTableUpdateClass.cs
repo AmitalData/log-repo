@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Object Table",
-			      				    Code =  "8ee7",
+			      				    Code =  "c67d",
 			      				    Name =  "ObjectTable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -179,9 +179,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search..",
+					  						DefaultText =  "Search..",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: name",
+					  						HelpTextDefaultText =  "Searching by :\n1: name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -191,6 +191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -239,7 +240,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HasDocuments",
-					  						DefaultText =  @"HasDocuments",
+					  						DefaultText =  "HasDocuments",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -250,6 +251,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "HasDocuments",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -298,7 +300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AllowedForComputingPartners",
-					  						DefaultText =  @"AllowedForComputingPartners",
+					  						DefaultText =  "AllowedForComputingPartners",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -309,6 +311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowedForComputingPartners",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -358,9 +361,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -371,6 +374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -417,10 +421,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DisplayName",
-					  						DefaultText =  @"Display Name",
+					  						DefaultText =  "Display Name",
 					  						ListFieldLable =  "DisplayNameListLable",
-					  						ListLableDefaultText =  @"Display Name",
-					  						ListLocalDefaultText =  @"Display Name",
+					  						ListLableDefaultText =  "Display Name",
+					  						ListLocalDefaultText =  "Display Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -430,6 +434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -478,7 +483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AllowedInQueues",
-					  						DefaultText =  @"AllowedInQueues",
+					  						DefaultText =  "AllowedInQueues",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -489,6 +494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowedInQueues",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -497,6 +503,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LovDisplayMemberPath",
+					  						OldFieldName =  "LovDisplayMemberPath",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -516,6 +523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LovDisplayMemberPath",
 					  						ListPropertyPath =  "LovDisplayMemberPath",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -533,9 +541,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LovDisplayMemberPath",
-					  						DefaultText =  @"Display Member Path",
+					  						DefaultText =  "Display Member Path",
 					  						ListFieldLable =  "LovDisplayMemberPathListLable",
-					  						ListLableDefaultText =  @"Display Member Path",
+					  						ListLableDefaultText =  "Display Member Path",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -545,6 +553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -553,6 +562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LovDisplayMemberPathLocal",
+					  						OldFieldName =  "LovDisplayMemberPathLocal",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -572,6 +582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LovDisplayMemberPathLocal",
 					  						ListPropertyPath =  "LovDisplayMemberPathLocal",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -589,9 +600,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LovDisplayMemberPathLocal",
-					  						DefaultText =  @"Display Member Path Local",
+					  						DefaultText =  "Display Member Path Local",
 					  						ListFieldLable =  "LovDisplayMemberPathLocalListLable",
-					  						ListLableDefaultText =  @"Display Member Path Local",
+					  						ListLableDefaultText =  "Display Member Path Local",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -601,6 +612,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -622,10 +634,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable ObjectTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ObjectTable" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature ObjectTableFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ObjectTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "ObjectTable.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ObjectTableFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ObjectTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "ObjectTable.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ObjectTableFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ObjectTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "ObjectTable.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ObjectTableFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ObjectTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "ObjectTable.Features.PackageFeature", NameTextCodeDefaultText = "ObjectTable Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+   
 	    
 		}
 

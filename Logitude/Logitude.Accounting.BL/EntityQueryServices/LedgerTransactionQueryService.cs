@@ -560,6 +560,48 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
+        public List<LedgerTransactionPM> GetARPaymentOpenTransactions(string billToGLAccountId, int tenant)
+        {
+            IQueryable<LedgerTransaction> ledgerTransactionQuery = (from a in context.LedgerTransactions
+                                                                    where a.AccountId == billToGLAccountId && a.Tenant == tenant && a.IsReconciled == false
+                                                                    select a).OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
+
+            List<LedgerTransactionPM> pms = ledgerTransactionQuery.ToList().Select(poco => GetEntityPM(poco)).ToList();
+
+            pms = (from t in pms
+                   where t.SourceTypeCode == "2" // 2- ARInvoice
+                   select t).ToList();
+
+            return pms;
+        }
+
+        public List<LedgerTransactionPM> GetARPaymentReconciledTransactions(string arpaymentId, string billToGLAccountId, int tenant)
+        {
+            IQueryable<LedgerTransaction> ledgerTransactionQuery = (from a in context.LedgerTransactions
+                                                                    where a.AccountId == billToGLAccountId && a.Tenant == tenant && a.IsReconciled == true
+                                                                    select a).OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
+
+            List<LedgerTransactionPM> pms = ledgerTransactionQuery.ToList().Select(poco => GetEntityPM(poco)).ToList();
+
+            //ledgerTransactionListQuery = ledgerTransactionListQuery.Where(d => d.SourceId == arpaymentId);
+            pms = pms.Where(d => d.SourceTypeCode == "2").ToList();
+
+            pms.ForEach(trans =>
+            {
+                trans.IsReconciled = true;
+            });
+
+            return pms;
+        }
+
+        //public List<LedgerTransactionPM> GetARPaymentTransactions(string arpaymentId, int tenant)
+        //{
+        //    List<LedgerTransaction> ledgerTransactionPOCOs = null;
+        //    ledgerTransactionPOCOs = repository.GetLedgerTransactionsByIdList(idList, tenant);
+        //    List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
+        //    return pms;
+        //}
+
 
 
     }

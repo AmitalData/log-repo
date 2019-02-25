@@ -97,5 +97,6 @@ export class TenantList {
 		StorageEncryptionKey: string;
 		TemperatureUnitCode: string;
 		DefaultSLAId: string;
+		NumberFormatCode: string;
 	
 }

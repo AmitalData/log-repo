@@ -495,6 +495,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CommunicationStatusType> CommunicationStatusTypes { get; set; }
         public IDbSet<CommunicationLogType> CommunicationLogTypes { get; set; }
         public IDbSet<WarehouseType> WarehouseTypes { get; set; }
+        public IDbSet<NumberFormat> NumberFormats { get; set; }
         public IDbSet<DocumentTypeTemplate> DocumentTypeTemplates { get; set; }
         public IDbSet<TemplateFormat> TemplateFormats { get; set; }
         public IDbSet<DWHSetting> DWHSettings { get; set; }

@@ -264,6 +264,16 @@ export class LedgerTransactionPM {
     public set OppositeAccountDisplayNumber(newValue: string) { if (this.oppositeAccountDisplayNumber != newValue) { this.oppositeAccountDisplayNumber = newValue; this.MarkAsDirty("OppositeAccountDisplayNumber"); } }
        
 	 
+    private recoNumber: string;
+    public get RecoNumber() { return this.recoNumber; }
+    public set RecoNumber(newValue: string) { if (this.recoNumber != newValue) { this.recoNumber = newValue; this.MarkAsDirty("RecoNumber"); } }
+       
+	 
+    private reconciliationId: string;
+    public get ReconciliationId() { return this.reconciliationId; }
+    public set ReconciliationId(newValue: string) { if (this.reconciliationId != newValue) { this.reconciliationId = newValue; this.MarkAsDirty("ReconciliationId"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

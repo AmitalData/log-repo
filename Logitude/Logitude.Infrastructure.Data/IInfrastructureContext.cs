@@ -20,7 +20,7 @@ namespace Logitude.Infrastructure.Data
        	 IDbSet<BatchTaskExecution> BatchTaskExecutions { get; }
 		 IDbSet<BatchTaskExecutionStatus> BatchTaskExecutionStatus { get; }
 		 IDbSet<BIReport> BIReports { get; }
-		 IDbSet<BIReportFolder>  BIReportFolders { get; }
+		 IDbSet<BIReportFolder> BIReportFolders { get; }
 		 IDbSet<BIReportsType> BIReportsTypes { get; }
 		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
 		 IDbSet<BusinessRole> BusinessRoles { get; }

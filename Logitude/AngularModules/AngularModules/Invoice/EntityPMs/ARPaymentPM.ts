@@ -484,6 +484,16 @@ export class ARPaymentPM {
     public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
        
 	 
+    private gLAccountId: string;
+    public get GLAccountId() { return this.gLAccountId; }
+    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
+       
+	 
+    private gLAccountRecoMethodCode: string;
+    public get GLAccountRecoMethodCode() { return this.gLAccountRecoMethodCode; }
+    public set GLAccountRecoMethodCode(newValue: string) { if (this.gLAccountRecoMethodCode != newValue) { this.gLAccountRecoMethodCode = newValue; this.MarkAsDirty("GLAccountRecoMethodCode"); } }
+       
+	 
 
     public OldEntityPM: ARPaymentPM;
 		

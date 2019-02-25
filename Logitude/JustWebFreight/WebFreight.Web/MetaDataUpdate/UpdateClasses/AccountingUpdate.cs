@@ -1745,7 +1745,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.InvoiceAmount", DefaultText = "Invoice Amount", LocalDefaultText = "סכום חשבונית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Duedate", DefaultText = "Due date", LocalDefaultText = "תאריך ערך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Status", DefaultText = "Status", LocalDefaultText = "סטטוס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.ReconciliationNumber", DefaultText = "Reconciliation Number", LocalDefaultText = "מספר התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.ReconciliationNumber", DefaultText = "Reco. Number", LocalDefaultText = "מספר התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Open", DefaultText = "Open", LocalDefaultText = "פתוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Closed", DefaultText = "Closed", LocalDefaultText = "סגור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.partiallyOpened", DefaultText = "Partially open", LocalDefaultText = "פתוח חלקית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1753,9 +1757,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.DocumentTypeNotFound", DefaultText = "Document type X not found", LocalDefaultText = "סוג מסמך X לא נמצא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.DeductionFileNumberNotFound", DefaultText = "Deduction file number not found", LocalDefaultText = "לא הוקלד מספר תיק ניכויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Rebuild", DefaultText = "Rebuild", LocalDefaultText = "בניה מחדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Building", DefaultText = "Building...", LocalDefaultText = "...בניין", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
-            
+
             #region MainMenu
 
 

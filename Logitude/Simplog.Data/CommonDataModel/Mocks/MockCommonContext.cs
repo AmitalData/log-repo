@@ -2561,6 +2561,21 @@ namespace Simplog.Data.CommonDataModel.Mocks
             {
                 throw new NotImplementedException();
             }
-        } 
+        }
+
+
+        public IDbSet<NumberFormat> NumberFormats
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
     }
 }

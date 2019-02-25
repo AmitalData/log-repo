@@ -172,6 +172,9 @@
     <Content Include="dlls\Simplog.Data.Global.dll" />
     <Content Include="dlls\Simplog.Server.Infrastructure.dll" />
     <Content Include="dlls\System.Windows.Interactivity.dll" />
+    <None Include="Files\DIM_MoveTypes.dwml" />
+    <None Include="Files\DIM_SpecialServicesTypes.dwml" />
+    <None Include="Files\DIM_Vessesl.dwml" />
     <Content Include="Generated Scripts\dw_objecttables_fields.generated.sql" />
     <Content Include="Templates\DWObjectTablesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

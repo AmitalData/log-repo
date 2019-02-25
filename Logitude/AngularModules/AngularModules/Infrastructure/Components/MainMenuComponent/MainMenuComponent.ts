@@ -176,8 +176,10 @@ export class MainMenuComponent {
         if (this.ClickedMenuItem != item) {
 
             this.ClickedMenuItem = item;
-            this.SelectionChanging.emit(true);
+            //
 
+                        // Code
+            this.SelectionChanging.emit(true);
             var isSubscribed: boolean = false;
             if (this.SelectionChanging) {
                 if (this.SelectionChanging.observers) {

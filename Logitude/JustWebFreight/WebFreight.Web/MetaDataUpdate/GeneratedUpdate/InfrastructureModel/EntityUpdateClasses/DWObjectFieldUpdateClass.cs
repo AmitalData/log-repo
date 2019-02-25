@@ -177,7 +177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -238,7 +238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
+					  						DefaultText =  "Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -300,7 +300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DWObjectTableCode",
-					  						DefaultText =  @"DW Object Table Code",
+					  						DefaultText =  "DW Object Table Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -361,7 +361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DataTypeCode",
-					  						DefaultText =  @"Data Type Code",
+					  						DefaultText =  "Data Type Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -423,7 +423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DimensionTableCode",
-					  						DefaultText =  @"DimensionTableCode",
+					  						DefaultText =  "DimensionTableCode",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -482,7 +482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MinLength",
-					  						DefaultText =  @"Min Length",
+					  						DefaultText =  "Min Length",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -541,7 +541,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MaxLength",
-					  						DefaultText =  @"Max Length",
+					  						DefaultText =  "Max Length",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -600,7 +600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsRequiered",
-					  						DefaultText =  @"Is Requiered",
+					  						DefaultText =  "Is Requiered",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -654,7 +654,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HideTree",
-					  						DefaultText =  @"Hide Tree",
+					  						DefaultText =  "Hide Tree",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -685,6 +685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable DWObjectFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DWObjectField" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature DWObjectFieldFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DWObjectFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "DWObjectField.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature DWObjectFieldFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DWObjectFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "DWObjectField.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature DWObjectFieldFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DWObjectFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "DWObjectField.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

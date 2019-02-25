@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .select {
         display: block;
@@ -107,6 +107,32 @@
                     </td>
                 </tr>
 
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'NumberFormatCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="width:187px">
+                                    <LogLov [ObjectFieldName]="'NumberFormatCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'NumberFormat'"
+                                            [HideColumns]="false">
+                                    </LogLov>
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                        </table>
+                      
+                    </td>
+                </tr>
+
                 <!-- DayLight Settings -->
                 <tr class="FormFieldRow">
                     <td colspan="2">
@@ -168,6 +194,9 @@
                                                 <LogTextBox [ObjectFieldName]="'DayLightOffset'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
                                         </tr>
+
+
+
 
                                         <tr>
                                             <td colspan="2">

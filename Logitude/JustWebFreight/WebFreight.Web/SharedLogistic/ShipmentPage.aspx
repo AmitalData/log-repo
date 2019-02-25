@@ -288,7 +288,7 @@ img {
 
                                                     <td style="vertical-align:top;">
                                                         
-                                                        <div style="margin:0 0 0 5px;">
+                                                        <div style="margin:0 0 0 5px;" data-bind="style: { visibility: PartnerVisibility }">
                                                             <div>
                                                                 <span class="LabelTextStyle" data-bind="text: PartnerTitle" style="display:inline-block; width:65px;"> </span>                                                                
                                                                 <span class="ValueTextStyle" data-bind="text: PartnerName"> </span>

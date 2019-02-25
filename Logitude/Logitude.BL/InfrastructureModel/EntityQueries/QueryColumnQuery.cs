@@ -356,11 +356,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             List<QueryColumnPM> Cols = new List<QueryColumnPM>();
-            foreach (var item in queries)
+
+            if (queries != null)
             {
-                if (!Cols.Contains(item))
+                foreach (var item in queries)
                 {
-                    Cols.Add(item);
+                    if (!Cols.Contains(item))
+                    {
+                        Cols.Add(item);
+                    }
                 }
             }
 
@@ -400,8 +404,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return queries;
         }
-
-
+        
         public IQueryable<QueryColumnPM> GetZeroQueryColumnsByQueryId(int tenant, string queryId)
         {
             IQueryable<QueryColumnPM> queries = null;
