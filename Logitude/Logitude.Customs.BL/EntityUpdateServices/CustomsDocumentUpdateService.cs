@@ -40,13 +40,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class CustomsDocumentUpdateService : EntityUpdateService<CustomsDocument, CustomsDocumentPM, EntityPM>
     {
-        public bool OnCreating_InsertPerfectCustomsDocumentMetaDataValues = false;//לאחר ממשק UD2LT - קישור מסמך לטיקט, אם התיק הינו תיק בלדרות יש לבצע העלאה של המסמך למכס - מסר קלוט צרופה
         protected override void OnCreating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
         {
             
             //entityPM.DocumentInId = IdCounter.GetNumber("Customs.CustomsDocument", entityPM.Tenant);
             entityPM.DocumentVersion = 1;
-            if (OnCreating_InsertPerfectCustomsDocumentMetaDataValues && entityPM.CustomsDocumentMetaDataValues.Count==0)
+            
+
+        }
+
+        //לאחר ממשק UD2LT - קישור מסמך לטיקט, אם התיק הינו תיק בלדרות יש לבצע העלאה של המסמך למכס - מסר קלוט צרופה
+        public void AddPerfectCustomsDocumentMetaDataValues(CustomsDocumentPM entityPM)
+        {
+            if ( entityPM.CustomsDocumentMetaDataValues.Count == 0)
             {
                 var customContext = CustomContext.GetContext(entityPM.Tenant);
                 var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
@@ -54,7 +60,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.CustomsDocumentMetaDataValues = CustomDocumentTypeMetaData.Select(r => new CustomsDocumentMetaDataValuePM()
                 {
                     ChangeSetOp = ChangeSetOperation.Insert,
-                    Tenant = EntityPM.Tenant,
+                    Tenant = entityPM.Tenant,
                     CustomsDocumentId = entityPM.CustomsDocId,
                     MetaDataTypeCode = r.MetaDataTypeCode,
                     MetaDataValue = null,
@@ -62,9 +68,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 AutoSetOriginalDocumentTrue(entityPM);
             }
-
         }
-
         protected override void UpdateComposition(CustomsDocumentPM entityPM)
         {
             AutoSetOriginalDocumentTrue(entityPM);
