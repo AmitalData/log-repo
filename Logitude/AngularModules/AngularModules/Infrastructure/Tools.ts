@@ -3,7 +3,7 @@ import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
 import {NumbersPipe} from './Pipes/NumbersPipe';
 import { forEach } from '@angular/router/src/utils/collection';
 import { DatePipe } from '@angular/common';
-
+import { SessionLocator } from './Utilities/SessionLocator';
 export class AppTool {
 
     public static GetCounterPrefixLength(prefix: string) {
@@ -1918,6 +1918,7 @@ export class FontTool {
     public static CellIsCheckedBackground: string = "rgba(208, 224, 234, 0.4)";
 }
 export class FormatTool {
+
     public static IsEmail(input: string): boolean {
         var myResult = true;
 
@@ -2090,6 +2091,157 @@ export class FormatTool {
         return myResult;
     }
     public static FormatNumber(myNumber: number, myFormat: string = 'N2') {
+
+            var first = ",";
+        var second = ".";
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+                        case "CD": {
+                            first = ",";
+                            second = ".";
+                            break;
+                        }
+
+                        case "DC": {
+                            first = ".";
+                            second = ",";
+                            break;
+                        }
+
+                        case "AD": {
+                            first = "'";
+                            second = ".";
+                            break;
+                        }
+
+                        default:
+                            {
+                                first = ",";
+                                second = ".";
+                                break;
+                            }
+                    }
+                
+            
+            var myResult: string = "";
+
+            if (!AppTool.IsNullOrEmpty(myNumber)) {
+
+                var isValid = true;
+
+                if (typeof (myNumber) == "string") {
+                    isValid = false;
+
+                    if (FormatTool.IsDecimal(myNumber + "")) {
+                        myNumber = +myNumber;
+                        isValid = true;
+                    }
+                }
+
+                if (isValid) {
+                    var myFractionDigits = 2;
+
+                    switch (myFormat.toString().toLowerCase()) {
+                        case "n0": { myFractionDigits = 0; break; }
+                        case "n1": { myFractionDigits = 1; break; }
+                        case "n2": { myFractionDigits = 2; break; }
+                        case "n3": { myFractionDigits = 3; break; }
+                        case "n4": { myFractionDigits = 4; break; }
+                        case "n5": { myFractionDigits = 5; break; }
+                        default: { myFractionDigits = 2; break; }
+                    }
+
+                    myNumber = AppTool.Round(myNumber, myFractionDigits);
+
+                    var myStringNumber = myNumber + "";
+                    var myStringNumber1 = myStringNumber.split('.')[0];
+                    var myStringNumber2 = myStringNumber.split('.')[1];
+
+                    myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, first);
+                    if (!AppTool.IsNullOrEmpty(myStringNumber2)) {
+                        myResult += second + myStringNumber2;
+                    }
+
+                    if (myFormat.toString().toLowerCase() != "n0") {
+                        var side1;
+                        var side2;
+                        if (first == "." && !myResult.toString().toLowerCase().includes(",")) {
+                            var arr = myResult.split('.');
+                            var firstRound: boolean = true;
+                            if (arr.length == 2) {
+                                if (arr[1] == "00" || arr[1] == "0" || arr[1] == "000" || arr[1] == "0000") {
+                                    side1 = arr[0];
+                                }
+                                else {
+                                    side1 = "0";                                    
+                                }
+                            }
+                            else if (arr.length == 1) {
+                                side1 = arr[0];
+                            }
+                            if (AppTool.IsNullOrEmpty(side1)) {
+                                arr.forEach(p => {
+                                    if (firstRound)
+                                        side1 = p;
+                                    else
+                                        side1 += "." + p;
+                                    firstRound = false;
+                                });
+                            }
+                            if (arr.length>1)
+                            side2 = myResult.split('.')[myResult.split('.').length-1];
+                        }
+                        else {
+                            if (myResult.toString().toLowerCase().includes(",") && side1==".") {
+                                side1 = myResult.split(',')[0];
+                                side2 = myResult.split(',')[1];
+                            }
+                            else {
+                                side1 = myResult.split('.')[0];
+                                side2 = myResult.split('.')[1];
+                            }
+                        }
+                      
+                        myResult = side1 + second + AppTool.PadRight(side2, myFractionDigits, '0');
+                    }
+                }
+            }
+
+            return myResult;
+
+       
+    }
+    public static CustomFormatNumber(myNumber: number, myFormat: string = 'N2') {
+
+        var first = ",";
+        var second = ".";
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "CD": {
+                first = ",";
+                second = ".";
+                break;
+            }
+
+            case "DC": {
+                first = ".";
+                second = ",";
+                break;
+            }
+
+            case "AD": {
+                first = "'";
+                second = ".";
+                break;
+            }
+
+            default:
+                {
+                    first = ",";
+                    second = ".";
+                    break;
+                }
+        }
+
+
         var myResult: string = "";
 
         if (!AppTool.IsNullOrEmpty(myNumber)) {
@@ -2124,21 +2276,24 @@ export class FormatTool {
                 var myStringNumber1 = myStringNumber.split('.')[0];
                 var myStringNumber2 = myStringNumber.split('.')[1];
 
-                myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, first);
                 if (!AppTool.IsNullOrEmpty(myStringNumber2)) {
-                    myResult += "." + myStringNumber2;
+                    myResult += second + myStringNumber2;
                 }
 
                 if (myFormat.toString().toLowerCase() != "n0") {
                     var side1 = myResult.split('.')[0];
                     var side2 = myResult.split('.')[1];
-                    myResult = side1 + '.' + AppTool.PadRight(side2, myFractionDigits, '0');
+                    myResult = side1 + second + AppTool.PadRight(side2, myFractionDigits, '0');
                 }
             }
         }
 
         return myResult;
+
+
     }
+
     public static Validate_IATACode(input: string): boolean {
         var myResult: boolean = false;
 

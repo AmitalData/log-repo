@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -125,6 +126,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return recoPMs;
         }
+
+
 
     }
 

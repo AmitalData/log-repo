@@ -1315,7 +1315,7 @@ function BuildPackagesTabPageViewModel(shipment) {
                     var itemQuantity = $.trim(item.Quantity) == "" ? 0 : item.Quantity;
                     var itemContainer = $.trim(item.ContainerNumber) == "" ? "" : item.ContainerNumber;
                     var itemNumberOfInsidePackages = $.trim(item.NumberOfInsidePackages) == "" ? 0 : item.NumberOfInsidePackages;                    
-                    var itemSeal = $.trim(item.Seal) == "" ? "" : item.Seal;
+                    var itemSeal = $.trim(item.ShipperSeal) == "" ? "" : item.ShipperSeal;
                     var itemVolume = $.trim(item.Volume) == "" ? 0 : item.Volume;
                     //var itemVolumetricWeight = $.trim(item.VolumetricWeight) == "" ? 0 : item.VolumetricWeight;
                     var itemGrossWeight = $.trim(item.Weight) == "" ? 0 : item.Weight;

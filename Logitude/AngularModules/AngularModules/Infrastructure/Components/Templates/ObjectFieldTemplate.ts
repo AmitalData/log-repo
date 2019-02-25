@@ -27,7 +27,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
     public FieldValue: any = null;
     public HasTemplate: boolean = false;
     public DataTypeCode: string = null;
-    public DigitsAfterPoints: number = 0;
+    public DigitsAfterPoints: string = "n0";
     public IsAutoFormat: boolean = false;    
     public IsLookUp: boolean = false;
     public LookUpFieldValue: string = null;
@@ -51,7 +51,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
             //this.IsCustom = this.ObjectField.IsCustom;
             this.HasTemplate = this.ObjectField.HasTemplate;
             this.DataTypeCode = this.ObjectField.DataTypeCode;
-            this.DigitsAfterPoints = this.ObjectField.DigitsAfterPoint;
+            this.DigitsAfterPoints = "n"+this.ObjectField.DigitsAfterPoint;
 
             if (this.IsHeaderScreenTemplate) {
                 this.FieldName = this.ObjectField.PMPropertyPath;
