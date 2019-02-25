@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.Def.EntityUpdateServicesExt
 {
-    public interface IReconciliationUpdateServiceExt
+    public interface IReconciliationServiceExt
     {
-        void Update(ReconciliationPM entityPM);
+        void CreateReconciliation(ReconciliationPM entityPM);
     }
 }

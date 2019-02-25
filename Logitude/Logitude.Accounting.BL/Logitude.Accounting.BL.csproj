@@ -464,7 +464,7 @@
     <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\BankCodeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\CashBookLineUpdateServiceExt.cs" />
-    <Compile Include="EntityUpdateServiceExt\ReconciliationUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\ReconciliationServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\CashBookUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\GLAccountUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\JournalVoidUpdateServiceExt.cs" />

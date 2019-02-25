@@ -1504,26 +1504,35 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region Full Accounting
         public void CreateReconciliationForARPayment(ARPaymentPM paymentPM)
         {
+            IAccountingContext ctx = AccountingContext.GetContext(paymentPM.Tenant);
             ReconciliationPM _reco = new ReconciliationPM();
             _reco.ChangeSetOp = ChangeSetOperation.Insert;
             _reco.Tenant = paymentPM.Tenant;
             _reco.AccountId = paymentPM.GLAccountId;
             _reco.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
 
-            // payment line
-            _reco.ReconciliationLines.Add(CreatePaymentRecoLine(paymentPM));
+            // get payment line LT
+            LedgerTransactionListQueryService ltListQuery = new LedgerTransactionListQueryService(ctx);
+            List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
+            LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
+            if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
+
+            // reco payment line
+            var _recoPYLine = CreatePaymentRecoLine(paymentPM);
+            _recoPYLine.TransactionId = paymentTransaction.Id;
+            _reco.ReconciliationLines.Add(_recoPYLine);
 
             // invoices lines
+            int line = 2;
             foreach (LedgerTransactionPM invoiceLT in paymentPM.InvoicesTransactions)
             {
-                var __line = CreateInvoiceRecoLine(paymentPM, invoiceLT);
-                _reco.ReconciliationLines.Add(__line);
+                var _recoInLine = CreateInvoiceRecoLine(paymentPM, invoiceLT, line++);
+                _reco.ReconciliationLines.Add(_recoInLine);
             }
 
-            //call itzik service
-            ///....
-            var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
-
+            //call reco service
+            var recoService = ContainerAccessor.Container.Resolve(typeof(IReconciliationServiceExt), "ReconciliationServiceExt", new ParameterOverride("", 1)) as IReconciliationServiceExt;
+            recoService.CreateReconciliation(_reco);
 
         }
         public void UpdateTransactions(ARPaymentPM paymentPM)
@@ -1540,6 +1549,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ReconciliationLinePM _paymentLine = new ReconciliationLinePM();
             _paymentLine.ChangeSetOp = ChangeSetOperation.Insert;
             _paymentLine.Tenant = paymentPM.Tenant;
+            _paymentLine.Line = 1;
 
             // validate
             if (string.IsNullOrEmpty(paymentPM.GLAccountRecoMethodCode))
@@ -1564,11 +1574,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             return _paymentLine;
         }
-        private ReconciliationLinePM CreateInvoiceRecoLine(ARPaymentPM paymentPM, LedgerTransactionPM invoiceTransactionPM)
+        private ReconciliationLinePM CreateInvoiceRecoLine(ARPaymentPM paymentPM, LedgerTransactionPM invoiceTransactionPM, int line)
         {
             ReconciliationLinePM _invoiceLine = new ReconciliationLinePM();
             _invoiceLine.ChangeSetOp = ChangeSetOperation.Insert;
             _invoiceLine.Tenant = paymentPM.Tenant;
+            _invoiceLine.TransactionId = invoiceTransactionPM.Id;
+            _invoiceLine.Line = line;
 
             // validate
             if (string.IsNullOrEmpty(paymentPM.GLAccountRecoMethodCode))
