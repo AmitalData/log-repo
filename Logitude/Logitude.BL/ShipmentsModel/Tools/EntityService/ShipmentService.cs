@@ -4588,6 +4588,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             item.NextETD = this.entityPoco.NextETD;
                             item.NextLeg = this.entityPoco.NextLeg;
                             item.NextLegCode = this.entityPoco.NextLegCode;
+                            if(string.IsNullOrEmpty(item.AgentId))
+                            {
+                                item.AgentComputed = entityPM.AgentId;
+                            }
                             entityRepository.Update(item);
                         }
 
