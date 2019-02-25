@@ -169,6 +169,9 @@
       <LastGenOutput>ShipmentClassesGeneraor.cs</LastGenOutput>
       <LastOutputs>.\ShipmentClassesGeneraor.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\CommonDataModel\NumberFormat.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\CommonDataModel\CustomerDeposition.lxml" />
   </ItemGroup>
   <ItemGroup>

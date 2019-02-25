@@ -675,7 +675,7 @@
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:25px; text-align:center;"><img style="height:20px; width:20px;" src="#= DirectionSRC #" title="#= DirectionName #" /></div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:60px;">Ref No:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:90px; color:\\#1B90CB;">${ShipmentNumber}</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;">${MyPartnerName}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; visibility: #= MyPartnerVisibility #;">${MyPartnerName}</div>
 
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:30px;"><img style="height:20px; width:22px; padding:0px; margin:0px;" src="#= FromCountySRC #"/></div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;" title="#= FromPortName #">${FromPortName}</div>

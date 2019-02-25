@@ -2,7 +2,7 @@
 <entity Id="&quot;b54cb3b4-a3a1-4aef-82c5-88682d2154f2&quot;" Code="&quot;DIM_Tenants&quot;" Name="&quot;DIM_Tenants&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="false" DefaultFilterBy="&quot;[Tenant Name]&quot;">
   <fields>
     <field Id="&quot;b0e6cb5e-857b-47a1-8af6-95e5e514e9a8&quot;" Code="&quot;[Tenant Number]&quot;" Name="&quot;Tenant Number&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="true" LOVAdditionalColumns="&quot;[Tenant Name]&quot;" HideTree="false" />
-    <field Id="&quot;9106ba27-d2c2-4858-be9b-2e93fdb79184&quot;" Code="&quot;[Tenant Name]&quot;" Name="&quot;Tenant Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="100" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" />
+    <field Id="&quot;9106ba27-d2c2-4858-be9b-2e93fdb79184&quot;" Code="&quot;[Tenant Name]&quot;" Name="&quot;Tenant Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="100" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" LOVAdditionalColumns="&quot;[Tenant Number]&quot;" HideTree="false" />
     <field Id="&quot;28347d5e-cbcc-4794-bcc2-707e935ce4d9&quot;" Code="&quot;[Country]&quot;" Name="&quot;Country&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="false" MinLength="0" MaxLength="120" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" />
   </fields>
 </entity>

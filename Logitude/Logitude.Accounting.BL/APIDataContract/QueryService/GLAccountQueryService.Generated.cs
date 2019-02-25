@@ -146,7 +146,7 @@ using Logitude.Accounting.Data;
 				   if(MyEntityPM.CustomerGLAccountId != null)
 				   {
 					   GLAccountQueryService GLAccountService8 = new GLAccountQueryService(Tenant);
-					   					   temp.CustomerGLAccount = GLAccountService8.GetGLAccountById(MyEntityPM.CustomerGLAccountId,Tenant); 
+					   					   temp.CustomerGLAccount = GLAccountService8.GLAccountCustomDataMapping(MyEntityPM.CustomerGLAccountId,Tenant); 
 			       
 					   				   }
 				   
@@ -389,7 +389,7 @@ using Logitude.Accounting.Data;
 					GLAccountQueryService CustomerGLAccountGLAccountService = new GLAccountQueryService(Tenant);
 					if(MyEntity.CustomerGLAccount != null)
 					{
-						var myCustomerGLAccountPM = CustomerGLAccountGLAccountService.GLAccountDataMappingAndValidatin(MyEntity.CustomerGLAccount,Tenant,ComputingPartnerName);
+						var myCustomerGLAccountPM = CustomerGLAccountGLAccountService.GLAccountCustomDataMappingAndValidatin(MyEntity.CustomerGLAccount,Tenant);
 												if(myCustomerGLAccountPM != null)
 						{
 							temp.CustomerGLAccountId = myCustomerGLAccountPM.Id;

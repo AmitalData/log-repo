@@ -381,12 +381,14 @@
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomerDepositionList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomsShipperList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\NumberFormatList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\NumberFormatListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />

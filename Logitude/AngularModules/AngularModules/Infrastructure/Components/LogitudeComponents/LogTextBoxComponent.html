@@ -114,6 +114,8 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: 12px;
+        background-color: white;
+        border-radius: 5px;
     }
 
         .expand-btn:hover {
@@ -186,9 +188,9 @@
                             <div *ngIf="!IsDisabled && isMouseOver && (ObjectField?.EnableFullscreenTextBox)"
                             [class.collapse-btn]="isExpanded"
                             class="expand-btn"
-                            style="top: 0px;background-color: transparent;"
-                            [style.right]="isRTL ? 'initial' : (multlineTextBoxLines > RowsCount ? '22px' : '2px')"
-                            [style.left]="isRTL ? (multlineTextBoxLines > RowsCount ? '22px' : '2px') : 'initial'"
+                            style="top: 0px;background-color: transparent;background-color: white;border-radius: 5px;"
+                            [style.right]="isRTL ? 'initial' : (multlineTextBoxLines > RowsCount ? '22px' : '0')"
+                            [style.left]="isRTL ? (multlineTextBoxLines > RowsCount ? '22px' : '0') : 'initial'"
                             (click)="ExpandButtonClicked()"></div>
 
                 </div>
