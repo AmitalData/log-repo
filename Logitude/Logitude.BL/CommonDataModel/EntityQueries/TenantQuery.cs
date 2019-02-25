@@ -143,7 +143,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 TenantVATManagement = a.TenantVATManagement,
                                                 TemperatureUnitCode = a.TemperatureUnitCode,
                                                 DefaultSLAId = a.DefaultSLAId,
-                                                AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
+                                                AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                                NumberFormatCode=a.NumberFormatCode,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -295,7 +296,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         TemperatureUnitCode = tt.TemperatureUnitCode,
                         DefaultSLAId = tt.DefaultSLAId,
                         StockTypeCode = tt.StockTypeCode,
-                        AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice
+                        AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice,
+                        NumberFormatCode = tt.NumberFormatCode,
+
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -453,7 +456,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     TemperatureUnitCode = tt.TemperatureUnitCode,
                     DefaultSLAId = tt.DefaultSLAId,
                     StockTypeCode = tt.StockTypeCode,
-                    AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice
+                    AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice,
+                    NumberFormatCode = tt.NumberFormatCode,
+
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -593,7 +598,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
                                            StockTypeCode = a.StockTypeCode,
-                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
+                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                           NumberFormatCode = a.NumberFormatCode,
+
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -732,7 +739,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
                                        StockTypeCode = a.StockTypeCode,
-                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
+                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                       NumberFormatCode = a.NumberFormatCode,
+
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -875,7 +884,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                TemperatureUnitCode = a.TemperatureUnitCode,
                                                DefaultSLAId = a.DefaultSLAId,
                                                StockTypeCode = a.StockTypeCode,
-                                               AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
+                                               AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                               NumberFormatCode = a.NumberFormatCode,
+
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1017,7 +1028,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
                                            StockTypeCode = a.StockTypeCode,
-                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
+                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                           NumberFormatCode = a.NumberFormatCode,
+
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1151,7 +1164,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
                                        StockTypeCode = a.StockTypeCode,
-                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
+                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                       NumberFormatCode = a.NumberFormatCode,
+
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1321,6 +1336,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DefaultSLAId = myPOCO.DefaultSLAId,
                     StockTypeCode = myPOCO.StockTypeCode,
                     AutoArchiveOnInvoice = myPOCO.AutoArchiveOnInvoice,
+                    NumberFormatCode = myPOCO.NumberFormatCode,
+
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1447,6 +1464,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 TenantVATManagement = a.TenantVATManagement,
                                                 TemperatureUnitCode = a.TemperatureUnitCode,
                                                 DefaultSLAId = a.DefaultSLAId,
+                                                NumberFormatCode = a.NumberFormatCode,
+
                                             };
             return result;
         }

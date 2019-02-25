@@ -917,7 +917,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.Line = 1;
                     journalLine.ActionCode = "1";
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
-                    journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
+                    journalLine.DocumentDate = theEntityPm.ValueDate.Value;
                     journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
                     journalLine.DueDate = theEntityPm.ValueDate.Value;
                     journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency - (decimal)theEntityPm.TaxDeductionLocalAmount;

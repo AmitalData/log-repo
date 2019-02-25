@@ -541,6 +541,7 @@
     <Content Include="Main Branch\2019\02 - 2019\Day 11 [Maheera] delete text code ChronologicalDates of Accounting settings.sql" />
     <Content Include="Main Branch\2019\02 - 2019\Day 11 [Maheera] Fill Approve Date Fields of ARPayment.sql" />
     <Content Include="Main Branch\2019\02 - 2019\Day 11 [Samar] delete from to state columns for shipment.sql" />
+    <Content Include="Main Branch\2019\02 - 2019\Day 24 [Khalid] Set Number Format Settings.sql" />
     <Content Include="Main Branch\2019\02 - 2019\Day 9 [Abdullah] update searchfields of integrity checks.sql" />
     <Content Include="Main Branch\2019\02 - 2019\Day 7 [Islam] Fix for empty shpment masterdataid records.sql" />
     <Content Include="Main Branch\2019\02 - 2019\Day 3[Khalid] delete objectfield and textcodes bluesnapconttractcode.sql" />

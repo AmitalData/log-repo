@@ -363,6 +363,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<NumberFormat> NumberFormats
+        {
+            get;
+            set;
+        }
         public IDbSet<DocumentTypeTemplate> DocumentTypeTemplates
         {
             get;
