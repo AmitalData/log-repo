@@ -699,9 +699,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 let obj = response.Result;
                 if (obj) {
                     let DefaultValue = obj['DefaultValue'];
-                    if (DefaultValue == "Y") {
+                    if (!AppTool.IsNullOrEmpty(DefaultValue)) {
                         if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                            this.JustAutoFillPaymentScreenCash();
+                            this.JustAutoFillPaymentScreenCash(DefaultValue);
                         }
                     }
                     else {
@@ -739,15 +739,15 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         }
     }
 
-    JustAutoFillPaymentScreenCash() {
+    JustAutoFillPaymentScreenCash(defaultValue: string) {
         for (let method of this.PaymentMethodsList.Collection) {
             method.Amount = this.DeclarationPM.TotalTax;
             method.MethodTypeCode = "2";
             this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
                 method.MethodTypeName = response.Result.LocalName;
             });
-            method.PayerActivityTypeCode = "0";
-            this.customerActivityTypeListService.getSingleFromCache("0").subscribe((response: ServiceResponse) => {
+            method.PayerActivityTypeCode = defaultValue;
+            this.customerActivityTypeListService.getSingleFromCache(defaultValue).subscribe((response: ServiceResponse) => {
                 method.PayerActivityTypeName = response.Result.LocalName;
             });
         }

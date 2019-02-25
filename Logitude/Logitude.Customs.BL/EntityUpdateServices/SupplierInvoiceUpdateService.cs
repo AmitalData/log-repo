@@ -1035,9 +1035,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (declarationPM != null && declarationPM.IsCourierDeclaration)
             {
-                //DeclarationPM fullDeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
+                DeclarationQueryService cDeclarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                DeclarationPM fullDeclarationPM = cDeclarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
                 DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_Context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(declarationPM);
+                DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(fullDeclarationPM);
                 /*
                  * getSingle moved to CalculateDeclarationCourierStatus
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_Context);

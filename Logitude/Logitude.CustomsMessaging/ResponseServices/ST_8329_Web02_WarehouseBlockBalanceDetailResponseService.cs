@@ -46,13 +46,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.BlockClosureDate = String.Format("{0:g}",customResponse.BlockDetails.BlockClosureDate);
             this.MyResponseData.LogicalPackagesQuantityBalance = customResponse.BlockDetails.LogicalPackagesQuantityBalance.ToString("N");
             this.MyResponseData.PhysicalPackagesQuantityBalance = customResponse.BlockDetails.PhysicalPackagesQuantityBalance.ToString("N2"); ;
-            this.MyResponseData.Value = String.Format("{0:N2}", customResponse.BlockDetails.Value);
-            this.MyResponseData.StorageEntryPortChargeBalance = String.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            this.MyResponseData.Value = string.Format("{0:N2}", customResponse.BlockDetails.Value);
+            this.MyResponseData.StorageEntryPortChargeBalance = string.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            if (!string.IsNullOrEmpty(customResponse.BlockDetails.StorageEntryPortChargeCurrencyType))
+            {
+                this.MyResponseData.StorageEntryPortChargeBalance += string.Concat(this.MyResponseData.StorageEntryPortChargeBalance, "(", customResponse.BlockDetails.StorageEntryPortChargeCurrencyType, ")");
+            }
             this.MyResponseData.StorageEntryPortChargeCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
-            this.MyResponseData.StorageEntryTransportBalance = String.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
-            this.MyResponseData.StorageEntryTransportCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
-            this.MyResponseData.StorageEntryInsuranceBalance = String.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
-            this.MyResponseData.StorageEntryInsuranceCurrencyType = customResponse.BlockDetails.StorageEntryPortChargeCurrencyType;
+            this.MyResponseData.StorageEntryTransportBalance = string.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            if (!string.IsNullOrEmpty(customResponse.BlockDetails.StorageEntryTransportCurrencyType))
+            {
+                this.MyResponseData.StorageEntryTransportBalance += string.Concat(this.MyResponseData.StorageEntryTransportBalance, "(", customResponse.BlockDetails.StorageEntryTransportCurrencyType, ")");
+            }
+            this.MyResponseData.StorageEntryTransportCurrencyType = customResponse.BlockDetails.StorageEntryTransportCurrencyType;
+            this.MyResponseData.StorageEntryInsuranceBalance = string.Format("{0:N2}", customResponse.BlockDetails.StorageEntryPortChargeBalance.Value);
+            if(!string.IsNullOrEmpty(customResponse.BlockDetails.StorageEntryInsuranceCurrencyType))
+            {
+                this.MyResponseData.StorageEntryInsuranceBalance += string.Concat(this.MyResponseData.StorageEntryInsuranceBalance,"(", customResponse.BlockDetails.StorageEntryInsuranceCurrencyType, ")");
+            }
+            this.MyResponseData.StorageEntryInsuranceCurrencyType = customResponse.BlockDetails.StorageEntryInsuranceCurrencyType;
             //Get Block Special Activities
             if (customResponse.BlockDetails.BlockSpecialActivities != null)
             {
