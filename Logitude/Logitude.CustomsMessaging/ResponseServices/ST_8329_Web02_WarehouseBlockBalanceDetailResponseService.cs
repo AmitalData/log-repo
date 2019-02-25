@@ -42,8 +42,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.ImporterTitle = customResponse.BlockDetails.ImporterTitle;
             this.MyResponseData.OpeningDate = String.Format("{0:g}", customResponse.BlockDetails.OpeningDate);
             this.MyResponseData.OriginalOpeningDate = String.Format("{0:g}", customResponse.BlockDetails.OriginalOpeningDate);
-            this.MyResponseData.MaxStorageDate = String.Format("{0:g}", customResponse.BlockDetails.MaxStorageDate); 
-            this.MyResponseData.BlockClosureDate = String.Format("{0:g}",customResponse.BlockDetails.BlockClosureDate);
+            this.MyResponseData.MaxStorageDate = String.Format("{0:g}", customResponse.BlockDetails.MaxStorageDate);
+            this.MyResponseData.BlockClosureDate = String.Format("{0:g}", customResponse.BlockDetails.BlockClosureDate);
             this.MyResponseData.LogicalPackagesQuantityBalance = customResponse.BlockDetails.LogicalPackagesQuantityBalance.ToString("N");
             this.MyResponseData.PhysicalPackagesQuantityBalance = customResponse.BlockDetails.PhysicalPackagesQuantityBalance.ToString("N2"); ;
             this.MyResponseData.Value = string.Format("{0:N2}", customResponse.BlockDetails.Value);
@@ -69,7 +69,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.BlockDetails.BlockSpecialActivities != null)
             {
                 List<BlockSpecialActivities> blockSpecialActivitiesList = new List<BlockSpecialActivities>();
-                foreach(var SpecialActivitiy in customResponse.BlockDetails.BlockSpecialActivities)
+                foreach (var SpecialActivitiy in customResponse.BlockDetails.BlockSpecialActivities)
                 {
                     if (!string.IsNullOrWhiteSpace(SpecialActivitiy))
                     {

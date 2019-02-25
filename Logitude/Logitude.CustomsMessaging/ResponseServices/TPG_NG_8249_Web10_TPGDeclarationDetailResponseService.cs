@@ -194,7 +194,92 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-           
+
+            /////////////////////////////////////////////////////////////////////////////////// FILL DATA FOR TESTING
+            //customResponse.GeneralDetails = new TPG_NG_8249_Web10_TPGDeclarationDetailGeneralDetails()
+            //{
+            //    customOfficeName = "customOfficeName",
+            //    customOfficeNumber = 11111,
+            //    declerationStatus = 22222,
+            //    externalID = 33333,
+            //    name = "name",
+            //    statusName = "statusName",
+            //};
+
+            //List<TPG_NG_8249_Web10_TPGDeclarationDetailFileList> claimList = new List<TPG_NG_8249_Web10_TPGDeclarationDetailFileList>();
+            //TPG_NG_8249_Web10_TPGDeclarationDetailFileList claim1 = new TPG_NG_8249_Web10_TPGDeclarationDetailFileList()
+            //{
+            //    agentExternalID = 11111,
+            //    agentName = "agentName",
+            //    claimAmount = 2222,
+            //    closeDate = DateTime.Now,
+            //    createDate = DateTime.Now,
+            //    displayFileNumber = "displayFileNumber",
+            //    fileNumber = "fileNumber",
+            //    Numeral = 1,
+            //    status = 55555,
+            //    statusName = "statusName",
+            //    totalRefundAmount = 66666,
+            //};
+            //claimList.Add(claim1);
+            //claim1 = new TPG_NG_8249_Web10_TPGDeclarationDetailFileList()
+            //{
+            //    agentExternalID = 55,
+            //    agentName = "agentName",
+            //    claimAmount = 66,
+            //    closeDate = DateTime.Now,
+            //    createDate = DateTime.Now,
+            //    displayFileNumber = "displayFileNumber",
+            //    fileNumber = "fileNumber",
+            //    Numeral = 1,
+            //    status = 55555,
+            //    statusName = "statusName",
+            //    totalRefundAmount = 66666,
+            //};
+            //claimList.Add(claim1);
+            //customResponse.Claim = claimList.ToArray();
+
+            //List<TPG_NG_8249_Web10_TPGDeclarationDetailFileList1> deficitList = new List<TPG_NG_8249_Web10_TPGDeclarationDetailFileList1>();
+            //TPG_NG_8249_Web10_TPGDeclarationDetailFileList1 deficit1 = new TPG_NG_8249_Web10_TPGDeclarationDetailFileList1()
+            //{
+            //    agentExternalID = 11111,
+            //    agentName = "agentName",
+            //    closeDate = DateTime.Now,
+            //    displayFileNumber = "displayFileNumber",
+            //    estimatedBalance = 222222,
+            //    fileNumber = "fileNumber",
+            //    Numeral = 3,
+            //    productionDate = DateTime.Now,
+            //    status = 44,
+            //    statusName = "statusName",
+            //    totalRefundAmount = 555,
+            //};
+            //deficitList.Add(deficit1);
+            //customResponse.Deficit = deficitList.ToArray();
+
+
+            //List<TPG_NG_8249_Web10_TPGDeclarationDetailFileList2> guaranteeList = new List<TPG_NG_8249_Web10_TPGDeclarationDetailFileList2>();
+            //TPG_NG_8249_Web10_TPGDeclarationDetailFileList2 guarantee1 = new TPG_NG_8249_Web10_TPGDeclarationDetailFileList2()
+            //{
+            //    agentExternalID = 11111,
+            //    agentName = "agentName",
+            //    Amount = 22222,
+            //    displayFileNumber = "displayFileNumber",
+            //    fileNumber = "fileNumber",
+            //    fileType = 33,
+            //    fileTypeName = "fileTypeName",
+            //    guaranteeStatus = 44,
+            //    guaranteeStatusName = "guaranteeStatusName",
+            //    Numeral = 5,
+            //    validity = DateTime.Now,
+
+            //};
+            //guaranteeList.Add(guarantee1);
+            //customResponse.Guarantee = guaranteeList.ToArray();
+            /////////////////////////////////////////////////////////////////////////////////// FILL DATA FOR TESTING
+            
+            
+            
             if (customResponse.GeneralDetails != null)
             {
                 MyResponseData.GeneralDetailsData = new DeclarationFilterResponseData.GeneralDetails()
