@@ -179,6 +179,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
     //}
     public IsEditingEnabled: boolean = false;
     public IsMainCarrierFieldsEnabled: boolean = false;
+    public IsCloseMasterInfoVisible: boolean = false;
     private SetUIProperties() {
         this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         this.SetUIProperties_Ports();
@@ -188,6 +189,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
         var isPortsEnabled = this.IsEditingEnabled;
         var isPortVia1Enabled = false;
         var isPortVia2Enabled = false;
+        this.IsCloseMasterInfoVisible = false;
 
         if (isPortsEnabled) {
             if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
@@ -216,6 +218,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
             if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
                 if (this.EntityPM.StatusWeight >= 60) {
                     isPortsEnabled = false;
+                    this.IsCloseMasterInfoVisible = true;
                 }
             }
         }

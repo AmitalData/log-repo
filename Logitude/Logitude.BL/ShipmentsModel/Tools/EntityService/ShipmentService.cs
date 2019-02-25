@@ -287,6 +287,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeFinalDestination();
 
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
+                this.ComputeAgentComputed(entityPM, entityPoco);
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
