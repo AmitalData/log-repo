@@ -41,7 +41,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         public  List<string> GetRequiredField(string messageToMaman)
         {
-            return ProxyUtil.GetRequiredField(messageToMaman,
+            return ProxyUtil.GetRequiredFieldInArrayJson(messageToMaman,
                             new List<string>()
                             {
                     "BaldarCode",

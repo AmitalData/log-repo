@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -52,14 +53,17 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 if (listStorageDefault.Contains("ILMMN") && myStorageSiteCode == "ILMMN") // Maman
                 {
 
-                    CourierGWMessageECTHRDataMamanRequestService courierGWMessageECTHRDataMamanService = null;
+                    var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                     drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
                     if (!dataHaveChangeSendIt && dbPM != null)
                     {
-                        courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
+                        
                         dbMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(dbPM.Id, dbPM.Tenant, dbPM, null);
                         
-                        if (dbMessage != drityMessage)
+                        if (!ProxyUtil.ArrayJsonAreEqual(drityMessage, dbMessage,
+                            new List<string>() {
+                                "BaldarMessageTime"
+                            }))
                         {
                             dataHaveChangeSendIt = true;
                         }
