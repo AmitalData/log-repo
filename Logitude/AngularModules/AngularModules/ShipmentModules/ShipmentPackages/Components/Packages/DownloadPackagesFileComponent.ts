@@ -53,12 +53,13 @@ export class DownloadPackagesFileComponent {
     }
 
     DownloadClicked() {
-        //var tempDate = new Date();
-        //var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        //var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + this.FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "" + "_" + MyDate;;
-        //window.open(url);        
+        var tempDate = new Date();
+        var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
 
-        DownloadManager.DownloadTransferHeaderFile(this.FileName);
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + this.FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "ShipmentPackages" + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007";
+        {
+            window.open(url);
+        }
 
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
