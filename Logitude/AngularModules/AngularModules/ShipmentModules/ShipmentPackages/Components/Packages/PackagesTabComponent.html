@@ -31,11 +31,11 @@
                                 <tr>
                                     <td>{{'Shipment.TH.Packages' | TextCodeTranslationPipe}}</td>
 
-                                    <td style="width: 90px" *ngIf="false">
+                                    <td style="width: 90px" *ngIf="IsFCLEntity">
                                         <button class="Button" (click)="DownloadPackagesClicked()">Download</button>
                                     </td>
 
-                                    <td style="width:5px;" *ngIf="false">
+                                    <td style="width:5px;" *ngIf="IsFCLEntity">
                                         <div></div>
                                     </td>
 
