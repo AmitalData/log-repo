@@ -24,22 +24,22 @@ namespace Logitude.BL.CommonDataModel
             all.Add(new NumberFormatDetails()
             {    
                 Code = "CD", 
-                Name = "Comma Dot", 
-                SearchFields = "CD,Comma Dot", 
+                Name = "Comma Dot 1,234.50 ", 
+                SearchFields = "CD,Comma Dot 1,234.50", 
 			});
 			 
             all.Add(new NumberFormatDetails()
             {    
                 Code = "DC", 
-                Name = "Dot Comma", 
-                SearchFields = "DC,Dot Comma", 
+                Name = "Dot Comma 1.234,50", 
+                SearchFields = "DC,Dot Comma 1.234,50", 
 			});
 			 
             all.Add(new NumberFormatDetails()
             {    
                 Code = "AD", 
-                Name = "Apostrophe Dot", 
-                SearchFields = "AD,Apostrophe Dot", 
+                Name = "Apostrophe Dot 1'234.50 ", 
+                SearchFields = "AD,Apostrophe Dot 1'234.50", 
 			});
 			
             return all;
