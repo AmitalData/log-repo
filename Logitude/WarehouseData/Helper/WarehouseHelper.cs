@@ -895,23 +895,23 @@ namespace WarehouseData.Helper
 
             if (table.DBTableName == "States")
             {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified' , GETDATE());";
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,AutomaticLastUpdateDate)values('-1'," + tenant + ",'' , GETDATE());";
             }
             else if (table.DBTableName == "Countries")
             {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,Code,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified' ,'', GETDATE());";
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,Code,AutomaticLastUpdateDate)values('-1'," + tenant + ",'' ,'', GETDATE());";
             }
             else if (table.DBTableName == "Addresses") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,CountryId,StateId ,AutomaticLastUpdateDate )values('-1'," + tenant + ",'-1' ,'-1' , GETDATE());";
 
             else if (table.DBTableName == "Contacts")
             {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,LocalName, Email,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified','Not Specified','Not Specified' , GETDATE());";
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,LocalName, Email,AutomaticLastUpdateDate)values('-1'," + tenant + ",'','','' , GETDATE());";
             }
 
-            else if (table.DBTableName == "ShipmentTypes" || table.DBTableName == "PartnerTypes") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Name, AutomaticLastUpdateDate)values('-1','Not Specified' ,GETDATE());";
+            else if (table.DBTableName == "ShipmentTypes" || table.DBTableName == "PartnerTypes") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Name, AutomaticLastUpdateDate)values('-1','' ,GETDATE());";
             else if (table.DBTableName == "ShipmentMasterDatas")
             {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,Master,MainCarriageATD, MainCarriageToPortId,Transshipment1ToPortId, Transshipment2ToPortId , Transshipment3ToPortId,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified',null,'-1' , '-1','-1','-1', GETDATE())";
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,Master,MainCarriageATD, MainCarriageToPortId,Transshipment1ToPortId, Transshipment2ToPortId , Transshipment3ToPortId,AutomaticLastUpdateDate)values('-1'," + tenant + ",'',null,'-1' , '-1','-1','-1', GETDATE())";
             }
             else if (table.DBTableName == "DWHSettings")
             {
