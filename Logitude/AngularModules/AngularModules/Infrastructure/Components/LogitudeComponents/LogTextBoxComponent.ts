@@ -70,7 +70,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() AddCommasToNumbers: boolean = true;
     @Input() Max: number;
     @Input() Min: number;
-    @Input() RowsCount: number = 2;
+    @Input() RowsCount;
 
 
 
@@ -303,19 +303,18 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         }
 
-        //check rowscount
-        if(this.IsMultiline){
-            setTimeout(() => {
+        //multiline: if rows count is empty, calculate it
+        setTimeout(() => {
+            if (this.IsMultiline && !this.RowsCount) {
                 var _element = document.getElementById(this.InputId)
                 var elHeight = _element.clientHeight;
                 var calculatedRowsCount = (elHeight / 18);
                 var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
 
-                if(this.RowsCount != ___roundedCalculatedRowsCountHaha)
-                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                this.RowsCount = ___roundedCalculatedRowsCountHaha;
+            }
+        }, 50);
 
-            }, 1000);
-        }
 
     }
 
@@ -1123,7 +1122,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                     case 'decimal':
                     case 'unsdecimal':
                         {
-                          
+
 
                             var isSignOk: boolean = true;
                             if (this.InputType == 'unsdecimal' || this.InputType == 'double') {
