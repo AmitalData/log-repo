@@ -246,11 +246,14 @@ namespace WebFreight.Web.Helpers
             TMProjectRepository myTMProjectRepository = new TMProjectRepository(tenant);
             foreach (var item in list)
             {
-                projectNo = this.GetWorkItemById(Int32.Parse(item.WINumber), false);
-                item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
-                TMEmployeeTime tmEmployee = myTMEmployeeTimeRepository.GetSingle(item.Id, item.Tenant);
-                tmEmployee.ProjectId = item.ProjectId;
-                myTMEmployeeTimeRepository.Update(tmEmployee);
+                if (!string.IsNullOrEmpty(item.WINumber))
+                {
+                    projectNo = this.GetWorkItemById(Int32.Parse(item.WINumber), false);
+                    item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
+                    TMEmployeeTime tmEmployee = myTMEmployeeTimeRepository.GetSingle(item.Id, item.Tenant);
+                    tmEmployee.ProjectId = item.ProjectId;
+                    myTMEmployeeTimeRepository.Update(tmEmployee);
+                }
             }
             myTMEmployeeTimeRepository.SubmitChanges();
             return list;
