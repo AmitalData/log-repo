@@ -1378,16 +1378,41 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 7);
 
 
-                if (item.CreatedbyUser != null)
+
+                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
+                if (user != null)
                 {
-                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                    if (user.Code != null)
+                    {
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
+                    }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
+
+                    else
+                    {
+                        myStringBuilder.Append(' ', 9);
+                    }
+
                 }
-                else
-                {
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 9);
-                }
+
+
+
+
+                //if (item.CreatedbyUser != null)
+                //{
+                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                //    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                //}
+                //else
+                //{
+                //    myStringBuilder.Append("a");
+                //    myStringBuilder.Append(' ', 9);
+                //}
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
@@ -1461,8 +1486,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a");
                     myStringBuilder.Append(' ', 30);
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append("יחידה");
                     myStringBuilder.Append(' ', 15);
+                    myStringBuilder.Append("יחידה");
+                    
 
 
                     if (line.Quantity != null)
@@ -2042,15 +2068,36 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 7);
 
 
-                if (item.CreatedbyUser != null)
+                //if (item.CreatedbyUser != null)
+                //{
+                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                //    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                //}
+                //else
+                //{
+                //    myStringBuilder.Append("a");
+                //    myStringBuilder.Append(' ', 9);
+                //}
+
+                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
+                if (user != null)
                 {
-                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
-                }
-                else
-                {
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 9);
+                    if (user.Code != null)
+                    {
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
+                    }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
+
+                    else
+                    {
+                        myStringBuilder.Append(' ', 9);
+                    }
+
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -2127,8 +2174,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a");
                     myStringBuilder.Append(' ', 30);
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append("יחידה");
                     myStringBuilder.Append(' ', 15);
+                    myStringBuilder.Append("יחידה");
+                    
 
                     myStringBuilder.Append("a");
                  
@@ -2642,16 +2690,25 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append(' ', 7);
 
+                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
+                if (user != null)
+                {
+                    if (user.Code != null)
+                    {
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
+                    }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
 
-                if (item.CreatedbyUser != null)
-                {
-                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
-                }
-                else
-                {
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 9);
+                    else
+                    {
+                        myStringBuilder.Append(' ', 9);
+                    }
+
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -3008,16 +3065,39 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 7);
 
 
-                if (item.CreatedbyUser != null)
+
+                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
+                if (user != null)
                 {
-                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                    if (user.Code != null)
+                    {
+                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
+                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
+                    }
+                    else if (user.EnglishName != null)
+                    {
+                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
+                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
+                    }
+
+                    else
+                    {
+                        myStringBuilder.Append(' ', 9);
+                    }
+
+
+
                 }
-                else
-                {
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append(' ', 9);
-                }
+                //if (item.CreatedbyUser != null)
+                //{
+                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                //    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
+                //}
+                //else
+                //{
+                //    myStringBuilder.Append("a");
+                //    myStringBuilder.Append(' ', 9);
+                //}
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
@@ -3454,10 +3534,11 @@ namespace Logitude.Accounting.BL.CoreBL
             TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
 
             // user
-            User loggedUser = GetLoggedUser(tenant);
+            ContactQuery contactQuery = new ContactQuery(tenant);
+
+            ContactPM contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, tenant);
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
-            ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
           
           
             string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, !contact.DontShowLocal);
@@ -3483,10 +3564,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 EntityNumber = openFormatReport.ReportNumber != null ? openFormatReport.ReportNumber.ToString() : null,
                 ObjectTableId = table.Id,
                 Code = _code,
-                CreatedByUserId = loggedUser.Id,
-                OwnerId = loggedUser.Id,
+                CreatedByUserId = contact.Id,
+                OwnerId = contact.Id,
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                UpdatedByUserId = loggedUser.Id,
+                UpdatedByUserId = contact.Id,
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 FileExtension = "txt",
                 SecurityId = "100",
@@ -3495,7 +3576,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             byte[] bytearray = Encoding.Unicode.GetBytes(file);
             document.FileData = bytearray;
-            docService.Create(document, document.FileData, loggedUser.Id);
+            docService.Create(document, document.FileData, contact.Id);
 
 
             //get document out
@@ -3972,10 +4053,13 @@ namespace Logitude.Accounting.BL.CoreBL
             TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
 
             // user
-            User loggedUser = GetLoggedUser(tenant);
+            ContactQuery contactQuery = new ContactQuery(tenant);
+
+            ContactPM contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, tenant);
+
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("INI", tenant);
 
-            ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
+          //  ContactPM contact = GetLoggedContact(tenant) ?? new ContactPM();
        
 
             string error = TranslateTextsClass.Translate("Accounting.O.DocumentTypeNotFound", tenant, !contact.DontShowLocal);
@@ -4001,10 +4085,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 EntityNumber = openFormatReport.ReportNumber != null ? openFormatReport.ReportNumber.ToString() : null,
                 ObjectTableId = table.Id,
                 Code = _code,
-                CreatedByUserId = loggedUser.Id,
-                OwnerId = loggedUser.Id,
+                CreatedByUserId = contact.Id,
+                OwnerId = contact.Id,
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                UpdatedByUserId = loggedUser.Id,
+                UpdatedByUserId = contact.Id,
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 FileExtension = "txt",
                 SecurityId = "100",
@@ -4013,7 +4097,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             byte[] bytearray = Encoding.Unicode.GetBytes(file);
             document.FileData = bytearray;
-            docService.Create(document, document.FileData, loggedUser.Id);
+            docService.Create(document, document.FileData, contact.Id);
 
 
             //get document out
