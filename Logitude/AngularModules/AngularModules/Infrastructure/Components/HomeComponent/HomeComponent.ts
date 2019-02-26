@@ -788,48 +788,100 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         }      
     }
 
+    //CloseTab(tabItem: SessionTabItem) {
+    //    var isNeedingConfirmation = false;
+    //    var tab = SessionLocator.CurrentSession.CurrentEditComponent; 
+    //    if (tabItem.SessionComponent.CurrentEditComponent != null) {
+    //        tab = tabItem.SessionComponent.CurrentEditComponent;
+    //        SessionLocator.CurrentSession = tabItem.SessionComponent;
+    //    }
+
+    //    if (tab) {
+    //        isNeedingConfirmation = tab.NeedCloseConfirmation();
+    //    }
+
+    //    if (isNeedingConfirmation) {
+    //        var confirmWindow = new ConfirmWindow();
+    //        confirmWindow.Width = 450;
+    //        confirmWindow.Height = 190;
+    //        confirmWindow.ShowCancelButton = true;
+    //        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+    //        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+    //        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+    //        confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(tab.ObjectTableName)));
+    //        confirmWindow.WindowClosed.subscribe((event: any) => {
+    //            if (confirmWindow.Yes) {
+
+
+    //                if (!this.SaveCompletedEvent) {
+    //                    this.SaveCompletedEvent = tab.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+    //                        if (isSaveSuccess) {
+    //                            this.Close(tabItem);
+    //                        }
+
+    //                        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+    //                        this.SaveCompletedEvent = null;
+    //                    });
+    //                }
+
+    //                tab.SaveChanges();
+    //            }
+
+    //            else if (confirmWindow.No) {
+    //                this.Close(tabItem);
+    //            }
+    //        });
+    //    }
+
+    //    else {
+    //        this.Close(tabItem);
+    //    }
+    //}
+
     CloseTab(tabItem: SessionTabItem) {
-        var isNeedingConfirmation = false;
-        var tab = SessionLocator.CurrentSession.CurrentEditComponent; 
-        if (tabItem.SessionComponent.CurrentEditComponent != null) {
-            tab = tabItem.SessionComponent.CurrentEditComponent;
-            SessionLocator.CurrentSession = tabItem.SessionComponent;
-        }
-        if (tab) {
-            isNeedingConfirmation = tab.NeedCloseConfirmation();
-        }
-        if (isNeedingConfirmation) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 450;
-            confirmWindow.Height = 190;
-            confirmWindow.ShowCancelButton = true;
-            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
-            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(tab.ObjectTableName)));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
 
+        var ClosedTabEditComponent = tabItem.SessionComponent.CurrentEditComponent;
 
-                    if (!this.SaveCompletedEvent) {
-                        this.SaveCompletedEvent = tab.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                            if (isSaveSuccess) {
-                                this.Close(tabItem);
-                            }
+        if (ClosedTabEditComponent) {
+            if (ClosedTabEditComponent.NeedCloseConfirmation()) {
 
-                            AppTool.KillEventEmitter(this.SaveCompletedEvent);
-                            this.SaveCompletedEvent = null;
-                        });
+                this.SelectionChanged(tabItem);
+
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 450;
+                confirmWindow.Height = 190;
+                confirmWindow.ShowCancelButton = true;
+                confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+                confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+                confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(ClosedTabEditComponent.ObjectTableName)));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        if (!this.SaveCompletedEvent) {
+                            this.SaveCompletedEvent = ClosedTabEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                                if (isSaveSuccess) {
+                                    this.Close(tabItem);
+                                }
+
+                                AppTool.KillEventEmitter(this.SaveCompletedEvent);
+                                this.SaveCompletedEvent = null;
+                            });
+                        }
+
+                        ClosedTabEditComponent.SaveChanges();
                     }
 
-                    tab.SaveChanges();
-                }
+                    else if (confirmWindow.No) {
+                        this.Close(tabItem);
+                    }
+                });
+            }
 
-                else if (confirmWindow.No) {
-                    this.Close(tabItem);
-                }
-            });
+            else {
+                this.Close(tabItem);
+            }
         }
+
         else {
             this.Close(tabItem);
         }
@@ -1019,6 +1071,9 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                 contractId = "3148346";
             }
         }
+        else {
+            temp = temp.Token;
+        }
 
         var link = "";
         var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
@@ -1058,6 +1113,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             temp = temp.Token;
 
             contractId = "3285402";
+        }
+
+        else {
+            temp = temp.Token;
         }
 
         var link = "";
@@ -1101,6 +1160,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
 
             contractId = "3233898";
         }
+
+        else {
+            temp = temp.Token;
+        }
         var link = "";
         var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
         if (isSandbox) {
@@ -1142,6 +1205,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             else {
                 contractId = "3300952";
             }
+        }
+
+        else {
+            temp = temp.Token;
         }
 
 
@@ -1187,6 +1254,9 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                 contractId = "3280846";
             }
         }
+        else {
+            temp = temp.Token;
+        }
 
         var link = "";
         var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
@@ -1231,6 +1301,9 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                                         if (!res.HasError) {
                                             contractId = res.Result.ContractId;
                                             EmptyOrError = false;
+                                            temp.ContractId = null;
+                                            temp.Storeid = null;
+                                            temp.Token = null;
                                             this.SubscribeToLogitude(EmptyOrError, contractId, temp);
                                         }
                                         else {
