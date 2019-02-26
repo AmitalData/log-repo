@@ -1071,6 +1071,9 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                 contractId = "3148346";
             }
         }
+        else {
+            temp = temp.Token;
+        }
 
         var link = "";
         var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
@@ -1110,6 +1113,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             temp = temp.Token;
 
             contractId = "3285402";
+        }
+
+        else {
+            temp = temp.Token;
         }
 
         var link = "";
@@ -1153,6 +1160,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
 
             contractId = "3233898";
         }
+
+        else {
+            temp = temp.Token;
+        }
         var link = "";
         var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
         if (isSandbox) {
@@ -1194,6 +1205,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             else {
                 contractId = "3300952";
             }
+        }
+
+        else {
+            temp = temp.Token;
         }
 
 
@@ -1239,6 +1254,9 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                 contractId = "3280846";
             }
         }
+        else {
+            temp = temp.Token;
+        }
 
         var link = "";
         var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
@@ -1283,6 +1301,9 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                                         if (!res.HasError) {
                                             contractId = res.Result.ContractId;
                                             EmptyOrError = false;
+                                            temp.ContractId = null;
+                                            temp.Storeid = null;
+                                            temp.Token = null;
                                             this.SubscribeToLogitude(EmptyOrError, contractId, temp);
                                         }
                                         else {
