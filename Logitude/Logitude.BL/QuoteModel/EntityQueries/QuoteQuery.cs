@@ -2007,7 +2007,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     QuotePackagePM quotePackage1 = new QuotePackagePM();
                     quotePackage1.QuoteId = entityId;
                     quotePackage1.PackageTypeId = entityPM.PackageType1Id;
-                    quotePackage1.Quantity = entityPM.PackageType1Quantity;
+                    quotePackage1.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType1Quantity;
                     entityPM.QuotePackages.Add(quotePackage1);
                 }
 
@@ -2016,7 +2016,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     QuotePackagePM quotePackage2 = new QuotePackagePM();
                     quotePackage2.QuoteId = entityId;
                     quotePackage2.PackageTypeId = entityPM.PackageType2Id;
-                    quotePackage2.Quantity = entityPM.PackageType2Quantity;
+                    quotePackage2.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType2Quantity;
                     entityPM.QuotePackages.Add(quotePackage2);
                 }
 
@@ -2025,7 +2025,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     QuotePackagePM quotePackage3 = new QuotePackagePM();
                     quotePackage3.QuoteId = entityId;
                     quotePackage3.PackageTypeId = entityPM.PackageType3Id;
-                    quotePackage3.Quantity = entityPM.PackageType3Quantity;
+                    quotePackage3.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType3Quantity;
                     entityPM.QuotePackages.Add(quotePackage3);
                 }
 
@@ -2034,7 +2034,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     QuotePackagePM quotePackage4 = new QuotePackagePM();
                     quotePackage4.QuoteId = entityId;
                     quotePackage4.PackageTypeId = entityPM.PackageType4Id;
-                    quotePackage4.Quantity = entityPM.PackageType4Quantity;
+                    quotePackage4.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType4Quantity;
                     entityPM.QuotePackages.Add(quotePackage4);
                 }
 
@@ -2043,7 +2043,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     QuotePackagePM quotePackage5 = new QuotePackagePM();
                     quotePackage5.QuoteId = entityId;
                     quotePackage5.PackageTypeId = entityPM.PackageType5Id;
-                    quotePackage5.Quantity = entityPM.PackageType5Quantity;
+                    quotePackage5.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType5Quantity;
                     entityPM.QuotePackages.Add(quotePackage5);
                 }
             }
