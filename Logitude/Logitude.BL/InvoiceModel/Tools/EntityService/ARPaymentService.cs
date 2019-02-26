@@ -146,6 +146,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.SubmitChanges();
             this.TraceConnected();
 
+            // Full Accounting => Reconciliation
+            if (theEntityPm.IsFullAccounting == true)
+            {
+                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+                    throw new ApplicationException("Hey! no glaccount provided!!");
+
+                FillPaymentInvoices(theEntityPm);
+            }
+
+
             // PaymentCheque And CashBook
             this.AddARPaymentChequeAndCashBook(theEntityPm, setApproved);
             this.GetForeignFields();
@@ -155,21 +165,35 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // DropBox
             this.CreateARInvoiceMessage(setApproved);
 
-            // Full Accounting => Reconciliation
-            if (theEntityPm.IsFullAccounting == true)
+            //// Full Accounting => Reconciliation
+            //if (theEntityPm.IsFullAccounting == true)
+            //{
+            //    //check glaccountid
+            //    if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+            //    {
+            //        throw new ApplicationException("Hey! no glaccount provided!!"); // this case shouldn't be correct because glaccountid should be filled in the client, otherwise check client
+            //    }
+
+            //    //CreateReconciliationService _recoSvc = new CreateReconciliationService();
+            //    CreateReconciliationForARPayment(theEntityPm);
+
+            //    UpdateTransactions(theEntityPm);
+            //}
+
+        }
+
+        void FillPaymentInvoices(ARPaymentPM paymentPM)
+        {
+            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
             {
-                //check glaccountid
-                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+                ARPaymentInvoicePM payInvPM = new ARPaymentInvoicePM()
                 {
-                    throw new ApplicationException("Hey! no glaccount provided!!"); // this case shouldn't be correct because glaccountid should be filled in the client, otherwise check client
-                }
-
-                //CreateReconciliationService _recoSvc = new CreateReconciliationService();
-                CreateReconciliationForARPayment(theEntityPm);
-
-                UpdateTransactions(theEntityPm);
+                    ARInvoiceId = invTrans.SourceId,
+                    LocalAmount = Convert.ToDouble(invTrans.LocalAmountCredit == 0 ? invTrans.LocalAmountCredit : invTrans.LocalAmountDebit),
+                    ForeignAmount = Convert.ToDouble(invTrans.ForeignAmount),
+                    ForeignCurrencyId = invTrans.CurrencyId
+                };
             }
-
         }
 
 
