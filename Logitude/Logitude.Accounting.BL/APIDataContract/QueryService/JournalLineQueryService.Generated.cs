@@ -69,14 +69,9 @@ using Logitude.Accounting.Data;
 				   temp.Reference2 = item.Reference2;
 				   temp.Reference3 = item.Reference3;
 				   temp.Notes = item.Notes;
-				   temp.ExternalOpenAmount = item.ExternalOpenAmount;			  
-				   if(item.ActionCode != null)
-				   {
-					   JournalActionTypeQueryService JournalActionTypeService1 = new JournalActionTypeQueryService(Tenant);
-					   					   temp.ActionCode = JournalActionTypeService1.GetJournalActionTypeByCode(item.ActionCode,Tenant); 
-			       
-					   				   }
-				   					
+				   temp.ExternalOpenAmount = item.ExternalOpenAmount;
+				   temp.ActionCode = item.ActionCode;
+				   temp.ExternalReconcileNumber = item.ExternalReconcileNumber;					
 					MyList.Add(temp);
 				}
 					
@@ -141,18 +136,8 @@ using Logitude.Accounting.Data;
 					temp.Reference3 = item.Reference3;
 					temp.Notes = item.Notes;
 					temp.ExternalOpenAmount = item.ExternalOpenAmount;
-					JournalActionTypeQueryService ActionCodeJournalActionTypeService = new JournalActionTypeQueryService(Tenant);
-					if(item.ActionCode != null)
-					{
-						var myActionCodePM = ActionCodeJournalActionTypeService.JournalActionTypeDataMappingAndValidatin(item.ActionCode,Tenant,ComputingPartnerName);
-												if(myActionCodePM != null)
-						{
-							temp.ActionCode = myActionCodePM.Code;
-						}
-						 
-					}
-			
-										   
+					temp.ActionCode = item.ActionCode;
+					temp.ExternalReconcileNumber = item.ExternalReconcileNumber;					   
 						MyList.Add(temp);
 					}
 						

@@ -84,7 +84,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
         this.TransactionsList = new ObservableCollection([]);
 
-
         //#region old
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
@@ -241,6 +240,23 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     });
                 });
 
+        }
+    }
+    PushTransaction(trans:LedgerTransactionPM){
+        if (trans != null) {
+            var index = this.EntityPM.InvoicesTransactions.indexOf(trans);
+            if (index == -1) {
+
+                this. EntityPM.InvoicesTransactions.push(trans);
+            }
+        }
+    }
+    PopTransaction(trans:LedgerTransactionPM){
+        if (trans != null) {
+            var index = this.EntityPM.InvoicesTransactions.indexOf(trans);
+            if (index > -1) {
+                this.EntityPM.InvoicesTransactions.splice(index, 1);
+            }
         }
     }
     //#endregion
@@ -1622,7 +1638,15 @@ export class TransactionLineModel extends BaseComponent {
         }
     }
     public set IsChecked(v : boolean) {
+
         this._isChecked = v;
+
+        if(v){
+            this.parent.PushTransaction(this.ledgerTransaction);
+        }else{
+            this.parent.PopTransaction(this.ledgerTransaction);
+        }
+
     }
 
 

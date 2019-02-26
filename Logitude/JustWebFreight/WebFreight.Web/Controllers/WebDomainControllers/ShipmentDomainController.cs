@@ -41,6 +41,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -1653,37 +1655,37 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+                PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
+
                 List<ShipmentPackage> shipmentPackages = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(shipmentId, tenant).ToList();
-                
-                string fileName = "Shipment" + DateTime.Now.ToShortDateString();
+                List<PackageType> packageTypes = packageTypeRepository.GetPackageTypes(tenant).ToList();
 
-                if(shipmentPackages.Count > 0)
+                ExportToExcelHelper helper = new ExportToExcelHelper();
+                byte[] data = this.ExportShipmentPackagesToExcel(shipmentPackages, packageTypes, tenant);
+
+                string fileName = "Shipment" + shipmentId +  DateTime.Now.ToShortDateString();
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
                 {
-                    byte[] data = this.CreateExcelFile();
+                    FileName = fileName,
+                    FolderName = "others",
+                    Extension = "xls",
+                    Tenant = tenant,
+                    FileSize = data.Length,
 
-                    StringBuilder stringbuilder = new StringBuilder();
-                    Encoding encoding = new UTF8Encoding();
-                    
-                    Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
-                    {
-                        FileName = fileName,
-                        Extension = "xls",
-                        Tenant = tenant,
-                        FileSize = data.Length,
-                        HasExternalContainer = true,
-                        ExternalContainerName = "tenant" + tenant
-                    };
+                };
 
-                    Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-                    storageservice.Write(data, fileInfo);
-                }
-                
-                return Request.CreateResponse(HttpStatusCode.OK, fileName);
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                storageservice.Write(data, fileInfo);
+
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);                
             }
 
             catch (Exception ex)
@@ -1692,53 +1694,119 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private byte[] CreateExcelFile()
+        public byte[] ExportShipmentPackagesToExcel(List<ShipmentPackage> shipmentPackages, List<PackageType> packageTypes, int tenant)
         {
-            using (ExcelEngine excelEngine = new ExcelEngine())
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+
+            if (shipmentPackages != null && shipmentPackages.Count > 0)
             {
-                IApplication application = excelEngine.Excel;                
-                application.DefaultVersion = ExcelVersion.Excel2010;
+                List<ExcelPackage> packages = (from a in shipmentPackages
+                                               select new ExcelPackage()
+                                               {
+                                                   ContainerType = a.PackageType == null ? null : a.PackageType.Code,
+                                                   ContainerNumber = a.ContainerNumber,
+                                                   Volume = a.Volume,
+                                                   GrossWeight = a.Weight,
+                                                   Tare = a.Tare,
+                                                   ShipperSeal = a.ShipperSeal,
+                                                   CarrierSeal = a.CarrierSeal,
+                                                   MarksAndNumbers = a.MarksAndNumbers,
+                                                   Description = a.Description,
+                                               }).ToList();
 
-                IWorkbook workbook = application.Workbooks.Create(2);
-                IWorksheet worksheet1 = workbook.Worksheets[0];
+                List<ExcelPackageType> types = (from a in packageTypes
+                                                where a.IsContainer == true
+                                                select new ExcelPackageType()
+                                                {
+                                                    Code = a.Code,
+                                                }).ToList();
 
-                //Adding text data
-                worksheet1.Range["A1"].Text = "Container Type";
-                worksheet1.Range["B1"].Text = "Container#";
-                worksheet1.Range["C1"].Text = "Volume";
-                worksheet1.Range["D1"].Text = "Gross Weight";
-                worksheet1.Range["E1"].Text = "Tare";
-                worksheet1.Range["F1"].Text = "Shipper Seal";
-                worksheet1.Range["G1"].Text = "Carrier Seal";
-                worksheet1.Range["H1"].Text = "Marks & Numbers";
-                worksheet1.Range["I1"].Text = "Description";
-
-                ////Adding DateTime data
-                //worksheet.Range["A2"].DateTime = new DateTime(2015, 1, 10);
-                //worksheet.Range["A3"].DateTime = new DateTime(2015, 2, 10);
-                //worksheet.Range["A4"].DateTime = new DateTime(2015, 3, 10);
-
-                ////Applying number format for date value cells A2 to A4
-                //worksheet.Range["A2:A4"].NumberFormat = "mmmm, yyyy";
-
-                ////Auto-size the first column to fit the content
-                //worksheet.AutofitColumn(1);
-
-                ////Adding numeric data
-                //worksheet.Range["B2"].Number = 68878;
-                //worksheet.Range["B3"].Number = 71550;
-                //worksheet.Range["B4"].Number = 72808;
-
-                ////Adding formula
-                //worksheet.Range["B6"].Formula = "SUM(B2:B4)";
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
                 
-                MemoryStream memorystream = new MemoryStream();
-                workbook.SaveAs(memorystream);
+                //Packages
+                IWorksheet sheet1 = workbook.Worksheets[0];
+                sheet1.Name = "Packages";
+                sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
+                sheet1.Range["A1:I1"].CellStyle.Font.Size = 11;
+                sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
 
-                return memorystream.ToArray();
+                sheet1.Range["A1:G1"].ColumnWidth = 15;
+                sheet1.Range["H1:I1"].ColumnWidth = 17;
+
+                string packagesRange = "A2:A" + (packages.Count() + 1);
+
+                sheet1.Range[packagesRange].DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
+                sheet1.Range[packagesRange].DataValidation.IsSuppressDropDownArrow = false;
+
+                sheet1.Range["A1"].Text = "Container Type";
+                sheet1.Range["B1"].Text = "Container #";
+                sheet1.Range["D1"].Text = "Gross Weight";
+                sheet1.Range["F1"].Text = "Shipper Seal";
+                sheet1.Range["G1"].Text = "Carrier Seal";
+                sheet1.Range["H1"].Text = "Marks & Numbers";
+
+                DataTable dataTable1 = this.ConvertToDataTable(packages);
+                sheet1.ImportDataTable(dataTable1, true, 1, 1);
+
+                //Package Types
+                IWorksheet sheet2 = workbook.Worksheets[1];
+                sheet2.Name = "Package Types";
+                sheet2.Range["A1"].CellStyle.Font.Bold = true;
+                sheet2.Range["A1"].CellStyle.Font.Size = 11;
+                sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
+                DataTable dataTable2 = this.ConvertToDataTable(types);
+                sheet2.ImportDataTable(dataTable2, true, 1, 1);
+                string typesRange = "A2:A" + (types.Count() + 1);
+
+                workbook.Version = ExcelVersion.Excel2007;
+                workbook.SaveAs(memory);
             }
+
+            return memory.ToArray();
+        }
+        private DataTable ConvertToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+            foreach (PropertyDescriptor prop in properties)
+            {
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            }
+
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                }
+
+                table.Rows.Add(row);
+            }
+
+            return table;
         }
     }
+}
+
+public class ExcelPackage
+{
+    public string ContainerType { get; set; }
+    public string ContainerNumber { get; set; }
+    public double? Volume { get; set; }
+    public double? GrossWeight { get; set; }
+    public double? Tare { get; set; }
+    public string ShipperSeal { get; set; }
+    public string CarrierSeal { get; set; }
+    public string MarksAndNumbers { get; set; }
+    public string Description { get; set; }
+}
+
+public class ExcelPackageType
+{
+    public string Code { get; set; }
 }
 
 public class ShipmentConnectedEntity
