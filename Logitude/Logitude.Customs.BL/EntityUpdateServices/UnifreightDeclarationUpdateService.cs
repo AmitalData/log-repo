@@ -2092,10 +2092,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             var stringDecimal = decConsignmentPackage.GrossMassMeasure.Value.ToString("0");
                             if (int.TryParse(stringDecimal, out myint))
                             {
-                                if(decConsignmentPackage.GrossMassMeasureTypeCode == "TNE")
-                                {
-                                    myint = myint * 1000;
-                                }
+                                //marked code moved to Uniface...
+                                //if(decConsignmentPackage.GrossMassMeasureTypeCode == "TNE")
+                                //{
+                                    //myint = myint * 1000;
+                                //}
                                 cCUMSHGRPM.WEIGHT = cCUMSHGRPM.WEIGHT.GetValueOrDefault() + myint;
                             }
                         }
