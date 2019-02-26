@@ -1,0 +1,126 @@
+﻿using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Transactions;
+using System.Web;
+using System.Web.Http;
+using WebFreight.Web.DataContracts;
+using WebFreight.Web.Helpers.ExternalAPIHelpers;
+using WebFreight.Web.Security;
+
+namespace WebFreight.Web.ExternalAPIs.V1
+{
+    public class ARPaymentController : ApiController
+    {
+
+
+        public HttpResponseMessage GetSingleARInvoice(string id, string number)
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+
+
+                ARPaymentQueryService Service = new ARPaymentQueryService(tenant);
+                ServiceResponse response = new ServiceResponse();
+                var Result = new ARPayment();
+                if (!string.IsNullOrEmpty(id))
+                {
+                    Result = Service.GetARPaymentById(id, tenant);
+                }
+                //else if (!string.IsNullOrEmpty(number))
+                //{
+                //    Result = Service.GetARInvoiceByInvoiceNumber(number, tenant);
+                //}
+
+                string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+                return Request.CreateResponse(HttpStatusCode.OK, Result);
+            }
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+        public HttpResponseMessage Post(ARPayment entity)
+        {
+            ARPayment oldEntity = entity;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        int tenant = entity.Tenant;
+
+                        SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+
+                        if (entity != null)
+                        {
+                            oldEntity = LogitudeXmlSerializer.DeserializeObject<ARPayment>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
+                        }
+
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(entity.Tenant);
+                        ARPaymentQueryService mappingService = new ARPaymentQueryService(entity.Tenant);
+                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, entity.Tenant);
+                       
+                        entityPM.Tenant = entity.Tenant;
+                       
+                    
+
+                        ARPaymentService service = new ARPaymentService(MyContext, entity.Tenant);
+
+                      
+
+                       
+
+                      //  entity = mappingService.ARInvoiceDataMappingAndValidatin(entityPM, entity.Tenant);
+                        APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARPayment", entityPM.Id, "ARPayment API", entity.Tenant);
+
+                        scope.Complete();
+
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entity);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "ARPayment", null, "ARPayment API");
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            }
+
+            else
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+                APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "ARPayment", null, "ARPayment API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+
+
+    }
+}

@@ -58,6 +58,8 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public decimal? ExternalOpenAmount { get; set; }
     
-    public JournalActionType ActionCode { get; set; }
+    public string ActionCode { get; set; }
+    
+    public string ExternalReconcileNumber { get; set; }
     }
 } 
