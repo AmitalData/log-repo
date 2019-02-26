@@ -1071,9 +1071,12 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                 contractId = "3148346";
             }
         }
+        else {
+            temp = temp.Token;
+        }
 
         var link = "";
-        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapContractQTY;
         if (isSandbox) {
             var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
         }
@@ -1112,8 +1115,12 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             contractId = "3285402";
         }
 
+        else {
+            temp = temp.Token;
+        }
+
         var link = "";
-        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBContractQTY;
         if (isSandbox) {
             var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
         }
@@ -1152,6 +1159,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             temp = temp.Token;
 
             contractId = "3233898";
+        }
+
+        else {
+            temp = temp.Token;
         }
         var link = "";
         var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
@@ -1196,9 +1207,13 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             }
         }
 
+        else {
+            temp = temp.Token;
+        }
+
 
         var link = "";
-        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapOneTimeContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapOneTimeContractQTY;
         if (isSandbox) {
             var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
         }
@@ -1238,6 +1253,9 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             else {
                 contractId = "3280846";
             }
+        }
+        else {
+            temp = temp.Token;
         }
 
         var link = "";
@@ -1283,6 +1301,9 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                                         if (!res.HasError) {
                                             contractId = res.Result.ContractId;
                                             EmptyOrError = false;
+                                            temp.ContractId = null;
+                                            temp.Storeid = null;
+                                            temp.Token = null;
                                             this.SubscribeToLogitude(EmptyOrError, contractId, temp);
                                         }
                                         else {

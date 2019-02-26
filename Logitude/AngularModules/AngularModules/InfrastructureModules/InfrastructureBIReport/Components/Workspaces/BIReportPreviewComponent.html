@@ -150,8 +150,8 @@
                                             <div></div>
                                         </td>
 
-                                        <td style="width: 15px;">
-                                            <img *ngIf="HasDeletionFeature" class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer; height:18px;" (click)="onDeleteBIReportClick()" [className]="'LeftCenter'" />
+                                        <td [hidden]="!HasDeletionFeature" style="width: 15px;">
+                                            <img  class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer; height:18px;" (click)="onDeleteBIReportClick()" [className]="'LeftCenter'" />
                                         </td>
 
                                         <td style="width: 5px;">
@@ -215,7 +215,6 @@
                                          [rowData]="rowData"
                                          [columnDefs]="columnDefs"
                                          [rowSelection]="'multiple'"
-                         
                                          (gridReady)="onGridReady($event)"
                                          (sortChanged)="onSortChanged($event)"
                                          (columnResized)="onColumnResized($event)"

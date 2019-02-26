@@ -67107,7 +67107,7 @@ namespace WebFreight.Web.MetaDataUpdate
             RoleRepository RolesRepository = new RoleRepository(ObjectContext);
             Dictionary<string, Role> TenantRoles = RolesRepository.GetRoles(tenant).ToDictionary(d => d.Code, a => a);
 
-            Role Role_01 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "ADMN", Tenant = tenant, RoleTypeCode = "IN", Name = "Administrator", Description = "All options." }, RolesRepository, TenantRoles);
+            Role Role_01 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "ADMN", Tenant = tenant, RoleTypeCode = "IN", Name = "Administrator", Description = "All options except the billing features." }, RolesRepository, TenantRoles);
             Role Role_02 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "MANG", Tenant = tenant, RoleTypeCode = "IN", Name = "Manager", Description = "All options excluding Maintenance." }, RolesRepository, TenantRoles);
             Role Role_03 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "FROP", Tenant = tenant, RoleTypeCode = "IN", Name = "Freight Operations", Description = "All Operations options including A/R Invoicing.\nNo Accounting, Maintenance or Dashboard." }, RolesRepository, TenantRoles);
             Role Role_04 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "SALE", Tenant = tenant, RoleTypeCode = "SA", Name = "Salesman - Organization", Description = "All CRM options at Organization level. Can view shipments without Accounting." }, RolesRepository, TenantRoles);
