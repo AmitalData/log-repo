@@ -1255,25 +1255,36 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
-                bool isPaymentsChanged = false;
-
-                if (invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() > 0)
+                if (this.isNewEntity)
                 {
-                    isPaymentsChanged = true;
+                    entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
+                    entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
+                    entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
                 }
-
-                if (!isPaymentsChanged)
+                else
                 {
-                    if (entityPM.StatusCode == "PP" || entityPM.StatusCode == "PD")
-                    {
 
+
+                    bool isPaymentsChanged = false;
+
+                    if (invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() > 0)
+                    {
+                        isPaymentsChanged = true;
                     }
 
-                    else
+                    if (!isPaymentsChanged)
                     {
-                        entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
-                        entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
-                        entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
+                        if (entityPM.StatusCode == "PP" || entityPM.StatusCode == "PD")
+                        {
+
+                        }
+
+                        else
+                        {
+                            entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
+                            entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
+                            entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
+                        }
                     }
                 }
             }
