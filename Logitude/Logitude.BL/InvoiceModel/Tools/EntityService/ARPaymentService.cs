@@ -146,6 +146,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.SubmitChanges();
             this.TraceConnected();
 
+            //get glaccount fields
+            FillGLAccountFields(theEntityPm);
+
             // Full Accounting => Reconciliation
             if (theEntityPm.IsFullAccounting == true)
             {
@@ -180,6 +183,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //    UpdateTransactions(theEntityPm);
             //}
 
+        }
+
+        void FillGLAccountFields(ARPaymentPM paymentPM)
+        {
+            GLAccountPM gla = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+            paymentPM.GLAccountId = gla.Id;
+            paymentPM.GLAccountRecoMethodCode = gla.ReconcileMethodCode;
         }
 
         void FillPaymentInvoices(ARPaymentPM paymentPM)
