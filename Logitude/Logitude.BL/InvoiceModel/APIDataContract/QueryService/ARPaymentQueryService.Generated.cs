@@ -70,7 +70,7 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.AccountingPaymentMethodId != null)
 				   {
 					   AccountingPaymentMethodQueryService AccountingPaymentMethodService0 = new AccountingPaymentMethodQueryService(Tenant);
-					   					   temp.AccountingPaymentMethod = AccountingPaymentMethodService0.GetAccountingPaymentMethodById(MyEntityPM.AccountingPaymentMethodId,Tenant); 
+					   					   temp.AccountingPaymentMethod = AccountingPaymentMethodService0.AccountingPaymentMethodCustomDataMapping(MyEntityPM.AccountingPaymentMethodId,Tenant); 
 			       
 					   				   }
 				   
@@ -153,7 +153,7 @@ using Simplog.Data.InvoiceModel;
 					temp.PaymentNo = MyEntity.PaymentNo;					AccountingPaymentMethodQueryService AccountingPaymentMethodAccountingPaymentMethodService = new AccountingPaymentMethodQueryService(Tenant);
 					if(MyEntity.AccountingPaymentMethod != null)
 					{
-						var myAccountingPaymentMethodPM = AccountingPaymentMethodAccountingPaymentMethodService.AccountingPaymentMethodDataMappingAndValidatin(MyEntity.AccountingPaymentMethod,Tenant,ComputingPartnerName);
+						var myAccountingPaymentMethodPM = AccountingPaymentMethodAccountingPaymentMethodService.AccountingPaymentMethodCustomDataMappingAndValidatin(MyEntity.AccountingPaymentMethod,Tenant);
 												if(myAccountingPaymentMethodPM != null)
 						{
 							temp.AccountingPaymentMethodId = myAccountingPaymentMethodPM.Id;

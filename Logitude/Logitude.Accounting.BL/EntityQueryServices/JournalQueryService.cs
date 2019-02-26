@@ -229,7 +229,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Tenant = a.Tenant,
                 TypeCode = a.TypeCode,
                 TypeName = a.JournalType != null ? a.JournalType.EnglishName : null,
-
+                ExternalSystem = a.ExternalSystem,
                 UpdateDate = a.UpdateDate,
                 UpdatedByUserId = a.UpdatedByUserId,
                 UpdatedByUserName = a.UpdatedByUser != null ? a.VoidedByUser.Contact.EnglishName : null,

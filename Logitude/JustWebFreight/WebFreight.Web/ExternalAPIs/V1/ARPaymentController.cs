@@ -24,7 +24,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
     {
 
 
-        public HttpResponseMessage GetSingleARInvoice(string id, string number)
+        public HttpResponseMessage GetSingleARPayment(string id, string number)
         {
             try
             {
@@ -85,16 +85,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, entity.Tenant);
                        
                         entityPM.Tenant = entity.Tenant;
+
+                        
+
+                          ARPaymentService service = new ARPaymentService(MyContext, entity.Tenant);
+                        entityPM = mappingService.SetARPaymentPMFields(entityPM);
+                        service.Create(entityPM);
+
                        
-                    
 
-                        ARPaymentService service = new ARPaymentService(MyContext, entity.Tenant);
-
-                      
-
-                       
-
-                      //  entity = mappingService.ARInvoiceDataMappingAndValidatin(entityPM, entity.Tenant);
+                        entity = mappingService.ARPaymentDataMapping(entityPM, entity.Tenant);
                         APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARPayment", entityPM.Id, "ARPayment API", entity.Tenant);
 
                         scope.Complete();
