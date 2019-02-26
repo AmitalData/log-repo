@@ -50,6 +50,9 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     private firstDigit: string=",";
     private secondDigit: string=".";
     CopyValueSubs: any;
+    public textboxHeight: string = '100%';
+
+
     @Output() KeyUp = new EventEmitter();
     @Output() ValueChanged = new EventEmitter();
     @Output() LostFocus = new EventEmitter();
@@ -70,7 +73,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() AddCommasToNumbers: boolean = true;
     @Input() Max: number;
     @Input() Min: number;
-    @Input() RowsCount;
+    @Input() RowsCount: number;
 
 
 
@@ -303,17 +306,28 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         }
 
-        //multiline: if rows count is empty, calculate it
-        setTimeout(() => {
-            if (this.IsMultiline && !this.RowsCount) {
-                var _element = document.getElementById(this.InputId)
-                var elHeight = _element.clientHeight;
-                var calculatedRowsCount = (elHeight / 18);
-                var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
 
-                this.RowsCount = ___roundedCalculatedRowsCountHaha;
-            }
-        }, 50);
+        //check rowscount
+        if(this.IsMultiline){
+            setTimeout(() => {
+
+                if(this.RowsCount){
+
+                    //calculate height: (rowcount * 18 row height) + 8 padding
+                    this.textboxHeight = ((this.RowsCount * 18) + 8)+'px';
+                }else{
+                    var _element = document.getElementById(this.InputId)
+                    var elHeight = _element.clientHeight;
+                    var calculatedRowsCount = (elHeight / 18);
+                    var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+
+                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                    this.textboxHeight = ((this.RowsCount * 18) + 8)+'px';
+
+                }
+
+            }, 100);
+        }
 
 
     }
