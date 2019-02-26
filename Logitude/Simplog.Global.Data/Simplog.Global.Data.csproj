@@ -317,6 +317,10 @@
     <Compile Include="Migrations\201902201017459_allownullinQTYTenantManagement_Khalid.Designer.cs">
       <DependentUpon>201902201017459_allownullinQTYTenantManagement_Khalid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.cs" />
+    <Compile Include="Migrations\201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.Designer.cs">
+      <DependentUpon>201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -410,6 +414,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902201017459_allownullinQTYTenantManagement_Khalid.resx">
       <DependentUpon>201902201017459_allownullinQTYTenantManagement_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.resx">
+      <DependentUpon>201902261831076_TenantManagement_BluesnapOnetimeContract_Field_Change.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
