@@ -640,3 +640,11 @@ ON [dbo].[FailedTokenLogs]([GMTDateTime])
 	LogDateTime,
 	PartnerTypeId
 	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+
+CREATE NONCLUSTERED INDEX IX_Activities_Tenant_ActivityTypeCode_ShipmentId
+ON [dbo].[Activities] ([Tenant],[ActivityTypeCode],[ShipmentId])
+
+
+CREATE NONCLUSTERED INDEX IX_ShipmentCarrierStatuses_RecordHash
+ON [dbo].[ShipmentCarrierStatuses] ([RecordHash])
