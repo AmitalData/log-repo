@@ -46,5 +46,25 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             return entity;
 
         }
+
+
+        public ARPayment GetARPaymentByNumber(string number, int Tenant)
+        {
+            try
+            {
+
+
+                var temp = query.GetSinglePaymentByPaymentNumber_00(number, Tenant);
+                if (temp == null)
+                    throw new ApplicationException("ARPayment with number " + number + " doesn't exist");
+
+                return ARPaymentDataMapping(temp, Tenant);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }
