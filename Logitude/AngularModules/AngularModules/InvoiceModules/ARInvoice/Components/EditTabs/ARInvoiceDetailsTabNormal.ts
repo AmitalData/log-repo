@@ -1542,7 +1542,7 @@ export class ARInvoiceLineItem extends BaseComponent {
         var isFieldEnabled = false;
 
         if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
+            if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
                 if (this.ForiegnCurrencyId != this.LocalCurrencyId && !this.IsExchangeRateFixed) {
                     isFieldEnabled = true;
                 }

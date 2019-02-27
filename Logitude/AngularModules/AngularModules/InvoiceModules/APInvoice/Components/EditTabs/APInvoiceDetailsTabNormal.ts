@@ -1285,7 +1285,7 @@ export class APInvoiceLineItem extends BaseComponent {
         var isFieldEnabled = false;
 
         if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
+            if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
                 if (this.ForiegnCurrencyId != this.LocalCurrencyId) {
                     isFieldEnabled = true;
                 }
