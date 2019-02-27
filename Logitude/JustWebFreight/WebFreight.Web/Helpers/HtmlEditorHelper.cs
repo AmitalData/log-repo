@@ -4306,7 +4306,7 @@ namespace WebFreight.Web.Helpers
 
         private bool CheckIfFieldHaveValueHtml(string fieldName)
         {
-            bool result = false;
+            bool result = false; 
             if (!string.IsNullOrEmpty(fieldName))
             {
                 fieldName = fieldName.ToLower();
@@ -4616,15 +4616,15 @@ namespace WebFreight.Web.Helpers
                 {
                     break;
                 }
-            }
-
+            } 
+             
             if (!string.IsNullOrEmpty(resultValue) && !resultValue.Contains("Telerik.Windows.Documents") && ReplaceHtmlStringWithTageHtml)
             {
                 resultValue = resultValue.Replace('\n', '\r');
                 resultValue = resultValue.Replace("\r", "<br/>");
                 // resultValue = resultValue.Replace(" ", "&nbsp;");
             }
-
+             
             if (resultValue == "") resultValue = " ";
             return resultValue;
         }
@@ -4639,7 +4639,7 @@ namespace WebFreight.Web.Helpers
                 if (!string.IsNullOrEmpty(result)) result = fieldValue;
                 else if (field != null && field.DataTypeCode.ToLower() == "boolean") result = "false";
             }
-
+             
             if (field != null)
             {
                 if (!string.IsNullOrEmpty(result))
