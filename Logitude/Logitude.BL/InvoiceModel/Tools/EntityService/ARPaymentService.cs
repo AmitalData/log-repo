@@ -99,6 +99,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (tenantPM != null && tenantPM.AccountingActivated == true)
                 theEntityPm.IsFullAccounting = true;
 
+            ValidateFullAccounting(theEntityPm);
+
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.changedList = theEntityPm.PaymentInvoices;
@@ -196,6 +198,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
          */
         public void Update(ARPaymentPM theEntityPm, bool mapComposition = false)
         {
+            ValidateFullAccounting(theEntityPm);
 
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
@@ -327,6 +330,31 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildEntitiesNumbers();
         }
 
+
+        private void ValidateFullAccounting(ARPaymentPM _payment)
+        {
+            if (!_payment.IsFullAccounting)
+                return;
+
+            bool showLocal = false;
+
+            // Validate lines amount to reconcile
+            if (_payment.InvoicesTransactions
+                .Any(d =>
+                    d.AmountToReconcile > CalculateInvoiceAmount(d, _payment.GLAccountRecoMethodCode == "0")
+                ))
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Reconciliations.O.ErrorsInSelectedLines", _payment.Tenant, showLocal));
+
+
+            // Validate sum of line's amount to reconcile
+            decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            decimal payAmount = Convert.ToDecimal(_payment.GLAccountRecoMethodCode == "0"?_payment.AmountInLocalCurrency:_payment.AmountInPaymentCurrency);
+            if (amount2reconcile > payAmount)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.selectedinvoicesishigherthanpayamount", _payment.Tenant, showLocal));
+
+
+
+        }
 
 
         private void ValidateHigherStatus()
