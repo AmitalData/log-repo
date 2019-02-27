@@ -1086,10 +1086,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;;
             }
         }
 
@@ -1130,10 +1130,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1175,10 +1175,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1223,10 +1223,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId  + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1269,10 +1269,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         }
         if (AppTool.IsNullOrEmpty(temp)) {
             if (isSandbox) {
-                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=1 &language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1450,27 +1450,13 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
 
                         var myService: CommonDomainService = new CommonDomainService();
                         myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                            SessionLocator.CurrentSession.StopBusyIndicator();
                             var temp: BluesnapParameters = myResult.Result;
                             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
-                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapOneTimeContractId;
+                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapOneTimeContract;
                             if (!AppTool.IsNullOrEmpty(contractId)) {
-                                this.BluesnapContractService.get(contractId).subscribe((res: ServiceResponse) => {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
-                                    if (res) {
-                                        if (!res.HasError) {
-                                            contractId = res.Result.ContractId;
-                                            EmptyOrError = false;
-                                            this.OneTimeBuy(EmptyOrError, contractId, temp);
-                                        }
-                                        else {
-                                            this.OneTimeBuy(EmptyOrError, null, temp);
-
-                                        }
-                                    }
-                                    else {
-                                        this.OneTimeBuy(EmptyOrError, null, temp);
-                                    }
-                                });
+                                EmptyOrError = false;
+                                this.OneTimeBuy(EmptyOrError, contractId, temp);                                    
                             }
                             else {
                                 SessionLocator.CurrentSession.StopBusyIndicator();
