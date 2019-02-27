@@ -34,7 +34,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public BluesnapContractIdFilterItems: ApiQueryFilters;
     public BluesnapEAWBContractIdFilterItems: ApiQueryFilters;
     public BluesnapEAWBSContractIdFilterItems: ApiQueryFilters;
-    public BluesnapOneTimeContractIdFilterItems: ApiQueryFilters;
     public BluesnapCRMContractIdFilterItems: ApiQueryFilters;
 
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
@@ -56,10 +55,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
         this.BluesnapEAWBSContractIdFilterItems = new ApiQueryFilters();
         this.BluesnapEAWBSContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "EABS", null, null, "Equals", false, false, false, "string", false, true);
-
-
-        this.BluesnapOneTimeContractIdFilterItems = new ApiQueryFilters();
-        this.BluesnapOneTimeContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "OT", null, null, "Equals", false, false, false, "string", false, true);
 
 
     }
@@ -1038,12 +1033,12 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
 
 
-    get BluesnapOneTimeContractId() {
-        return this.EntityPM.BluesnapOneTimeContractId;
+    get BluesnapOneTimeContract() {
+        return this.EntityPM.BluesnapOneTimeContract;
     }
-    set BluesnapOneTimeContractId(newValue: string) {
-        if (this.EntityPM.BluesnapOneTimeContractId != newValue) {
-            this.EntityPM.BluesnapOneTimeContractId = newValue;
+    set BluesnapOneTimeContract(newValue: string) {
+        if (this.EntityPM.BluesnapOneTimeContract != newValue) {
+            this.EntityPM.BluesnapOneTimeContract = newValue;
         }
     }
 

@@ -75,7 +75,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.BluesnapCRMContractId = entityPM.BluesnapCRMContractId;
             entityPOCO.BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId;
             entityPOCO.BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId;
-            entityPOCO.BluesnapOneTimeContractId = entityPM.BluesnapOneTimeContractId;
+            entityPOCO.BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract;
                      
             entityPOCO.GlobalTenant.TTY = entityPM.TTY;
             entityPOCO.GlobalTenant.IsActive = entityPM.IsActive;

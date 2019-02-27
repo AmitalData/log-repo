@@ -1063,17 +1063,23 @@
 
                                                                     <tr class="FormFieldRow">
                                                                         <td>
-                                                                            <LogLabel [ObjectFieldName]="'BluesnapOneTimeContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapOneTimeContract'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
 
                                                                         <td>
-                                                                            <LogLov [ObjectFieldName]="'BluesnapOneTimeContractId'"
-                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                    [SelectedValue]="BluesnapOneTimeContractId"
-                                                                                    [DataContext]="DataContext"
-                                                                                    [QueryFilterItems]="BluesnapOneTimeContractIdFilterItems"
-                                                                                    [LookUpTableName]="'BluesnapContract'">
-                                                                            </LogLov>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapOneTimeContract'" [DataContext]="DataContext"
+                                                                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+
+                                                                                    <td style="width:36px">
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                   
                                                                         </td>
 
                                                                         <td style="width:50px">
