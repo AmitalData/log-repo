@@ -24,297 +24,301 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 if (entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid)
                 {
                     ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(myCommonContext);
-                    IQueryable<ChargesType> iQueryable_ChargesType = chargesTypeRepository.GetQuoteDefaultChargesTypes(tenant);
+                    IQueryable<ChargesType> iQueryable_ChargeTypes = chargesTypeRepository.GetQuoteDefaultChargesTypes(tenant).Where(d => d.InActive == false);
 
                     switch (entityPM.TransportModeId.ToUpper())
                     {
                         case "A":
                             {
-                                iQueryable_ChargesType = iQueryable_ChargesType.Where(r => r.IsAir);
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsAir);
                                 break;
                             }
 
                         case "O":
                             {
-                                iQueryable_ChargesType = iQueryable_ChargesType.Where(r => r.IsOcean);
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsOcean);
                                 break;
                             }
 
                         case "I":
                             {
-                                iQueryable_ChargesType = iQueryable_ChargesType.Where(r => r.IsInland);
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsInland);
                                 break;
                             }
                     }
 
-                    //if (!this.isEnableMultiPercentageVATTypes)
-                    //{
-                    //    List<string> allVatTypesId = this.allVatTypes.Where(d => d.IsMultiPercentage == false).Select(s => s.Id).ToList();
-
-                    //    iQueryable_ChargesType = (from d in iQueryable_ChargesType
-                    //                              where d.VatTypeId == null
-                    //                              || allVatTypesId.Contains(d.VatTypeId)
-                    //                              select d);
-                    //}
-
-                    RatesTableQuery myQuery = new RatesTableQuery(tenant);
-                    LastRate freightChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.FreightCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
-                    LastRate othersChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.OtherChargesCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
-
+                    List<ChargesType> list_ChargeTypes = new List<ChargesType>();
                     if (this.isLCLQuote)
                     {
-                        #region
-                        foreach (ChargesType chargesType in iQueryable_ChargesType.OrderBy(d => d.ViewOrder))
-                        {
-                            QuoteChargePM quoteChargePM = new QuoteChargePM()
-                            {
-                                Tenant = tenant,
-                                QuoteId = entityPM.Id,
-                                ChargesTypeId = chargesType.Id,
-                                ChargesTypeCode = chargesType.Code,
-                                ChargesTypeName = chargesType.EnglishName,
-                                ChargesGroupCode = chargesType.ChargesGroupCode,
-                                UpdatedByUserId = loggedContact.Id,
-                                CostMeasurementId = chargesType.MeasurementId,
-                                SaleMeasurementId = chargesType.MeasurementId,
-                                MarkUpTypeCode = "F",
-                                MarkUpValue = 0,
-                                QuoteTypeCode = entityPM.QuoteTypeCode,
-                                SaleCurrencyId = entityPM.SaleCurrencyId,
-                                SaleExchangeRate = entityPM.ExchangeRate,
-                                ChangeSetOp = ChangeSetOperation.Insert,
-                                IsBackToBack = chargesType.IsBackToBack,
-                            };
-
-                            if (chargesType.Measurement != null)
-                            {
-                                quoteChargePM.CostMeasurementCode = chargesType.Measurement.Code;
-                                quoteChargePM.SaleMeasurementCode = chargesType.Measurement.Code;
-                                quoteChargePM.CostMeasurementShortName = chargesType.Measurement.ShortName;
-                                quoteChargePM.SaleMeasurementShortName = chargesType.Measurement.ShortName;
-                            }
-
-                            if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
-                            {
-                                quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
-
-                                if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
-                                {
-                                    quoteChargePM.CostExchangeRate = null;
-                                }
-
-                                else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
-                                {
-                                    quoteChargePM.CostExchangeRate = 1;
-                                }
-
-                                else if (freightChargeRate != null)
-                                {
-                                    quoteChargePM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
-                                }
-                            }
-
-                            else
-                            {
-                                quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
-
-                                if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
-                                {
-                                    quoteChargePM.CostExchangeRate = null;
-                                }
-
-                                else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
-                                {
-                                    quoteChargePM.CostExchangeRate = 1;
-                                }
-
-                                else if (othersChargeRate != null)
-                                {
-                                    quoteChargePM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
-                                }
-                            }
-
-                            if (entityPM.QuoteTypeCode == "A")
-                            {
-                                switch (quoteChargePM.CostMeasurementCode)
-                                {
-                                    case "GRWT": { quoteChargePM.CostQuantity = entityPM.GrossWeight; break; }
-                                    case "CHWT": { quoteChargePM.CostQuantity = entityPM.ChargeableWeight; break; }
-                                    case "VOLU": { quoteChargePM.CostQuantity = entityPM.Volume; break; }
-                                    case "FIXD": { quoteChargePM.CostQuantity = 1; break; }
-                                    case "BCNT": { quoteChargePM.CostQuantity = null; break; }
-                                    case "BTEU": { quoteChargePM.CostQuantity = entityPM.TEU; break; }
-                                    case "PRVL": { quoteChargePM.CostQuantity = entityPM.ValueOfGoods; break; }
-                                    case "QTY": { quoteChargePM.CostQuantity = entityPM.NumberOfPackages; break; }
-                                    default: { break; }
-                                }
-
-                                switch (quoteChargePM.SaleMeasurementCode)
-                                {
-                                    case "GRWT": { quoteChargePM.SaleQuantity = entityPM.GrossWeight; break; }
-                                    case "CHWT": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeight; break; }
-                                    case "VOLU": { quoteChargePM.SaleQuantity = entityPM.Volume; break; }
-                                    case "FIXD": { quoteChargePM.SaleQuantity = 1; break; }
-                                    case "BCNT": { quoteChargePM.SaleQuantity = null; break; }
-                                    case "BTEU": { quoteChargePM.SaleQuantity = entityPM.TEU; break; }
-                                    case "PRVL": { quoteChargePM.SaleQuantity = entityPM.ValueOfGoods; break; }
-                                    case "QTY": { quoteChargePM.SaleQuantity = entityPM.NumberOfPackages; break; }
-                                    default: { break; }
-                                }
-
-                                if (entityPM.IsChargesByVAT)
-                                {
-                                    quoteChargePM.VatTypeId = chargesType.VatTypeId;
-
-                                    if (quoteChargePM.VatTypeId != null)
-                                    {
-                                        VatType myVatType = this.allVatTypes.Where(d => d.Id == quoteChargePM.VatTypeId).FirstOrDefault();
-                                        if (myVatType != null)
-                                        {
-                                            quoteChargePM.VatTypeName = myVatType.EnglishName;
-                                            quoteChargePM.VatIsMultiPercentage = myVatType.IsMultiPercentage;
-
-                                            if (myVatType.IsMultiPercentage)
-                                            {
-
-                                            }
-
-                                            else
-                                            {
-                                                VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == quoteChargePM.VatTypeId).FirstOrDefault();
-                                                if (myPercentagePM != null)
-                                                {
-                                                    quoteChargePM.VatPercentage = myPercentagePM.Percentage;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            entityPM.QuoteCharges.Add(quoteChargePM);
-                        }
-                        #endregion
+                        list_ChargeTypes = iQueryable_ChargeTypes.OrderBy(d => d.ViewOrder).ToList();
                     }
 
                     else
                     {
-                        #region
-                        foreach (ChargesType chargesType in iQueryable_ChargesType.Where(d => d.ContainerMeasurement.Code == "BCNT").OrderBy(d => d.ViewOrder))
+                        list_ChargeTypes = iQueryable_ChargeTypes.Where(d => d.ContainerMeasurement.Code == "BCNT").OrderBy(d => d.ViewOrder).ToList();
+                    }
+
+                    if (list_ChargeTypes.Count > 0)
+                    {
+                        RatesTableQuery myQuery = new RatesTableQuery(tenant);
+                        LastRate freightChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.FreightCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                        LastRate othersChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.OtherChargesCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+
+                        if (this.isLCLQuote)
                         {
-                            QuoteChargePM quoteChargePM = new QuoteChargePM()
+                            #region
+                            foreach (ChargesType chargesType in list_ChargeTypes)
                             {
-                                Tenant = tenant,
-                                QuoteId = entityPM.Id,
-                                ChargesTypeId = chargesType.Id,
-                                ChargesTypeCode = chargesType.Code,
-                                ChargesTypeName = chargesType.EnglishName,
-                                ChargesGroupCode = chargesType.ChargesGroupCode,
-                                UpdatedByUserId = loggedContact.Id,
-                                CostMeasurementId = chargesType.ContainerMeasurementId,
-                                SaleMeasurementId = chargesType.ContainerMeasurementId,
-                                MarkUpTypeCode = "F",
-                                ContainerType1MarkUpTypeCode = "F",
-                                ContainerType2MarkUpTypeCode = "F",
-                                ContainerType3MarkUpTypeCode = "F",
-                                ContainerType4MarkUpTypeCode = "F",
-                                ContainerType5MarkUpTypeCode = "F",
-                                MarkUpValue = 0,
-                                ContainerType1MarkUpValue = 0,
-                                ContainerType2MarkUpValue = 0,
-                                ContainerType3MarkUpValue = 0,
-                                ContainerType4MarkUpValue = 0,
-                                ContainerType5MarkUpValue = 0,
-                                QuoteTypeCode = entityPM.QuoteTypeCode,
-                                SaleCurrencyId = entityPM.SaleCurrencyId,
-                                SaleExchangeRate = entityPM.ExchangeRate,
-                                ChangeSetOp = ChangeSetOperation.Insert,
-                                IsBackToBack = chargesType.IsBackToBack,
-                            };
-
-                            if (chargesType.Measurement != null)
-                            {
-                                quoteChargePM.CostMeasurementCode = chargesType.Measurement.Code;
-                                quoteChargePM.SaleMeasurementCode = chargesType.Measurement.Code;
-                                quoteChargePM.CostMeasurementShortName = chargesType.Measurement.ShortName;
-                                quoteChargePM.SaleMeasurementShortName = chargesType.Measurement.ShortName;
-                            }
-
-                            if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
-                            {
-                                quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
-
-                                if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                QuoteChargePM quoteChargePM = new QuoteChargePM()
                                 {
-                                    quoteChargePM.CostExchangeRate = null;
+                                    Tenant = tenant,
+                                    QuoteId = entityPM.Id,
+                                    ChargesTypeId = chargesType.Id,
+                                    ChargesTypeCode = chargesType.Code,
+                                    ChargesTypeName = chargesType.EnglishName,
+                                    ChargesGroupCode = chargesType.ChargesGroupCode,
+                                    UpdatedByUserId = loggedContact.Id,
+                                    CostMeasurementId = chargesType.MeasurementId,
+                                    SaleMeasurementId = chargesType.MeasurementId,
+                                    MarkUpTypeCode = "F",
+                                    MarkUpValue = 0,
+                                    QuoteTypeCode = entityPM.QuoteTypeCode,
+                                    SaleCurrencyId = entityPM.SaleCurrencyId,
+                                    SaleExchangeRate = entityPM.ExchangeRate,
+                                    ChangeSetOp = ChangeSetOperation.Insert,
+                                    IsBackToBack = chargesType.IsBackToBack,
+                                };
+
+                                if (chargesType.Measurement != null)
+                                {
+                                    quoteChargePM.CostMeasurementCode = chargesType.Measurement.Code;
+                                    quoteChargePM.SaleMeasurementCode = chargesType.Measurement.Code;
+                                    quoteChargePM.CostMeasurementShortName = chargesType.Measurement.ShortName;
+                                    quoteChargePM.SaleMeasurementShortName = chargesType.Measurement.ShortName;
                                 }
 
-                                else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
                                 {
-                                    quoteChargePM.CostExchangeRate = 1;
-                                }
+                                    quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
 
-                                else if (freightChargeRate != null)
-                                {
-                                    quoteChargePM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
-                                }
-                            }
-
-                            else
-                            {
-                                quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
-
-                                if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
-                                {
-                                    quoteChargePM.CostExchangeRate = null;
-                                }
-
-                                else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
-                                {
-                                    quoteChargePM.CostExchangeRate = 1;
-                                }
-
-                                else if (othersChargeRate != null)
-                                {
-                                    quoteChargePM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
-                                }
-                            }
-
-                            if (entityPM.QuoteTypeCode == "A")
-                            {
-                                if (entityPM.IsChargesByVAT)
-                                {
-                                    quoteChargePM.VatTypeId = chargesType.VatTypeId;
-
-                                    if (quoteChargePM.VatTypeId != null)
+                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
                                     {
-                                        VatType myVatType = this.allVatTypes.Where(d => d.Id == quoteChargePM.VatTypeId).FirstOrDefault();
-                                        if (myVatType != null)
+                                        quoteChargePM.CostExchangeRate = null;
+                                    }
+
+                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    {
+                                        quoteChargePM.CostExchangeRate = 1;
+                                    }
+
+                                    else if (freightChargeRate != null)
+                                    {
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
+                                    }
+                                }
+
+                                else
+                                {
+                                    quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
+
+                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                    {
+                                        quoteChargePM.CostExchangeRate = null;
+                                    }
+
+                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    {
+                                        quoteChargePM.CostExchangeRate = 1;
+                                    }
+
+                                    else if (othersChargeRate != null)
+                                    {
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
+                                    }
+                                }
+
+                                if (entityPM.QuoteTypeCode == "A")
+                                {
+                                    switch (quoteChargePM.CostMeasurementCode)
+                                    {
+                                        case "GRWT": { quoteChargePM.CostQuantity = entityPM.GrossWeight; break; }
+                                        case "CHWT": { quoteChargePM.CostQuantity = entityPM.ChargeableWeight; break; }
+                                        case "VOLU": { quoteChargePM.CostQuantity = entityPM.Volume; break; }
+                                        case "FIXD": { quoteChargePM.CostQuantity = 1; break; }
+                                        case "BCNT": { quoteChargePM.CostQuantity = null; break; }
+                                        case "BTEU": { quoteChargePM.CostQuantity = entityPM.TEU; break; }
+                                        case "PRVL": { quoteChargePM.CostQuantity = entityPM.ValueOfGoods; break; }
+                                        case "QTY": { quoteChargePM.CostQuantity = entityPM.NumberOfPackages; break; }
+                                        default: { break; }
+                                    }
+
+                                    switch (quoteChargePM.SaleMeasurementCode)
+                                    {
+                                        case "GRWT": { quoteChargePM.SaleQuantity = entityPM.GrossWeight; break; }
+                                        case "CHWT": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeight; break; }
+                                        case "VOLU": { quoteChargePM.SaleQuantity = entityPM.Volume; break; }
+                                        case "FIXD": { quoteChargePM.SaleQuantity = 1; break; }
+                                        case "BCNT": { quoteChargePM.SaleQuantity = null; break; }
+                                        case "BTEU": { quoteChargePM.SaleQuantity = entityPM.TEU; break; }
+                                        case "PRVL": { quoteChargePM.SaleQuantity = entityPM.ValueOfGoods; break; }
+                                        case "QTY": { quoteChargePM.SaleQuantity = entityPM.NumberOfPackages; break; }
+                                        default: { break; }
+                                    }
+
+                                    if (entityPM.IsChargesByVAT)
+                                    {
+                                        quoteChargePM.VatTypeId = chargesType.VatTypeId;
+
+                                        if (quoteChargePM.VatTypeId != null)
                                         {
-                                            quoteChargePM.VatTypeName = myVatType.EnglishName;
-                                            quoteChargePM.VatIsMultiPercentage = myVatType.IsMultiPercentage;
-
-                                            if (myVatType.IsMultiPercentage)
+                                            VatType myVatType = this.allVatTypes.Where(d => d.Id == quoteChargePM.VatTypeId).FirstOrDefault();
+                                            if (myVatType != null)
                                             {
+                                                quoteChargePM.VatTypeName = myVatType.EnglishName;
+                                                quoteChargePM.VatIsMultiPercentage = myVatType.IsMultiPercentage;
 
-                                            }
-
-                                            else
-                                            {
-                                                VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == quoteChargePM.VatTypeId).FirstOrDefault();
-                                                if (myPercentagePM != null)
+                                                if (myVatType.IsMultiPercentage)
                                                 {
-                                                    quoteChargePM.VatPercentage = myPercentagePM.Percentage;
+
+                                                }
+
+                                                else
+                                                {
+                                                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == quoteChargePM.VatTypeId).FirstOrDefault();
+                                                    if (myPercentagePM != null)
+                                                    {
+                                                        quoteChargePM.VatPercentage = myPercentagePM.Percentage;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
 
-                            entityPM.QuoteCharges.Add(quoteChargePM);
+                                entityPM.QuoteCharges.Add(quoteChargePM);
+                            }
+                            #endregion
                         }
-                        #endregion
+
+                        else
+                        {
+                            #region
+                            foreach (ChargesType chargesType in list_ChargeTypes)
+                            {
+                                QuoteChargePM quoteChargePM = new QuoteChargePM()
+                                {
+                                    Tenant = tenant,
+                                    QuoteId = entityPM.Id,
+                                    ChargesTypeId = chargesType.Id,
+                                    ChargesTypeCode = chargesType.Code,
+                                    ChargesTypeName = chargesType.EnglishName,
+                                    ChargesGroupCode = chargesType.ChargesGroupCode,
+                                    UpdatedByUserId = loggedContact.Id,
+                                    CostMeasurementId = chargesType.ContainerMeasurementId,
+                                    SaleMeasurementId = chargesType.ContainerMeasurementId,
+                                    MarkUpTypeCode = "F",
+                                    ContainerType1MarkUpTypeCode = "F",
+                                    ContainerType2MarkUpTypeCode = "F",
+                                    ContainerType3MarkUpTypeCode = "F",
+                                    ContainerType4MarkUpTypeCode = "F",
+                                    ContainerType5MarkUpTypeCode = "F",
+                                    MarkUpValue = 0,
+                                    ContainerType1MarkUpValue = 0,
+                                    ContainerType2MarkUpValue = 0,
+                                    ContainerType3MarkUpValue = 0,
+                                    ContainerType4MarkUpValue = 0,
+                                    ContainerType5MarkUpValue = 0,
+                                    QuoteTypeCode = entityPM.QuoteTypeCode,
+                                    SaleCurrencyId = entityPM.SaleCurrencyId,
+                                    SaleExchangeRate = entityPM.ExchangeRate,
+                                    ChangeSetOp = ChangeSetOperation.Insert,
+                                    IsBackToBack = chargesType.IsBackToBack,
+                                };
+
+                                if (chargesType.Measurement != null)
+                                {
+                                    quoteChargePM.CostMeasurementCode = chargesType.Measurement.Code;
+                                    quoteChargePM.SaleMeasurementCode = chargesType.Measurement.Code;
+                                    quoteChargePM.CostMeasurementShortName = chargesType.Measurement.ShortName;
+                                    quoteChargePM.SaleMeasurementShortName = chargesType.Measurement.ShortName;
+                                }
+
+                                if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
+                                {
+                                    quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
+
+                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                    {
+                                        quoteChargePM.CostExchangeRate = null;
+                                    }
+
+                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    {
+                                        quoteChargePM.CostExchangeRate = 1;
+                                    }
+
+                                    else if (freightChargeRate != null)
+                                    {
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
+                                    }
+                                }
+
+                                else
+                                {
+                                    quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
+
+                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                    {
+                                        quoteChargePM.CostExchangeRate = null;
+                                    }
+
+                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    {
+                                        quoteChargePM.CostExchangeRate = 1;
+                                    }
+
+                                    else if (othersChargeRate != null)
+                                    {
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
+                                    }
+                                }
+
+                                if (entityPM.QuoteTypeCode == "A")
+                                {
+                                    if (entityPM.IsChargesByVAT)
+                                    {
+                                        quoteChargePM.VatTypeId = chargesType.VatTypeId;
+
+                                        if (quoteChargePM.VatTypeId != null)
+                                        {
+                                            VatType myVatType = this.allVatTypes.Where(d => d.Id == quoteChargePM.VatTypeId).FirstOrDefault();
+                                            if (myVatType != null)
+                                            {
+                                                quoteChargePM.VatTypeName = myVatType.EnglishName;
+                                                quoteChargePM.VatIsMultiPercentage = myVatType.IsMultiPercentage;
+
+                                                if (myVatType.IsMultiPercentage)
+                                                {
+
+                                                }
+
+                                                else
+                                                {
+                                                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == quoteChargePM.VatTypeId).FirstOrDefault();
+                                                    if (myPercentagePM != null)
+                                                    {
+                                                        quoteChargePM.VatPercentage = myPercentagePM.Percentage;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                entityPM.QuoteCharges.Add(quoteChargePM);
+                            }
+                            #endregion
+                        }
                     }
                 }
             }

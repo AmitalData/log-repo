@@ -143,7 +143,7 @@ export class EditComponent implements OnDestroy {
             }
         }
 
-        if (this.ObjectTableName == "ARPayment" && SessionLocator.TenantPM.AccountingActivated) {
+        if (this.ObjectTableName == "ARPayment" && SessionLocator.TenantPM.AccountingActivated && !this.EntityPM.Id) {
             this.IsSaveBtnVisible = false;
         }
 

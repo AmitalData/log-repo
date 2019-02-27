@@ -88,12 +88,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
         }
 
-
-        /***************
-         * 
+        /*
          *  CREATE
-         *  
-         * *************/
+         */
         public void Create(ARPaymentPM theEntityPm)
         {
 
@@ -185,26 +182,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        void FillGLAccountFields(ARPaymentPM paymentPM)
-        {
-            GLAccountPM gla = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
-            paymentPM.GLAccountId = gla.Id;
-            paymentPM.GLAccountRecoMethodCode = gla.ReconcileMethodCode;
-        }
-
-        void FillPaymentInvoices(ARPaymentPM paymentPM)
-        {
-            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
-            {
-                ARPaymentInvoicePM payInvPM = new ARPaymentInvoicePM()
-                {
-                    ARInvoiceId = invTrans.SourceId,
-                    LocalAmount = Convert.ToDouble(invTrans.LocalAmountCredit == 0 ? invTrans.LocalAmountCredit : invTrans.LocalAmountDebit),
-                    ForeignAmount = Convert.ToDouble(invTrans.ForeignAmount),
-                    ForeignCurrencyId = invTrans.CurrencyId
-                };
-            }
-        }
 
 
 
@@ -213,6 +190,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.changedList = list;
         }
 
+
+        /*
+         *  UPDATE
+         */
         public void Update(ARPaymentPM theEntityPm, bool mapComposition = false)
         {
 
@@ -300,6 +281,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setVoided = theEntityPm.SetVoided;
             var SetReSendQBO = theEntityPm.SetReSendQBO;
 
+
+            //get glaccount fields
+            FillGLAccountFields(theEntityPm);
+
+            // Full Accounting => Reconciliation
+            if (theEntityPm.IsFullAccounting == true)
+            {
+                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+                    throw new ApplicationException("Hey! no glaccount provided!!");
+
+                CreateReconciliationForARPayment(theEntityPm);
+            }
+
             // PaymentCheque And CashBook
             this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved);
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
@@ -332,6 +326,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.BuildEntitiesNumbers();
         }
+
+
 
         private void ValidateHigherStatus()
         {
@@ -1591,11 +1587,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             bool useLocalRecoMethod = paymentPM.GLAccountRecoMethodCode == "0";
 
+
             //amount
-            _paymentLine.ReconciliationAmount
-                = Convert.ToDecimal(
-                    useLocalRecoMethod ? paymentPM.AmountInLocalCurrency : paymentPM.AmountInPaymentCurrency
-                    ); // 0- Local Currency
+            decimal invoiceAmountToReconcileSum = paymentPM.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            _paymentLine.ReconciliationAmount = invoiceAmountToReconcileSum * -1;
 
             //currency
             _paymentLine.CurrencyId = useLocalRecoMethod ? paymentPM.LocalCurrencyId : paymentPM.PaymentCurrencyId;
@@ -1669,6 +1664,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        void FillGLAccountFields(ARPaymentPM paymentPM)
+        {
+            GLAccountPM gla = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+            paymentPM.GLAccountId = gla.Id;
+            paymentPM.GLAccountRecoMethodCode = gla.ReconcileMethodCode;
+        }
+
+        void FillPaymentInvoices(ARPaymentPM paymentPM)
+        {
+            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
+            {
+                ARPaymentInvoicePM payInvPM = new ARPaymentInvoicePM()
+                {
+                    ARInvoiceId = invTrans.SourceId,
+                    LocalAmount = Convert.ToDouble(invTrans.AmountToReconcile),
+                    ForeignAmount = Convert.ToDouble(invTrans.AmountToReconcile / invTrans.ExchangeRate),
+                    ForeignCurrencyId = invTrans.CurrencyId
+                };
+                paymentPM.PaymentInvoices.Add(payInvPM);
+            }
+        }
         #endregion
     }
 }

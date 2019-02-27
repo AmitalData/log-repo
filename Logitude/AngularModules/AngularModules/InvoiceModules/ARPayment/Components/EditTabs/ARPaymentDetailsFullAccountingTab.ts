@@ -1602,9 +1602,9 @@ export class TransactionLineModel extends BaseComponent {
     CalculateFields(){
         this.IconCode = AccountingEntityHelper.getEntityIcon(this.LedgerTransactionPM.SourceTypeCode);
 
-        this.Status = this.GetStatus();
         this.OriginalAmount = this.CalculateOriginalAmount();
         this.OriginalAmountCurrency = this.CalculatOriginalCurruncy();
+        this.Status = this.GetStatus();
     }
     //#region Properties
 

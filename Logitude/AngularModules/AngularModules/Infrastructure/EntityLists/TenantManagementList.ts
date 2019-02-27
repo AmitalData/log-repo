@@ -76,7 +76,7 @@ export class TenantManagementList {
 		BluesnapCRMContractId: string;
 		BluesnapEAWBContractId: string;
 		BluesnapEAWBSContractId: string;
-		BluesnapOneTimeContractId: string;
+		BluesnapOneTimeContract: string;
 		BluesnapContractQTY: number;
 		BluesnapCRMContractQTY: number;
 		BluesnapEAWBContractQTY: number;
