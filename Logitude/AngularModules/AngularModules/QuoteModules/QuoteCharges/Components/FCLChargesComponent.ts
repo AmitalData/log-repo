@@ -2473,19 +2473,19 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     myTotalAmount = this.CostQuantity * this.CostUnitPrice;
                 }
             }
+        }
 
-            /* MinMax */
-            if (myTotalAmount != null) {
-                if (this.CostMinAmount != null) {
-                    if (myTotalAmount < this.CostMinAmount) {
-                        myTotalAmount = this.CostMinAmount;
-                    }
+        /* MinMax */
+        if (myTotalAmount != null) {
+            if (this.CostMinAmount != null) {
+                if (myTotalAmount < this.CostMinAmount) {
+                    myTotalAmount = this.CostMinAmount;
                 }
+            }
 
-                if (this.CostMaxAmount != null) {
-                    if (myTotalAmount > this.CostMaxAmount) {
-                        myTotalAmount = this.CostMaxAmount;
-                    }
+            if (this.CostMaxAmount != null) {
+                if (myTotalAmount > this.CostMaxAmount) {
+                    myTotalAmount = this.CostMaxAmount;
                 }
             }
         }
@@ -2511,6 +2511,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.ComputeCostInSaleAmount();
         }
 
+        this.SetUIProperties_CostMinMax();                
         this.fatherComponent.ComputeTotals();
     }
     ComputeCostInSaleAmount() {
@@ -2760,6 +2761,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
             if (this.ChargesGroupCode == "FRT") {
                 this.fatherComponent.OnFreightAmountChanged();
             }
+
+            this.SetUIProperties_SaleMinMax();
         }
     }
 
@@ -2767,6 +2770,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
     set SaleTotalAmountLocal(value: number) {
         if (this.EntityPM.SaleTotalAmountLocal != value) {
             this.EntityPM.SaleTotalAmountLocal = AppTool.Round(value, 2);
+            this.SetUIProperties_SaleMinMax();
         }
     }
 
@@ -2874,19 +2878,19 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     myTotalAmount = this.SaleQuantity * this.SaleUnitPrice;
                 }
             }
+        }
 
-            /* MinMax */
-            if (myTotalAmount != null) {
-                if (this.SaleMinAmount != null) {
-                    if (myTotalAmount < this.SaleMinAmount) {
-                        myTotalAmount = this.SaleMinAmount;
-                    }
+        /* MinMax */
+        if (myTotalAmount != null) {
+            if (this.SaleMinAmount != null) {
+                if (myTotalAmount < this.SaleMinAmount) {
+                    myTotalAmount = this.SaleMinAmount;
                 }
+            }
 
-                if (this.SaleMaxAmount != null) {
-                    if (myTotalAmount > this.SaleMaxAmount) {
-                        myTotalAmount = this.SaleMaxAmount;
-                    }
+            if (this.SaleMaxAmount != null) {
+                if (myTotalAmount > this.SaleMaxAmount) {
+                    myTotalAmount = this.SaleMaxAmount;
                 }
             }
         }
@@ -2899,6 +2903,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.fatherComponent.OnFreightAmountChanged();
         }
 
+        this.SetUIProperties_SaleMinMax();
         this.fatherComponent.ComputeTotals();
     }
     ComputeSalePrice() {
