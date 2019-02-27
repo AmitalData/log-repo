@@ -160,7 +160,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
                     CustomsDocumentPM customsDocumentPM;
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    myCustomsDocumentUpdateService.OnCreating_InsertPerfectCustomsDocumentMetaDataValues = true;
+                    
                     CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQuery = new CustomsDocumentMetaDataValueQueryService(_context);
                     List<CustomsDocumentMetaDataValuePM> CustomsDocumentMetaDataValues = customsDocumentMetaDataValueQuery.GetCustomsDocumentMetaDataValuesByConnectedEntity(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
                     //if(CustomsDocumentMetaDataValues.Where(r => r.MetaDataValue == "1" && r.MetaDataTypeCode == "380").FirstOrDefault() == null)
@@ -172,7 +172,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     {
                         customsDocumentPM = new CustomsDocumentPM();
                         customsDocumentPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                        customsDocumentPM.IsSendToQueue = true;
+                        //customsDocumentPM.IsSendToQueue = true;
                         customsDocumentPM.DocumentsFilingId = this._LogitudeDocs.COM_ID;
                         customsDocumentPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                         customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
@@ -187,13 +187,25 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     {
                         customsDocumentPM = myDocumentId;
                         customsDocumentPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        customsDocumentPM.IsSendToQueue = true;
+                        //customsDocumentPM.IsSendToQueue = true;
                         if (customsDocumentPM.DocumentsFilingId != this._LogitudeDocs.COM_ID) customsDocumentPM.DocumentsFilingId = this._LogitudeDocs.COM_ID;
                         if (customsDocumentPM.DocumentTypeCode != customsDocumentsTicketPM.DocumentTypeCode) customsDocumentPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                         if (customsDocumentPM.CurrentCustomsDocumentsTicketId != customsDocumentsTicketPM.Id) customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
                     }
                     if (CustomsDocumentMetaDataValues != null && CustomsDocumentMetaDataValues.Count() > 0 && (customsDocumentPM.CustomsDocumentMetaDataValues == null || customsDocumentPM.CustomsDocumentMetaDataValues.Count() < CustomsDocumentMetaDataValues.Count())) customsDocumentPM.CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues;
+
+                    customsDocumentPM.IsSendToQueue = false;
+                    myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+
+
+                    customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
+                    customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+                    customsDocumentPM.IsSendToQueue = true;
+                    myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+
+
+
                 }
                 else
                 {
