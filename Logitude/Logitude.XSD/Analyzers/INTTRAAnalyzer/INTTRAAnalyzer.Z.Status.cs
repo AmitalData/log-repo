@@ -249,10 +249,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 string EventCombinedCode = location.LocationCode.Value;
                 string EventPortCode = EventCombinedCode.Substring(EventCountryCode.Length);
 
-                Port iEventPort = iPortRepository.GetSinglePortByCode(this.Tenant, EventPortCode, true);
+                Port iEventPort = iPortRepository.GetOceanPortByCodeAndCountryCode(this.Tenant, EventPortCode, EventCountryCode, true);
                 if (iEventPort == null)
                 {
-                    iEventPort = iPortRepository.GetPortsByNameOrCode(EventPortCode, null, 0).Where(a => a.IsOcean).FirstOrDefault();
+                    iEventPort = iPortRepository.GetOceanPortByCodeAndCountryCode(0, EventPortCode, EventCountryCode, true);
                     if (iEventPort != null)
                     {
                         iEventPort = this.GetPortCopyToCurrentTenant(iEventPort.Id, this.Tenant);
@@ -396,10 +396,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             DateTime? LocationsDate = this.GetDateFromString(iLocation);
                             string PortCode = CombinedCode.Substring(CountryCode.Length);
 
-                            Port iPort = iPortRepository.GetSinglePortByCode(this.Tenant, PortCode, true);
+                            Port iPort = iPortRepository.GetOceanPortByCodeAndCountryCode(this.Tenant, PortCode, CountryCode, true);
                             if (iPort == null)
                             {
-                                iPort = iPortRepository.GetPortsByNameOrCode(PortCode, null, 0).Where(a => a.IsOcean).FirstOrDefault();
+                                iPort = iPortRepository.GetOceanPortByCodeAndCountryCode(0, PortCode, CountryCode, true);
                                 if (iPort != null)
                                 {
                                     iPort = this.GetPortCopyToCurrentTenant(iPort.Id, this.Tenant);
@@ -436,10 +436,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             DateTime? LocationsDate = this.GetDateFromString(iLocation);
                             string PortCode = CombinedCode.Substring(CountryCode.Length);
 
-                            Port iPort = iPortRepository.GetSinglePortByCode(this.Tenant, PortCode, true);
+                            Port iPort = iPortRepository.GetOceanPortByCodeAndCountryCode(this.Tenant, PortCode, CountryCode, true);
                             if (iPort == null)
                             {
-                                iPort = iPortRepository.GetPortsByNameOrCode(PortCode, null, 0).Where(a => a.IsOcean).FirstOrDefault();
+                                iPort = iPortRepository.GetOceanPortByCodeAndCountryCode(0, PortCode, CountryCode, true);
                                 if (iPort != null)
                                 {
                                     iPort = this.GetPortCopyToCurrentTenant(iPort.Id, this.Tenant);

@@ -349,9 +349,9 @@ export class TenantManagementPM {
     public set BluesnapEAWBSContractId(newValue: string) { if (this.bluesnapEAWBSContractId != newValue) { this.bluesnapEAWBSContractId = newValue; this.MarkAsDirty("BluesnapEAWBSContractId"); } }
        
 	 
-    private bluesnapOneTimeContractId: string;
-    public get BluesnapOneTimeContractId() { return this.bluesnapOneTimeContractId; }
-    public set BluesnapOneTimeContractId(newValue: string) { if (this.bluesnapOneTimeContractId != newValue) { this.bluesnapOneTimeContractId = newValue; this.MarkAsDirty("BluesnapOneTimeContractId"); } }
+    private bluesnapOneTimeContract: string;
+    public get BluesnapOneTimeContract() { return this.bluesnapOneTimeContract; }
+    public set BluesnapOneTimeContract(newValue: string) { if (this.bluesnapOneTimeContract != newValue) { this.bluesnapOneTimeContract = newValue; this.MarkAsDirty("BluesnapOneTimeContract"); } }
        
 	 
     private aWBMessagesCCSTypeCode: string;
@@ -662,6 +662,11 @@ export class TenantManagementPM {
     private isINTTRAOnlyDemo: boolean;
     public get IsINTTRAOnlyDemo() { return this.isINTTRAOnlyDemo; }
     public set IsINTTRAOnlyDemo(newValue: boolean) { if (this.isINTTRAOnlyDemo != newValue) { this.isINTTRAOnlyDemo = newValue; this.MarkAsDirty("IsINTTRAOnlyDemo"); } }
+       
+	 
+    private autoArchiveOnInvoice: boolean;
+    public get AutoArchiveOnInvoice() { return this.autoArchiveOnInvoice; }
+    public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
        
 	 
     private packageCodeSearchField: string;
