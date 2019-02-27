@@ -4639,7 +4639,7 @@ namespace WebFreight.Web.Helpers
                 if (!string.IsNullOrEmpty(result)) result = fieldValue;
                 else if (field != null && field.DataTypeCode.ToLower() == "boolean") result = "false";
             }
-
+             
             if (field != null)
             {
                 if (!string.IsNullOrEmpty(result))
