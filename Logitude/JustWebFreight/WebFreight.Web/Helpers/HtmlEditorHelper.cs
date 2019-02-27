@@ -4306,7 +4306,7 @@ namespace WebFreight.Web.Helpers
 
         private bool CheckIfFieldHaveValueHtml(string fieldName)
         {
-            bool result = false;
+            bool result = false; 
             if (!string.IsNullOrEmpty(fieldName))
             {
                 fieldName = fieldName.ToLower();
