@@ -76,7 +76,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string BluesnapCRMContractId { get; set; }
         public string BluesnapEAWBContractId { get; set; }
         public string BluesnapEAWBSContractId { get; set; }
-        public string BluesnapOneTimeContractId { get; set; }
+        public string BluesnapOneTimeContract { get; set; }
         public int BluesnapContractQTY { get; set; }
         public int BluesnapCRMContractQTY { get; set; }
         public int BluesnapEAWBContractQTY { get; set; }
