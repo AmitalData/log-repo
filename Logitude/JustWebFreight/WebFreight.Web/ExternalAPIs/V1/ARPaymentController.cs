@@ -42,10 +42,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     Result = Service.GetARPaymentById(id, tenant);
                 }
-                //else if (!string.IsNullOrEmpty(number))
-                //{
-                //    Result = Service.GetARInvoiceByInvoiceNumber(number, tenant);
-                //}
+                else if (!string.IsNullOrEmpty(number))
+                {
+                    Result = Service.GetARPaymentByNumber(number, tenant);
+                }
 
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);

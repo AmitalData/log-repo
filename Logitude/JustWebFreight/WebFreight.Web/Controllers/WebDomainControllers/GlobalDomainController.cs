@@ -527,7 +527,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         BluesnapCRMContractId = entityPM.BluesnapCRMContractId,
                         BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId,
                         BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId,
-                        BluesnapOneTimeContractId = entityPM.BluesnapOneTimeContractId,
+                        BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract,
 
                     };
                 }
@@ -590,7 +590,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string BluesnapCRMContractId { get; set; }
         public string BluesnapEAWBContractId { get; set; }
         public string BluesnapEAWBSContractId { get; set; }
-        public string BluesnapOneTimeContractId { get; set; }
+        public string BluesnapOneTimeContract { get; set; }
         public int BluesnapContractQTY { get; set; }
         public int BluesnapCRMContractQTY { get; set; }
         public int BluesnapEAWBContractQTY { get; set; }

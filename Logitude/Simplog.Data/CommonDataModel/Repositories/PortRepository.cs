@@ -352,5 +352,64 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Port GetOceanPortByCodeAndCountryCode(int tenant, string iPortCode, string iCountryCode, bool getFromCache)
+        {
+            Port iResult = null;
+
+            if (!string.IsNullOrEmpty(iPortCode) && !string.IsNullOrEmpty(iCountryCode))
+            {
+                string entityName = "Port" + tenant + iPortCode + iCountryCode;
+
+                if (getFromCache)
+                {
+                    if (CacheManager.CacheWrapper != null)
+                    {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            iResult = (from a in context.Ports.Include("Country")
+                                       where a.Tenant == tenant
+                                       && a.IsOcean == true
+                                       && a.Code == iPortCode
+                                       && a.Country.Code == iCountryCode
+                                       select a).FirstOrDefault();
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && iResult != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, iResult, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+
+                        else
+                        {
+                            iResult = (Port)CacheManager.CacheWrapper.Get(entityName);
+                        }
+                    }
+
+                    else
+                    {
+                        iResult = (from a in context.Ports.Include("Country")
+                                   where a.Tenant == tenant
+                                   && a.IsOcean == true
+                                   && a.Code == iPortCode
+                                   && a.Country.Code == iCountryCode
+                                   select a).FirstOrDefault();
+                    }
+                }
+
+                else
+                {
+                    iResult = (from a in context.Ports.Include("Country")
+                               where a.Tenant == tenant
+                               && a.IsOcean == true
+                               && a.Code == iPortCode
+                               && a.Country.Code == iCountryCode
+                               select a).FirstOrDefault();
+                }
+
+            }
+
+            return iResult;
+        }
     }
 }
