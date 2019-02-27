@@ -1,37 +1,20 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools;
-using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using System.Web;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.BL.EntityDataMappings;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.Security;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Server.Tools.Helpers;
-using Logitude.BL.Interfaces;
-using Microsoft.Practices.Unity;
-using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
-{ 
-   public partial class ExternalReconciliationUpdateService
+{
+    public partial class ExternalReconciliationUpdateService
    {
         protected override void OnCreating(ExternalReconciliationPM entityPM, EntityPM entityParentPM)
         {
@@ -161,7 +144,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             {
                                 ARPaymentChequePM chequePM = arpChequeQuery.GetSingle(depLine.ARPaymentChequeId, false, false);
                                 chequePM.ChangeSetOp = ChangeSetOperation.Update;
-                                chequePM.StatusCode = "4"; // 4- In cashbook
+                                chequePM.StatusCode = "3"; // 3- in bank account
                                 arpChequeUpdateService.Update(chequePM, true);
                             }
 
