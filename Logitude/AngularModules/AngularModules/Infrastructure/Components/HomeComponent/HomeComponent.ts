@@ -1301,9 +1301,6 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
                                         if (!res.HasError) {
                                             contractId = res.Result.ContractId;
                                             EmptyOrError = false;
-                                            temp.ContractId = null;
-                                            temp.Storeid = null;
-                                            temp.Token = null;
                                             this.SubscribeToLogitude(EmptyOrError, contractId, temp);
                                         }
                                         else {
