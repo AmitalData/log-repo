@@ -4616,15 +4616,15 @@ namespace WebFreight.Web.Helpers
                 {
                     break;
                 }
-            }
-
+            } 
+             
             if (!string.IsNullOrEmpty(resultValue) && !resultValue.Contains("Telerik.Windows.Documents") && ReplaceHtmlStringWithTageHtml)
             {
                 resultValue = resultValue.Replace('\n', '\r');
                 resultValue = resultValue.Replace("\r", "<br/>");
                 // resultValue = resultValue.Replace(" ", "&nbsp;");
             }
-
+             
             if (resultValue == "") resultValue = " ";
             return resultValue;
         }
