@@ -1007,7 +1007,7 @@ namespace Logitude.Accounting.BL.CoreBL
             List<APInvoiceLinePM> aPInvoiceLinePMs = aPInvoiceLineQuery.GetInvoiceLinesByInvoiceIds(APInvoiceIDs, tenant);
             BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(tenant);
             List<BankDepositLinePM> depositLines = bankDepositLineQueryService.GetDepositLinePMsByDepositIds(depositIds, tenant);
-
+         
           
             ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
          
@@ -3657,7 +3657,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         CreatedbyUser= a.CreatedByUser.Contact.LocalName != null? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.BillTo.GLAccountId,
                                         IsCancelled = a.IsCancelled,
-
+                                        
                                     }).ToList();
 
 
@@ -3692,7 +3692,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                         GLAccountId = a.VendorCard.GLAccountId,
                                         IsCancelled = a.StatusCode =="VD" ? true:false,
                                         VendorId =a.VendorId,
-
+                                      
+                                    
                                     }).ToList();
 
 
@@ -3765,6 +3766,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         VendorId =null,
                                         DepositId = a.Id,
                                         CashBookType = a.CashBook.CashBookTypeCode,
+                                       
                                     }).ToList();
 
 
