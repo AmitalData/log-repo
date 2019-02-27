@@ -57,7 +57,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //(Repository as Logitude.Customs.Data.Repsitories.DeclarationCourierStatusRepository).FastDeleteMulti(entityKeyFields);
         }
 
-        public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM)
+        public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM, bool isRequiredFieldHasChanged = false)
         {
             CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(declarationPM);
             return calculateDeclarationCourierStatus.CalcAll();
