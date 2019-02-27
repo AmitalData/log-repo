@@ -45,7 +45,7 @@ using Logitude.Accounting.Data;
 				{
 				   
 				   var temp = new JournalLine(); 
-				   temp.JournalId = item.JournalId;
+				   temp.JournalNumber = item.JournalId;
 				   temp.Line = item.Line;
 				   temp.Tenant = item.Tenant;
 				   temp.DebitControlAccount = item.DebitControlAccountId;
@@ -94,9 +94,9 @@ using Logitude.Accounting.Data;
 				{
 					   
 					var temp = new JournalLinePM();
-										if (!string.IsNullOrEmpty(item.JournalId))
+										if (!string.IsNullOrEmpty(item.JournalNumber))
 					{
-						temp = query.GetSinglePMByJournalId(item.JournalId, Tenant);
+						temp = query.GetSinglePMByJournalId(item.JournalNumber, Tenant);
 					} 					if (!string.IsNullOrEmpty(item.Line))
 					{
 						temp = query.GetSinglePMByLine(item.Line, Tenant);
@@ -106,7 +106,7 @@ using Logitude.Accounting.Data;
 					    throw new ApplicationException("JournalLine with Line " + item.Line + " doesn't exist");
 						
 					} 
-					temp.JournalId = item.JournalId;
+					temp.JournalId = item.JournalNumber;
 					temp.Line = item.Line;
 					temp.Tenant = item.Tenant;
 					temp.DebitControlAccountId = item.DebitControlAccount;

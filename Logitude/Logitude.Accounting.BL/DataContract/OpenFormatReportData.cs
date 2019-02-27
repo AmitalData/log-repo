@@ -131,4 +131,33 @@ namespace Logitude.Accounting.BL.DataContract
         public string ARPaymentId { get; set; }
        
     }
+
+    public class Summary
+    {
+        public string VatNumber { get; set; }
+        public string CompanyName { get; set; }
+
+
+        public List<ReportData> Data { get; set; }
+        public List<ReportTotal> ReportTotals { get; set; }
+
+    }
+
+    public class ReportData{
+        
+        public string RecordCode { get; set; }
+        public string RecordDescription { get; set; }
+        public int TotalRecords { get; set; }
+
+    }
+
+    public class ReportTotal
+    {
+        public string DocumentNumber { get; set; }
+        public string DocumentType { get; set; }
+        public decimal TotalQuantity { get; set; }
+        public decimal TotalAmount { get; set; }
+
+
+    }
 }

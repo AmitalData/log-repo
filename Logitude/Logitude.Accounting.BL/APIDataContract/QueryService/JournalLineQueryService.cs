@@ -30,9 +30,15 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 {
 
                     var temp = new JournalLinePM();
-                    if (!string.IsNullOrEmpty(item.JournalId) && item.Line != null)
+                    if (!string.IsNullOrEmpty(item.JournalNumber) && item.Line != null)
                     {
-                        temp = query.GetSingleJournalLine(item.JournalId, item.Line, Tenant);
+                        JournalQueryService journalQueryService = new JournalQueryService(Tenant);
+                        Journal journal = journalQueryService.GetJournalByNumber(item.JournalNumber, Tenant);
+                        if(journal != null)
+                        {
+                            temp = query.GetSingleJournalLine(journal.Id, item.Line, Tenant);
+                        }
+                       
                     }
 
                     if (temp == null)
@@ -40,7 +46,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                         throw new ApplicationException("JournalLine with Line " + item.Line + " doesn't exist");
 
                     }
-                    temp.JournalId = item.JournalId;
+                    temp.JournalId = item.JournalNumber;
                     temp.Line = item.Line;
                     temp.Tenant = item.Tenant;
                     Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService gLAccoutQueryService = new EntityQueryServices.GLAccountQueryService(Tenant);
@@ -150,7 +156,11 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 {
 
                     var temp = new JournalLine();
-                    temp.JournalId = item.JournalId;
+
+                    JournalQueryService journalQueryService = new JournalQueryService(Tenant);
+                    JournalPM journalPM = journalQueryService.GetJournalPMById(item.JournalId, Tenant);
+                    if (journalPM != null)
+                        temp.JournalNumber = journalPM.JournalNumber;
                     temp.Line = item.Line;
                     temp.Tenant = item.Tenant;
                     //if (item.DebitControlAccountId != null)

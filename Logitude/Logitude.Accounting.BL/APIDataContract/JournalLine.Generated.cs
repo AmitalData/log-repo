@@ -20,7 +20,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     {
 
 	    
-    public string JournalId { get; set; }
+    public string JournalNumber { get; set; }
     
     public int Line { get; set; }
     
