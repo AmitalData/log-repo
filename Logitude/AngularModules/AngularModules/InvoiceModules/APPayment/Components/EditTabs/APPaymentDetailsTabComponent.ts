@@ -158,19 +158,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ComputeRelativeRateDate();
         this.GetRateIsEnabled();
     }
-    public RateIsEnabled: boolean = true;
-    GetRateIsEnabled() {
-        var result = true;
-
-        if (this.EntityPM != null) {
-
-            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {                
-                result = false;
-            }
-        }
-
+    public RateIsEnabled: boolean = false;
+    GetRateIsEnabled() {        
         this.SetUIProperties_ExchangeRate();
-        this.RateIsEnabled = result;
     }
 
     // SetUIProperties
@@ -246,23 +236,18 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         var isEnabled: boolean = false;
 
         if (this.IsScreenEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APPaymentEditExchangeRate")) {
-                if (this.EntityPM.PaymentInvoices.length > 0) {
-                    isEnabled = false;
-                }
-                else {
-                    isEnabled = true;
-                }
-
-                if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                    isEnabled = false;
-                }
-                else {
-                    isEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("APPayment", "APPaymentEditExchangeRate")) {
+                if (this.PaymentCurrencyId) {
+                    if (this.PaymentCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                        if (this.EntityPM.PaymentInvoices.length == 0) {
+                            isEnabled = true;
+                        }
+                    }
                 }
             }
         }
 
+        this.RateIsEnabled = isEnabled;
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);
     }

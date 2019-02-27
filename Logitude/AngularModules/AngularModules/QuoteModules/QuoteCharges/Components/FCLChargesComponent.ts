@@ -423,14 +423,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
-                isExchangeRateEnabled = true;
-
-                if (AppTool.IsNullOrEmpty(this.SaleCurrencyId)) {
-                    isExchangeRateEnabled = false;
-                }
-
-                else if (this.SaleCurrencyId == SessionLocator.LocalCurrencyId) {
-                    isExchangeRateEnabled = false;
+                if (this.SaleCurrencyId) {
+                    if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
+                        isExchangeRateEnabled = false;
+                    }
                 }
             }
         }
@@ -1412,24 +1408,17 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
-                isEnabled = true;
-
-                if (AppTool.IsNullOrEmpty(this.CostCurrencyId)) {
-                    isEnabled = false;
-                }
-
-                else if (this.CostCurrencyId == SessionLocator.LocalCurrencyId) {
-                    isEnabled = false;
-                }
-
-                else if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
-                    isEnabled = false;
+                if (this.CostCurrencyId) {
+                    if (this.CostCurrencyId != SessionLocator.LocalCurrencyId) {
+                        if (this.CostCurrencyId != this.fatherComponent.SaleCurrencyId) {
+                            isEnabled = true;
+                        }
+                    }
                 }
             }
         }
 
-        //this.IsEnabled_CostExchangeRate = isEnabled;
-        this.IsEnabled_CostExchangeRate = true;
+        this.IsEnabled_CostExchangeRate = isEnabled;
         this.UIProperties.SetEnabled("CostExchangeRate", this.ObjectTableName, isEnabled);
     }
 
