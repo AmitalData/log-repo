@@ -118,10 +118,15 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     //temp.CreditAccountNumber = item.CreditAccountNumber;
                     //temp.DebitAccountNumber = item.DebitAccountNumber;
                     temp.Notes = item.Notes;
+                    if(item.ExternalOpenAmount != null)
                     temp.ExternalOpenAmount = item.ExternalOpenAmount;
                     //temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
                     //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
-                    //temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
+                    temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
+
+                    JournalActionTypeQueryService journalActionTypeService = new JournalActionTypeQueryService(Tenant);
+                    temp.ActionCode = item.ActionCode;
+
                     lines.Add(temp);
                 }
 
@@ -203,8 +208,8 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.ExternalOpenAmount = item.ExternalOpenAmount;
                     //temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
                     //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
-                    //temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
-                 
+                    temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
+                    temp.ActionCode = item.ActionCode;
                     MyList.Add(temp);
                 }
 

@@ -306,6 +306,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         }
 
+
         //check rowscount
         if(this.IsMultiline){
             setTimeout(() => {
@@ -327,6 +328,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
             }, 100);
         }
+
 
     }
 
@@ -1134,7 +1136,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                     case 'decimal':
                     case 'unsdecimal':
                         {
-                          
+
 
                             var isSignOk: boolean = true;
                             if (this.InputType == 'unsdecimal' || this.InputType == 'double') {

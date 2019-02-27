@@ -406,6 +406,14 @@
     <Compile Include="GlobalModel\Tools\DataMapping\WebhookKeysMapping.cs" />
     <Compile Include="GlobalModel\Tools\EntityService\WebhookKeysService.cs" />
     <Compile Include="Helpers\FullAccountingHelper.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\AccountingPaymentMethod.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPayment.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\CreditCardType.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\AccountingPaymentMethodQueryService.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\AccountingPaymentMethodQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentQueryService.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\CreditCardTypeQueryService.Generated.cs" />
     <Compile Include="Resolvers\LoggedContactResolver.cs" />
     <Compile Include="Mocks\MockLoggedContactUtil.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\ObjectTable.cs" />
