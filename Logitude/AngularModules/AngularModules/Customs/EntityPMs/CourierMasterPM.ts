@@ -204,6 +204,16 @@ export class CourierMasterPM {
     public set WeightValueName(newValue: string) { if (this.weightValueName != newValue) { this.weightValueName = newValue; this.MarkAsDirty("WeightValueName"); } }
        
 	 
+    private storageSiteCode: string;
+    public get StorageSiteCode() { return this.storageSiteCode; }
+    public set StorageSiteCode(newValue: string) { if (this.storageSiteCode != newValue) { this.storageSiteCode = newValue; this.MarkAsDirty("StorageSiteCode"); } }
+       
+	 
+    private storageSiteName: string;
+    public get StorageSiteName() { return this.storageSiteName; }
+    public set StorageSiteName(newValue: string) { if (this.storageSiteName != newValue) { this.storageSiteName = newValue; this.MarkAsDirty("StorageSiteName"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		
