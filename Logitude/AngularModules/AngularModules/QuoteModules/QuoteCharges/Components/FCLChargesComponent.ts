@@ -112,6 +112,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "QTCH") {
+                    if (this.IsAdhoc) {
+                        if (this.ItemsSource.Collection.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+                            this.CheckUpdateQuantities();
+                        }
+
+                        else {
+                            this.UpdateQuantitiesClicked();
+                        }
+                    }
+
                     this.SetLabelsAttached();
                     this.SetUIProperties();
                     this.UpdateCharges();
@@ -1007,15 +1017,32 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     CheckUpdateQuantities() {
         if (this.IsAdhoc) {
             var updateMessage = null;
+            var entityQuantity: number = null;
+            var isDifferentOrders: boolean = false;
+
+
+            entityQuantity = this.EntityPM.TEU;
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+
 
             if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
-                if (this.EntityPM.QuoteCharges.filter(d => d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods).length > 0) {
+                if (this.EntityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
                     updateMessage = "You have updated the Value of Goods, apply the new values?";
                 }
 
                 else if (this.EntityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != this.EntityPM.ValueOfGoods).length > 0) {
                     updateMessage = "You have updated the Value of Goods, apply the new values?";
                 }
+            }
+
+
+            if (isDifferentOrders) {
+                updateMessage = "You have updated the expected order details, apply the new values?";
             }
 
             this.UpdateQuantitiesMessage = updateMessage;
@@ -2146,6 +2173,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostQuantity != value) {
             this.EntityPM.CostQuantity = AppTool.Round(value, 2);
             this.ComputeCostAmounts();
+            this.fatherComponent.CheckUpdateQuantities();
         }
     }
 
@@ -2161,6 +2189,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
             this.ComputeCostAmounts();
             this.ComputeCostInSalePrice();
+            this.fatherComponent.CheckUpdateQuantities();
+
         }        
     }
 
@@ -2502,6 +2532,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
         this.SetUIProperties_CostMinMax();                
         this.fatherComponent.ComputeTotals();
+        this.fatherComponent.CheckUpdateQuantities();
     }
     ComputeCostInSaleAmount() {
         var myResult = null;
@@ -2660,6 +2691,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
             this.SetSaleQuantity();
             this.SetUIProperties_SaleFields();
+            this.fatherComponent.CheckUpdateQuantities();
+
         }
     }
 
@@ -2691,6 +2724,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleQuantity != value) {
             this.EntityPM.SaleQuantity = AppTool.Round(value, 2);
             this.ComputeSaleAmounts();
+            this.fatherComponent.CheckUpdateQuantities();
         }
     }
 
@@ -2699,6 +2733,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleUnitPrice != value) {
             this.EntityPM.SaleUnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
+            this.fatherComponent.CheckUpdateQuantities();
+
         }
     }
 
@@ -2894,6 +2930,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
         this.SetUIProperties_SaleMinMax();
         this.fatherComponent.ComputeTotals();
+        this.fatherComponent.CheckUpdateQuantities();
+
     }
     ComputeSalePrice() {
         if (AppTool.IsNullOrEmpty(this.CostUnitPriceInSaleCurrency)) {
