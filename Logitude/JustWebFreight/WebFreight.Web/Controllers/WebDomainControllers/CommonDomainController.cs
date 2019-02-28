@@ -168,12 +168,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetBlueSnapToken(string VaultedShopperId)
+        public HttpResponseMessage GetBlueSnapToken(string VaultedShopperId,string countryname)
         {
             try
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
+                    BluesnapParameters bluesnapParameters = new BluesnapParameters();
+
                     if (VaultedShopperId == "undefined")
                         VaultedShopperId = null;
                     string token = HttpContext.Current.Request.Headers["Token"];
@@ -191,11 +193,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         client.DefaultRequestHeaders.Accept.Add(
                         new MediaTypeWithQualityHeaderValue("application/xml"));
 
-                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
+                        string apicreditionals = "API_15408257301181065689979";
+                        var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
+                        if ((LogitudeSettings.DeploymentStage == "logitudepreproduction" || LogitudeSettings.DeploymentStage == "Dev") && countryname != "Israel")
+                        {
+                            apicreditionals = "API_1516630314047705132569";
+                            bluesnapParameters.ContractId = "2261197";
+                            bluesnapParameters.Storeid = "8439";
+                            request = WebRequest.Create("https://sandbox.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
+
+                        }
+
+
+                        string authInfo = apicreditionals + ":" + "BlueSand123";
                         authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
-                        var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
-                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(apicreditionals+":BlueSand123"));
                         try
                         {
                             var response2 = request.GetResponse();
@@ -212,6 +225,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                             myResult = doc.InnerText;
+                            bluesnapParameters.Token = myResult;
 
                         }
                         catch (Exception EX1)
@@ -239,11 +253,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                                myResult = doc.InnerText;
+                                bluesnapParameters.Token = myResult;
 
                             }
                             catch (Exception EX2)
                             {
                                 myResult = null;
+                                bluesnapParameters.Token = myResult;
+
                             }
 
                         }
@@ -253,7 +270,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                     scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    return Request.CreateResponse(HttpStatusCode.OK, bluesnapParameters);
                 }
             }
 
@@ -265,7 +282,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
 
-        public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId)
+        
+
+
+        public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId,string countryname)
         {
             try
             {
@@ -273,6 +293,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     if (VaultedShopperId == "undefined")
                         VaultedShopperId = null;
+                    BluesnapParameters bluesnapParameters = new BluesnapParameters();
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
@@ -287,16 +308,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                         client.DefaultRequestHeaders.Accept.Add(
                         new MediaTypeWithQualityHeaderValue("application/xml"));
+                        string apicreditionals = "API_15408257301181065689979";
+                        var request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
+                        if ((LogitudeSettings.DeploymentStage == "logitudepreproduction" || LogitudeSettings.DeploymentStage == "Dev") && countryname != "Israel")
+                        {
+                            apicreditionals = "API_1516630314047705132569";
+                            bluesnapParameters.ContractId = "2261197";
+                            bluesnapParameters.Storeid = "8439";
+                            request = WebRequest.Create("https://sandbox.bluesnap.com/services/2/tools/param-encryption");
+                        }
 
-                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
+                        string authInfo = apicreditionals + ":" + "BlueSand123";
                         authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
 
 
                         string xml = @"<param-encryption xmlns='http://ws.plimus.com'><parameters><parameter><param-key>shopperId</param-key><param-value>"+VaultedShopperId+"</param-value></parameter><parameter><param-key>expirationInMinutes</param-key><param-value>300</param-value></parameter><parameter><param-key>pageName</param-key><param-value>AUTO_LOGIN_PAGE</param-value></parameter></parameters></param-encryption>";
                         //like this:
-                        var request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
-                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(apicreditionals+":BlueSand123"));
 
                         byte[] bytes;
                         bytes = System.Text.Encoding.ASCII.GetBytes(xml);
@@ -323,11 +352,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                             myResult = doc.InnerText;
+                            bluesnapParameters.Token = myResult;
 
                         }
                         catch (Exception EX1)
                         {
-
                             authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
                             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
@@ -361,11 +390,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                                 myResult = doc.InnerText;
+                                bluesnapParameters.Token = myResult;
 
                             }
                             catch (Exception EX2)
                             {
                                 myResult = null;
+                                bluesnapParameters.Token = myResult;
+
                             }
 
                         }
@@ -375,7 +407,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                     scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    return Request.CreateResponse(HttpStatusCode.OK, bluesnapParameters);
                 }
             }
 
@@ -1615,6 +1647,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     iAccountingSetting.AllowVoidARP = false;
                     iAccountingSetting.AllowManualInvoiceNumber = false;
                     iAccountingSetting.IsARInvoiceChronologicalDates = true;
+                    iAccountingSetting.IsARPaymentChronologicalDates = true;
                     iAccountingSetting.IsVatNumberMandatoryInAP = true;
                     iAccountingSetting.IsVatNumberMandatoryInAR = true;
                     iAccountingSettingRepository.Update(iAccountingSetting);
@@ -2408,6 +2441,16 @@ public class StatusData
     public string LoggedByUserEmail { get; set; }
     public bool IsValidCert { get; set; }
 }
+
+
+public class BluesnapParameters
+{
+    public string Token { get; set; }
+    public string Storeid { get; set; }
+    public string ContractId { get; set; }
+
+}
+
 
 public class FilingInboxSummary
 {

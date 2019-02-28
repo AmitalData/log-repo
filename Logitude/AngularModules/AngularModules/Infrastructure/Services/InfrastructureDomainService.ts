@@ -16,7 +16,7 @@ import {TasksSchedulerPM} from '../EntityPMs/TasksSchedulerPM';
 import { BIReportPM } from '../EntityPMs/BIReportPM';
 import { ClassLevelValidator } from '../Validators/ClassLevelValidator';
 import { DWQueryData } from '../../Common/DataContracts/DWQueryData';
-
+import { FeatureToggleList } from '../EntityLists/FeatureToggleList';
 
 @Injectable()
 
@@ -767,6 +767,40 @@ export class InfrastructureDomainService {
         );
     }
 
+    DeleteBIReport(Id: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeleteBIReport?' + 'Id=' + Id , {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                var servertime = response.headers.get('ServerExecutionTime');
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    DeleteFolder(Id: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeleteFolder?' + 'Id=' + Id, {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                var servertime = response.headers.get('ServerExecutionTime');
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {
 
         if (!entityPM) {
@@ -786,8 +820,7 @@ export class InfrastructureDomainService {
         }
         return entityPM;
     }
-
-
+    
     public deepClone(obj, hash = new WeakMap()) {
         // Do not try to clone primitives or functions
         if (Object(obj) !== obj || obj instanceof Function) {
@@ -826,6 +859,45 @@ export class InfrastructureDomainService {
                     key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
 
             })));
+    }
+
+    GetFeatureToggles() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetFeatureToggles';
+
+        return Observable.defer(() => {
+
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var allLists = response.json();
+                var _mappedListsArray: Array<FeatureToggleList> = [];
+
+                for (var key in allLists) {
+                    var entity: FeatureToggleList;
+                    entity = this.MapJsonToFeatureToggleList(allLists[key]);
+                    _mappedListsArray.push(entity);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    private MapJsonToFeatureToggleList(jsonItem: any) {
+        var entityList: FeatureToggleList = new FeatureToggleList();
+        var jsonItemKeys = Object.keys(jsonItem);
+
+        for (var key in jsonItemKeys) {
+            var property = jsonItemKeys[key];
+            entityList[property] = jsonItem[property];
+        }
+
+        return entityList;
     }
 }
 

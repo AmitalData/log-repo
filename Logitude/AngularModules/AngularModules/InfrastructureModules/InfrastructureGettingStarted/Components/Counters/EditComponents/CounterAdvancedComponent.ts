@@ -58,6 +58,8 @@ export class CounterAdvancedComponent extends BaseComponent {
                         this.InitializeDefinitions();
                         this.SetUIProperties();
                     }
+
+                    this.CalculateSampleValue();
                 }
 
                 this.IsResourcesReady = true;
@@ -212,6 +214,8 @@ export class CounterAdvancedComponent extends BaseComponent {
             this.APIHelper.CounterDefinitions.forEach(item => {
                 item.Prefix = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -223,6 +227,8 @@ export class CounterAdvancedComponent extends BaseComponent {
             this.APIHelper.CounterDefinitions.forEach(item => {
                 item.CounterSize = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -235,6 +241,8 @@ export class CounterAdvancedComponent extends BaseComponent {
             this.APIHelper.CounterDefinitions.forEach(item => {
                 item.StartNumber = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -351,6 +359,12 @@ export class CounterAdvancedComponent extends BaseComponent {
                 }
             }
         }
+    }
+    public SampleValue: string;
+    CalculateSampleValue() {
+
+        this.SampleValue = AppTool.GetCounterResolvedNumber(this.Prefix, this.StartNumber, "", this.CounterSize);
+        
     }
 }
 export class CounterAdvancedColumnItem {

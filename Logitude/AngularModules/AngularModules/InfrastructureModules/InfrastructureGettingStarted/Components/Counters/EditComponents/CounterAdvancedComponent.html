@@ -100,7 +100,7 @@
                                         </td>
 
                                         <td style="width: 150px;">
-                                            <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -114,8 +114,8 @@
                                             <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
-                                        <td style="width: 150px;">
-                                            <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="CounterSize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="CounterSize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -130,7 +130,7 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'StartNumber'" [Text]="StartNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            <LogTextBox [ObjectFieldName]="'StartNumber'" [Text]="StartNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -138,21 +138,43 @@
                                         </td>
                                     </tr>
 
-                                    <tr style="height: 10px;">
+                                    <!-- SampleValue -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [Text]="'Format'"  [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td colspan="2">
+                                            <div class="Value" style="text-align: left;">{{SampleValue}}</div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
                                         <td colspan="3">
                                             <div></div>
                                         </td>
                                     </tr>
 
                                     <tr style="height: 1px;">
-                                        <td colspan="3">
-                                            <div class="NoDataTextStyle" style="text-align: left;">The created numbers have the following format:</div>
-                                            <div class="Value" style="padding-left: 15px;">[Prefix]Number</div>
-                                            <br />
-                                            <div class="NoDataTextStyle" style="text-align: left;">You can add [MM],[YY] or [YYYY] to the prefix. it will be translated due to the current date</div>
-                                            <div *ngIf="CounterPM.Code == 'MAST'  || CounterPM.Code == 'SHIP'" class="NoDataTextStyle" style="text-align: left;">You can also add [B] to bring the branch code</div>
 
+                                        <td colspan="3">
+
+                                            <!--<div class="NoDataTextStyle" style="text-align: left;">The created numbers have the following format:</div>
+        <div class="Value" style="padding-left: 15px;">[Prefix]Number</div>
+                                            <br />-->
+                                            <div class="NoDataTextStyle" style="text-align:left;margin-left:10px;">You can add [MM],[YY] or [YYYY] to the prefix. it will be translated due to the current date</div>
+                                            <div *ngIf="CounterPM.Code == 'MAST'  || CounterPM.Code == 'SHIP'" class="NoDataTextStyle" style="text-align:left;margin-left:10px;">You can also add [B] to bring the branch code</div>
                                         </td>
+
+                                        <!--<td></td>
+                                        <td>
+                                            <div></div>
+                                        </td>-->
+
                                     </tr>
 
                                     <tr>

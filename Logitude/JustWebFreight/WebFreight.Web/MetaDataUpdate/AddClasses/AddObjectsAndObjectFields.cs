@@ -687,20 +687,34 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     updatedObjectField.FieldName = objectFieldDetails.FieldName;
                 }
-                if (!tenantZeroTextCodes.ContainsKey(objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId))
-                {
-
-                }
+               
                 if (objectFieldDetails.ObjectTableName == "Address")
                     return;
-               TextCode updatedFullNameTextCode = tenantZeroTextCodes[objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId];
-                if (!updatedFullNameTextCode.IsSpellChecked)
-                {
-                    updatedFullNameTextCode.DefaultText = objectFieldDetails.DefaultText;
-                    updatedFullNameTextCode.InActive = objectFieldDetails.InActive;
-                    updatedFullNameTextCode.LocalDefaultText = objectFieldDetails.FullLocalDefaultText;
-                    textCodeRepository.Update(updatedFullNameTextCode);
-                }
+
+				if (!tenantZeroTextCodes.ContainsKey(objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId))
+				{
+					TextCode objectFieldTextCode = new TextCode();
+					objectFieldTextCode.Code = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable;
+					objectFieldTextCode.DefaultText = objectFieldDetails.DefaultText;
+					objectFieldTextCode.Id = IdCounter.GetNumber("TextCode", objectFieldDetails.Tenant).ToString();
+					objectFieldTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
+					objectFieldTextCode.Tenant = 0;
+					objectFieldTextCode.TextCodeTypeCode = "F";
+					objectFieldTextCode.InActive = objectFieldDetails.InActive;
+					objectFieldTextCode.LocalDefaultText = objectFieldDetails.FullLocalDefaultText;
+					textCodeRepository.Add(objectFieldTextCode);
+				}
+				else
+				{
+					TextCode updatedFullNameTextCode = tenantZeroTextCodes[objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId];
+					if (!updatedFullNameTextCode.IsSpellChecked)
+					{
+						updatedFullNameTextCode.DefaultText = objectFieldDetails.DefaultText;
+						updatedFullNameTextCode.InActive = objectFieldDetails.InActive;
+						updatedFullNameTextCode.LocalDefaultText = objectFieldDetails.FullLocalDefaultText;
+						textCodeRepository.Update(updatedFullNameTextCode);
+					}
+				}
                 if (objectFieldDetails.ShortFieldLable != null)
                 {
 

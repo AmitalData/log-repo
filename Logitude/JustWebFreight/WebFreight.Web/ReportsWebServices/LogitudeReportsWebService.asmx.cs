@@ -469,6 +469,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_IncludeAccountedOnly = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeAccountedOnly").FirstOrDefault();
             QueryFilterItem filterItem_IsByCreateDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
             QueryFilterItem filterItem_DepartmentId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DepartmentId").FirstOrDefault();
+            QueryFilterItem filterItem_CarrierId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CarrierId").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
@@ -483,6 +484,7 @@ namespace WebFreight.Web.ReportsWebServices
             bool includeAccountedOnly = false;
             bool isByCreateDate = false;
             string departmentId = null;
+            string carrierId = null;
 
             if (filterItem_AccountingClosed != null)
             {
@@ -556,6 +558,14 @@ namespace WebFreight.Web.ReportsWebServices
                 if (filterItem_DepartmentId.FieldValue != null)
                 {
                     departmentId = filterItem_DepartmentId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CarrierId != null)
+            {
+                if (filterItem_CarrierId.FieldValue != null)
+                {
+                    carrierId = filterItem_CarrierId.FieldValue.ToString();
                 }
             }
             #endregion
@@ -636,6 +646,11 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(departmentId))
             {
                 shipments = shipments.Where(d => d.DepartmentId == departmentId);
+            }
+
+            if (!string.IsNullOrEmpty(carrierId))
+            {
+                shipments = shipments.Where(d => d.MainCarriageCarrierId == carrierId);
             }
             #endregion
 
@@ -2152,7 +2167,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_EntityStatus = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EntityStatus").FirstOrDefault();
-            QueryFilterItem filterItem_ShipmentCustomerTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipmentCustomerTypeCode").FirstOrDefault();
+            QueryFilterItem filterItem_SupplierId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SupplierId").FirstOrDefault();
 
             //ToDate
             DateTime? toDate = null;
@@ -2164,6 +2179,8 @@ namespace WebFreight.Web.ReportsWebServices
                     toDate = (DateTime)filterItem_tODate.FieldValue;
                 }
             }
+
+
 
             //FromDate
             DateTime? FromDate = null;
@@ -2194,17 +2211,16 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            string customerId = null;
-            totalData.CustomerName = "All";
-            if (filterItem_CustomerId != null)
+            string supplierId = null;
+            if (filterItem_SupplierId != null)
             {
-                if (filterItem_CustomerId.FieldValue != null)
+                if (filterItem_SupplierId.FieldValue != null)
                 {
-                    customerId = filterItem_CustomerId.FieldValue.ToString();
-                    if (!String.IsNullOrEmpty(customerId))
+                    supplierId = filterItem_SupplierId.FieldValue.ToString();
+                    if (!String.IsNullOrEmpty(supplierId))
                     {
                         CardRepository cardRepository = new CardRepository(commonContext);
-                        Card customer = cardRepository.GetSingleCard(customerId, tenant);
+                        Card customer = cardRepository.GetSingleCard(supplierId, tenant);
                         if (customer != null)
                             totalData.ShipperName = customer.EnglishName;
                     }
@@ -2235,19 +2251,20 @@ namespace WebFreight.Web.ReportsWebServices
 
 
 
-            string shipmentCustomerTypeCode = null;
-            if (filterItem_ShipmentCustomerTypeCode != null)
+            string CustomerId = null;
+            totalData.CustomerName = "All";
+            if (filterItem_CustomerId != null)
             {
-                if (filterItem_ShipmentCustomerTypeCode.FieldValue != null)
+                if (filterItem_CustomerId.FieldValue != null)
                 {
-                    shipmentCustomerTypeCode = filterItem_ShipmentCustomerTypeCode.FieldValue.ToString();
+                    CustomerId = filterItem_CustomerId.FieldValue.ToString();
 
-                    if (!String.IsNullOrEmpty(shipmentCustomerTypeCode))
+                    if (!String.IsNullOrEmpty(CustomerId))
                     {
-                        ShipmentCustomerTypeRepository shipmentsRepository = new ShipmentCustomerTypeRepository(shipmentsContext);
-                        ShipmentCustomerType shipmentcustomertypeCode = shipmentsRepository.GetSingleShipmentCustomerType(shipmentCustomerTypeCode);
-                        if (shipmentcustomertypeCode != null)
-                            totalData.CustomerName = shipmentcustomertypeCode.Name;
+                        CardRepository cardRepository = new CardRepository(commonContext);
+                        Card customerCard = cardRepository.GetSingleCard(CustomerId,tenant);
+                        if (customerCard != null)
+                            totalData.CustomerName = customerCard.EnglishName;
                     }
                 }
             }
@@ -2275,7 +2292,12 @@ namespace WebFreight.Web.ReportsWebServices
             item.FieldValue = FromDate;
             item.FieldValue2 = toDate;
             item.IsCustomField = true;
-            item.Operator = "Between";
+            if (toDate == null)
+            {
+                item.Operator = "GreaterThanOrEqual";
+            }
+            else
+                item.Operator = "Between";
             queryOperations2.QueryFilterItems.Add(item);
 
             shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations2, shipments);
@@ -2287,9 +2309,9 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
 
-            if (!string.IsNullOrEmpty(customerId))
+            if (!string.IsNullOrEmpty(CustomerId))
             {
-                shipments = shipments.Where(d => d.CustomerId == customerId);
+                shipments = shipments.Where(d => d.CustomerId == CustomerId);
             }
 
 
@@ -2299,9 +2321,9 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
 
-            if (!string.IsNullOrEmpty(shipmentCustomerTypeCode))
+            if (!string.IsNullOrEmpty(supplierId))
             {
-                shipments = shipments.Where(d => d.ShipmentCustomerTypeCode == shipmentCustomerTypeCode);
+                shipments = shipments.Where(d => d.ShipperId == supplierId);
             }
 
             List<ShipmentDataView> Shipments = shipments.ToList();
@@ -2335,7 +2357,14 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.RequestETD = dataView.FirstPickupETD;
                     shipment.EstimateETD = dataView.FirstPickupETA;
                     if (!String.IsNullOrEmpty(dataView.Field2))
-                        shipment.RequestETA = Convert.ToDateTime(dataView.Field2);
+                    {
+                        string year= dataView.Field2.Substring(0,4);
+                        string month = dataView.Field2.Substring(4, 2);
+                        string day = dataView.Field2.Substring(6, 2);
+
+                        shipment.RequestETA = DateTime.Parse(year+"/"+month+"/"+day);
+
+                    }
                     shipment.EstimateETA = dataView.MainCarriageFinalDestinationETA;
                     shipment.Shipper = dataView.ShipperName;
                     shipment.Pieces = Item.Quantity;

@@ -3492,6 +3492,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<BIReportFolder> BIReportFolders
+        {
+            get;
+            set;
+
+        }
+
         public IDbSet<BusinessRole> BusinessRoles
         {
             get;
@@ -4248,6 +4255,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new BatchTaskExecutionMap());
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
+            modelBuilder.Configurations.Add(new BIReportFolderMap());
             #endregion
 
             modelBuilder.Configurations.Add(new BlobFileMap());

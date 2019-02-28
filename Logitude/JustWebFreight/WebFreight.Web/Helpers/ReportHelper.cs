@@ -25,6 +25,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
 using WebFreight.Web.WebServices;
@@ -1624,7 +1625,11 @@ namespace WebFreight.Web.Helpers
 
                 case "EMTS":
                     {
-                        dataProvider = logitudeReportsWebService.LoadEmployeeTimeSheetData(filters, reportFliter.tenant);
+                        //dataProvider = logitudeReportsWebService.LoadEmployeeTimeSheetData(filters, reportFliter.tenant);
+
+                        EmployeeTimeSheetManager myDataManager = new EmployeeTimeSheetManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+
                         break;
                     }
 

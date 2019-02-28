@@ -86,7 +86,7 @@ export class WebFreightDomainService {
         var url = ServiceHelper.GetLogitudeURL() + 'api/TraceEventsDomain';
 
         return Observable.defer(() => {
-            return this._http.put(url, JSON.stringify(mappedArgs), { headers: authHeader }).map((response) => {
+            return this._http.put(url + "/PutDeleteTraceEvent", JSON.stringify(mappedArgs), { headers: authHeader }).map((response) => {
                 var myResult = response.json();
 
                 var myResponse = new ServiceResponse();
@@ -209,28 +209,6 @@ export class WebFreightDomainService {
         }
         );
     }
-
-    //GetExportBIReportToExcel(QueryData) {
-    //    var authHeader = new Headers();
-    //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-    //    var mappedEntity: BIReportPM;
-    //    mappedEntity = this.MapJsonToEntityPM(QueryData.BIReportPM, false);
-    //    var temp = this.deepClone(QueryData.DWQueryData);
-    //    QueryData.BIReportPM = mappedEntity;
-    //    QueryData.DWQueryData = temp;
-    //    var temp2 = this.deepClone(QueryData);
-    //    var url = this._apiUrl + '/GetExportBIReportToExcel?bIReportXMLData=' + JSON.stringify(temp2); 
-    //    return Observable.defer(() => {
-    //        return this._http.get(url, { headers: authHeader }).map(response => {
-    //            var allLists = response.json();
-    //            var serviceResponse: ServiceResponse;
-    //            serviceResponse = new ServiceResponse();
-    //            serviceResponse.Result = allLists;
-    //            return serviceResponse;
-    //        }).catch(ServiceHelper.HandleServiceError);
-    //    });
-    //}
-
 
     GetExportBIReportToExcel(QueryData: BIReportXMLData) {
         return Observable.defer(() => {

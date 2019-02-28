@@ -126,26 +126,20 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     public RateIsEnabled = false;
     SetUIProperties() {
-        var isRateEnabled = true;
+        var isRateEnabled = false;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
-            isRateEnabled = false;
-        }
-
-        else {
-            if (this.IsCreatedFromInvoiceSide) {
-                isRateEnabled = false;
-            }
-
-            else if (this.PaymentCurrencyId == this.TenantPM.CurrencyId || this.PaymentCurrencyId == null || this.TenantPM.CurrencyId == null) {
-                isRateEnabled = false;
+        if (FeatureLocator.HasFeaturePermession("ARPayment", "ARPaymentEditExchangeRate")) {
+            if (this.PaymentCurrencyId) {
+                if (this.PaymentCurrencyId != this.TenantPM.CurrencyId) {
+                    if (this.IsCreatedFromInvoiceSide == false) {
+                        isRateEnabled = true;
+                    }
+                }
             }
         }
 
-        //this.RateIsEnabled = isRateEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isRateEnabled;
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isRateEnabled);
-
         this.SetUIProperties_Payment();
     }
 

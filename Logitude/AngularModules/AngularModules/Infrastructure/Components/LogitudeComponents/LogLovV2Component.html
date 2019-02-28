@@ -670,7 +670,9 @@
                                     (mouseleave)="OnLiMouseLeave($event)" [attr.name]="item[DisplayMemberPath]"
                                     [class.InActive]="item.InActive">
 
-                                    <div style="height:20px; font-size:10px; width:100%; position:relative; display: table; " (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                    <!-- the style was like this but because of bug 48807 i changed it height:20px; font-size:10px; width:100%; position:relative; display: table;-->
+
+                                    <div style="height:16px; font-size:10px; width:100%; position:relative;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
                                         <div *ngFor="let col of headerColumns; let colIndex = index"
                                              [style.width.px]="Widths[colIndex]"
                                              [style.min-width.px]="MinWidths[colIndex]"
@@ -706,7 +708,8 @@
                                     (mouseover)="OnLiMouseOver($event)"
                                     (mouseleave)="OnLiMouseLeave($event)"
                                    >
-                                    <div style="height:20px; font-size:10px; width:100%; position:relative;display: table;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                   <!--the style was like this but because of bug 48807 i changed it height:20px; font-size:10px; width:100%; position:relative;display: table;-->
+                                    <div style="height:16px; font-size:10px; width:100%; position:relative;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
                                         <div *ngFor="let col of headerColumns; let colIndex = index"
 
                                              [style.width.px]="Widths[colIndex]"
@@ -740,9 +743,10 @@
                                     </li>
                                 </ul>
 
-                                <a href="javascript:;" *ngIf="ShowAddLink" (click)="OnAddValue()" [style.float]="isRTL ? 'left' : 'right'">
+                                <a href="javascript:;" *ngIf="ShowAddLink && !IsAddTypesVisible" (click)="OnAddValue()" [style.float]="isRTL ? 'left' : 'right'">
                                     <img src="./Images/Icons/plus.png">
                                     {{'General.B.Add' | TextCodeTranslationPipe}}</a>
+
                                 <a href="javascript:;" *ngIf="ShowSearchButton"  [style.float]="isRTL ? 'left' : 'right'" (click)="SearchButtonClicked()" style="margin-left: 8px;">{{'General.O.ViewAll'| TextCodeTranslationPipe}}</a>
 
 

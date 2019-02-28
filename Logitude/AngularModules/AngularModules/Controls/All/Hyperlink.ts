@@ -1,9 +1,9 @@
-﻿import {Component, OnInit, ChangeDetectionStrategy, ElementRef} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ElementRef} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 
 @Component({
     selector: 'Hyperlink',
-    inputs: ['Text', 'FontSize', 'Color', 'IsEnabled'],
+    inputs: ['Text', 'FontSize', 'Color', 'IsEnabled', 'Title'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
@@ -46,6 +46,7 @@ import {AppTool} from '../../Infrastructure/Tools';
 
 export class Hyperlink implements OnInit {
     public FontSize: number = 10;
+    public Title: string = null;
     constructor(private elementRef: ElementRef) {
 
     }

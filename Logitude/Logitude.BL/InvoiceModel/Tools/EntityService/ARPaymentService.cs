@@ -358,6 +358,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 {
                     entityPM.StatusCode = "AD";
+                    entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    entityPM.ApprovedByUserId = loggedContact.Id;
                 }
 
                 UpdateDocOutNeedsRebuild();
@@ -1390,9 +1392,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
+            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly( AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
             if (loggedContact == null)
             {
                 loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);

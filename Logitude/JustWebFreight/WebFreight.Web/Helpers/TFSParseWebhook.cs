@@ -66,7 +66,7 @@ namespace WebFreight.Web.Helpers
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "qcxofyaix25ph4bxun4n2pzmicxhp3d3t2w6bgissmpgsjwn4egq";
+            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
             int workItemId = wi;
 
             // new VssOAuthAccessTokenCredential(personalAccessToken)
@@ -246,11 +246,14 @@ namespace WebFreight.Web.Helpers
             TMProjectRepository myTMProjectRepository = new TMProjectRepository(tenant);
             foreach (var item in list)
             {
-                projectNo = this.GetWorkItemById(Int32.Parse(item.WINumber), false);
-                item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
-                TMEmployeeTime tmEmployee = myTMEmployeeTimeRepository.GetSingle(item.Id, item.Tenant);
-                tmEmployee.ProjectId = item.ProjectId;
-                myTMEmployeeTimeRepository.Update(tmEmployee);
+                if (!string.IsNullOrEmpty(item.WINumber))
+                {
+                    projectNo = this.GetWorkItemById(Int32.Parse(item.WINumber), false);
+                    item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
+                    TMEmployeeTime tmEmployee = myTMEmployeeTimeRepository.GetSingle(item.Id, item.Tenant);
+                    tmEmployee.ProjectId = item.ProjectId;
+                    myTMEmployeeTimeRepository.Update(tmEmployee);
+                }
             }
             myTMEmployeeTimeRepository.SubmitChanges();
             return list;

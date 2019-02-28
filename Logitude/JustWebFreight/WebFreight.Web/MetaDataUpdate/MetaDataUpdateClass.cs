@@ -17768,7 +17768,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "English Name",
                 DisplayOnLookUp = true,
                 DisplayInSearchWindowFilters = false,
-                DisplayInSearchWindowList = true,
+                DisplayInSearchWindowList = false,
                 DisplayInLookUpIndex = 1,
                 DisplayInSearchWindowFiltersIndex = 1,
                 DisplayInSearchWindowListIndex = 1,
@@ -17848,7 +17848,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListLableDefaultText = "Local Name",
                 ListLocalDefaultText = "שם מקומי",
                 DisplayInSearchWindowFilters = true,
-                DisplayInSearchWindowList = true,
+                DisplayInSearchWindowList = false,
                 DisplayInLookUpIndex = 2,
                 DisplayInSearchWindowFiltersIndex = 2,
                 DisplayInSearchWindowListIndex = 2,
@@ -67107,7 +67107,7 @@ namespace WebFreight.Web.MetaDataUpdate
             RoleRepository RolesRepository = new RoleRepository(ObjectContext);
             Dictionary<string, Role> TenantRoles = RolesRepository.GetRoles(tenant).ToDictionary(d => d.Code, a => a);
 
-            Role Role_01 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "ADMN", Tenant = tenant, RoleTypeCode = "IN", Name = "Administrator", Description = "All options." }, RolesRepository, TenantRoles);
+            Role Role_01 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "ADMN", Tenant = tenant, RoleTypeCode = "IN", Name = "Administrator", Description = "All options except the billing features." }, RolesRepository, TenantRoles);
             Role Role_02 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "MANG", Tenant = tenant, RoleTypeCode = "IN", Name = "Manager", Description = "All options excluding Maintenance." }, RolesRepository, TenantRoles);
             Role Role_03 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "FROP", Tenant = tenant, RoleTypeCode = "IN", Name = "Freight Operations", Description = "All Operations options including A/R Invoicing.\nNo Accounting, Maintenance or Dashboard." }, RolesRepository, TenantRoles);
             Role Role_04 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "SALE", Tenant = tenant, RoleTypeCode = "SA", Name = "Salesman - Organization", Description = "All CRM options at Organization level. Can view shipments without Accounting." }, RolesRepository, TenantRoles);
@@ -67120,6 +67120,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Role Role_11 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "FOPL", Tenant = tenant, RoleTypeCode = "IN", Name = "Freight Operations - Limited", Description = "Operations options.\nNo Accounting, Maintenance or Dashboard." }, RolesRepository, TenantRoles);
             Role Role_12 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "CUCA", Tenant = tenant, RoleTypeCode = "IN", Name = "Customer Care", Description = "Customer care role." }, RolesRepository, TenantRoles);
             Role Role_13 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "FRL1", Tenant = tenant, RoleTypeCode = "IN", Name = "Freelancer 1", Description = "Freelancer user role." }, RolesRepository, TenantRoles);
+            Role Role_14 = AddRolesAndFeaturesClass.AddRole(new RoleDetails() { Code = "BILL", Tenant = tenant, RoleTypeCode = "IN", Name = "Billing", Description = "Billing against Logitude. Can manage Bluesnap account and edit the payment options." }, RolesRepository, TenantRoles);
 
 
             //============= Just For Testing ============= 

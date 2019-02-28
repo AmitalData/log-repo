@@ -221,11 +221,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Contact GetSingleContactByEmailSpecificTenant(string email, int tenant)
         {
-            UserRepository usersRepository = new UserRepository(tenant);
             Contact contact = (from a in context.Contacts
-                               where a.Email == email.ToLower() && (a.Tenant == tenant)
+                               where
+                               a.Email != null
+                               && a.Email.ToLower() == email.ToLower()
+                               && a.Tenant == tenant
                                select a).FirstOrDefault();
-
 
             return contact;
         }

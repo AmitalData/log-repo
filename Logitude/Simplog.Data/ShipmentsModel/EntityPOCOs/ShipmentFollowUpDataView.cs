@@ -503,6 +503,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? Volume { get; set; }
         public string BranchName { get; set; }
         public string MoveTypeName { get; set; }
+        public string AgentComputed { get; set; }
 
         public string LocalCustomsTransmissionsStatusCode { get; set; }
         public string LocalCustomsTransmissionsStatusName { get; set; }
@@ -610,6 +611,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? RegistryDate { get; set; }
         public bool IsAssembly { get; set; }
         public DateTime? FirstOperationalCloseDate { get; set; }
+        public DateTime? FirstAccountingCloseDate { get; set; }
 
         public string LastSharedEventId { get; set; }
         public string LastSharedEventName { get; set; }
@@ -655,5 +657,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string From { get; set; }
         public string To { get; set; }
         public string Origin { get; set; }
+        public string DeclarationNumber { get; set; }
+        public DateTime? DeclarationDate { get; set; }
     }
 }

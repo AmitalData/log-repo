@@ -48,6 +48,9 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     public DigitsAfterPoint: number;
     public IsRatioBox: boolean = false;
     CopyValueSubs: any;
+    public textboxHeight: string = '100%';
+
+
     @Output() KeyUp = new EventEmitter();
     @Output() ValueChanged = new EventEmitter();
     @Output() LostFocus = new EventEmitter();
@@ -68,7 +71,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() AddCommasToNumbers: boolean = true;
     @Input() Max: number;
     @Input() Min: number;
-    @Input() RowsCount: number = 2;
+    @Input() RowsCount: number;
 
     isFirstTime: boolean = true;
     private text: any;
@@ -263,6 +266,30 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             }, 1);
 
         }
+
+
+        //check rowscount
+        if(this.IsMultiline){
+            setTimeout(() => {
+
+                if(this.RowsCount){
+
+                    //calculate height: (rowcount * 18 row height) + 8 padding
+                    this.textboxHeight = ((this.RowsCount * 18) + 8)+'px';
+                }else{
+                    var _element = document.getElementById(this.InputId)
+                    var elHeight = _element.clientHeight;
+                    var calculatedRowsCount = (elHeight / 18);
+                    var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+
+                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                    this.textboxHeight = ((this.RowsCount * 18) + 8)+'px';
+
+                }
+
+            }, 100);
+        }
+
     }
 
     RunComponent() {
@@ -1550,17 +1577,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         //this.isExpanded = !this.isExpanded;
 
-        if (this.ObjectField) {
-            this.showMultiLineWindow();
-        } else {
-            var _resSrvc = new EntityResourceService();
-            _resSrvc.getEntityResourceByTableName(this.ObjectTableName)
-                .subscribe((response: any) => {
-                    var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
-                    this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
-                    this.showMultiLineWindow();
-                });
-        }
+        this.showMultiLineWindow();
 
 
 
@@ -1598,8 +1615,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     showMultiLineWindow() {
         // show window
         var windowArgs: any = {};
-        windowArgs.ObjectTableName = this.ObjectTableName;
-        windowArgs.ObjectFieldName = this.ObjectFieldName;
+        // windowArgs.ObjectTableName = this.ObjectTableName;
+        // windowArgs.ObjectFieldName = this.ObjectFieldName;
         windowArgs.TextValue = this.TextValue;
 
         var wind = new LogitudeWindow();

@@ -1,4 +1,4 @@
-select top(1)* from DIM_Tenants
+
 
     declare @Id as int
     declare @Company as varchar(100)

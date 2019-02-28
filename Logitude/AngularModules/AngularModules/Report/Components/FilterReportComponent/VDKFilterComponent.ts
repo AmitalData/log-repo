@@ -5,6 +5,7 @@ import { ReportFliter } from '../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { Component } from '@angular/core';
 import { DateTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     moduleId: module.id,
@@ -21,7 +22,7 @@ export class VDKFilterComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
-
+    public SupplierValues: string = "CS";
     ToDate: Date;
     FromDate: Date;
     private shipmentCustomerTypeCode: string;
@@ -37,6 +38,14 @@ export class VDKFilterComponent extends BaseComponent {
     set CustomerId(newValue: string) {
         if (this.customerId != newValue) {
             this.customerId = newValue;
+        }
+    }
+
+    private supplierId: string;
+    get SupplierId() { return this.supplierId; }
+    set SupplierId(newValue: string) {
+        if (this.supplierId != newValue) {
+            this.supplierId = newValue;
         }
     }
 
@@ -64,6 +73,12 @@ export class VDKFilterComponent extends BaseComponent {
 
     constructor() {
         super();
+        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+            this.SupplierValues = "CS,AG";
+        }
+        else {
+            this.SupplierValues = "CS";
+        }
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
@@ -80,15 +95,14 @@ export class VDKFilterComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
-        }
+            }
+            if (this.ToDate != null) {
+                if (this.FromDate > this.ToDate) {
+                    this.ValidationErrorsList.push("From Date cannot be greater than To Date");
+                }
+            }
 
-        if (this.ToDate == null) {
-            this.ValidationErrorsList.push("To Date is required");
-        }
-
-        if (this.FromDate > this.ToDate) {
-            this.ValidationErrorsList.push("From Date cannot be greater than To Date");
-        }
+       
 
             if (this.ValidationErrorsList.length == 0) {
                 this.queryFilterItems = new Array<QueryFilterItem>();
@@ -110,7 +124,7 @@ export class VDKFilterComponent extends BaseComponent {
                 this.queryFilterItems.push(new QueryFilterItem("BranchId", this.BranchId, "String"));
                 this.queryFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId, "String"));
                 this.queryFilterItems.push(new QueryFilterItem("EntityStatus", this.EntityStatus, "String"));
-                this.queryFilterItems.push(new QueryFilterItem("ShipmentCustomerTypeCode", this.ShipmentCustomerTypeCode, "String"));
+                this.queryFilterItems.push(new QueryFilterItem("SupplierId", this.supplierId, "String"));
                 
                 this.reportFliter = new ReportFliter();
                 this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;

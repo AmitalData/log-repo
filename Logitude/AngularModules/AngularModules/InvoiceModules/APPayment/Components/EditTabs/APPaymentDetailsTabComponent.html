@@ -482,7 +482,8 @@
                                         <log-cell-template template="let item" #logcelltemplate [IsFilled]="true" [TabIndex]="-1" [CellColor]="item.CellBackground">
                                             <div class="CenterCenter" style="width: 16px; height: 16px;">
                                                 <img *ngIf="item.NotMatchedVisibility" class="CenterCenter" title="Not Matched" src="./Images/Info.png" />
-                                                <img *ngIf="!item.ConnectFeature && !item.NotMatchedVisibility" class="CenterCenter"  title="You have no permission to connect invoices" src="./Images/Info.png" />
+                                                <CheckBox *ngIf="!item.ConnectFeature && !item.NotMatchedVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" title="You have no permission to connect invoices" [IsEnabled]="false"></CheckBox>
+
                                                 <CheckBox *ngIf="item.CheckBoxVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" title="{{item.NoPermision}}" [IsEnabled]="item.CheckBoxEnabled"></CheckBox>
                                             </div>
                                         </log-cell-template>

@@ -15,7 +15,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ChargesGroupCode).IsRequired().HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.VatTypeId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Description).HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.Description).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.IATACodeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DueTypeCode).HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.MeasurementId).IsRequired().HasMaxLength(15).IsUnicode(false);

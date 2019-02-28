@@ -57,6 +57,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string TruckNumber { get; set; }
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierName { get; set; }
+        public string AgentComputed { get; set; }
         public string CustomFieldId { get; set; }
         public string FromPortId { get; set; }
         public string FromPort { get; set; }
@@ -462,6 +463,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         #endregion 
 
         public DateTime? FirstOperationalCloseDate { get; set; }
+        public DateTime? FirstAccountingCloseDate { get; set; }
         public DateTime? AMSClosingDate { get; set; }
         public string UpdatedByPartner { get; set; }
 

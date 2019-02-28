@@ -2382,7 +2382,37 @@ export class AWBWizardComponent {
             }
 
             else {
-                this.SubmitUpdatingShipment();
+
+                var isConfirmingPorts: boolean = false;
+                if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+                    if (this.EntityPM.OriginMainCarriageFromPortId != this.EntityPM.MainCarriageFromPortId) {
+                        isConfirmingPorts = true;
+                    }
+
+                    else if (this.EntityPM.OriginFinalDestinationPortId != this.EntityPM.MainCarriageFinalDestinationPortId) {
+                        isConfirmingPorts = true;
+                    }
+                }
+
+                if (isConfirmingPorts) {
+
+                    this.StopBusyIndicator();
+
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Title = "Ports Changed";
+                    confirmWindow.Show("Updating the Master shipment ports will update the house shipment accordingly");
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+
+                            this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                            this.SubmitUpdatingShipment();                            
+                        }
+                    });
+                }
+
+                else {
+                    this.SubmitUpdatingShipment();
+                }
             }
         }
 
@@ -2400,9 +2430,15 @@ export class AWBWizardComponent {
         this.myService.insert(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
             if (!myRespone.HasError) {
                 this.EntityPM = myRespone.Result;
-                this.OnSaveCompletedSuccessfully();
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                this.SaveCompleted.emit(true);
+
+                if (this.isReloadingOnSave) {
+                    this.OnSaveCompletedSuccessfully();
+                }
+
+                else {
+                    this.SaveCompleted.emit(true);
+                    this.OnSaveCompletedSuccessfully();
+                }
             }
 
             else {
@@ -2422,8 +2458,15 @@ export class AWBWizardComponent {
         this.myService.update(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
             if (!myRespone.HasError) {
                 this.EntityPM = myRespone.Result;
-                this.OnSaveCompletedSuccessfully();
-                this.SaveCompleted.emit(true);
+
+                if (this.isReloadingOnSave) {
+                    this.OnSaveCompletedSuccessfully();
+                }
+
+                else {
+                    this.SaveCompleted.emit(true);
+                    this.OnSaveCompletedSuccessfully();
+                }               
             }
 
             else {
@@ -2436,6 +2479,7 @@ export class AWBWizardComponent {
     }
     private OnSaveCompletedSuccessfully() {
         if (this.isReloadingOnSave) {
+            this.isReloadingOnSave = false;
             this.isExecutingMethod = true;
             this.ReloadShipment();
         }

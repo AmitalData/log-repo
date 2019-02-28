@@ -57,6 +57,11 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
         public virtual BIReportsType BIReportsType { get; set; }
         [Column("AGGridOptionsXML")]
 	    public string AGGridOptionsXML { get; set; }
+        [ForeignKey("BIReportFolder")]
+        [Column("BIReportFolderId")]
+	    public string BIReportFolderId { get; set; }
+	      
+        public virtual BIReportFolder BIReportFolder { get; set; }
     }
 }
 	 

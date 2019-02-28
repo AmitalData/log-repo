@@ -102,7 +102,17 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.IsClosed = entityPM.IsClosed;
             }
 
-
+            if (entityPM.SetApproved)
+            {
+                if (entity.FirstApproveDate == null)
+                {
+                    if (entityPM.ApprovedDate != null)
+                    {
+                        entity.FirstApproveDate = entityPM.ApprovedDate;
+                        entityPM.FirstApproveDate = entityPM.ApprovedDate;
+                    }
+                }
+            }
 
             entityPM.SetVoided = false;
             entityPM.SetApproved = false;

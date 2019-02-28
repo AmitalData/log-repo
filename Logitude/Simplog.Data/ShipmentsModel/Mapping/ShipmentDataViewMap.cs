@@ -850,6 +850,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.LastSharedEventDate).HasColumnName("LastSharedEventDate");
             this.Property(t => t.GrossWeightPerTon).HasColumnName("GrossWeightPerTon");
             this.Property(t => t.FirstOperationalCloseDate).HasColumnName("FirstOperationalCloseDate");
+            this.Property(t => t.FirstAccountingCloseDate).HasColumnName("FirstAccountingCloseDate");
             this.Property(t => t.INTTRASIStatusCode).HasColumnName("INTTRASIStatusCode");
             this.Property(t => t.INTTRASIStatusName).HasColumnName("INTTRASIStatusName");
             this.Property(t => t.INTTRASIStatusDate).HasColumnName("INTTRASIStatusDate");
@@ -871,6 +872,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
 
 
             this.Property(t => t.Origin).HasColumnName("Origin");
+            this.Property(t => t.DeclarationDate).HasColumnName("DeclarationDate");
+            this.Property(t => t.DeclarationNumber).HasColumnName("DeclarationNumber");
         }
     }
 }

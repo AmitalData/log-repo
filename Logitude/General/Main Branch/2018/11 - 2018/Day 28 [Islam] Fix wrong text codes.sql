@@ -171,3 +171,11 @@ update TextCodes set Code = 'MessagingStock.Q.1-42388' where Code = 'AWBMessagin
 update TextCodes set Code = 'MessagingStock.TotalPriceHelpText' where Code = 'AWBMessagingStock.TotalPriceHelpText'
 update TextCodes set Code = 'MessagingStock.UpdateDateHelpText' where Code = 'AWBMessagingStock.UpdateDateHelpText'
 update TextCodes set Code = 'MessagingStock.UpdatedByUserIdHelpText' where Code = 'AWBMessagingStock.UpdatedByUserIdHelpText'
+delete from TextCodes where Code = 'AccountingSetting.CH.IsChronologicalDates'
+delete from TextCodes where Code = 'Customer.CH.BillToNameListLable'
+delete from TextCodes where Code = 'Participant.AccountingCardHelpText'
+delete from ObjectFields where FieldName = 'IsChronologicalDates'
+delete from TextCodes where Code like '%IsChronologicalDates%'
+ delete from textcodes where code=  'Participant.CH.AccountingCardListLable'
+
+
