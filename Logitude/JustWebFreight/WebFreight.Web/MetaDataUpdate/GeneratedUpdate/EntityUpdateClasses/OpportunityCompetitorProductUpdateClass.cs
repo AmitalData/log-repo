@@ -142,9 +142,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityId",
-					  						DefaultText =  @"Opportunity",
+					  						DefaultText =  "Opportunity",
 					  						ListFieldLable =  "OpportunityIdListLable",
-					  						ListLableDefaultText =  @"Opportunity",
+					  						ListLableDefaultText =  "Opportunity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -180,9 +180,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CompetitorId",
-					  						DefaultText =  @"Competitor",
+					  						DefaultText =  "Competitor",
 					  						ListFieldLable =  "CompetitorIdListLable",
-					  						ListLableDefaultText =  @"Competitor",
+					  						ListLableDefaultText =  "Competitor",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -218,9 +218,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProductTypeCode",
-					  						DefaultText =  @"Product Type",
+					  						DefaultText =  "Product Type",
 					  						ListFieldLable =  "ProductTypeCodeListLable",
-					  						ListLableDefaultText =  @"Product Type",
+					  						ListLableDefaultText =  "Product Type",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  

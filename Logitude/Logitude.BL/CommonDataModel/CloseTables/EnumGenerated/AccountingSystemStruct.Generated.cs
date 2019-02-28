@@ -15,6 +15,8 @@ namespace Logitude.BL.CommonDataModel.CloseTables
        public const string LogitudeGenericInterface = "GI";  
        public const string None = "NO";  
        public const string QuickBooks = "QB";  
+       public const string QuickBooksOnlineGlobal = "QBOG";  
+       public const string QuickBooksOnlineUS = "QBO";  
        public const string Rivheet = "RH";  
     }
 }
