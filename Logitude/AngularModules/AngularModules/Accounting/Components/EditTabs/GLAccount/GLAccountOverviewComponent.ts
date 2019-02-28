@@ -439,15 +439,18 @@ export class GLAccountOverviewComponent extends BaseComponent {
         return iconTxt;
     }
     GetReferencesText(transaction: LedgerTransactionList) {
-        var txt="";
-        if (transaction.Reference1) txt += transaction.Reference1;
-        txt += txt ? " / " : "";
-        if (transaction.Reference2) txt += transaction.Reference2;
-        txt += txt ? " / " : "";
-        if (transaction.Reference3) txt += transaction.Reference3;
+        var reference="";
 
-        return txt;
+        reference = this.pushText(reference, transaction.Reference1);
+        reference = this.pushText(reference, transaction.Reference2);
+        reference = this.pushText(reference, transaction.Reference3);
+
+        return reference;
     }
+    pushText(txt: string, target: string) {
+        return (target ? (!target.includes(txt) ? (target += ' / ' + txt) : target) : txt);
+    }
+
     GetLastTransactions() {
         this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.AccountPM.Id).subscribe(myResult => {
 
