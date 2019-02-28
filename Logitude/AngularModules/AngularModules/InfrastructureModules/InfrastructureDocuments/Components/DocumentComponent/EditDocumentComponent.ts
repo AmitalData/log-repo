@@ -285,12 +285,12 @@ export class EditDocumentComponent implements OnInit {
                                 this.ReloadFroalaEditor();
 
                                 if (this.IsEditHtml) {
-                                
+                                 
                                     var logWindow = new LogitudeWindow();
                                     logWindow.Width = 230;
                                     logWindow.Height = 85;
                                     logWindow.Title = "";
-                                    logWindow.IsFullScreen = true;
+                                    logWindow.IsHideWindowMargin = true;
                                     logWindow.IsHideHeader = true;
                                     logWindow.DataContext = "";
                                     logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/SimplogInfoPopupComponent');
