@@ -235,11 +235,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public isLogedInQBO: boolean = false;
     public isQBO: boolean = false;
     SetQuickBookProperties() {
-        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))
-            this.isQBO = true;
-        else
-            this.isQBO = false;
-
+       
         if (this.EntityPM.QBOAccessToken != null) {
             this.isLogedInQBO = true;
         }
@@ -422,14 +418,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         logWindow.Show('./Invoice/Components/Workspaces/QuickBooksLogin');
     }
     
-    DissConnectQBO(loadeding = true) {
+    DissConnectQBO(loadeding = true,force:boolean) {
         if (loadeding) {
             SessionLocator.CurrentSession.StartBusyIndicator("Disconnecting..");
             this.EntityPM.QBOAccessToken = null;
             this.EntityPM.QBOAccessTokenSecret = null;
         }
 
-        if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG") {
+        if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG" || force) {
             this.EntityPM.AccountingSystemCode = "NO";
             this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
                 if (myResponse1.HasError) {
@@ -509,12 +505,12 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
-            else if (loadedEntity.AccountingSystemCode != "QBO" && loadedEntity.AccountingSystemCode != "QBOG") {
+             if (loadedEntity.AccountingSystemCode != "QBO" && loadedEntity.AccountingSystemCode != "QBOG") {
                 this.EntityPM.AccountingSystemCode = loadedEntity.AccountingSystemCode;
                 this.EntityPM.QBOrealMeID = null;
                 this.EntityPM.QBOAccessToken = null;
                 this.EntityPM.QBOAccessTokenSecret = null;
-                this.DissConnectQBO(false);
+                this.DissConnectQBO(false,true);
             }
         });
     }
