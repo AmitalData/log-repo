@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .ItemBox {
         height: 40px;
@@ -82,7 +82,8 @@
                                             [DataContext]="DataContext"
                                             [SelectedValue]="EmployeeUserId"
                                             [LookUpTableName]="'User'"
-                                            [HideColumns]="true">
+                                            [HideColumns]="true"
+                                            >
                                     </LogLov>
                                 </td>
 
@@ -164,20 +165,20 @@
                         <div class="MediaFill">
                             <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemSourceCollection">
 
-                                <log-column [width]="'100'" [header]="'Work Date'" >
+                                <!-- WorkDate -->
+                                <log-column [width]="'100'" [header]="'Work Date'">
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                         <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
                                             {{item.WorkDate  | DateTimePipe:'SD'}}
                                         </div>
                                     </log-cell-template>
                                 </log-column>
-                              
-                                
-                                
-                                <log-column [width]="'100'" [header]="'Entry Time'" >
+
+                                <!-- EntryTime -->
+                                <log-column [width]="'100'" [header]="'Entry Time'">
 
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.Inactive">
-                                        <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode"  >
+                                        <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
                                             {{item.EntryTime  | DateTimePipe:'T'}}
                                             <img src="./Images/EditPencilActiving.png" title="{{item.EditedManualyEntryTime}}" *ngIf="item.RecordedEntryAddedManually" />
 
@@ -187,9 +188,9 @@
                                             <LogDatePicker [FocusOnMe]="'true'" [ObjectFieldName]="'EntryTime'" [InputType]="'time'" [TimeMode]="24" [NoObjectField]="true" [SelectedDateValue]="EntryTime" [ObjectTableName]="'TMOfficeHour'" [DataContext]="item.DataContext" [HideColumns]="true"></LogDatePicker>
                                         </div>
                                     </log-cell-template>
-                                </log-column>         
-                                
-                                
+                                </log-column>
+
+                                <!-- ExitTime -->
                                 <log-column [width]="'100'" [header]="'Exit Time'">
 
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.Inactive">
@@ -204,21 +205,20 @@
                                             <LogDatePicker [FocusOnMe]="'true'" [ObjectFieldName]="'ExitTime'" [InputType]="'time'" [TimeMode]="24" [NoObjectField]="true" [SelectedDateValue]="ExitTime" [ObjectTableName]="'TMOfficeHour'" [DataContext]="item.DataContext" [HideColumns]="true"></LogDatePicker>
                                         </div>
                                     </log-cell-template>
-                                </log-column>         
-                                
-                                
-                                <log-column [width]="'80'" [header]="'Duration'" >
+                                </log-column>
+
+                                <!-- Duration -->
+                                <log-column [width]="'80'" [header]="'Duration'">
 
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                        <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{'color':item.MinusItem?'red':'black'}" >
-                                         {{item.Duration}}
-                                        </div>                                       
+                                        <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{'color':item.Minutes < 0 ?'red':'black'}">
+                                            {{item.Minutes | TimeToHoursMinutesPipe}}
+                                        </div>
                                     </log-cell-template>
-                                </log-column>         
-                                
-                                
-                                
-                                <log-column [width]="'200'" [header]="'Description'" >
+                                </log-column>
+
+                                <!-- Description -->
+                                <log-column [width]="'200'" [header]="'Description'">
 
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.Inactive">
                                         <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
@@ -229,18 +229,19 @@
                                             <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Description'" [Text]="Description" [NoObjectField]="true" [ObjectTableName]="'TMOfficeHour'" [DataContext]="item.DataContext"></LogTextBox>
                                         </div>
                                     </log-cell-template>
-                                </log-column>          
-                                
+                                </log-column>
+
+                                <!-- Inactive -->
                                 <log-column [width]="'80'" [header]="'Inactive'">
 
                                     <log-cell-template template="let item" #logcelltemplate>
-                                            <table>
-                                                <tr>
-                                                    <td style="width:50px;min-width:50px;max-width:50px;align-items:center;justify-content:center;padding-left:25px;margin-top:3px"><CheckBox (Checked)="item.Inactive=$event" [IsChecked]="item.Inactive"></CheckBox></td>
-                                                </tr>
-                                            </table>
+                                        <table>
+                                            <tr>
+                                                <td style="width:50px;min-width:50px;max-width:50px;align-items:center;justify-content:center;padding-left:25px;margin-top:3px"><CheckBox (Checked)="item.Inactive=$event" [IsChecked]="item.Inactive"></CheckBox></td>
+                                            </tr>
+                                        </table>
                                     </log-cell-template>
-                                </log-column>                                                            
+                                </log-column>
 
                             </logitude-edit-grid>
                         </div>
@@ -248,24 +249,29 @@
 
                     </td>
                 </tr>
+
                 <tr style="height: 50px;">
                     <td style="vertical-align: bottom">
-                        <div style="height:50px;border:1px solid #E9E9E9; background: #E9E9E9; color:#1B90CB;border-radius:3px;vertical-align:central;">
+                        <div style="height:50px;border:1px solid #E9E9E9; background: #E9E9E9; color:#1B90CB;margin:2px;border-radius:3px;">
                             <table>
-                                <tr style="height: 32px;">
-                                   
+                                <tr>
+                                    <td style="width: 300px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 80px; font-size: 16px;">
+                                        {{TotalMinutes | TimeToHoursMinutesPipe}}
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
                     </td>
                 </tr>
                 <tr style="height: 15px;">
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <tr style="height:1px">
                     <td>
                         <div></div>
                     </td>

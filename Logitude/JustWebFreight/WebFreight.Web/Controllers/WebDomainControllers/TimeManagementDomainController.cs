@@ -440,27 +440,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
             return result;
         }
-        public HttpResponseMessage GetTimeOfficeClock(string employeeUserId, string FromDate, string ToDate)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
+        //public HttpResponseMessage GetTimeOfficeClock(string employeeUserId, string FromDate, string ToDate)
+        //{
+        //    try
+        //    {
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //        int tenant = authToken.Tenant;
+        //        string loggedUserEmail = authToken.Email;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("TMOfficeHour", "READ", tenant);
+        //        SecurityUtility.AuthenticationOnTenant(tenant);
+        //        SecurityUtility.CheckContactFeature("TMOfficeHour", "READ", tenant);
 
-                List<TMOfficeHour> myResult = this.GetTimeOffice(employeeUserId, FromDate, ToDate, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
+        //        List<TMOfficeHour> myResult = this.GetTimeOffice(employeeUserId, FromDate, ToDate, tenant);
+        //        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+        //    }
 
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //    }
+        //}
         public HttpResponseMessage GetNewTMProjectConnect(string MainId,string id)
         {
             try
@@ -552,31 +552,31 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     where a.ProjectNumber.StartsWith(ProjectNumber) && a.Tenant == tenant && a.ProjectNumber != ProjectNumber
                     select a);
         }
-        private List<TMOfficeHour> GetTimeOffice(string employeeUserId, string FromDate, string ToDate, int tenant)
-        {
+        //private List<TMOfficeHour> GetTimeOffice(string employeeUserId, string FromDate, string ToDate, int tenant)
+        //{
 
-            DateTime? myStartDate = DateHelper.GetDate(FromDate);
+        //    DateTime? myStartDate = DateHelper.GetDate(FromDate);
 
-            if (myStartDate == null)
-            {
-                throw new ApplicationException("Please select from date");
-            }
+        //    if (myStartDate == null)
+        //    {
+        //        throw new ApplicationException("Please select from date");
+        //    }
 
-            DateTime? myEndDate = DateHelper.GetDate(ToDate);
+        //    DateTime? myEndDate = DateHelper.GetDate(ToDate);
 
-            if (myEndDate == null)
-            {
-                throw new ApplicationException("Please select to date");
-            }
+        //    if (myEndDate == null)
+        //    {
+        //        throw new ApplicationException("Please select to date");
+        //    }
 
-            ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
-            IQueryable<TMOfficeHour> iQueryable = (from d in myContext.TMOfficeHours
-                                                   where d.Tenant == tenant && d.UserId == employeeUserId && d.WorkDate >= myStartDate && d.WorkDate <= myEndDate
-                                                   select d);
+        //    ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
+        //    IQueryable<TMOfficeHour> iQueryable = (from d in myContext.TMOfficeHours
+        //                                           where d.Tenant == tenant && d.UserId == employeeUserId && d.WorkDate >= myStartDate && d.WorkDate <= myEndDate
+        //                                           select d);
 
-            return iQueryable.ToList();
+        //    return iQueryable.ToList();
 
-        }
+        //}
         public HttpResponseMessage GetProjectsCounts(string loggedUserId)
         {
             try

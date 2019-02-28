@@ -980,6 +980,8 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     set InvoiceCurrencyId(value: string) {
         if (this.EntityPM.InvoiceCurrencyId != value) {
             this.EntityPM.InvoiceCurrencyId = value;
+            this.SetUIProperties_ExchangeRate();
+
             this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);
             this.ExchangeRateDate = this.GetCurrencyRateDate(value);
    

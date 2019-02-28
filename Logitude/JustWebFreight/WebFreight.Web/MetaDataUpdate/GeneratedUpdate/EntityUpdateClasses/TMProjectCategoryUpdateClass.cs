@@ -174,9 +174,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search ...",
+					  						DefaultText =  "Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  @"Search ...",
+					  						ListLableDefaultText =  "Search ...",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -230,9 +230,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -286,9 +286,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  @"Inactive",
+					  						DefaultText =  "Inactive",
 					  						ListFieldLable =  "InactiveListLable",
-					  						ListLableDefaultText =  @"Inactive",
+					  						ListLableDefaultText =  "Inactive",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -322,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCategoriesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectCategoryTextCode_0.Id, Code = "All Categories",  QueryGroupCode = "a849", IndexOrder = 0, Tenant = 0, ObjectTableId = TMProjectCategoryObjectTable.Id, QuerySection = "TMProjectCategory", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectCategoryFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query AllCategoriesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectCategoryTextCode_0.Id, Code = "All Categories",  QueryGroupCode = "a849", IndexOrder = 0, Tenant = 0, ObjectTableId = TMProjectCategoryObjectTable.Id, QuerySection = "TMProjectCategory", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectCategoryFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCategoriesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCategoriesQuery.Id, IndexOrder = 0, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TMProjectCategoryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -356,8 +356,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable TMProjectCategoryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMProjectCategory" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable TMProjectCategoryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMProjectCategory" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TMProjectCategoryGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMProjectCategory.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = TMProjectCategoryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TMProjectCategoryGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProjectCategory.Tab.General", ObjectTableId = TMProjectCategoryObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProjectCategoryFeatures.GEPG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -379,6 +380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable TMProjectCategoryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMProjectCategory" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature TMProjectCategoryFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectCategoryObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProjectCategory.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TMProjectCategoryFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectCategoryObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProjectCategory.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TMProjectCategoryFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectCategoryObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProjectCategory.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

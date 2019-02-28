@@ -579,6 +579,11 @@ export class TicketPM {
     public set EntityType(newValue: string) { if (this.entityType != newValue) { this.entityType = newValue; this.MarkAsDirty("EntityType"); } }
        
 	 
+    private entityNumber: string;
+    public get EntityNumber() { return this.entityNumber; }
+    public set EntityNumber(newValue: string) { if (this.entityNumber != newValue) { this.entityNumber = newValue; this.MarkAsDirty("EntityNumber"); } }
+       
+	 
 
     public OldEntityPM: TicketPM;
 		
