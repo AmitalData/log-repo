@@ -171,7 +171,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //Task 46455:
                 DestLineCode = "9999999999",
                 DeclarationId = myDeclarationPM.DeclarationNumber,
-                CustomIkuv = myDeclarationPM.CourierSuspentionReasonCode,
+                CustomIkuv = myDeclarationPM.CourierSuspentionCode,//task 49300
+                //CustomIkuv = myDeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
 
 
