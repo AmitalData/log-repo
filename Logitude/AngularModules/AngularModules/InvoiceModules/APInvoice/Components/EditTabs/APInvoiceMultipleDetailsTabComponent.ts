@@ -45,7 +45,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         this.BuildScreenData();
         this.Listen();
 
-        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
         }
     }

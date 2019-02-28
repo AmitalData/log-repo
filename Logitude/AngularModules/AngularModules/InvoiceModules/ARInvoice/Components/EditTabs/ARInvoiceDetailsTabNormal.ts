@@ -272,23 +272,16 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         var isFieldtEnabled = false;
 
         if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
-                if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                    isFieldtEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != null) {
-                    isFieldtEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != this.InvoiceCurrencyId) {
-                    isFieldtEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
+                if (this.InvoiceCurrencyId) {
+                    if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                        isFieldtEnabled = true;
+                    }
                 }
             }
         }
         
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_PrintNotes() {
@@ -1543,14 +1536,17 @@ export class ARInvoiceLineItem extends BaseComponent {
 
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
-                if (this.ForiegnCurrencyId != this.LocalCurrencyId && !this.IsExchangeRateFixed) {
-                    isFieldEnabled = true;
+                if (this.ForiegnCurrencyId) {
+                    if (this.ForiegnCurrencyId != this.LocalCurrencyId) {
+                        if (!this.IsExchangeRateFixed) {
+                            isFieldEnabled = true;
+                        }
+                    }
                 }
             }
         }
         
-        //this.IsRateEnabled = isFieldEnabled;
-        this.IsRateEnabled = true;
+        this.IsRateEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("ForiegnExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
     SetUIProperties_VAT() {

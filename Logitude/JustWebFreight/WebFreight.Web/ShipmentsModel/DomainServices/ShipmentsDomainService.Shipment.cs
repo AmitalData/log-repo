@@ -1062,6 +1062,14 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             ShipmentCustomFilter customfilters = new ShipmentCustomFilter(tenant);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+            var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
+
+            if (MySearchFilter != null)
+            {
+                var SearchTerm = MySearchFilter.FieldValue.ToString();
+                shipments = shipments.Where(a => a.SearchFields.Contains(SearchTerm));
+                queryOperations.QueryFilterItems.Remove(MySearchFilter);
+            }
             shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
@@ -1142,8 +1150,10 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 query2 = query2.OrderByDescending(d => d.CreateDateTime);
             }
 
-            query2 = query2.Skip(skippedShipments);
-            query2 = query2.Take(queryOperations.PageSize);
+            query2 = System.Data.Entity.QueryableExtensions.Skip(query2, () => skippedShipments);
+            query2 = System.Data.Entity.QueryableExtensions.Take(query2, () => queryOperations.PageSize);
+            //query2 = query2.Skip(skippedShipments);
+            //query2 = query2.Take(queryOperations.PageSize);
 
             List<ShipmentList> listQuery = query2.ToList();
 
