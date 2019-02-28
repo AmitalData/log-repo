@@ -222,7 +222,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Id = a.Id,
                 JournalNumber = a.JournalNumber,
                 OriginalJournalId = a.OriginalJournalId,
-                OriginalJournalName = a.OriginalJournal != null ? a.OriginalJournal.JournalNumber : null,
+              
                 SearchFields = a.SearchFields,
                 StatusCode = a.StatusCode,
                 StatusName = a.JournalStatusType != null ? a.JournalStatusType.EnglishName : null,
@@ -238,6 +238,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             };
 
+            if (journal.OriginalJournalId != null)
+            {
+              
+                JournalQueryService journalQueryService = new JournalQueryService(tenant);
+                JournalPM parent = journalQueryService.GetSingle(journal.OriginalJournalId, false, false);
+                journal.OriginalJournalName = parent.JournalNumber;
+
+            }
             JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
             List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(journal.Id, tenant);
             journal.JournalLines = lines;
@@ -300,6 +308,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Journal poco = null;
             poco = repository.GetJournalByIdAndTenant(id, tenant);
             JournalPM pm = this.GetEntityPM(poco);
+
+            if (pm.OriginalJournalId != null)
+            {
+
+                JournalQueryService journalQueryService = new JournalQueryService(tenant);
+                JournalPM parent = journalQueryService.GetSingle(pm.OriginalJournalId, false, false);
+                pm.OriginalJournalName = parent.JournalNumber;
+
+            }
             JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
             List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(id,tenant);
             pm.JournalLines = lines;
