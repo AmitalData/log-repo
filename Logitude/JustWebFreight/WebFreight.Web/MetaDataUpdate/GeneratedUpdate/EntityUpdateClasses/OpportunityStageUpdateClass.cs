@@ -145,9 +145,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityId",
-					  						DefaultText =  @"Opportunity",
+					  						DefaultText =  "Opportunity",
 					  						ListFieldLable =  "OpportunityIdListLable",
-					  						ListLableDefaultText =  @"Opportunity",
+					  						ListLableDefaultText =  "Opportunity",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  		
@@ -188,9 +188,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FromStageId",
-					  						DefaultText =  @"From Stage",
+					  						DefaultText =  "From Stage",
 					  						ListFieldLable =  "FromStageIdListLable",
-					  						ListLableDefaultText =  @"From Stage",
+					  						ListLableDefaultText =  "From Stage",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  		
@@ -231,9 +231,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ToStageId",
-					  						DefaultText =  @"To Stage",
+					  						DefaultText =  "To Stage",
 					  						ListFieldLable =  "ToStageIdListLable",
-					  						ListLableDefaultText =  @"To Stage",
+					  						ListLableDefaultText =  "To Stage",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  		
@@ -273,9 +273,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StartDate",
-					  						DefaultText =  @"Start Date",
+					  						DefaultText =  "Start Date",
 					  						ListFieldLable =  "StartDateListLable",
-					  						ListLableDefaultText =  @"Start Date",
+					  						ListLableDefaultText =  "Start Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  		
@@ -315,9 +315,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EndDate",
-					  						DefaultText =  @"End Date",
+					  						DefaultText =  "End Date",
 					  						ListFieldLable =  "EndDateListLable",
-					  						ListLableDefaultText =  @"End Date",
+					  						ListLableDefaultText =  "End Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  		
@@ -356,7 +356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStageDate",
-					  						DefaultText =  @"Last Stage Date",
+					  						DefaultText =  "Last Stage Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  		
@@ -396,7 +396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OwnerId",
-					  						DefaultText =  @"Owner",
+					  						DefaultText =  "Owner",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  		
@@ -435,7 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityTypeId",
-					  						DefaultText =  @"Opportunity Type",
+					  						DefaultText =  "Opportunity Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  		
@@ -459,6 +459,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable OpportunityStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpportunityStage" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature OpportunityStageFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityStage.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature OpportunityStageFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityStage.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature OpportunityStageFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityStage.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
