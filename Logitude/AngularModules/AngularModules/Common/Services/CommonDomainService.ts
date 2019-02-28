@@ -649,21 +649,7 @@ export class CommonDomainService {
         });
     }
 
-    UpdateComputingPartnerTranslationList(entityPMList: any[]) {
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-            var url = ServiceHelper.GetLogitudeURL() + 'api/TimeOfficeHourDomain';
 
-            return this._http.post(url, JSON.stringify(entityPMList), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
-                var myResponse = new ServiceResponse();
-                myResponse.Result = myResponse;
-                return myResponse;
-            });
-        });
-    }
     getNoneZeroTenantTranslation(computingPartnerId:string,ObjectTableId:string,Code:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
