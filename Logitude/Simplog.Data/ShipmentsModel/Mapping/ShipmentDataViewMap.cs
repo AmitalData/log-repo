@@ -868,6 +868,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.From).HasColumnName("From");
             this.Property(t => t.To).HasColumnName("To");
 
+
+
             this.Property(t => t.Origin).HasColumnName("Origin");
         }
     }
