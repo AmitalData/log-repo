@@ -2286,40 +2286,40 @@ namespace Logitude.BL.Helpers
                     if (quotePM.PackageType1Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType1Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType1Quantity + " x " + containerTypeCode;
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType1Quantity + " x " + containerTypePrintAs;
                         HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft , true));
                     }
 
                     if (quotePM.PackageType2Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType2Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType2Quantity + " x " + containerTypeCode;
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType2Quantity + " x " + containerTypePrintAs;
                         HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft , true));
                     }
 
                     if (quotePM.PackageType3Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType3Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType3Quantity + " x " + containerTypeCode;
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType3Quantity + " x " + containerTypePrintAs;
                         HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft , true));
                     }
 
                     if (quotePM.PackageType4Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType4Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType4Quantity + " x " + containerTypeCode;
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType4Quantity + " x " + containerTypePrintAs;
                         HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft , true));
                     }
 
                     if (quotePM.PackageType5Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType5Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType5Quantity + " x " + containerTypeCode;
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType5Quantity + " x " + containerTypePrintAs;
                         HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft, true));
                     }
                 }
@@ -2740,11 +2740,13 @@ namespace Logitude.BL.Helpers
 
                         HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
 
-                    }
+                    } 
 
                     if (setting.ShowMeasurementPackages)
                     {
-                        HtmlTemplate.Append(BuildTableColumn(chargePM.SaleMeasurementShortName, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
+                        var value = setting.RightToLeft ? chargePM.SaleMeasurementLocalName : chargePM.SaleMeasurementShortName;
+
+                        HtmlTemplate.Append(BuildTableColumn(value, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
 
                     }
 
@@ -2831,7 +2833,8 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowMeasurementContainers)
                     {
-                        HtmlTemplate.Append(BuildTableColumn(chargePM.SaleMeasurementShortName, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
+                        var value = setting.RightToLeft ? chargePM.SaleMeasurementLocalName : chargePM.SaleMeasurementShortName;
+                        HtmlTemplate.Append(BuildTableColumn(value, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
                         row += 1;
                     }
 

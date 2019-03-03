@@ -243,6 +243,8 @@
     <Content Include="Images\Icons\Folder_L.png" />
     <Content Include="Images\Icons\GreenV.png" />
     <Content Include="Images\Icons\OrangeV.png" />
+    <Content Include="Images\Icons\payments.png" />
+    <Content Include="Images\Icons\payments_Blue.png" />
     <Content Include="Images\Icons\RedX.png" />
     <Content Include="Images\Flags\--.png" />
     <Content Include="Images\Flags\XK.png" />
@@ -6277,6 +6279,7 @@
     <TypeScriptCompile Include="TimeManagement\Services\StandardPMs\TMProjectPMService.ts" />
     <TypeScriptCompile Include="TimeManagement\Services\StandardPMs\TMReleasePMService.ts" />
     <TypeScriptCompile Include="TimeManagement\Services\TimeManagementDomainService.ts" />
+    <TypeScriptCompile Include="TimeManagement\Services\TimeOfficeHourDomainService.ts" />
     <TypeScriptCompile Include="typings.d.ts" />
     <TypeScriptCompile Include="Warehouse\Components\AddEditWarehouseEntryPackagesAndContainers.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CutsomerTenantAccessManagementComponent.ts" />

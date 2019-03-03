@@ -74,6 +74,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonReverseTotalFIX_Click,
             _ButtonReverseGLBalanceFIX_Click,
             _AccountingIntegrityService_Click,
+            _ButtonBalanceByCollector_Click,
 
         }
 
@@ -663,6 +664,69 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
         }
 
+        
+#if true        
+                 protected void _ButtonBalanceByCollector_Click(object sender, EventArgs e)
+        {
+            BalanceGroupByCollectorReportParam myCollectorReportParam = null;
+            var myAgingReportParamDefault = new BalanceGroupByCollectorReportParam()
+            {
+                
+                //ChartOfAccountIdV1NotInUse = "",
+                VendorCustomerId = "",
+                Tenant = 1064,
+                //CurrenciesDetailedV1NotInUse = null,
+                CollectorId="1-81443",
+                GroupByDate = AgingReportParam.DateEnum.DueDate,
+                GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
+
+                AccountTypeCode = AgingReportParam.Aging4AccountTypeCodeEnum.Customer2,
+                AccountTypeCode_Options = "Customer2;Vendor3",
+            };
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonBalanceByCollector_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    //   myAgingReportParam = UpdateDefaultLedgerTransBalance(myAgingReportParam);
+                    return;
+                }
+                myCollectorReportParam = LogitudeXmlSerializer.DeserializeObject<BalanceGroupByCollectorReportParam>(_TextBoxParam.Text);
+
+                var collectorReport = new BalanceGroupByCollectorService(myCollectorReportParam);
+                var res = collectorReport.RunReport();
+                
+                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToXmlString(res);
+                _LabelResult.Text = xmlMyPeriodList;
+
+                ReloadGrid(System.Text.Encoding.UTF8.GetBytes(xmlMyPeriodList));
+            }
+            catch
+            {
+                myCollectorReportParam = null;
+                throw;
+            }
+            finally
+            {
+
+                _MyLastAction.Value = MyLastAction._ButtonBalanceByCollector_Click.ToString();
+                if (myCollectorReportParam == null)
+                {
+                    myCollectorReportParam = myAgingReportParamDefault;
+                }
+                var SerializeObjectByteParam = LogitudeXmlSerializer.SerializeObject<BalanceGroupByCollectorReportParam>(myCollectorReportParam);
+                _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam);
+                //_LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+
+        }
+
+
+#endif
         protected void _ButtonAging_Click(object sender, EventArgs e)
         {
             AgingReportParam myAgingReportParam = null;

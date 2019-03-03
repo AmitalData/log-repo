@@ -55,6 +55,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 entityPM.CreateDate = myDate;
                 entityPM.UpdateDate = myDate;
                 entityPM.OpenDate = myDate;
+                entityPM.EntityNumber = entityPM.ShipmentNumber != null ? entityPM.ShipmentNumber : entityPM.QuoteNumber;
                 if (string.IsNullOrEmpty(entityPM.GuidId))
                 {
                     // Guid 
@@ -77,6 +78,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 SLAHeaderQueryService sLAHeaderQuery = new SLAHeaderQueryService(context);
                 EmployeeGroupQueryService employeeGroupQuery = new EmployeeGroupQueryService(context);
                 TicketClassificationRepository repClassification = new TicketClassificationRepository(entityPM.Tenant);
+
 
                 if (!string.IsNullOrEmpty(entityPM.SecondaryClassificationId))
                 {
@@ -121,6 +123,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         protected override void OnUpdating(EntityPMs.TicketPM entityPM)
         {
             DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            entityPM.EntityNumber = entityPM.ShipmentNumber != null ? entityPM.ShipmentNumber : entityPM.QuoteNumber;
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);

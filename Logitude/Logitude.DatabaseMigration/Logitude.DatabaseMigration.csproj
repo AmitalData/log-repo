@@ -714,6 +714,10 @@
     <Compile Include="Migrations\201902202034350_add_AgentComputed_Shipments.Designer.cs">
       <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.cs" />
+    <Compile Include="Migrations\201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.Designer.cs">
+      <DependentUpon>201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.cs" />
     <Compile Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.Designer.cs">
       <DependentUpon>201902241639523_add_ClosedTable_NumberFormat_Khalid.cs</DependentUpon>
@@ -1201,6 +1205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902202034350_add_AgentComputed_Shipments.resx">
       <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.resx">
+      <DependentUpon>201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.resx">
       <DependentUpon>201902241639523_add_ClosedTable_NumberFormat_Khalid.cs</DependentUpon>
