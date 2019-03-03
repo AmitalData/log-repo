@@ -86,7 +86,7 @@ using Logitude.Accounting.Data;
 			       
 					   				   }
 				   
-				   temp.AccountingEntityId = MyEntityPM.AccountingEntityId;
+				   temp.AccountingEntityId = MyEntityPM.JournalNumber;
 				if(MyEntityPM.JournalLines != null && MyEntityPM.JournalLines.Count > 0)
 				{
 					 JournalLineQueryService JournalLineService1 = new JournalLineQueryService(Tenant);
@@ -151,7 +151,7 @@ using Logitude.Accounting.Data;
 					}
 			
 					
-					temp.AccountingEntityId = MyEntity.AccountingEntityId;
+					temp.JournalNumber = MyEntity.AccountingEntityId;
 					if(MyEntity.JournalLines != null && MyEntity.JournalLines.Count > 0)
 					{
 						JournalLineQueryService JournalLineService1 = new JournalLineQueryService(Tenant);

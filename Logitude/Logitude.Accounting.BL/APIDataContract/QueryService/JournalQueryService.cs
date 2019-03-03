@@ -35,7 +35,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 temp.Tenant = MyEntity.Tenant;
 
                 
-                //temp.JournalNumber = MyEntity.JournalNumber;
+               temp.JournalNumber = MyEntity.JournalNumber;
                 temp.CreateDate = MyEntity.CreateDate;
                 temp.AccountingDate = MyEntity.AccountingDate;
                 temp.ExternalNo = MyEntity.ExternalNo;
@@ -163,7 +163,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 }
 
 
-                temp.AccountingEntityId = MyEntity.AccountingEntityId;
+                temp.AccountingEntityId = MyEntity.JournalNumber;
              
 
 
