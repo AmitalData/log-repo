@@ -1507,8 +1507,8 @@ implements OnDestroy
                 windowArgs.CourierMasterPM = this.entityPM;
                 //windowArgs.Mode = mode;
 
-                logitudeWindow.Width = 650;
-                logitudeWindow.Height = 500;
+                logitudeWindow.Width = 550;
+                logitudeWindow.Height = 400;
                 logitudeWindow.IsShowCloseButton = true;
                 logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
                 logitudeWindow.WindowArgs = windowArgs;

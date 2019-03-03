@@ -519,5 +519,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
+
+        public HttpResponseMessage PostGatepassRequestMessage(GatepassRequestMessageRequestParams requestParams)
+        {
+            try
+            {
+                // use messageing service
+                var service = new GP_1030_GatepassRequestMessageMessagingService();
+                var responseData = service.Send(requestParams);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

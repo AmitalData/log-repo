@@ -399,12 +399,11 @@ export class CourierWorksheetListTemplate {
                             var logWindow = new LogitudeWindow();
                             logWindow.Width = 1000;
                             logWindow.Height = 350;
-                            logWindow.Title = "פעולות מיוחדות";
+                            logWindow.Title = "פעולות מיוחדות במסוף";
                             logWindow.WindowArgs = {
                                 MamanSpecialActionList: list
                             };
                             logWindow.ShowCloseButton = true;
-                            //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/AddEditMamanStickerComponent');
                             logWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/DeclarationMamanSpecialActionComponent');
                             logWindow.WindowClosed.subscribe(($event: any) => {
                                 //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
