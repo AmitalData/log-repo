@@ -56,5 +56,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public string AccountingEntityId { get; set; }
     
     public List<JournalLine> JournalLines { get; set; }
+    
+    public string JournalNumber { get; set; }
     }
 } 

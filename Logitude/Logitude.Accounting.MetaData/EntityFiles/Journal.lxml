@@ -178,6 +178,7 @@
       <DCField DCFieldName="&quot;AccountingEntity&quot;" FieldName="&quot;AccountingEntityCode&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;AccountingEntity&quot;" IsNullable="true" IsSpecialField="false" IsCustomType="true" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;AccountingEntityId&quot;" FieldName="&quot;AccountingEntityId&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="true" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;JournalLines&quot;" FieldName="&quot;JournalLines&quot;" IsKey="false" IsManualMapping="true" IsMulti="true" MultiTableName="&quot;JournalLine&quot;" FieldsDataType="&quot;List&lt;JournalLine&gt;&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="true" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
+      <DCField DCFieldName="&quot;JournalNumber&quot;" FieldName="&quot;JournalNumber&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

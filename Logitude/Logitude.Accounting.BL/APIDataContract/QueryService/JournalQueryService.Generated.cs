@@ -93,7 +93,8 @@ using Logitude.Accounting.Data;
 					 temp.JournalLines = JournalLineService1.JournalLineCustomDataMapping(MyEntityPM,MyEntityPM.JournalLines,Tenant);
 				}
 
-							 					
+							 
+				   temp.JournalNumber = MyEntityPM.JournalNumber;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -157,7 +158,8 @@ using Logitude.Accounting.Data;
 						temp.JournalLines = JournalLineService1.JournalLineCustomDataMappingAndValidatin(MyEntity,MyEntity.JournalLines,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 
+					temp.JournalNumber = MyEntity.JournalNumber;					   
 					   return temp;
 		    }
             catch (Exception ex)
