@@ -11,6 +11,8 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 import { GatepassRequestMessageRequestParams } from '../../../../Customs/DataContract/RequestParams/GatepassRequestMessageRequestParams';
 import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+
 
 @Component({
     moduleId: module.id,
@@ -27,11 +29,19 @@ export class GatepassRequestComponent extends BaseComponent {
     OkButtonEnabled: boolean;
     HeaderScreenHeight: any;
 
+    _entityResourceService: EntityResourceService = new EntityResourceService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
-    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
 
+    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
+    Loaded: boolean = false;
     constructor() {
-        super();            
+        super();
+
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            this.Loaded = true;
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        });
     }
 
     SetWindowArgs(args: any) {

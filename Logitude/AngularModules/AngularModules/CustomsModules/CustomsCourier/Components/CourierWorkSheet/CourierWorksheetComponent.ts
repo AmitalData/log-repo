@@ -1508,8 +1508,8 @@ implements OnDestroy
                 //windowArgs.Mode = mode;
 
                 logitudeWindow.Width = 650;
-                logitudeWindow.Height = 350;
-                logitudeWindow.IsShowCloseButton = false;
+                logitudeWindow.Height = 500;
+                logitudeWindow.IsShowCloseButton = true;
                 logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
