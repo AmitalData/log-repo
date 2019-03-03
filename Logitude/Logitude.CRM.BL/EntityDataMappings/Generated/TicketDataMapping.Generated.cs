@@ -196,7 +196,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         ContactTel, 
 	         SLAName, 
 	         SLAId, 
-	         EntityType,
+	         EntityType, 
+	         EntityNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

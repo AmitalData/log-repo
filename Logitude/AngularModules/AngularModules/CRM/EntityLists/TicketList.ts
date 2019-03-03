@@ -124,6 +124,7 @@ export class TicketList {
 	SLAName: string;
 	SLAId: string;
 	EntityType: string;
+	EntityNumber: string;
 	
 }
  
