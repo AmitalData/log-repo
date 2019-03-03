@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public string ExternalSystem { get; set; }
     
-    public string OriginalJournal { get; set; }
+    public string OriginalJournalNumber { get; set; }
     
     public string ApprovedByUser { get; set; }
     
