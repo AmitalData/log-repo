@@ -217,6 +217,9 @@ namespace Logitude.CRM.BL.EntityDataMappings
                             </t:RadDocument>";
 
             entityPM.TicketReplyto = this.GetReplyToEmail(entityPOCO.Tenant,entityPOCO.GuidId);
+            entityPM.EntityNumber = entityPM.ShipmentNumber != null ? entityPM.ShipmentNumber : entityPM.QuoteNumber;
+
+
             // Automation Fields
             ICRMContext context = CRMContext.GetContext(entityPM.Tenant);
             TicketClassificationPM classification = new TicketClassificationPM();

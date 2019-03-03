@@ -323,8 +323,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public set TextValue(newValue: any) {
         if (this.textValue != newValue) {
             //if (this.textValue != null && this.textValue != undefined) {
-                this.textValue = newValue;
+            this.textValue = newValue;
+            if (this.FilterChanged) {
                 this.FilterChanged.emit("FilterValueChanged");
+            }
             //}
             //else {
             //    this.textValue = newValue;

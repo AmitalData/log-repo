@@ -146,7 +146,6 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     // UIProperties
-    public RateIsEnabled: boolean = true;
     get IsScreenEnabled() {
         var result = true;
 
@@ -232,27 +231,24 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         this.SetUIProperties_ExchangeRate();
     }
+
+    public RateIsEnabled: boolean = false;
     SetUIProperties_ExchangeRate() {
         var isEnabled: boolean = false;
 
         if (this.IsScreenEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
-                if (this.EntityPM.PaymentInvoices.length > 0) {
-                    isEnabled = false;
-                }
-                else {
-                    isEnabled = true;
-                }
-
-                if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                    isEnabled = false;
-                }
-                else {
-                    isEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("ARPayment", "ARPaymentEditExchangeRate")) {
+                if (this.PaymentCurrencyId) {
+                    if (this.PaymentCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                        if (this.EntityPM.PaymentInvoices.length == 0) {
+                            isEnabled = true;
+                        }
+                    }
                 }
             }
         }
 
+        this.RateIsEnabled = isEnabled;
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);        
     }
@@ -336,16 +332,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
     }    
     GetRateIsEnabled() {
-        var result = true;
-        if (this.EntityPM != null) {
-            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {                
-                result = false;
-            }
-        }
-
         this.SetUIProperties_ExchangeRate();
-
-        this.RateIsEnabled = result;
     }
 
     // Load Data

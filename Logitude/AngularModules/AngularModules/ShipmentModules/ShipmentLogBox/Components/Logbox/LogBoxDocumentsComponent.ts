@@ -645,6 +645,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 //    }
                 //});
                 //SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");//
+                ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
                 this.StartBusyIndicator("Loading ...");
                 if (EntityPm.IsSharedWithForwarder == true) {
                     EntityPm.IsSharedWithForwarder = false;

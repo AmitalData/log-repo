@@ -146,7 +146,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.TraceConnected();
 
             //get glaccount fields
-            FillGLAccountFields(theEntityPm);
+            GLAccountPM gla = FillGLAccountFields(theEntityPm);
 
             // Full Accounting => Reconciliation
             if (theEntityPm.IsFullAccounting == true)
@@ -154,7 +154,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
-                FillPaymentInvoices(theEntityPm);
+                FillPaymentInvoices(theEntityPm, (bool) gla.IsMultiCurrency);
             }
 
 
@@ -199,6 +199,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public void Update(ARPaymentPM theEntityPm, bool mapComposition = false)
         {
             ValidateFullAccounting(theEntityPm);
+
+            //get glaccount fields
+            GLAccountPM gla = FillGLAccountFields(theEntityPm);
 
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
@@ -284,18 +287,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setVoided = theEntityPm.SetVoided;
             var SetReSendQBO = theEntityPm.SetReSendQBO;
 
-
-            //get glaccount fields
-            FillGLAccountFields(theEntityPm);
-
-            // Full Accounting => Reconciliation
+            //update amounts
             if (theEntityPm.IsFullAccounting == true)
-            {
-                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
-                    throw new ApplicationException("Hey! no glaccount provided!!");
+                UpdateFullAccountPaymentAmount(theEntityPm, gla.ReconcileMethodCode == "0");
+            else
+                UpdatePaymentOpenAmount();
 
-                CreateReconciliationForARPayment(theEntityPm);
-            }
 
             // PaymentCheque And CashBook
             this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved);
@@ -308,7 +305,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
 
-            this.UpdatePaymentOpenAmount();
+
             ARPaymentHelper service = new ARPaymentHelper();
             if (payment.ExternalAccountingEntityId != null || SetReSendQBO)
             {
@@ -323,6 +320,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // DropBox
             this.CreateARInvoiceMessage(setApproved);
 
+
+            // Full Accounting => Reconciliation
+            if (theEntityPm.IsFullAccounting == true)
+            {
+                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+                    throw new ApplicationException("Hey! no glaccount provided!!");
+
+                CreateReconciliationForARPayment(theEntityPm);
+            }
+
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
             this.TraceConnected();
@@ -330,31 +337,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildEntitiesNumbers();
         }
 
-
-        private void ValidateFullAccounting(ARPaymentPM _payment)
-        {
-            if (!_payment.IsFullAccounting)
-                return;
-
-            bool showLocal = false;
-
-            // Validate lines amount to reconcile
-            if (_payment.InvoicesTransactions
-                .Any(d =>
-                    d.AmountToReconcile > CalculateInvoiceAmount(d, _payment.GLAccountRecoMethodCode == "0")
-                ))
-                throw new ApplicationException(TextCodesTranslator.TranslateText("Reconciliations.O.ErrorsInSelectedLines", _payment.Tenant, showLocal));
-
-
-            // Validate sum of line's amount to reconcile
-            decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
-            decimal payAmount = Convert.ToDecimal(_payment.GLAccountRecoMethodCode == "0"?_payment.AmountInLocalCurrency:_payment.AmountInPaymentCurrency);
-            if (amount2reconcile > payAmount)
-                throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.selectedinvoicesishigherthanpayamount", _payment.Tenant, showLocal));
-
-
-
-        }
 
 
         private void ValidateHigherStatus()
@@ -1592,6 +1574,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var recoService = ContainerAccessor.Container.Resolve(typeof(IReconciliationServiceExt), "ReconciliationServiceExt", new ParameterOverride("", 1)) as IReconciliationServiceExt;
             recoService.CreateReconciliation(_reco);
 
+
         }
         public void UpdateTransactions(ARPaymentPM paymentPM)
         {
@@ -1692,27 +1675,107 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        void FillGLAccountFields(ARPaymentPM paymentPM)
+        GLAccountPM FillGLAccountFields(ARPaymentPM paymentPM)
         {
             GLAccountPM gla = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
             paymentPM.GLAccountId = gla.Id;
             paymentPM.GLAccountRecoMethodCode = gla.ReconcileMethodCode;
+            return gla;
         }
 
-        void FillPaymentInvoices(ARPaymentPM paymentPM)
+        void FillPaymentInvoices(ARPaymentPM paymentPM, bool isMultiCurrency)
         {
+            bool useLocalRecoMethod = paymentPM.GLAccountRecoMethodCode == "0";
+
             foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
             {
-                ARPaymentInvoicePM payInvPM = new ARPaymentInvoicePM()
+                ARPaymentInvoicePM payInvPM;
+                if (useLocalRecoMethod || isMultiCurrency)
                 {
-                    ARInvoiceId = invTrans.SourceId,
-                    LocalAmount = Convert.ToDouble(invTrans.AmountToReconcile),
-                    ForeignAmount = Convert.ToDouble(invTrans.AmountToReconcile / invTrans.ExchangeRate),
-                    ForeignCurrencyId = invTrans.CurrencyId
-                };
+                    payInvPM = new ARPaymentInvoicePM()
+                    {
+                        ARInvoiceId = invTrans.SourceId,
+                        LocalAmount = (double)invTrans.AmountToReconcile,
+                        ForeignAmount = (double)(invTrans.AmountToReconcile / invTrans.ExchangeRate),
+                        ForeignCurrencyId = invTrans.CurrencyId
+                    };
+                }
+                else
+                {
+                    payInvPM = new ARPaymentInvoicePM()
+                    {
+                        ARInvoiceId = invTrans.SourceId,
+                        LocalAmount = Convert.ToDouble(invTrans.AmountToReconcile * invTrans.ExchangeRate),
+                        ForeignAmount = (double)invTrans.AmountToReconcile,
+                        ForeignCurrencyId = invTrans.CurrencyId
+                    };
+                }
+
                 paymentPM.PaymentInvoices.Add(payInvPM);
             }
         }
+
+        private void ValidateFullAccounting(ARPaymentPM _payment)
+        {
+            if (!_payment.IsFullAccounting)
+                return;
+
+            bool showLocal = false;
+
+            // Validate lines amount to reconcile
+            if (_payment.InvoicesTransactions
+                .Any(d =>
+                    d.AmountToReconcile > CalculateInvoiceAmount(d, _payment.GLAccountRecoMethodCode == "0")
+                ))
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Reconciliations.O.ErrorsInSelectedLines", _payment.Tenant, showLocal));
+
+
+            // Validate sum of line's amount to reconcile
+            decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            decimal payAmount = Convert.ToDecimal(_payment.GLAccountRecoMethodCode == "0" ? _payment.AmountInLocalCurrency : _payment.AmountInPaymentCurrency);
+            if (amount2reconcile > payAmount)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.selectedinvoicesishigherthanpayamount", _payment.Tenant, showLocal));
+
+
+
+        }
+
+        void UpdateFullAccountPaymentAmount(ARPaymentPM paymentPM, bool useLocalRecoMethod)
+        {
+            //
+            // update payment amount:
+            decimal amount2reconcile = paymentPM.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            //paymentPM.OpenAmount
+            //    = (useLocalRecoMethod ? paymentPM.AmountInLocalCurrency : paymentPM.AmountInPaymentCurrency)
+            //       - (double) amount2reconcile;
+
+            // amount sent updated from clientt
+            //paymentPM.OpenAmount = paymentPM.OpenAmount - (double)amount2reconcile;
+
+
+            //
+            // update invoices amount
+            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
+            {
+                //get invoice
+                ARInvoice invoice = GetInvoice(invTrans.SourceId, tenant);
+
+                //update
+                double? invoiceAmountDue = MethodHelper.Round((invoice.AmountDue - (double)invTrans.AmountToReconcile), 2);
+
+                invoice.AmountDue = invoiceAmountDue;
+                invoice.AmountDueInLocalCurrency = MethodHelper.Round(invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate, 2);
+                invoice.AmountDueInProfitCurrency = MethodHelper.Round(invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate, 2);
+
+                invoiceRepository.Update(invoice);
+            }
+
+
+
+
+
+        }
+
         #endregion
     }
 }

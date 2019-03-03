@@ -62,7 +62,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string SaleMeasurementId { get; set; }
         public string SaleMeasurementCode { get; set; }
         public string SaleMeasurementShortName { get; set; }
+        public string SaleMeasurementLocalName { get; set; }
 
+        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CostCurrencyId { get; set; }
         public string CostCurrencyCode { get; set; }

@@ -44,7 +44,7 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
         [Column("Description")]
 	    public string Description { get; set; }
         [Column("Index")]
-	    public int Index { get; set; }
+	    public int? Index { get; set; }
     }
 }
 	 

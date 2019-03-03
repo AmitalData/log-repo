@@ -200,6 +200,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
         temp.placeholder = "";
         temp.style.background = "rgba(0, 0, 0, 0)";
+        temp.select();
     }
 
     FillPlaceHolder() {
@@ -368,9 +369,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
             queryColumnList[i].IndexOrder = i;
         }
     }
-    btnUp_Click() {
+    btnUp_Click(selectedItem) {
 
-        var item = this.FieldSelectedItem;
+        var item = selectedItem;//this.FieldSelectedItem;
         if (item != null) {
             //this.HasChanges = true;
             var i = this.SelectedFieldsDataSource.indexOf(item);
@@ -388,9 +389,14 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
 
     }
-
-    btnDown_Click() {
-        var item = this.FieldSelectedItem;
+    //ShowArrows: boolean = false;
+    ShowOrderArrows(item) {
+        this.FieldSelectedItem = item;
+    }
+    //ShowOrderArrows(item) {
+    //}
+    btnDown_Click(selectedItem) {
+        var item = selectedItem;//this.FieldSelectedItem;
         if (item != null) {
             //this.HasChanges = true;
 

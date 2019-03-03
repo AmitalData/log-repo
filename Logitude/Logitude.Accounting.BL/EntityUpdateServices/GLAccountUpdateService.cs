@@ -251,7 +251,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPM.InternalNumber == null || entityPM.InternalNumber == "") entityPM.InternalNumber = CodeCounter.GetNumber("GLAccount", entityPM.Tenant).ToString();
+            if (entityPM.InternalNumber == null || entityPM.InternalNumber == "") entityPM.InternalNumber = /*CodeCounter*/(new CodeCounterWrapper(true)).GetNumber("GLAccount", entityPM.Tenant).ToString();
             if (entityPM.Id == null || entityPM.Id == "") entityPM.Id = IdCounter.GetNumber("GLAccount", entityPM.Tenant);
             if (entityPM.ReconcileMethodCode == null || entityPM.ReconcileMethodCode == "") entityPM.ReconcileMethodCode = "0";
             GLAccountCurrencyPM gLAccountCurrency = null;
