@@ -85,7 +85,7 @@ export class DWAskUserFiltersComponent implements OnInit {
         }
         this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.CurrentSession.StartBusyIndicator("Loading " + this.count);
             this.GetRowDataRecursive();
         }
         else {
