@@ -160,7 +160,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BluesnapEAWBSContractId { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string BluesnapOneTimeContractId { get; set; }
+        public string BluesnapOneTimeContract { get; set; }
 
 
 

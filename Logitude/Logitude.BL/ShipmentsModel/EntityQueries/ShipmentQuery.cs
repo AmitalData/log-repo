@@ -379,6 +379,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.FinalDistenationPortId = masterData.MainCarriageToPortId;
                     shipmentPM.MainCarriageFinalDestinationPortId = masterData.MainCarriageFinalDestinationPortId;
                     shipmentPM.MainCarriageFromPortId = masterData.MainCarriageFromPortId;
+
+
+                    shipmentPM.OriginMainCarriageFromPortId = masterData.MainCarriageFromPortId;
+                    shipmentPM.OriginFinalDestinationPortId = masterData.MainCarriageFinalDestinationPortId;
+
                     shipmentPM.MainCarriageToPortId = masterData.MainCarriageToPortId;
 
                     PortPM mainCarriageFromPort = portQuery.GetSinglePM(masterData.MainCarriageFromPortId, masterData.Tenant);
@@ -11662,7 +11667,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
                     From = f.From,
                     To = f.To,
-                    Origin = f.Origin
+                    Origin = f.Origin,
+                    DeclarationDate = f.DeclarationDate,
+                    DeclarationNumber = f.DeclarationNumber,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

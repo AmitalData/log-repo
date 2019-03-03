@@ -345,7 +345,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
                         LOVAdditionalColumns = a.LOVAdditionalColumns,
-                        Category = aa.DWCategoryCode,
+                        Category = aa.DWCategory.Name,
                         CategoryIndex = b.Index,
                         HideTree = a.HideTree,
                     }

@@ -28,7 +28,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapCRMContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BluesnapEAWBContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BluesnapEAWBSContractId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.BluesnapOneTimeContractId).HasMaxLength(15).IsUnicode(false); 
+            this.Property(t => t.BluesnapOneTimeContract).HasMaxLength(40).IsUnicode(false); 
            
             this.Property(t => t.AWBMessagesCCSTypeCode).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.PIMA).HasMaxLength(25).IsUnicode(false);
@@ -101,7 +101,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapCRMContractId).HasColumnName("BluesnapCRMContractId");
             this.Property(t => t.BluesnapEAWBContractId).HasColumnName("BluesnapEAWBContractId");
             this.Property(t => t.BluesnapEAWBSContractId).HasColumnName("BluesnapEAWBSContractId");
-            this.Property(t => t.BluesnapOneTimeContractId).HasColumnName("BluesnapOneTimeContractId");
+            this.Property(t => t.BluesnapOneTimeContract).HasColumnName("BluesnapOneTimeContract");
 
             this.Property(t => t.AWBMessagesCCSTypeCode).HasColumnName("AWBMessagesCCSTypeCode");
             this.Property(t => t.PIMA).HasColumnName("PIMA");
@@ -177,7 +177,6 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapCRMContractId);
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBContractId);
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBSContractId);
-            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapOneTimeContractId);
             this.HasOptional(t => t.AWBMessagesCCSType).WithMany().HasForeignKey(d => d.AWBMessagesCCSTypeCode);
             this.HasOptional(t => t.TenantType).WithMany().HasForeignKey(d => d.TenantTypeCode);
 

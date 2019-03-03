@@ -256,6 +256,7 @@
     <Content Include="Images\Menu\Documents.png" />
     <Content Include="Images\Menu\Documents.Selected.png" />
     <Content Include="Images\Menu\Shared.png" />
+    <Content Include="Images\numberIcon.png" />
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
@@ -6272,6 +6273,7 @@
     <TypeScriptCompile Include="TimeManagement\Services\StandardPMs\TMProjectPMService.ts" />
     <TypeScriptCompile Include="TimeManagement\Services\StandardPMs\TMReleasePMService.ts" />
     <TypeScriptCompile Include="TimeManagement\Services\TimeManagementDomainService.ts" />
+    <TypeScriptCompile Include="TimeManagement\Services\TimeOfficeHourDomainService.ts" />
     <TypeScriptCompile Include="typings.d.ts" />
     <TypeScriptCompile Include="Warehouse\Components\AddEditWarehouseEntryPackagesAndContainers.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CutsomerTenantAccessManagementComponent.ts" />

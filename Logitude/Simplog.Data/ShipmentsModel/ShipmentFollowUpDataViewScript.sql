@@ -12,6 +12,7 @@ GO
 CREATE VIEW [dbo].[ShipmentFollowUpDataView]
 AS
 SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.ShipperReference1, dbo.Shipments.ARInvoiceIssued, dbo.Shipments.CreditNoteIssued,
+						 dbo.Shipments.DeclarationNumber, dbo.Shipments.DeclarationDate,
                          dbo.ShipmentMasterDatas.Tenant AS ShipmentMasterDataTenant, dbo.ShipmentMasterDatas.Id AS ShipmentMasterDataId, 
                          dbo.ShipmentMasterDatas.MainCarriageFromPortId, dbo.ShipmentMasterDatas.MainCarriageToPortId, 
 						 dbo.Shipments.LastFinalDestination, [dbo].[Shipments].[From], [dbo].[Shipments].[To], dbo.Shipments.Origin, dbo.Shipments.FirstPickupETA, dbo.Shipments.FirstPickupETD,

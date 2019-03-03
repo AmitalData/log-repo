@@ -14,5 +14,8 @@ namespace WebFreight.Web.Helpers
         public string ProfitCurrencyCode { get; set; }
         public string TenantDateTimeFormat { get; set; }
         public bool IsInvoicesMenuEnabled { get; set; }
+        public bool IsAgentShared { get; set; }
+        public bool IsShipperShared { get; set; }
+        public bool IsConsigneeShared { get; set; }
     }
 }

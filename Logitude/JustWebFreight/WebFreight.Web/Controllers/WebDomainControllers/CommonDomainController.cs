@@ -1647,6 +1647,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     iAccountingSetting.AllowVoidARP = false;
                     iAccountingSetting.AllowManualInvoiceNumber = false;
                     iAccountingSetting.IsARInvoiceChronologicalDates = true;
+                    iAccountingSetting.IsARPaymentChronologicalDates = true;
                     iAccountingSetting.IsVatNumberMandatoryInAP = true;
                     iAccountingSetting.IsVatNumberMandatoryInAR = true;
                     iAccountingSettingRepository.Update(iAccountingSetting);

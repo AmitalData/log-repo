@@ -808,7 +808,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
 
                     var isValidatingChronological = false;
-                    if(isNew && (entityPM.IsAutoCredit || entityPM.SetApproved))
+                    if (entityPM.SetApproved)
+                    {
+                        isValidatingChronological = true;
+                    }
+
+                    else if (entityPM.IsAutoCredit && isNew)
                     {
                         isValidatingChronological = true;
                     }

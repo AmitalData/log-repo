@@ -714,13 +714,40 @@ namespace CommunicationWorkerRole
                         string Id = final.Id;
                         APInvoiceId = Id;
                         final.Id = null;
-                            Bill Result = service.Add(final) as Bill;
+                        Bill Result;
+                        if (!string.IsNullOrEmpty(final.domain))
+                        {
+                            QueryService<Bill> invoiceQueryService = new QueryService<Bill>(serviceContext);
+                            List<Bill> myResult = invoiceQueryService.ExecuteIdsQuery("Select * from Bill where Id='" + final.domain + "'").ToList();
+                            if (myResult.Count != 0)
+                            {
+                                SendingSuccessfully(waitingCommLog, tenant, final.domain, null, Id);
+                            }
+                            else
+                            {
+                                final.domain = null;
+                                Result = service.Add(final) as Bill;
+                                if (Result == null)
+                                    SendingFail(waitingCommLog, tenant, "Failed to Send", null, Id);
+                                else
+                                {
+                                    SendingSuccessfully(waitingCommLog, tenant, Result.Id, null, Id);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            final.domain = null;
+                            Result = service.Add(final) as Bill;
                             if (Result == null)
                                 SendingFail(waitingCommLog, tenant, "Failed to Send", null, Id);
                             else
                             {
-                                SendingSuccessfully(waitingCommLog, tenant, Result.Id,null, Id);
-                            }                        
+                                SendingSuccessfully(waitingCommLog, tenant, Result.Id, null, Id);
+                            }
+
+
+                        }
                     }
 
 

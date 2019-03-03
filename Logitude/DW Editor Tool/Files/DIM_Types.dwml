@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <entity Id="&quot;6b653954-cd5e-4a9f-8bff-0ebcffa48462&quot;" Code="&quot;DIM_Types&quot;" Name="&quot;DIM_Types&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="true" DefaultFilterBy="&quot;[Name]&quot;">
   <fields>
-    <field Id="&quot;c9c3fa88-ab8c-49c0-a289-807446a3e86e&quot;" Code="&quot;[Code]&quot;" Name="&quot;Code&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="4" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" />
-    <field Id="&quot;07591786-fc3a-406a-ad89-0794f2ce654d&quot;" Code="&quot;[Name]&quot;" Name="&quot;Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="40" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" />
+    <field Id="&quot;c9c3fa88-ab8c-49c0-a289-807446a3e86e&quot;" Code="&quot;[Code]&quot;" Name="&quot;Code&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="4" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" LOVAdditionalColumns="&quot;[Name]&quot;" HideTree="false" />
+    <field Id="&quot;07591786-fc3a-406a-ad89-0794f2ce654d&quot;" Code="&quot;[Name]&quot;" Name="&quot;Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="40" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="true" LOVAdditionalColumns="&quot;[Code]&quot;" HideTree="false" />
   </fields>
 </entity>

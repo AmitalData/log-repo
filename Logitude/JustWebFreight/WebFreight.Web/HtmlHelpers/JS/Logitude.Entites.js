@@ -122,6 +122,7 @@ var ShipmentListClass = function () {
 
     this.DeliveryDate = "";
     this.DeliveryDateVisibility = "collapse";
+    this.MyPartnerVisibility = "collapse";
 };
 
 var InvoiceListClass = function () {
@@ -203,7 +204,7 @@ function IsLCLShipment(shipment) {
     return Result;
 }
 
-function BuildShipmentsList(shipments, TenantDateTimeFormat) {
+function BuildShipmentsList(shipments, TenantDateTimeFormat, IsAgentShared, IsShipperShared, IsConsigneeShared) {
     
     var ShipmentsList = [];
 
@@ -258,6 +259,12 @@ function BuildShipmentsList(shipments, TenantDateTimeFormat) {
         var _myPartnerName = "";
 
         if (shipment.ShipmentLevelCode == "C") {
+            if (!IsAgentShared) {
+                item.MyPartnerVisibility = "collapse";
+            }
+            else {
+                item.MyPartnerVisibility = "visible";
+            }
 
             _myPartnerName = shipment.AgentName;
 
@@ -269,10 +276,24 @@ function BuildShipmentsList(shipments, TenantDateTimeFormat) {
 
         else {
             if (shipment.DirectionId == "I") {
+                if (!IsShipperShared) {
+                    item.MyPartnerVisibility = "collapse";
+                }
+                else {
+                    item.MyPartnerVisibility = "visible";
+                }
+
                 _myPartnerName = shipment.Shipper;
             }
 
             else {
+                if (!IsConsigneeShared) {
+                    item.MyPartnerVisibility = "collapse";
+                }
+                else {
+                    item.MyPartnerVisibility = "visible";
+                }
+
                 _myPartnerName = shipment.Consignee;
             }
 
@@ -1294,7 +1315,7 @@ function BuildPackagesTabPageViewModel(shipment) {
                     var itemQuantity = $.trim(item.Quantity) == "" ? 0 : item.Quantity;
                     var itemContainer = $.trim(item.ContainerNumber) == "" ? "" : item.ContainerNumber;
                     var itemNumberOfInsidePackages = $.trim(item.NumberOfInsidePackages) == "" ? 0 : item.NumberOfInsidePackages;                    
-                    var itemSeal = $.trim(item.Seal) == "" ? "" : item.Seal;
+                    var itemSeal = $.trim(item.ShipperSeal) == "" ? "" : item.ShipperSeal;
                     var itemVolume = $.trim(item.Volume) == "" ? 0 : item.Volume;
                     //var itemVolumetricWeight = $.trim(item.VolumetricWeight) == "" ? 0 : item.VolumetricWeight;
                     var itemGrossWeight = $.trim(item.Weight) == "" ? 0 : item.Weight;
