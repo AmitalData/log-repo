@@ -1601,7 +1601,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             //amount
             decimal invoiceAmountToReconcileSum = paymentPM.InvoicesTransactions.Sum(d => d.AmountToReconcile);
-            _paymentLine.ReconciliationAmount = invoiceAmountToReconcileSum;
+            _paymentLine.ReconciliationAmount = invoiceAmountToReconcileSum * -1;
 
             //currency
             _paymentLine.CurrencyId = useLocalRecoMethod ? paymentPM.LocalCurrencyId : paymentPM.PaymentCurrencyId;
@@ -1629,7 +1629,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             bool useLocalRecoMethod = paymentPM.GLAccountRecoMethodCode == "0";
 
             //amount
-            _invoiceLine.ReconciliationAmount = invoiceTransactionPM.AmountToReconcile > 0 ? invoiceTransactionPM.AmountToReconcile * -1 : invoiceTransactionPM.AmountToReconcile;
+            _invoiceLine.ReconciliationAmount = invoiceTransactionPM.AmountToReconcile;
 
             //currency
             _invoiceLine.CurrencyId = useLocalRecoMethod ? paymentPM.LocalCurrencyId : paymentPM.PaymentCurrencyId;
