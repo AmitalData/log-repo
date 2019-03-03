@@ -69,7 +69,7 @@ namespace WebFreight.Web
             userdata.Token = logintokenparam.Token;
             return userdata;
         }
-
+         
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool isAngular)
         {
             UserData userData = null;
