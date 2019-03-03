@@ -39,6 +39,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.MeasurementId).HasColumnName("MeasurementId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.IsRefrigerated).HasColumnName("IsRefrigerated");
+            this.Property(t => t.IsVehicle).HasColumnName("IsVehicle");
 
             // Relationships
             this.HasOptional(t => t.Measurement).WithMany().HasForeignKey(d => d.MeasurementId);
