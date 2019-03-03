@@ -306,7 +306,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         private TimeManagementAPIHelper FillDataEntryTimeSheetList(string employeeUserId, string locationCode, DateTime? myStartDate, DateTime? myEndDate, int tenant)
         {
-            int count = 1;
             TimeManagementAPIHelper myResult = new TimeManagementAPIHelper()
             {
                 Id = tenant,
@@ -315,89 +314,128 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 StartDate = myStartDate,
             };
 
-            ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
-            IQueryable<TMEmployeeTime> iQueryable = (from d in myContext.TMEmployeeTimes
-                                                     where d.Tenant == tenant && d.DateOfWork != null
-                                                     select d);
-            List<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d).ToList();
-            List<TMLocation> allLocations = (from d in myContext.TMLocations select d).ToList();
+            if (myStartDate != null && myEndDate != null)
+            {
+                ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
 
-            if (!string.IsNullOrEmpty(employeeUserId))
-            {
-                iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
-            }
-            if (!string.IsNullOrEmpty(locationCode) && locationCode != "A")
-            {
-                iQueryable = iQueryable.Where(d => d.LocationCode == locationCode);
-            }
+                List<TMLocation> allLocations = (from d in myContext.TMLocations select d).ToList();
+                List<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d).ToList();
 
-            if (myEndDate != null)
-            {
-                count = (int)(myEndDate.Value - myStartDate.Value).TotalDays;
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(myStartDate));
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(myEndDate));
-                officeHours = (from a in myContext.TMOfficeHours
-                               where a.Tenant == tenant && !a.Inactive && a.UserId == employeeUserId && a.WorkDate != null &&
-                               System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) >= System.Data.Entity.DbFunctions.TruncateTime(myStartDate) &&
-                               System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) <= System.Data.Entity.DbFunctions.TruncateTime(myEndDate)
-                               select a);
-            }
-            else
-            {
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(myStartDate));
-                officeHours = (from a in myContext.TMOfficeHours
-                               where a.Tenant == tenant && !a.Inactive && a.UserId == employeeUserId && a.WorkDate != null &&
-                               System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) == System.Data.Entity.DbFunctions.TruncateTime(myStartDate)
-                               select a);
-            }
+                IQueryable<TMEmployeeTime> iQueryable_TMEmployeeTime = (from d in myContext.TMEmployeeTimes where d.Tenant == tenant && d.DateOfWork != null select d);
+                IQueryable<TMOfficeHour> iQueryable_TMOfficeHour = (from a in myContext.TMOfficeHours where a.Tenant == tenant && a.WorkDate != null && !a.Inactive select a);
 
-            //List<DateTime> workDays = iQueryable.Select(a => a.DateOfWork).ToList();
-            //officeHours = officeHours.Where(a => workDays.Contains(System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate)));
-
-            double? totalOfficeHours = 0;
-            for (int i = 0; i <= count; i++)
-            {
-                var date = myStartDate.Value.AddDays(i);
-                TimeSheetItemDay newItemDay = new TimeSheetItemDay();
-                newItemDay.Index = i;
-                newItemDay.Date = date;
-                if (count == 0)
-                    this.FillOfficeHours(newItemDay, date,true);
-                else
+                if (!string.IsNullOrEmpty(employeeUserId))
                 {
-                    this.FillOfficeHours(newItemDay, date,false);
+                    iQueryable_TMEmployeeTime = iQueryable_TMEmployeeTime.Where(d => d.EmployeeUserId == employeeUserId);
+                    iQueryable_TMOfficeHour = iQueryable_TMOfficeHour.Where(d => d.UserId == employeeUserId);
                 }
-                totalOfficeHours += newItemDay.TotalFromClock;
+
+                if (!string.IsNullOrEmpty(locationCode) && locationCode != "A")
+                {
+                    iQueryable_TMEmployeeTime = iQueryable_TMEmployeeTime.Where(d => d.LocationCode == locationCode);
+                }
+
+
+                List<TMOfficeHour> list_TMOfficeHour =
+                    (from a in iQueryable_TMOfficeHour
+                     where
+                     System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) >= System.Data.Entity.DbFunctions.TruncateTime(myStartDate)
+                     &&
+                     System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) <= System.Data.Entity.DbFunctions.TruncateTime(myEndDate)
+                     select a).ToList();
+
+                List<TMEmployeeTime> list_TMEmployeeTime =
+                    (from a in iQueryable_TMEmployeeTime
+                     where
+                     System.Data.Entity.DbFunctions.TruncateTime(a.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(myStartDate)
+                     &&
+                     System.Data.Entity.DbFunctions.TruncateTime(a.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(myEndDate)
+                     select a).ToList();
+
+
+                //int iDays = 1;
+
+                //if (myEndDate != null)
+                //{
+                //    iDays = (int)(myEndDate.Value - myStartDate.Value).TotalDays;
+
+
+                //}
+
+
+                myResult.ItemsPM = (from a in list_TMEmployeeTime
+                                    select new TMEmployeeTimePM()
+                                    {
+                                        Id = a.Id,
+                                        Tenant = a.Tenant,
+                                        CreateDate = a.CreateDate,
+                                        CreatedByUserId = a.CreatedByUserId,
+                                        UpdateDate = a.UpdateDate,
+                                        UpdatedByUserId = a.UpdatedByUserId,
+                                        EmployeeUserId = a.EmployeeUserId,
+                                        LocationCode = a.LocationCode,
+                                        DateOfWork = a.DateOfWork,
+                                        Description = a.Description,
+                                        Description_db = a.Description,
+                                        TimeInMinutes = a.TimeInMinutes,
+                                        TimeInMinutes_db = a.TimeInMinutes,
+                                        WINumber = a.WINumber,
+                                        WINumber_db = a.WINumber,
+                                        ProjectId = a.ProjectId,
+                                        ProjectId_db = a.ProjectId,
+                                        SprintId = a.SprintId,
+                                        ProjectName = (allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault() != null ? allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault().Name : null),
+                                        LocationName = (allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault() != null ? allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault().Name : null),
+                                    }).ToList();
+
+
+                DateTime? lastEntryTime = null;
+                double totalMinutesFromClock = 0;
+                foreach (var item in list_TMOfficeHour)
+                {
+                    DateTime? entry = item.EntryTime != null ? item.EntryTime : item.RecordedEntryTime;
+                    DateTime? exit = item.ExitTime != null ? item.ExitTime : item.RecordedExitTime;
+
+                    if (entry != null && exit != null)
+                    {
+                        totalMinutesFromClock += (exit.Value - entry.Value).TotalMinutes;
+                    }
+
+                    else if (entry != null && exit == null)
+                    {
+                        if (lastEntryTime == null)
+                        {
+                            lastEntryTime = entry;
+                        }
+
+                        else if (entry > lastEntryTime)
+                        {
+                            lastEntryTime = entry;
+                        }
+                    }
+                }
+
+                if (lastEntryTime != null)
+                {
+                    DateTime? iDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    int iDays = (int)(iDate.Value - lastEntryTime.Value).TotalDays;
+
+                    if (iDays == 0)
+                    {
+                        totalMinutesFromClock += (iDate.Value - lastEntryTime.Value).TotalMinutes;
+                    }
+
+                    else
+                    {
+                        DateTime? lastEntryDayTime = new DateTime(lastEntryTime.Value.Year, lastEntryTime.Value.Month, lastEntryTime.Value.Day, 23, 59, 59);
+                        totalMinutesFromClock += (lastEntryDayTime.Value - lastEntryTime.Value).TotalMinutes;
+                    }
+                }
+
+                myResult.TotalMinutesFromClock = totalMinutesFromClock;
+                myResult.TotalFromClock = GetTimeFormatFromMinutes(totalMinutesFromClock);
             }
 
-            myResult.TotalFromClock = DateFormat(totalOfficeHours.Value);
-            List<TMEmployeeTime> list = iQueryable.ToList();
-            List<TMEmployeeTimePM> listPM = (from a in list
-                                             select new TMEmployeeTimePM()
-                                             {
-                                                 Id = a.Id,
-                                                 Tenant = a.Tenant,
-                                                 CreateDate = a.CreateDate,
-                                                 CreatedByUserId = a.CreatedByUserId,
-                                                 UpdateDate = a.UpdateDate,
-                                                 UpdatedByUserId = a.UpdatedByUserId,
-                                                 EmployeeUserId = a.EmployeeUserId,
-                                                 LocationCode = a.LocationCode,
-                                                 DateOfWork = a.DateOfWork,
-                                                 Description = a.Description,
-                                                 Description_db = a.Description,
-                                                 TimeInMinutes = a.TimeInMinutes,
-                                                 TimeInMinutes_db = a.TimeInMinutes,
-                                                 WINumber = a.WINumber,
-                                                 WINumber_db = a.WINumber,
-                                                 ProjectId = a.ProjectId,
-                                                 ProjectId_db = a.ProjectId,
-                                                 SprintId=a.SprintId,
-                                                 ProjectName = (allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault() != null ? allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault().Name : null),
-                                                 LocationName = (allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault() != null ? allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault().Name : null),
-                                             }).ToList();
-
-            myResult.ItemsPM = listPM;
             return myResult;
         }
 
@@ -405,26 +443,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private void FillOfficeHours(TimeSheetItemDay newItem, DateTime date,bool OneDay)
         {
             List<TMOfficeHour> officeDays = officeHours.Where(a => System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) == System.Data.Entity.DbFunctions.TruncateTime(date)).ToList();
+
             double total = 0;
+            double totalMinutesFromClock = 0;
             foreach (var item in officeDays)
             {
                 DateTime? entry = item.EntryTime != null ? item.EntryTime : item.RecordedEntryTime;
                 DateTime? exit = item.ExitTime != null ? item.ExitTime : item.RecordedExitTime;
+
                 if (OneDay && officeDays.Count==1 && entry!=null && exit==null)
                 {
                     exit = TenantServerConfigration.GetCurrentDateTime(item.Tenant);
                     total += Math.Round((exit.Value - entry.Value).TotalHours, 2);
-
+                    totalMinutesFromClock += (exit.Value - entry.Value).TotalMinutes;
                 }
+
                 else
                 {
                     if (entry != null && exit != null)
                     {
                         total += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+                        totalMinutesFromClock += (exit.Value - entry.Value).TotalMinutes;
                     }
                 }
             }
 
+            newItem.MinutesFromClock = totalMinutesFromClock;
             newItem.TotalFromClock = total;
             newItem.TotalFromClockString = DateFormat(total);
         }
@@ -734,6 +778,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private string GetTimeFormatFromMinutes(double minutes)
+        {
+            string iResult = "";
+
+            if (minutes != 0)
+            {
+                TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
+
+                iResult = (int)iTimeSpan.TotalHours + ":" + iTimeSpan.Minutes.ToString("00");
+
+                if (minutes < 0)
+                {
+                    iResult = "- " + iResult;
+                }
+            }
+
+            return iResult;
+        }
+
     }
 
     public class TimeManagementAPIHelper
@@ -747,6 +811,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string LocationCode { get; set; }
         public string EmployeeUserId { get; set; }
         public string TotalFromClock { get; set; }
+        public double TotalMinutesFromClock { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public List<TimeSheetItem> Items { get; set; }
@@ -781,6 +846,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int? Minuts_db { get; set; }
         public double? TotalFromClock { get; set; }
         public string TotalFromClockString { get; set; }
+        public double MinutesFromClock { get; set; }
+
         //public bool IsUpdated { get; set; }
         //public string ProjectId { get; set; }
     }

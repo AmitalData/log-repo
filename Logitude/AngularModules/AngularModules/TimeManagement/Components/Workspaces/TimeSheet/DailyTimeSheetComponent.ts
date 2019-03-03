@@ -36,6 +36,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
 
     public LoggedUserName: string = "";
     ComputeLoggedUserName() {
+        var pipe = new DateTimePipe();
         this.LoggedUserName = SessionLocator.LoggedUserPM.EnglishName + " " + pipe.transform(DateTool.GetCurrentDateAsUtc(), "SD");
     }
 
@@ -73,8 +74,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
 
     InitTab(arg) {
         this.ItemSource = new ObservableCollection([]);
-        this.employeeUserId = SessionLocator.LoggedUserId;
-        var pipe = new DateTimePipe();
+        this.employeeUserId = SessionLocator.LoggedUserId;        
         this.locationCodeFilter = this.SelectedLocationFilter;
         this.startDate = DateTool.GetCurrentDateTimeAsUtc();
         this.endDate = this.startDate;
