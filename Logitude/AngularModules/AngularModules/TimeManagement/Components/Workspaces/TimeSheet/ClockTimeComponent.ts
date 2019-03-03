@@ -396,6 +396,8 @@ export class ItemSourceItem extends BaseComponent {
         }
     }
    
+    ComputeMinutes() {
+        var iResult: number = 0;
 
         if (this.EntryTime && this.ExitTime) {
             iResult = DateTool.GetDateParts(this.ExitTime).Minutes - DateTool.GetDateParts(this.EntryTime).Minutes;
