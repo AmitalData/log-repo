@@ -230,6 +230,12 @@
             font-size: 11px;
             text-indent: 3px;
         }
+        .Visible{
+            visibility:visible;
+        }
+    .Hidden {
+        visibility: hidden;
+    }
 </style>
 
     <table>
@@ -460,12 +466,12 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="EmailBoxMultiLinesText" style="height:100%;white-space: normal;max-width: 812px;overflow-y: auto;background:linear-gradient(#F2F8FF, #E6EBF0);">
-                                                                    <div class="ItemBox" *ngFor="let item of SelectedFieldsDataSource" [class.SelectedItemBox]="FieldSelectedItem == item" (click)="SetFieldSelectedItem(item)">
+                                                                    <div class="ItemBox" *ngFor="let item of SelectedFieldsDataSource" [class.SelectedItemBox]="FieldSelectedItem == item" (mouseover)="ShowOrderArrows(item)" (click)="SetFieldSelectedItem(item)">
                                                                         <div class="SelectedItemBoxContent">
                                                                             <table>
                                                                                 <tr>
                                                                                     <td>
-                                                                                        <span style="width:20px;"><img *ngIf="FieldSelectedItem == item" (click)="btnUp_Click()" src="./Images/ArrowLeft.png" class="ArrowBtn" /></span>
+                                                                                        <span style="width:20px;"><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnUp_Click(item)" src="./Images/ArrowLeft.png" class="ArrowBtn" /></span>
                                                                                     </td>
                                                                                     <td>
                                                                                         <span style="margin-left:2px;cursor: default;">{{item.DisplayName.replace('[', '').replace(']', '')}}</span>
@@ -474,7 +480,7 @@
                                                                                         <span><img (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span>
                                                                                     </td>
                                                                                     <td>
-                                                                                        <span style="width:20px;"><img *ngIf="FieldSelectedItem == item" (click)="btnDown_Click()" src="./Images/ArrowRight.png" class="ArrowBtn" /></span>
+                                                                                        <span style="width:20px;"><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnDown_Click(item)" src="./Images/ArrowRight.png" class="ArrowBtn" /></span>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>

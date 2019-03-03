@@ -151,7 +151,7 @@ namespace WebFreight.Web.ReportsWebServices
                 this.GetNotify1Data(awbDp, shipmentPM, addressRepository);
                 this.GetNotify2Data(awbDp, shipmentPM, addressRepository);
                 this.GetAgentData(awbDp, shipmentPM, addressRepository);
-
+                this.GetConsolidatorData(awbDp, shipmentPM);
 
                 #region PlaceOfDelivery
 
@@ -2877,6 +2877,18 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         awbDp.AgentATTN = agentAddress.ATTN;
                     }
+                }
+            }
+        }
+
+        private void GetConsolidatorData(AWBDataProvider awbDp, ShipmentPM shipmentPM)
+        {
+            if (!string.IsNullOrEmpty(shipmentPM.ConsolidatorId))
+            {
+                Card card = CardRepository.GetSingleCard(shipmentPM.ConsolidatorId, shipmentPM.Tenant, false);
+                if(card != null)
+                {
+                    awbDp.ConsolidatorName = card.EnglishName;
                 }
             }
         }
