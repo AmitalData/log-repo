@@ -200,6 +200,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
         temp.placeholder = "";
         temp.style.background = "rgba(0, 0, 0, 0)";
+        temp.select();
     }
 
     FillPlaceHolder() {
