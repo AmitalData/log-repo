@@ -227,12 +227,12 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private int index ;
+	  private int? index ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int Index  
+       public int? Index  
 	   {
 	    
 	     get
@@ -243,7 +243,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 		 {
 		   if(index != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Index",OldValue=index,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Index",OldValue=index,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   index=value;
 		   }

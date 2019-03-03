@@ -141,8 +141,12 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
     GetImageFile(imageId: string, isFirEvent: boolean = false) {
         var extension: string = this.EntityName == "Quotation" ? "png" : "jpg";
+        var type = "Base64";
+        if (this.EntityName == "Quotation") {
+            type += ("^ImageDetail");
+        }
         ShowHideProgressDownload(true, this.ProgressDownloadId);
-        this._imageLibraryService.DownloadFile(this.ImageId, extension, "images", SessionInfo.LoggedUserTenant, "Base64").subscribe((res: any) => {
+        this._imageLibraryService.DownloadFile(this.ImageId, extension, "images", SessionInfo.LoggedUserTenant, type).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
 
             ShowHideProgressDownload(false, this.ProgressDownloadId);
@@ -181,23 +185,31 @@ export class ImageComponent implements AfterViewInit, OnInit {
         var file: any = UploadLogoFile(this.ImageFileHtmlId);
 
         if (file) {
-            if (file.type == "image/jpeg" || file.type == "image/jpg") {
-                this.ArrayBufferToBase64(file, "images", width, height, "jpg", this);
-            } else if ((file.type == "image/png" || file.type == "image/PNG") && this.EntityName == "Quotation") {
-                this.ArrayBufferToBase64(file, "images", width, height, "png", this);
+            //(file.type == "image/png" || file.type == "image/PNG") && 
+            if (this.EntityName == "Quotation") {
+                this.ArrayBufferToBase64(file, "images", width, height, this);
             }
+            else if (file.type == "image/jpeg" || file.type == "image/jpg") {
+                this.ArrayBufferToBase64(file, "images", width, height, this);
+            }
+
         }
-
-
-
     }
 
 
 
-    ArrayBufferToBase64(file: any, filename: any, widht: number, height: number, extension: string, viewmode: any) {
+    ArrayBufferToBase64(file: any, filename: any, widht: number, height: number, viewmode: any) {
 
         if (file) {
             var reader: FileReader = new FileReader();
+            var extension: string = "";
+            var fileInfo = file.name.split('.');
+  
+            if (fileInfo.length > 1) {
+                extension = fileInfo[fileInfo.length - 1];
+            }
+            else extension = fileInfo[1];
+
 
             var reader = new FileReader();
             reader.onload = function (e) {
