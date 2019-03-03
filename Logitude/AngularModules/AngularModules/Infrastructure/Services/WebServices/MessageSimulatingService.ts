@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
@@ -84,6 +84,7 @@ export class SimulatorArgs {
     public ShipmentLevelCode: string;
     public IsViaColoader: boolean;
     public ColoaderReference: string;
+    public AnalyzeQueueId: string;
     public XmlText: string;
     public IsGLSHKISAC: boolean;
     public ISAC_Sender: string;
@@ -92,6 +93,7 @@ export class SimulatorArgs {
     public FSA: any;
     public FFA: any;
     public FVA: SimulatorFVA;
+    public IsLocalAnalyze: boolean;
 }
 
 export class SimulatorFVA {

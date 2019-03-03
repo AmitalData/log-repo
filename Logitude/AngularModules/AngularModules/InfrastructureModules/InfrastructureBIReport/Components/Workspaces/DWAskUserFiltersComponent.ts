@@ -7,12 +7,13 @@ import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQuery
 import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: 'DWAskUserFiltersComponent',
     moduleId: module.id,
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand','IsFirstTime']
 })
 
 export class DWAskUserFiltersComponent implements OnInit {
@@ -34,6 +35,7 @@ export class DWAskUserFiltersComponent implements OnInit {
     ValidationErrorsList: any[];
     public DWQueryData: DWQueryData;
     IsDateFilter: boolean = false;
+    IsFirstTime: boolean = false;
     public ComputeFiltersCommand: EventEmitter<any>;
 
     constructor() {
@@ -64,54 +66,87 @@ export class DWAskUserFiltersComponent implements OnInit {
         this.ComputeFiltersComplete.emit(this.DWQueryData);
     }
 
+    private PageIndex = 0;
+    private PageSize = 10000;
+    private count = 0;
+    private rowData = []; 
+
     RunReport(MyDWQueryData) {
         this.ValidationErrorsList = [];
-
+        this.PageIndex = 0;
+        this.PageSize = 10000;
+        this.count = 0;
+        this.rowData = []; 
         if (MyDWQueryData.FirstTime == true) {
             this.DWQueryData = MyDWQueryData.MyData;
         }
         else {
             this.DWQueryData = MyDWQueryData;
         }
-
-        //this.DWQueryData.Filters = this.SelectedFiltersDataSource;
-        //if (this.DWQueryData.Filters) {
         this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
         if (this.ValidationErrorsList.length == 0) {
-            var QueryData = new DWQueryData();
-            QueryData.Columns = this.DWQueryData.Columns;
-            QueryData.Filters = this.SelectedFiltersDataSource[0];
-            
-            QueryData.PageIndex = this.DWQueryData.PageIndex;
-            QueryData.PageSize = this.DWQueryData.PageSize;
-
-            QueryData.ColumnsSort = this.DWQueryData.ColumnsSort;
-
-            this.DWQueryData.Filters = this.SelectedFiltersDataSource[0];
-
-            this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
-                if (!myResult.HasError) {
-                    //this.rowData = myResult.Result;
-                    this.RunReportComplete.emit(myResult.Result.SQLDataResult);
-                }
-                else {
-                    //this.StopBusyIndicator();
-                }
-
-                //this.LoadBIReportData();
-            });
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.GetRowDataRecursive();
         }
         else {
             if (MyDWQueryData.FirstTime == true) {
                 this.ValidationErrorsList = [];
-                this.RunReportComplete.emit("ValidationError");
+                this.RunReportComplete.emit({ Msg:"ValidationError"});
             }
             else {
-                this.RunReportComplete.emit("ValidationError");
+                this.RunReportComplete.emit({ Msg: "ValidationError" });
             }
         }
-        //} 
-
+    }
+    GetRowDataRecursive() {
+        if (this.count <50000) {
+            var QueryData = new DWQueryData();
+            QueryData.Columns = this.DWQueryData.Columns;
+            QueryData.Filters = this.SelectedFiltersDataSource[0];
+            QueryData.PageIndex = this.PageIndex;
+            QueryData.PageSize = this.PageSize;
+            QueryData.ColumnsSort = this.DWQueryData.ColumnsSort;
+            this.DWQueryData.Filters = this.SelectedFiltersDataSource[0];
+            this.GetRowData(QueryData);
+        }
+        else {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.RunReportComplete.emit({ rowData: this.rowData, Count: this.count});
+        }
+    }
+    GetRowData(QueryData: DWQueryData) {
+        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+            if (!myResult.HasError) {
+                this.rowData = this.rowData.concat(myResult.Result.SQLDataResult);
+                this.PageIndex = this.PageIndex + 10000;
+                var dataSize = myResult.Result.SQLDataResult.length;
+                if (dataSize == 0) {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.RunReportComplete.emit({ rowData: this.rowData , Count: this.count});
+                }
+                else {
+                    this.count = this.count + dataSize;
+                    if (this.count == 50000) {
+                        this.PageIndex = this.PageIndex + 1;
+                        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+                            if (!myResult.HasError) {
+                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count});// more than 50000
+                            }
+                            else {
+                                SessionLocator.CurrentSession.StopBusyIndicator();
+                            }
+                        });
+                    }
+                    else {
+                        this.GetRowDataRecursive();
+                    }
+                }
+            }
+            else {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+            }
+        });
     }
 
     AddFilterToGroup(item) {
@@ -176,7 +211,7 @@ export class DWAskUserFiltersComponent implements OnInit {
 
             if (field.FilterItems.length == 0) {
                 if (field.IsMandatoryFilter == true && AppTool.IsNullOrEmpty(field.TextValue)) {
-                    this.ValidationErrorsList.push(field.Name + " filter is required");
+                    this.ValidationErrorsList.push(field.DisplayName.replace('[', '').replace(']', '') + " filter is required");
                 }
             }
             else {

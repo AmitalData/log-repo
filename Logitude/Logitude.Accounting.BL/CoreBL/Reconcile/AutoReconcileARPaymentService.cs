@@ -38,7 +38,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             if (_GLAccountBillTO.ReconcileMethodCode == ((int)ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString()
         ) //Local Currency
             {
-                var sumLocal = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id).Sum(r => r.LocalAmount);
+                   var sumLocal = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id && r.ActionCode == "1").Sum(r => r.LocalAmount); // 1- Credit
                 
                 if (sumLocal != ReconciliationLines.Sum(r => r.ReconciliationAmount))
                 {
@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             else
             {
                 string glAccountCurrencyId = _GLAccountBillTO.CurrencyId;
-                var sumForeign = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id).Sum(r => r.ForeignAmount);
+                var sumForeign = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id && r.ActionCode == "1").Sum(r => r.ForeignAmount); // 1- Credit
                 if (sumForeign != ReconciliationLines.Sum(r => r.ReconciliationAmount))
                 {
                     throw new Exception("(sumForeign != ReconciliationLines.Sum(r => r.ReconciliationAmount))");

@@ -710,6 +710,18 @@
     <Compile Include="Migrations\201902171020578_IsUnicodeDescriptionChargesType_Maheera.Designer.cs">
       <DependentUpon>201902171020578_IsUnicodeDescriptionChargesType_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902202034350_add_AgentComputed_Shipments.cs" />
+    <Compile Include="Migrations\201902202034350_add_AgentComputed_Shipments.Designer.cs">
+      <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.cs" />
+    <Compile Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.Designer.cs">
+      <DependentUpon>201902241639523_add_ClosedTable_NumberFormat_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902241710005_AddField_Tenant_Khalid.cs" />
+    <Compile Include="Migrations\201902241710005_AddField_Tenant_Khalid.Designer.cs">
+      <DependentUpon>201902241710005_AddField_Tenant_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1186,6 +1198,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902171042304_SetBIReportFolderIdToBeRequired_Samar.resx">
       <DependentUpon>201902171042304_SetBIReportFolderIdToBeRequired_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902202034350_add_AgentComputed_Shipments.resx">
+      <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.resx">
+      <DependentUpon>201902241639523_add_ClosedTable_NumberFormat_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902241710005_AddField_Tenant_Khalid.resx">
+      <DependentUpon>201902241710005_AddField_Tenant_Khalid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

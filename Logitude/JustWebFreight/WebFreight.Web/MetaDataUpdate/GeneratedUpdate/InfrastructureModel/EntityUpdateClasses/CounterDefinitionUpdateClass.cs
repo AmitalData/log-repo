@@ -111,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Counter Definition",
-			      				    Code =  "e209",
+			      				    Code =  "b8fd",
 			      				    Name =  "CounterDefinition",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -174,9 +174,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Prefix",
-					  						DefaultText =  @"Prefix",
+					  						DefaultText =  "Prefix",
 					  						ListFieldLable =  "PrefixListLable",
-					  						ListLableDefaultText =  @"Prefix",
+					  						ListLableDefaultText =  "Prefix",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -237,9 +237,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StartNumber",
-					  						DefaultText =  @"Start Number",
+					  						DefaultText =  "Start Number",
 					  						ListFieldLable =  "StartNumberListLable",
-					  						ListLableDefaultText =  @"Start Number",
+					  						ListLableDefaultText =  "Start Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -296,9 +296,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CounterSize",
-					  						DefaultText =  @"Size",
+					  						DefaultText =  "Size",
 					  						HelpTextCode =  "CounterSize",
-					  						HelpTextDefaultText =  @"defining the size will result in padding of zeros to the counter to reach the defined size",
+					  						HelpTextDefaultText =  "defining the size will result in padding of zeros to the counter to reach the defined size",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -354,9 +354,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Suffix",
-					  						DefaultText =  @"Suffix",
+					  						DefaultText =  "Suffix",
 					  						ListFieldLable =  "SuffixListLable",
-					  						ListLableDefaultText =  @"Suffix",
+					  						ListLableDefaultText =  "Suffix",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -388,10 +388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CounterDefinitionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CounterDefinition" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature CounterDefinitionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CounterDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "CounterDefinition.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CounterDefinitionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CounterDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "CounterDefinition.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CounterDefinitionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CounterDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "CounterDefinition.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CounterDefinitionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CounterDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "CounterDefinition.Features.PackageFeature", NameTextCodeDefaultText = "CounterDefinition Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+   
 	    
 		}
 

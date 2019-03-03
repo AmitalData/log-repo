@@ -665,6 +665,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     set ShipperContactId(newValue: string) {
         if (this.EntityPM.ShipperContactId != newValue) {
             this.EntityPM.ShipperContactId = newValue;
+
+            if (this.QuoteCustomerTypeCode == "SHI") {
+                this.EntityPM.CustomerContactId = newValue;
+            }
         }
     }
 
@@ -684,10 +688,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
     private GetShipperCardData() {
         if (AppTool.IsNullOrEmpty(this.ShipperId)) {
-            this.ShipperContactId = null;
             this.ShipperNote = null;
             this.EntityPM.ShipperName = null;
             this.ShipperAddressList = null;
+            this.EntityPM.ShipperContactId = null;
             this.EntityPM.ShipperMainAddressId = null;
             this.EntityPM.ShipperPickAddressId = null;
         }
@@ -699,7 +703,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 if (myCardList) {
                     this.EntityPM.ShipperName = myCardList.EnglishName;
                     this.ShipperNote = myCardList.Notes;
-                    this.ShipperContactId = myCardList.PrimaryContactId;
+                    this.EntityPM.ShipperContactId = myCardList.PrimaryContactId;
                     this.EntityPM.ShipperMainAddressId = myCardList.MainAddressId;
                     this.EntityPM.ShipperPickAddressId = myCardList.PickAddressId;
 
@@ -782,6 +786,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     set ConsigneeContactId(newValue: string) {
         if (this.EntityPM.ConsigneeContactId != newValue) {
             this.EntityPM.ConsigneeContactId = newValue;
+
+            if (this.QuoteCustomerTypeCode == "CON") {
+                this.EntityPM.CustomerContactId = newValue;
+            }
         }
     }
 
@@ -801,10 +809,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
     private GetConsigneeCardData() {
         if (AppTool.IsNullOrEmpty(this.ConsigneeId)) {
-            this.ConsigneeContactId = null;
             this.ConsigneeNote = null;
             this.EntityPM.ConsigneeName = null;
             this.ConsigneeAddressList = null;
+            this.EntityPM.ConsigneeContactId = null;
             this.EntityPM.ConsigneeMainAddressId = null;
             this.EntityPM.ConsigneePickAddressId = null;
         }
@@ -816,7 +824,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 if (myCardList) {
                     this.EntityPM.ConsigneeName = myCardList.EnglishName;
                     this.ConsigneeNote = myCardList.Notes;
-                    this.ConsigneeContactId = myCardList.PrimaryContactId;
+                    this.EntityPM.ConsigneeContactId = myCardList.PrimaryContactId;
                     this.EntityPM.ConsigneeMainAddressId = myCardList.MainAddressId;
                     this.EntityPM.ConsigneePickAddressId = myCardList.PickAddressId;
 

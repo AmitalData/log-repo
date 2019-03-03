@@ -3720,7 +3720,7 @@ namespace WebFreight.Web.Helpers
 + "</t:RadDocument>";
             }
 
-
+             
 
 
 
@@ -4306,7 +4306,7 @@ namespace WebFreight.Web.Helpers
 
         private bool CheckIfFieldHaveValueHtml(string fieldName)
         {
-            bool result = false;
+            bool result = false; 
             if (!string.IsNullOrEmpty(fieldName))
             {
                 fieldName = fieldName.ToLower();
@@ -4616,34 +4616,45 @@ namespace WebFreight.Web.Helpers
                 {
                     break;
                 }
-            }
-
+            } 
+             
             if (!string.IsNullOrEmpty(resultValue) && !resultValue.Contains("Telerik.Windows.Documents") && ReplaceHtmlStringWithTageHtml)
             {
                 resultValue = resultValue.Replace('\n', '\r');
                 resultValue = resultValue.Replace("\r", "<br/>");
                 // resultValue = resultValue.Replace(" ", "&nbsp;");
             }
-
+             
             if (resultValue == "") resultValue = " ";
             return resultValue;
         }
 
-        private string ResolveFieldValue(string resultValue, ObjectField field)
+        private string ResolveFieldValue(string fieldValue, ObjectField field)
         {
-            if (field != null && !string.IsNullOrEmpty(resultValue))
+            string result = string.Empty;
+
+            if (!string.IsNullOrEmpty(fieldValue))
             {
-                if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
+                result = fieldValue.Replace(" ","");
+                if (!string.IsNullOrEmpty(result)) result = fieldValue;
+                else if (field != null && field.DataTypeCode.ToLower() == "boolean") result = "false";
+            }
+             
+            if (field != null)
+            {
+                if (!string.IsNullOrEmpty(result))
                 {
-                    resultValue = FormatNumber(resultValue, field);
-                }
-                else if (field.DataTypeCode.ToLower() == "boolean")
-                {
-                    resultValue = resultValue.ToLower() == "false" ? "No" : "Yes";
+                    if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
+                    {
+                        result = FormatNumber(result, field);
+                    }
+                    else if (field.DataTypeCode.ToLower() == "boolean") result = result.ToLower() == "false" ? "No" : "Yes";
                 }
             }
+           
 
-            return resultValue;
+
+            return result;
         }
 
 

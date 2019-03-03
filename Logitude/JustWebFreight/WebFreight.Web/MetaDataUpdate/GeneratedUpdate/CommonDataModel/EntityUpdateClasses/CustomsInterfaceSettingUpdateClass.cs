@@ -172,7 +172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ActivateCustomsManagementInShipments",
-					  						DefaultText =  @"Activate Customs Management in Shipments",
+					  						DefaultText =  "Activate Customs Management in Shipments",
 					  						HelpTextCode =  "ActivateCustomsManagementInShipments",
 					  						Code =  "ActivateCustomsManagementInShipments",
 					  						DependencyFilter3IsList =  false,
@@ -231,7 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "LocalCustomsInterfaceCode",
-					  						DefaultText =  @"Local Customs Interface",
+					  						DefaultText =  "Local Customs Interface",
 					  						HelpTextCode =  "LocalCustomsInterfaceCode",
 					  						Code =  "LocalCustomsInterfaceCode",
 					  						DependencyFilter3IsList =  false,
@@ -290,7 +290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ImportToUSAInterfaceCode",
-					  						DefaultText =  @"Import to USA (Manifest & ISF)",
+					  						DefaultText =  "Import to USA (Manifest & ISF)",
 					  						HelpTextCode =  "ImportToUSAInterfaceCode",
 					  						Code =  "ImportToUSAInterfaceCode",
 					  						DependencyFilter3IsList =  false,
@@ -349,7 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ExportFromUSAInterfaceCode",
-					  						DefaultText =  @"Export from USA (SED)",
+					  						DefaultText =  "Export from USA (SED)",
 					  						HelpTextCode =  "ExportFromUSAInterfaceCode",
 					  						Code =  "ExportFromUSAInterfaceCode",
 					  						DependencyFilter3IsList =  false,
@@ -406,7 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "LocalCompanyId",
-					  						DefaultText =  @"Company",
+					  						DefaultText =  "Company",
 					  						HelpTextCode =  "LocalCompanyId",
 					  						Code =  "LocalCompanyId",
 					  						DependencyFilter3IsList =  false,
@@ -463,7 +463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "LocalUserId",
-					  						DefaultText =  @"User",
+					  						DefaultText =  "User",
 					  						HelpTextCode =  "LocalUserId",
 					  						Code =  "LocalUserId",
 					  						DependencyFilter3IsList =  false,
@@ -520,7 +520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "LocalPassword",
-					  						DefaultText =  @"Password",
+					  						DefaultText =  "Password",
 					  						HelpTextCode =  "LocalPassword",
 					  						Code =  "LocalPassword",
 					  						DependencyFilter3IsList =  false,
@@ -579,7 +579,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ArtemusOutSettingsId",
-					  						DefaultText =  @"Out Settings",
+					  						DefaultText =  "Out Settings",
 					  						HelpTextCode =  "ArtemusOutSettingsId",
 					  						Code =  "ArtemusOutSettingsId",
 					  						DependencyFilter3IsList =  false,
@@ -638,7 +638,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ArtemusInSettingsId",
-					  						DefaultText =  @"In Settings",
+					  						DefaultText =  "In Settings",
 					  						HelpTextCode =  "ArtemusInSettingsId",
 					  						Code =  "ArtemusInSettingsId",
 					  						DependencyFilter3IsList =  false,
@@ -696,7 +696,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ArtemusOutSettingsHost",
-					  						DefaultText =  @"Out Settings Host",
+					  						DefaultText =  "Out Settings Host",
 					  						HelpTextCode =  "ArtemusOutSettingsHost",
 					  						Code =  "ArtemusOutSettingsHost",
 					  						DependencyFilter3IsList =  false,
@@ -754,7 +754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ArtemusInSettingsHost",
-					  						DefaultText =  @"In Settings Host",
+					  						DefaultText =  "In Settings Host",
 					  						HelpTextCode =  "ArtemusInSettingsHost",
 					  						Code =  "ArtemusInSettingsHost",
 					  						DependencyFilter3IsList =  false,
@@ -815,9 +815,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomsInterfaceCode",
-					  						DefaultText =  @"Customs Interface",
+					  						DefaultText =  "Customs Interface",
 					  						ListFieldLable =  "CustomsInterfaceCodeListLable",
-					  						ListLableDefaultText =  @"Customs Interface",
+					  						ListLableDefaultText =  "Customs Interface",
 					  						HelpTextCode =  "CustomsInterfaceCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -872,7 +872,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CompanyId",
-					  						DefaultText =  @"Company",
+					  						DefaultText =  "Company",
 					  						HelpTextCode =  "CompanyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -927,7 +927,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UserId",
-					  						DefaultText =  @"User",
+					  						DefaultText =  "User",
 					  						HelpTextCode =  "UserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -982,7 +982,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Password",
-					  						DefaultText =  @"Password",
+					  						DefaultText =  "Password",
 					  						HelpTextCode =  "Password",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1005,6 +1005,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CustomsInterfaceSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsInterfaceSetting" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature CustomsInterfaceSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsInterfaceSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsInterfaceSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomsInterfaceSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsInterfaceSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsInterfaceSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomsInterfaceSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomsInterfaceSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsInterfaceSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

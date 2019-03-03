@@ -41,8 +41,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<TaxDeductionReportStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TaxDeductionReportStatus> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 				private IQueryable<TaxDeductionReportStatus> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<TaxDeductionReportStatus> iQueryable)
         {
 			return iQueryable;

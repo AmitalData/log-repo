@@ -130,6 +130,11 @@ export class DWObjectFieldPM {
     public set HideTree(newValue: boolean) { if (this.hideTree != newValue) { this.hideTree = newValue; this.MarkAsDirty("HideTree"); } }
        
 	 
+    private dimensionTableDisplayName: string;
+    public get DimensionTableDisplayName() { return this.dimensionTableDisplayName; }
+    public set DimensionTableDisplayName(newValue: string) { if (this.dimensionTableDisplayName != newValue) { this.dimensionTableDisplayName = newValue; this.MarkAsDirty("DimensionTableDisplayName"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

@@ -146,6 +146,7 @@ export class AccountingSettingsComponent extends BaseComponent {
                 this.UIProperties.SetEnabled("IsVatNumberMandatoryInAR", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsARPaymentChronologicalDates", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("AllowVoidAPI", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("AllowVoidAPP", this.ObjectTableName, false)
                 this.UIProperties.SetEnabled("IsVatNumberMandatoryInAP", this.ObjectTableName, false)

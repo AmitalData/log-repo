@@ -423,7 +423,7 @@ namespace Logitude.XSD.INTTRA.BL
             this.BuildDemo_Data();
             this.BuildDemo_CONTRL();
             this.BuildDemo_APERAK();
-            this.BuildDemo_Status();
+            //this.BuildDemo_Status();
         }
         private void BuildDemo_Data()
         {

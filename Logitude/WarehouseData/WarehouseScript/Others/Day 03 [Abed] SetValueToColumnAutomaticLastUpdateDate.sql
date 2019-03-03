@@ -21,3 +21,6 @@ update  Tenants set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdate
 update  Branches set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  Ranks set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  DWHSettings set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+update  MoveTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+update  Vessels set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+update  SpecialServicesTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null

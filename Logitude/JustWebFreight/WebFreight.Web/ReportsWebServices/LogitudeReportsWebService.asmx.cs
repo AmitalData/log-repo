@@ -2180,10 +2180,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            if (toDate == null)
-            {
-                toDate= TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            }
+
 
             //FromDate
             DateTime? FromDate = null;
@@ -2295,7 +2292,12 @@ namespace WebFreight.Web.ReportsWebServices
             item.FieldValue = FromDate;
             item.FieldValue2 = toDate;
             item.IsCustomField = true;
-            item.Operator = "Between";
+            if (toDate == null)
+            {
+                item.Operator = "GreaterThanOrEqual";
+            }
+            else
+                item.Operator = "Between";
             queryOperations2.QueryFilterItems.Add(item);
 
             shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations2, shipments);
@@ -2355,7 +2357,14 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.RequestETD = dataView.FirstPickupETD;
                     shipment.EstimateETD = dataView.FirstPickupETA;
                     if (!String.IsNullOrEmpty(dataView.Field2))
-                        shipment.RequestETA = Convert.ToDateTime(dataView.Field2);
+                    {
+                        string year= dataView.Field2.Substring(0,4);
+                        string month = dataView.Field2.Substring(4, 2);
+                        string day = dataView.Field2.Substring(6, 2);
+
+                        shipment.RequestETA = DateTime.Parse(year+"/"+month+"/"+day);
+
+                    }
                     shipment.EstimateETA = dataView.MainCarriageFinalDestinationETA;
                     shipment.Shipper = dataView.ShipperName;
                     shipment.Pieces = Item.Quantity;

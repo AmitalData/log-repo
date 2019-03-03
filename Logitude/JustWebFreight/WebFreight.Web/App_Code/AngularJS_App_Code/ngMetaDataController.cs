@@ -650,7 +650,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
             var querycolumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUser(tenant, userid, queryid);
-            if (querycolumns.Count() > 0)
+
+            if (querycolumns != null && querycolumns.Count() > 0)
             {
                 return querycolumns.OrderBy(a => a.IndexOrder).ToList();
             }

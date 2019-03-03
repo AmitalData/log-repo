@@ -142,6 +142,17 @@ export class EditComponent implements OnDestroy {
                 this.ShowWindowsOverEditComponent = true;
             }
         }
+
+        //fullaccounting => hide arpayment save btn for new arp entity
+        var isNewEntity = true;
+        if (this.EntityId || (this.EntityId && this.EntityPM.Id))
+            isNewEntity = false;
+
+        if (this.ObjectTableName == "ARPayment" && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+            this.IsSaveBtnVisible = false;
+        }
+        //
+
     }
 
     private LoadEntityPM() {
@@ -1473,21 +1484,24 @@ export class EditComponent implements OnDestroy {
     }
 
     SetNextPreviousButtonsEnablity() {
-        if (this.CurrentNavigatedIndex == 0) {
-            this.PreviousButtonDisabled = true;
-        }
-        else {
-            this.PreviousButtonDisabled = false;
-        }
+        if(this.NavigationIds)
+        {
+            if (this.CurrentNavigatedIndex == 0) {
+                this.PreviousButtonDisabled = true;
+            }
+            else {
+                this.PreviousButtonDisabled = false;
+            }
 
-        if (this.CurrentNavigatedIndex == this.NavigationIds.length - 1) {
-            this.NextButtonDisabled = true;
-        }
-        else {
-            this.NextButtonDisabled = false;
-        }
+            if (this.CurrentNavigatedIndex == this.NavigationIds.length - 1) {
+                this.NextButtonDisabled = true;
+            }
+            else {
+                this.NextButtonDisabled = false;
+            }
 
-        this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
+            this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
+        }
     }
 
     public SetSelectedTabByCode(code: string) {

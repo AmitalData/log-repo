@@ -105,9 +105,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 newContactTenant = InseartNewContact(entityPm);
             }
 
-            #region newUser roles
 
-            UpdateUserRolesForHybrid(entityPM, newContactTenant);
+			#region newUser roles
+
+			UpdateUserRolesForHybrid(entityPM, newContactTenant);
 
             #endregion
 
@@ -570,7 +571,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPM.Email = entityPM.Email.ToLower();
 
             Contact newContact = new Contact();
-            MapUserToContact(entityPM, newContact);
+			newContact.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; // Mohammad & Islam: related to bug 44449
+
+			MapUserToContact(entityPM, newContact);
 
             Contact adminContact = contactRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
             if (adminContact != null)

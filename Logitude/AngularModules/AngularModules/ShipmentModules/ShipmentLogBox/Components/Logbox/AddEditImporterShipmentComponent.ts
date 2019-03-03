@@ -142,15 +142,15 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (AppTool.IsNullOrEmpty(this.TransportModeId)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportModeId"));
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Transportation Type"));
         }
 
         if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Order Number"));
         }
 
         if (AppTool.IsNullOrEmpty(this.ForwarderPartnerId)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "ForwarderPartnerId"));
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Agent"));
         }
         this._PortExtendedPMService = new PortExtendedPMService();
         if (AppTool.IsNullOrEmpty(this.FromPortId)) {

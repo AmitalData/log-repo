@@ -36,6 +36,8 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.JournalId == journalId && a.Line == line && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+
+
         public IQueryable<JournalLine> GetQueryContainsAccId(IQueryable<string> GLAccountIDList, int tenant
              )
         {

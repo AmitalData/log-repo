@@ -19,6 +19,27 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return this.repository.CheckWhetherCodeExists(code, id, tenant);
         }
 
+        public JournalActionTypePM GetSinglePM(string code, int tenant)
+        {
+            JournalActionTypePM entityPM = null;
+
+            entityPM =
+                (from a in repository.All()
+                 where a.Code == code
+                 select new JournalActionTypePM()
+                 {
+                     Code = a.Code,
+                     LocalName = a.LocalName,
+                     EnglishName = a.EnglishName,
+                     Inactive = a.Inactive,
+                     Tenant = a.Tenant,
+                     Id= a.Id
+
+
+                 }).FirstOrDefault();
+
+            return entityPM;
+        }
 
     }
 }

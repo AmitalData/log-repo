@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .FormFieldRow {
         height: 25px;
@@ -171,7 +171,7 @@
                                                                                                             </div>
 
                                                                                                             <div *ngIf="item.SelectedCustomField.DataTypeCode == 'LookUp'">
-                                                                                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="item.SelectedCustomField.FieldName"
+                                                                                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="'FieldValue'"
                                                                                                                         [ObjectTableName]="item.SelectedCustomField.ObjectTableName"
                                                                                                                         [DataContext]="item"
                                                                                                                         [IsFreeText]="true"
@@ -224,7 +224,7 @@
                                                                                                             </div>
 
                                                                                                             <div *ngIf="item.SelectedCustomField.DataTypeCode == 'LookUp'">
-                                                                                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="item.SelectedCustomField.FieldName"
+                                                                                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="'FieldValue'"
                                                                                                                         [ObjectTableName]="item.SelectedCustomField.ObjectTableName"
                                                                                                                         [DataContext]="item"
                                                                                                                         [IsFreeText]="true"
