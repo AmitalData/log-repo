@@ -28,15 +28,17 @@ export class DailyTimeSheetComponent extends BaseComponent {
     public ItemSource: ObservableCollection;
     public DataContext = this;
     public HasChanges: boolean = false;
-    public LoggedUserName: string = "";
     public TotalFromClock = "";
     private myDomainService: TimeManagementDomainService = new TimeManagementDomainService();
     constructor() {
         super();
     }
 
-   
-
+    public LoggedUserName: string = "";
+    ComputeLoggedUserName() {
+        var pipe = new DateTimePipe();
+        this.LoggedUserName = SessionLocator.LoggedUserPM.EnglishName + " " + pipe.transform(DateTool.GetCurrentDateAsUtc(), "SD");
+    }
 
     private isLoaderReady: boolean = false;
     RunComponent() {
@@ -72,13 +74,12 @@ export class DailyTimeSheetComponent extends BaseComponent {
 
     InitTab(arg) {
         this.ItemSource = new ObservableCollection([]);
-        this.employeeUserId = SessionLocator.LoggedUserId;
-        var pipe = new DateTimePipe();
-        this.LoggedUserName = SessionLocator.LoggedUserPM.EnglishName + " " + pipe.transform(DateTool.GetCurrentDateAsUtc(), "SD");
+        this.employeeUserId = SessionLocator.LoggedUserId;        
         this.locationCodeFilter = this.SelectedLocationFilter;
         this.startDate = DateTool.GetCurrentDateTimeAsUtc();
         this.endDate = this.startDate;
         this.myDomainService = new TimeManagementDomainService();
+        this.ComputeLoggedUserName();
         this.Initialize();
     }
     Initialize() {
@@ -87,6 +88,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         //}
     }
     RefreshTab() {
+        this.ComputeLoggedUserName();
         this.LoadDailyTimeSheetList();
     }
     LoadDailyTimeSheetList() {
