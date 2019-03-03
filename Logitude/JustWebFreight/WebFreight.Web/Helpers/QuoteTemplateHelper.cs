@@ -417,8 +417,8 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALAMOUNTS", "Estimated total based on the above weight/volume", "Estimated total based on the above weight/volume", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALAMOUNTS", "Estimated total based on the above weight/volume", "Estimated total based on the above weight/volume", "Containers"));
 
-            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTEPACKAGES", "Charge Note", "Charge Note", "Packages"));
-            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTECONTAINERS", "Charge Note", "Charge Note", "Containers"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTEPACKAGES", "Charge Notes", "Charge Notes", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTECONTAINERS", "Charge Notes", "Charge Notes", "Containers"));
 
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEMINMAXPACKAGES", "Min/Max", "Min/Max", "Packages"));
