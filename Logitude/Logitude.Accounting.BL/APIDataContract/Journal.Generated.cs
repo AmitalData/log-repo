@@ -37,15 +37,15 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public string AccountingEntityReference { get; set; }
     
-    public string UpdatedByUser { get; set; }
+    public User UpdatedByUser { get; set; }
     
     public string ExternalSystem { get; set; }
     
     public string OriginalJournalNumber { get; set; }
     
-    public string ApprovedByUser { get; set; }
+    public User ApprovedByUser { get; set; }
     
-    public string CreatedByUser { get; set; }
+    public User CreatedByUser { get; set; }
     
     public string JournalType { get; set; }
     
