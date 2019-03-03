@@ -19,6 +19,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
             CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
+            GatepassRequestQueryService myGatepassRequestQueryService = new GatepassRequestQueryService(dbContext);
             _CourierMasterPM = myCourierMasterQueryService.GetSingle(requestParams.MasterCourierId, true, false);
 
             var myGP_NG_1030_MSG1_GatepassRequestMessage = new GP_NG_1030_MSG1_GatepassRequestMessage();
@@ -32,7 +33,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey2 = _CourierMasterPM.MAWB;
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey3 = _CourierMasterPM.HAWB;
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
-            myGatepassRequestMessage.gatepassNumber = 1;
+            GatepassRequestPM myGatepassRequest = myGatepassRequestQueryService.GetSingle(requestParams.MasterCourierId, false, false);
+            myGatepassRequestMessage.gatepassNumber = myGatepassRequest.GatepassNumber;
 
             var declarationQS = new DeclarationQueryService(dbContext);
             string forwarder = declarationQS.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
