@@ -198,19 +198,18 @@
                                         <div></div>
                                     </td>
 
-                                    <!--<td style="width: 1px;">
-        <button class="Button" (click)="OnClearCache()">Clear Cache</button>
-    </td>-->
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:1px;color:red" class="Value">
+                                        {{TrialMessage}}
+                                    </td>
 
                                     <td style="width: 5px;">
                                         <div></div>
                                     </td>
-                                    <td style="width:1px;color:red" class="Value">
-                                        {{TrialMessage}}
-                                    </td>
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
+
                                     <td style="width: 1px;" class="Value">
                                         {{LoggedUser}}
                                     </td>
@@ -227,21 +226,18 @@
                                         <div></div>
                                     </td>
 
-                                    <td style="width: 20px;" *ngIf="IsBellVisible">
-                                        <!--   <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height: 20px; border:none; background:none;">-->
+                                    <td style="width: 20px;" *ngIf="IsBellVisible">                                       
                                         <div>
                                             <IconButton id="111Bell" [Name]="'Bell'" [IsIconOnly]="true" (blur)="OnBellBlur()" (click)="onBellButtonClicked()" style="position:relative; display:block; bottom:1px"></IconButton>
                                         </div>
-                                        <!--  <div class="ToggleButtonMenu" style="left:400px;width:400px">-->
-                                        <!-- <img src="./Images/Image 13.png" style="position:relative" />-->
+                                     
                                         <div (click)="onBellButtonClicked()" [style.height.px]="height" [style.width.px]="width" style="user-select: none;cursor: pointer; border-radius:15px;background-color:#c8373b; position:absolute; top:-4px;right:6px" *ngIf="IsBadjCountVisibile">
                                             <span style="color:white; font-size:10px;  text-align:center; position:absolute;top:5px  " [style.right.px]="right" [style.top.px]="top" [style.left.px]="left"> {{badjCount}}</span>
                                         </div>
 
                                         <NotificationBellComponent (mouseover)="OnControlMouseOver()" (mouseout)="OnControlMouseOut()" [ParentComponent]="DataContext" style="position:absolute;right:initial;left:-50px;z-index: 1;" *ngIf="IsControlVisibile"></NotificationBellComponent>
-
-
                                     </td>
+
                                     <td style="width: 20px;">
                                         <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" *ngIf="IfBlueSnapContracts" >
                                             <IconButton [Name]="'payments'" [IsIconOnly]="true"></IconButton>
@@ -266,8 +262,7 @@
                                         <div></div>
                                     </td>
 
-                                    <td style="width: 20px;">
-                                        <!--*ngIf="SettingBtnVisibility"-->
+                                    <td style="width: 20px;">                                      
                                         <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" >
                                             <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
                                             <div class="ToggleButtonMenu" style="right:-50px">
@@ -283,13 +278,8 @@
                                                 <button *ngIf="IsCurrenciesRatesVisible" (click)="CurrenciesRatesClicked()">Currencies Rates</button>
                                                 <button *ngIf="IsDataBackupVisible" (click)="DataBackupClicked()">Data Backup</button>
                                                 <button *ngIf="IsDocumentsBackupVisible" (click)="DocumentsBackupClicked()">Documents Backup</button>
-                                                <button *ngIf="Tenant == 0" (click)="LoadSampleDataClicked()">Load Sample Data</button>
-                                                <!--<button (click)="ShowQueryBuilderClicked()">Query Builder</button>-->
+                                                <button *ngIf="Tenant == 0" (click)="LoadSampleDataClicked()">Load Sample Data</button>                                               
                                                 <button *ngIf="IsFillLocalStorageVisible" (click)="FillStorageClicked()">Fill Local Storage</button>
-
-                                                <!--<button (click)="ConnectToDropBox()">Connect To DropBox</button>
-                <button (click)="CreateCommLogForDropBox()">Create Comm. Log For DropBox</button>-->
-
                                             </div>
                                         </div>
                                     </td>
