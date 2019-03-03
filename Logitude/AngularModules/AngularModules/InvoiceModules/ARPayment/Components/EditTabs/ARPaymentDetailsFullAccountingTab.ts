@@ -739,6 +739,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
                 this.LoadData();
 
+                if(value)
+                    this.GetData();
+
+
                 if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
                     this.BillToAddressId = null;
                     this.EntityPM.BillToName = null;
