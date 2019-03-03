@@ -1,8 +1,100 @@
-﻿
+﻿<!--Quotation-->
+<table *ngIf="EntityName == 'Quotation'" style="height:100%;width:100%;">
+    <tr>
+
+        <td align="center" style="height:100%;width:100%;vertical-align:central;">
+
+            <div class="BodyBackground" valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:100%;width:100%;border:1px solid gray;border-radius:5px;">
+                <div style="vertical-align:central;">
+                    <input [attr.id]="ImageFileHtmlId" accept=".png,.PNG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
+
+                    <img [style.height]="DefultImageHeight" (click)="OpenUpLoadLogo()" title="{{'QuoteTemplate.M.Clicktoaddthephoto' | TextCodeTranslationPipe}}" style="width:auto;  top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;background-color:white;max-width: 295px;max-height: 245px; position: absolute;border:0px solid #ffffff" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />
+
+
+                    <!--<img title="Click to add the photo" (click)="OpenUpLoadLogo()" style="vertical-align:central;height:245px;width:100%;background-color:white;border:0px solid #ffffff ;cursor: pointer;" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />-->
+                    <span [attr.id]="ProgressDownloadId" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img class="CenterCenter" src="Images/progressDownload.gif" /></span>
+
+                </div>
+
+            </div>
 
 
 
-<table *ngIf="!QuotationMode && EntityName !='SocialMessage'" style="height:100%;width:100%">
+        </td>
+
+    </tr>
+</table>
+
+<!--SocialMessage-->
+<table *ngIf="EntityName =='SocialMessage'">
+    <tr>
+        <td [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowSocialMessageAreaImage1">
+            <img [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowSocialMessageImage1" [style.max-width]="WidthImage" [style.max-height]="HeightImage" class="CenterCenter" style="width:100%;height:100%;vertical-align:top;background-color:white;border:0px solid #ffffff;" [attr.id]="SocialMessageImage1Key" />
+
+            <div [style.background-color]="SocialMessageImage1Color" *ngIf="!IsShowSocialMessageImage1" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;">
+                <table>
+                    <tr>
+                        <td><div [style.font-size]="IsDefultFontSize ?'12px':'18px'" style="vertical-align:central;text-align:center;color:white;font-size:12px">{{SocialMessageImage1Text}}</div></td>
+                    </tr>
+                </table>
+            </div>
+
+
+        </td>
+
+
+        <td [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowSocialMessageAreaImage2">
+            <img *ngIf="IsShowSocialMessageImage2" [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" class="CenterCenter" style="width:100%;height:100%;vertical-align:top;background-color:white;border:0px solid #ffffff;" [attr.id]="SocialMessageImage2Key" />
+
+            <div [style.background-color]="SocialMessageImage2Color" *ngIf="!IsShowSocialMessageImage2" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;">
+                <table>
+                    <tr>
+                        <td><div style="vertical-align:central;text-align:center;color:white;font-size:12px">{{SocialMessageImage2Text}}</div></td>
+                    </tr>
+                </table>
+            </div>
+
+        </td>
+
+
+
+    </tr>
+
+    <tr *ngIf="IsShowSocialMessageAreaImage3 || IsShowSocialMessageAreaImage4">
+        <!--ColSpanArea3-->
+        <td [attr.colspan]="'1'" [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowSocialMessageAreaImage3">
+            <img *ngIf="IsShowSocialMessageImage3" [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" class="CenterCenter" style="vertical-align:top;background-color:white;border:0px solid #ffffff;" [attr.id]="SocialMessageImage3Key" />
+            <div [style.background-color]="SocialMessageImage3Color" *ngIf="!IsShowSocialMessageImage3" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;">
+                <table>
+                    <tr>
+                        <td><div style="vertical-align:central;text-align:center;color:white;font-size:12px">{{SocialMessageImage3Text}}</div></td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+
+
+        <td [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowSocialMessageAreaImage4">
+            <img *ngIf="IsShowSocialMessageImage4" [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" class="CenterCenter" style="width:100%;height:100%;vertical-align:top;background-color:white;border:0px solid #ffffff;" [attr.id]="SocialMessageImage4Key" />
+
+            <div [style.background-color]="SocialMessageImage4Color" *ngIf="!IsShowSocialMessageImage4 && !IsShowOtherTextArea" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;">
+                <table>
+                    <tr>
+                        <td><div style="vertical-align:central;text-align:center;color:white;font-size:12px">{{SocialMessageImage4Text}}</div></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowOtherTextArea" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;background-color:lightgray;font-size:12px">
+                {{OtherAreaText}}
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+<!--Others-->
+<table *ngIf="EntityName != 'Quotation' && EntityName !='SocialMessage'" style="height:100%;width:100%">
     <tr>
 
         <td align="center" style="height:100%;width:100%;vertical-align:central">
@@ -23,100 +115,5 @@
 
     </tr>
 </table>
-
-
-<table *ngIf="QuotationMode &&  EntityName !='SocialMessage'" style="height:100%;width:100%;">
-    <tr>
-
-        <td align="center" style="height:100%;width:100%;vertical-align:central;">
-
-            <div class="BodyBackground" valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:100%;width:100%;border:1px solid gray;border-radius:5px;">
-                <div style="vertical-align:central;">
-                    <input [attr.id]="ImageFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
-
-                    <img [style.height]="DefultImageHeight" (click)="OpenUpLoadLogo()" title="{{'QuoteTemplate.M.Clicktoaddthephoto' | TextCodeTranslationPipe}}"  style="width:auto;  top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;background-color:white;max-width: 295px;max-height: 245px; position: absolute;border:0px solid #ffffff" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />
-
-
-                    <!--<img title="Click to add the photo" (click)="OpenUpLoadLogo()" style="vertical-align:central;height:245px;width:100%;background-color:white;border:0px solid #ffffff ;cursor: pointer;" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />-->
-                    <span [attr.id]="ProgressDownloadId" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img class="CenterCenter" src="Images/progressDownload.gif" /></span>
-
-                </div>
-
-            </div>
-
-
-
-        </td>
-
-    </tr>
-</table>
-
-
-<table *ngIf="EntityName =='SocialMessage'" >
-    <tr>
-        <td [style.width]="WidthSocialImage" [style.height]="HeightSocialImage"  *ngIf="IsShowSocialMessageAreaImage1">
-            <img  [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowSocialMessageImage1" [style.max-width]="WidthImage" [style.max-height]="HeightImage" class="CenterCenter" style="width:100%;height:100%;vertical-align:top;background-color:white;border:0px solid #ffffff;" [attr.id]="SocialMessageImage1Key" />
-
-            <div [style.background-color]="SocialMessageImage1Color" *ngIf="!IsShowSocialMessageImage1" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;">
-                <table>
-                    <tr>
-                        <td><div  [style.font-size]="IsDefultFontSize ?'12px':'18px'" style="vertical-align:central;text-align:center;color:white;font-size:12px">{{SocialMessageImage1Text}}</div></td>
-                    </tr>
-                </table>
-            </div>
-
-      
-        </td>
-
-
-        <td  [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowSocialMessageAreaImage2">
-            <img *ngIf="IsShowSocialMessageImage2" [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" class="CenterCenter" style="width:100%;height:100%;vertical-align:top;background-color:white;border:0px solid #ffffff;" [attr.id]="SocialMessageImage2Key" />
-
-            <div [style.background-color]="SocialMessageImage2Color" *ngIf="!IsShowSocialMessageImage2" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;">
-                <table>
-                    <tr>
-                        <td><div style="vertical-align:central;text-align:center;color:white;font-size:12px">{{SocialMessageImage2Text}}</div></td>
-                    </tr>
-                </table>
-            </div>
-
-        </td>
-
-
-
-    </tr>
-
-    <tr *ngIf="IsShowSocialMessageAreaImage3 || IsShowSocialMessageAreaImage4">
-        <!--ColSpanArea3-->
-        <td [attr.colspan]="'1'"  [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowSocialMessageAreaImage3">
-            <img *ngIf="IsShowSocialMessageImage3"  [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" class="CenterCenter" style="vertical-align:top;background-color:white;border:0px solid #ffffff;" [attr.id]="SocialMessageImage3Key" />
-            <div [style.background-color]="SocialMessageImage3Color" *ngIf="!IsShowSocialMessageImage3" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;">
-                <table>
-                    <tr>
-                        <td><div style="vertical-align:central;text-align:center;color:white;font-size:12px">{{SocialMessageImage3Text}}</div></td>
-                    </tr>
-                </table>
-            </div>
-        </td>
-
-
-        <td  [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowSocialMessageAreaImage4">
-            <img *ngIf="IsShowSocialMessageImage4"  [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" class="CenterCenter" style="width:100%;height:100%;vertical-align:top;background-color:white;border:0px solid #ffffff;" [attr.id]="SocialMessageImage4Key" />
-
-            <div [style.background-color]="SocialMessageImage4Color" *ngIf="!IsShowSocialMessageImage4 && !IsShowOtherTextArea" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;">
-                <table>
-                    <tr>
-                        <td><div style="vertical-align:central;text-align:center;color:white;font-size:12px">{{SocialMessageImage4Text}}</div></td>
-                    </tr>
-                </table>
-            </div>
-
-            <div  [style.width]="WidthSocialImage" [style.height]="HeightSocialImage" *ngIf="IsShowOtherTextArea" valign="center" align="center" style="vertical-align:top;text-align:center;height:100%;width:100%;color:white;background-color:lightgray;font-size:12px">
-                {{OtherAreaText}}
-            </div>
-        </td>
-    </tr>
-</table>
-
 
 

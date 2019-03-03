@@ -164,7 +164,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         itemRow.MinutesFromHome = item_TMEmployeeTime.Where(d => d.LocationCode == "H").Sum(s => s.TimeInMinutes);
                         itemRow.MinutesFromClient = item_TMEmployeeTime.Where(d => d.LocationCode == "C").Sum(s => s.TimeInMinutes);
                         itemRow.MinutesDifference = itemRow.MinutesFromOffice - itemRow.MinutesFromClock;
-                        itemRow.MinutesTotalWork = itemRow.MinutesFromOffice + itemRow.MinutesFromHome + itemRow.MinutesFromClient;
+                        itemRow.MinutesTotalWork = itemRow.MinutesFromClock + itemRow.MinutesFromHome + itemRow.MinutesFromClient;
                         itemRow.MinutesOverTime = itemRow.MinutesTotalWork - (itemRow.RequiredWorkHours.Value * 60);
 
                         itemRow.TimeFromClock = this.GetTimeFormatFromMinutes(itemRow.MinutesFromClock);

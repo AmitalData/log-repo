@@ -2740,11 +2740,13 @@ namespace Logitude.BL.Helpers
 
                         HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
 
-                    }
+                    } 
 
                     if (setting.ShowMeasurementPackages)
                     {
-                        HtmlTemplate.Append(BuildTableColumn(chargePM.SaleMeasurementShortName, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
+                        var value = setting.RightToLeft ? chargePM.SaleMeasurementLocalName : chargePM.SaleMeasurementShortName;
+
+                        HtmlTemplate.Append(BuildTableColumn(value, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
 
                     }
 
@@ -2831,7 +2833,8 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowMeasurementContainers)
                     {
-                        HtmlTemplate.Append(BuildTableColumn(chargePM.SaleMeasurementShortName, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
+                        var value = setting.RightToLeft ? chargePM.SaleMeasurementLocalName : chargePM.SaleMeasurementShortName;
+                        HtmlTemplate.Append(BuildTableColumn(value, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
                         row += 1;
                     }
 

@@ -716,15 +716,16 @@ export class QuoteMenuButtonsHandler {
     private OpenQuotationWindow() {
         var windowArgs: any = {};
         windowArgs.QuotePM = this.EntityPM;
-
+       
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = window.innerWidth - 150;
         logWindow.Height = window.innerHeight - 150;
         logWindow.IsShowCloseButton = true;
+        windowArgs.QuotationWindow = logWindow;
         logWindow.Title = TextCodeTranslator.Translate("Quote.B.Quotation");
         logWindow.Show('./QuoteModules/QuoteOthers/Components/Quotation/QuotationComponent');
-
+ 
         logWindow.WindowClosed.subscribe(s => {
             this.isButtonClicked = false;
         });
