@@ -264,6 +264,10 @@
     <None Include="Service References\DeclarationWebServiceReference\DeclarationWebService.wsdl" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommunicationWorkerRole\CommunicationWorkerRole.csproj">
+      <Project>{d5834b27-2c00-4ab3-9aa3-4266314b5aba}</Project>
+      <Name>CommunicationWorkerRole</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.AmitalMessaging\Logitude.AmitalMessaging.csproj">
       <Project>{e177d993-3117-420c-a59b-88f5398019ed}</Project>
       <Name>Logitude.AmitalMessaging</Name>
