@@ -2740,7 +2740,7 @@ namespace Logitude.BL.Helpers
 
                         HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
 
-                    }
+                    } 
 
                     if (setting.ShowMeasurementPackages)
                     {
