@@ -285,17 +285,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var SetReSendQBO = theEntityPm.SetReSendQBO;
 
 
-            //get glaccount fields
-            FillGLAccountFields(theEntityPm);
 
-            // Full Accounting => Reconciliation
-            if (theEntityPm.IsFullAccounting == true)
-            {
-                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
-                    throw new ApplicationException("Hey! no glaccount provided!!");
-
-                CreateReconciliationForARPayment(theEntityPm);
-            }
 
             // PaymentCheque And CashBook
             this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved);
@@ -308,7 +298,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
 
-            this.UpdatePaymentOpenAmount();
+            if(theEntityPm.IsFullAccounting == true)
+            {
+                UpdateFullAccountPaymentAmount();
+            }
+            else
+            {
+                UpdatePaymentOpenAmount();
+            }
             ARPaymentHelper service = new ARPaymentHelper();
             if (payment.ExternalAccountingEntityId != null || SetReSendQBO)
             {
@@ -322,6 +319,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // DropBox
             this.CreateARInvoiceMessage(setApproved);
+
+            //get glaccount fields
+            FillGLAccountFields(theEntityPm);
+
+            // Full Accounting => Reconciliation
+            if (theEntityPm.IsFullAccounting == true)
+            {
+                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+                    throw new ApplicationException("Hey! no glaccount provided!!");
+
+                CreateReconciliationForARPayment(theEntityPm);
+            }
 
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
@@ -1569,7 +1578,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             //update payment open amount
             decimal amount2reconcile = paymentPM.InvoicesTransactions.Sum(d => d.AmountToReconcile);
-            paymentPM.OpenAmount -= (double)amount2reconcile;
+            //paymentPM.OpenAmount -= (double)amount2reconcile;
 
 
         }
@@ -1734,6 +1743,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.selectedinvoicesishigherthanpayamount", _payment.Tenant, showLocal));
 
 
+
+        }
+
+        void UpdateFullAccountPaymentAmount()
+        {
 
         }
 

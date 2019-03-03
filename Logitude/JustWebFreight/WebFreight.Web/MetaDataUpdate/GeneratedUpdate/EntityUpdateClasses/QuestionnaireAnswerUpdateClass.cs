@@ -145,9 +145,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuestioneerId",
-					  						DefaultText =  @"QuestioneerId",
+					  						DefaultText =  "QuestioneerId",
 					  						ListFieldLable =  "QuestioneerIdListLable",
-					  						ListLableDefaultText =  @"QuestioneerId",
+					  						ListLableDefaultText =  "QuestioneerId",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -186,9 +186,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VersionNumber",
-					  						DefaultText =  @"Version",
+					  						DefaultText =  "Version",
 					  						ListFieldLable =  "VersionNumberListLable",
-					  						ListLableDefaultText =  @"Version",
+					  						ListLableDefaultText =  "Version",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -228,9 +228,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
+					  						DefaultText =  "Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
+					  						ListLableDefaultText =  "Create Date",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -270,7 +270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  @"Created By",
+					  						DefaultText =  "Created By",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -310,9 +310,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ObjectTableId",
-					  						DefaultText =  @"Object Table Id",
+					  						DefaultText =  "Object Table Id",
 					  						ListFieldLable =  "ObjectTableIdListLable",
-					  						ListLableDefaultText =  @"Object Table Id",
+					  						ListLableDefaultText =  "Object Table Id",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -351,9 +351,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntityId",
-					  						DefaultText =  @"Entity Id",
+					  						DefaultText =  "Entity Id",
 					  						ListFieldLable =  "EntityIdListLable",
-					  						ListLableDefaultText =  @"Entity Id",
+					  						ListLableDefaultText =  "Entity Id",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -392,7 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuestionnaireAnswerLines",
-					  						DefaultText =  @"Questionnaire Answer Lines",
+					  						DefaultText =  "Questionnaire Answer Lines",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -431,10 +431,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HasTwoColumn",
-					  						DefaultText =  @"Has Two Column",
+					  						DefaultText =  "Has Two Column",
 					  						ListFieldLable =  "HasTwoColumnListLable",
-					  						ListLableDefaultText =  @"Has Two Column",
-					  						ListLocalDefaultText =  @"Has Two Column",
+					  						ListLableDefaultText =  "Has Two Column",
+					  						ListLocalDefaultText =  "Has Two Column",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -457,6 +457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable QuestionnaireAnswerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuestionnaireAnswer" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature QuestionnaireAnswerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = QuestionnaireAnswerObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuestionnaireAnswer.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature QuestionnaireAnswerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = QuestionnaireAnswerObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuestionnaireAnswer.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature QuestionnaireAnswerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = QuestionnaireAnswerObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuestionnaireAnswer.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

@@ -28,15 +28,17 @@ export class DailyTimeSheetComponent extends BaseComponent {
     public ItemSource: ObservableCollection;
     public DataContext = this;
     public HasChanges: boolean = false;
-    public LoggedUserName: string = "";
     public TotalFromClock = "";
     private myDomainService: TimeManagementDomainService = new TimeManagementDomainService();
     constructor() {
         super();
     }
 
-   
-
+    public LoggedUserName: string = "";
+    ComputeLoggedUserName() {
+        var pipe = new DateTimePipe();
+        this.LoggedUserName = SessionLocator.LoggedUserPM.EnglishName + " " + pipe.transform(DateTool.GetCurrentDateAsUtc(), "SD");
+    }
 
     private isLoaderReady: boolean = false;
     RunComponent() {
@@ -72,13 +74,12 @@ export class DailyTimeSheetComponent extends BaseComponent {
 
     InitTab(arg) {
         this.ItemSource = new ObservableCollection([]);
-        this.employeeUserId = SessionLocator.LoggedUserId;
-        var pipe = new DateTimePipe();
-        this.LoggedUserName = SessionLocator.LoggedUserPM.EnglishName + " " + pipe.transform(DateTool.GetCurrentDateAsUtc(), "SD");
+        this.employeeUserId = SessionLocator.LoggedUserId;        
         this.locationCodeFilter = this.SelectedLocationFilter;
         this.startDate = DateTool.GetCurrentDateTimeAsUtc();
         this.endDate = this.startDate;
         this.myDomainService = new TimeManagementDomainService();
+        this.ComputeLoggedUserName();
         this.Initialize();
     }
     Initialize() {
@@ -87,6 +88,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         //}
     }
     RefreshTab() {
+        this.ComputeLoggedUserName();
         this.LoadDailyTimeSheetList();
     }
     LoadDailyTimeSheetList() {
@@ -215,21 +217,29 @@ export class DailyTimeSheetComponent extends BaseComponent {
 
     }
     AddLineClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "New Line";
         var args: any = {};
         args.IsNew = true;
         args.LocationCode = this.LocationCodeFilter != "A" ? this.LocationCodeFilter : "O";
         args.EmployeeUserId = this.EmployeeUserId;
         args.Father = this;
-        var date = DateTool.GetCurrentDateTimeAsUtc();
-        if (this.SelectedDateFilter == "Y") {
-            date = DateTool.NextDay(DateTool.GetCurrentDateTimeAsUtc(), -1);
+
+        if (this.SelectedDateFilter != "P") {
+            var date = DateTool.GetCurrentDateTimeAsUtc();
+
+            if (this.SelectedDateFilter == "Y") {
+                date = DateTool.NextDay(DateTool.GetCurrentDateTimeAsUtc(), -1);
+            }
+
+            args.DateOfWork = date;
         }
-        args.DateOfWork = date;
+
         args.WINumber = null;
         args.ProjectId = null;
         args.Description = null;
+
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "New Line";
         logWindow.WindowArgs = args;
         logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
         logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));

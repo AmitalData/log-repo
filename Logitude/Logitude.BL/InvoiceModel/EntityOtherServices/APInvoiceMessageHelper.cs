@@ -273,6 +273,11 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         TaxCode = myline.VatType == null ? "" : myline.VatType.Code,
                         Quantity=null,
                     };
+
+                    if(tenant == 303 || tenant == 814)
+                    {
+                        lineElement.Quantity = 0;
+                    }
                     
                     if (string.IsNullOrEmpty(lineElement.OriginalCurrency))
                     {

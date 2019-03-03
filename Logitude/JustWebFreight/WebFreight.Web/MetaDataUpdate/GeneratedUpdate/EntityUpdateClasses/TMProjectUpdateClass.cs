@@ -175,9 +175,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -232,9 +232,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Description",
-					  						DefaultText =  @"Description",
+					  						DefaultText =  "Description",
 					  						ListFieldLable =  "DescriptionListLable",
-					  						ListLableDefaultText =  @"Description",
+					  						ListLableDefaultText =  "Description",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -292,9 +292,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerId",
-					  						DefaultText =  @"Customer",
+					  						DefaultText =  "Customer",
 					  						ListFieldLable =  "CustomerIdListLable",
-					  						ListLableDefaultText =  @"Customer",
+					  						ListLableDefaultText =  "Customer",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -348,7 +348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search ...",
+					  						DefaultText =  "Search ...",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -404,7 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OwnerId",
-					  						DefaultText =  @"Owner",
+					  						DefaultText =  "Owner",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -459,9 +459,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProjectNumber",
-					  						DefaultText =  @"Project Number",
+					  						DefaultText =  "Project Number",
 					  						ListFieldLable =  "ProjectNumberListLable",
-					  						ListLableDefaultText =  @"Project Number",
+					  						ListLableDefaultText =  "Project Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -515,7 +515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MyAllOpenProjects",
-					  						DefaultText =  @"My Open Projects",
+					  						DefaultText =  "My Open Projects",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -569,9 +569,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"CreateDate",
+					  						DefaultText =  "CreateDate",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"CreateDate",
+					  						ListLableDefaultText =  "CreateDate",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -625,7 +625,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  @"Created By",
+					  						DefaultText =  "Created By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -679,9 +679,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
+					  						DefaultText =  "Update Date",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  @"Update Date",
+					  						ListLableDefaultText =  "Update Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -735,7 +735,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
+					  						DefaultText =  "Updated By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -789,9 +789,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OwnerName",
-					  						DefaultText =  @"Owner",
+					  						DefaultText =  "Owner",
 					  						ListFieldLable =  "OwnerNameListLable",
-					  						ListLableDefaultText =  @"Owner",
+					  						ListLableDefaultText =  "Owner",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -845,9 +845,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerName",
-					  						DefaultText =  @"Customer",
+					  						DefaultText =  "Customer",
 					  						ListFieldLable =  "CustomerNameListLable",
-					  						ListLableDefaultText =  @"Customer",
+					  						ListLableDefaultText =  "Customer",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -902,9 +902,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsInnerProject",
-					  						DefaultText =  @"Inner Project",
+					  						DefaultText =  "Inner Project",
 					  						ListFieldLable =  "IsInnerProjectListLable",
-					  						ListLableDefaultText =  @"Inner Project",
+					  						ListLableDefaultText =  "Inner Project",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -959,9 +959,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  @"Inactive",
+					  						DefaultText =  "Inactive",
 					  						ListFieldLable =  "InactiveListLable",
-					  						ListLableDefaultText =  @"Inactive",
+					  						ListLableDefaultText =  "Inactive",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1015,7 +1015,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BudgetId",
-					  						DefaultText =  @"Budget",
+					  						DefaultText =  "Budget",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1069,7 +1069,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CategoryId",
-					  						DefaultText =  @"Category",
+					  						DefaultText =  "Category",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1122,9 +1122,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsProrated",
-					  						DefaultText =  @"Is Prorated",
+					  						DefaultText =  "Is Prorated",
 					  						ListFieldLable =  "IsProratedListLable",
-					  						ListLableDefaultText =  @"Is Prorated",
+					  						ListLableDefaultText =  "Is Prorated",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1178,9 +1178,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExternalProjectNumber",
-					  						DefaultText =  @"External Project #",
+					  						DefaultText =  "External Project #",
 					  						ListFieldLable =  "ExternalProjectNumberListLable",
-					  						ListLableDefaultText =  @"External Project #",
+					  						ListLableDefaultText =  "External Project #",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1218,7 +1218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_0.Id, Code = "All Projects",  QueryGroupCode = "bb65", IndexOrder = 0, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query AllProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_0.Id, Code = "All Projects",  QueryGroupCode = "bb65", IndexOrder = 0, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllProjectsQuery.Id, IndexOrder = 0, ObjectFieldId = TMProjectObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TMProjectObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1228,7 +1228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query MyProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_1.Id, Code = "My Projects",  QueryGroupCode = "bb65", IndexOrder = 1, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_1.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query MyProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_1.Id, Code = "My Projects",  QueryGroupCode = "bb65", IndexOrder = 1, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_1.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id, IndexOrder = 0, ObjectFieldId = TMProjectObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TMProjectObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1236,7 +1236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn MyProjectsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id, IndexOrder = 2, ObjectFieldId = TMProjectObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TMProjectObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MyProjectsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TMProjectObjectFields.Where(d => d.FieldName == "MyAllOpenProjects" && d.ObjectTableId == TMProjectObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyProjectsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MyProjectsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TMProjectObjectFields.Where(d => d.FieldName == "MyAllOpenProjects" && d.ObjectTableId == TMProjectObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyProjectsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -1283,8 +1283,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable TMProjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMProject" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable TMProjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMProject" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TMProjectGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMProject.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TMProjectGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Tab.General", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -1306,6 +1307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable TMProjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMProject" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature TMProjectFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TMProjectFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TMProjectFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

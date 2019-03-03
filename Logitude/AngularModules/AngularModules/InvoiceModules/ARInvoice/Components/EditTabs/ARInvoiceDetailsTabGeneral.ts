@@ -249,25 +249,18 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = false;
-        
+
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
-                if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                    isFieldtEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != null) {
-                    isFieldtEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != this.InvoiceCurrencyId) {
-                    isFieldtEnabled = true;
+                if (this.InvoiceCurrencyId) {
+                    if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                        isFieldtEnabled = true;
+                    }
                 }
             }
         }
 
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_PrintNotes() {
@@ -1367,8 +1360,7 @@ export class ARInvoiceLineItem extends BaseComponent {
             }
         }
         
-        //this.IsRateEnabled = isFieldEnabled;
-        this.IsRateEnabled = true;
+        this.IsRateEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("ForiegnExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
 

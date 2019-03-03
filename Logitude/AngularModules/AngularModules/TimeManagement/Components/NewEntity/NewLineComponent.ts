@@ -1,9 +1,6 @@
 import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TMProjectPM} from '../../EntityPMs/TMProjectPM'; 
-import {TMProjectPMService} from '../../Services/StandardPMs/TMProjectPMService'; 
 import {TMEmployeeTimePM} from '../../EntityPMs/TMEmployeeTimePM'; 
-import {TMEmployeeTimePMService} from '../../Services/StandardPMs/TMEmployeeTimePMService'; 
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {DateTool, AppTool} from '../../../Infrastructure/Tools';
@@ -46,6 +43,7 @@ export class NewLineComponent extends BaseComponent {
     public IsNew = true;
     SetWindowArgs(args: any) {
         if (args != null) {
+
             if (!args.IsNew) {
                 this.EntityPM = args.EntityPM;
                 this.EntityId = this.EntityPM.Id;
@@ -56,6 +54,7 @@ export class NewLineComponent extends BaseComponent {
                 this.SetUIProperties();
                 this.IsNew = false;
             }
+
             else {
                 this.Father = args.Father;
                 this.EntityId = args.EntityId;
@@ -81,6 +80,7 @@ export class NewLineComponent extends BaseComponent {
         this.UIProperties.SetRequired("WINumber", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WINumber) && AppTool.IsNullOrEmpty(this.Description));
         this.UIProperties.SetRequired("DateOfWorkDateFormat", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DateOfWorkDateFormat));
         this.UIProperties.SetRequired("SprintId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.SprintId));
+        this.UIProperties.SetRequired("DateOfWork", this.ObjectTableName, this.DateOfWork == null ? true : false);
     }
     ApplyTimeFormat(minutes) {
         var formattedMinutes = "";
@@ -108,8 +108,6 @@ export class NewLineComponent extends BaseComponent {
         }
         this.SetUIProperties();
     }
-
-
 
     get EmployeeUserId() {
         if (this.EntityPM != null) {
@@ -170,11 +168,11 @@ export class NewLineComponent extends BaseComponent {
     get DateOfWork() {
         return this.EntityPM.DateOfWork;
     }
-
     set DateOfWork(value: Date) {
         if (this.EntityPM.DateOfWork != value) {
             this.EntityPM.DateOfWork = value;
             this.DateOfWorkDate.Date = value;
+            this.UIProperties.SetRequired("DateOfWork", this.ObjectTableName, this.DateOfWork == null ? true : false);
         }
     }
 

@@ -174,20 +174,17 @@ export class NewAPInvoiceComponent extends BaseComponent {
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = true;
+        var isEnabled: boolean = false;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
-            isEnabled = false;
-        }
-
-        else {
-            if (this.EntityPM.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.InvoiceCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
-                isEnabled = false;
+        if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
+            if (this.InvoiceCurrencyId) {
+                if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                    isEnabled = true;
+                }
             }
         }
 
-        //this.RateIsEnabled = isEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isEnabled);
     }
 

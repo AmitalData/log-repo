@@ -3527,47 +3527,113 @@ User/Pass",
 
 		private void btnCompareData_Click(object sender, EventArgs e)
 		{
-			string connectionString1 = "LogitudeMain_PreR1,logitudemanager,!LO009008,logitudetest.database.windows.net";// "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
+			string connectionString1 = "LogitudeMain_Copy,logitudemanager,!LO852456,ebup282itq.database.windows.net";//"LogitudeMain_PreR1,logitudemanager,!LO009008,logitudetest.database.windows.net";// "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
 			DbConnection Logitudeconnection1 = DatabaseInitializer.GetConnection(connectionString1);
 			CommonDataContext Logitudecontext1 = new CommonDataContext(Logitudeconnection1);
-			WebFreightContext WebFreightContext = new WebFreightContext(Logitudeconnection1);
-			List<Feature> preFeatures = (from a in Logitudecontext1.Features
-										 where a.IsOld == false
-										 select a).ToList();
+			
+			//List<Feature> preFeatures = (from a in Logitudecontext1.Features
+			//							 where a.IsOld == false
+			//							 select a).ToList();
 
-			List<ObjectTable> allTables = (from a in WebFreightContext.ObjectTables
-										   select a).ToList();
-
+			
 			string productionConnectionString = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
 			DbConnection productionConnection  = DatabaseInitializer.GetConnection(productionConnectionString);
 			CommonDataContext productionLogitudeContext = new CommonDataContext(productionConnection);
 
-			List<string> onlineFeatureCodes = (from a in productionLogitudeContext.Features
-											   select a.Code + a.ObjectTableId).ToList();
+			WebFreightContext WebFreightContext = new WebFreightContext(productionConnection);
+			List<ObjectTable> allTables = (from a in WebFreightContext.ObjectTables
+										   select a).ToList();
+
+
+			List<MyFeature> onlineFeatureCodes = (from a in productionLogitudeContext.Features.Include("NameTextCode")
+												  select
+											   new MyFeature() {
+												   Id = a.Id,
+												   Tenant = a.Tenant,
+												   Code= a.Code,
+												   ObjectTableId = a.ObjectTableId,
+												   Name = a.NameTextCode.DefaultText,
+												   FeatureTypeCode = a.FeatureTypeCode,
+												   Packagable = a.Packagable,
+												   IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
+												   IsCoreFeature = a.IsCoreFeature, 
+
+											   }).ToList();
 
 			//featureDetails.Code + featureDetails.ObjectTableId
 			//List<Feature> onlineFeatures = (from a in Logitudecontext2.Features
 			//								select a).ToList();
 
-			List<Feature> newlyAddedFeatures = preFeatures.Where(f => !onlineFeatureCodes.Any(pf => pf == (f.Code + f.ObjectTableId))).ToList();
+			//List<Feature> newlyAddedFeatures = preFeatures.Where(f => !onlineFeatureCodes.Any(pf => pf == (f.Code + f.ObjectTableId))).ToList();
+
+			List<MyFeature> backupFeatures = (from a in Logitudecontext1.Features.Include("NameTextCode")
+											  select
+											  new MyFeature()
+											  {
+												  Id = a.Id,
+												  Tenant = a.Tenant,
+												  Code = a.Code,
+												  ObjectTableId = a.ObjectTableId,
+												  Name = a.NameTextCode.DefaultText,
+												  FeatureTypeCode = a.FeatureTypeCode,
+												  Packagable = a.Packagable,
+												  IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
+												  IsCoreFeature = a.IsCoreFeature, 
+												  
+											  }).ToList();
+
 
 			StringBuilder sb = new StringBuilder();
 
-			foreach (var f in newlyAddedFeatures)
+			foreach (var f in backupFeatures)
 			{
+				MyFeature prodFeature = onlineFeatureCodes.FirstOrDefault(o => o.Code == f.Code && o.ObjectTableId == f.ObjectTableId);
+				if (prodFeature != null)
+				{
+					sb.Append(f.Code);
+					sb.Append(",");
+					sb.Append(f.Name);
+					sb.Append(",");
+					sb.Append(f.FeatureTypeCode);
+					sb.Append(",");
+					sb.Append(allTables.First(t => t.Id == f.ObjectTableId).Name);
+					sb.Append(",");
 
+					sb.Append(f.Packagable);
+					sb.Append(",");
+					sb.Append(prodFeature.Packagable);
+					sb.Append(",");
 
-				sb.Append(f.Code);
-				sb.Append(",");
-				sb.Append(f.NameTextCode);
-				sb.Append(",");
-				sb.Append(f.FeatureTypeCode);
-				sb.Append(",");
-				sb.Append(allTables.First(t => t.Id == f.ObjectTableId).Name);
-				sb.Append(",");
-				sb.AppendLine();
+					sb.Append(f.IsBusinessUnitEnabled);
+					sb.Append(",");
+					sb.Append(prodFeature.IsBusinessUnitEnabled);
+					sb.Append(",");
+
+					sb.Append(f.IsCoreFeature);
+					sb.Append(",");
+					sb.Append(prodFeature.IsCoreFeature);
+					sb.Append(",");
+
+					sb.AppendLine();
+				}
 
 			}
+
+			//foreach (var f in newlyAddedFeatures)
+			//{
+
+
+			//	sb.Append(f.Code);
+			//	sb.Append(",");
+			//	sb.Append(f.NameTextCode);
+			//	sb.Append(",");
+			//	sb.Append(f.FeatureTypeCode);
+			//	sb.Append(",");
+			//	sb.Append(allTables.First(t => t.Id == f.ObjectTableId).Name);
+			//	sb.Append(",");
+			//	sb.AppendLine();
+
+			//}
 
 			Encoding currentEncoding = Encoding.GetEncoding(Encoding.UTF8.CodePage);
 			byte[] sbByte = currentEncoding.GetBytes(sb.ToString());
@@ -3575,12 +3641,28 @@ User/Pass",
 
 		
 
-			File.WriteAllBytes("newlyAddedFeatures.csv", sbByte); // Requires System.IO
+			File.WriteAllBytes("ComparingFeatures.csv", sbByte); // Requires System.IO
 		}
 
 
 
 
+	}
+
+	public class MyFeature
+	{
+		 
+		public string Id { get; set; }
+		public int Tenant { get; set; }
+		public string Code { get; set; }
+		public string ObjectTableId { get; set; }
+		public string Name { get; set; }
+		public string FeatureTypeCode { get; set; }
+		public bool Packagable { get; set; }
+		public bool IsBusinessUnitEnabled { get; set; }
+		public bool IsOld { get; set; }
+		public bool IsCoreFeature { get; set; } 
+ 
 	}
 
 

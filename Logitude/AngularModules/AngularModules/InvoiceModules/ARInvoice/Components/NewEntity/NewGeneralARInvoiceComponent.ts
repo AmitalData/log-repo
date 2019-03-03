@@ -182,28 +182,17 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isFieldtEnabled = true;
+        var isFieldtEnabled = false;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
-            isFieldtEnabled = false;
-        }
-
-        else {
-            if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.TenantPM.CurrencyId == null) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.TenantPM.CurrencyId == this.InvoiceCurrencyId) {
-                isFieldtEnabled = false;
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
+            if (this.InvoiceCurrencyId) {
+                if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                    isFieldtEnabled = true;
+                }
             }
         }
 
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_General(isEnabled: boolean) {
