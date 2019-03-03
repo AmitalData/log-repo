@@ -396,6 +396,62 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             }
         }
 
+        public GLAccount GLAccountCustomDataMapping(string id, int tenant)
+        {
+            try
+            {
+                var temp = new GLAccount();
+                GLAccountPM gLAccountPM = null;
+                if (!string.IsNullOrEmpty(id))
+                {
+                    gLAccountPM = query.GetSinglePM(id, tenant);
+                }
+
+                if (gLAccountPM == null)
+                {
+                    throw new ApplicationException("GLAccount with Id " + id + " doesn't exist");
+                }
+                if (string.IsNullOrEmpty(id))
+                {
+                    temp.Id = id;
+                }
+                temp.Tenant = tenant;
+                temp.InternalNumber = gLAccountPM.InternalNumber;
+            
+
+                temp.DisplayNumber = gLAccountPM.DisplayNumber;
+                temp.LocalName = gLAccountPM.LocalName;
+                temp.EnglishName = gLAccountPM.EnglishName;
+                temp.IsMultiCurrency = gLAccountPM.IsMultiCurrency;
+        
+
+
+             
+                return temp;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public GLAccountPM GLAccountCustomDataMappingAndValidatin(GLAccount entity, int tenant)
+        {
+            GLAccountPM entityPM = null;
+            if(entity.InternalNumber != null)
+            {
+                entityPM = query.GetSinglePMByInternalNumber(entity.InternalNumber, tenant);
+            }
+          
+
+            if (entityPM == null)
+            {
+                throw new Exception("GLAccount with internal number " + entity.InternalNumber + " does not exist");
+            }
+
+            return entityPM;
+        }
 
         public void CheckParentCurrency(GLAccountPM MyEntity)
         {
@@ -458,17 +514,22 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
         }
 
-        //public GLAccount GetGLAccountByInternalNumber(string number, int tenant)
-        //{
-        //    Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService queryService = new Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService(tenant);
-        //    GLAccountPM gLAccountPM = queryService.GetSinglePMByInternalNumber(number, tenant);
-        //    return GLAccountDataMappingAndValidatin(gLAccountPM, tenant);
+        public GLAccount GetGLAccountByInternalNumber(string number, int tenant)
+        {
+            Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService queryService = new Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService(tenant);
+            GLAccountPM gLAccountPM = queryService.GetSinglePMByInternalNumber(number, tenant);
+
+            if (gLAccountPM == null)
+            {
+                throw new Exception("GLAccount with internal number " + gLAccountPM.InternalNumber + " does not exist");
+            }
+            return GLAccountDataMappingAndValidatin(gLAccountPM, tenant);
 
 
 
 
 
-        //}
+        }
 
     }
 

@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .CellColoredBox {
         border-radius: 3px;
@@ -130,7 +130,7 @@
 
                                                             <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
                                                                 <div class="NotMatchedButton"></div>
-                                                                <IconButton [Name]="'Disconnect'" [IsSmall]="true" (click)="item.DisconnectClicked()" [IsEnabled]="item.ConnectButtonIsEnabled"></IconButton>
+                                                                <IconButton [Name]="'Disconnect'" [Title]="DisConnectFeatureTitle"  [IsSmall]="true" (click)="item.DisconnectClicked()" [IsEnabled]="item.ConnectButtonIsEnabled || IsEnabledDisconnect"></IconButton>
                                                             </td>
 
                                                             <td class="GridViewCell" [style.width.px]="NoColumnWidth" [style.min-width.px]="NoColumnWidth" [style.max-width.px]="NoColumnWidth">
@@ -217,7 +217,7 @@
 
                                                             <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
                                                                 <img src="./Images/Buttons/NotMatched.png" *ngIf="item.IsNotMatchedVisibile" />
-                                                                <IconButton [Name]="'Connect'" *ngIf="item.IsConnectButtonVisibile" [IsSmall]="true" (click)="item.ConnectClicked()"></IconButton>
+                                                                <IconButton [Name]="'Connect'" [IsEnabled]="IsEnabledConnect" [Title]="ConnectFeatureTitle" *ngIf="item.IsConnectButtonVisibile" [IsSmall]="true" (click)="item.ConnectClicked()"></IconButton>
                                                             </td>
 
                                                             <td class="GridViewCell" [style.width.px]="NoColumnWidth" [style.min-width.px]="NoColumnWidth" [style.max-width.px]="NoColumnWidth">

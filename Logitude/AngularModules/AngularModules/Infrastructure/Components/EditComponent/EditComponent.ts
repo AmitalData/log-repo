@@ -142,6 +142,17 @@ export class EditComponent implements OnDestroy {
                 this.ShowWindowsOverEditComponent = true;
             }
         }
+
+        //fullaccounting => hide arpayment save btn for new arp entity
+        var isNewEntity = true;
+        if (this.EntityId || (this.EntityId && this.EntityPM.Id))
+            isNewEntity = false;
+
+        if (this.ObjectTableName == "ARPayment" && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+            this.IsSaveBtnVisible = false;
+        }
+        //
+
     }
 
     private LoadEntityPM() {

@@ -69,7 +69,7 @@ namespace WebFreight.Web
             userdata.Token = logintokenparam.Token;
             return userdata;
         }
-
+         
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool isAngular)
         {
             UserData userData = null;
@@ -88,8 +88,8 @@ namespace WebFreight.Web
             }
             return userData;
         }
-
-
+         
+          
         public UserData PostTrayLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool fromTray, bool useTenant)
         {
             UserData userdata;

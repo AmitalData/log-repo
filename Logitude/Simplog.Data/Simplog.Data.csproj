@@ -346,6 +346,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\UsoCFDI.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VatFormatType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VATTypesGroup.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\NumberFormat.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\WarehouseType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PaymentGatewayPartners.cs" />
     <Compile Include="CommonDataModel\ICustomersDataViewContext.cs" />
@@ -439,6 +440,7 @@
     <Compile Include="CommonDataModel\Mapping\UsoCFDIMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VatFormatTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VATTypesGroupMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\NumberFormatMap.cs" />
     <Compile Include="CommonDataModel\Mapping\WarehouseTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnersMap.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedDocumentRepository.cs" />
@@ -508,6 +510,7 @@
     <Compile Include="CommonDataModel\Repositories\TenantLoginPolicyRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TwoFactorAuthenticationDeviceRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\LoginPolicyRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\NumberFormatRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\WarehouseTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UsoCFDIRepository.cs" />
     <Compile Include="Helpers\AutomationFollowUp.cs" />

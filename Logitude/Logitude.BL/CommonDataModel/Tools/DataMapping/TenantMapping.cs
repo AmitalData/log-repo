@@ -107,6 +107,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.TenantVATManagement = entityPM.TenantVATManagement;
             poco.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
             poco.TemperatureUnitCode = entityPM.TemperatureUnitCode;
+            poco.NumberFormatCode = entityPM.NumberFormatCode;
             poco.DefaultSLAId = entityPM.DefaultSLAId;
             poco.StockTypeCode = entityPM.StockTypeCode;
             poco.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;

@@ -69,6 +69,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     set TransmitStatusCode(value: string) {
         if (this.TaxReportLinePM.TransmitStatusCode != value) {
             this.TaxReportLinePM.TransmitStatusCode = value;
+            this.SetUIProperties();
         }
     }
 
@@ -122,7 +123,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
             this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, false);
 
         }
-        // this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, true);
+        this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, !this.TransmitStatusCode);
     }
 
     //#region Buttons

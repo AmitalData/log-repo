@@ -16,5 +16,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.IsReconciledBy(tenant, transactionIdList);
         }
+
+        public ReconciliationLine GetLineByTransactionId(string transId, int tenant)
+        {
+            ReconciliationLine recoLine = (from a in context.ReconciliationLines
+                                           where a.TransactionId == transId && a.Tenant == tenant
+                                           select a).FirstOrDefault();
+            //var pm = GetEntityPM(recoLine);
+            return recoLine;
+        }
+        
+
+
     }
 }

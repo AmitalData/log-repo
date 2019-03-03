@@ -22,7 +22,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 if (isNewState)
                 {
                     entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant);
-                    entityPM.CreatedByUserId = loggedContact.Id;
+                    if (entityPM.CreatedByUserId == null)
+                    {
+                        entityPM.CreatedByUserId = loggedContact.Id;
+                    }
                     entityPM.OpenAmount = entityPM.AmountInPaymentCurrency;
 
                     entity.Id = entityPM.Id;

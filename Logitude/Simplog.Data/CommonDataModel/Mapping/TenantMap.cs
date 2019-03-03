@@ -122,6 +122,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.DefaultSLAId).HasColumnName("DefaultSLAId");
             this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode");
             this.Property(t => t.AutoArchiveOnInvoice).HasColumnName("AutoArchiveOnInvoice");
+            this.Property(t => t.NumberFormatCode).HasColumnName("NumberFormatCode");
 
 
             //#if ORACLE_DB
@@ -214,6 +215,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.VatFormatType).WithMany().HasForeignKey(d => d.VatFormatTypeCode);
             this.HasOptional(t => t.VatFormatCountry).WithMany().HasForeignKey(d => d.VatFormatCountryId);
             this.HasOptional(t => t.TemperatureUnit).WithMany().HasForeignKey(d => d.TemperatureUnitCode);
+            this.HasOptional(t => t.NumberFormat).WithMany().HasForeignKey(d => d.NumberFormatCode);
+
         }
     }
 }

@@ -20,19 +20,19 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     {
 
 	    
-    public string JournalId { get; set; }
+    public string JournalNumber { get; set; }
     
     public int Line { get; set; }
     
     public int Tenant { get; set; }
     
-    public GLAccount DebitControlAccount { get; set; }
+    public string DebitControlAccount { get; set; }
     
-    public GLAccount DebitAccount { get; set; }
+    public string DebitAccount { get; set; }
     
-    public GLAccount CreditControlAccount { get; set; }
+    public string CreditControlAccount { get; set; }
     
-    public GLAccount CreditAccount { get; set; }
+    public string CreditAccount { get; set; }
     
     public DateTime DocumentDate { get; set; }
     
@@ -54,17 +54,11 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public string Reference3 { get; set; }
     
-    public string CreditAccountNumber { get; set; }
-    
-    public string DebitAccountNumber { get; set; }
-    
     public string Notes { get; set; }
     
     public decimal? ExternalOpenAmount { get; set; }
     
-    public bool? IsCreditAccountMulti { get; set; }
-    
-    public bool? IsDebitAccountMulti { get; set; }
+    public string ActionCode { get; set; }
     
     public string ExternalReconcileNumber { get; set; }
     }
