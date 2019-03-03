@@ -1834,6 +1834,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DWQueryData.Columns = Columns;
                         DWQueryData.Filters = Filters;
                     }
+                    var sortingList = new List<Column>();
+                    foreach (Column item in bITabularViewSettings.Columns.ToList())
+                    {
+                        if (item.SortDirction != null)
+                        {
+                            sortingList.Add(item);
+                        }
+
+                    }
+                    if (sortingList != null && sortingList.Count() > 0)
+                    {
+                        foreach (Column item in sortingList.OrderBy(o => o.SortOrder).ToList())
+                        {
+                            DWQueryData.ColumnsSort += "[" + item.Code + "]" + " " + item.SortDirction + ",";
+                        }
+                        DWQueryData.ColumnsSort = QueryData.DWQueryData.ColumnsSort.TrimEnd(',');
+                    }
+
                     QueryData_Updated.BIReportPM = entityPM;
                     QueryData_Updated.BIReportId = entityPM.Id;
                     QueryData_Updated.DWQueryData = DWQueryData;
@@ -1858,6 +1876,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IWebFreightContext webContext = WebFreightContext.GetContext(authToken.Tenant);
                 BIReportRepository repository = new BIReportRepository(objectContext);
                 DWQueryRepository dWQueryRepository = new DWQueryRepository(webContext);
+                DWSubQueryRepository dWSubQueryRepository = new DWSubQueryRepository(webContext);
 
                 BIReport BIReport = repository.GetSingle(Id, authToken.Tenant);
                 if (BIReport != null)
@@ -1866,9 +1885,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     repository.Remove(BIReport);
                     repository.SubmitChanges();
 
+                    DWSubQuery DWSubQuery = dWSubQueryRepository.GetSingleDWSubQueryByDWQueryId(queryId, authToken.Tenant);
                     DWQuery DWQuery = dWQueryRepository.GetSingleDWQuery(queryId, authToken.Tenant);
                     if(DWQuery != null)
                     {
+                        if (DWSubQuery != null)
+                        {
+                            dWSubQueryRepository.Remove(DWSubQuery);
+                        }
+                        
                         dWQueryRepository.Remove(DWQuery);
                         dWQueryRepository.SubmitChanges();
                     }
@@ -1880,6 +1905,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetDeleteFolder(string Id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                IWebFreightContext webContext = WebFreightContext.GetContext(authToken.Tenant);
+                BIReportFolderRepository repository = new BIReportFolderRepository(objectContext);
+            
+                BIReportFolder bIReportFolder = repository.GetSingle(Id, authToken.Tenant);
+                if (bIReportFolder != null)
+                {
+                    repository.Remove(bIReportFolder);
+                    repository.SubmitChanges();
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+       
 
         public HttpResponseMessage GetFeatureToggles()
         {

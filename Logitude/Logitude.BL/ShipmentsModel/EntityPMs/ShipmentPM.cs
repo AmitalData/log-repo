@@ -467,6 +467,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFinalDestinationPortId { get; set; }
+        public string OriginFinalDestinationPortId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFinalDestinationPortCode { get; set; }
@@ -701,6 +702,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AgentId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string AgentComputed { get; set; }
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AgentAddressId { get; set; }
@@ -987,6 +992,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFromPortId { get; set; }
         public string MainCarriageToPortId { get; set; }
+        public string OriginMainCarriageFromPortId { get; set; }
 
         public string MainCarriageFromPortCode { get; set; }
         public string MainCarriageFromPortName { get; set; }
@@ -2258,6 +2264,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsSharedLogisticsMoneyTabEnabled { get; set; }
         public bool IsSharedLogisticsMainCarrierVisible { get; set; }
         public bool IsSharedLogisticsPickDelvCarrierVisible { get; set; }
+        public bool IsSharedLogisticsAgentVisible { get; set; }
+        public bool IsSharedLogisticsShipperVisible { get; set; }
+        public bool IsSharedLogisticsConsigneeVisible { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstPickupATA { get; set; }

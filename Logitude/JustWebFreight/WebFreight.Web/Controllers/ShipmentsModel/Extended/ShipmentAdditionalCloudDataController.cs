@@ -502,8 +502,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ShipmentAdditionalCloudDataRepository Repository = new ShipmentAdditionalCloudDataRepository(tenant);
+                ShipmentRepository ShipmentRepository = new ShipmentRepository(tenant);
 
                 ShipmentAdditionalCloudData data = Repository.GetSingleShipmentAdditionalCloudData(id, tenant);
+                Shipment MyShipment = ShipmentRepository.GetSingleShipment(id, tenant);
 
                 ShipmentAdditionalCloudCustomData CustomData = new ShipmentAdditionalCloudCustomData();
                 CustomData.IsPaymentRequired = data.IsPaymentRequired;
@@ -786,10 +788,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         CustomData.RequestPaymentData = MyPaymentData;
                         //var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
                         var myId = Path.GetRandomFileName().Replace("&", "").Replace(".", "").Replace("=", "");
+                        var ShipmentNumber = MyShipment.ShipmentNumber;
                         //"sum=199.9&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable="
                         var MyConString = MyAdditionalData.PaymentGatewayConnectionString;
                         MyConString = MyConString.Replace("*sum*", MyPaymentData.TotalChargesInNIS);
-                        MyConString = MyConString.Replace("*DCdisable*", myId);
+                        MyConString = MyConString.Replace("*DCdisable*", ShipmentNumber);
                         MyConString = MyConString.Replace("*DclickTK*", myId);
                         string myParams = MyConString;// "sum=" + MyPaymentData.TotalChargesInNIS + "&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable=" + myId + "&DclickTK=" + myId;
                         Dictionary<string, string> dict = GetParamsAsDict(myParams);

@@ -18,6 +18,7 @@ namespace WarehouseData.Helper
         long timeOut = 10000000000000000;
         string AppName = string.Empty;
         string Mode = string.Empty;
+
         List<TableClass> tableLists = new List<TableClass>();
         public WarehouseHelper(string appName = "WarehouseData", string mode = "Debug")
         {
@@ -51,33 +52,30 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Department", DBTableName = "Departments", Dw_TableName = "dw_Departments", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Departments", BuildScriptName = "BuildDepartmentDimensionTable", IncrementalScriptName = "UpdateDepartmentDimensionTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Incoterm", DBTableName = "Incoterms", Dw_TableName = "dw_Incoterms", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Incoterms", BuildScriptName = "BuildIncotermDimensionTable", IncrementalScriptName = "UpdateIncotermDimensionTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Currency", DBTableName = "Currencies", Dw_TableName = "dw_Currencies", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Currencies", BuildScriptName = "BuildCurrencyDimensionTable", IncrementalScriptName = "UpdateCurrencyDimensionTable", DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "MoveType", DBTableName = "MoveTypes", Dw_TableName = "dw_MoveTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_MoveTypes", BuildScriptName = "BuildMoveTypeDimensionTable", IncrementalScriptName = "UpdateMoveTypeDimensionTable", HasConstraint = true  });
+            tableNameLists.Add(new TableClass() { TableName = "Vessel", DBTableName = "Vessels", Dw_TableName = "dw_Vessels", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Vessels", BuildScriptName = "BuildVesselDimensionTable", IncrementalScriptName = "UpdateVesselDimensionTable", HasConstraint = true });
+            tableNameLists.Add(new TableClass() { TableName = "SpecialServicesType", DBTableName = "SpecialServicesTypes", Dw_TableName = "dw_SpecialServicesTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_SpecialServicesTypes", BuildScriptName = "BuildSpecialServicesTypeDimensionTable", IncrementalScriptName = "UpdateSpecialServicesTypeDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName", FieldsDBName = "TableName,LastUpdateDate" });
 
             tableLists = tableNameLists;
             return tableNameLists;
 
         }
-
-
-
-
+        
         public void BuildDWObjectFieldDB(List<TableClass> tableNameLists, string connectionString)
         {
 
             var dWObjectFieldDB = new DataTable();
 
-            using (SqlConnection sourceConnection =
-       new SqlConnection(connectionString))
+            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
             {
                 sourceConnection.Open();
                 SqlCommand commandSourceData = new SqlCommand("SELECT  Code, DWObjectTableCode,DataTypeCode,MaxLength,MinLength,IsRequired ,IsPrimaryKey,DimensionTableCode from DWObjectFields", sourceConnection);
                 SqlDataReader reader = commandSourceData.ExecuteReader();
-
                 dWObjectFieldDB.Load(reader);
                 reader.Close();
 
             }
-
 
             foreach (TableClass tableClass in tableNameLists.Where(d => d.HasDimensionTable || d.HasFactTable).ToList())
             {
@@ -96,7 +94,6 @@ namespace WarehouseData.Helper
                     tableClass.DWObjectFieldDBLists.Add(fieldDB);
                 }
             }
-
 
             foreach (TableClass tableClass in tableNameLists.Where(d => d.HasDimensionTable || d.HasFactTable).ToList())
             {
@@ -128,33 +125,21 @@ namespace WarehouseData.Helper
 
         }
 
-
-
         public void BuildWarehouseObjectField(List<TableClass> tableNameLists, string connectionString)
         {
             var objectFieldsTable = new DataTable();
-
-            using (SqlConnection sourceConnection =
-            new SqlConnection(connectionString))
+            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
             {
                 sourceConnection.Open();
-
                 SqlCommand commandSourceData = new SqlCommand("SELECT  FieldName,ObjectTableId from ObjectFields where CopyToDW = 1", sourceConnection);
-
                 SqlDataReader reader = commandSourceData.ExecuteReader();
-
                 objectFieldsTable.Load(reader);
                 reader.Close();
-
             }
 
-
-
-            using (SqlConnection sourceConnection =
-           new SqlConnection(connectionString))
+            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
             {
                 sourceConnection.Open();
-                //('Direction' ,'Tenant') 
                 string sql = "SELECT  Id,Name from  ObjectTables where Name in (";
                 foreach (TableClass table in tableNameLists)
                 {
@@ -165,9 +150,7 @@ namespace WarehouseData.Helper
                 sql = sql.Replace(",)", ")");
 
                 SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
-
                 SqlDataReader reader = commandSourceData.ExecuteReader();
-
                 var objectTables = new DataTable();
                 objectTables.Load(reader);
 
@@ -236,36 +219,24 @@ namespace WarehouseData.Helper
 
         }
 
-        public void ExecuteScript(string forderName, string connectionString, TableClass table, string scripName = null)
+        public void BuildAndExecuteDataWarehouseScript(string forderName, string connectionString, TableClass table)
         {
+            string scriptName =  forderName == "BuildWarehouse" ? table.BuildScriptName : table.IncrementalScriptName;
+
             string path = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
             if (AppName != "Service")
             {
-                if (path.Contains(@"\bin\" + Mode))
-                {
-                    path = path.Replace(@"\bin\" + Mode, string.Empty);
-                }
+                if (path.Contains(@"\bin\" + Mode)) path = path.Replace(@"\bin\" + Mode, string.Empty);
             }
 
-            if (scripName == null)
-            {
-                if (table != null) scripName = forderName == "BuildWarehouse" ? table.BuildScriptName : table.IncrementalScriptName;
-            }
-
-            string fileDirectory = Path.Combine(path, "WarehouseScript\\" + forderName, scripName + ".sql");
+            string fileDirectory = Path.Combine(path, "WarehouseScript\\" + forderName, scriptName + ".sql");
             FileInfo file = new FileInfo(fileDirectory);
             string cmd = file.OpenText().ReadToEnd();
 
-
             if (forderName == "BuildWarehouse" && table != null)
             {
-                if (table.DBTableName == "Shipments")
-                {
-
-                }
                 cmd = (CreateDimensionsFactTable(connectionString, table) + cmd);
                 cmd += (" " + TransferTempDataToNewDimensionsFactTable(connectionString, table));
-
                 if (table.HasFactTable)
                 {
                     cmd += (" " + RenameALLTables());
@@ -273,17 +244,41 @@ namespace WarehouseData.Helper
                 }
             }
 
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            {
-                SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                sqlCommand.CommandTimeout = (int)timeOut;
-                cn.Open();
-                sqlCommand.ExecuteNonQuery();
-                cn.Close();
-            }
+            ExecuteSql(cmd, connectionString);
 
         }
 
+        public void ExecuteScript(string forderName, string connectionString, string scriptName )
+        {
+            string path = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+            if (AppName != "Service")
+            {
+                if (path.Contains(@"\bin\" + Mode)) path = path.Replace(@"\bin\" + Mode, string.Empty);
+            }
+
+            string fileDirectory = Path.Combine(path, "WarehouseScript\\" + forderName, scriptName + ".sql");
+            FileInfo file = new FileInfo(fileDirectory);
+            string cmd = file.OpenText().ReadToEnd();
+
+            ExecuteSql(cmd, connectionString);
+
+        }
+
+        public void ExecuteSql(string sqlString, string connectionString)
+        {
+       
+            if (!string.IsNullOrEmpty(sqlString))
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    SqlCommand sqlCommand = new SqlCommand(sqlString, cn);
+                    sqlCommand.CommandTimeout = (int)timeOut;
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
 
 
         private string CreateDimensionsFactTable(string connectionString, TableClass table)
@@ -346,7 +341,7 @@ namespace WarehouseData.Helper
                             values = field.FieldName == "[Tenant Number]" ? "-1" : "0";
                         }
 
-                        if (!table.HasFactTable) insertNullValue += (values + ",");
+                         insertNullValue += (values + ",");
                     }
                 }
             }
@@ -362,9 +357,6 @@ namespace WarehouseData.Helper
                 var x = insertNullValue.Replace("-1", "Air").Replace("Not Specified", "Air") + ";";
                 insertNullValue += x;
             }
-
-
-
 
             sql += ");";
             sql = sql.Replace(",);", ");");
@@ -457,7 +449,7 @@ namespace WarehouseData.Helper
                 sql += (" ALTER TABLE " + table.DWObjectTableCode + " ADD CONSTRAINT PK_" + table.DWObjectTableCode + "_" + primaryfield.Replace(" ", "") + " PRIMARY KEY CLUSTERED([" + primaryfield + "]) \r\n");
             }
 
-            foreach (DWObjectFieldDB objectFieldDB in table.DWObjectFieldDBLists.Where(d => !string.IsNullOrWhiteSpace(d.DimensionTableCode)))
+            foreach (DWObjectFieldDB objectFieldDB in table.DWObjectFieldDBLists.Where(d => !string.IsNullOrWhiteSpace(d.DimensionTableCode) &&  d.DimensionTableCode!= "DIM_Dates"))
             {
                 string field = objectFieldDB.FieldName.Replace("[", "").Replace("]", "");
                 TableClass orginalTable = tableLists.Where(d => d.DWObjectTableCode == objectFieldDB.DimensionTableCode).FirstOrDefault();
@@ -496,42 +488,7 @@ namespace WarehouseData.Helper
             return result;
         }
 
-        //    public string GetShipmentField()
-        //    {
-
-        //        string sourceConnectionString = "Data Source=" + "." + ";Initial Catalog=" + "Logitude2-5_Global" + ";Integrated Security=False;Persist Security Info=True;User ID=" + "sa" + ";Password= " + "Saas256" + ";MultipleActiveResultSets=True;Connect Timeout=60";
-
-        //        var dwObjectTable = new DataTable();
-
-
-        //        using (SqlConnection sourceConnection =
-        //new SqlConnection(sourceConnectionString))
-        //        {
-        //            sourceConnection.Open();
-
-        //            SqlCommand commandSourceData = new SqlCommand("select top(1) *" + " from " + " Fact_Shipments", sourceConnection);
-
-        //            SqlDataReader reader = commandSourceData.ExecuteReader();
-
-        //            dwObjectTable.Load(reader);
-        //            reader.Close();
-
-        //        }
-        //        string sql = "(";
-        //        for (int i = 0; i < dwObjectTable.Columns.Count; i++)
-        //        {
-        //            sql+= "[" + dwObjectTable.Columns[i].ColumnName + "],";
-        //        }
-        //        sql += ")";
-        //        sql = sql.Replace("],)", "])");
-        //        return sql;
-
-
-        //    }
-
-
-
-
+     
 
         public string BuildConnectionString(string catalog, string userName, string password, string server)
         {
@@ -643,17 +600,17 @@ namespace WarehouseData.Helper
                 UpdateAutomaticLastUpdate(table, sourceConnectionString, destinationConnectionString, privateTenant);
             }
 
-            ExecuteScript("BuildWarehouse", destinationConnectionString, null, "BuildDateDimensionsTable");
-
+            ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
+            ExecuteScript("Others", destinationConnectionString, "Day 06 [Abed]Add Function Date");
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
             {
-                ExecuteScript("BuildWarehouse", destinationConnectionString, table);
+                BuildAndExecuteDataWarehouseScript("BuildWarehouse", destinationConnectionString, table);
             }
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
             {
-                ExecuteScript("BuildWarehouse", destinationConnectionString, table);
+                BuildAndExecuteDataWarehouseScript("BuildWarehouse", destinationConnectionString, table);
             }
 
         }
@@ -821,27 +778,14 @@ namespace WarehouseData.Helper
 
         public void InitializationDWTable(TableClass table, string sourceConnectionString, string destinationConnectionString)
         {
-            string fieldName = !string.IsNullOrEmpty(table.FieldsDBName) ? table.FieldsDBName : "*";
-            using (SqlConnection cn = new SqlConnection(destinationConnectionString))
-            {
-                string cmd = "IF OBJECT_ID ('" + table.Dw_TableName + "', 'U')  IS NOT NULL drop table " + table.Dw_TableName;
-                SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                sqlCommand.CommandTimeout = (int)this.timeOut;
-                cn.Open();
-                sqlCommand.ExecuteNonQuery();
-                cn.Close();
-            }
-
-
+            ExecuteSql("IF OBJECT_ID ('" + table.Dw_TableName + "', 'U')  IS NOT NULL drop table " + table.Dw_TableName, destinationConnectionString);
+     
             var dwObjectTable = new DataTable();
-
-
-            using (SqlConnection sourceConnection =
-    new SqlConnection(sourceConnectionString))
+            using (SqlConnection sourceConnection = new SqlConnection(sourceConnectionString))
             {
                 sourceConnection.Open();
-
-                SqlCommand commandSourceData = new SqlCommand("select top(1) " + table.FieldsDBName + " from " + " dbo." + table.DBTableName, sourceConnection);
+                string fieldName = !string.IsNullOrEmpty(table.FieldsDBName) ? table.FieldsDBName : "*";
+                SqlCommand commandSourceData = new SqlCommand("select top(1) " + fieldName + " from " + " dbo." + table.DBTableName, sourceConnection);
 
                 SqlDataReader reader = commandSourceData.ExecuteReader();
 
@@ -849,239 +793,160 @@ namespace WarehouseData.Helper
                 reader.Close();
 
             }
-
-
-            using (SqlConnection cn = new SqlConnection(destinationConnectionString))
-            {
-
-
-                string cmd = CreateTABLE(table.Dw_TableName, dwObjectTable);
-                SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                sqlCommand.CommandTimeout = (int)this.timeOut;
-                cn.Open();
-                sqlCommand.ExecuteNonQuery();
-                cn.Close();
-            }
-
-
+            ExecuteSql(CreateTABLE(table.Dw_TableName, dwObjectTable), destinationConnectionString);
         }
 
         public void CreateIndex(TableClass table, string fieldName, string connectionString)
         {
-            using (SqlConnection cn = new SqlConnection(connectionString))
+            string cmd = "CREATE NONCLUSTERED INDEX [IX_" + table.Dw_TableName + "_" + fieldName + "] ON[dbo].[" + table.Dw_TableName + "]([" + fieldName + "])";
+            if (table.DBTableName == "Shipments" && fieldName == "Id")
             {
-                string cmd = "CREATE NONCLUSTERED INDEX [IX_" + table.Dw_TableName + "_" + fieldName + "] ON[dbo].[" + table.Dw_TableName + "]([" + fieldName + "])";
-                if (table.DBTableName == "Shipments" && fieldName == "Id")
-                {
-                    cmd += "; CREATE NONCLUSTERED INDEX[dw_Shipments_AllColumnsIndexes]ON[dbo].[dw_Shipments]([AutomaticLastUpdateDate])INCLUDE([Id],[Tenant],[ShipmentNumber],[House],[BranchId],[IncotermId],[SalesmanUserId],[DepartmentId],[ShipmentTypeId],[ShipperId],[ConsigneeId],[TransportModeId],[DirectionId],[AgentId],[IsOperationalClosed],[ChargeableWeightInKG],[GrossWeightInKG],[VolumeInCBM],[NumberOfContainers],[NumberOfPackages],[StatusId],[IsAccountingClosed],[AccountedReceivablesInLocalCurrency],[ProfitInLocalCurrency],[CustomerId],[ProfitCurrencyId],[ProfitInProfitCurrency],[AccountedReceivablesInProfitCurrency],[MasterShipmentDataId],[FromPortId],[ToPortId],[ShipmentLevelCode],[AccountedPayablesInLocalCurrency],[AccountedPayablesInProfitCurrency],[FinalArrivalDate],[AccountManagerUserId],[StatusLocation],[CustomsClearanceDate],[ForwarderPartnerId] ,[CustomAgentExportId],[CustomAgentImportId],[ValueOfGoodsCurrencyId],[WarehouseLegWarehouseId])";
-                }
-                if (!string.IsNullOrEmpty(cmd))
-                {
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                    sqlCommand.CommandTimeout = (int)this.timeOut;
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                }
-
-
-                cn.Close();
+                cmd += "; CREATE NONCLUSTERED INDEX[dw_Shipments_AllColumnsIndexes]ON[dbo].[dw_Shipments]([AutomaticLastUpdateDate])INCLUDE([Id],[Tenant],[ShipmentNumber],[House],[BranchId],[IncotermId],[SalesmanUserId],[DepartmentId],[ShipmentTypeId],[ShipperId],[ConsigneeId],[TransportModeId],[DirectionId],[AgentId],[IsOperationalClosed],[ChargeableWeightInKG],[GrossWeightInKG],[VolumeInCBM],[NumberOfContainers],[NumberOfPackages],[StatusId],[IsAccountingClosed],[AccountedReceivablesInLocalCurrency],[ProfitInLocalCurrency],[CustomerId],[ProfitCurrencyId],[ProfitInProfitCurrency],[AccountedReceivablesInProfitCurrency],[MasterShipmentDataId],[FromPortId],[ToPortId],[ShipmentLevelCode],[AccountedPayablesInLocalCurrency],[AccountedPayablesInProfitCurrency],[FinalArrivalDate],[AccountManagerUserId],[StatusLocation],[CustomsClearanceDate],[ForwarderPartnerId] ,[CustomAgentExportId],[CustomAgentImportId],[ValueOfGoodsCurrencyId],[WarehouseLegWarehouseId] " +
+                    ", [IsCancelled] , [StatusDate] , [CustomsDeclarationNumber] ,[FirstOperationalCloseDate] , [EstimatedFinalArrivalDate] , [ActualFinalArrivalDate],[Routing],[DescriptionOfGoods],[PreCarriageETD],[MoveTypeId],[SpecialServicesTypeId])";
             }
-
-
+            ExecuteSql(cmd, connectionString);
         }
 
         public void AddConstraint(TableClass table, string connectionString)
         {
-
-            using (SqlConnection cn = new SqlConnection(connectionString))
+            string cmd = string.Empty;
+            switch (table.DBTableName)
             {
+                case "Shipments":
 
-                string cmd = string.Empty;
-                switch (table.DBTableName)
-                {
-                    case "Shipments":
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperId DEFAULT '-1' FOR ShipperId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeId DEFAULT '-1' FOR ConsigneeId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AgentId DEFAULT '-1' FOR AgentId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomerId DEFAULT '-1' FOR CustomerId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "IncotermId DEFAULT '-1' FOR IncotermId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT '-1' FOR SalesmanUserId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AccountManagerUserId DEFAULT '-1' FOR AccountManagerUserId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "FromPortId DEFAULT '-1' FOR FromPortId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ToPortId DEFAULT '-1' FOR ToPortId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MasterShipmentDataId DEFAULT '-1' FOR MasterShipmentDataId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentTypeId DEFAULT '-1' FOR ShipmentTypeId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DepartmentId DEFAULT '-1' FOR DepartmentId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BranchId DEFAULT '-1' FOR BranchId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ProfitCurrencyId DEFAULT '-1' FOR ProfitCurrencyId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "StatusId DEFAULT '-1' FOR StatusId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DirectionId DEFAULT '1' FOR DirectionId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "TransportModeId DEFAULT '1' FOR TransportModeId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentLevelCode DEFAULT '1' FOR ShipmentLevelCode;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ForwarderPartnerId DEFAULT '-1' FOR ForwarderPartnerId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomAgentImportId DEFAULT '-1' FOR CustomAgentImportId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomAgentExportId DEFAULT '-1' FOR CustomAgentExportId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "WarehouseLegWarehouseId DEFAULT '-1' FOR WarehouseLegWarehouseId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CreatedByUserId DEFAULT '-1' FOR CreatedByUserId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ValueOfGoodsCurrencyId DEFAULT '-1' FOR ValueOfGoodsCurrencyId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MoveTypeId DEFAULT '-1' FOR MoveTypeId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SpecialServicesTypeId DEFAULT '-1' FOR SpecialServicesTypeId";
+                    break;
+                case "Cards":
 
-                        cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperId DEFAULT '-1' FOR ShipperId"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeId DEFAULT '-1' FOR ConsigneeId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AgentId DEFAULT '-1' FOR AgentId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomerId DEFAULT '-1' FOR CustomerId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "IncotermId DEFAULT '-1' FOR IncotermId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT '-1' FOR SalesmanUserId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AccountManagerUserId DEFAULT '-1' FOR AccountManagerUserId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "FromPortId DEFAULT '-1' FOR FromPortId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ToPortId DEFAULT '-1' FOR ToPortId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MasterShipmentDataId DEFAULT '-1' FOR MasterShipmentDataId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentTypeId DEFAULT '-1' FOR ShipmentTypeId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DepartmentId DEFAULT '-1' FOR DepartmentId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BranchId DEFAULT '-1' FOR BranchId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ProfitCurrencyId DEFAULT '-1' FOR ProfitCurrencyId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "StatusId DEFAULT '-1' FOR StatusId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DirectionId DEFAULT '1' FOR DirectionId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "TransportModeId DEFAULT '1' FOR TransportModeId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentLevelCode DEFAULT '1' FOR ShipmentLevelCode;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ForwarderPartnerId DEFAULT '-1' FOR ForwarderPartnerId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomAgentImportId DEFAULT '-1' FOR CustomAgentImportId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomAgentExportId DEFAULT '-1' FOR CustomAgentExportId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "WarehouseLegWarehouseId DEFAULT '-1' FOR WarehouseLegWarehouseId"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CreatedByUserId DEFAULT '-1' FOR CreatedByUserId"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ValueOfGoodsCurrencyId DEFAULT '-1' FOR ValueOfGoodsCurrencyId";
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT '-1' FOR SalesmanUserId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PrimaryContactId DEFAULT '-1' FOR PrimaryContactId;"
+                       + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CountryId DEFAULT '-1' FOR CountryId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerTypeId DEFAULT '-1' FOR PartnerTypeId;";
+                    break;
+                case "Tenants":
 
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AddressId DEFAULT '-1' FOR AddressId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CurrencyId DEFAULT '-1' FOR CurrencyId;";
 
-                        break;
-                    case "Cards":
+                    break;
+                case "Ports":
+                case "Addresses":
 
-                        cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT '-1' FOR SalesmanUserId"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PrimaryContactId DEFAULT '-1' FOR PrimaryContactId;"
-                           + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CountryId DEFAULT '-1' FOR CountryId;"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerTypeId DEFAULT '-1' FOR PartnerTypeId;";
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "StateId DEFAULT '-1' FOR StateId"
+                          + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CountryId DEFAULT '-1' FOR CountryId;";
 
+                    break;
+                case "ShipmentMasterDatas":
 
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageToPortId DEFAULT '-1' FOR MainCarriageToPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1ToPortId DEFAULT '-1' FOR Transshipment1ToPortId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2ToPortId DEFAULT '-1' FOR Transshipment2ToPortId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3ToPortId DEFAULT '-1' FOR Transshipment3ToPortId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageCarrierId DEFAULT '-1' FOR MainCarriageCarrierId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageVesselId DEFAULT '-1' FOR MainCarriageVesselId;";
 
-                        break;
-                    case "Tenants":
+                    break;
 
-                        cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AddressId DEFAULT '-1' FOR AddressId"
-                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CurrencyId DEFAULT '-1' FOR CurrencyId;";
+                case "DWHSettings":
 
-                        break;
-                    case "Ports":
-                    case "Addresses":
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ParentTenant DEFAULT -1 FOR ParentTenant";
 
-                        cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "StateId DEFAULT '-1' FOR StateId"
-                              + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CountryId DEFAULT '-1' FOR CountryId;";
+                    break;
 
-
-
-                        break;
-                    case "ShipmentMasterDatas":
-
-                        cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageToPortId DEFAULT '-1' FOR MainCarriageToPortId"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1ToPortId DEFAULT '-1' FOR Transshipment1ToPortId;"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2ToPortId DEFAULT '-1' FOR Transshipment2ToPortId;"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3ToPortId DEFAULT '-1' FOR Transshipment3ToPortId;"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageCarrierId DEFAULT '-1' FOR MainCarriageCarrierId;";
-                        break;
-
-                    case "DWHSettings":
-
-                        cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ParentTenant DEFAULT -1 FOR ParentTenant";
-
-                        break;
-                    default:
-                        cmd = string.Empty;
-                        break;
-                }
-
-
-                if (!string.IsNullOrEmpty(cmd))
-                {
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                    sqlCommand.CommandTimeout = (int)this.timeOut;
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                }
-
-
-                cn.Close();
+                default:
+                    cmd = string.Empty;
+                    break;
             }
+
+            ExecuteSql(cmd, connectionString);
 
         }
 
         public void InSertNotSpecifiedValueToDW(TableClass table, string connectionString, int? privateTenant = null)
         {
             int tenant = privateTenant != null ? (int)privateTenant : 0;
-            using (SqlConnection cn = new SqlConnection(connectionString))
+
+            string cmd = "";
+
+            if (table.DBTableName == "States")
             {
-                string cmd = "";
-
-                if (table.DBTableName == "States")
-                {
-                    cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified' , GETDATE());";
-                }
-                else if (table.DBTableName == "Countries")
-                {
-                    cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,Code,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified' ,'', GETDATE());";
-                }
-                else if (table.DBTableName == "Addresses") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,CountryId,StateId ,AutomaticLastUpdateDate )values('-1'," + tenant + ",'-1' ,'-1' , GETDATE());";
-
-                else if (table.DBTableName == "Contacts")
-                {
-                    cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,LocalName, Email,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified','Not Specified','Not Specified' , GETDATE());";
-                }
-
-                else if (table.DBTableName == "ShipmentTypes" || table.DBTableName == "PartnerTypes") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Name, AutomaticLastUpdateDate)values('-1','Not Specified' ,GETDATE());";
-                else if (table.DBTableName == "ShipmentMasterDatas")
-                {
-                    cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,Master,MainCarriageATD, MainCarriageToPortId,Transshipment1ToPortId, Transshipment2ToPortId , Transshipment3ToPortId,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified',null,'-1' , '-1','-1','-1', GETDATE())";
-                }
-                else if (table.DBTableName == "DWHSettings")
-                {
-                    cmd = "INSERT INTO " + table.Dw_TableName + " (Tenant,ParentTenant, AutomaticLastUpdateDate)values(-1 ,-1, GETDATE());";
-                }
-
-                if (!string.IsNullOrEmpty(cmd))
-                {
-
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                    sqlCommand.CommandTimeout = (int)this.timeOut;
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    cn.Close();
-                }
-
-
-
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,AutomaticLastUpdateDate)values('-1'," + tenant + ",'' , GETDATE());";
             }
+            else if (table.DBTableName == "Countries")
+            {
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,Code,AutomaticLastUpdateDate)values('-1'," + tenant + ",'' ,'', GETDATE());";
+            }
+            else if (table.DBTableName == "Addresses") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,CountryId,StateId ,AutomaticLastUpdateDate )values('-1'," + tenant + ",'-1' ,'-1' , GETDATE());";
+
+            else if (table.DBTableName == "Contacts")
+            {
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,LocalName, Email,AutomaticLastUpdateDate)values('-1'," + tenant + ",'','','' , GETDATE());";
+            }
+
+            else if (table.DBTableName == "ShipmentTypes" || table.DBTableName == "PartnerTypes") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Name, AutomaticLastUpdateDate)values('-1','' ,GETDATE());";
+            else if (table.DBTableName == "ShipmentMasterDatas")
+            {
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,Master,MainCarriageATD, MainCarriageToPortId,Transshipment1ToPortId, Transshipment2ToPortId , Transshipment3ToPortId,AutomaticLastUpdateDate)values('-1'," + tenant + ",'',null,'-1' , '-1','-1','-1', GETDATE())";
+            }
+            else if (table.DBTableName == "DWHSettings")
+            {
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Tenant,ParentTenant, AutomaticLastUpdateDate)values(-1 ,-1, GETDATE());";
+            }
+
+            ExecuteSql(cmd, connectionString);
+
+
 
         }
 
         #region WaterMark
         public void CreateWaterMarksTable(string tableName, string connectionString)
         {
-
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            {
-                string cmd = "IF OBJECT_ID ('" + tableName + "', 'U')  IS NOT NULL drop table " + tableName + " ; CREATE TABLE " + tableName + " (TableName varchar(100) not null,LastUpdateDate  datetime,);CREATE NONCLUSTERED INDEX [IX_" + tableName + "_TableName] ON[dbo].[" + tableName + "]([TableName])";
-                cmd += ";CREATE NONCLUSTERED INDEX [IX_" + tableName + "_LastUpdateDate] ON[dbo].[" + tableName + "]([LastUpdateDate])";
-                SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                sqlCommand.CommandTimeout = (int)this.timeOut;
-                cn.Open();
-                sqlCommand.ExecuteNonQuery();
-                cn.Close();
-            }
-
+            string cmd = "IF OBJECT_ID ('" + tableName + "', 'U')  IS NOT NULL drop table " + tableName + " ; CREATE TABLE " + tableName + " (TableName varchar(100) not null,LastUpdateDate  datetime,);CREATE NONCLUSTERED INDEX [IX_" + tableName + "_TableName] ON[dbo].[" + tableName + "]([TableName])";
+            cmd += ";CREATE NONCLUSTERED INDEX [IX_" + tableName + "_LastUpdateDate] ON[dbo].[" + tableName + "]([LastUpdateDate])";
+            ExecuteSql(cmd, connectionString);
 
         }
 
         public void CreatePrivateWaterMarksTable(string connectionString)
         {
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            {
-                string cmd = "IF OBJECT_ID ('PrivateWaterMarks', 'U')  IS NOT NULL drop table PrivateWaterMarks ; CREATE TABLE PrivateWaterMarks (TableName varchar(100) not null, LastUpdateDate  datetime, PrivateTenant  int);CREATE NONCLUSTERED INDEX [IX_PrivateWaterMarks_TableName] ON[dbo].[PrivateWaterMarks]([TableName])";
-                cmd += ";CREATE NONCLUSTERED INDEX [IX_PrivateWaterMarks_LastUpdateDate] ON[dbo].[PrivateWaterMarks]([LastUpdateDate])";
-                cmd += ";CREATE NONCLUSTERED INDEX [IX_PrivateWaterMarks_PrivateTenant] ON[dbo].[PrivateWaterMarks]([PrivateTenant])";
-                SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                sqlCommand.CommandTimeout = (int)this.timeOut;
-                cn.Open();
-                sqlCommand.ExecuteNonQuery();
-                cn.Close();
-            }
+            string cmd = "IF OBJECT_ID ('PrivateWaterMarks', 'U')  IS NOT NULL drop table PrivateWaterMarks ; CREATE TABLE PrivateWaterMarks (TableName varchar(100) not null, LastUpdateDate  datetime, PrivateTenant  int);CREATE NONCLUSTERED INDEX [IX_PrivateWaterMarks_TableName] ON[dbo].[PrivateWaterMarks]([TableName])";
+            cmd += ";CREATE NONCLUSTERED INDEX [IX_PrivateWaterMarks_LastUpdateDate] ON[dbo].[PrivateWaterMarks]([LastUpdateDate])";
+            cmd += ";CREATE NONCLUSTERED INDEX [IX_PrivateWaterMarks_PrivateTenant] ON[dbo].[PrivateWaterMarks]([PrivateTenant])";
 
-
+            ExecuteSql(cmd, connectionString);
         }
 
         public void AddWareMarkRecord(TableClass table, string date, string connectionString, int? tenant)
         {
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            {
-                string cmd = tenant == null ? "insert into WaterMarks  values('" + table.TableName + "' , '" + date + "')" : "insert into PrivateWaterMarks  values('" + table.TableName + "' , '" + date + "' ," + tenant + " )";
+            string cmd = tenant == null ? "insert into WaterMarks  values('" + table.TableName + "' , '" + date + "')" : "insert into PrivateWaterMarks  values('" + table.TableName + "' , '" + date + "' ," + tenant + " )";
+            ExecuteSql(cmd, connectionString);
 
-                SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                sqlCommand.CommandTimeout = (int)this.timeOut;
-                cn.Open();
-                sqlCommand.ExecuteNonQuery();
-                cn.Close();
-            }
         }
 
         public string GetAutomaticLastUpdateDate(string tableName, string connectionString)
@@ -1101,11 +966,19 @@ namespace WarehouseData.Helper
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
                     reader.Read();
-                    DateTime? datetime = (DateTime)(reader["AutomaticLastUpdateDate"]);
-                    if (datetime != null)
+                    DateTime? datetime = null;
+                    var value = reader["AutomaticLastUpdateDate"];
+                    if (value != null)
                     {
-                        result = datetime.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                        if (!string.IsNullOrEmpty(value.ToString())) {
+                            datetime = (DateTime?)(value);
+                            if (datetime != null) result = datetime.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                        }
+             
                     }
+             
+                    
+               
 
                 }
             }
@@ -1140,7 +1013,7 @@ namespace WarehouseData.Helper
             #region Update Dimensions Table
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
             {
-                ExecuteScript("IncrementalWarehouse", destinationConnectionString, table);
+                BuildAndExecuteDataWarehouseScript("IncrementalWarehouse", destinationConnectionString, table);
             }
             #endregion
 
@@ -1149,7 +1022,7 @@ namespace WarehouseData.Helper
             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
             {
                 RemoveDataFromFactShipment(table, destinationConnectionString);
-                ExecuteScript("IncrementalWarehouse", destinationConnectionString, table);
+                BuildAndExecuteDataWarehouseScript("IncrementalWarehouse", destinationConnectionString, table);
             }
 
             #endregion
@@ -1274,20 +1147,12 @@ namespace WarehouseData.Helper
 
         private void RemoveDataBase(TableClass table, string ids, string connectionString)
         {
-
             if (!string.IsNullOrEmpty(ids))
             {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string cmd = "delete " + table.Dw_TableName + " where " + table.KeyName + " in " + ids;
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                    sqlCommand.CommandTimeout = (int)this.timeOut;
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    cn.Close();
-                }
-            }
+                string cmd = "delete " + table.Dw_TableName + " where " + table.KeyName + " in " + ids;
+                ExecuteSql(cmd, connectionString);
 
+            }
 
         }
 
@@ -1328,15 +1193,9 @@ namespace WarehouseData.Helper
 
             if (!string.IsNullOrEmpty(ids))
             {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string cmd = "delete " + factTableName + " where " + table.KeyName + " in " + ids;
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                    sqlCommand.CommandTimeout = (int)this.timeOut;
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    cn.Close();
-                }
+                string cmd = "delete " + factTableName + " where " + table.KeyName + " in " + ids;
+                ExecuteSql(cmd, connectionString);
+
             }
 
             return ids;
@@ -1344,22 +1203,14 @@ namespace WarehouseData.Helper
 
         private void UpdateWareMarkTable(TableClass table, string date, string connectionString, int? privateTenant = null)
         {
-
-            using (SqlConnection cn = new SqlConnection(connectionString))
+            string cmd = "update  WaterMarks set LastUpdateDate = '" + date + "' where tableName = '" + table.TableName + "'";
+            if (privateTenant != null)
             {
-                string cmd = "update  WaterMarks set LastUpdateDate = '" + date + "' where tableName = '" + table.TableName + "'";
-                if (privateTenant != null)
-                {
-                    cmd = cmd.Replace("WaterMarks", "PrivateWaterMarks");
-                    cmd += (" and PrivateTenant = " + privateTenant);
-                }
-
-                SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                sqlCommand.CommandTimeout = (int)this.timeOut;
-                cn.Open();
-                sqlCommand.ExecuteNonQuery();
-                cn.Close();
+                cmd = cmd.Replace("WaterMarks", "PrivateWaterMarks");
+                cmd += (" and PrivateTenant = " + privateTenant);
             }
+            ExecuteSql(cmd, connectionString);
+
         }
 
 

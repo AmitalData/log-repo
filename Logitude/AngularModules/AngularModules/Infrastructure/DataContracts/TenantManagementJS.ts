@@ -31,7 +31,7 @@ export class TenantManagementJS {
     public BluesnapCRMContractId: string;
     public BluesnapEAWBContractId: string;
     public BluesnapEAWBSContractId: string;
-    public BluesnapOneTimeContractId: string;
+    public BluesnapOneTimeContract: string;
     public BluesnapContractQTY: number;
     public BluesnapCRMContractQTY: number;
     public BluesnapEAWBContractQTY: number;

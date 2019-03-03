@@ -176,4 +176,6 @@ delete from TextCodes where Code = 'Customer.CH.BillToNameListLable'
 delete from TextCodes where Code = 'Participant.AccountingCardHelpText'
 delete from ObjectFields where FieldName = 'IsChronologicalDates'
 delete from TextCodes where Code like '%IsChronologicalDates%'
+ delete from textcodes where code=  'Participant.CH.AccountingCardListLable'
+
 

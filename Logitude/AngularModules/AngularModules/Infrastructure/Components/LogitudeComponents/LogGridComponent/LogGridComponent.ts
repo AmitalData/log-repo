@@ -1349,6 +1349,11 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
                 }
             }
+            else {
+                this.IsSpotLight = false;
+                this.SpotlightDataTemplate = null;
+
+            }
         }
         this.rowsBuffer = [];
 

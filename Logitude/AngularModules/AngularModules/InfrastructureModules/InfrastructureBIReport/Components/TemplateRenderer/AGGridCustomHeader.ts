@@ -1,21 +1,24 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ILoadingOverlayComp } from "ag-grid-community"; 
 import { IHeaderAngularComp  } from 'ag-grid-angular';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'app-loading-overlay',
     template: `
-        <div>
-            <div *ngIf="params.enableMenu" #menuButton class="customHeaderMenuButton" (click)="onMenuClicked($event)">
-                <i class="{{params.menuIcon}}"></i></div> 
-            <div class="customHeaderLabel">{{params.displayName}}</div> 
+        <div class="MediaFill">
+            <div *ngIf="params.enableMenu && params.menuIcon !='fa-list-ol'" #menuButton class="customHeaderMenuButton" (click)="onMenuClicked($event)">
+                <i class="fa {{params.menuIcon}}"></i>
+            </div>
+            <div *ngIf="params.enableMenu && params.menuIcon =='fa-list-ol'" #menuButton class="customHeaderMenuButton" (click)="onMenuClicked($event)">
+                <img  src="./Images/numberIcon.png" [className]="'LeftCenter'"/>
+            </div>
+            <div class="customHeaderLabel TextTrimming">{{params.displayName}}</div>
             <div class="action-holders__sort-number action-holders__sorting">
                 <p id="sortingOrder{{colId}}"></p>
             </div>
-            <div *ngIf="params.enableSorting" (click)="onSortRequested('asc', $event)" [ngClass]="ascSort" class="customSortDownLabel"><i class="fa fa-long-arrow-down"></i></div> 
-            <div style="width:5px;"></div>
-            <div *ngIf="params.enableSorting" (click)="onSortRequested('desc', $event)" [ngClass]="descSort" class="customSortUpLabel"><i class="fa fa-long-arrow-up"></i></div> 
-            <div style="width:5px;"></div>
+            <div *ngIf="params.enableSorting" (click)="onSortRequested('asc', $event)" [ngClass]="ascSort" class="customSortDownLabel"><i class="fa fa-long-arrow-up"></i></div> 
+            <div *ngIf="params.enableSorting" (click)="onSortRequested('desc', $event)" [ngClass]="descSort" class="customSortUpLabel"><i class="fa fa-long-arrow-down"></i></div> 
             <div *ngIf="params.enableSorting" (click)="onSortRequested('', $event)" [ngClass]="noSort" class="customSortRemoveLabel"><i class="fa fa-times"></i></div>
         </div>
     `,
@@ -27,10 +30,15 @@ import { IHeaderAngularComp  } from 'ag-grid-angular';
             float: left;
             width: 7px;
             height: 32px;
-            margin: 0 0 0 3px;
+            margin-right: 3px;
+            margin-left: 3px;
         }
+        .customHeaderLabel {
+            float: left;
+            min-width: 70px;   
+            margin: 0 0 0 15px;
+         }
         .customHeaderMenuButton, 
-        .customHeaderLabel, 
         .customSortDownLabel, 
         .customSortUpLabel, 
         .customSortRemoveLabel 
@@ -38,7 +46,6 @@ import { IHeaderAngularComp  } from 'ag-grid-angular';
             float: left;
             margin: 0 0 0 5px;
         }
-
             .customSortUpLabel {
                 margin: 0;
             }
@@ -54,12 +61,12 @@ import { IHeaderAngularComp  } from 'ag-grid-angular';
     ]
 })
 export class AGGridCustomHeader implements IHeaderAngularComp  {
-    private params: any;
-    private ascSort: string;
+    public params: any;
+    public ascSort: string;
     public colId;
     public sortNumber = 0;
-    private descSort: string;
-    private noSort: string;
+    public descSort: string;
+    public noSort: string;
 
     @ViewChild('menuButton', {read: ElementRef}) public menuButton;
 
@@ -78,7 +85,7 @@ export class AGGridCustomHeader implements IHeaderAngularComp  {
     };
 
     onSortChanged() {
-      this.checkSortOrder();
+        this.checkSortOrder();
         this.ascSort = this.descSort = this.noSort = 'inactive';
         if (this.params.column.isSortAscending()) {
             this.ascSort = 'active';
@@ -92,22 +99,22 @@ export class AGGridCustomHeader implements IHeaderAngularComp  {
    /**
    * Check for sort Order
    */
-  checkSortOrder() {
-    const sortingArray = this.params.api.getSortModel();
-    let j: number;
-    if (sortingArray.length > 1) {
-      setTimeout(() => {
-        for (j = 0; j < sortingArray.length; j++) {
-          this.sortNumber = j + 1;
-          const sortingDom = <HTMLElement>document.getElementById('sortingOrder' + sortingArray[j].colId.replace(/\s/g, ''))
-          sortingDom.innerHTML = this.sortNumber.toString();
+    checkSortOrder() {
+        const sortingArray = this.params.api.sortController.getColumnsWithSortingOrdered();
+        let j: number;
+        if (sortingArray.length > 0) {
+            setTimeout(() => {
+                for (j = 0; j < sortingArray.length; j++) {
+                    this.sortNumber = j + 1;
+                    const sortingDom = <HTMLElement>document.getElementById('sortingOrder' + sortingArray[j].colId.replace(/\s/g, ''))
+                    sortingDom.innerHTML = this.sortNumber.toString();
+                }
+            });
         }
-      });
     }
-  }
 
     onSortRequested(order, event) {
-        this.params.setSort(order, event.shiftKey);
+        this.params.setSort(order, true);
         this.checkSortOrder();
     }
 }

@@ -163,7 +163,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
-                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.ToList();
+                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c=> contacts.Any(ct=> ct.Email == c.Email) ).ToList();
 
                 foreach (var c in contacts)
                 {
@@ -226,7 +226,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
-                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.ToList();
+				List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == email).ToList();
 
                 foreach (var c in contacts)
                 {
@@ -736,7 +736,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                             {
                                 IGlobalContext globalContext = GlobalContext.GetContext();
-                                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.ToList();
+								List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == name).ToList();
 
                                 ContactPassword contactPassword = contactPasswords.Where(cn => cn.Email == entity.Email).FirstOrDefault();
                                 if (contactPassword != null)

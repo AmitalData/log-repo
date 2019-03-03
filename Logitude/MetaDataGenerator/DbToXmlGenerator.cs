@@ -78,10 +78,53 @@ namespace MetaDataGenerator
 
 
 
+		public DbToXmlGenerator(ObjectTable table)
+		{
+			ObjectFieldRepository fieldsRep = new ObjectFieldRepository(0);
+			TextCodeRepository textCodesRep = new TextCodeRepository(0);
+			QueryRepository queryRep = new QueryRepository(0);
+			QueryColumnRepository queryColumnRep = new QueryColumnRepository(0);
+			AdvancedQueryFilterRepository advancedQueryFilterRepository = new AdvancedQueryFilterRepository(0);
+			QueryGroupRepository queryGroupRep = new QueryGroupRepository(0);
+			FeatureRepository featureRep = new FeatureRepository(0);
+			ScreensRepository screensRep = new ScreensRepository(0);
+			ScreenFieldsRepository screenFieldsRep = new ScreenFieldsRepository(0);
+			ObjectTableTabRepository tabsRep = new ObjectTableTabRepository(0);
+			EventTypeRepository eventTypesRep = new EventTypeRepository(0);
+			MenuButtonRepository menuButtonRep = new MenuButtonRepository(0);
+			MenuButtonGroupRepository menuButtonGroupRep = new MenuButtonGroupRepository(0);
+			EntityStatusRepository entityStatusRepository = new EntityStatusRepository(0);
 
 
 
-        public bool AppendExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
+			allFields = fieldsRep.GetObjectFieldsByTenant(0).Where(f => f.ObjectTableId == table.Id).Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable").ToList();
+			allTextCodes = textCodesRep.GetTextCodesByTenantAndObjectTable(0, table.Name).ToList();
+
+
+
+			allQueries = queryRep.GetQueriesByTenant(0).ToList();
+			allQueryColumns = queryColumnRep.GetQueryColumnsByTenant(0).ToList();
+			allQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenant(0).ToList();
+
+			allQueryGroups = queryGroupRep.GetQueryGroups().ToList();
+
+			allFeatures = featureRep.GetFeaturesByTenant(0).Where(f=>f.ObjectTableId == table.Id).ToList();
+			allScreens = screensRep.GetScreensByTenant(0).Where(f => f.ObjectTableId == table.Id).ToList();
+			allScreenFields = screenFieldsRep.GetScreenFieldsByTenant(0).ToList();
+			allTabs = tabsRep.GetObjectTableTabsByTenant(0).Where(f => f.ObjectTableId == table.Id).ToList();
+			allEventTypes = eventTypesRep.GetEventTypesByTenant(0).Where(f => f.ObjectTableId == table.Id).ToList();
+			allMenuButtons = menuButtonRep.GetMenuButtonsByTenant(0).ToList();
+			allMenuButtonGroup = menuButtonGroupRep.GetMenuButtonGroupsByTenant(0).ToList();
+
+			allEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).Where(f => f.ObjectTableId == table.Id).ToList();
+		}
+
+
+
+
+
+
+		public bool AppendExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
         {
             directoryPath = directoryPath + @"\";
             foreach (ObjectTable table in modelTables)
@@ -474,22 +517,26 @@ namespace MetaDataGenerator
 
         private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields, bool updateLXML = false)
         {
-            string modelName = "CommonDataModel";
-            string qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + table.Name);
+			string tableName = table.Name;
+			if (table.Name.ToLower() == "master")
+				tableName = "Shipment";
+
+			string modelName = "CommonDataModel";
+            string qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + tableName);
 
             System.Type tableClass = System.Type.GetType(qName);
 
             if (tableClass == null)
             {
                 modelName = "ShipmentsModel";
-                qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + table.Name);
+                qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + tableName);
                 tableClass = System.Type.GetType(qName);
             }
 
             if (tableClass == null)
             {
                 modelName = "QuoteModel";
-                qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + table.Name);
+                qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + tableName);
                 tableClass = System.Type.GetType(qName);
             }
 
@@ -497,7 +544,7 @@ namespace MetaDataGenerator
             if (tableClass == null)
             {
                 modelName = "InfrastructureModel";
-                qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + table.Name);
+                qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + tableName);
                 tableClass = System.Type.GetType(qName);
             }
 
@@ -505,7 +552,7 @@ namespace MetaDataGenerator
             if (tableClass == null)
             {
                 modelName = "GlobalModel";
-                qName = Assembly.CreateQualifiedName("Simplog.Data.Global", "Simplog.Global.Data.GlobalModel.EntityPOCOs." + table.Name);
+                qName = Assembly.CreateQualifiedName("Simplog.Data.Global", "Simplog.Global.Data.GlobalModel.EntityPOCOs." + tableName);
                 tableClass = System.Type.GetType(qName);
 
                 //Simplog.Global.Data.GlobalModel.EntityPOCOs
@@ -514,18 +561,18 @@ namespace MetaDataGenerator
             if (tableClass == null)
             {
                 modelName = "InvoiceModel";
-                qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + table.Name);
+                qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + tableName);
                 tableClass = System.Type.GetType(qName);
             }
 
-            string qPMName = Assembly.CreateQualifiedName("Logitude.BL", "Logitude.BL." + modelName + ".EntityPMs." + table.Name + "PM");
+            string qPMName = Assembly.CreateQualifiedName("Logitude.BL", "Logitude.BL." + modelName + ".EntityPMs." + tableName + "PM");
             System.Type tablePMClass = System.Type.GetType(qPMName);
 
-            string qListName = Assembly.CreateQualifiedName("Logitude.BL", "Logitude.BL." + modelName + ".EntityLists." + table.Name + "List");
+            string qListName = Assembly.CreateQualifiedName("Logitude.BL", "Logitude.BL." + modelName + ".EntityLists." + tableName + "List");
             System.Type tableListClass = System.Type.GetType(qListName);
 
 
-            if (tableClass == null && table.Name != "General")// && tablePMClass == null)
+            if (tableClass == null && tableName != "General")// && tablePMClass == null)
             {
                 return false;
             }

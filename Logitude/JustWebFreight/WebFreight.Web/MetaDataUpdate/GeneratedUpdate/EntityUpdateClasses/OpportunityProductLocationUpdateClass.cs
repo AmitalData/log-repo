@@ -142,9 +142,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityId",
-					  						DefaultText =  @"OpportunityId",
+					  						DefaultText =  "OpportunityId",
 					  						ListFieldLable =  "OpportunityIdListLable",
-					  						ListLableDefaultText =  @"OpportunityId",
+					  						ListLableDefaultText =  "OpportunityId",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -182,9 +182,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityProductTypeCode",
-					  						DefaultText =  @"Opportunity Product Type",
+					  						DefaultText =  "Opportunity Product Type",
 					  						ListFieldLable =  "OpportunityProductTypeCodeListLable",
-					  						ListLableDefaultText =  @"Opportunity Product Type",
+					  						ListLableDefaultText =  "Opportunity Product Type",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -222,9 +222,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LineNumber",
-					  						DefaultText =  @"Line Number",
+					  						DefaultText =  "Line Number",
 					  						ListFieldLable =  "LineNumberListLable",
-					  						ListLableDefaultText =  @"Line Number",
+					  						ListLableDefaultText =  "Line Number",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -263,9 +263,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CountryId",
-					  						DefaultText =  @"Country",
+					  						DefaultText =  "Country",
 					  						ListFieldLable =  "CountryIdListLable",
-					  						ListLableDefaultText =  @"Country",
+					  						ListLableDefaultText =  "Country",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -301,7 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocationCode",
-					  						DefaultText =  @"Location Code",
+					  						DefaultText =  "Location Code",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -337,7 +337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocationName",
-					  						DefaultText =  @"Location Name",
+					  						DefaultText =  "Location Name",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -376,9 +376,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TEU",
-					  						DefaultText =  @"TEU",
+					  						DefaultText =  "TEU",
 					  						ListFieldLable =  "TEUListLable",
-					  						ListLableDefaultText =  @"TEU",
+					  						ListLableDefaultText =  "TEU",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -416,9 +416,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NumberOfShipments",
-					  						DefaultText =  @"No Of Shipments",
+					  						DefaultText =  "No Of Shipments",
 					  						ListFieldLable =  "NumberOfShipmentsListLable",
-					  						ListLableDefaultText =  @"No Of Shipments",
+					  						ListLableDefaultText =  "No Of Shipments",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -457,9 +457,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChargeableWeight",
-					  						DefaultText =  @"Chargeable Weight",
+					  						DefaultText =  "Chargeable Weight",
 					  						ListFieldLable =  "ChargeableWeightListLable",
-					  						ListLableDefaultText =  @"Chargeable Weight",
+					  						ListLableDefaultText =  "Chargeable Weight",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -498,9 +498,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Revenue",
-					  						DefaultText =  @"Revenue",
+					  						DefaultText =  "Revenue",
 					  						ListFieldLable =  "RevenueListLable",
-					  						ListLableDefaultText =  @"Revenue",
+					  						ListLableDefaultText =  "Revenue",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);

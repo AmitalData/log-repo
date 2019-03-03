@@ -76,7 +76,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string BluesnapCRMContractId { get; set; }
         public string BluesnapEAWBContractId { get; set; }
         public string BluesnapEAWBSContractId { get; set; }
-        public string BluesnapOneTimeContractId { get; set; }
+        public string BluesnapOneTimeContract { get; set; }
 
 
         public int BluesnapContractQTY { get; set; }
@@ -161,8 +161,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         [ForeignKey("BluesnapEAWBSContractId")]
         public virtual BluesnapContract BluesnapContractEAWBS { get; set; }
 
-        [ForeignKey("BluesnapOneTimeContractId")]
-        public virtual BluesnapContract BluesnapContractOneTme { get; set; }
 
 
         [ForeignKey("AWBMessagesCCSTypeCode")]

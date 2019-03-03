@@ -4928,6 +4928,7 @@
     <Compile Include="ReportsWebServices\LogitudeReports\DetailedShipmentChargesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ShipmentProfitVSQuoteEstimateManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\StatisticsByCustomerManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\EmployeeTimeSheetManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VendorChargesAnalysisManager.cs" />
     <Compile Include="ReportsWebServices\OpportunitySummaryWebService.asmx.cs">
       <DependentUpon>OpportunitySummaryWebService.asmx</DependentUpon>

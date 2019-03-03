@@ -1,4 +1,4 @@
-﻿export class ListComponentArgs {
+export class ListComponentArgs {
     public QueryCode: string;
     public ObjectTableName: string;
     public DisplayTitle: string;
@@ -16,6 +16,7 @@
     public SelectedTransportMode: string = "All";
     public SuppressOnRowSelected: boolean = false;
     public IsTasksMenuClicked: boolean;
+    public BIReportFolderId: string;
 }
 
 export class NewEntityArgs {

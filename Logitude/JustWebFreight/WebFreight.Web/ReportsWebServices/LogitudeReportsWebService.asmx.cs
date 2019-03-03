@@ -2180,10 +2180,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            if (toDate == null)
-            {
-                toDate= TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            }
+
 
             //FromDate
             DateTime? FromDate = null;
@@ -2295,7 +2292,12 @@ namespace WebFreight.Web.ReportsWebServices
             item.FieldValue = FromDate;
             item.FieldValue2 = toDate;
             item.IsCustomField = true;
-            item.Operator = "Between";
+            if (toDate == null)
+            {
+                item.Operator = "GreaterThanOrEqual";
+            }
+            else
+                item.Operator = "Between";
             queryOperations2.QueryFilterItems.Add(item);
 
             shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations2, shipments);
@@ -2329,8 +2331,7 @@ namespace WebFreight.Web.ReportsWebServices
            // List<string> ConsigneeAdressIds = Shipments.Select(p => p.ConsigneeAddressId).ToList();
 
             List<ShipmentPackage> shipmentPackages = (from d in shipmentsContext.ShipmentPackages.Include("PackageType") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
-           // List<Card> Consiness = (from d in commonContext.Cards.Include("Address") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
-
+            // List<Card> Consiness = (from d in commonContext.Cards.Include("Address") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
 
 
             if (shipmentPackages.Count > 0)
@@ -2354,12 +2355,14 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Unit = Item.PackageType!=null?Item.PackageType.EnglishName:null;
                     shipment.RequestETD = dataView.FirstPickupETD;
                     shipment.EstimateETD = dataView.FirstPickupETA;
-                    if (!String.IsNullOrEmpty(dataView.Field2))
-                        shipment.RequestETA = Convert.ToDateTime(dataView.Field2);
                     shipment.EstimateETA = dataView.MainCarriageFinalDestinationETA;
                     shipment.Shipper = dataView.ShipperName;
                     shipment.Pieces = Item.Quantity;
                     shipment.ContainerNr = Item.ContainerNumber;
+
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, dataView, shipment);
+
                     totalData.ShipmentPackages.Add(shipment);
 
                 }

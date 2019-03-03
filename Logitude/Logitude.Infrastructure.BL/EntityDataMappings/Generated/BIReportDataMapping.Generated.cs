@@ -55,7 +55,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Inactive, 
 	         TypeCode, 
 	         AGGridOptionsXML, 
-	         BIReportFolderId,
+	         BIReportFolderId, 
+	         CreatedByUserName, 
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

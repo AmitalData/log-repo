@@ -178,6 +178,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildIncotermDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildMoveTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildPortsDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -187,6 +188,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildSpecialServicesTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildTenantDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -199,6 +201,8 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactShipmentTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildVesselDimensionTable.sql" />
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateMoveTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateBrancheDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -232,6 +236,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateSpecialServicesTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateTenantDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -241,23 +246,24 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateUsersDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\Day 04 [Abed] AddColumnAutomaticLastUpdateDateAndTriggerToAllTableUsedInWarehouseData.sql">
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateVesselDimensionTable.sql" />
+    <Content Include="WarehouseScript\Others\Day 04 [Abed] AddTriggerToColumnAutomaticLastUpdate.sql" />
+    <Content Include="WarehouseScript\Others\Day 01[Abed] AddColumnAutomaticLastUpdateDate.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\Day 04 [Abed] CreateIndexes.sql">
+    <Content Include="WarehouseScript\Others\Day 02 [Abed] CreateIndexesOnCloumnAutomaticLastUpdateDate.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\Day 04 [Abed] SetColumnAutomaticLastUpdateDateOnAllTableUsedInWarehouseData.sql">
+    <Content Include="WarehouseScript\Others\Day 03 [Abed] SetValueToColumnAutomaticLastUpdateDate.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\Day 26 [Abed] FillDWHSettingTable.sql">
+    <Content Include="WarehouseScript\Others\Day 05 [Abed] FillDWHSettingTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\Function Date.sql">
+    <Content Include="WarehouseScript\Others\Day 06 [Abed]Add Function Date.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\UpdateDWObjectFieldHideTree.sql" />
-    <Content Include="WarehouseScript\Others\UpdateObjectFieldCopyToDW.sql">
+    <Content Include="WarehouseScript\Others\Day 08[Abed] UpdateObjectFieldCopyToDW.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

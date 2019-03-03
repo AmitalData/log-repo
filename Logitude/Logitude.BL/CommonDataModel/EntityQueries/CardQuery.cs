@@ -818,6 +818,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StateName = entityPOCO.StateName,
                     IsInternationalPartner = entityPOCO.IsInternationalPartner,
                     IsAutonomy = entityPOCO.IsAutonomy,
+                    CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
+                    CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
                 };
 
                 if (entityPOCO.Customer != null)

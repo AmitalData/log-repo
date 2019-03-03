@@ -127,28 +127,17 @@ export class NewConsolidationComponent extends BaseComponent {
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isFieldtEnabled = true;
+        var isFieldtEnabled = false;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
-            isFieldtEnabled = false;
-        }
-
-        else {
-            if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.LocalCurrencyId == null) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.LocalCurrencyId == this.InvoiceCurrencyId) {
-                isFieldtEnabled = false;
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
+            if (this.InvoiceCurrencyId) {
+                if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                    isFieldtEnabled = true;
+                }
             }
         }
         
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_DueDate() {
@@ -581,7 +570,7 @@ export class NewConsolidationComponent extends BaseComponent {
         else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
             errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
         }
-        
+
         if (this.DueDate == null) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.DueDate")));
         }
@@ -595,23 +584,21 @@ export class NewConsolidationComponent extends BaseComponent {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
-          }
-          if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
-              errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
-          }
+            }
+            if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
+            }
 
-          if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
-            errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
-          }
+            if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
+                errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
+            }
         }
 
-        if (errors.length == 0) {
-            if (!this.EntityPM.IsBillToAllowConsolidation) {
-                errors.push(TextCodeTranslator.Translate("ARInvoice.M.NewConsolidationInvoiceErrorMsg1"));
-            }
-      }
-
-   
+        //if (errors.length == 0) {
+        //    if (!this.EntityPM.IsBillToAllowConsolidation) {
+        //        errors.push(TextCodeTranslator.Translate("ARInvoice.M.NewConsolidationInvoiceErrorMsg1"));
+        //    }
+        //}
 
         this.ValidationErrorsList = errors;
 

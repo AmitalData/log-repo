@@ -201,46 +201,40 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isFieldtEnabled = true;
+        var isFieldtEnabled = false;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
-            isFieldtEnabled = false
-        }
-
-        else {
-            if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.TenantPM.CurrencyId == null) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.TenantPM.CurrencyId == this.InvoiceCurrencyId) {
-                isFieldtEnabled = false;
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
+            if (this.InvoiceCurrencyId) {
+                if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                    isFieldtEnabled = true;
+                }
             }
         }
 
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_Constituent(isBillToHasConstituentEnabled: boolean) {
-        //var isFieldVisible = false;
+        var isFieldVisible = false;
         var isFieldtEnabled = false;
 
         if (FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent")) {
-            if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") {
-                //isFieldVisible = true;
-                this.IsConstituentInvoiceVisible = false;
+
+            isFieldVisible = true;
+            isFieldtEnabled = true;
+
+            if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") {                
+                isFieldVisible = false;
             }
 
-            isFieldtEnabled = isBillToHasConstituentEnabled;
+            //isFieldtEnabled = isBillToHasConstituentEnabled;
+
             if (AppTool.IsNullOrEmpty(this.BillToId)) {
                 isFieldtEnabled = false;
             }
         }
 
+        this.IsConstituentInvoiceVisible = isFieldVisible;
         this.UIProperties.SetEnabled("IsConstituentInvoice", this.ObjectTableName, isFieldtEnabled);
         //this.UIProperties.SetVisibility("IsConstituentInvoice", this.ObjectTableName, isFieldVisible);
     }

@@ -45,11 +45,11 @@ export class CommonDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
     }
 
-    GetBlueSnapToken(VaultedShopperId:string) {
+    GetBlueSnapToken(VaultedShopperId:string,countryName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetBlueSnapToken?VaultedShopperId=' + VaultedShopperId, {
+            return this._http.get(this._apiUrl + '/GetBlueSnapToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName, {
                 headers: authHeader
             }).map(response => {
                 var myResult = response.json();
@@ -62,11 +62,11 @@ export class CommonDomainService {
     }
 
 
-    GetBlueSnapSecretToken(VaultedShopperId: string) {
+    GetBlueSnapSecretToken(VaultedShopperId: string,countryName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetBlueSnapSecretToken?VaultedShopperId=' + VaultedShopperId, {
+            return this._http.get(this._apiUrl + '/GetBlueSnapSecretToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName, {
                 headers: authHeader
             }).map(response => {
                 var myResult = response.json();
@@ -649,21 +649,7 @@ export class CommonDomainService {
         });
     }
 
-    UpdateComputingPartnerTranslationList(entityPMList: any[]) {
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-            var url = ServiceHelper.GetLogitudeURL() + 'api/TimeOfficeHourDomain';
 
-            return this._http.post(url, JSON.stringify(entityPMList), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
-                var myResponse = new ServiceResponse();
-                myResponse.Result = myResponse;
-                return myResponse;
-            });
-        });
-    }
     getNoneZeroTenantTranslation(computingPartnerId:string,ObjectTableId:string,Code:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

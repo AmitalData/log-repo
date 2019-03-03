@@ -11,6 +11,7 @@ import { SignalRChannelService } from '../Services/SignalRServices/SignalRChanne
 import {SATInterfaceSettingPM} from '../../Invoice/EntityPMs/SATInterfaceSettingPM';
 import {Http} from '@angular/http';
 import { TenantManagementJS } from '../DataContracts/TenantManagementJS';
+import { FeatureToggleList } from '../EntityLists/FeatureToggleList';
 
 export class SessionLocator {
     public static Http: Http;    
@@ -44,7 +45,8 @@ export class SessionLocator {
     public static TenantSettings: any[];
     public static LoggedUserPM: UserPM;
     public static ApplicationLocation: ViewContainerRef;  
-    public static SATInterfaceSettings: SATInterfaceSettingPM;  
+    public static SATInterfaceSettings: SATInterfaceSettingPM;
+    public static FeatureToggles: FeatureToggleList[] = [];
     public static CurrentSession: SessionComponent;
     public static AllSessions: Array<SessionComponent>;
     public static AddSession(mySession: SessionComponent) {
