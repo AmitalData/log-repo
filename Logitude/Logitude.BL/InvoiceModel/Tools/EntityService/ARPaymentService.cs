@@ -1749,7 +1749,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //    = (useLocalRecoMethod ? paymentPM.AmountInLocalCurrency : paymentPM.AmountInPaymentCurrency)
             //       - (double) amount2reconcile;
 
-            // amount sent updated from client
+            // amount sent updated from clientt
             //paymentPM.OpenAmount = paymentPM.OpenAmount - (double)amount2reconcile;
 
 
