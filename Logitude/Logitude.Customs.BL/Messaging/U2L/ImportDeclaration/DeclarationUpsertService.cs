@@ -576,6 +576,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             GrossMassMeasure = GrossMassMeasure / 1000;
                             this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "TNE";
                         }
+                        else
+                        {
+                            if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode == "TNE")
+                            {
+                                this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
+                            }
+                        }
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure = GrossMassMeasure;
                     }
                 }
