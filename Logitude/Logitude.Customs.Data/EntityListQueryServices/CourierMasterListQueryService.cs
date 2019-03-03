@@ -56,6 +56,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        UpdatedByUserId = a.UpdatedByUserId,
                                                        WeightValueCode = a.WeightValueCode,
                                                        WeightValueName = a.FreightPaymentMethod != null ? a.FreightPaymentMethod.LocalName : null,
+                                                       StorageSiteCode = a.StorageSiteCode,
+                                                       StorageSiteName = a.DeliverySiteType != null ? a.DeliverySiteType.LocalName : null,
                                                     });
             return query;
 		}
