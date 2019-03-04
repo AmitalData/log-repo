@@ -710,15 +710,13 @@
     <Compile Include="Migrations\201902202034350_add_AgentComputed_Shipments.Designer.cs">
       <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
-    <Compile Include="Migrations\201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.cs" />
-    <Compile Include="Migrations\201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.Designer.cs">
-      <DependentUpon>201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.cs</DependentUpon>
-=======
     <Compile Include="Migrations\201903030807448_AddIsVeichleToPackageType_Samar.cs" />
     <Compile Include="Migrations\201903030807448_AddIsVeichleToPackageType_Samar.Designer.cs">
       <DependentUpon>201903030807448_AddIsVeichleToPackageType_Samar.cs</DependentUpon>
->>>>>>> ed1b4697a0299dbdeba5e893ecd6cc3da0f539c7
+    </Compile>
+    <Compile Include="Migrations\201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.cs" />
+    <Compile Include="Migrations\201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.Designer.cs">
+      <DependentUpon>201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -1197,13 +1195,11 @@
     <EmbeddedResource Include="Migrations\201902202034350_add_AgentComputed_Shipments.resx">
       <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
-    <EmbeddedResource Include="Migrations\201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.resx">
-      <DependentUpon>201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.cs</DependentUpon>
-=======
     <EmbeddedResource Include="Migrations\201903030807448_AddIsVeichleToPackageType_Samar.resx">
       <DependentUpon>201903030807448_AddIsVeichleToPackageType_Samar.cs</DependentUpon>
->>>>>>> ed1b4697a0299dbdeba5e893ecd6cc3da0f539c7
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.resx">
+      <DependentUpon>201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
