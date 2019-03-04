@@ -135,7 +135,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     //#region abdullah code
     originalPaymentOpenAmount: number;
     paymentAmountTotal: number = 0;
-    amount2reconcileTotal: number = 0;;
+    amount2reconcileTotal: number = 0;
+
     // IsEntityValid: boolean = true;
 
 
@@ -1496,6 +1497,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
             this.originalPaymentOpenAmount = this.EntityPM.AmountInPaymentCurrency;
             this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
+
+            this.CalculateTotals();
+
 
             this.ItemsSource.Collection.forEach(item => {
                 item.SetUIProperties();
