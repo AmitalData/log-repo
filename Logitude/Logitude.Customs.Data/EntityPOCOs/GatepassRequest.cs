@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("GatepassNumber")]
-	    public int? GatepassNumber { get; set; }
+	    public int GatepassNumber { get; set; }
         [ForeignKey("OriginSiteType")]
         [Column("OriginSiteCode")]
 	    public string OriginSiteCode { get; set; }
