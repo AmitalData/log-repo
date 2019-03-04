@@ -754,6 +754,7 @@
     <TextCode Code="&quot;General.MH.Shipments&quot;" DefaultText="&quot;Shipments&quot;" TextCodeTypeCode="&quot;MH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.MH.Invoices&quot;" DefaultText="&quot;Invoices&quot;" TextCodeTypeCode="&quot;MH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.PaymentBankAccountCurrencyDifferent&quot;" DefaultText="&quot;Payment currency is different from bank account currency&quot;" LocalDefaultText="&quot;מטבע התשלום שונה ממטבע חשבון הבנק הנבחר&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;General.MH.Depositions&quot;" DefaultText="&quot;Depositions&quot;" TextCodeTypeCode="&quot;MH&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;DASHBOARD&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;General.Features.Dashboard&quot;" FeatureDefaultText="&quot;Dashboard&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
