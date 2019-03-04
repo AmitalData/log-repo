@@ -10082,6 +10082,18 @@ namespace WebFreight.Web.ReportsWebServices
                         TMProject project = allProjects.Where(d => d.Id == item.ProjectId).FirstOrDefault();
                         if (project != null)
                         {
+                            if (project.CategoryId != null)
+                            {
+                                TMProjectCategory category = new TMProjectCategory();
+                                TMProjectCategoryRepository repo = new TMProjectCategoryRepository(tenant);
+                                category = repo.GetSingle(project.CategoryId, tenant);
+                                if (category != null)
+                                {
+                                    timSheetItem_Detailed.CategoryId = category.Id;
+                                    timSheetItem_Detailed.CategoryName = category.Name;
+                                }
+
+                            }
                             timSheetItem_Detailed.ExternalProjectNumber = project.ExternalProjectNumber;
                             timSheetItem_Detailed.ProjectName = project.Name;
                             timSheetItem_Detailed.ProjectNumber = project.ProjectNumber;
