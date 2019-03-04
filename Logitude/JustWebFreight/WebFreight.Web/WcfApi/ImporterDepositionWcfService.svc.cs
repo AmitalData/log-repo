@@ -12,6 +12,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Web;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityLists;
@@ -25,6 +26,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.Helpers
@@ -48,9 +50,15 @@ namespace WebFreight.Web.Helpers
                 }
 
                 if (customerTenant == null) customerTenant = customerTenantAccessLists.FirstOrDefault().CustomerTenant;
+                string URI = string.Empty;
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    SettingQuery settingQuery = new SettingQuery();
+                    URI = settingQuery.GetSinglePM().CustomerTenantsURL.TrimEnd('/') + "/api/";
+                    scope.Complete();
+                }
 
-                SettingQuery settingQuery = new SettingQuery();
-                string URI = settingQuery.GetSinglePM().CustomerTenantsURL.TrimEnd('/') + "/api/";
+
                 ImporterDepositionAM importerDepositionAM = new ImporterDepositionAM();
                 MapImporterDepositionPMToImporterDepositionAM(importerDepositionPM, importerDepositionAM);
                 importerDepositionAM.CustomerTenant = (int)customerTenant;
