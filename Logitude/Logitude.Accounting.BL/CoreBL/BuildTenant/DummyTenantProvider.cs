@@ -260,7 +260,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             {
 
 
-                int iMTKR = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "MTKR", fullAccountingSetting.Tenant);
+                int iMTKR = (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "MTKR", fullAccountingSetting.Tenant);
 
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
@@ -308,7 +308,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
             while (tot++ < buildGLAccountEachType)
             {
-                int iSPDR = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "SPDR", fullAccountingSetting.Tenant);
+                int iSPDR = (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "SPDR", fullAccountingSetting.Tenant);
 
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
@@ -364,7 +364,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             while (tot++ < timeLimit)
             {
 
-                int iRevenues = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Revenues.ToIntString(), fullAccountingSetting.Tenant);
+                int iRevenues = (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Revenues.ToIntString(), fullAccountingSetting.Tenant);
                 us.Update(new Def.EntityPMs.GLAccountPM()
                 {
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -412,7 +412,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             while (tot++ < timeLimit)
             {
                 int iExpenses =
-            CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Expenses.ToIntString(), fullAccountingSetting.Tenant);
+            (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Expenses.ToIntString(), fullAccountingSetting.Tenant);
 
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
@@ -461,7 +461,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
 
-                    int iClient = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
+                    int iClient = (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
                     us.Update(new Def.EntityPMs.GLAccountPM()
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -519,7 +519,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             while (tot++ < amount)
             {
 
-                int iVendors = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Vendors.ToIntString(), fullAccountingSetting.Tenant);
+                int iVendors =  (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Vendors.ToIntString(), fullAccountingSetting.Tenant);
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
 
