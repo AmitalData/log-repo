@@ -396,50 +396,8 @@ export class ItemSourceItem extends BaseComponent {
         }
     }
    
-
-    get Id() { return this.entity.Id; }
-    set Id(value: string) { if (this.entity.Id != value) this.entity.Id = value; }
-    set WorkDate(value: Date) { if (this.entity.WorkDate != value) this.entity.WorkDate = value; }
-    set EntryTime(value: Date) {        
-        if (this.entity.EntryTime != value) {
-
-            if (value != null) {
-                var year = DateTool.GetDateParts(this.WorkDate).DateObject.getUTCFullYear();
-                var month = DateTool.GetDateParts(this.WorkDate).DateObject.getUTCMonth();
-                var day = DateTool.GetDateParts(this.WorkDate).DateObject.getDate();
-                value.setFullYear(year, month, day);
-            }
-
-            if (value == null)
-                this.entity.EntryTime = value;
-            else {
-                if (this.entity.ExitTime != null) {
-                    var a = DateTool.GetDateParts(this.entity.ExitTime).DateObject.valueOf();
-                    var b = DateTool.GetDateParts(value).DateObject.valueOf();
-                    if (DateTool.GetDateParts(this.entity.ExitTime).DateObject.valueOf() < DateTool.GetDateParts(value).DateObject.valueOf())
-                        this.entity.EntryTime = this.entity.EntryTime;
-                    else
-                        this.entity.EntryTime = value;
-                }
-                else {
-                    this.entity.EntryTime = value;
-                }
-            }
-            this.UpdatedByUserId = SessionLocator.LoggedUserId;
-            this.GetEmployeeUserName();
-        }
-    }
-    set ExitTime(value: Date) {
-        if (this.entity.ExitTime != value) {
-            if (value != null) {
-                var year = DateTool.GetDateParts(this.WorkDate).DateObject.getUTCFullYear();
-                var month = DateTool.GetDateParts(this.WorkDate).DateObject.getUTCMonth();
-                var day = DateTool.GetDateParts(this.WorkDate).DateObject.getDate();
-                value.setFullYear(year, month, day);
-            }
-                if (value == null)
-                this.entity.ExitTime = value;
-            else {
+    ComputeMinutes() {
+        var iResult: number = 0;
 
         if (this.EntryTime && this.ExitTime) {
             iResult = DateTool.GetDateParts(this.ExitTime).Minutes - DateTool.GetDateParts(this.EntryTime).Minutes;

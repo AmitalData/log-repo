@@ -1,5 +1,5 @@
 ﻿import { AccountingIntegrityCheckPMService } from './../../Services/StandardPMs/AccountingIntegrityCheckPMService';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -23,7 +23,7 @@ export class NewIntegrityCheckComponent extends BaseComponent implements OnInit 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _AccountingIntegrityCheckPMService: AccountingIntegrityCheckPMService = new AccountingIntegrityCheckPMService();
 
-    constructor() {
+    constructor(private CD: ChangeDetectorRef) {
         super();
 
     }
@@ -44,6 +44,12 @@ export class NewIntegrityCheckComponent extends BaseComponent implements OnInit 
     set FromMonthInclusive(value: Date) {
         if (this.EntityPM.FromMonthInclusive != value) {
             this.EntityPM.FromMonthInclusive = value;
+
+            if (!this.isValid)
+                this.validateDates();
+            else {
+                this.isValid = false;
+            }
         }
     }
 
@@ -51,17 +57,55 @@ export class NewIntegrityCheckComponent extends BaseComponent implements OnInit 
     set ToMonthInclusive(value: Date) {
         if (this.EntityPM.ToMonthInclusive != value) {
             this.EntityPM.ToMonthInclusive = value;
+
+            if (!this.isValid)
+                this.validateDates();
+            else {
+                this.isValid = false;
+            }
         }
     }
     //#endregion
 
+
+    //#region Date Filters Validation
+    isValid: boolean = true;
+    validateDates() {
+        if (this.FromMonthInclusive > this.ToMonthInclusive) {
+
+            this.isValid = false;
+            setTimeout(() => {
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                this.UIProperties.SetValidity("FromMonthInclusive", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                this.CD.detectChanges();
+            }, 200);
+
+        } else {
+            setTimeout(() => {
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
+                this.UIProperties.SetValidity("FromMonthInclusive", this.ObjectTableName, true, "");
+                this.CD.detectChanges();
+
+                this.isValid = true;
+
+            }, 200);
+
+
+        }
+    }
+
     OkButtonClicked() {
         var errors: string[] = [];
 
+        if(!this.isValid) return;
 
         // Required check
         if (AppTool.IsNullOrEmpty(this.FromMonthInclusive) || AppTool.IsNullOrEmpty(this.ToMonthInclusive)) {
             errors.push(TextCodeTranslator.Translate("Accounting.General.O.AllFieldsRequired"));
+        }
+        else if (this.FromMonthInclusive.getFullYear() !=  this.ToMonthInclusive.getFullYear()) {
+            // errors.push(TextCodeTranslator.Translate("Accounting.O.FromdateandTodatemustbesameyear"));
+            errors.push("From date and To date must be same year");
         }
 
         if (errors.length > 0) {

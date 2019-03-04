@@ -200,6 +200,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             ValidateFullAccounting(theEntityPm);
 
+            //get glaccount fields
+            GLAccountPM gla = FillGLAccountFields(theEntityPm);
+
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.SetVoided = theEntityPm.SetVoided;
@@ -284,7 +287,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setVoided = theEntityPm.SetVoided;
             var SetReSendQBO = theEntityPm.SetReSendQBO;
 
-
+            //update amounts
+            if (theEntityPm.IsFullAccounting == true)
+                UpdateFullAccountPaymentAmount(theEntityPm, gla.ReconcileMethodCode == "0");
+            else
+                UpdatePaymentOpenAmount();
 
 
             // PaymentCheque And CashBook
@@ -298,14 +305,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
 
-            if(theEntityPm.IsFullAccounting == true)
-            {
-                UpdateFullAccountPaymentAmount();
-            }
-            else
-            {
-                UpdatePaymentOpenAmount();
-            }
+
             ARPaymentHelper service = new ARPaymentHelper();
             if (payment.ExternalAccountingEntityId != null || SetReSendQBO)
             {
@@ -320,8 +320,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // DropBox
             this.CreateARInvoiceMessage(setApproved);
 
-            //get glaccount fields
-            FillGLAccountFields(theEntityPm);
 
             // Full Accounting => Reconciliation
             if (theEntityPm.IsFullAccounting == true)
@@ -1576,10 +1574,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var recoService = ContainerAccessor.Container.Resolve(typeof(IReconciliationServiceExt), "ReconciliationServiceExt", new ParameterOverride("", 1)) as IReconciliationServiceExt;
             recoService.CreateReconciliation(_reco);
 
-            //update payment open amount
-            decimal amount2reconcile = paymentPM.InvoicesTransactions.Sum(d => d.AmountToReconcile);
-            //paymentPM.OpenAmount -= (double)amount2reconcile;
-
 
         }
         public void UpdateTransactions(ARPaymentPM paymentPM)
@@ -1746,8 +1740,39 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        void UpdateFullAccountPaymentAmount()
+        void UpdateFullAccountPaymentAmount(ARPaymentPM paymentPM, bool useLocalRecoMethod)
         {
+            //
+            // update payment amount:
+            decimal amount2reconcile = paymentPM.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            //paymentPM.OpenAmount
+            //    = (useLocalRecoMethod ? paymentPM.AmountInLocalCurrency : paymentPM.AmountInPaymentCurrency)
+            //       - (double) amount2reconcile;
+
+            // amount sent updated from clientt
+            //paymentPM.OpenAmount = paymentPM.OpenAmount - (double)amount2reconcile;
+
+
+            //
+            // update invoices amount
+            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
+            {
+                //get invoice
+                ARInvoice invoice = GetInvoice(invTrans.SourceId, tenant);
+
+                //update
+                double? invoiceAmountDue = MethodHelper.Round((invoice.AmountDue - (double)invTrans.AmountToReconcile), 2);
+
+                invoice.AmountDue = invoiceAmountDue;
+                invoice.AmountDueInLocalCurrency = MethodHelper.Round(invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate, 2);
+                invoice.AmountDueInProfitCurrency = MethodHelper.Round(invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate, 2);
+
+                invoiceRepository.Update(invoice);
+            }
+
+
+
+
 
         }
 

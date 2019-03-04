@@ -70,7 +70,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        int tenant = entity.Tenant;
+                        int tenant = authToken.Tenant;
 						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 						if (entity != null)
                         {
@@ -84,7 +84,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                        // entityPM.VoidedByJournalId = mappingService.SetVoidedByJournal(entity, entity.Tenant);
                         entityPM.OriginalJournalId = mappingService.SetOriginalJournal(entity, entity.Tenant);
                       
-                        entityPM.Tenant = entity.Tenant;
+                        entityPM.Tenant = authToken.Tenant;
 
 
                         

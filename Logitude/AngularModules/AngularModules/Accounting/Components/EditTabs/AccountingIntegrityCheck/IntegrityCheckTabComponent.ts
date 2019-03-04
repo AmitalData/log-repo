@@ -30,7 +30,7 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
 
     public _parameters: IntegrityCheckParameters = new IntegrityCheckParameters();
 
-    constructor(private entityArgs: EntityArgs) {
+    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -71,6 +71,13 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
         if (this.entityPM.FromMonthInclusive  != value) {
             this.entityPM.FromMonthInclusive  = value;
             // this.encodeParameters();
+
+            if (!this.isValidate)
+                this.validateDates();
+            else {
+                this.isValidate = false;
+            }
+
         }
     }
 
@@ -79,6 +86,12 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
         if (this.entityPM.ToMonthInclusive  != value) {
             this.entityPM.ToMonthInclusive  = value;
             // this.encodeParameters();
+
+            if (!this.isValidate)
+                this.validateDates();
+            else {
+                this.isValidate = false;
+            }
         }
     }
 
@@ -91,6 +104,26 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
     }
 
     //#endregion
+
+
+    //#region Date Filters Validation
+    isValidate: boolean = false;
+    validateDates() {
+        setTimeout(() => {
+            if (this.FromMonthInclusive > this.ToMonthInclusive) {
+
+                this.UIProperties.SetValidity("ToMonthInclusive", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                this.UIProperties.SetValidity("FromMonthInclusive", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                this.CD.detectChanges();
+
+            } else {
+                this.UIProperties.SetValidity("ToMonthInclusive", this.ObjectTableName, true, "");
+                this.UIProperties.SetValidity("FromMonthInclusive", this.ObjectTableName, true, "");
+                this.CD.detectChanges();
+
+            }
+        }, 200);
+    }
 
     ReloadData() {
     }
