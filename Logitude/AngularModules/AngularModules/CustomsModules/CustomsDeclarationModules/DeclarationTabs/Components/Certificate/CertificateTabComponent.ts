@@ -969,13 +969,24 @@ export class CertificateTicketListItem extends BaseComponent {
 
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => {
-                if ($event == "ok") {
-                    this.ReloadCertificates($event);
-                    this.parent.CD.reattach();
-                    this.parent.RefreshEntity();
-                }
+            logWindow.ComponentLoaded.subscribe(s => {
+                logWindow.WindowClosed.subscribe($event => {
+                    this.ticket = s.certificateTicke;
+                    if ($event == "ok") {
+                        this.ReloadCertificates($event);
+                        this.parent.CD.reattach();
+                        //  this.parent.RefreshEntity();
+                    } 
+                });
             });
+
+            //logWindow.WindowClosed.subscribe(($event: any) => {
+            //    if ($event == "ok") {
+            //        this.ReloadCertificates($event);
+            //        this.parent.CD.reattach();
+            //      //  this.parent.RefreshEntity();
+            //    }
+            //});
             this.parent.CD.detach();
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CreateEditTicketComponent');
                     //}
