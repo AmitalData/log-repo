@@ -138,6 +138,7 @@ export class GatepassRequestComponent extends BaseComponent {
 
     SetGatepassRequestStatus(){
         switch (this.EntityPM.UpdateCode) {
+            case null:
             case "":
             case "2":
             case "4":
