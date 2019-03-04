@@ -126,5 +126,16 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string RoutingIds { get; set; }
         public string VoyageTripNumber { get; set; }
         public bool HasContainerException { get; set; }
+
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
+        public string ChassisNumber { get; set; }
+        public string RegistrationNumber { get; set; }
+        public string CountryId { get; set; }
+        [ForeignKey("CountryId")]
+        public virtual Country Country { get; set; }
+
     }
 }

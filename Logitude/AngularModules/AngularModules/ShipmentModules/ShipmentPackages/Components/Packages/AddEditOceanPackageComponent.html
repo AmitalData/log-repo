@@ -636,6 +636,134 @@
                                                 </td>
                                             </tr>
 
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 10px;">
+                                                                <div></div>
+                                                            </td>
+                                                            <td>
+                                                                <table>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td colspan="5">
+                                                                            <table>
+                                                                                <tr style="height: 20px;">
+                                                                                    <td class="SectionHeaderRow" style="vertical-align: middle;">
+                                                                                        <span style="margin-left: 5px;color: #45494A; font-size: 14px;">Vehicle Details</span>
+                                                                                    </td>
+                                                                                    <td style="width: 36px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Make | Chassis Number  -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 110px;">
+                                                                            <LogLabel [ObjectFieldName]="'Make'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width: 185px;">
+                                                                            <LogTextBox [ObjectFieldName]="'Make'" [Text]="DataContext.Make" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 110px;">
+                                                                            <LogLabel [ObjectFieldName]="'ChassisNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td style="width: 185px;">
+                                                                            <LogTextBox [ObjectFieldName]="'ChassisNumber'" [Text]="DataContext.ChassisNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Model | Registration Number  -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 110px;">
+                                                                            <LogLabel [ObjectFieldName]="'Model'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width: 185px;">
+                                                                            <LogTextBox [ObjectFieldName]="'Model'" [Text]="DataContext.Model" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 110px;">
+                                                                            <LogLabel [ObjectFieldName]="'RegistrationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td style="width: 185px;">
+                                                                            <LogTextBox [ObjectFieldName]="'RegistrationNumber'" [Text]="DataContext.RegistrationNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <!-- Year  | CountryId -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 110px;">
+                                                                            <LogLabel [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width: 185px;">
+                                                                            <LogTextBox [ObjectFieldName]="'Year'" [Text]="DataContext.Year" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 110px;">
+                                                                            <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td style="width: 185px;">
+                                                                            <LogLov [ObjectFieldName]="'CountryId'"
+                                                                                    [SelectedValue]="DataContext.CountryId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Country'">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <!-- Color  -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 110px;">
+                                                                            <LogLabel [ObjectFieldName]="'Color'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width: 185px;">
+                                                                            <LogTextBox [ObjectFieldName]="'Color'" [Text]="DataContext.Color" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="3">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:10px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
                                             <tr style="height: 175px;">
                                                 <td>
                                                     <table>

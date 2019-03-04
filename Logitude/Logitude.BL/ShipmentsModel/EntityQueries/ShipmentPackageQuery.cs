@@ -175,6 +175,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        RoutingIds = a.RoutingIds,
                        VoyageTripNumber = a.VoyageTripNumber,
                        HasContainerException = a.HasContainerException,
+                       Make = a.Make, 
+                       Year = a.Year,
+                       Model=a.Model,
+                       Color = a.Color, 
+                       ChassisNumber = a.ChassisNumber, 
+                       RegistrationNumber = a.RegistrationNumber, 
+                       CountryId = a.CountryId, 
                    }).FirstOrDefault();
 
 
@@ -297,6 +304,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        RoutingIds = a.RoutingIds,
                        VoyageTripNumber = a.VoyageTripNumber,
                        HasContainerException = a.HasContainerException,
+                       Make = a.Make,
+                       Year = a.Year,
+                       Model = a.Model,
+                       Color = a.Color,
+                       ChassisNumber = a.ChassisNumber,
+                       RegistrationNumber = a.RegistrationNumber,
+                       CountryId = a.CountryId,
                    }).ToList();
 
             foreach (ShipmentPackagePM package in shipmentPackages)
@@ -414,6 +428,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 RoutingIds = a.RoutingIds,
                                 VoyageTripNumber = a.VoyageTripNumber,
                                 HasContainerException = a.HasContainerException,
+                                Make = a.Make,
+                                Year = a.Year,
+                                Model = a.Model,
+                                Color = a.Color,
+                                ChassisNumber = a.ChassisNumber,
+                                RegistrationNumber = a.RegistrationNumber,
+                                CountryId = a.CountryId,
                             }).ToList();
             }
 

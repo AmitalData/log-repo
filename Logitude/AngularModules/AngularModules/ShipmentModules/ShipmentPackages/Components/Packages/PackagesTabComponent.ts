@@ -1199,7 +1199,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
             logWindow.Width = 940;
-            logWindow.Height = 610;
+            logWindow.Height = 690;
         }
 
         var itemComponent = new ShipmentPackageItem(itemPM, this, true);
@@ -1228,7 +1228,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
             logWindow.Width = 940;
-            logWindow.Height = 550;
+            logWindow.Height = 590;
         }
 
         logWindow.DataContext = itemComponent;
@@ -2432,6 +2432,57 @@ export class ShipmentPackageItem extends BaseComponent {
         if (this.EntityPM.EmptyContainerReturnATA != value) {
             this.EntityPM.EmptyContainerReturnATA = value;
             this.SetUIProperties_ValidateActualDates_R();
+        }
+    }
+
+
+    get Make() { return this.EntityPM.Make; }
+    set Make(newValue: string) {
+        if (this.EntityPM.Make != newValue) {
+            this.EntityPM.Make = newValue;
+        }
+    }
+
+    get Model() { return this.EntityPM.Model; }
+    set Model(newValue: string) {
+        if (this.EntityPM.Model != newValue) {
+            this.EntityPM.Model = newValue;
+        }
+    }
+
+
+    get Year() { return this.EntityPM.Year; }
+    set Year(newValue: string) {
+        if (this.EntityPM.Year != newValue) {
+            this.EntityPM.Year = newValue;
+        }
+    }
+
+    get Color() { return this.EntityPM.Color; }
+    set Color(newValue: string) {
+        if (this.EntityPM.Color != newValue) {
+            this.EntityPM.Color = newValue;
+        }
+    }
+
+    get ChassisNumber() { return this.EntityPM.ChassisNumber; }
+    set ChassisNumber(newValue: string) {
+        if (this.EntityPM.ChassisNumber != newValue) {
+            this.EntityPM.ChassisNumber = newValue;
+        }
+    }
+
+    get RegistrationNumber() { return this.EntityPM.RegistrationNumber ; }
+    set RegistrationNumber (newValue: string) {
+        if (this.EntityPM.RegistrationNumber  != newValue) {
+            this.EntityPM.RegistrationNumber  = newValue;
+        }
+    }
+
+    get CountryId() { return this.EntityPM.CountryId; }
+    set CountryId(newValue: string) {
+        if (this.EntityPM.CountryId != newValue) {
+            this.EntityPM.CountryId = newValue;
         }
     }
 
