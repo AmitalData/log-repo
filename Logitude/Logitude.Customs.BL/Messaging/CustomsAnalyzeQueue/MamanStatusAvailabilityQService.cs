@@ -253,7 +253,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             var myXElementSTBMessage = XElement.Parse(communicationsData);
 
             mySTBMessage.BaldarAwb = (string)GetXElement(myXElementSTBMessage, "BaldarAwb");//<BaldarAwb>177553172644104455</BaldarAwb>
-            mySTBMessage.BaldarOpenDate = (string)GetXElement(myXElementSTBMessage, "BaldarOpenDate");//<BaldarOpenDate>241118</BaldarOpenDate>
+            //OpenBaldarAwbDate
+            mySTBMessage.BaldarOpenDate = (string)GetXElement(myXElementSTBMessage, "OpenBaldarAwbDate");//<BaldarOpenDate>241118</BaldarOpenDate>
             mySTBMessage.EventCode = (string)GetXElement(myXElementSTBMessage, "EventCode");//<EventCode>1234</EventCode>
 
 

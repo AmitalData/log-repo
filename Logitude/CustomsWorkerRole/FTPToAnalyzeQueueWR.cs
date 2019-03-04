@@ -57,7 +57,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         
 INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('D', 'Done')
 INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('F', 'Fail')
-INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
+INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
+
      */
 
     //public class SendWebAPI2MamanGWMessageECTHRDataWR
@@ -251,14 +252,14 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 {
                     directoryFiles = directoryFiles.Where(f => (
                     Path.GetExtension(f)
-                    .Equals(customsPartnerFtpPM.FileExt, StringComparison.CurrentCultureIgnoreCase)))
+                    .Contains(customsPartnerFtpPM.FileExt)))
                     .ToList();
                 }
-                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
+                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileName))
                 {
                     directoryFiles = directoryFiles.Where(f => (
                      Path.GetFileNameWithoutExtension(f)
-                    .Equals(customsPartnerFtpPM.FileName, StringComparison.CurrentCultureIgnoreCase)))
+                    .Contains(customsPartnerFtpPM.FileName)))
                     .ToList();
                 }
                 directoryFiles = directoryFiles.Where(r => !String.IsNullOrWhiteSpace(r)).ToList();

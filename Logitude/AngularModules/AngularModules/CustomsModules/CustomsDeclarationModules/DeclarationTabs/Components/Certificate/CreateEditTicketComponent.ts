@@ -517,51 +517,51 @@ export class CreateEditTicketComponent extends BaseComponent {
 
     IsAllSelected: boolean;
     
-
+    public certificateTicke: CertificateTicket
     UpdateTicket() {
 
         SessionLocator.CurrentSession.StartBusyIndicator("");
-        var certificateTicket: CertificateTicket = new CertificateTicket();
-        certificateTicket.DeclarationId = this.declarationId;
-        certificateTicket.InvoiceNumber = null;
-        certificateTicket.AttachmentTypeCode = this.AttachmentTypeCode;
-        certificateTicket.CertificateNumber = this.CertificateNumber;
-        certificateTicket.ResConfirmationTypeCode = this.ResConfirmationTypeCode;
-        certificateTicket.CertificateExemptionTypeCode = this.CertificateExemptionTypeCode;
-        certificateTicket.ReqConfirmationTypeCode = this.ticket.ReqConfirmationTypeCode;
-        certificateTicket.oldAttachment = this.oldAttachment;
-        certificateTicket.oldCertificateExempt = this.oldCertificateExempt;
-        certificateTicket.oldCertificateNumber = this.oldCertificateNumber;
-        certificateTicket.oldResConfirmation = this.oldResConfirmation;
-        certificateTicket.IsAllSelected = this.IsAllSelected;
+        this.certificateTicke  = new CertificateTicket();
+        this.certificateTicke.DeclarationId = this.declarationId;
+        this.certificateTicke.InvoiceNumber = null;
+        this.certificateTicke.AttachmentTypeCode = this.AttachmentTypeCode;
+        this.certificateTicke.CertificateNumber = this.CertificateNumber;
+        this.certificateTicke.ResConfirmationTypeCode = this.ResConfirmationTypeCode;
+        this.certificateTicke.CertificateExemptionTypeCode = this.CertificateExemptionTypeCode;
+        this.certificateTicke.ReqConfirmationTypeCode = this.ticket.ReqConfirmationTypeCode;
+        this.certificateTicke.oldAttachment = this.oldAttachment;
+        this.certificateTicke.oldCertificateExempt = this.oldCertificateExempt;
+        this.certificateTicke.oldCertificateNumber = this.oldCertificateNumber;
+        this.certificateTicke.oldResConfirmation = this.oldResConfirmation;
+        this.certificateTicke.IsAllSelected = this.IsAllSelected;
 
-        certificateTicket.ExternalCertificatCode = this.ticket.ExternalCertificatCode;// Itzik :  Response.ExternalCertificatCode  from  UnifreightCertificateCallbackAction
+        this.certificateTicke.ExternalCertificatCode = this.ticket.ExternalCertificatCode;// Itzik :  Response.ExternalCertificatCode  from  UnifreightCertificateCallbackAction
 
-        certificateTicket.SelectedItems = [];
-        //if (!certificateTicket.IsAllSelected) {
+        this.certificateTicke.SelectedItems = [];
+        //if (!this.certificateTicke.IsAllSelected) {
         if (!AppTool.IsNullOrEmpty(this.connectedItems) && this.connectedItems.length > 0) {
 
-            certificateTicket.SelectedItems = this.connectedItems;
+            this.certificateTicke.SelectedItems = this.connectedItems;
 
-            //   certificateTicket.SelectedItems = this.Items;
+            //   this.certificateTicke.SelectedItems = this.Items;
 
-            certificateTicket.ConnectedItemsKeys = "";
-            if (certificateTicket.SelectedItems) {
-                certificateTicket.SelectedItems.forEach((item) => {
-                    certificateTicket.ConnectedItemsKeys = certificateTicket.ConnectedItemsKeys + "," + item.DeclarationId + ";" + item.InvoiceCounterKey + ";" + item.LineNumber + ";" + item.ItemCertificateCounterKey;
+            this.certificateTicke.ConnectedItemsKeys = "";
+            if (this.certificateTicke.SelectedItems) {
+                this.certificateTicke.SelectedItems.forEach((item) => {
+                    this.certificateTicke.ConnectedItemsKeys = this.certificateTicke.ConnectedItemsKeys + "," + item.DeclarationId + ";" + item.InvoiceCounterKey + ";" + item.LineNumber + ";" + item.ItemCertificateCounterKey;
                 });
-                certificateTicket.ConnectedItemsKeys = certificateTicket.ConnectedItemsKeys.substr(1, certificateTicket.ConnectedItemsKeys.length - 1);
+                this.certificateTicke.ConnectedItemsKeys = this.certificateTicke.ConnectedItemsKeys.substr(1, this.certificateTicke.ConnectedItemsKeys.length - 1);
             }
         }
     
-        certificateTicket.ExcludedItemsKeys = "";
+        this.certificateTicke.ExcludedItemsKeys = "";
         if (!AppTool.IsNullOrEmpty(this.ExcludedItems)) {
             this.ExcludedItems.forEach((item) => {
-                certificateTicket.ExcludedItemsKeys = certificateTicket.ExcludedItemsKeys + "," + item.DeclarationId + ";" + item.InvoiceCounterKey + ";" + item.LineNumber + ";" + item.ItemCertificateCounterKey;
+                this.certificateTicke.ExcludedItemsKeys = this.certificateTicke.ExcludedItemsKeys + "," + item.DeclarationId + ";" + item.InvoiceCounterKey + ";" + item.LineNumber + ";" + item.ItemCertificateCounterKey;
             });
-            certificateTicket.ExcludedItemsKeys = certificateTicket.ExcludedItemsKeys.substr(1, certificateTicket.ExcludedItemsKeys.length - 1);
+            this.certificateTicke.ExcludedItemsKeys = this.certificateTicke.ExcludedItemsKeys.substr(1, this.certificateTicke.ExcludedItemsKeys.length - 1);
         }
-        this.multiCertificatesService.PutCertificateTickets(certificateTicket)
+        this.multiCertificatesService.PutCertificateTickets(this.certificateTicke)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     SessionLocator.CurrentSession.StopBusyIndicator();

@@ -480,6 +480,11 @@ namespace WebFreight.Web.MetaDataUpdate
                         {
                             InfrastructureModelUpdateClass modelUpdateClass = new InfrastructureModelUpdateClass();
                             modelUpdateClass.LoadObjectsTenantZero(context);
+                            if (LogitudeSettings.IsCostomsDeploy)
+                            {
+                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                                updateClass.UpgradeClosedTablesForTenantZero();
+                            }
                             break;
                         }
 

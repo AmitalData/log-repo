@@ -77,7 +77,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
 
 
-            var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = FileName };
+            var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = Path.GetFileNameWithoutExtension(FileName) };
             var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
             Document document = new Document()
