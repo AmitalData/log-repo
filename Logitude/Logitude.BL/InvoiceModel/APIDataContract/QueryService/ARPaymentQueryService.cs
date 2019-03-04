@@ -42,6 +42,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 entity.GLAccountId = card.GLAccountId;
             }
+            else
+            {
+                throw new ApplicationException("Bill to field  is required");
+            }
 
             AccountingPaymentMethodQueryService AccountingPaymentMethodAccountingPaymentMethodService = new AccountingPaymentMethodQueryService(entity.Tenant);
             if (entity.AccountingPaymentMethodId != null)
@@ -53,8 +57,17 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 }
 
             }
+            else
+            {
+                throw new ApplicationException("Accounting Payment Method field  is required");
+            }
 
-            return entity;
+            if (entity.PaymentCurrencyId == null)
+            {
+                throw new ApplicationException("Payment currency field  is required");
+            }
+
+                return entity;
 
         }
 
