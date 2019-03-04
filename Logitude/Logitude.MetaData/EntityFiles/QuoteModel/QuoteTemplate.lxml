@@ -130,7 +130,7 @@
     <TextCode Code="&quot;QuoteTemplate.S.ShowSaleCurrencyColumn&quot;" DefaultText="&quot;Show Sale Currency Column&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;QuoteTemplate.S.ShowLocalCurrencyColumn&quot;" DefaultText="&quot;Show Local Currency Column&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;QuoteTemplate.S.ShowChargeDescription&quot;" DefaultText="&quot;Show Charge Description&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;QuoteTemplate.S.ShowChargeNote&quot;" DefaultText="&quot;Show Charge Note&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;QuoteTemplate.S.ShowChargeNote&quot;" DefaultText="&quot;Show Charge Notes&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;QuoteTemplate.S.ShowSaleMinMax&quot;" DefaultText="&quot;Show Sale Min/Max&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;QuoteTemplate.S.Splitbychargegroup&quot;" DefaultText="&quot;Split by charge group&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;QuoteTemplate.S.ShowTotalInLocalCurrency&quot;" DefaultText="&quot;Show Total In Local Currency&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
