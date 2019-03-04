@@ -42,6 +42,10 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string SaleMeasurementId { get; set; }
         public string SaleMeasurementCode { get; set; }
         public string SaleMeasurementShortName { get; set; }
+        public string SaleMeasurementLocalName { get; set; }
+        
+
+
         public double? SaleQuantity { get; set; }
         public double? SaleUnitPrice { get; set; }
         public double? SaleTotalAmount { get; set; }

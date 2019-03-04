@@ -47,6 +47,7 @@ namespace WebFreight.Web.DataProviders
             public double? TEU { get; set; }
             public double? Receivables { get; set; }
             public double? Payables { get; set; }
+            public double? PayablesExpectedAmount { get; set; }
             public double? Profit { get; set; }
             public double? Margin { get; set; }
             public string WeightUnit { get; set; }
