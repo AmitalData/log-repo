@@ -19,7 +19,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public int? GatepassNumber  { get; set; }
+       public int GatepassNumber  { get; set; }
        [DataMember]
        public string OriginSiteCode  { get; set; }
        [DataMember]

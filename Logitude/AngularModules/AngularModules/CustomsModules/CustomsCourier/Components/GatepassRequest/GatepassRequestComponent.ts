@@ -11,6 +11,8 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 import { GatepassRequestMessageRequestParams } from '../../../../Customs/DataContract/RequestParams/GatepassRequestMessageRequestParams';
 import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+
 
 @Component({
     moduleId: module.id,
@@ -25,13 +27,23 @@ export class GatepassRequestComponent extends BaseComponent {
     ValidationErrorsList: any[] = [];
     OriginPortCode: string;
     OkButtonEnabled: boolean;
-    HeaderScreenHeight: any;
+    IsNew: boolean = true;
+    public HeaderScreenHeight: number = 40;
 
+    _entityResourceService: EntityResourceService = new EntityResourceService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
-    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
+    _GatepassRequestPMService: GatepassRequestPMService = new GatepassRequestPMService()
 
+    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
+    Loaded: boolean = false;
     constructor() {
-        super();            
+        super();
+
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            this.Loaded = true;
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        });
     }
 
     SetWindowArgs(args: any) {
@@ -48,16 +60,19 @@ export class GatepassRequestComponent extends BaseComponent {
                 this.CancelButtonClicked();
             }
 
-            let myGatepassRequestPMService: GatepassRequestPMService = new GatepassRequestPMService()
-            myGatepassRequestPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
+            this._GatepassRequestPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
                 let entityPMResult = rsptPMget.Result;
                 if (entityPMResult != null) {
+                    this.IsNew = false;
                     this.EntityPM = entityPMResult;
-                    //
+                    this.GatepassNumber = this.EntityPM.GatepassNumber.toString();
+                    this.GatepassRequestStatus = this.EntityPM.GatepassRequestStatus;
+                }
+                else {
+                    this.EntityPM.MasterCourierId = this.CourierMasterPM.Id;
                 }
                 this.SetGatepassRequestStatus();
             });
-            //this.SetScreenFieldsEditability(true);
         }
     }
 
@@ -68,60 +83,84 @@ export class GatepassRequestComponent extends BaseComponent {
     }
 
     //#region Properties
+    public get MAWB() { return this.CourierMasterPM.MAWB; }
+    public set MAWB(newValue: string) {
+        this.CourierMasterPM.MAWB = newValue;
+    }
+
+    public get HAWB() { return this.CourierMasterPM.HAWB; }
+    public set HAWB(newValue: string) {
+        this.CourierMasterPM.HAWB = newValue;
+    }
+
+    private _GatepassNumber: string;
+    public get GatepassNumber() { return this._GatepassNumber; }
+    public set GatepassNumber(newValue: string) {
+        this._GatepassNumber = newValue;
+    }
+
+    private _GatepassRequestStatus: string;
+    public get GatepassRequestStatus() { return this._GatepassRequestStatus; }
+    public set GatepassRequestStatus(newValue: string) {
+        this._GatepassRequestStatus = newValue;
+    }
+
     private _UpdateCode: string;
     public get UpdateCode() { return this._UpdateCode; }
     public set UpdateCode(newValue: string) {
         this._UpdateCode = newValue;
     }
 
-    public get GatepassNumber() { return this.EntityPM.GatepassNumber; }
-    public set GatepassNumber(newValue: number) {
-        this.EntityPM.GatepassNumber = newValue;
-    }
-
-    public get OriginSiteCode() { return this.EntityPM.OriginSiteCode; }
+    private _OriginSiteCode: string;
+    public get OriginSiteCode() { return this._OriginSiteCode; }
     public set OriginSiteCode(newValue: string) {
-        this.EntityPM.OriginSiteCode = newValue;
+        this._OriginSiteCode = newValue;
     }
 
-    //private _OriginSiteCode: string;
-    //public get OriginSiteCode() { return this._OriginSiteCode; }
-    //public set OriginSiteCode(newValue: string) {
-    //    this._OriginSiteCode = newValue;
-    //}
-
-    public get DesignateSiteCode() { return this.EntityPM.DesignateSiteCode; }
+    private _DesignateSiteCode: string;
+    public get DesignateSiteCode() { return this._DesignateSiteCode; }
     public set DesignateSiteCode(newValue: string) {
-        this.EntityPM.DesignateSiteCode = newValue;
+        this._DesignateSiteCode = newValue;
     }
 
-    //private _DesignateSiteCode: string;
-    //public get DesignateSiteCode() { return this._DesignateSiteCode; }
-    //public set DesignateSiteCode(newValue: string) {
-    //    this._DesignateSiteCode = newValue;
-    //}
-
-    public get TransportationTypeCode() { return this.EntityPM.TransportationTypeCode; }
+    private _TransportationTypeCode: string;
+    public get TransportationTypeCode() { return this._TransportationTypeCode; }
     public set TransportationTypeCode(newValue: string) {
-        this.EntityPM.TransportationTypeCode = newValue;
+        this._TransportationTypeCode = newValue;
     }
-
-    //private _TransportationTypeCode: string;
-    //public get TransportationTypeCode() { return this._TransportationTypeCode; }
-    //public set TransportationTypeCode(newValue: string) {
-    //    this._TransportationTypeCode = newValue;
-    //}
 
     //#endregion\
 
     _ShowUpdateCode;
     ResetUpdateCodeListChangeSelected(enumvalue) {
         this._ShowUpdateCode = enumvalue;
-
     }
 
-    SetGatepassRequestStatus(){
-
+    SetGatepassRequestStatus() {
+        switch (this.EntityPM.UpdateCode) {
+            case "":
+            case "2":
+            case "4":
+            case "7":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+                this.UpdateCode = "1";
+                break;
+            case "1":
+                this.UpdateCodeList = [{ 'EnumId': 2, 'Name': 'ביטול' }];
+                this.UpdateCode = "2";
+                this.SetScreenFieldsEditability(true);
+                break;
+            case "3":
+            case "6":
+            case "8":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
+                this.UpdateCode = "1";
+                break;
+            case "5":
+                this.UpdateCodeList = [];
+                this.UpdateCode = "";
+                break;
+        }
     }
 
     FillErrors() {
@@ -150,6 +189,28 @@ export class GatepassRequestComponent extends BaseComponent {
         }
 
         SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.EntityPM.UpdateCode = this.UpdateCode;
+        this.EntityPM.OriginSiteCode = this.OriginSiteCode;
+        this.EntityPM.DesignateSiteCode = this.DesignateSiteCode;
+        this.EntityPM.TransportationTypeCode = this.TransportationTypeCode;
+        if (this.IsNew) {
+            this._GatepassRequestPMService.insert(this.EntityPM).subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.SendGatepassRequestMessage(customSendOptionsArgs);
+            });
+        }
+        else {
+            this._GatepassRequestPMService.update(this.EntityPM).subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.SendGatepassRequestMessage(customSendOptionsArgs);
+            });
+        }
+
+    }
+
+    SendGatepassRequestMessage(customSendOptionsArgs: CustomSendOptionsArgs) {
+
+        SessionLocator.CurrentSession.StartBusyIndicator("");
         var currRequestParams = new GatepassRequestMessageRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -160,9 +221,9 @@ export class GatepassRequestComponent extends BaseComponent {
         currRequestParams.MasterCourierId = this.CourierMasterPM.Id;
         currRequestParams.OriginSiteCode = this.OriginSiteCode;
         currRequestParams.DesignateSiteCode = this.DesignateSiteCode;
-        //currRequestParams.UpdateCode = this.UpdateCode;
+        currRequestParams.UpdateCode = this.UpdateCode;
         currRequestParams.TransportationTypeCode = this.TransportationTypeCode;
-        
+
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
                 "שליחת בקשה העברה", true)

@@ -80,6 +80,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string WeightValueCode  { get; set; }
        [DataMember]
        public string WeightValueName  { get; set; }
+       [DataMember]
+       public string StorageSiteCode  { get; set; }
+       [DataMember]
+       public string StorageSiteName  { get; set; }
    }
 
 }

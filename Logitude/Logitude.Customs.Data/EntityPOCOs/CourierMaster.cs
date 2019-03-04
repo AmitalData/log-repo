@@ -86,6 +86,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string WeightValueCode { get; set; }
 	      
         public virtual FreightPaymentMethod FreightPaymentMethod { get; set; }
+        [ForeignKey("DeliverySiteType")]
+        [Column("StorageSiteCode")]
+	    public string StorageSiteCode { get; set; }
+	      
+        public virtual DeliverySiteType DeliverySiteType { get; set; }
     }
 }
 	 

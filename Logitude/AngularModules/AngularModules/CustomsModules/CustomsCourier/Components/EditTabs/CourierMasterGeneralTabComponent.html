@@ -270,7 +270,25 @@
             </table>
         </td>
 
-        <td></td>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'StorageSiteCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogLov [ObjectFieldName]="'StorageSiteCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="StorageSiteCode"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.DeliverySiteType'">
+                        </LogLov>
+                    </td>
+                </tr>
+            </table>
+        </td>
         <td><div></div></td>
     </tr>
 
