@@ -156,6 +156,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM.GLAccountId) {
             console.log(">>> Getting transactions for Account: ", this.EntityPM.GLAccountId);
             this.TransactionsList.Clear();
+            this.EntityPM.InvoicesTransactions = [];
 
             this._loading = true;
             this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId).subscribe(myResult => {
