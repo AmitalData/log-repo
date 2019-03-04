@@ -57,6 +57,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                           PrintAs = a.PrintAs,
                                           IsRefrigerated = a.IsRefrigerated,
+                                          IsVehicle = a.IsVehicle,
                                       }).FirstOrDefault();
 
             return instance;
@@ -90,6 +91,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                                          PrintAs = a.PrintAs,
                                                          IsRefrigerated = a.IsRefrigerated,
+                                                         IsVehicle = a.IsVehicle,
                                                      };
             return packageTypes;
         }
@@ -121,6 +123,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      SearchFields = entity.SearchFields,
                                                      PrintAs = entity.PrintAs,
                                                      IsRefrigerated = entity.IsRefrigerated,
+                                                     IsVehicle = entity.IsVehicle,
                                                  };
             return result;
         }
@@ -154,6 +157,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                           PrintAs = a.PrintAs,
                                           IsRefrigerated = a.IsRefrigerated,
+                                          IsVehicle = a.IsVehicle,
                                       }).FirstOrDefault();
 
             return instance;

@@ -1199,7 +1199,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
             logWindow.Width = 940;
-            logWindow.Height = 690;
+            logWindow.Height = 620;
         }
 
         var itemComponent = new ShipmentPackageItem(itemPM, this, true);
@@ -1228,7 +1228,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
             logWindow.Width = 940;
-            logWindow.Height = 590;
+            logWindow.Height = 620;
         }
 
         logWindow.DataContext = itemComponent;
