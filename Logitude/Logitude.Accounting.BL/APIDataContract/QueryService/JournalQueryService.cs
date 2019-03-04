@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
                 if (MyEntity.UpdatedByUserId != null)
                 {
-                    var myUpdatedByUserPM = UpdatedByUserUserService.GetUserById(MyEntity.CreatedByUserId, Tenant);
+                    var myUpdatedByUserPM = UpdatedByUserUserService.GetUserById(MyEntity.UpdatedByUserId, Tenant);
                     if (myUpdatedByUserPM != null)
                     {
                         temp.UpdatedByUser = new User();
