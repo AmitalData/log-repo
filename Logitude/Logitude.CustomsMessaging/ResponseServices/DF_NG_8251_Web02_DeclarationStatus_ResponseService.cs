@@ -199,7 +199,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (declarationPM.IsCourierDeclaration)
                             {
                                 //declarationPM.CourierSuspentionReasonCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
-                                declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 31/12/18
+                                //declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 31/12/18//Task 49319
                                 switch (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
                                 {
                                     case "3":
@@ -215,6 +215,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     case "35":
                                         declarationPM.CourierCustomStatusCode = "2";
                                         courierStatusUpdated = true;
+                                        declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 4/3/2019 Task 49319
                                         break;
                                     case "13":
                                         if (declarationPM.PaymentDate.HasValue)
