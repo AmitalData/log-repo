@@ -116,6 +116,18 @@ export class GatepassRequestComponent extends BaseComponent {
     public get UpdateCode() { return this._UpdateCode; }
     public set UpdateCode(newValue: string) {
         this._UpdateCode = newValue;
+        if (newValue == "2") {
+            this.OriginSiteCode = this.EntityPM.OriginSiteCode;
+            this.DesignateSiteCode = this.EntityPM.DesignateSiteCode;
+            this.TransportationTypeCode = this.EntityPM.TransportationTypeCode;
+            this.SetScreenFieldsEditability(true);
+        }
+        else {
+            this.OriginSiteCode = null;
+            this.DesignateSiteCode = null;
+            this.TransportationTypeCode = null;
+            this.SetScreenFieldsEditability(false);
+        }
     }
 
     private _OriginSiteCode: string;
@@ -156,7 +168,6 @@ export class GatepassRequestComponent extends BaseComponent {
             case "1":
                 this.UpdateCodeList = [{ 'EnumId': 2, 'Name': 'ביטול' }];
                 this.UpdateCode = "2";
-                this.SetScreenFieldsEditability(true);
                 break;
             case "3":
             case "6":
