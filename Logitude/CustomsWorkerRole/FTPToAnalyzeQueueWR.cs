@@ -252,14 +252,14 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 {
                     directoryFiles = directoryFiles.Where(f => (
                     Path.GetExtension(f)
-                    .Equals(customsPartnerFtpPM.FileExt, StringComparison.CurrentCultureIgnoreCase)))
+                    .Contains(customsPartnerFtpPM.FileExt)))
                     .ToList();
                 }
-                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
+                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileName))
                 {
                     directoryFiles = directoryFiles.Where(f => (
                      Path.GetFileNameWithoutExtension(f)
-                    .Equals(customsPartnerFtpPM.FileName, StringComparison.CurrentCultureIgnoreCase)))
+                    .Contains(customsPartnerFtpPM.FileName)))
                     .ToList();
                 }
                 directoryFiles = directoryFiles.Where(r => !String.IsNullOrWhiteSpace(r)).ToList();
