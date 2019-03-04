@@ -50,7 +50,6 @@ export class GatepassRequestComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.CourierMasterPM = args.CourierMasterPM;
             this.EntityPM = new GatepassRequestPM();
-            this.UpdateCode = "1";
 
             if (AppTool.IsNullOrEmpty(this.CourierMasterPM.MAWB)) {
                 var myMessageWindow = new MessageWindow();
@@ -67,11 +66,14 @@ export class GatepassRequestComponent extends BaseComponent {
                     this.EntityPM = entityPMResult;
                     this.GatepassNumber = this.EntityPM.GatepassNumber.toString();
                     this.GatepassRequestStatus = this.EntityPM.GatepassRequestStatus;
+                    this.SetGatepassRequestStatus();
                 }
                 else {
                     this.EntityPM.MasterCourierId = this.CourierMasterPM.Id;
+                    this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+                    this.UpdateCode = "1";
                 }
-                this.SetGatepassRequestStatus();
+                
             });
         }
     }
