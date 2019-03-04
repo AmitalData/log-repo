@@ -566,7 +566,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             if (entityAM.CustomsClearanceDate != null)
             {
-                entityPM.IsDepositionCloseTask = true;
+                entityPM.IsDepositionRequired = false;
+                entityPM.IsShipmentComputedFieldChange = true;
             }
 
             entityPM.Tenant = entityAM.ImporterTenant;
