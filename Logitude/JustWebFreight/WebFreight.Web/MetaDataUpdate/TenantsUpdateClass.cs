@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Dictionary<string, TranslationHeader> tenantZeroTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(0).ToDictionary(d => d.Description, a => a);
             Dictionary<string, TranslationHeader> currentTenantTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(tenant).ToDictionary(d => d.Description, a => a);
             Dictionary<string, Measurement> tenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
-            ///Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> tenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EventType> tenantZeroEventTypes = null;
@@ -674,7 +674,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     stopWatch.Start();
 
                     //UpdateTranslationHeaders(tenant, tenantZeroTranslationHeaders, currentTenantTranslationHeaders, translationHeadersRepository);
-                    //UpdateMeasurements(tenant, tenantZeroMeasurements, currentTenantMeasurements, measurementsRepository);
+                    UpdateMeasurements(tenant, tenantZeroMeasurements, currentTenantMeasurements, measurementsRepository);
 
                     //===========================
 
