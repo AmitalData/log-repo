@@ -121,7 +121,8 @@ using Simplog.Data.InvoiceModel;
 			       
 					   				   }
 				   
-				   temp.PaymentCurrencyCode = MyEntityPM.PaymentCurrencyCode;					
+				   temp.PaymentCurrencyCode = MyEntityPM.PaymentCurrencyCode;
+				   temp.CreateDate = MyEntityPM.CreateDate;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -229,7 +230,8 @@ using Simplog.Data.InvoiceModel;
 					}
 			
 					
-					temp.PaymentCurrencyCode = MyEntity.PaymentCurrencyCode;					   
+					temp.PaymentCurrencyCode = MyEntity.PaymentCurrencyCode;
+					temp.CreateDate = MyEntity.CreateDate;					   
 					   return temp;
 		    }
             catch (Exception ex)

@@ -35,7 +35,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 temp.Tenant = MyEntity.Tenant;
 
                 
-                //temp.JournalNumber = MyEntity.JournalNumber;
+               temp.JournalNumber = MyEntity.JournalNumber;
                 temp.CreateDate = MyEntity.CreateDate;
                 temp.AccountingDate = MyEntity.AccountingDate;
                 temp.ExternalNo = MyEntity.ExternalNo;
@@ -46,16 +46,16 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
                 if (MyEntity.UpdatedByUserId != null)
                 {
-                    var myCreatedByUserPM = UpdatedByUserUserService.GetUserById(MyEntity.CreatedByUserId, Tenant);
-                    if (myCreatedByUserPM != null)
+                    var myUpdatedByUserPM = UpdatedByUserUserService.GetUserById(MyEntity.UpdatedByUserId, Tenant);
+                    if (myUpdatedByUserPM != null)
                     {
-                        temp.CreatedByUser = myCreatedByUserPM.ExternalCode;
-                        //temp.CreatedByUser.EnglishName = myCreatedByUserPM.EnglishName;
-                        //temp.CreatedByUser.LocalName = myCreatedByUserPM.LocalName;
-                        //temp.CreatedByUser.PartnerCode = myCreatedByUserPM.PartnerCode;
-                        //temp.CreatedByUser.ExternalCode = myCreatedByUserPM.ExternalCode;
-                     
-                        
+                        temp.UpdatedByUser = new User();
+                        temp.UpdatedByUser.EnglishName = myUpdatedByUserPM.EnglishName;
+                        temp.UpdatedByUser.LocalName = myUpdatedByUserPM.LocalName;
+                        temp.UpdatedByUser.PartnerCode = myUpdatedByUserPM.PartnerCode;
+                        temp.UpdatedByUser.ExternalCode = myUpdatedByUserPM.ExternalCode;
+
+
                     }
 
                 }
@@ -85,7 +85,11 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     var myApprovedByUserPM = ApprovedByUserUserService.GetUserById(MyEntity.ApprovedByUserId, Tenant);
                     if (myApprovedByUserPM != null)
                     {
-                      temp.ApprovedByUser = myApprovedByUserPM.ExternalCode;
+                        temp.ApprovedByUser = new User();
+                        temp.ApprovedByUser.EnglishName = myApprovedByUserPM.EnglishName;
+                        temp.ApprovedByUser.LocalName = myApprovedByUserPM.LocalName;
+                        temp.ApprovedByUser.PartnerCode = myApprovedByUserPM.PartnerCode;
+                        temp.ApprovedByUser.ExternalCode = myApprovedByUserPM.ExternalCode;
                     }
 
                 }
@@ -99,11 +103,11 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     var myCreatedByUserPM = ApprovedByUserUserService.GetUserById(MyEntity.CreatedByUserId, Tenant);
                     if (myCreatedByUserPM != null)
                     {
-                        temp.CreatedByUser = myCreatedByUserPM.ExternalCode;
-                        //temp.CreatedByUser.EnglishName = myApprovedByUserPM.EnglishName;
-                        //temp.CreatedByUser.LocalName = myApprovedByUserPM.LocalName;
-                        //temp.CreatedByUser.PartnerCode = myApprovedByUserPM.PartnerCode;
-                        //temp.CreatedByUser.ExternalCode = myApprovedByUserPM.ExternalCode;
+                        temp.CreatedByUser = new User();
+                        temp.CreatedByUser.EnglishName = myCreatedByUserPM.EnglishName;
+                        temp.CreatedByUser.LocalName = myCreatedByUserPM.LocalName;
+                        temp.CreatedByUser.PartnerCode = myCreatedByUserPM.PartnerCode;
+                        temp.CreatedByUser.ExternalCode = myCreatedByUserPM.ExternalCode;
                     }
 
                 }
@@ -163,7 +167,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 }
 
 
-                temp.AccountingEntityId = MyEntity.AccountingEntityId;
+                temp.AccountingEntityId = MyEntity.JournalNumber;
              
 
 
