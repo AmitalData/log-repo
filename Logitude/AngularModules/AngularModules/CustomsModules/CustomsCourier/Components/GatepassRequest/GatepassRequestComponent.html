@@ -18,31 +18,31 @@
     </tr>
 
     <tr >
-        <td colspan="3" style="width: 300px; padding-top: 10px;">
+        <td colspan="3" style="width: 600px; padding-top: 10px;">
             <table>
                 <tr>
                     <td>
                         <table>
-                            <tr style="height: 40px">
-                                <td colspan="4">
+                            <tr style="height: 40px; width:600px">
+                                <td colspan="5">
                                     <div class="HeaderBorder">
-                                        <table>
-                                            <tr>
+                                        <table style="width: 600px;">
+                                            <tr style="width: 600px;">
                                                 <!-- MAWB -->
-                                                <td style="width: 160px;">
+                                                <td style="width: 100px;">
                                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'MAWB'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext" [Text]="'ש.מ.ר'">
                                                     </LogLabel>
                                                 </td>
-                                                <td style="width: 160px; ">
-                                                    <div>{{MAWB}}</div>
+                                                <td style="width: 200px; ">
+                                                    <div>{{MAWB}} - {{AirlinePrefix}}</div>
                                                 </td>
                                                 <td style="width: 10px">
                                                     <div style="width: 1px; height: 90%; margin:auto; background: #DADADA;"></div>
                                                 </td>
 
                                                 <!-- HAWB -->
-                                                <td style="width: 160px;">
+                                                <td style="width: 100px;">
                                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'HAWB'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext" [Text]="'ש.מ.פ'">
                                                     </LogLabel>
@@ -55,7 +55,7 @@
                                                 </td>
 
                                                 <!-- GatepassNumber -->
-                                                <td style="width: 160px;">
+                                                <td style="width: 120px;">
                                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'GatepassNumber'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext" [Text]="'מס גייטפס'">
                                                     </LogLabel>
@@ -68,7 +68,7 @@
                                                 </td>
 
                                                 <!-- GatepassRequestStatus -->
-                                                <td style="width: 160px;">
+                                                <td style="width: 120px;">
                                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'GatepassRequestStatus'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext" [Text]="'סטטוס'">
                                                     </LogLabel>
@@ -107,7 +107,7 @@
                             </tr>
 
                             <tr class="FormFieldRow" style="height: 30px; width:600px">
-                                <td style="width:110px">
+                                <td style="width:100px">
                                     <LogLabel [ObjectFieldName]="'OriginSiteCode'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -121,7 +121,7 @@
                                     </LogLov>
                                 </td>
 
-                                <td style="width:110px">
+                                <td style="width:100px">
                                     <LogLabel [ObjectFieldName]="'DesignateSiteCode'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -139,7 +139,7 @@
                             </tr>
 
                             <tr class="FormFieldRow" style="height: 30px; width:600px">
-                                <td style="width:110px">
+                                <td style="width:100px">
                                     <LogLabel [ObjectFieldName]="'TransportationTypeCode'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -165,7 +165,7 @@
         </td>
     </tr>
 
-    <tr style="height: 30px; width:300px">
+    <tr style="height: 30px; width:600px">
         <td>
             <div></div>
         </td>

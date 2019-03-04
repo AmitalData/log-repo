@@ -90,6 +90,11 @@ export class GatepassRequestComponent extends BaseComponent {
         this.CourierMasterPM.MAWB = newValue;
     }
 
+    public get AirlinePrefix() { return this.CourierMasterPM.AirlinePrefix; }
+    public set AirlinePrefix(newValue: string) {
+        this.CourierMasterPM.AirlinePrefix = newValue;
+    }
+
     public get HAWB() { return this.CourierMasterPM.HAWB; }
     public set HAWB(newValue: string) {
         this.CourierMasterPM.HAWB = newValue;
@@ -172,13 +177,16 @@ export class GatepassRequestComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (AppTool.IsNullOrEmpty(this.OriginSiteCode)) {
-            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.CustomsBlockListInWarehouse.O.FromDateMandatory"));
+            this.ValidationErrorsList.push("חובה להזין מאתר אחסון");
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.OriginSiteCodeMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.DesignateSiteCode)) {
-            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.CustomsBlockListInWarehouse.O.ToDateMandatory"));
+            this.ValidationErrorsList.push("חובה להזין לאתר אחסון");
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.DesignateSiteCodeMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.TransportationTypeCode)) {
-            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.CustomsBlockListInWarehouse.O.StorageSiteNumberMandatory"));
+            this.ValidationErrorsList.push("חובה להזין הובלה");
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.TransportationTypeCodeMandatory"));
         }
 
 

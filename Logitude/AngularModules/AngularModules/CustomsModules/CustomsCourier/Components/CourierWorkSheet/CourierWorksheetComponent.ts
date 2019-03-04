@@ -1500,24 +1500,19 @@ implements OnDestroy
             return;
         }
 
-        //this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
-            //if (!response.HasError) {
-                var logitudeWindow = new LogitudeWindow();
-                var windowArgs: any = {};
-                windowArgs.CourierMasterPM = this.entityPM;
-                //windowArgs.Mode = mode;
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.CourierMasterPM = this.entityPM;
 
-                logitudeWindow.Width = 550;
-                logitudeWindow.Height = 400;
-                logitudeWindow.IsShowCloseButton = true;
-                logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
-                logitudeWindow.WindowArgs = windowArgs;
-                logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
-                logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    //this.RefreshData();
-                });
-            //}
-        //});
+        logitudeWindow.Width = 620;
+        logitudeWindow.Height = 400;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            //this.RefreshData();
+        });
     }
 
     SendALLTerminal() {
