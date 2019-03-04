@@ -558,7 +558,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return transactions;
         }
-
+        public List<LedgerTransactionPM> GetTransactionBySourceId(string AccountId, int tenant)
+        {
+            List<LedgerTransaction> ledgerTransactionPOCOs = null;
+            ledgerTransactionPOCOs = repository.GetLast10TransactionsForAccount(AccountId, tenant);
+            List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => GetEntityPM(poco)).ToList();
+            return pms;
+        }
 
         public List<LedgerTransactionPM> GetARPaymentOpenTransactions(string billToGLAccountId, int tenant)
         {
@@ -576,18 +582,46 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<LedgerTransactionPM> GetARPaymentReconciledTransactions(string arpaymentId, string billToGLAccountId, int tenant)
         {
+            ReconciliationQueryService recoQuery = new ReconciliationQueryService(tenant);
+            ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
             IQueryable<LedgerTransactionPM> query = GetTransactionsJoinedWithJounrals();
 
-            query = query.Where(d => 
-                    d.AccountId == billToGLAccountId 
-                &&  d.Tenant == tenant 
-                &&  d.IsReconciled == true
-                &&  d.SourceTypeCode == "2"
-                );
-            query = query.OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
-            
 
-            return query.ToList();
+            // get payment transaction
+            LedgerTransactionPM paymentTransaction = query.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
+            string paymentTransactionId = paymentTransaction.Id;
+
+            // get payment transaction reconciliation id    
+            ReconciliationLine paymentReco = recoLineQuery.GetLineByTransactionId(paymentTransactionId, tenant);
+            string paymentRecoId = paymentReco.ReconciliationId;
+
+
+            // filter query
+            query = query.Where(d =>
+                    d.AccountId == billToGLAccountId
+                && d.Tenant == tenant
+                && d.IsReconciled == true
+                && d.SourceTypeCode == "2").OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
+
+
+            // get reconiliations:
+            List<string> transactionsIds = query.Select(d => d.Id).ToList();
+            List<ReconciliationLinePM> recoLines = recoLineQuery.GetLineByTransactionIds(transactionsIds, tenant);
+            List<string> recosIds = recoLines.Select(d => d.ReconciliationId).ToList();
+            List<ReconciliationPM> recos = recoQuery.GetReconciliationsByIds(recosIds, tenant);
+            List<LedgerTransactionPM> trans4invoices = query.ToList();
+            trans4invoices.ForEach(t =>
+            {
+                t.ReconciliationId = recoLines.Find(r => r.TransactionId == t.Id)?.ReconciliationId;
+                t.RecoNumber = recos.Find(r => r.Id == t.ReconciliationId)?.Number;
+            });
+
+            //filter by ARPayment
+            List<LedgerTransactionPM> filteredTransactions = trans4invoices.Where(t => t.ReconciliationId == paymentRecoId).ToList();
+
+
+
+            return trans4invoices;
         }
 
         IQueryable<LedgerTransactionPM> GetTransactionsJoinedWithJounrals()
@@ -653,8 +687,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     //OppositeAccountEnglishName = _transaction.OppositeAccountEnglishName,
                     //OppositeAccountLocalName = _transaction.OppositeAccountLocalName,
                     //OppositeAccountDisplayNumber = _transaction.OppositeAccountDisplayNumber,
-                    //RecoNumber = jl.reco,
-                    //ReconciliationId = jl.rec,
+                    //RecoNumber = _journal,
+                    //ReconciliationId = _journal,
                 };
 
             return query;
