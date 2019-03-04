@@ -92,20 +92,22 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                SecurityUtility.AuthenticationOnTenant(Data.Tenant);
-                ICommonDataContext commonContext = CommonDataContext.GetContext(Data.Tenant);
-                CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
-                DocumentRepository documentrepository = new DocumentRepository(commonContext);
-                ObjectTableRepository objecttableRep = new ObjectTableRepository(Data.Tenant);
-                ObjectTable objectTable = null;
-
-                objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
-
-                List<QueueTask> tasks = new List<QueueTask>();
-                tasks.Add(new QueueTask()
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    Action = "StatusUpdate",
-                    Parameters = new List<Logitude.Server.Tools.Parameter>() {
+                    SecurityUtility.AuthenticationOnTenant(Data.Tenant);
+                    ICommonDataContext commonContext = CommonDataContext.GetContext(Data.Tenant);
+                    CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
+                    DocumentRepository documentrepository = new DocumentRepository(commonContext);
+                    ObjectTableRepository objecttableRep = new ObjectTableRepository(Data.Tenant);
+                    ObjectTable objectTable = null;
+
+                    objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
+
+                    List<QueueTask> tasks = new List<QueueTask>();
+                    tasks.Add(new QueueTask()
+                    {
+                        Action = "StatusUpdate",
+                        Parameters = new List<Logitude.Server.Tools.Parameter>() {
                 new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = Data.ShipmentNumber},
                 new Logitude.Server.Tools.Parameter { Name = "Code", Value = Data.Code},
                 new Logitude.Server.Tools.Parameter { Name = "Date", Value = Data.Date},
@@ -113,81 +115,82 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 new Logitude.Server.Tools.Parameter { Name = "Remarks", Value = Data.Remarks},
                 new Logitude.Server.Tools.Parameter { Name = "Direction", Value = Data.Direction}
                 }
-                });
-                var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
-                Document document = new Document()
-                {
-                    CreateDate = DateTime.Now,
-                    Extension = "xml",
-                    FileSize = ByteData.Length,
-                    Tenant = Convert.ToInt32(Data.Tenant),
-                    Id = IdCounter.GetNumber("Document", Data.Tenant),
-                    HasFile = true,
-                    Folder = "ExternalTasksQueue",
-                };
-                documentrepository.Add(document);
-                documentrepository.SubmitChanges();
-                var commLog = new CommunicationLog()
-                {
-                    Id = IdCounter.GetNumber("CommunicationLog", Data.Tenant),
-                    LastStatusDate = TenantServerConfigration.GetCurrentDateTime(Data.Tenant),
-                    InOut = "O",
-                    ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
-                    Subject = "Status Update",
-                    Tenant = Data.Tenant,
-                    CommunicationLogTypeCode = "Q",
-                    CommunicationStatusTypeCode = "W",
-                    CreateDate = TenantServerConfigration.GetCurrentDateTime(Data.Tenant),
-                    DocumentId = document.Id,
-                    CreateDateUTC = DateTime.UtcNow,
-                    LastStatusDateUTC = DateTime.UtcNow,
-                    QueueName = "externaltasksqueue" + Data.Tenant + 1,
-                    Priority = 1,
-
-                };
-
-                communicationLogRepository.Add(commLog);
-                communicationLogRepository.SubmitChanges();
-                string filename = document.Id + "." + document.Extension;
-                string filePath = "tenant" + commLog.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = document.Id,
-                    FolderName = document.Folder,
-                    Extension = document.Extension,
-                    Tenant = Data.Tenant,
-                    FileSize = ByteData.Length,
-
-                };
-
-                storageservice.Write(ByteData, fileInfo);
-
-                if (!string.IsNullOrEmpty(commLog.QueueName))
-                {
-                    try
+                    });
+                    var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
+                    Document document = new Document()
                     {
-                        Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "Before adding message to queue ImporterDeposition" + DateTime.Now.ToString(), null);
-                        SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, Data.Tenant);
-                        Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "after adding message to queue  ImporterDeposition" + DateTime.Now.ToString(), null);
-
-                    }
-                    catch (Exception ex)
+                        CreateDate = DateTime.Now,
+                        Extension = "xml",
+                        FileSize = ByteData.Length,
+                        Tenant = Convert.ToInt32(Data.Tenant),
+                        Id = IdCounter.GetNumber("Document", Data.Tenant),
+                        HasFile = true,
+                        Folder = "ExternalTasksQueue",
+                    };
+                    documentrepository.Add(document);
+                    documentrepository.SubmitChanges();
+                    var commLog = new CommunicationLog()
                     {
-                        string errorMessage = ex.Message;
+                        Id = IdCounter.GetNumber("CommunicationLog", Data.Tenant),
+                        LastStatusDate = TenantServerConfigration.GetCurrentDateTime(Data.Tenant),
+                        InOut = "O",
+                        ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
+                        Subject = "Status Update",
+                        Tenant = Data.Tenant,
+                        CommunicationLogTypeCode = "Q",
+                        CommunicationStatusTypeCode = "W",
+                        CreateDate = TenantServerConfigration.GetCurrentDateTime(Data.Tenant),
+                        DocumentId = document.Id,
+                        CreateDateUTC = DateTime.UtcNow,
+                        LastStatusDateUTC = DateTime.UtcNow,
+                        QueueName = "externaltasksqueue" + Data.Tenant + 1,
+                        Priority = 1,
 
-                        if (!string.IsNullOrEmpty(ex.StackTrace))
+                    };
+
+                    communicationLogRepository.Add(commLog);
+                    communicationLogRepository.SubmitChanges();
+                    string filename = document.Id + "." + document.Extension;
+                    string filePath = "tenant" + commLog.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = document.Id,
+                        FolderName = document.Folder,
+                        Extension = document.Extension,
+                        Tenant = Data.Tenant,
+                        FileSize = ByteData.Length,
+
+                    };
+
+                    storageservice.Write(ByteData, fileInfo);
+
+                    if (!string.IsNullOrEmpty(commLog.QueueName))
+                    {
+                        try
                         {
-                            errorMessage += Environment.NewLine + ex.StackTrace;
+                            Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "Before adding message to queue ImporterDeposition" + DateTime.Now.ToString(), null);
+                            SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, Data.Tenant);
+                            Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "after adding message to queue  ImporterDeposition" + DateTime.Now.ToString(), null);
+
                         }
+                        catch (Exception ex)
+                        {
+                            string errorMessage = ex.Message;
 
-                        Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "Exception occured while adding message to queue ImporterDeposition" + DateTime.Now.ToString(), errorMessage);
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                            if (!string.IsNullOrEmpty(ex.StackTrace))
+                            {
+                                errorMessage += Environment.NewLine + ex.StackTrace;
+                            }
 
+                            Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "Exception occured while adding message to queue ImporterDeposition" + DateTime.Now.ToString(), errorMessage);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+
+                        }
                     }
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, "");
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, "");
-
             }
             catch (Exception ex)
             {
