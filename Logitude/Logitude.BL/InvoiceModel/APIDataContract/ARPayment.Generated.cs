@@ -63,6 +63,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public CreditCardType CreditCardType { get; set; }
     
     public string PaymentCurrencyCode { get; set; }
+    
+    public DateTime? CreateDate { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
