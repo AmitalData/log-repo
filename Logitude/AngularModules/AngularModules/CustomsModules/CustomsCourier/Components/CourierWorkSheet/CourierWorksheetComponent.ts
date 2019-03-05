@@ -147,6 +147,9 @@ implements OnDestroy
         switch (item.Code) {
             case "DECR": 
                 this._ReadyDECToBatchSend = item.Value;
+                if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                    this._ReadyDECToBatchSend = 0;
+                }
                 break;
             case "MNF":
                 this._SelectedMNFValue = 'C';
@@ -172,7 +175,7 @@ implements OnDestroy
     }
 
     CheckRequiredFields() {
-        this._CourierMasterService.GetRequiredFieldsForCourierMaster(this.entityPM.Id).subscribe((response: ServiceResponse) => {
+        this._CourierMasterService.GetRequiredFieldsForCourierMasterIncludeManifest(this.entityPM.Id).subscribe((response: ServiceResponse) => {
             if (response.Result) {
                 this._ValidationErrors = this.GetRequiredErrorsList(response.Result.RequiredFields);
             }
@@ -918,140 +921,6 @@ implements OnDestroy
             
         return myout;
     }
-
-   /*getRowsOld(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-
-        if (filters == null) {
-            filters = new ApiQueryFilters();
-        }
-
-        filters.PageSize = take;
-        filters.PageIndex = skip;
-        filters.GetAll = false;
-        filters.GetCount = true;
-
-        filters.SortBy = sortingCol;
-        filters.SortDirection = sortingDir;
-        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
-            filters.SortBy = "CourierHawb";
-        }
-        if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
-            filters.SortDirection = "Descending";
-        }
-        filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
-        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-
-        switch (this._SelectedTabFilter.Code) {
-            case "ALL": {
-                break;
-            }
-            default: {
-                filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
-                break;
-            }
-        }
-
-        switch (this._SelectedBOLValue) {
-            case "L": {
-                filters.addAdditionalFilter("HighLowValue", "L", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "H": {
-                filters.addAdditionalFilter("HighLowValue", "H", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedStatusValue) {
-            case "O": {
-                filters.addAdditionalFilter("IsClosedForFollowUp", false, null, null, "Equals", false, false, false, "Boolean");
-                break;
-            }
-            case "C": {
-                filters.addAdditionalFilter("IsClosedForFollowUp", true, null, null, "Equals", false, false, false, "Boolean");
-                break;
-            }
-        }
-
-        switch (this._SelectedMNFValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedDECValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedDOCValue) {
-            case "C": {
-                filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "U": {
-                filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedTotalInvoiceValue) {
-            case "75": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
-                break;
-            }
-            case "500": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 76, 500, null, "Between", false, false, false, "number", false);
-                break;
-            }
-            case "1000": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 501, 1000, null, "Between", false, false, false, "number", false);
-                break;
-            }
-        }
-
-        switch (this._SelectedAvailableValue) {
-            case "AD": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "2", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "AV": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "1", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "NAV": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "0", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedACCValue) {
-            case "W": {
-                filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
-        }
-
-
-        var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
-
-        return myout;
-    }*/
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
 
