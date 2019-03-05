@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.Validators
         public const string M_LineSequence = "Check for missing Line number in sequence ";
 
         public const string M_GetGLAccountReturnNull = "myGLAccountDataProvider.GetGLAccount return null";
-        public const string M_BlockedGLAccount = "Blocked GLAccounts(Inactive=True)";
+        public const string M_BlockedGLAccount = "Journal.M.AccountIsBlocked";//"Blocked GLAccounts(Inactive=True)";
 
         public const string M_GLAccountIsControl = "GLAccount IsControl=True";
         public const string M_ButAccountCurrencyisDifferent =
@@ -618,7 +618,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 errorsList.Add(TranslateMyTextCode(M_BlockedGLAccount,tenant) + 
                     //glAccId
-                    GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant)
+                    GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant) + "-  " + glAccId
                     );
                 return;
             }

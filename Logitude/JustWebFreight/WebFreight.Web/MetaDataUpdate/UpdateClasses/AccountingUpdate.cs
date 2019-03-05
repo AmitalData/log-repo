@@ -2131,7 +2131,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 DefaultText = "Jornal Line Accounting Date must be within Accounting month of Journal", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FutureDateForbidden", DefaultText = "Future date is not allowed", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText= "לא ניתן  להקליד תאריך עתידי "}, textCodeRepository, textcodes);
 
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AccountIsBlocked", DefaultText = "Account card is blocked", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText = "כרטיס הנהלת החשבונות חסום " }, textCodeRepository, textcodes);
             
+
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeDebit", DefaultText = "Please select a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText= "אנא בחר כרטיס חובה" }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCreditAndCredit", DefaultText = "Please select a credit and a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="אנא בחר כרטיס זכות וכרטיס חובה" }, textCodeRepository, textcodes);
