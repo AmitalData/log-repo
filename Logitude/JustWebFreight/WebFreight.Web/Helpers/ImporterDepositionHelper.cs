@@ -212,15 +212,12 @@ namespace WebFreight.Web.Helpers
             {
                 if (customsShipperPM.ValidityStartDate != validityStartDate || customsShipperPM.ValidityEndDate != validityEndDate)
                 {
-                    customsShipperPM.ValidityStartDate = validityStartDate;
-                    customsShipperPM.ValidityEndDate = validityEndDate;
-                    customsShipperPM.IsChange = true;
-
-                    //DateTime currentDate = DateTime.Now.Date;
-                    //if (currentDate >= validityStartDate.Value.Date && currentDate < validityEndDate.Value.Date)
-                    //{
-
-                    //}
+                    if (customsShipperPM.ValidityEndDate == null || validityEndDate > customsShipperPM.ValidityEndDate)
+                    {
+                        customsShipperPM.ValidityStartDate = validityStartDate;
+                        customsShipperPM.ValidityEndDate = validityEndDate;
+                        customsShipperPM.IsChange = true;
+                    }
 
                 }
             }

@@ -726,6 +726,18 @@ export class ShipmentsComponent {
     onUserQueriesBackComplete(event) {
         this.LoadAllScreenData();
     }
+
+    CreateMissingMastersClicked() {
+        SessionLocator.CurrentSession.StartBusyIndicator("Creating Masters");
+
+        this.myShipmentDomainService.CreateMissingMasters().subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                }
+            }
+        });
+    }
 }
 
 class DepartureArrivalItem {
@@ -769,7 +781,7 @@ class DepartureArrivalItem {
         this.Today = new DepartureArrival("TOD");
         this.Tomorrow = new DepartureArrival("TOM");
         this.NextWeek = new DepartureArrival("NXW");
-    }
+    }    
 }
 class DepartureArrival {
     public Code: string;

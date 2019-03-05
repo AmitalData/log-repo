@@ -6,7 +6,7 @@
 
             <div class="BodyBackground" valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:100%;width:100%;border:1px solid gray;border-radius:5px;">
                 <div style="vertical-align:central;">
-                    <input [attr.id]="ImageFileHtmlId" accept=".png,.PNG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
+                    <input [attr.id]="ImageFileHtmlId" accept=".png,.jpg,.jpeg" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
 
                     <img [style.height]="DefultImageHeight" (click)="OpenUpLoadLogo()" title="{{'QuoteTemplate.M.Clicktoaddthephoto' | TextCodeTranslationPipe}}" style="width:auto;  top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;background-color:white;max-width: 295px;max-height: 245px; position: absolute;border:0px solid #ffffff" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />
 
