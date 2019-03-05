@@ -30,7 +30,7 @@ export class NewBIReport extends BaseComponent {
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.UpdateDate = todayDate;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.TypeCode ="EXL";
+        this.EntityPM.TypeCode = "EXL";
         this.myService = new BIReportPMService();
         this.SetUIProperties();
     }
@@ -114,18 +114,52 @@ export class NewBIReport extends BaseComponent {
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
+        SessionLocator.CurrentSession.CloseCurrentWindow();
 
-        if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-            this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                if (myResponse.HasError) {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;
-                }
-                else {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+        var logWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.DWQueryId = this.DWQueryId;
+        windowArgs.IsBIReportWorkspace = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 1200;
+        logWindow.Height = 820;
+        logWindow.Title = "Query Builder";
+        logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if (s != null) {
+                    this.EntityPM.DWQueryId = s.QID;
+
+                    if (this.ValidationErrorsList.length == 0) {
+                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                        this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            if (myResponse.HasError) {
+                                this.ValidationErrorsList = myResponse.ErrorsArray;
+                            }
+                            else {
+                                SessionLocator.CurrentSession.CloseCurrentWindow();
+
+                                if (d != "cancel") {
+                                    SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                                        .then(cmpRef => {
+                                            cmpRef.instance.ComponentRef = cmpRef;
+                                            cmpRef.instance.Run({
+                                                DWQueryId: s.QID,
+                                                ObjectTableName: 'BIReport',
+                                                EntityId: this.EntityPM.Id,
+                                            });
+
+                                            //cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                                               
+                                            //});
+                                        });
+                                }
+                            }
+                        });
+                    }
                 }
             });
-        }
+        });
     }
 }

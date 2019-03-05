@@ -2335,13 +2335,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             logWindow.Height = 570;
             logWindow.NewWizardArgs = { IsNewEntity: true };
 
-            switch (this.ObjectTableName) {
-                case "BIReport": {
-                    logWindow.Width = 1200;
-                    logWindow.Height = 790;
-                    break;
-                }
-
+            switch (this.ObjectTableName) {                
                 case "Customs.Vehicle":
                     {
                         logWindow.Width = 1300;
@@ -2472,11 +2466,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             //var windowTitle = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             var str = FinalText;
-
-            if (this.ObjectTableName == "BIReport") {
-                str = "Query Builder";
-            }
-
+            
             if (this.ObjectTableName == "Currency") {
                 str = TextCodeTranslator.Translate("General.B.Add") + " Currency";
             }
@@ -2513,34 +2503,34 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
             }
 
-            if (this.ObjectTableName == "BIReport") {
-                logWindow.ComponentLoaded.subscribe(s => {
-                    logWindow.WindowClosed.subscribe(d => {
-                        if (s != null && d != "cancel") {
-                            SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({
-                                        DWQueryId: s.QID,
-                                        ObjectTableName: 'BIReport',
-                                        EntityId: null,
-                                        FolderId: this.listArgs.BIReportFolderId
-                                    });
+            //if (this.ObjectTableName == "BIReport") {
+            //    logWindow.ComponentLoaded.subscribe(s => {
+            //        logWindow.WindowClosed.subscribe(d => {
+            //            if (s != null && d != "cancel") {
+            //                SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            //                    .then(cmpRef => {
+            //                        cmpRef.instance.ComponentRef = cmpRef;
+            //                        cmpRef.instance.Run({
+            //                            DWQueryId: s.QID,
+            //                            ObjectTableName: 'BIReport',
+            //                            EntityId: null,
+            //                            FolderId: this.listArgs.BIReportFolderId
+            //                        });
 
-                                    cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
-                                        //this.isEditControlOpened = false;
-                                        //this.OnBackFromEdit(selectedEntityId, $event);
-                                        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
-                                    });
-                                });
-                        }
-                    });
-                });
-            }
+            //                        cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+            //                            //this.isEditControlOpened = false;
+            //                            //this.OnBackFromEdit(selectedEntityId, $event);
+            //                            this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
+            //                        });
+            //                    });
+            //            }
+            //        });
+            //    });
+            //}
 
-            else {
+            //else {
                 logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
-            }
+            //}
 
             logWindow.Show(componentPath);
         }

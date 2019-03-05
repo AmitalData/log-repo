@@ -238,6 +238,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                         shipmentPM.TenantZeroAirlineGLSHKFVRFVA = tenantZeroAirline.GLSHKFVRFVA;
                                         shipmentPM.TenantZeroAirlineGLSHKNeedsRegistration = tenantZeroAirline.GLSHKNeedsRegistration;
                                     }
+
+                                    scope.Complete();
                                 }
                             }
                         }
