@@ -36,17 +36,13 @@ namespace WebFreight.Web.WcfApi
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-				using (TransactionScope scope = TransactionFactory.GetTransaction())
-				{
-					if (importerDepositionPM != null)
-					{
-						importerDepositionPM.Tenant = authToken.Tenant;
-						ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
-						response = await importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM);
-					}
 
-					scope.Complete();
-				}
+                if (importerDepositionPM != null)
+                {
+                    importerDepositionPM.Tenant = authToken.Tenant;
+                    ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
+                    response = await importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM);
+                }
 
                 return response;
             }
