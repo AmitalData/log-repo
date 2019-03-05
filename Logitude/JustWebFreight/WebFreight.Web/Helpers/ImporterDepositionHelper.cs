@@ -81,6 +81,7 @@ namespace WebFreight.Web.Helpers
                     token = User.Token;
                 }
 
+                token = "uOU10Hq1nsywibGKANDPihTjtfyignV1J4Y=";
                 if (!string.IsNullOrEmpty(token))
                 {
                     using (var client = new HttpClient())

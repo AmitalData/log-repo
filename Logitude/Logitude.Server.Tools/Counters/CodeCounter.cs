@@ -14,7 +14,7 @@ namespace Logitude.Server.Tools.Counters
 {
     public class CodeCounter
     {
-        //private static Object thisLock = new Object();
+        private static Object thisLock = new Object();
         public static int GetNumber(string tableName, int tenant)
         {
             int number = 0;
@@ -70,40 +70,44 @@ namespace Logitude.Server.Tools.Counters
             }
             else
             {
-
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                lock (thisLock)
                 {
-                    using (SqlConnection cn = new SqlConnection(strConnString))
+                    using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                     {
-                        SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
-                        cmd.CommandType = CommandType.StoredProcedure;
+                        //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                        //{
+                        using (SqlConnection cn = new SqlConnection(strConnString))
+                        {
+                            SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
+                            cmd.CommandType = CommandType.StoredProcedure;
 
-                        SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
-                        SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.NVarChar);
-                        SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
+                            SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
+                            SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.NVarChar);
+                            SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
 
 
-                        lastNumberPar.Direction = ParameterDirection.Output;
-                        tableNamePar.Direction = ParameterDirection.Input;
-                        tenantPar.Direction = ParameterDirection.Input;
+                            lastNumberPar.Direction = ParameterDirection.Output;
+                            tableNamePar.Direction = ParameterDirection.Input;
+                            tenantPar.Direction = ParameterDirection.Input;
 
-                        tenantPar.Value = tenant;
-                        tableNamePar.Value = tableName;
+                            tenantPar.Value = tenant;
+                            tableNamePar.Value = tableName;
 
-                        cmd.Parameters.Add(lastNumberPar);
-                        cmd.Parameters.Add(tenantPar);
-                        cmd.Parameters.Add(tableNamePar);
-                        cn.Open();
-                        cmd.ExecuteNonQuery();
-                        cn.Close();
-                        number = (int)cmd.Parameters["@pLastNumber"].Value;
+                            cmd.Parameters.Add(lastNumberPar);
+                            cmd.Parameters.Add(tenantPar);
+                            cmd.Parameters.Add(tableNamePar);
+                            cn.Open();
+                            cmd.ExecuteNonQuery();
+                            cn.Close();
+                            number = (int)cmd.Parameters["@pLastNumber"].Value;
 
-                        //}
-                        //
+                            //}
+                            //
+                        }
+
+                        scope.Complete();
+                        return number;
                     }
-
-                    scope.Complete();
-                    return number;
                 }
 
             }
