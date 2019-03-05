@@ -141,7 +141,7 @@ export class BIReportPreviewComponent implements OnInit {
             }
 
         }
-    }
+    }   
     public BuildColumns(arg: BIReportXMLData) {
         this.columnDefs = [];
         

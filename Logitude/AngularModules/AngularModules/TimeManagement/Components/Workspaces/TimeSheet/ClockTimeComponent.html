@@ -22,21 +22,21 @@
         display: block;
     }
 
-   .ItemDisabled {
-       background:red;
-
-   }
-
+    .ItemDisabled {
+        background: red;
+    }
 
 
 
-       .SaveTMButton {
+
+    .SaveTMButton {
         background: #349BDB;
         height: 30px;
         color: white;
         border-radius: 2px;
         cursor: pointer;
     }
+
     .SaveTMButtonHasChanges {
         background: Orange;
         height: 30px;
@@ -55,7 +55,7 @@
         <td>
             <table>
                 <tr style="height:5px">
-                <td></td>
+                    <td></td>
                 </tr>
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;padding-top:5px">
                     <td>
@@ -82,8 +82,7 @@
                                             [DataContext]="DataContext"
                                             [SelectedValue]="EmployeeUserId"
                                             [LookUpTableName]="'User'"
-                                            [HideColumns]="true"
-                                            >
+                                            [HideColumns]="true">
                                     </LogLov>
                                 </td>
 
@@ -91,8 +90,8 @@
                                     <div></div>
                                 </td>
 
-                              
-                                <!-- Filters -->                          
+
+                                <!-- Filters -->
 
                                 <td style="width:80px;">
                                     <LogLabel [Text]="'From Date'" [DataContext]="DataContext"></LogLabel>
@@ -112,9 +111,9 @@
                                 <td style="width:10px"></td>
 
                                 <td style="width:100px">
-                                   <button class="Button" (click)="SearchButtonClicked()">Search</button>
-                                </td>     
-                                <td></td>                                
+                                    <button class="Button" (click)="SearchButtonClicked()">Search</button>
+                                </td>
+                                <td></td>
 
                                 <td style="width: 90px;">
                                     <button class="Button" (click)="AddNewClockHour()" style="height:25px">
@@ -151,14 +150,14 @@
 
                                 <td style="width: 5px;">
                                     <div></div>
-                                </td>                       
+                                </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr style="height:10px">
                     <td></td>
-                </tr>              
+                </tr>
 
                 <tr style="vertical-align:top;height:100%">
                     <td>
@@ -233,13 +232,20 @@
 
                                 <!-- Inactive -->
                                 <log-column [width]="'80'" [header]="'Inactive'">
-
                                     <log-cell-template template="let item" #logcelltemplate>
-                                        <table>
+                                        <div style="height: 100%; width: 100%; position:relative;">
+                                            <div class="CenterCenter" style="width: 16px;">
+                                                <CheckBox (Checked)="item.Inactive=$event" [IsChecked]="item.Inactive"></CheckBox>
+                                            </div>
+                                        </div>
+
+                                        <!--<table>
                                             <tr>
-                                                <td style="width:50px;min-width:50px;max-width:50px;align-items:center;justify-content:center;padding-left:25px;margin-top:3px"><CheckBox (Checked)="item.Inactive=$event" [IsChecked]="item.Inactive"></CheckBox></td>
+                                                <td style="width:50px;min-width:50px;max-width:50px;align-items:center;justify-content:center;padding-left:25px;margin-top:3px">
+                                                    <CheckBox (Checked)="item.Inactive=$event" [IsChecked]="item.Inactive"></CheckBox>
+                                                </td>
                                             </tr>
-                                        </table>
+                                        </table>-->
                                     </log-cell-template>
                                 </log-column>
 

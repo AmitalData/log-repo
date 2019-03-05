@@ -217,7 +217,7 @@ export class ClockTimeComponent extends BaseComponent {
 
     public TotalMinutes: number;
     public ComputeTotals() {
-        this.TotalMinutes = ArrayTool.Sum(this.ItemSourceCollection.Collection,"Minutes");
+        this.TotalMinutes = ArrayTool.Sum(this.ItemSourceCollection.Collection.filter(f => f.Inactive == false), "Minutes");
     }
 }
 
@@ -251,24 +251,24 @@ export class ItemSourceItem extends BaseComponent {
     set EntryTime(value: Date) {
         if (this.EntityPM.EntryTime != value) {
 
-            if (value == null) {
-                this.EntityPM.EntryTime = value;
-            }
+            var iResult: Date = null;
 
-            else {
-                if (this.EntityPM.ExitTime != null) {
-                    var a = DateTool.GetDateParts(this.EntityPM.ExitTime).DateObject.valueOf();
-                    var b = DateTool.GetDateParts(value).DateObject.valueOf();
+            if (value) {
+                var iDateParts = DateTool.GetDateParts(value);
 
-                    if (DateTool.GetDateParts(this.EntityPM.ExitTime).DateObject.valueOf() < DateTool.GetDateParts(value).DateObject.valueOf())
-                        this.EntityPM.EntryTime = this.EntityPM.EntryTime;
-                    else
-                        this.EntityPM.EntryTime = value;
-                }
-                else {
-                    this.EntityPM.EntryTime = value;
+                iResult = DateTool.GetDateParts(this.EntityPM.WorkDate).DateObject;
+
+                iResult.setUTCHours(iDateParts.Hours);
+                iResult.setUTCMinutes(iDateParts.Minutes);
+
+                if (this.ExitTime) {
+                    if (DateTool.GetDateParts(iResult).DateTicks > DateTool.GetDateParts(this.ExitTime).DateTicks) {
+                        iResult = this.EntryTime;
+                    }
                 }
             }
+
+            this.EntityPM.EntryTime = iResult;
 
             this.ComputeMinutes();
             this.UpdatedByUserId = SessionLocator.LoggedUserId;
@@ -280,29 +280,24 @@ export class ItemSourceItem extends BaseComponent {
     set ExitTime(value: Date) {
         if (this.EntityPM.ExitTime != value) {
 
-            if (value == null) {
-                this.EntityPM.ExitTime = value;
-            }
+            var iResult: Date = null;
 
-            else {
+            if (value) {
+                var iDateParts = DateTool.GetDateParts(value);
 
-                if (this.EntityPM.EntryTime != null) {
-                    var a = DateTool.GetDateParts(value).DateObject.valueOf();
-                    var b = DateTool.GetDateParts(this.EntityPM.EntryTime).DateObject.valueOf();
+                iResult = DateTool.GetDateParts(this.EntityPM.WorkDate).DateObject;
 
-                    if (DateTool.GetDateParts(value).DateObject.valueOf() < DateTool.GetDateParts(this.EntityPM.EntryTime).DateObject.valueOf()) {
-                        this.EntityPM.ExitTime = this.EntityPM.ExitTime;
-                    }
+                iResult.setUTCHours(iDateParts.Hours);
+                iResult.setUTCMinutes(iDateParts.Minutes);
 
-                    else {
-                        this.EntityPM.ExitTime = value;
+                if (this.EntryTime) {
+                    if (DateTool.GetDateParts(iResult).DateTicks < DateTool.GetDateParts(this.EntryTime).DateTicks) {
+                        iResult = this.ExitTime;
                     }
                 }
-
-                else {
-                    this.EntityPM.ExitTime = value;
-                }
             }
+
+            this.EntityPM.ExitTime = iResult;
 
             this.ComputeMinutes();
             this.UpdatedByUserId = SessionLocator.LoggedUserId;
@@ -343,6 +338,7 @@ export class ItemSourceItem extends BaseComponent {
     set Inactive(value: boolean) {
         if (this.EntityPM.Inactive != value) {
             this.EntityPM.Inactive = value;
+            this.father.ComputeTotals();
         }
     }
 
@@ -400,7 +396,9 @@ export class ItemSourceItem extends BaseComponent {
         var iResult: number = 0;
 
         if (this.EntryTime && this.ExitTime) {
-            iResult = DateTool.GetDateParts(this.ExitTime).Minutes - DateTool.GetDateParts(this.EntryTime).Minutes;
+            var ExitTimeTotalMinutes = DateTool.GetDateParts(this.ExitTime).TotalMinutes;
+            var EntryTimeTotalMinutes = DateTool.GetDateParts(this.EntryTime).TotalMinutes;
+            iResult = ExitTimeTotalMinutes - EntryTimeTotalMinutes;
         }
 
         this.Minutes = iResult;
