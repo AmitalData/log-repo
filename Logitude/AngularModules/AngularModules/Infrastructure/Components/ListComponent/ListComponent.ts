@@ -2300,7 +2300,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
                 this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
                     if (isNewWizard) {
-                        if (this.QueryCode == "Masters") {
+                        var IsOriginalMaster: boolean = false;
+                        if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryId)) {
+                            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQuery.OriginalQueryId)[0];
+                            if (query.Code == "Masters" || query.Code == "Open Payables Masters" || query.Code == "All Masters") {
+                                IsOriginalMaster = true;
+                            }
+                        }
+                        if (this.QueryCode == "Masters" || this.QueryCode == "Open Payables Masters" || this.QueryCode == "All Masters" || IsOriginalMaster) {
                             this.RunNewMasterWizard();
                         }
                         else {
