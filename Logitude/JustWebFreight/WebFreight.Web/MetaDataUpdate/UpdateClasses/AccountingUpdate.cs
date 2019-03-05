@@ -2132,7 +2132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FutureDateForbidden", DefaultText = "Future date is not allowed", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText= "לא ניתן  להקליד תאריך עתידי "}, textCodeRepository, textcodes);
 
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AccountIsBlocked", DefaultText = "Account card is blocked", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText = "כרטיס הנהלת חשבונות חסום " }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AccountIsBlocked", DefaultText = "Account card is blocked", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText = "כרטיס הנהלת החשבונות חסום " }, textCodeRepository, textcodes);
             
 
 
