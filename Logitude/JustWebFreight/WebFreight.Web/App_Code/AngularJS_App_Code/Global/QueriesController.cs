@@ -78,7 +78,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 QueryService service = new QueryService(objectContext, entityPM.Tenant);
-                entityPM.OriginalQueryId = null;
+                //entityPM.OriginalQueryId = null;
                 service.Create(entityPM);
 
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
@@ -99,7 +99,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 QueryService service = new QueryService(objectContext, entityPM.Tenant);
-                entityPM.OriginalQueryId = null;
+                //entityPM.OriginalQueryId = null;
                 service.Update(entityPM);
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
             }

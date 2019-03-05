@@ -164,7 +164,7 @@
     inner JOIN dw_ShipmentMasterDatas ON dw_Shipments.MasterShipmentDataId = dw_ShipmentMasterDatas.Id
 	inner JOIN DIM_Partners shipperPartners ON dw_Shipments.ShipperId = shipperPartners.Id
 	inner JOIN DIM_Partners consigneePartners ON dw_Shipments.ConsigneeId = consigneePartners.Id
-	inner JOIN DIM_Partners agentPartners ON dw_Shipments.AgentId = agentPartners.Id
+	inner JOIN DIM_Partners agentPartners ON dw_Shipments.AgentComputed = agentPartners.Id
 	inner JOIN DIM_Partners customerPartners ON dw_Shipments.CustomerId = customerPartners.Id
 	inner JOIN DIM_Incoterms  ON dw_Shipments.IncotermId = DIM_Incoterms.Id
 	inner JOIN DIM_Users SalesmanUser ON dw_Shipments.SalesmanUserId = SalesmanUser.Id
