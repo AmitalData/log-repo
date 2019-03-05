@@ -648,3 +648,10 @@ ON [dbo].[Activities] ([Tenant],[ActivityTypeCode],[ShipmentId])
 
 CREATE NONCLUSTERED INDEX IX_ShipmentCarrierStatuses_RecordHash
 ON [dbo].[ShipmentCarrierStatuses] ([RecordHash])
+
+GO
+CREATE NONCLUSTERED INDEX [ShipmentMasterDatas_Master_AirlinePrefix]
+ON [dbo].[ShipmentMasterDatas] ([Master],[AirlinePrefix])
+
+GO
+
