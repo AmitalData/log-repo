@@ -69,12 +69,12 @@
                         <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" (ItemClicked)="EditShipment($event)" [AutoClearSearchText]="true"></SearchBox>
                     </td>
 
-                    <td style="width: 15px;" *ngIf="TestToggleIsVisible">
+                    <td style="width: 15px;" *ngIf="false">
                         <div></div>
                     </td>
 
-                    <td style="width:1px;" *ngIf="TestToggleIsVisible">
-                        <button class="Button">Test Toggle</button>
+                    <td style="width:1px;" *ngIf="false">
+                        <button class="Button" (click)="CreateMissingMastersClicked()">Create Missing Masters</button>
                     </td>
 
                     <td>

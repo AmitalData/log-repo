@@ -92,6 +92,17 @@ export class BIFolderReportComponent {
         });
     }
 
+    NewReportButtonClicked(){
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "New BI Report";
+        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+        logWindow.WindowClosed.subscribe(d => {
+            if (d) {
+                //this.LoadData();
+            }
+        });
+    }
+
     DeleteFolderClicked(item: BIFolderClass) {
         if (item != null) {
             if (item.reportsList != null && item.reportsList.length > 0) {

@@ -447,6 +447,8 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
             private void LogMe(string mess)
             {
+                if(_StringBuilder == null)
+                    _StringBuilder = new StringBuilder();
                 if (mess == Environment.NewLine)
                 {
                     return;

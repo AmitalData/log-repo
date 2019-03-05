@@ -219,8 +219,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 }
             }
         }
-
-
         private void AnalyzeStatus_Movement(CHAMP17.MovementDetail item, StatusParams iStatusArgs)
         {
             if (item != null)
@@ -229,6 +227,14 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 iStatusArgs.LocationPortCode = this.GetMovementLocation(iStatusArgs.StatusCode, item);
                 iStatusArgs.FromPortCode = item.AirportCityCodeOfDeparture;
                 iStatusArgs.ToPortCode = item.AirportCityCodeOfArrival;
+
+                if (iStatusArgs.StatusCode == "ARR")
+                {
+                    if (iStatusArgs.LocationPortCode == null)
+                    {
+                        iStatusArgs.LocationPortCode = item.AirportCityCodeOfArrival;
+                    }
+                }           
 
                 int day = item.Day;
                 int month = !string.IsNullOrEmpty(item.Month) ? GetMonthInNumbers(item.Month) : 0;
@@ -496,11 +502,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         }
         private void UpdateShipment_ArrivalDates(StatusParams iStatusArgs)
         {
-            if (iStatusArgs.DepartureDate != null)
+            if (iStatusArgs.ArrivalDate != null)
             {
-                if (!string.IsNullOrEmpty(iStatusArgs.FromPortCode))
+                if (!string.IsNullOrEmpty(iStatusArgs.ToPortCode))
                 {
-                    string myPortCode = iStatusArgs.FromPortCode;
+                    string myPortCode = iStatusArgs.ToPortCode;
                     DateTime? myEventDate = iStatusArgs.EventDate;
                     DateTime? myDateTime = iStatusArgs.ArrivalDate;
                     string myTimeType = iStatusArgs.TimeOfArrivalInfo;

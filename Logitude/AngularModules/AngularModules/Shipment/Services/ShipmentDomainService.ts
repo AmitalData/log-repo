@@ -722,15 +722,16 @@ export class ShipmentDomainService {
         return entityList;
     }
 
-    DownloadShipmentPackages(shipmentId: string) {
+    CreateMissingMasters() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetDownloadShipmentPackages?shipmentId=' + shipmentId;
+        var url = this._apiUrl + '/GetCreateMissingMasterData';
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+                var myResult: string = response.json();
+
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;

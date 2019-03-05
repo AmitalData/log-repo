@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {SessionInfo} from '../../Utilities/SessionInfo';
 import {InfraSettings} from '../../Utilities/InfraSettings';
 import {SessionLocator} from '../../Utilities/SessionLocator';
@@ -8,6 +8,8 @@ import {TenantManagementPMService} from '../../Services/StandardPMs/TenantManage
 import {AppTool} from '../../Tools';
 import {Environment} from '../../Locators/Environment';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { HomeComponent } from '../HomeComponent/HomeComponent';
+import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 
 @Component({
     moduleId: module.id,
@@ -20,20 +22,54 @@ export class BlockScreenComponent {
     public BlockMessagePart1: string = "";
     public BlockMessagePart2: string = "";
     public BlockMessagePart3: string = "";
-
+    public BlockMessagePart4: string = "";
+    public BlockMessagePart5: string = "You can also manage your bluesnap account ";
+    public ExistManage: boolean = false;
     public IsProduction: boolean = false;
 
     public isCompanyAndUser: boolean = false;
     public LogoURL: string = "./Images/LoginScreen/header.jpg";
     public SampleLogoURL: string = "./Images/ApplicationLogo/Angular/AngularLogo.png";
     public authHeader;
+    GoToManage() {
+        var myService: CommonDomainService = new CommonDomainService();
+        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+            var temp = myResult.Result;
+            temp = temp.Token;
+            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+            var link = "https://cp.bluesnap.com/jsp/account_login.jsp";
+            if (!AppTool.IsNullOrEmpty(temp)) {
+                link = "https://www.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
+            }
+            var win = window.open(link, '_blank');
+            win.focus();
+        });
+
+    }
+
+
+    private setCookie(name: string, value: string, expireDays: number, path: string = '') {
+        let d: Date = new Date();
+        d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
+        let expires: string = `expires=${d.toUTCString()}`;
+        let cpath: string = path ? `; path=${path}` : '';
+        document.cookie = `${name}=${value}; ${expires}${cpath}`;
+    }
+
+
+
     constructor(private loginService: LoginService) {
         this.authHeader = new Headers();
         this.authHeader.append('Content-Type', 'application/json');
         this.authHeader.append('Accept', 'application/json');
         this.authHeader.append('token', SessionInfo.Token);
         this.loginService.AuthHeader = this.authHeader;
-
+        if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.BluesnapAccount)) {
+            this.ExistManage = true;
+        }
+        else {
+            this.ExistManage = false;
+        }
         //var temp = window.sessionStorage.getItem("LogoURL");
         //var LogoCode = window.sessionStorage.getItem("LogoCode");
         //if (temp) {
@@ -86,37 +122,39 @@ export class BlockScreenComponent {
         //}
         //this.SetBlockMessage();
     }
+    public Email: string = "";
     SetBlockMessage() {
         this.IsProduction = SessionLocator.IsProduction;
-        var Email: string = "";
+        this.Email = "";
         if (SessionLocator.PrivateLableSettings) {
-            Email = SessionLocator.PrivateLableSettings.ContactUsEmail;
+            this.Email = SessionLocator.PrivateLableSettings.ContactUsEmail;
         }
         else {
             var tempmail = Environment.GetContactUsEmail();
             if (tempmail) {
-                Email = tempmail;
+                this.Email = tempmail;
             }
             else {
-                Email = "info@logitudeworld.com";
+                this.Email = "info@logitudeworld.com";
             }
         }
 
         if (SessionLocator.BlockType == "company") {
             this.BlockMessagePart1 = "Your company subscription has expired.";
-            this.BlockMessagePart2 = "To renew please contact " + Email;
-            this.isCompanyAndUser = true;
+            this.BlockMessagePart2 = "To renew you can use the links under the billing icon above";
+            this.BlockMessagePart3 = "For more information and help please contact " ;
         }
         else if (SessionLocator.BlockType == "user") {
             this.BlockMessagePart1 = "Your temporary access has expired";
-            this.BlockMessagePart2 = "To renew please contact " + Email;
-            this.isCompanyAndUser = true;
+            this.BlockMessagePart2 = "To renew you can use the links under the billing icon above";
+            this.BlockMessagePart3 = "For more information and help please contact " ;
 
         }
         else if (SessionLocator.BlockType == "suspend") {
             this.BlockMessagePart1 = "Your company subscription has expired. The recurring renew has failed due to credit";
             this.BlockMessagePart2 = "card authorization error.";
-            this.BlockMessagePart3 = "Please contact your e-commerce vendor or " + Email;
+            this.BlockMessagePart3 = "To renew you can use the links under the billing icon above, Please contact your e-commerce vendor or ";
+           
         }
     }
 
