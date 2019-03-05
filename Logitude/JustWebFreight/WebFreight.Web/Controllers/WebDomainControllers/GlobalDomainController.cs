@@ -24,6 +24,7 @@ using System.Net.Http;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.GlobalModel;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.InfrastructureModel;
@@ -465,7 +466,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetTenantManagementJS()
+        public HttpResponseMessage GetTenantManagementJS(string loggeduserid)
         {
             try
             {
@@ -530,6 +531,89 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract,
 
                     };
+
+                    if (entityPM.PaymentFailure)
+                    {
+                        if (entityPM.SuspendDate.Value.Date < DateTime.Now.Date)
+                        {
+                            myResult.DoBlocking = true;
+                            myResult.BlockType = "suspend";
+                        }
+                        else if (entityPM.SuspendDate.Value.Date == DateTime.Now.Date)
+                        {
+                            myResult.SuspendDaysLeft = 0;
+                        }
+                        else
+                        {
+                            myResult.SuspendDaysLeft = tenantManagementQuery.ComputeDaysLeft(entityPM.SuspendDate);
+                        }
+                    }
+
+                    if (entityPM.IsTrial)
+                    {
+                        if (entityPM.TrialEndDate.Value.Date < DateTime.Now.Date)
+                        {
+                            myResult.DoBlocking = true;
+                            myResult.BlockType = "company";
+                        }
+                        else if (entityPM.TrialEndDate.Value.Date == DateTime.Now.Date)
+                        {
+                            myResult.TrailDaysLeft = 0;
+                        }
+                        else
+                        {
+                            myResult.TrailDaysLeft = tenantManagementQuery.ComputeDaysLeft(entityPM.TrialEndDate);
+                        }
+                    }
+                    else if (entityPM.PaidUntilDate != null)
+                    {
+                        if (!entityPM.IsRecurring)
+                        {
+                            if ((entityPM.PaidUntilDate - DateTime.Now).Value.Days < 0)
+                            {
+                                myResult.DoBlocking = true;
+                                myResult.BlockType = "company";
+                            }
+                            else
+                            {
+                                myResult.PaidDaysLeft = tenantManagementQuery.ComputeDaysLeft(entityPM.PaidUntilDate);
+                            }
+                        }
+                    }
+
+
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        ContactDomainService service = new ContactDomainService();
+                        UserPM user = service.GetSingleUser(loggeduserid, entityPM.Id);
+
+                        if (user != null)
+                        {
+                            myResult.ExpirationDate = user.ExpirationDate;
+
+
+                            if (user.ExpirationDate != null)
+                            {
+                                if (user.ExpirationDate.Value.Date < DateTime.Now.Date)
+                                {
+                                    myResult.DoBlocking = true;
+                                    myResult.BlockType = "user";
+                                }
+                                else if (user.ExpirationDate.Value.Date == DateTime.Now.Date)
+                                {
+                                    myResult.ExpirationDaysLeft = 0;
+                                }
+                                else
+                                {
+                                    myResult.ExpirationDaysLeft = tenantManagementQuery.ComputeDaysLeft(user.ExpirationDate);
+                                }
+                            }
+                        }
+                        scope.Complete();
+                    }
+
+
+
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -573,12 +657,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string PrivateLabelId { get; set; }
         public bool PaymentFailure { get; set; }
         public DateTime? SuspendDate { get; set; }
+        public int ExpirationDaysLeft { get; set; }
         public bool IsTrial { get; set; }
         public bool IsRecurring { get; set; }
         public bool IsEAWBOnlyDemo { get; set; }
         public bool IsRestrictedByAirline { get; set; }
         public bool IsCargonautEnabled { get; set; }
         public bool IsDEXXConnectionEnabled { get; set; }
+        public bool DoBlocking { get; set; }
+        public string BlockType { get; set; }
+        public DateTime? ExpirationDate { get; set; }
         public bool ManageLicencesPerUser { get; set; }
         public bool ChangeHeaderColor { get; set; }
         public int TrailDaysLeft { get; set; }

@@ -2300,7 +2300,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
                 this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
                     if (isNewWizard) {
-                        this.RunNewEntityWizard(this.SelectedQuery.ObjectTableNewWizardControlName);
+                        if (this.QueryCode == "Masters") {
+                            this.RunNewMasterWizard();
+                        }
+                        else {
+                            this.RunNewEntityWizard(this.SelectedQuery.ObjectTableNewWizardControlName);
+                        }
                     }
                     else {
 
@@ -2312,6 +2317,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         } else if (this.ObjectTableName == "AccountingIntegrityCheck") {
                             this.RunNewAccountingIntegrityCheckWizard();
                         }
+                    
                         else {
 
                             this.RunNewGenaricEntity();
@@ -2844,6 +2850,18 @@ export class ListComponent implements OnInit, AfterViewInit {
                 });
             });
     }
+
+    RunNewMasterWizard() {
+        var componentPath: string ="./Shipment/Components/NewEntity/NewMasterComponent";
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "New Master";
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.NewWizardArgs = { IsNewEntity: true };
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
+        logWindow.Show(componentPath);
+    }
+
     RunNewAccountingIntegrityCheckWizard() {
         var __entity: AccountingIntegrityCheckPM = new AccountingIntegrityCheckPM();
         __entity.StatusCode = "1";

@@ -74,6 +74,7 @@ namespace CommunicationWorkerRole
                                 analyzeQueue.Status = "F";
                             }
                             analyzeQueueRepository.Update(analyzeQueue);
+                            analyzeQueueRepository.SubmitChanges();
                         }
 
                         else
