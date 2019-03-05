@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
             // Build the XmlDocument from the MemorySteam of UTF-8 encoded bytes
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(ms);
+            xmlDoc.LoadXml(communicationsData);
 
 
             //var myXElementMamanBaldarSTB = XElement.Parse(communicationsData);
