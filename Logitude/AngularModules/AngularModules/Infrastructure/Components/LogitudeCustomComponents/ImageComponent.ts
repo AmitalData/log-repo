@@ -140,13 +140,13 @@ export class ImageComponent implements AfterViewInit, OnInit {
     }
 
     GetImageFile(imageId: string, isFirEvent: boolean = false) {
-        var extension: string = this.EntityName == "Quotation" ? "png" : "jpg";
+
         var type = "Base64";
         if (this.EntityName == "Quotation") {
             type += ("^ImageDetail");
         }
         ShowHideProgressDownload(true, this.ProgressDownloadId);
-        this._imageLibraryService.DownloadFile(this.ImageId, extension, "images", SessionInfo.LoggedUserTenant, type).subscribe((res: any) => {
+        this._imageLibraryService.DownloadFile(this.ImageId, "jpg", "images", SessionInfo.LoggedUserTenant, type).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
 
             ShowHideProgressDownload(false, this.ProgressDownloadId);
@@ -185,14 +185,12 @@ export class ImageComponent implements AfterViewInit, OnInit {
         var file: any = UploadLogoFile(this.ImageFileHtmlId);
 
         if (file) {
-            //(file.type == "image/png" || file.type == "image/PNG") && 
-            if (this.EntityName == "Quotation") {
-                this.ArrayBufferToBase64(file, "images", width, height, this);
-            }
-            else if (file.type == "image/jpeg" || file.type == "image/jpg") {
-                this.ArrayBufferToBase64(file, "images", width, height, this);
-            }
 
+            if (file.type == "image/jpeg" || file.type == "image/jpg") {
+                this.ArrayBufferToBase64(file, "images", width, height, this);
+            } else if (this.EntityName == "Quotation" && (file.type == "image/png" || file.type == "image/PNG")) {
+                this.ArrayBufferToBase64(file, "images", width, height, this);
+            }
         }
     }
 
