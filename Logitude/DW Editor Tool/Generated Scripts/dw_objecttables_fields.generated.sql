@@ -192,7 +192,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_MoveTypesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_MoveTypesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed) Values(@DIM_MoveTypesNewId,0,'DIM_MoveTypes','DIM_MoveTypes','Dimension','false')  
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy) Values(@DIM_MoveTypesNewId,0,'DIM_MoveTypes','DIM_MoveTypes','Dimension','false','[English Name]')  
 --Fields --
 declare @DIM_MoveTypesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_MoveTypesId_NumberNewId OUTPUT,'DWObjectField' 
