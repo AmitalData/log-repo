@@ -566,7 +566,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             if (entityAM.CustomsClearanceDate != null)
             {
-                entityPM.IsDepositionCloseTask = true;
+                entityPM.IsDepositionRequired = false;
+                entityPM.IsShipmentComputedFieldChange = true;
             }
 
             entityPM.Tenant = entityAM.ImporterTenant;
@@ -885,9 +886,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.OnCarriageATD = entityAM.OnCarriageATD;
             entityPM.PreCarriageATA = entityAM.PreCarriageATA;
             entityPM.PreCarriageATD = entityAM.PreCarriageATD;
-            entityPM.ExceptionDate = entityAM.ExceptionDate;
-            entityPM.ExceptionDescription = entityAM.ExceptionDescription;
-            entityPM.HasException = entityAM.HasException;
+           
             entityPM.DimensionsUnitCode = entityAM.DimensionsUnitCode;
             entityPM.GrossWeightUnitCode = entityAM.GrossWeightUnitCode;
             entityPM.ChargeableWeightUnitCode = entityAM.ChargeableWeightUnitCode;
@@ -911,6 +910,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
             {
                 entityPM.IsOperationalClosed = true;
+            }
+            if (entityPM.CustomsClearanceDate == null)
+            {
+                entityPM.ExceptionDate = entityAM.ExceptionDate;
+                entityPM.ExceptionDescription = entityAM.ExceptionDescription;
+                entityPM.HasException = entityAM.HasException;
             }
             if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true)
             {

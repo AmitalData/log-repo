@@ -271,8 +271,15 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 if (item.Id != oldObjectFieldId) {
 
                     this.IsHideGeneralControl = false;
-                    this.FieldValue = "";
-                    this.CurrentEntityPM.Value = "";
+                    this.FieldValue = item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime" ? 0 : "";
+
+
+                    if (item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime") {
+                        var todayDate = DateTool.GetCurrentDateTimeAsUtc();
+                        this.CurrentEntityPM.Value = this.SelectedDateType.Name + "*" + this.FieldValue + "*" + FieldValueResolver.ConvertUTCDateToString(todayDate, "Automation");
+                    } else this.CurrentEntityPM.Value = "";
+
+                   
                     this.AddEditAutomationsViewModel.IsChangeCondition = true;
                     var ischange = false;
 
@@ -301,6 +308,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                         this.IsRefrachCustomField = !this.IsRefrachCustomField;
                     }
 
+           
                     this.BuildCustomFromFieldbjectFieldLists();
 
                 }

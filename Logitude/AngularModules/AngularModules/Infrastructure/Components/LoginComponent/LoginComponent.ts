@@ -247,19 +247,19 @@ export class LoginComponent implements OnInit {
 
                     var iGlobalDomainService = new GlobalDomainService();
 
-                    iGlobalDomainService.GetTenantManagementJS().subscribe((myResponse: ServiceResponse) => {
+                    iGlobalDomainService.GetTenantManagementJS(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
                         ObjectsUpdater.UpdateLoggedUserPM(myResult);
                         ObjectsUpdater.UpdateTenantManagementJS(myResponse.Result);
 
                         SessionInfo.LoggedUserPM = myResult;
 
                         if (ObjectsLocator.LoggedUserPM.ExpirationDate != null && DateTool.GetDateParts(ObjectsLocator.LoggedUserPM.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-                            this.Blocking.emit("user");
+                            SessionLocator.BlockType = "user";
                         }
 
-                        else {
+                     //   else {
                             this.CheckTenantBlocking(userData);
-                        }
+                     //   }
                     });
                 });
             }
@@ -495,7 +495,7 @@ export class LoginComponent implements OnInit {
 
                 // TenantManagementPM
                 var iGlobalDomainService = new GlobalDomainService();
-                iGlobalDomainService.GetTenantManagementJS().subscribe((myResponse: ServiceResponse) => {
+                iGlobalDomainService.GetTenantManagementJS(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
                     ObjectsUpdater.UpdateTenantManagementJS(myResponse.Result);
                     this.IncreaseProgressBar();
                     //4
@@ -814,12 +814,12 @@ export class LoginComponent implements OnInit {
 
             if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
                 isCheckedCompleted = true;
-                this.Blocking.emit("company");
+                SessionLocator.BlockType = "company";
             }
 
             else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
                 isCheckedCompleted = true;
-                this.Blocking.emit("suspend");
+                SessionLocator.BlockType = "suspend";
             }
 
             else {
@@ -833,12 +833,12 @@ export class LoginComponent implements OnInit {
 
                 if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
                     isCheckedCompleted = true;
-                    this.Blocking.emit("company");
+                    SessionLocator.BlockType = "company";
                 }
 
                 else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
                     isCheckedCompleted = true;
-                    this.Blocking.emit("company");
+                    SessionLocator.BlockType = "company";
                 }
 
                 else {
@@ -853,7 +853,7 @@ export class LoginComponent implements OnInit {
 
                 if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
                     isCheckedCompleted = true;
-                    this.Blocking.emit("company");
+                    SessionLocator.BlockType = "company";
                 }
 
                 else {
@@ -863,9 +863,9 @@ export class LoginComponent implements OnInit {
             }
         }
 
-        if (!isCheckedCompleted) {
+       // if (!isCheckedCompleted) {
             this.LoadClosedTablesToWindow(userData.CurrentTenant);
-        }
+      //  }
     }
 
     private timerToken: any;

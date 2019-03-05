@@ -98,6 +98,11 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
+                if (this.EntityPM.AccountingSystemCode != "QBO" && this.EntityPM.AccountingSystemCode != "QBOG") {
+                    this.EntityPM.QBOAccessToken = null;
+                    this.EntityPM.QBOAccessTokenSecret = null;
+                    this.EntityPM.QBOrealMeID = null;
+                }
             }
 
             this.SetUIProperties();
@@ -418,14 +423,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         logWindow.Show('./Invoice/Components/Workspaces/QuickBooksLogin');
     }
     
-    DissConnectQBO(loadeding = true,force:boolean) {
+    DissConnectQBO(loadeding = true) {
         if (loadeding) {
             SessionLocator.CurrentSession.StartBusyIndicator("Disconnecting..");
             this.EntityPM.QBOAccessToken = null;
             this.EntityPM.QBOAccessTokenSecret = null;
         }
 
-        if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG" || force) {
+        if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG" ) {
             this.EntityPM.AccountingSystemCode = "NO";
             this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
                 if (myResponse1.HasError) {
@@ -509,8 +514,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                 this.EntityPM.AccountingSystemCode = loadedEntity.AccountingSystemCode;
                 this.EntityPM.QBOrealMeID = null;
                 this.EntityPM.QBOAccessToken = null;
-                this.EntityPM.QBOAccessTokenSecret = null;
-                this.DissConnectQBO(false,true);
+                 this.EntityPM.QBOAccessTokenSecret = null;
+                this.DissConnectQBO(false);
             }
         });
     }

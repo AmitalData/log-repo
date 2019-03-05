@@ -159,10 +159,12 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
 
     public froalaEditorSetting: FroalaEditorSetting;
-
+    QuotationWindow: any;
+    QuotationTitle: string;
     SetWindowArgs(args: any) {
         this.QuotePM = args.QuotePM;
-
+        this.QuotationWindow = args.QuotationWindow;
+        this.QuotationTitle = args.QuotationWindow ? args.QuotationWindow.Title : "";
         this.LoadQuoteCustomerEmail();
         this.froalaEditorSetting = new FroalaEditorSetting();
         this.froalaEditorSetting.Id = Guid.newGuid();
@@ -405,6 +407,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     }
 
 
+
+
+     //this.SelectedQuoteTemplateList
     private selectedQuoteTemplateList: QuoteTemplateList;
     private selectedQuoteTemplatePM: QuoteTemplatePM;
 
@@ -412,6 +417,12 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     public set SelectedQuoteTemplateList(newValue: QuoteTemplateList) {
         if (this.selectedQuoteTemplateList != newValue) {
             this.selectedQuoteTemplateList = newValue;
+            var title = this.QuotationTitle + (" (" + this.SelectedQuoteTemplateList.Name + ")");
+           if (this.QuotationWindow && this.QuotationWindow.Title != title) {
+               this.QuotationWindow.Title = title;
+            }
+
+
             this.PreviewQuoteTemplatePdfReport();
         }
 
