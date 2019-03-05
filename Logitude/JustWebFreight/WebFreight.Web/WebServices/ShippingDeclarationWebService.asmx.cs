@@ -2612,6 +2612,21 @@ namespace WebFreight.Web.WebServices
                     packageline.Notes = package.Notes;
                     packageline.PackageTare = package.Tare != null ? String.Format("{0:0,0.00}", package.Tare.Value) : null;
                     packageline.MarksAndNumbersOnly = package.MarksAndNumbers;
+                    packageline.Make = package.Make;
+                    packageline.Model = package.Model;
+                    packageline.Year = package.Year;
+                    packageline.Color = package.Color;
+                    packageline.ChassisNumber = package.ChassisNumber;
+                    packageline.RegistrationNumber = package.RegistrationNumber;
+
+                    if (!string.IsNullOrEmpty(package.CountryId))
+                    {
+                        Country country = countryRepository.GetSingleCountry(package.CountryId, tenant);
+                        if (country != null)
+                        {
+                            packageline.CountryName = country.EnglishName;
+                        }
+                    }
 
                     #region Harmonize
                     if (package.IsMultiHarmonize)
