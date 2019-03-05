@@ -399,7 +399,7 @@ export class CourierWorksheetListTemplate {
                             var logWindow = new LogitudeWindow();
                             logWindow.Width = 1000;
                             logWindow.Height = 350;
-                            logWindow.Title = "פעולות מיוחדות במסוף";
+                            logWindow.Title = "פעולות מיוחדות מול מסוף";
                             logWindow.WindowArgs = {
                                 MamanSpecialActionList: list
                             };
