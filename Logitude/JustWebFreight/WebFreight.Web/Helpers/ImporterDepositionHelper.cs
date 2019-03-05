@@ -139,8 +139,7 @@ namespace WebFreight.Web.Helpers
                 customsShipperPM.ShipperVAT = importerDepositionAM.ShipperVAT;
                 customsShipperPM.CountryCode = importerDepositionAM.ShipperCountry;
                 customsShipperPM.ValidDepositionNumber = importerDepositionAM.DepositionNumber;
-
-                UpdateValidityDate(customsShipperPM, importerDepositionAM.ValidityStartDate, importerDepositionAM.ValidityEndDate);
+                SetValidStartAndEndDate(customsShipperPM, importerDepositionAM.ValidityStartDate, importerDepositionAM.ValidityEndDate);
 
                 customsShipperPM.Addresses = new List<AddressPM>();
 
@@ -166,6 +165,7 @@ namespace WebFreight.Web.Helpers
                 customsShipperPM.Addresses.Add(address);
                 customsShipperService.Create(customsShipperPM);
             }
+
             CustomerDepositionRepository customerDepositionRepository = new CustomerDepositionRepository(tenant);
             CustomerDeposition customerDeposition = !isNew ? customerDepositionRepository.GetCustomerDepositionByCustomsShipperIdAndDepositionNumber(customsShipperPM.Id, importerDepositionAM.DepositionNumber, tenant) : null;
 
@@ -193,20 +193,22 @@ namespace WebFreight.Web.Helpers
                     customerDepositionRepository.Update(customerDeposition);
                     customerDepositionRepository.SubmitChanges();
                 }
-
-
             }
 
             if (!isNew)
             {
-                UpdateValidityDate(customsShipperPM, customerDeposition.ValidityStartDate, customerDeposition.ValidityEndDate);
-                if (customsShipperPM.IsChange) customsShipperService.Update(customsShipperPM);
+                SetValidStartAndEndDate(customsShipperPM, customerDeposition.ValidityStartDate, customerDeposition.ValidityEndDate);
+                if (customsShipperPM.IsChange)
+                {
+                    customsShipperPM.ValidDepositionNumber = importerDepositionAM.DepositionNumber;
+                    customsShipperService.Update(customsShipperPM);
+                }
             }
 
 
         }
 
-        private static void UpdateValidityDate(CustomsShipperPM customsShipperPM , DateTime? validityStartDate , DateTime? validityEndDate)
+        private static void SetValidStartAndEndDate(CustomsShipperPM customsShipperPM , DateTime? validityStartDate , DateTime? validityEndDate)
         {
             if (validityStartDate != null && validityEndDate != null)
             {
