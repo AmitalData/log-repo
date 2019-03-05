@@ -400,7 +400,9 @@ export class ItemSourceItem extends BaseComponent {
         var iResult: number = 0;
 
         if (this.EntryTime && this.ExitTime) {
-            iResult = DateTool.GetDateParts(this.ExitTime).Minutes - DateTool.GetDateParts(this.EntryTime).Minutes;
+            var ExitTimeTotalMinutes = DateTool.GetDateParts(this.ExitTime).TotalMinutes;
+            var EntryTimeTotalMinutes = DateTool.GetDateParts(this.EntryTime).TotalMinutes;
+            iResult = ExitTimeTotalMinutes - EntryTimeTotalMinutes;
         }
 
         this.Minutes = iResult;
