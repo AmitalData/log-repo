@@ -3959,32 +3959,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public List<ShipmentPM> GetShipmentPMsByMasterIdAndTenantForAutomation(string masterId, int tenant)
         {
             #region shipmentpm temp code
+
             List<Shipment> shipmentLists = (from s in repository.context.Shipments
-                                                    where s.Tenant == tenant && s.MasterShipmentDataId == masterId && s.Id != masterId && ((s.ShipmentLevelCode == "H") || (s.ShipmentLevelCode == "D") || s.ShipmentLevelCode == "A")
-                                                    select new Shipment()
-                                                    {
-                                                        Id = s.Id,
-                                                        Tenant = s.Tenant,
-                                                        CreatedByUserId = s.CreatedByUserId,
-                                                        UpdatedByUserId = s.UpdatedByUserId,
-                                                        DirectionId = s.DirectionId,
-                                                        ShipmentLevelCode = s.ShipmentLevelCode,
-                                                        CustomerId = s.CustomerId,
-                                                        AccountManagerUserId = s.AccountManagerUserId,
-                                                        BranchId = s.BranchId,
-                                                        DepartmentId = s.DepartmentId,
-                                                        AgentId = s.AgentId,
-                                                        AgentComputed=s.AgentComputed,
-                                                        IsAccountingClosed = s.IsAccountingClosed,
-                                                        IsOperationalClosed = s.IsOperationalClosed,
-                                                        OriginShipmentId = s.OriginShipmentId,
-                                                        SalesmanUserId = s.SalesmanUserId,
-                                                        StatusId = s.StatusId,
-                                                        TransportModeId = s.TransportModeId,
-                                                        IncotermId = s.IncotermId,
-                                                        CustomerContactId = s.CustomerContactId,
-                                                        AgentContactId = s.AgentContactId,
-                                                    }).ToList();
+                                            where s.Tenant == tenant && s.MasterShipmentDataId == masterId && s.Id != masterId && ((s.ShipmentLevelCode == "H") || (s.ShipmentLevelCode == "D") || s.ShipmentLevelCode == "A")
+                                            select s).ToList();
+
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();
             if (shipmentLists.Count() > 0)
