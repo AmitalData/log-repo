@@ -64,27 +64,46 @@
                                                         <td></td>
                                                     </tr>
                                                     <tr style="height:1px">
-                                                      <td style="color:red;vertical-align:middle">
-                                                          <div style="font-size:x-large;margin-left:25%">  {{BlockMessagePart1}} </div>
-                                                        </td>  
+                                                        <td style="color:red;vertical-align:middle">
+                                                            <div style="font-size:x-large;margin-left:25%">  {{BlockMessagePart1}} </div>
+                                                        </td>
 
                                                     </tr>
                                                     <tr style="height:1px">
                                                         <td style="color:red;vertical-align:middle">
                                                             <div style="font-size:x-large;margin-left:25%">  {{BlockMessagePart2}} </div>
-                                                        </td>  
+                                                        </td>
                                                     </tr>
                                                     <tr style="height:1px">
                                                         <td style="color:red;vertical-align:middle">
-                                                            <div style="font-size:x-large;margin-left:25%">  {{BlockMessagePart3}} </div>
+                                                            <div style="font-size:x-large;margin-left:25%">
+                                                                {{BlockMessagePart3}} <a style="font-size:x-large" href="mailto:{{Email}}">{{Email}}</a>
+                                                            </div>
                                                         </td>
                                                     </tr>
+                                                    <tr style="height:1px">
+                                                        <td style="color:red;vertical-align:middle">
+                                                            <div style="font-size:large;margin-left:5%">
+                                                                {{BlockMessagePart4}} <a style="font-size:x-large" *ngIf="BlockMessagePart4!=''" href="mailto:{{Email}}">{{Email}}</a>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:1px" *ngIf="ExistManage">
+                                                        <td style="color:red;vertical-align:middle">
+                                                            <div style="font-size:large;margin-left:5%">
+                                                                {{BlockMessagePart5}} <a style="font-size:x-large;color:#1E4AC4;text-decoration:underline" (click)="GoToManage()">here</a>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
                                                     <tr>
                                                         <td></td>
                                                     </tr>
                                                     <tr style="height:15px">
-                                                        <td>
-                                                        </td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr style="height:10px"><td></td></tr>
                                                 </table>
@@ -109,7 +128,26 @@
                                                     </tr>
                                                     <tr style="height:1px">
                                                         <td style="color:red;vertical-align:middle">
-                                                            <div style="font-size:large;margin-left:5%">  {{BlockMessagePart3}} </div>
+                                                            <div style="font-size:large;margin-left:5%">
+                                                                {{BlockMessagePart3}} <a style="font-size:x-large" href="mailto:{{Email}}">{{Email}}</a>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="height:1px">
+                                                        <td style="color:red;vertical-align:middle">
+                                                            <div style="font-size:large;margin-left:5%">
+                                                                {{BlockMessagePart4}} <a style="font-size:x-large" *ngIf="BlockMessagePart4!=''" href="mailto:{{Email}}">{{Email}}</a>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="height:1px" *ngIf="ExistManage">
+                                                        <td style="color:red;vertical-align:middle">
+                                                            <div style="font-size:large;margin-left:5%">
+                                                                {{BlockMessagePart5}} <a style="font-size:x-large;color:#1E4AC4;text-decoration:underline" (click)="GoToManage()">here</a>
+
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     <tr>

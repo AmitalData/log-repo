@@ -1478,7 +1478,7 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             
         }
     }
-    ManageBluesnapAccountClicked() {
+    public ManageBluesnapAccountClicked() {
 
 
         var myService: CommonDomainService = new CommonDomainService();
