@@ -436,6 +436,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (this.SelectedItem.Code == '[Full Date]') {
                 this.SelectedItem.ParentDataTypeCode = "LookUp";
                 this.SelectedItem.DataTypeCode = "DateTime";
+                this.SelectedItem.HasTree = true;
             }
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
@@ -714,6 +715,14 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.DWQueryData.PageSize = 100;
 
         //if (this.DWQueryData.Filters) {
+        if (this.SelectedFiltersDataSource.length > 0 && this.ValidFiltersValues(this.SelectedFiltersDataSource[0]) != true) {
+            this.messageWindow.Width = 300;
+            this.messageWindow.Height = 150;
+            this.messageWindow.Title = "Invalid Filters";
+            this.messageWindow.Message = "There is an invalid input in one of the filters";
+            this.messageWindow.Show(this.messageWindow.Message);
+            return;
+        }
         if (this.SelectedFieldsDataSource.length > 0) {
 
 
@@ -818,6 +827,49 @@ export class DWQueryBuilderComponent extends BaseComponent {
         //        this.PreviewData(StopPreview);
         //    }
         //}
+
+
+    }
+
+    ValidFiltersValues(MyFilter: DWObjectFieldsDetails) {
+        if (MyFilter.FilterItems.length == 0) {
+            return true;
+        }
+        var Valid = true;
+        MyFilter.FilterItems.forEach((field) => {
+
+            if (field.FilterItems.length == 0) {
+                if (field.DataTypeCode && field.TextValue) {
+                    switch (field.DataTypeCode.toLowerCase()) {
+                        case 'text':
+                        case 'ntext':
+                            {
+                                break;
+                            }
+                        default: {
+                            var val: number;
+
+                            if ((field.TextValue + "").indexOf(',') == -1) {
+                                val = Number(field.TextValue);
+                            }
+
+                            if (isNaN(Number(val))) {
+                                Valid = false;
+                            }
+                            break;
+                        }
+
+                    }
+                }
+
+            }
+            else {
+                this.ValidFiltersValues(field);
+            }
+
+        });
+
+        return Valid;
 
 
     }
