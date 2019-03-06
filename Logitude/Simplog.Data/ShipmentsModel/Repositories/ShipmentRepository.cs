@@ -831,8 +831,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return myResult;
         }
 
-
-
-
+        public IQueryable<Shipment> GetMissingMasterDataShipments(int tenant)
+        {
+            return (from d in context.Shipments
+                    where d.Tenant == tenant
+                    && d.ShipmentLevelCode != "H"
+                    && d.MasterShipmentDataId == null
+                    select d);
+        }
     }
 }
