@@ -1650,13 +1650,46 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
 
-                QueryHelper.CreateMissingMasterData(tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, true);
+                    IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
+                    ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
+                    ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
+
+                    List<Shipment> iShipments = iShipmentRepository.GetMissingMasterDataShipments(tenant).ToList();
+
+                    if (iShipments.Count > 0)
+                    {
+                        foreach (Shipment shipment in iShipments)
+                        {
+                            bool isExist = (from d in iContext.ShipmentMasterDatas where d.Id == shipment.Id && d.Tenant == tenant select d).Any();
+                            if (isExist)
+                            {
+                                shipment.MasterShipmentDataId = shipment.Id;
+                                iShipmentRepository.Update(shipment);
+                            }
+
+                            else
+                            {
+                                ShipmentPM shipmentPM = iShipmentQuery.GetSinglePM(shipment.Id, tenant);
+                                shipmentPM.ConvertFromHouseToDirect = true;
+                                shipmentPM.DontCreateConvertEvent = true;
+
+                                string systemEmail = "system@tenant" + tenant + ".com";
+                                ShipmentService iShipmentService = new ShipmentService(iContext, shipmentPM, systemEmail);
+                                iShipmentService.Update();
+                            }
+                        }
+                    }
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, true);
+                }
             }
 
             catch (Exception ex)
