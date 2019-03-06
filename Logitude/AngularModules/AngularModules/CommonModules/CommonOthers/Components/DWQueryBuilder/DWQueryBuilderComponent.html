@@ -245,7 +245,7 @@
                     <!--overflow:auto;-->
                     <table>
                         <tr>
-                            <td style="width: 353px;height:100%;">
+                            <td style="width: 390px;height:100%;">
                                 <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px;overflow:auto;">
                                     <table>
                                         <tr>
@@ -310,15 +310,19 @@
                                                                                                             <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" *ngIf="item" style="width:100px;height:20px">
                                                                                                                 <table>
                                                                                                                     <tr class="OutterLink">
-                                                                                                                        <td style="width:70%;">
+                                                                                                                        <td style="width:5%;max-width:20px;">
+                                                                                                                            <HelpIcon *ngIf="item.HelpText" style="width: 18px;height:18px;" [Header]="'Help'" [Text]="item.HelpText"></HelpIcon>
+                                                                                                                            <div *ngIf="!item.HelpText" style="width: 20px;height:20px;"></div>
+                                                                                                                        </td>
+                                                                                                                        <td style="width:85%;">
                                                                                                                             <p style="display:inline-block;">{{item.Name}}</p>
                                                                                                                         </td>
                                                                                                                         <td *ngIf="item" style="width:5%;"></td>
-                                                                                                                        <td class="LinkBtn" style="width:10%;">
+                                                                                                                        <td class="LinkBtn" style="width:70px;">
                                                                                                                             <span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
                                                                                                                         </td>
                                                                                                                         <td *ngIf="item " style="width:1%;"></td>
-                                                                                                                        <td class="LinkBtn" style="width:10%;">
+                                                                                                                        <td class="LinkBtn" style="width:65px;">
                                                                                                                             <span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
                                                                                                                         </td>
                                                                                                                         <td *ngIf="item" style="width:4%;"></td>
