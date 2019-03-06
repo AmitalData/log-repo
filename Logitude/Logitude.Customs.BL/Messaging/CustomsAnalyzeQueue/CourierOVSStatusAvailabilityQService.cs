@@ -79,7 +79,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     string myDeclarationId = consignmentQueryService.GetDeclarationIdBythirdCargoID(mySTBMessage.CourierHawbDate, _CommunicationLog.Tenant, idList);
                     if (string.IsNullOrWhiteSpace(myDeclarationId))
                     {
-                        res.ErrorMessage = $"myDeclarationId=GetDeclarationIdBythirdCargoID({mySTBMessage.CourierHawbDate}) is null  unable to choose what to do ??";
+                        res.ErrorMessage = $"myDeclarationId=GetDeclarationIdBythirdCargoID({mySTBMessage.CourierHawbDate}) is null  unable to choose what to do ?? {mySTBMessage.CourierHawbNumber}";
                         res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
                         //leave to master res.EntityID = idList.First();
 

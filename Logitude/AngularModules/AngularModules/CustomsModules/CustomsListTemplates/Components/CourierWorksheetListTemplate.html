@@ -128,7 +128,7 @@
 
     
     <div class="TextTrimming" *ngIf="fieldName == 'SpecialActionStatus'" style="cursor:default;height:35px;width:120px;" (click)="ButtonClick($event)" >
-        <img *ngIf="_CourierWorksheet['SpecialActionStatus'] == 'V'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <img *ngIf="_CourierWorksheet['SpecialActionStatus'] == 'V'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " (click)="SpecialActionStatusXClicked($event)" />
         <img *ngIf="_CourierWorksheet['SpecialActionStatus'] == 'X'" src="./Images/Icons/RedX.png" (click)="SpecialActionStatusXClicked($event)" [attr.title]="_CourierWorksheet['SpecialActionsErrorXml']"
              style="height:20px;width:15px;vertical-align:central;padding-bottom:5px;cursor:pointer;" />
     </div>
