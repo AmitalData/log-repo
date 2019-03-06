@@ -65,12 +65,13 @@ export class GetStorageSiteCodeComponent extends BaseComponent {
         }
 
         var confirm = new ConfirmWindow();
-        confirm.Width = 350;
-        confirm.Height = 200;
+        confirm.Width = 320;
+        confirm.Height = 180;
         confirm.Title = "שינוי אתר אחסון";
-        confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         confirm.ShowNoButton = true;
-        confirm.Show("שינוי יבצע עדכון של כל ההצהרות באתר האחסון החדש וישדר את ההצהרות למכס?");
+        confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+        confirm.Show("שינוי יבצע עדכון של כל ההצהרות באתר האחסון החדש וישדר את ההצהרות למכס");
         confirm.WindowClosed.subscribe((event: any) => {
             if (confirm.Yes) {
                 this.ChangeStorageSiteCode();
