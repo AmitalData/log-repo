@@ -65,7 +65,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //    return;
             //}
             var listOf9001TDExt = ManipulateCustomResponse(requestParams.TableId, customResponse);
-            if (requestParams.TableId == "1344" && listOf9001TDExt.Count == 0)
+            if ((requestParams.TableId == "1344" || requestParams.TableId == "2653") && listOf9001TDExt.Count == 0)
             {
                 LogMessagingUtil.Instance.AppendLine("1344 dataset is null>> no update");
                 return;
