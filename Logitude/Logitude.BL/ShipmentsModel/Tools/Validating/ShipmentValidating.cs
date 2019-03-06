@@ -24,6 +24,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Data.ShipmentsModel;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
@@ -385,17 +386,33 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             int myTenant = entityPM.Tenant;
                             bool isMasterFieldUsed = false;
 
-                            ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
-                            IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(myTenant);
+                            //ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
+                            //IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(myTenant);
 
-                            iQueryable = (from a in iQueryable
-                                          where (a.ShipmentLevelCode == "C" || a.ShipmentLevelCode == "D")
-                                          && a.IsCancelled == false
-                                              && a.DirectionId == entityPM.DirectionId
-                                              && a.TransportModeId == entityPM.TransportModeId
-                                          && a.Master == entityPM.Master
-                                              && a.AirlinePrefix == entityPM.AirlinePrefix
-                                          select a);
+                            //iQueryable = (from a in iQueryable
+                            //              where (a.ShipmentLevelCode == "C" || a.ShipmentLevelCode == "D")
+                            //              && a.IsCancelled == false
+                            //                  && a.DirectionId == entityPM.DirectionId
+                            //                  && a.TransportModeId == entityPM.TransportModeId
+                            //              && a.Master == entityPM.Master
+                            //                  && a.AirlinePrefix == entityPM.AirlinePrefix
+                            //              select a);
+
+                            IShipmentsContext iContext = ShipmentsContext.GetContext(myTenant);
+
+                            var iQueryable = (from myShipment in iContext.Shipments
+                                              join db_Masters in iContext.ShipmentMasterDatas
+                                              on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                              from myMasterData in ShipmentsMasters.DefaultIfEmpty()
+
+                                              where myShipment.Tenant == myTenant
+                                              && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
+                                              && myShipment.IsCancelled == false
+                                              && myShipment.DirectionId == entityPM.DirectionId
+                                              && myShipment.TransportModeId == entityPM.TransportModeId
+                                              && myMasterData.Master == entityPM.Master
+                                              && myMasterData.AirlinePrefix == entityPM.AirlinePrefix
+                                              select myShipment);
 
                             if (!string.IsNullOrEmpty(entityPM.Id))
                             {
@@ -841,17 +858,33 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     {
                         if (myShipmentLevelCode == "C" || myShipmentLevelCode == "D")
                         {
-                            ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
-                            IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(myTenant);
+                            //ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
+                            //IQueryable<ShipmentDataView> iQueryable1 = shipmentRepository.GetShipmentViewsByTenant(myTenant);
 
-                            iQueryable = (from a in iQueryable
-                                          where (a.ShipmentLevelCode == "C" || a.ShipmentLevelCode == "D")
-                                          && a.IsCancelled == false
-                                          && a.DirectionId == myDirectionId
-                                          && a.TransportModeId == myTransportModeId
-                                                  && a.Master == myMasterField
-                                              && a.AirlinePrefix == myAirlinePrefixField
-                                          select a);
+                            //iQueryable1 = (from a in iQueryable1
+                            //               where (a.ShipmentLevelCode == "C" || a.ShipmentLevelCode == "D")
+                            //               && a.IsCancelled == false
+                            //               && a.DirectionId == myDirectionId
+                            //               && a.TransportModeId == myTransportModeId
+                            //                       && a.Master == myMasterField
+                            //                   && a.AirlinePrefix == myAirlinePrefixField
+                            //               select a);
+
+                            IShipmentsContext iContext = ShipmentsContext.GetContext(myTenant);
+
+                            var iQueryable = (from myShipment in iContext.Shipments
+                                          join db_Masters in iContext.ShipmentMasterDatas
+                                          on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                          from myMasterData in ShipmentsMasters.DefaultIfEmpty()
+
+                                          where myShipment.Tenant == myTenant
+                                          && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
+                                          && myShipment.IsCancelled == false
+                                          && myShipment.DirectionId == myDirectionId
+                                          && myShipment.TransportModeId == myTransportModeId
+                                          && myMasterData.Master == myMasterField
+                                          && myMasterData.AirlinePrefix == myAirlinePrefixField
+                                          select myShipment);
 
                             if (!string.IsNullOrEmpty(entityId))
                             {
