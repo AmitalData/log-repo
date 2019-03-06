@@ -1468,6 +1468,7 @@ export class DateTool {
             myDateParts.DateObject = dateObject;
             myDateParts.Hours12 = myDateParts.Hours > 12 ? (myDateParts.Hours - 12) : myDateParts.Hours;
             myDateParts.DateTicks = myDateParts.DateObject.valueOf();
+            myDateParts.TotalMinutes = (myDateParts.Hours * 60) + myDateParts.Minutes;
         }
 
         return myDateParts;
@@ -3065,6 +3066,7 @@ export class DateParts {
     public LocalYear: number = 0;
     public LocalMonth: number = 0;
     public LocalDay: number = 0;
+    public TotalMinutes: number = 0;
 }
 export class DateFormats {
     public AMPM: string;

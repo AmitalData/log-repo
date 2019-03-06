@@ -1079,14 +1079,16 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
 
     public RunVatTypeFilterMethod() {
-        if (this.ItemsSource != null) {
-            this.ItemsSource.Collection.forEach(item => {
-                item.VatTypeId = this.VatTypeId;
-            });
+        if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
+            if (this.ItemsSource != null) {
+                this.ItemsSource.Collection.forEach(item => {
+                    item.VatTypeId = this.VatTypeId;
+                });
+            }
+
+            this.VatTypeId = null;
+            this.ComputeTotals();
         }
-       
-        this.VatTypeId = null;
-        this.ComputeTotals();
     }
 
     public RefreshLinesVat(vatId: string, vatPercentage: number) {

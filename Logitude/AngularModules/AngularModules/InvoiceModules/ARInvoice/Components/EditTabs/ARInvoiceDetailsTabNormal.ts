@@ -664,28 +664,27 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
     }
     VatTypeFilterClicked() {
-
-        var loadingDate = this.EntityPM.InvoiceDate;
-        if (loadingDate == null) {
-            loadingDate = DateTool.GetCurrentDateAsUtc();
-        }
-
-        this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.VatTypePercentagesList = myResponse.Result;
-
-                this.ItemsSource.forEach(item => {
-                    //item.VatTypeId = this.VatTypeId;
-
-                    item.EntityPM.VatTypeId = this.VatTypeId;
-                    item.GetVatTypeData();
-                });
-
-                this.VatTypeId = null;
-                this.SetGridColumnsWidth();
-                this.ComputeTotals();
+        if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
+            var loadingDate = this.EntityPM.InvoiceDate;
+            if (loadingDate == null) {
+                loadingDate = DateTool.GetCurrentDateAsUtc();
             }
-        });
+
+            this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.VatTypePercentagesList = myResponse.Result;
+
+                    this.ItemsSource.forEach(item => {
+                        item.EntityPM.VatTypeId = this.VatTypeId;
+                        item.GetVatTypeData();
+                    });
+
+                    this.VatTypeId = null;
+                    this.SetGridColumnsWidth();
+                    this.ComputeTotals();
+                }
+            });
+        }
     }
 
     // Filter Invoice lines

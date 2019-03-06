@@ -626,24 +626,25 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
     VatTypeFilterClicked() {
-
-        var loadingDate = this.EntityPM.InvoiceDate;
-        if (loadingDate == null) {
-            loadingDate = DateTool.GetCurrentDateAsUtc();
-        }
-
-        this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.VatTypePercentagesList = myResponse.Result;
-
-                this.ItemsSource.forEach(item => {
-                    item.VatTypeId = this.VatTypeId;
-                });
-
-                this.VatTypeId = null;
-                this.SetGridColumnsWidth();
+        if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
+            var loadingDate = this.EntityPM.InvoiceDate;
+            if (loadingDate == null) {
+                loadingDate = DateTool.GetCurrentDateAsUtc();
             }
-        });
+
+            this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.VatTypePercentagesList = myResponse.Result;
+
+                    this.ItemsSource.forEach(item => {
+                        item.VatTypeId = this.VatTypeId;
+                    });
+
+                    this.VatTypeId = null;
+                    this.SetGridColumnsWidth();
+                }
+            });
+        }
     }
 
     // Prepaid Collect Filter
