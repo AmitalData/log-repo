@@ -847,10 +847,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
             if (field.FilterItems.length == 0) {
                 if (field.DataTypeCode && field.TextValue) {
-                    if (field.DataTypeCode != 'DateTime' && field.DataTypeCode != 'Date'){
                         switch (field.DataTypeCode.toLowerCase()) {
                             case 'text':
                             case 'ntext':
+                            case 'DateTime':
+                            case 'Date':
                                 {
                                     break;
                                 }
@@ -868,7 +869,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                             }
 
                         }
-                    }
+                    
                 }
 
             }
