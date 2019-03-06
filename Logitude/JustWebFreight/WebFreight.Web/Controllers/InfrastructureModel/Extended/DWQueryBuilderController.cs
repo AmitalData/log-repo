@@ -200,8 +200,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                 if (!string.IsNullOrEmpty(SearchData))
                 {
-                    WhereStmt = WhereStmt + " and " + (Field + " like '" + SearchData + "%'");
+                    WhereStmt = WhereStmt + " and (" + (Field + " like '" + SearchData + "%')");
                 }
+                
                 if (!IsClosed)
                 {
                     if (Tabel != "DIM_Tenants" && Tabel != "DIM_Dates")
@@ -277,6 +278,59 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                                 }
                                 index++;
 
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(SearchData))
+                        {
+                            if (!string.IsNullOrEmpty(Field1))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field1 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field2))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field2 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field3))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field3 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field4))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field4 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field5))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field5 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field6))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field6 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field7))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field7 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field8))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field8 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field9))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field9 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field10))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field10 + " like '" + SearchData + "%')");
                             }
                         }
                         SQL = SQL + " from " + Tabel + WhereStmt + PagingString;
