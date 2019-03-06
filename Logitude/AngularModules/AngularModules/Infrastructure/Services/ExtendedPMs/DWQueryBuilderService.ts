@@ -192,7 +192,7 @@ export class DWQueryBuilderService {
                         pmresponse.Result = result;
                         return pmresponse;
 
-                    });
+                    }).catch(ServiceHelper.HandleServiceError);;
             }
             else {
 
