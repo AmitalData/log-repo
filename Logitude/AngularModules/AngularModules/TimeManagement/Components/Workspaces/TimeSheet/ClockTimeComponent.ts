@@ -154,6 +154,32 @@ export class ClockTimeComponent extends BaseComponent {
 
     }
 
+    SaveSingleTimeOfficeHourRecord(item: TMOfficeHourPM) {
+        var items: TMOfficeHourPM[] = [];
+
+        if (item.IsDirty) {
+            items.push(item);
+        }
+
+        if (items.length != 0) {
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+
+            this.myDomainService.UpdateOfficeHourList(items).subscribe((myResponse: ServiceResponse) => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                if (myResponse.HasError) {
+                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+
+                else {
+                    item.IsDirty = false;
+                }
+
+                this.ComputeTotals();
+            });
+        }
+    }
+
     SaveTimeOfficeHour() {
         var items: TMOfficeHourPM[] = [];
 
@@ -196,16 +222,14 @@ export class ClockTimeComponent extends BaseComponent {
     }
 
     SearchButtonClicked() {
-        if(this.ItemSourceCollection.Collection.filter(p => p.IsDirty).length > 0)
-        {
+        if (this.ItemSourceCollection.Collection.filter(p => p.IsDirty).length > 0) {
             this.SaveTimeOfficeHour();
         }
+
         else {
             this.LoadClockTimeSheet();
-        }   
+        }
     }
-
-
 
     RefreshTab() {
 
@@ -220,7 +244,6 @@ export class ClockTimeComponent extends BaseComponent {
         this.TotalMinutes = ArrayTool.Sum(this.ItemSourceCollection.Collection.filter(f => f.Inactive == false), "Minutes");
     }
 }
-
 
 export class ItemSourceItem extends BaseComponent {
     public EntityPM: TMOfficeHourPM
@@ -238,8 +261,7 @@ export class ItemSourceItem extends BaseComponent {
 
     get Id() { return this.EntityPM.Id; }
     get IsDirty() { return this.EntityPM.IsDirty; }
-
-
+    
     get WorkDate() { return this.EntityPM.WorkDate; }
     set WorkDate(value: Date) {
         if (this.EntityPM.WorkDate != value) {
@@ -269,10 +291,7 @@ export class ItemSourceItem extends BaseComponent {
             }
 
             this.EntityPM.EntryTime = iResult;
-
             this.ComputeMinutes();
-            this.UpdatedByUserId = SessionLocator.LoggedUserId;
-            this.UpdatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
         }
     }
 
@@ -298,10 +317,7 @@ export class ItemSourceItem extends BaseComponent {
             }
 
             this.EntityPM.ExitTime = iResult;
-
             this.ComputeMinutes();
-            this.UpdatedByUserId = SessionLocator.LoggedUserId;
-            this.UpdatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
         }
     }
 
@@ -339,10 +355,10 @@ export class ItemSourceItem extends BaseComponent {
         if (this.EntityPM.Inactive != value) {
             this.EntityPM.Inactive = value;
             this.father.ComputeTotals();
+            this.SaveSingleLine();
         }
     }
-
-
+    
     get RecordedEntryAddedManually() {
         if (this.EntryTime != this.EntityPM.RecordedEntryTime || this.EntityPM.RecordedEntryTime == null)
             return true;
@@ -402,5 +418,14 @@ export class ItemSourceItem extends BaseComponent {
         }
 
         this.Minutes = iResult;
+
+        this.SaveSingleLine();
+    }
+
+    private SaveSingleLine() {
+         this.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.UpdatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+
+        this.father.SaveSingleTimeOfficeHourRecord(this.EntityPM);
     }
 }
