@@ -228,13 +228,21 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 iStatusArgs.FromPortCode = item.AirportCityCodeOfDeparture;
                 iStatusArgs.ToPortCode = item.AirportCityCodeOfArrival;
 
-                if (iStatusArgs.StatusCode == "ARR")
+                if (iStatusArgs.StatusCode == "DEP")
+                {
+                    if (iStatusArgs.LocationPortCode == null)
+                    {
+                        iStatusArgs.LocationPortCode = item.AirportCityCodeOfArrival;
+                    }
+                }
+
+                else if (iStatusArgs.StatusCode == "ARR")
                 {
                     if (iStatusArgs.LocationPortCode == null)
                     {
                         iStatusArgs.LocationPortCode = item.AirportCityCodeOfDeparture;
                     }
-                }           
+                }
 
                 int day = item.Day;
                 int month = !string.IsNullOrEmpty(item.Month) ? GetMonthInNumbers(item.Month) : 0;
