@@ -356,6 +356,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.invoice = invoiceRepository.GetSingleInvoice(entityPM.Id);
 
+            if (invoice.StatusCode == "AR")
+            {
+                if (this.entityPM.StatusCode == "AD")
+                {
+                    throw new ApplicationException("this invoice is already auto credited");
+                }
+            }
+
             this.ValidateInvoiceConnected();
 
             if (entityPM.SetApproved)
