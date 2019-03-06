@@ -1645,58 +1645,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        public HttpResponseMessage GetCreateMissingMasterData()
-        {
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    
-                    IShipmentsContext iContext = ShipmentsContext.GetContext(0);
-                    ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
-                    ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
-
-                    List<Shipment> iShipments = iShipmentRepository.GetMissingMasterDataShipments().ToList();
-
-                    if (iShipments.Count > 0)
-                    {
-                        foreach (Shipment shipment in iShipments)
-                        {
-                            int tenant = shipment.Tenant;
-
-                            bool isExist = (from d in iContext.ShipmentMasterDatas where d.Id == shipment.Id && d.Tenant == shipment.Tenant select d).Any();
-                            if (isExist)
-                            {
-                                shipment.MasterShipmentDataId = shipment.Id;
-                                iShipmentRepository.Update(shipment);
-                            }
-
-                            else
-                            {
-                                ShipmentPM shipmentPM = iShipmentQuery.GetSinglePM(shipment.Id, tenant);
-                                shipmentPM.ConvertFromHouseToDirect = true;
-                                shipmentPM.DontCreateConvertEvent = true;
-
-                                string systemEmail = "system@tenant" + tenant + ".com";
-                                ShipmentService iShipmentService = new ShipmentService(iContext, shipmentPM, systemEmail);
-                                iShipmentService.Update();
-                            }
-                        }
-                    }
-
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, true);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 }
 
