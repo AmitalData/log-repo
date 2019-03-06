@@ -1419,11 +1419,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 var list = aRPaymentCheques.Where(a => a.StatusCode == "6" || a.StatusCode == "3").ToList();
                                 if (list != null && list.Count() != 0)
                                 {
-                                    string msg = TranslateTextsClass.Translate("ARPayment.M.CANTCancelARPayment", entityPm.Tenant, useLocal) + "{ ";
-                                    foreach (var item in list)
-                                    {
-                                        msg += "Cheque No.: " + item.ChequeNumber + ", Status: " + item.StatusName;
-                                    }
+                                    string msg = TranslateTextsClass.Translate("ARPayment.M.CANTCancelARPayment", entityPm.Tenant, useLocal);
+                                    //    + "{ ";
+                                    //foreach (var item in list)
+                                    //{
+                                    //    msg += "Cheque No.: " + item.ChequeNumber + ", Status: " + item.StatusName;
+                                    //}
                                     throw new ApplicationException(msg);
                                 }
                                 else

@@ -1,3 +1,4 @@
+import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { ReconcileEventManager } from './../../../../Accounting/Utilities/ReconcileEventManager';
 import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
 import { LedgerTransactionPM } from './../../../../Accounting/EntityPMs/LedgerTransactionPM';
@@ -69,6 +70,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ARPaymentChequeStatusColor = "black";
 
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
+    private _glaService: GLAccountListService = new GLAccountListService();
 
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
@@ -133,7 +135,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     //#region abdullah code
     originalPaymentOpenAmount: number;
     paymentAmountTotal: number = 0;
-    amount2reconcileTotal: number = 0;;
+    amount2reconcileTotal: number = 0;
+
     // IsEntityValid: boolean = true;
 
 
@@ -152,6 +155,25 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
     _loading: boolean = false;
+
+    ReloadGLAccount(){
+        //1- get glaccount
+        this.fetchBillToCard().then(res => {
+            var card = res;
+            this.fetchGLAccount().then(response => {
+                var glaccount: any = response;
+
+                if (glaccount) {
+                    this.EntityPM.GLAccountId = glaccount.Id;
+                    console.log("GLAccount reloaded: " + this.EntityPM.GLAccountId);
+                    this.GetData();
+                }
+
+            });
+
+        });
+    }
+
     GetData() {
         if (this.EntityPM.GLAccountId) {
             console.log(">>> Getting transactions for Account: ", this.EntityPM.GLAccountId);
@@ -184,6 +206,53 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         }
     }
+
+    fetchGLAccount() {
+        return new Promise((resolve, reject) => {
+
+            var _glaId = this.billtoCard.GLAccountId;
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this._glaService.getSingle(_glaId)
+                .subscribe(response => {
+
+                    var res: ServiceResponse = response;
+                    if (!res.HasError) {
+                        var glaccount = res.Result;
+
+                        resolve(glaccount);
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
+                    else {
+                        reject();
+
+                        console.error(res.ErrorsArray);
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
+                });
+
+        });
+    }
+
+    billtoCard;
+    fetchBillToCard() {
+        return new Promise((resolve, reject) => {
+
+            var myService: CardListService = new CardListService();
+            myService.getSingle(this.BillToId).subscribe((resp: ServiceResponse) => {
+                if (resp != null) {
+                    if (!resp.HasError) {
+                        var cardList = resp.Result;
+                        if (cardList != null) {
+                            this.billtoCard = cardList;
+                            resolve(cardList);
+                        }
+                    }
+                }
+            });
+
+        });
+    }
+
 
     CalculateTotals() {
 
@@ -741,7 +810,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.LoadData();
 
                 if(value)
-                    this.GetData();
+                    this.ReloadGLAccount();
 
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
@@ -1428,6 +1497,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
             this.originalPaymentOpenAmount = this.EntityPM.AmountInPaymentCurrency;
             this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
+
+            this.CalculateTotals();
+
 
             this.ItemsSource.Collection.forEach(item => {
                 item.SetUIProperties();

@@ -38,7 +38,7 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        private bool ValidateFieldValue(string operationCode, string fieldValue)
+        public bool ValidateFieldValue(string operationCode, string fieldValue)
         {
             bool isValid = true;
             string range = string.Empty;
@@ -54,7 +54,7 @@ namespace WebFreight.Web.Helpers
                         range = valuesArray[2];
                     }
 
-                    if (interval <= 0) isValid = false;
+                    //if (interval <= 0) isValid = false;
 
                 }
                 else

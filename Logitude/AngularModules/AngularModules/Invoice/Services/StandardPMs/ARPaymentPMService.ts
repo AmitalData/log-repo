@@ -22,6 +22,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 
 import {ARPaymentInvoicePM} from '../../EntityPMs/ARPaymentInvoicePM';
+// import {ElasticPM} from '../../EntityPMs/ElasticPM';
 import {ARPaymentPMInitService} from '../../EntityPMInitServices/ARPaymentPMInitService';
 import {ARPaymentValidator} from '../../Validators/ARPaymentValidator';
 
@@ -229,6 +230,7 @@ export class ARPaymentPMService {
             }
 
                this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapInvoicesLedgerTransactions(entityPM, jsonPM, mapParent); // Call composition tables map methods
 
 
 
@@ -243,6 +245,15 @@ export class ARPaymentPMService {
 
             entityPM.OldEntityPM.PaymentInvoices.push(newARPaymentInvoicePM);
             }
+
+            // entityPM.OldEntityPM.InvoicesLedgerTransactions = [];
+            // for (var item in entityPM.InvoicesLedgerTransactions) {
+            // var myElasticPM = entityPM.InvoicesLedgerTransactions[item];
+            // var newElasticPM: ElasticPM = this.clone(myElasticPM);
+
+
+            // entityPM.OldEntityPM.InvoicesLedgerTransactions.push(newElasticPM);
+            // }
 
 		}
         else {
@@ -346,7 +357,32 @@ export class ARPaymentPMService {
             }
         }
     }
+//file not found! for child composition ARPaymentInvoice
+    MapInvoicesLedgerTransactions(entityPM: ARPaymentPM, jsonPM: any, mapParent: boolean = true) {
 
+        // entityPM.InvoicesLedgerTransactions = new Array<ElasticPM>();
+        // for (var item in jsonPM.InvoicesLedgerTransactions) {
+
+        //     var jItem = jsonPM.InvoicesLedgerTransactions[item];
+        //     if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+        //         continue;
+        //     }
+        //     var newElasticPM: ElasticPM;
+        //     newElasticPM = new ElasticPM();
+
+        //     var pmKeysArray = Object.keys(jItem);
+        //     for (var pmKey in pmKeysArray) {
+
+        //         if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+        //             continue;
+        //         }
+        //         var pmProperty = pmKeysArray[pmKey];
+        //         newElasticPM[pmProperty] = jItem[pmProperty];
+        //     }
+        //     newElasticPM.IsDirty = false;
+        //     entityPM.InvoicesLedgerTransactions.push(newElasticPM);
+        // }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

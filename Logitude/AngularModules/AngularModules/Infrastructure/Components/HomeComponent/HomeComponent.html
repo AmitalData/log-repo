@@ -238,8 +238,8 @@
                                         <NotificationBellComponent (mouseover)="OnControlMouseOver()" (mouseout)="OnControlMouseOut()" [ParentComponent]="DataContext" style="position:absolute;right:initial;left:-50px;z-index: 1;" *ngIf="IsControlVisibile"></NotificationBellComponent>
                                     </td>
 
-                                    <td style="width: 20px;">
-                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" *ngIf="IfBlueSnapContracts" >
+                                    <td style="width: 20px;" *ngIf="IfBlueSnapContracts">
+                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" >
                                             <IconButton [Name]="'payments'" [IsIconOnly]="true"></IconButton>
                                             <div class="ToggleButtonMenu" style="right:-50px">
                                                 <button *ngIf="IsLogBox == false && IsBluesnapAccount" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
@@ -416,7 +416,7 @@
                                 </div>
                             </li>
 
-                            <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse">+</li>
+                            <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse && !IsApplicationBlocked">+</li>
                         </ul>
                         <div *ngIf="IsShowLastSuccessfulLoginComponent" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'"  style="height:20px;margin-top:-23px">
                             <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>

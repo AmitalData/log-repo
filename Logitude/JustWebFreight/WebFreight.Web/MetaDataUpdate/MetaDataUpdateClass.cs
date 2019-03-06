@@ -380,9 +380,14 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public void UpdateShipmentLogboxAuomationObjectFields(IWebFreightContext context)
         {
-                List<string> fieldsName = new List<string> { "OwnerLink", "IsDigitalSignRequired", "IsRequestedDocuments" };
+
+              ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
+              string objectTableid =  objectTableRepository.GetObjectTableIdByName("Shipment");
+
+
+                List<string> fieldsName = new List<string> { "OwnerLink", "IsDigitalSignRequired", "IsRequestedDocuments" , "IsDepositionRequired" };
                 ObjectFieldsRepository = new ObjectFieldRepository(context);
-                List<ObjectField> objectFields = ObjectFieldsRepository.GetObjectFieldsByFieldsNamesAndObjectTable(fieldsName, ShipmentObject.Id).ToList();
+                List<ObjectField> objectFields = ObjectFieldsRepository.GetObjectFieldsByFieldsNamesAndObjectTable(fieldsName, objectTableid).ToList();
                 if (objectFields.Count > 0)
                 {
                     foreach (ObjectField objectField in objectFields)
@@ -64238,7 +64243,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.SearchByMsg", DefaultText = "Search by Invoice #/ Bill To", LocalDefaultText = "חפש לפי חשבונית", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ARpaymentValueHigherThanCashbookValue", DefaultText = "ARpayment Value is higher than Cashbook Value", LocalDefaultText = "לא ניתן לבטל קבלה - סכום הקבלה גדול מהיתרה בקופה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CANTCancelARPayment", DefaultText = "Can’t Cancel this ARPayment because at least one of the cheques is deposited or redeemed, return these cheques to the cashbook and cancel the external reconciliation ", LocalDefaultText = "לא ניתן לבטל את הקבלה, חלק מההמחאות הופקדו/נפרעו כבר, יש להחזיר את ההמחאות לקופה ולבטל את ההתאמה החיצונית ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CANTCancelARPayment", DefaultText = "Can’t Cancel this ARPayment because at least one of the cheques is deposited or redeemed, return these cheques to the cashbook and cancel the external reconciliation ", LocalDefaultText = "לא ניתן לבטל את ההפקדה, משום שהיא מכילה לפחות המחאה אחת שנפרעה, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             #endregion
 
             #region Column Header

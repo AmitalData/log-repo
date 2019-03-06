@@ -3,12 +3,16 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityAMs;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
@@ -36,14 +40,19 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
 
-                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
-                ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(id, tenant);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
 
-                if (shipmentComputedFields != null && shipmentComputedFields.IsDepositionRequired)
+                if (shipmentPM != null)
                 {
-                    shipmentComputedFields.IsDepositionRequired = false;
-                    shipmentComputedFieldsRepository.Update(shipmentComputedFields);
-                    shipmentComputedFieldsRepository.SubmitChanges();
+                    shipmentPM.IsDepositionRequired = false;
+                    shipmentPM.IsShipmentComputedFieldChange = true;
+
+                    IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
+                    ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
+                    shipmentService.Update();
+
+
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                     var objecttable = objectTabelRepository.GetObjectTableByName("Shipment", 0, true);
 
@@ -82,7 +91,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     return Request.CreateResponse(HttpStatusCode.OK, "");
                 }
 
-                //return null;
+            
 
             }
 

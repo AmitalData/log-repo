@@ -37,6 +37,9 @@ export class TenantManagementJS {
     public BluesnapEAWBContractQTY: number;
     public BluesnapEAWBSContractQTY: number;
     public BluesnapOneTimeContractQTY: number;
+    public DoBlocking: boolean;
+    public BlockType: string;
+    public ExpirationDaysLeft: number;
 
     public BluesnapAccount: string;
     public ManagesRegisteredAgent: boolean;

@@ -50,12 +50,16 @@ export class AccountingPeriodsComponent extends BaseComponent {
         this.accountingPeriodPMService = new AccountingPeriodPMService();
         this._AccountingPeriodExtendedListService = new AccountingPeriodExtendedListService();
         this._AccountingPeriodExtendedPMService = new AccountingPeriodExtendedPMService();
-        this.UIProperties.SetEnabled("Year", this.ObjectTableName, true);
+        // this.UIProperties.SetEnabled("Year", this.ObjectTableName, true);
 
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.hasReadPermision = FeatureLocator.HasEntityPermessions(this.ObjectTableName, 'READ',false);
-        if(this.hasReadPermision) this.UIProperties.SetEnabled("Year", this.ObjectTableName, false);
+        if(this.hasReadPermision)
+            this.UIProperties.SetEnabled("Year", this.ObjectTableName, true);
+        else
+            this.UIProperties.SetEnabled("Year", this.ObjectTableName, false);
+
 
     }
 

@@ -1573,6 +1573,12 @@
 
 
         LoginToAngular = function (userdata) {
+            var isTenantAllowed = false;
+            var Tenant = userdata.CurrentTenant;
+            if (Tenant == 42 || Tenant == 1232 || Tenant == 1586) {
+                isTenantAllowed = true;
+            }
+
             if (navigator.sayswho && navigator.sayswho.toString().indexOf("IE") > -1) {
                 alert("Internet explorer is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
                 return;
@@ -1582,28 +1588,29 @@
                 alert("Edge is currently not supported in HTML5 version, please use Chrome, Firefox or Opera.");
                 return;
             }
-
-            var email = userdata.UserName;
-            if (email) {
-                email = email.toLowerCase();
-
-            }
-            if (navigator.userAgent != null && email!="perla@amital.co.il") {
-                    if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
-                        alert("IOS is currently not supported in HTML5 version");
-                        return;
-                    }
-
-                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
-                        alert("IOS is currently not supported in HTML5 version");
-                        return;
-                    }
-
-                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
+ 
+            if (navigator.userAgent != null) {
+                if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {                    
+                    if (!isTenantAllowed) {
                         alert("IOS is currently not supported in HTML5 version");
                         return;
                     }
                 }
+
+                else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {                    
+                    if (!isTenantAllowed) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
+                    }
+                }
+
+                else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {                    
+                    if (!isTenantAllowed) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
+                    }
+                }
+            }
             
 
             //if (navigator.sayswho && navigator.sayswho.toString().indexOf("Safari") > -1) {

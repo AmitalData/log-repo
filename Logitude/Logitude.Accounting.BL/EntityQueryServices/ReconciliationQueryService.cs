@@ -33,7 +33,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             base.GetComposition(entityKeys, entityPM);
         }
 
- 
+        public List<ReconciliationPM> GetReconciliationsByIds(List<string> recoIds, int tenant)
+        {
+            List<Reconciliation> recoLines = (from a in context.Reconciliations
+                                                  where recoIds.Contains(a.Id) && a.Tenant == tenant
+                                                  select a).ToList();
+
+            List<ReconciliationPM> pms = recoLines.Select(poco => GetEntityPM(poco)).ToList();
+
+            return pms;
+        }
 
     }// class ReconciliationQueryService
 }

@@ -7,6 +7,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityListQueryServices;
@@ -427,7 +428,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
                     WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
                     WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext);
-                     
+
                     IQueryable<WarehouseEntry> warehouseEntryLists = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant);
                     IQueryable<WarehouseRelease> warehouseReleaseLists = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant);
 
@@ -505,7 +506,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             {
                                 UserQuery userQuery = new UserQuery(tenant);
                                 UserPM user = userQuery.GetSinglePM(myQuote.SalesmanUserId, tenant);
-                                if(user != null)
+                                if (user != null)
                                 {
                                     salesman = user.EnglishName;
                                 }
@@ -755,7 +756,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        public HttpResponseMessage GetShipmentByDirectionAndTransmode(string type,int lastMonths, int lastDays, int currentTenant, string customerid)
+        public HttpResponseMessage GetShipmentByDirectionAndTransmode(string type, int lastMonths, int lastDays, int currentTenant, string customerid)
         {
             try
             {
@@ -771,7 +772,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", currentTenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByDirectionAndTransMode(type,lastMonths, lastDays, currentTenant, customerid).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByDirectionAndTransMode(type, lastMonths, lastDays, currentTenant, customerid).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
 
@@ -817,7 +818,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ToDateOBJ = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                 }
 
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByDirectionAndTransModeCustom(type , FromDateOBJ, ToDateOBJ,tenant, customerid);
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByDirectionAndTransModeCustom(type, FromDateOBJ, ToDateOBJ, tenant, customerid);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
 
@@ -831,7 +832,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage GetShipmentsByTop10CountriesDashBoard(string type,int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string customerid, string directionId, string transmodeId)
+        public HttpResponseMessage GetShipmentsByTop10CountriesDashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string customerid, string directionId, string transmodeId)
         {
             try
             {
@@ -850,7 +851,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", currentTenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByTop10CountriesDashBoard(type,lastMonths, lastDays, measurment, currentTenant, top, includeOthers, customerid, directionId, transmodeId).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByTop10CountriesDashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers, customerid, directionId, transmodeId).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
@@ -907,11 +908,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage GetTop10DashBoardCustom(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers, string directionId,string transportmodeid)
+        public HttpResponseMessage GetTop10DashBoardCustom(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers, string directionId, string transportmodeid)
         {
             try
             {
-               
+
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -947,8 +948,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        
-        public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers,string directionid,string transportmodeId)
+
+        public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string directionid, string transportmodeId)
         {
             try
             {
@@ -963,7 +964,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", currentTenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers, directionid,transportmodeId).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers, directionid, transportmodeId).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
@@ -1419,7 +1420,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
-                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d=>d.StockType == "Champ");
+                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ");
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -1522,7 +1523,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
                 AnalyzeQueue analyzeQueue = new AnalyzeQueue()
                 {
-                    Subject =  "Voyage Response",
+                    Subject = "Voyage Response",
                     CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
                     From = "Artemus",
                     Id = IdCounter.GetNumber("AnalyzeQueue", 0),
@@ -1541,7 +1542,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ArtemusAnalyzer analyzer = new ArtemusAnalyzer(analyzeQueue, analyzeQueueReposiory);
                 analyzer.Simulate(tenant, shipmentNumber, Encoding.UTF8.GetBytes(xmlString1), "Voyage");
                 analyzer.Simulate(tenant, shipmentNumber, Encoding.UTF8.GetBytes(xmlString2), "Voyage");
-                analyzer.Simulate(tenant, shipmentNumber, Encoding.UTF8.GetBytes(xmlString3),"BL");
+                analyzer.Simulate(tenant, shipmentNumber, Encoding.UTF8.GetBytes(xmlString3), "BL");
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
@@ -1569,9 +1570,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     QuoteRepository quoteRepository = new QuoteRepository(tenant);
                     Quote myQuote = quoteRepository.GetSingleQuote(myShipment.QuoteId, tenant);
-                    if(myQuote != null)
+                    if (myQuote != null)
                     {
-                        if(myQuote.UsageCount == 1)
+                        if (myQuote.UsageCount == 1)
                         {
                             myQuote.UsageCount = null;
                         }
@@ -1613,14 +1614,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     if (receivables.Count > 0)
                     {
-                        foreach(ShipmentReceivable item in receivables)
+                        foreach (ShipmentReceivable item in receivables)
                         {
                             item.IsFromQuote = false;
                             item.QuoteChargeId = null;
                             item.QuoteSaleMinAmount = null;
                             item.QuoteSaleMaxAmount = null;
                             receivableRepository.Update(item);
-                        }                        
+                        }
                     }
 
                     if (payables.Count > 0)
@@ -1643,6 +1644,58 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetCreateMissingMasterData()
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    
+                    IShipmentsContext iContext = ShipmentsContext.GetContext(0);
+                    ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
+                    ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
+
+                    List<Shipment> iShipments = iShipmentRepository.GetMissingMasterDataShipments().ToList();
+
+                    if (iShipments.Count > 0)
+                    {
+                        foreach (Shipment shipment in iShipments)
+                        {
+                            int tenant = shipment.Tenant;
+
+                            bool isExist = (from d in iContext.ShipmentMasterDatas where d.Id == shipment.Id && d.Tenant == shipment.Tenant select d).Any();
+                            if (isExist)
+                            {
+                                shipment.MasterShipmentDataId = shipment.Id;
+                                iShipmentRepository.Update(shipment);
+                            }
+
+                            else
+                            {
+                                ShipmentPM shipmentPM = iShipmentQuery.GetSinglePM(shipment.Id, tenant);
+                                shipmentPM.ConvertFromHouseToDirect = true;
+                                shipmentPM.DontCreateConvertEvent = true;
+
+                                string systemEmail = "system@tenant" + tenant + ".com";
+                                ShipmentService iShipmentService = new ShipmentService(iContext, shipmentPM, systemEmail);
+                                iShipmentService.Update();
+                            }
+                        }
+                    }
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, true);
+                }
             }
 
             catch (Exception ex)

@@ -190,6 +190,35 @@ declare @DIM_LevelsNameNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_LevelsNameNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_LevelsNameNewId,0,'DIM_Levels','[Name]','Name','Text','true',0,40,'true','false','true','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_MoveTypesNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_MoveTypesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy) Values(@DIM_MoveTypesNewId,0,'DIM_MoveTypes','DIM_MoveTypes','Dimension','false','[English Name]')  
+--Fields --
+declare @DIM_MoveTypesId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_MoveTypesId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree) Values(@DIM_MoveTypesId_NumberNewId,0,'DIM_MoveTypes','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','[Code],[Name]','false')  
+declare @DIM_MoveTypesIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_MoveTypesIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_MoveTypesIdNewId,0,'DIM_MoveTypes','[Id]','Id','Text','true',0,15,'false','false','false','false')  
+declare @DIM_MoveTypesEnglishNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_MoveTypesEnglishNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_MoveTypesEnglishNameNewId,0,'DIM_MoveTypes','[English Name]','English Name','Text','true',0,40,'false','false','true','false')  
+declare @DIM_MoveTypesLocalNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_MoveTypesLocalNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_MoveTypesLocalNameNewId,0,'DIM_MoveTypes','[Local Name]','Local Name','Text','true',0,40,'false','false','true','false')  
+declare @DIM_MoveTypesCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_MoveTypesCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_MoveTypesCodeNewId,0,'DIM_MoveTypes','[Code]','Code','Text','true',0,3,'false','false','true','false')  
+declare @DIM_MoveTypesTransportModeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_MoveTypesTransportModeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_MoveTypesTransportModeNewId,0,'DIM_MoveTypes','[Transport Mode]','Transport Mode','Text','false',0,1,'false','false','true','false')  
+declare @DIM_MoveTypesSourceTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_MoveTypesSourceTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_MoveTypesSourceTenantNewId,0,'DIM_MoveTypes','[Source Tenant]','Source Tenant','Integer','true',0,0,'false','false','false','false')  
+declare @DIM_MoveTypesParentTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_MoveTypesParentTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_MoveTypesParentTenantNewId,0,'DIM_MoveTypes','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_PartnersNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy) Values(@DIM_PartnersNewId,0,'DIM_Partners','DIM_Partners','Dimension','false','[Name]')  

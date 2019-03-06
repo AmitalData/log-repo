@@ -10,6 +10,8 @@ import { LedgerTransactionPM } from './../../Accounting/EntityPMs/LedgerTransact
 
 
 import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
+
+// import {LedgerTransactionPM} from './LedgerTransactionPM';
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -509,26 +511,7 @@ export class ARPaymentPM {
             this.invoicesTransactions = newValue;
         }
     }
-    public AddLedgerTransactionPM(item: LedgerTransactionPM) {
-        if (item != null) {
-            var index = this.InvoicesTransactions.indexOf(item);
-            if (index == -1) {
-
-                this. InvoicesTransactions.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveLedgerTransactionPM(item: LedgerTransactionPM) {
-        if (item != null) {
-            var index = this.InvoicesTransactions.indexOf(item);
-            if (index > -1) {
-                this. InvoicesTransactions.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-
+    //public InvoicesTransactions: Array<LedgerTransactionPMPM>= [];
 
     public OldEntityPM: ARPaymentPM;
 
