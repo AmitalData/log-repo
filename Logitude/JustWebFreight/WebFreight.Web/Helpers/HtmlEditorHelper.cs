@@ -1035,7 +1035,7 @@ namespace WebFreight.Web.Helpers
             List<HtmlNode> ticketHeaderNode = new List<HtmlNode>();
             List<HtmlNode> ticketFooterNode = new List<HtmlNode>();
 
-
+             
 
             Dictionary<HtmlNode, HtmlNode> tablesDic = new Dictionary<HtmlNode, HtmlNode>();
             HtmlDocument document = null;
