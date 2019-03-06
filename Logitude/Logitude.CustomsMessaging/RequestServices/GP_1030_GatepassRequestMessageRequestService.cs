@@ -37,12 +37,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             GatepassRequestPM myGatepassRequest = myGatepassRequestQueryService.GetSingle(requestParams.MasterCourierId, false, false);
             myGatepassRequestMessage.gatepassNumber = myGatepassRequest.GatepassNumber;
 
-            var declarationQS = new DeclarationQueryService(dbContext);
-            string forwarder = declarationQS.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
-            if(!string.IsNullOrEmpty(forwarder))
-            {
-                myGatepassRequestMessage.ExternalID = forwarder.Substring(forwarder.Length - 3);
-            }
+            CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(dbContext);
+            CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(_CourierMasterPM.Tenant);
+            myGatepassRequestMessage.ExternalID = CustomsSetting.CustomsAgentId;
 
             myGatepassRequestMessage.originSiteCode = requestParams.OriginSiteCode;
             myGatepassRequestMessage.processTypeCode = 1;
