@@ -59,6 +59,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                           Reference4 = a.Reference4,
                                                           CommodityNumber = a.CommodityNumber,
                                                           CommodityName = a.CommodityName,
+                                                          Make = a.Make,
+                                                          Year = a.Year,
+                                                          Model = a.Model,
+                                                          Color = a.Color,
+                                                          ChassisNumber = a.ChassisNumber,
+                                                          RegistrationNumber = a.RegistrationNumber,
+                                                          CountryId = a.CountryId,
                                                       }).ToList();
 
             return myResult;
