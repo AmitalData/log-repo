@@ -274,6 +274,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openARinvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openARinvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = openARinvoice.BillToId;
+                accountingLedgerRecord.HouseNumber = openARinvoice.HouseNumber;
+                accountingLedgerRecord.MasterNumber = openARinvoice.MasterNumber;
 
                 if (openARinvoice.ARInvoiceTypeCode == "CD")
                 {
@@ -323,6 +325,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openAPInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openAPInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = openAPInvoice.VendorId;
+                accountingLedgerRecord.HouseNumber = openAPInvoice.HouseNumber;
+                accountingLedgerRecord.MasterNumber = openAPInvoice.MasterNumber;
 
                 if (openAPInvoice.AmountInInvoiceCurrency > 0)
                 {
@@ -468,6 +472,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.DueDate = arInvoice.DueDate.Value;
                 accountingLedgerRecord.Notes = arInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = arInvoice.BillToId;
+                accountingLedgerRecord.HouseNumber = arInvoice.HouseNumber;
+                accountingLedgerRecord.MasterNumber = arInvoice.MasterNumber;
 
                 if (!string.IsNullOrEmpty(arInvoice.BillToId))
                 {
@@ -556,7 +562,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = apInvoice.InternalNotes;
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == apInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.CustomerId = apInvoice.VendorId;
-
+                accountingLedgerRecord.HouseNumber = apInvoice.HouseNumber;
+                accountingLedgerRecord.MasterNumber = apInvoice.MasterNumber;
+                
                 if (!string.IsNullOrEmpty(apInvoice.VendorId))
                 {
                     Card card = cardRepository.GetSingleCard(apInvoice.VendorId, tenant);
@@ -790,6 +798,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.ShipmentNumber = ledger.ShipmentNumber;
                         currencyRecord.Notes = ledger.Notes;
                         currencyRecord.BillToVendor = ledger.BillToVendor;
+                        currencyRecord.HouseNumber = ledger.HouseNumber;
+                        currencyRecord.MasterNumber = ledger.MasterNumber;
 
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
                     }                    
