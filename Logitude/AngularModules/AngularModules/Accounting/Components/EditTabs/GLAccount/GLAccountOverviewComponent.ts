@@ -786,7 +786,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             "gradientOrientation": "horizontal",
             "borderAlpha": 0,
             "lineColor": "#fff",
-            "fixedColumnWidth": 70,
+            "fixedColumnWidth": this.FilterSelectedValue == "9mo" ? 30 : 40,
 
 
         }]

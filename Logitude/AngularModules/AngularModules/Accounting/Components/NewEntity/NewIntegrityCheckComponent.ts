@@ -75,20 +75,23 @@ export class NewIntegrityCheckComponent extends BaseComponent implements OnInit 
 
             this.isValid = false;
             setTimeout(() => {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                this.UIProperties.SetValidity("ToMonthInclusive", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
                 this.UIProperties.SetValidity("FromMonthInclusive", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
                 this.CD.detectChanges();
             }, 200);
+            return false;
+
 
         } else {
+            this.isValid = true;
             setTimeout(() => {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
+                this.UIProperties.SetValidity("ToMonthInclusive", this.ObjectTableName, true, "");
                 this.UIProperties.SetValidity("FromMonthInclusive", this.ObjectTableName, true, "");
                 this.CD.detectChanges();
 
-                this.isValid = true;
 
             }, 200);
+            return true;
 
 
         }
@@ -97,16 +100,21 @@ export class NewIntegrityCheckComponent extends BaseComponent implements OnInit 
     OkButtonClicked() {
         var errors: string[] = [];
 
-        if(!this.isValid) return;
-
         // Required check
         if (AppTool.IsNullOrEmpty(this.FromMonthInclusive) || AppTool.IsNullOrEmpty(this.ToMonthInclusive)) {
-            errors.push(TextCodeTranslator.Translate("Accounting.General.O.AllFieldsRequired"));
+            if(this.FromMonthInclusive == null) errors.push("From Month not selected");
+            if(this.ToMonthInclusive == null) errors.push("To Month not selected");
+            // errors.push(TextCodeTranslator.Translate("Accounting.General.O.AllFieldsRequired"));
         }
         else if (this.FromMonthInclusive.getFullYear() !=  this.ToMonthInclusive.getFullYear()) {
             // errors.push(TextCodeTranslator.Translate("Accounting.O.FromdateandTodatemustbesameyear"));
-            errors.push("From date and To date must be same year");
+            errors.push("From and To months must be same year");
         }
+
+        if(!this.validateDates()){
+            errors.push("To month is greater than from month");
+        }
+
 
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;

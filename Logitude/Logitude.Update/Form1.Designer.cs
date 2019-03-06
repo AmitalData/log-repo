@@ -1576,7 +1576,7 @@
 			this.btnCompareData.TabIndex = 93;
 			this.btnCompareData.Text = "Compare Onlie Data";
 			this.btnCompareData.UseVisualStyleBackColor = true;
-			this.btnCompareData.Click += new System.EventHandler(this.btnCompareData_Click);
+			//this.btnCompareData.Click += new System.EventHandler(this.btnCompareData_Click);
 			// 
 			// Form1
 			// 

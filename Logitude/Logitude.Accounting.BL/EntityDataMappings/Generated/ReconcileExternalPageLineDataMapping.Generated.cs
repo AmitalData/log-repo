@@ -236,6 +236,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 return;
 
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.Reference)) //T4 find type == nText 
+            {
+                entityPM.Reference = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Reference));
+            }
             if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
             {
                 entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
