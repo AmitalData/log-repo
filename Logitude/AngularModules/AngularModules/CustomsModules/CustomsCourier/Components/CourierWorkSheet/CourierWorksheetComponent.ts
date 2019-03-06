@@ -150,6 +150,7 @@ implements OnDestroy
                 if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
                     this._ReadyDECToBatchSend = 0;
                 }
+                this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.General.O.FieldForTableIsRequired") + ' (' + this._ReadyDECToBatchSend + ')';
                 break;
             case "MNF":
                 this._SelectedMNFValue = 'C';
@@ -224,6 +225,14 @@ implements OnDestroy
 
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
 
+        if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("חסרים שדות חובה ברמת הטיסה");
+            return;
+        }
+
         if (this._ReadyMNFToBatchSend == 0 && courierDeclarationStatusCode == "R") {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -245,7 +254,6 @@ implements OnDestroy
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.HAWB = this.entityPM.HAWB;
-        currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
@@ -266,42 +274,6 @@ implements OnDestroy
                     this.RefreshButtonClicked();
                 });
             });
-
-    }
-    SendALLCorrectManifest_OLD(courierDeclarationStatusCode: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
-        if (courierDeclarationStatusCode == "M") {
-            if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
-                var currRequestParams = new SendALLCorrectRequestParams();
-                currRequestParams.LoggingEnabled = true;
-                currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-                currRequestParams.Tenant = SessionLocator.Tenant;
-                currRequestParams.CourierMasterId = this.entityPM.Id;
-                currRequestParams.HAWB = this.entityPM.HAWB;
-                currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-                this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
-                    .subscribe(res => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
-                        myMessageWindow.WindowClosed.subscribe(s => {
-                            this.RefreshButtonClicked();
-                        });
-                    });
-            }
-        }
-        else {
-            this._CourierMasterService.GetSendALLCorrectManifest(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
-                .subscribe(res => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    var myMessageWindow = new MessageWindow();
-                    myMessageWindow.Show(res.Result);
-                    myMessageWindow.WindowClosed.subscribe(s => {
-                        this.RefreshButtonClicked();
-                    });
-
-                });
-        }
 
     }
     
@@ -376,6 +348,14 @@ implements OnDestroy
 
     SendALLCorrectDec(courierDeclarationStatusCode: string) {
 
+        if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("חסרים שדות חובה ברמת הטיסה");
+            return;
+        }
+
         if (this._ReadyDECToBatchSend == 0 && courierDeclarationStatusCode == "R") {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -419,49 +399,6 @@ implements OnDestroy
             });
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
     }
-
-    //SendALLCorrectDec_OLD(courierDeclarationStatusCode: string) {
-    //    SessionLocator.CurrentSession.StartBusyIndicatorCreating();
-    //    if (courierDeclarationStatusCode == "M") {
-    //        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
-    //            var currRequestParams = new SendALLCorrectRequestParams();
-    //            currRequestParams.LoggingEnabled = true;
-    //            currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-    //            currRequestParams.Tenant = SessionLocator.Tenant;
-    //            currRequestParams.CourierMasterId = this.entityPM.Id;
-    //            currRequestParams.HAWB = this.entityPM.HAWB;
-    //            currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-
-    //            currRequestParams.SelectedAvailableValue = this._SelectedAvailableValue;
-    //            currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
-    //            currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
-    //            currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
-    //            currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
-
-    //            this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
-    //                .subscribe(res => {
-    //                    SessionLocator.CurrentSession.StopBusyIndicator();
-    //                    var myMessageWindow = new MessageWindow();
-    //                    myMessageWindow.Show(res.Result);
-    //                    myMessageWindow.WindowClosed.subscribe(s => {
-    //                        this.RefreshButtonClicked();
-    //                    });
-    //                });
-    //        }
-    //    }
-    //    else {
-    //        this._CourierMasterService.GetSendALLCorrectDec(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
-    //            .subscribe(res => {
-    //                SessionLocator.CurrentSession.StopBusyIndicator();
-    //                var myMessageWindow = new MessageWindow();
-    //                myMessageWindow.Show(res.Result);
-    //                myMessageWindow.WindowClosed.subscribe(s => {
-    //                    this.RefreshButtonClicked();
-    //                });
-    //            });
-    //    }
-
-    //}
 
     SendALLSVG() {
 
@@ -562,8 +499,10 @@ implements OnDestroy
     }
 
     _ReadyDECToBatchSend = 0;
+    _ReadyDECToBatchSendButtonText: string = "";
     _ReadyMNFToBatchSend = 0;
-    _PAYReadyNotFastindividual /*_ReadyLOWPAYToBatchSend*/= 0;
+    _ReadyMNFToBatchSendButtonText: string = "";
+    _PAYReadyNotFastindividual = 0;
     _SVGTotal = 0;
     _DOCTotal = 0;
     _DOC_U_Total = 0;
@@ -590,21 +529,35 @@ implements OnDestroy
                         case "DECR": {
                             //statements; 
                             this._ReadyDECToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._ReadyDECToBatchSend = 0;
+                            }
+                            this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSendR") + ' (' + this._ReadyDECToBatchSend + ')';
                             break;
                         }
                         case "DECR_RV": {
                             //statements; 
                             this._CorrectDECToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._CorrectDECToBatchSend = 0;
+                            }
                             break;
                         }
                         case "MNFR": {
                             //statements; 
                             this._ReadyMNFToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._ReadyMNFToBatchSend = 0;
+                            }
+                            this._ReadyMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSendR") + ' (' + this._ReadyMNFToBatchSend + ')';
                             break;
                         }
                         case "MNFR_RV": {
                             //statements; 
                             this._CorrectMNFToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._CorrectMNFToBatchSend = 0;
+                            }
                             break;
                         }
                         case "SVG": {

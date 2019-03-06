@@ -302,14 +302,14 @@
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:140px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
-                                                                                          [ButtonText]="'Customs.CourierMaster.O.ReadyMNFToSendR' |TextCodeTranslationPipe"
+                                                                                          [ButtonText]=_ReadyMNFToBatchSendButtonText
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
                                                                                         <ul class="x-button-drop-menu" style="width:120px;">
                                                                                             <li>
-                                                                                                <span (click)="SendALLCorrectManifest('RV')">{{'Customs.CourierMaster.O.ReadyMNFToSendRV' | TextCodeTranslationPipe }} ({{_ReadyMNFToBatchSend}})</span>
+                                                                                                <span (click)="SendALLCorrectManifest('RV')">{{'Customs.CourierMaster.O.ReadyMNFToSendRV' | TextCodeTranslationPipe }} ({{_CorrectMNFToBatchSend}})</span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
@@ -340,14 +340,14 @@
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:150px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
-                                                                                          [ButtonText]="'Customs.CourierMaster.O.ReadyDECToSendR' |TextCodeTranslationPipe"
+                                                                                          [ButtonText]=_ReadyDECToBatchSendButtonText
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
                                                                                         <ul class="x-button-drop-menu" style="width:130px;">
                                                                                             <li>
-                                                                                                <span (click)="SendALLCorrectDec('RV')">{{'Customs.CourierMaster.O.ReadyDECToSendRV' | TextCodeTranslationPipe }}</span>
+                                                                                                <span (click)="SendALLCorrectDec('RV')">{{'Customs.CourierMaster.O.ReadyDECToSendRV' | TextCodeTranslationPipe }} ({{_CorrectDECToBatchSend}})</span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
@@ -364,7 +364,7 @@
                                                                                     <div>
                                                                                         <ul class="x-button-drop-menu" style="width:130px;">
                                                                                             <li>
-                                                                                                <span (click)="SendALLCorrectDec('RV')">{{'Customs.CourierMaster.O.ReadyDECToSendRV' | TextCodeTranslationPipe }}</span>
+                                                                                                <span (click)="SendALLCorrectDec('RV')">{{'Customs.CourierMaster.O.ReadyDECToSendRV' | TextCodeTranslationPipe }} ({{_CorrectDECToBatchSend}})</span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
