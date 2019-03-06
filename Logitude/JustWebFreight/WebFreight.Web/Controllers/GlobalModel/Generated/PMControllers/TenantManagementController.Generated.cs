@@ -61,7 +61,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                 {
                     isAuthentication = SecurityUtility.CheckIsUserCustomerCare(authToken.Email);
                     if (!isAuthentication)
-                    {
+                    { 
                         isAuthentication = SecurityUtility.CheckFeature("Customer", "TENANTMANAGEMENT", authToken.Tenant);
                         if (!isAuthentication) isAuthentication = SecurityUtility.CheckFeature("Opportunity", "TenantManagement", authToken.Tenant);
                     }
