@@ -411,7 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadOtherFields(context);
                             //updateClass.loadQueries();
                             //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
+                            //updateClass.LoadObjectTableTabs(); 
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadMenustables();
                             //updateClass.LoadEventTypes();
