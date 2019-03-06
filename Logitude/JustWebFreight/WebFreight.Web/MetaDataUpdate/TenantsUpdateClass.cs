@@ -411,7 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadOtherFields(context);
                             //updateClass.loadQueries();
                             //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
+                            //updateClass.LoadObjectTableTabs(); 
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadMenustables();
                             //updateClass.LoadEventTypes();
@@ -426,6 +426,13 @@ namespace WebFreight.Web.MetaDataUpdate
                         {
                             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+
+                            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                            {
+                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                            }
+
                             break;
                         }
                     case "quote":

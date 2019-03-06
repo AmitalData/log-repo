@@ -1660,20 +1660,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-
-
-                    IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
+                    
+                    IShipmentsContext iContext = ShipmentsContext.GetContext(0);
                     ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
 
-                    List<Shipment> iShipments = iShipmentRepository.GetMissingMasterDataShipments(tenant).ToList();
+                    List<Shipment> iShipments = iShipmentRepository.GetMissingMasterDataShipments().ToList();
 
                     if (iShipments.Count > 0)
                     {
                         foreach (Shipment shipment in iShipments)
                         {
-                            bool isExist = (from d in iContext.ShipmentMasterDatas where d.Id == shipment.Id && d.Tenant == tenant select d).Any();
+                            int tenant = shipment.Tenant;
+
+                            bool isExist = (from d in iContext.ShipmentMasterDatas where d.Id == shipment.Id && d.Tenant == shipment.Tenant select d).Any();
                             if (isExist)
                             {
                                 shipment.MasterShipmentDataId = shipment.Id;
