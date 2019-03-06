@@ -2301,7 +2301,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
                 this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
                     if (isNewWizard) {
-                        if (this.QueryCode == "Masters") {
+                        var IsOriginalMaster: boolean = false;
+                        if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryId)) {
+                            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQuery.OriginalQueryId)[0];
+                            if (query.Code == "Masters" || query.Code == "Open Payables Masters" || query.Code == "All Masters") {
+                                IsOriginalMaster = true;
+                            }
+                        }
+                        if (this.QueryCode == "Masters" || this.QueryCode == "Open Payables Masters" || this.QueryCode == "All Masters" || IsOriginalMaster) {
                             this.RunNewMasterWizard();
                         }
                         else {
@@ -2343,11 +2350,11 @@ export class ListComponent implements OnInit, AfterViewInit {
             logWindow.NewWizardArgs = { IsNewEntity: true };
 
             switch (this.ObjectTableName) {
-                case "BIReport": {
-                    logWindow.Width = 1200;
-                    logWindow.Height = 790;
-                    break;
-                }
+                //case "BIReport": {
+                //    logWindow.Width = 1200;
+                //    logWindow.Height = 790;
+                //    break;
+                //}
 
                 case "Customs.Vehicle":
                     {
@@ -2480,9 +2487,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             //var windowTitle = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             var str = FinalText;
 
-            if (this.ObjectTableName == "BIReport") {
-                str = "Query Builder";
-            }
+            //if (this.ObjectTableName == "BIReport") {
+            //    str = "Query Builder";
+            //}
 
             if (this.ObjectTableName == "Currency") {
                 str = TextCodeTranslator.Translate("General.B.Add") + " Currency";
@@ -2520,34 +2527,34 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
             }
 
-            if (this.ObjectTableName == "BIReport") {
-                logWindow.ComponentLoaded.subscribe(s => {
-                    logWindow.WindowClosed.subscribe(d => {
-                        if (s != null && d != "cancel") {
-                            SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({
-                                        DWQueryId: s.QID,
-                                        ObjectTableName: 'BIReport',
-                                        EntityId: null,
-                                        FolderId: this.listArgs.BIReportFolderId
-                                    });
+            //if (this.ObjectTableName == "BIReport") {
+            //    logWindow.ComponentLoaded.subscribe(s => {
+            //        logWindow.WindowClosed.subscribe(d => {
+            //            if (s != null && d != "cancel") {
+            //                SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            //                    .then(cmpRef => {
+            //                        cmpRef.instance.ComponentRef = cmpRef;
+            //                        cmpRef.instance.Run({
+            //                            DWQueryId: s.QID,
+            //                            ObjectTableName: 'BIReport',
+            //                            EntityId: null,
+            //                            FolderId: this.listArgs.BIReportFolderId
+            //                        });
 
-                                    cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
-                                        //this.isEditControlOpened = false;
-                                        //this.OnBackFromEdit(selectedEntityId, $event);
-                                        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
-                                    });
-                                });
-                        }
-                    });
-                });
-            }
+            //                        cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+            //                            //this.isEditControlOpened = false;
+            //                            //this.OnBackFromEdit(selectedEntityId, $event);
+            //                            this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
+            //                        });
+            //                    });
+            //            }
+            //        });
+            //    });
+            //}
 
-            else {
+            //else {
                 logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
-            }
+            //}
 
             logWindow.Show(componentPath);
         }
