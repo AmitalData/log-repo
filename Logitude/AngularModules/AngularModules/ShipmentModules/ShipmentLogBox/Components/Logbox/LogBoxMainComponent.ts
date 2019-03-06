@@ -348,7 +348,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 FieldName: 'ActionRequired',
                 DataTypeCode: 'String',
                 Display: '',
-                Styles: { width: '225px' },
+                Styles: { width: '285px' },
                 HtmlListComponentName: 'ActionButtonsListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/ApprovePaymentButtonListTemplate',
                 IsCustomTemplate: true,

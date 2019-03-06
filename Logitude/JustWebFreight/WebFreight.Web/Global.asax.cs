@@ -562,13 +562,20 @@ namespace WebFreight.Web
                     
                                     }
 
-									//ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
-									//ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
+
 									if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
 									{
 										HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
-                                    }
-                                }
+									}
+									else
+									{
+										ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
+										ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
+										if (contactPassword != null && contactPassword.Password == authToken.Password)
+											HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+
+									}
+								}
 
                                 else HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
                             }

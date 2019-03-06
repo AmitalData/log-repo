@@ -303,6 +303,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 this.InitializeBookingData();
 
+
                 GetForeignFields();
                 BuildActivityLog();
                 BuildImportersQueue();
@@ -452,13 +453,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     RunAutomation("OnUpdate");
 
+                    UpdateShipmentComputedFields();
+
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
-                    this.ComputeAgentComputed(entityPM,entityPoco);
+                    this.ComputeAgentComputed(entityPM, entityPoco);
                     entityRepository.Update(entityPoco);
                     entityRepository.SubmitChanges();
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
+
+
+              
 
                     this.ApplyUpdatingMasterHouses();
 
@@ -525,6 +531,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void UpdateShipmentComputedFields()
+        {
+
+            if (entityComputedFields == null)
+            {
+                entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
+            }
+
+            if (entityComputedFields != null)
+            {
+                if (entityPM.IsShipmentComputedFieldChange)
+                {
+                    if (entityComputedFields.IsDepositionRequired != entityPM.IsDepositionRequired || entityComputedFields.ImporterDepositionRequestDetails != entityPM.ImporterDepositionRequestDetails)
+                    {
+                        entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
+                        entityComputedFields.ImporterDepositionRequestDetails = entityPM.ImporterDepositionRequestDetails;
+                        shipmentComputedFieldsRepository.Update(entityComputedFields);
+                    }
+
+                }
+               
+            }
+
         }
 
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
@@ -2310,10 +2341,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 else if (!entityPM.IsUpdateByAutomation && type == "OnUpdate")
                 {
-
                     ShipmentPM changeTrackingPM = new ShipmentPM();
                     ShipmentQuery query = new ShipmentQuery(tenant);
-                    query.MapShipmentToShipmentPMForAutomation(changeTrackingPM, this.entityPoco, null, this.entityMasterData);
+                    query.MapShipmentToShipmentPMForAutomation(changeTrackingPM, this.entityPoco, null, this.entityMasterData ,  entityComputedFields);
                     changeTrackingPM.StatusId = entityPM.OldStatusValue;
 
                     if (entityPM.ShipmentLevelCode == "H")
@@ -2497,6 +2527,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     entityComputedFields.IsMissingDocuments = false;
                     entityComputedFields.IsRequestedDocuments = false;
+
+
                 }
 
                 else
@@ -2510,9 +2542,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     entityComputedFields.IsDigitalSignRequired = false;
                 }
 
-                if (entityPM.IsDepositionCloseTask)
+
+                if (entityPM.IsShipmentComputedFieldChange)
                 {
-                    entityComputedFields.IsDepositionRequired = false;
+                    entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
                 }
 
 
@@ -2753,12 +2786,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (entityComputedFields != null)
                 {
-
-                    if (entityPM.IsDepositionCloseTask)
-                    {
-                        entityComputedFields.IsDepositionRequired = false;
-                    }
-
                     if (entityPM.IsOperationalClosed)
                     {
                         entityComputedFields.IsMissingDocuments = false;
@@ -2767,6 +2794,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityComputedFields.MissingDocumentsCount = 0;
                         entityComputedFields.MissingDocumentsNames = "";
 
+                        entityPM.IsShipmentComputedFieldChange = true;
                     }
 
                     else
