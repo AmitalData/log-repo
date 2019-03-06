@@ -232,7 +232,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 {
                     if (iStatusArgs.LocationPortCode == null)
                     {
-                        iStatusArgs.LocationPortCode = item.AirportCityCodeOfArrival;
+                        iStatusArgs.LocationPortCode = item.AirportCityCodeOfDeparture;
                     }
                 }           
 
