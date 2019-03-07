@@ -82,7 +82,7 @@ namespace CommunicationWorkerRole
                             Thread.Sleep(500);
                         }
                     }
-                     
+
                     catch (Exception e)
                     {
                         ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "TranzilaPaymentMessageAnalyzeWR : Run() Method", null);
@@ -161,6 +161,24 @@ namespace CommunicationWorkerRole
             };
 
             storageservice.Write(ByteData, fileInfo);
+            if (!string.IsNullOrEmpty(commLog.QueueName))
+            {
+                SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, commLog.Tenant);
+            }
+        }
+
+        private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
+        {
+            try
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(queueName, 0);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SendCommunicationLogMessageToQueue Forwarder Shipment", null, null);
+            }
         }
 
         public override bool OnStart()
