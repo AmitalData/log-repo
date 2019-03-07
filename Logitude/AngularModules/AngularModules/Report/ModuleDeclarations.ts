@@ -60,6 +60,7 @@ import {ShipmentProfitVSQuoteEstimateComponent} from './Components/FiltersCompon
 import {ParentVsChildTenantsComponent} from './Components/FilterReportComponent/ParentVsChildTenantsComponent';
 import {UsersByTenantReportFilterComponent} from './Components/FiltersComponent/CRM/UsersByTenantReportFilterComponent';
 import {LicenseManagementFilterComponent} from './Components/FiltersComponent/Operational/LicenseManagementFilterComponent';
+import { VehiclesFilterComponent } from './Components/FiltersComponent/Operational/VehiclesFilterComponent';
 
 // Time Sheet
 import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportComponent/EmployeeTimeSheetFilterComponent';
@@ -132,6 +133,7 @@ export const Components =
         DetailedShipmentChargesAnalysisComponent,
         VendorChargesAnalysisFilterComponent,
         VDKFilterComponent,
+        VehiclesFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -196,7 +198,8 @@ export class ModuleDeclarations {
             case "ShipmentDetailsFilterComponent": { myResult = ShipmentDetailsFilterComponent; break; }
             case "DetailedShipmentChargesAnalysisComponent": { myResult = DetailedShipmentChargesAnalysisComponent; break; }
             case "VendorChargesAnalysisFilterComponent": { myResult = VendorChargesAnalysisFilterComponent; break; }
-            case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }                
+            case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }
+            case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }                
         }
 
         return myResult;

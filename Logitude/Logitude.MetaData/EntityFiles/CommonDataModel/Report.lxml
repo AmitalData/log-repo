@@ -109,5 +109,6 @@
     <Feature Code="&quot;Report.Features.DetailedShipmentCharges&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.Report.Features.DetailedShipmentCharges&quot;" FeatureDefaultText="&quot;Detailed Shipment Charges Analysis&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;Report.Features.VendorCharges&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.Report.Features.VendorCharges&quot;" FeatureDefaultText="&quot;Vendor Charges Analysis&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;VDK&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.VDK&quot;" FeatureDefaultText="&quot;VDK Report Templates&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;Vehicles&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.Vehicles&quot;" FeatureDefaultText="&quot;Vehicles Shipping&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
