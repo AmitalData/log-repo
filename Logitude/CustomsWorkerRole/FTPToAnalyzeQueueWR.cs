@@ -247,20 +247,25 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 FTPService ftpService = new FTPService(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password);
                 Debug.WriteLine($"DirectoryListSimple({ftpDetail.Folder})");
                 var directoryFiles = ftpService.DirectoryListSimple(ftpDetail.Folder).ToList();
-
+                Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
                 {
+
+                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileExt})");
                     directoryFiles = directoryFiles.Where(f => (
                     Path.GetExtension(f)
                     .Contains(customsPartnerFtpPM.FileExt)))
                     .ToList();
+                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 }
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileName))
                 {
+                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileName})");
                     directoryFiles = directoryFiles.Where(f => (
                      Path.GetFileNameWithoutExtension(f)
                     .Contains(customsPartnerFtpPM.FileName)))
                     .ToList();
+                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 }
                 directoryFiles = directoryFiles.Where(r => !String.IsNullOrWhiteSpace(r)).ToList();
                 directoryFiles = directoryFiles.OrderBy(fileName => fileName).ToList();
