@@ -1254,6 +1254,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string SecurityKey { get; set; }
         public double? TEU { get; set; }
 
+        public bool DontCreateConvertEvent { get; set; }
         public bool ConvertFromHouseToDirect { get; set; }
         public bool ConvertFromDirectToHouse { get; set; }
         public bool IsRefreshShipmentFollowUps { get; set; }
