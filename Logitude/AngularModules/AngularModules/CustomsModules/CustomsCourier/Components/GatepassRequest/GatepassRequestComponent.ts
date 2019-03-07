@@ -58,24 +58,28 @@ export class GatepassRequestComponent extends BaseComponent {
                 myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען");
                 this.CancelButtonClicked();
             }
-
-            this._GatepassRequestPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
-                let entityPMResult = rsptPMget.Result;
-                if (entityPMResult != null) {
-                    this.IsNew = false;
-                    this.EntityPM = entityPMResult;
-                    this.GatepassNumber = this.EntityPM.GatepassNumber.toString();
-                    this.GatepassRequestStatus = this.EntityPM.GatepassRequestStatus;
-                    this.SetGatepassRequestStatus();
-                }
-                else {
-                    this.EntityPM.MasterCourierId = this.CourierMasterPM.Id;
-                    this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
-                    this.UpdateCode = "1";
-                }
-                
-            });
+            this.SetGatepassRequest();
+            
         }
+    }
+
+    SetGatepassRequest() {
+
+        this._GatepassRequestPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
+            let entityPMResult = rsptPMget.Result;
+            if (entityPMResult != null) {
+                this.IsNew = false;
+                this.EntityPM = entityPMResult;
+                this.GatepassNumber = this.EntityPM.GatepassNumber.toString();
+                this.GatepassRequestStatus = this.EntityPM.GatepassRequestStatus;
+                this.SetGatepassRequestStatus();
+            }
+            else {
+                this.EntityPM.MasterCourierId = this.CourierMasterPM.Id;
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+                this.UpdateCode = "1";
+            }
+        });
     }
 
     SetScreenFieldsEditability(isDisplayOnly: boolean) {
@@ -110,6 +114,12 @@ export class GatepassRequestComponent extends BaseComponent {
     public get GatepassRequestStatus() { return this._GatepassRequestStatus; }
     public set GatepassRequestStatus(newValue: string) {
         this._GatepassRequestStatus = newValue;
+    }
+
+    private _GatepassRequestStatusName: string;
+    public get GatepassRequestStatusName() { return this._GatepassRequestStatusName; }
+    public set GatepassRequestStatusName(newValue: string) {
+        this._GatepassRequestStatusName = newValue;
     }
 
     private _UpdateCode: string;
@@ -154,29 +164,52 @@ export class GatepassRequestComponent extends BaseComponent {
         this._ShowUpdateCode = enumvalue;
     }
 
-    SetGatepassRequestStatus(){
-        switch (this.EntityPM.UpdateCode) {
+    SetGatepassRequestStatus() {
+        switch (this.EntityPM.GatepassRequestStatus) {
             case null:
             case "":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+                this.UpdateCode = "1";
+                break;
             case "2":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+                this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת העברה שגויה";
+                break;
             case "4":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+                this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת העברה נדחתה";
+                break;
             case "7":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
                 this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת ביטול העברה אושרה";
                 break;
             case "1":
                 this.UpdateCodeList = [{ 'EnumId': 2, 'Name': 'ביטול' }];
                 this.UpdateCode = "2";
+                this.GatepassRequestStatusName = "ממתין לאישור העברה";
                 break;
             case "3":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
+                this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת העברה אושרה";
+                break;
             case "6":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
+                this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת ביטול העברה שגויה";
+                break;
             case "8":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
                 this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת ביטול העברה נדחתה";
                 break;
             case "5":
                 this.UpdateCodeList = [];
                 this.UpdateCode = "";
+                this.GatepassRequestStatusName = "ממתין לאישור ביטול העברה";
                 break;
         }
     }
@@ -248,8 +281,7 @@ export class GatepassRequestComponent extends BaseComponent {
             .ShowProgressBar(currRequestParams.PBId,
                 "שליחת בקשה העברה", true)
             .then((res) => {
-                //this.ResponseData = res;
-                //this.OnMassageDisplayMethod();
+                this.SetGatepassRequest();
             }
             ).catch((err) => {
                 this.ValidationErrorsList.push(err);
