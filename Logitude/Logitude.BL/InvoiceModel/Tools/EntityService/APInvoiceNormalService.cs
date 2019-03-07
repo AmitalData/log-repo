@@ -184,6 +184,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private List<APInvoiceLinePM> invoiceLinesChangeSet;
         private List<APInvoicePaymentPM> invoicePaymentsChangeSet;
+        private bool IsSetVoided = false;
+        private bool IsSetApproved = false;
+        private bool IsAlreadyVoided = false;
         public void SetChangeSets(List<APInvoiceLinePM> invoiceLinesChangeSet, List<APInvoicePaymentPM> invoicePaymentsChangeSet)
         {
             this.invoiceLinesChangeSet = invoiceLinesChangeSet;
@@ -195,6 +198,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.entityPM = entityPM;
             this.isNewEntity = true;
             this.invoice = new APInvoice();
+
+            this.IsSetApproved = entityPM.SetApproved;
 
             this.ValidateInvoiceCreated();
 
@@ -274,7 +279,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.entityPM = entityPM;
             this.isNewEntity = false;
+
             this.invoice = invoiceRepository.GetSingleAPInvoice(entityPM.Id, tenant);
+
+            this.IsSetVoided = entityPM.SetVoided;
+            this.IsSetApproved = entityPM.SetApproved;
+            this.IsAlreadyVoided = this.invoice.StatusCode == "VD" ? true : false;
 
             this.ValidateHigherStatus();
 
@@ -296,10 +306,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // Journal Work
             this.AddAPInvoiceJournalAndJournalLines(entityPM, entityPM.SetApproved);
             this.VoidAPInvoiceInFullAccounting(entityPM, entityPM.SetVoided);
-
-            var IsSetApproved = entityPM.SetApproved;
-
-
 
             APInvoiceHelper helper = new APInvoiceHelper();
             if (entityPM.SetReSendQBO)
@@ -1086,118 +1092,139 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void BuildUnexpectedPayables()
         {
-            if (entityPM.InvoiceLines.Where(d => d.EntityPayableId == null).Any())
+            if (!this.IsAlreadyVoided)
             {
-                foreach (APInvoiceLinePM invoicelinePM in entityPM.InvoiceLines.Where(d => d.EntityPayableId == null))
+                List<APInvoiceLinePM> lines = new List<APInvoiceLinePM>();
+
+                if (isNewEntity)
                 {
-                    ShipmentPayable payable = new ShipmentPayable()
-                    {
-                        Id = IdCounter.GetNumber("ShipmentPayable", entityPM.Tenant),
-                        VendorId = entityPM.VendorId,
-                        ChargesTypeId = invoicelinePM.ChargesTypeId,
-                        CurrencyId = entityPM.InvoiceCurrencyId,
-                        ShipmentPayableLineStatusCode = "ACCT",
-                        ShipmentPayableAmountTypeCode = "NEXP",
-                        Rate = entityPM.InvoiceCurrencyExchangeRate,
-                        ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate,
-                        ShipmentId = invoicelinePM.EntityId,
-                        Tenant = entityPM.Tenant,
-                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
-                        ValueDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
-                        CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
-                        CreatedByUserId = entityPM.UpdatedByUserId,
-                        UpdateByUserId = entityPM.UpdatedByUserId,
-                        AWBPrint = false,
-                        IsEditedByUser = false,
-                        IsFromQuote = false,
-                    };
-
-                    //ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
-                    //ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(invoicelinePM.ChargesTypeId, tenant);
-                    //if (chargesType != null)
-                    //{
-                    //    payable.MeasurementId = chargesType.MeasurementId;
-                    //}
-
-                    invoicelinePM.EntityPayableId = payable.Id;
-                    shipmentPayableRepository.Add(payable);
+                    lines = entityPM.InvoiceLines.ToList();
                 }
 
-                shipmentPayableRepository.SubmitChanges();
+                else
+                {
+                    lines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                }
+
+                if (lines.Where(d => d.EntityPayableId == null).Any())
+                {
+                    foreach (APInvoiceLinePM invoicelinePM in entityPM.InvoiceLines.Where(d => d.EntityPayableId == null))
+                    {
+                        ShipmentPayable payable = new ShipmentPayable()
+                        {
+                            Id = IdCounter.GetNumber("ShipmentPayable", entityPM.Tenant),
+                            VendorId = entityPM.VendorId,
+                            ChargesTypeId = invoicelinePM.ChargesTypeId,
+                            CurrencyId = entityPM.InvoiceCurrencyId,
+                            ShipmentPayableLineStatusCode = "ACCT",
+                            ShipmentPayableAmountTypeCode = "NEXP",
+                            Rate = entityPM.InvoiceCurrencyExchangeRate,
+                            ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate,
+                            ShipmentId = invoicelinePM.EntityId,
+                            Tenant = entityPM.Tenant,
+                            UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
+                            ValueDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
+                            CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
+                            CreatedByUserId = entityPM.UpdatedByUserId,
+                            UpdateByUserId = entityPM.UpdatedByUserId,
+                            AWBPrint = false,
+                            IsEditedByUser = false,
+                            IsFromQuote = false,
+                        };
+
+                        //ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
+                        //ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(invoicelinePM.ChargesTypeId, tenant);
+                        //if (chargesType != null)
+                        //{
+                        //    payable.MeasurementId = chargesType.MeasurementId;
+                        //}
+
+                        invoicelinePM.EntityPayableId = payable.Id;
+                        shipmentPayableRepository.Add(payable);
+                    }
+
+                    shipmentPayableRepository.SubmitChanges();
+                }
             }
         }
 
         private void UpdateAllPayablesAccountedAmountAndStatus()
         {
-            if (allPayables.Count > 0)
+            if (!this.IsAlreadyVoided)
             {
-                List<string> allPayablesIds = allPayables.Select(s => s.Id).ToList();
-                List<APInvoiceLine> allPayablesInvoicesLines = invoiceLineRepository.GetPayablesInvoicesLines(allPayablesIds, tenant);
-
-                foreach (ShipmentPayable myPayable in allPayables)
+                if (allPayables.Count > 0)
                 {
-                    List<APInvoiceLine> myInvoiceslines = allPayablesInvoicesLines.Where(d => d.EntityPayableId == myPayable.Id).ToList();
+                    List<string> allPayablesIds = allPayables.Select(s => s.Id).ToList();
+                    List<APInvoiceLine> allPayablesInvoicesLines = invoiceLineRepository.GetPayablesInvoicesLines(allPayablesIds, tenant);
 
-                    double? myAccountedAmount = myInvoiceslines.Sum(s => s.ForiegnCurrencyAmount);
-                    double? myAccountedAmount_Local = myInvoiceslines.Sum(s => s.LocalCurrencyAmount);
-                    double? myAccountedAmount_Profit = myInvoiceslines.Sum(s => s.ProfitCurrencyAmount);
-
-                    myPayable.AccountedAmount = Round(myAccountedAmount, 2);
-                    myPayable.AccountedAmountInLocalCurrency = Round(myAccountedAmount_Local, 2);
-                    myPayable.AccountedAmountInProfitCurrency = Round(myAccountedAmount_Profit, 2);
-
-                    this.SetStatusCode(myPayable);
-                    shipmentPayableRepository.Update(myPayable);
-
-                    List<ShipmentPayable> ChildPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(myPayable.Id, tenant);
-                    foreach (ShipmentPayable myChild in ChildPayables)
+                    foreach (ShipmentPayable myPayable in allPayables)
                     {
-                        myChild.ShipmentPayableLineStatusCode = myPayable.ShipmentPayableLineStatusCode;
-                        shipmentPayableRepository.Remove(myChild);
-                    }
-                }
+                        List<APInvoiceLine> myInvoiceslines = allPayablesInvoicesLines.Where(d => d.EntityPayableId == myPayable.Id).ToList();
 
-                shipmentPayableRepository.SubmitChanges();
+                        double? myAccountedAmount = myInvoiceslines.Sum(s => s.ForiegnCurrencyAmount);
+                        double? myAccountedAmount_Local = myInvoiceslines.Sum(s => s.LocalCurrencyAmount);
+                        double? myAccountedAmount_Profit = myInvoiceslines.Sum(s => s.ProfitCurrencyAmount);
+
+                        myPayable.AccountedAmount = Round(myAccountedAmount, 2);
+                        myPayable.AccountedAmountInLocalCurrency = Round(myAccountedAmount_Local, 2);
+                        myPayable.AccountedAmountInProfitCurrency = Round(myAccountedAmount_Profit, 2);
+
+                        this.SetStatusCode(myPayable);
+                        shipmentPayableRepository.Update(myPayable);
+
+                        List<ShipmentPayable> ChildPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(myPayable.Id, tenant);
+                        foreach (ShipmentPayable myChild in ChildPayables)
+                        {
+                            myChild.ShipmentPayableLineStatusCode = myPayable.ShipmentPayableLineStatusCode;
+                            shipmentPayableRepository.Remove(myChild);
+                        }
+                    }
+
+                    shipmentPayableRepository.SubmitChanges();
+                }
             }
         }
 
         private void SetStatusCode(ShipmentPayable entity)
         {
-            if (entity.ShipmentPayableAmountTypeCode == "NEXP")
+            if (!this.IsAlreadyVoided)
             {
-                entity.ShipmentPayableLineStatusCode = "ACCT";
-            }
-
-            else if (entity.Quantity == null || entity.UnitPrice == null)
-            {
-                entity.ShipmentPayableLineStatusCode = "EMPT";
-            }
-
-            else
-            {
-                if(entity.OpenAmount == null)
-                {
-                    entity.OpenAmount = 0;
-                }
-
-                if (entity.AccountedAmount == null)
-                {
-                    entity.AccountedAmount = 0;
-                }
-
-                if (entity.OpenAmount != 0 && entity.AccountedAmount != 0)
-                {
-                    entity.ShipmentPayableLineStatusCode = "PACC";
-                }
-
-                else if (entity.OpenAmount != 0)
-                {
-                    entity.ShipmentPayableLineStatusCode = "OAMT";
-                }
-
-                else if (entity.AccountedAmount != 0)
+                if (entity.ShipmentPayableAmountTypeCode == "NEXP")
                 {
                     entity.ShipmentPayableLineStatusCode = "ACCT";
+                }
+
+                else if (entity.Quantity == null || entity.UnitPrice == null)
+                {
+                    entity.ShipmentPayableLineStatusCode = "EMPT";
+                }
+
+                else
+                {
+                    if (entity.OpenAmount == null)
+                    {
+                        entity.OpenAmount = 0;
+                    }
+
+                    if (entity.AccountedAmount == null)
+                    {
+                        entity.AccountedAmount = 0;
+                    }
+
+                    if (entity.OpenAmount != 0 && entity.AccountedAmount != 0)
+                    {
+                        entity.ShipmentPayableLineStatusCode = "PACC";
+                    }
+
+                    else if (entity.OpenAmount != 0)
+                    {
+                        entity.ShipmentPayableLineStatusCode = "OAMT";
+                    }
+
+                    else if (entity.AccountedAmount != 0)
+                    {
+                        entity.ShipmentPayableLineStatusCode = "ACCT";
+                    }
                 }
             }
         }

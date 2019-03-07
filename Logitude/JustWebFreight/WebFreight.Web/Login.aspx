@@ -1573,9 +1573,8 @@
 
 
         LoginToAngular = function (userdata) {
-
             var isTenantAllowed = false;
-            var Tenant = userdata.Tenant;
+            var Tenant = userdata.CurrentTenant;
             if (Tenant == 42 || Tenant == 1232 || Tenant == 1586) {
                 isTenantAllowed = true;
             }
