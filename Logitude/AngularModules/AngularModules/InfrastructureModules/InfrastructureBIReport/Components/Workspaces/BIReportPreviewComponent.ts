@@ -1,4 +1,4 @@
-import { Component, ComponentRef, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
+import { Component, ComponentRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 //import { AgGridModule } from "ag-grid-angular/main";
 import { BIReportPM } from '../../../../Infrastructure/EntityPMs/BIReportPM';
 import { BIReportPMService } from '../../../../Infrastructure/Services/StandardPMs/BIReportPMService';
@@ -18,6 +18,7 @@ import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMSer
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { DWObjectFieldsDetails } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { AGGridCustomHeader } from "../TemplateRenderer/AGGridCustomHeader";
 import { EditShipmentLinkRendererComponent } from "../TemplateRenderer/EditShipmentLinkRendererComponent";
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 
@@ -109,6 +110,7 @@ export class BIReportPreviewComponent implements OnInit {
             });
         }
     }
+
     public UpdateAGGrid(arg: BIReportXMLData, msg = null, count = 0) {
         var sortsList = [];
         if (arg.BITabularViewSettings != null && arg.BITabularViewSettings.Columns != null) {
@@ -126,7 +128,7 @@ export class BIReportPreviewComponent implements OnInit {
             if (sortsList != null) {
                 sortsList = sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 });
                 this.IsSorting = true;
-              //  this.agGrid.api.setSortModel(sortsList);
+                //  this.agGrid.api.setSortModel(sortsList);
             }
             //var params = {
             //    force: true,
@@ -134,17 +136,18 @@ export class BIReportPreviewComponent implements OnInit {
             this.agGrid.api.refreshCells();
             //var count = this.agGrid.api.getDisplayedRowCount();
             if (count > 50000 || msg == "MT5000") {
-                this.CountText = "Showing the first 50,000 rows, download the excel to view all."
+                this.CountText = "Showing the first 50,000 rows, scroll down or download the excel to view all."
             }
             else {
-                this.CountText = count + " rows" ;
+                this.CountText = "Number of rows: " + count;
             }
 
         }
-    }   
+    }
+    
     public BuildColumns(arg: BIReportXMLData) {
         this.columnDefs = [];
-        
+
         this.agGrid.api.setColumnDefs(this.columnDefs);
         var columns = arg.BITabularViewSettings.Columns.sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 });
         if (columns != null) {
@@ -163,6 +166,8 @@ export class BIReportPreviewComponent implements OnInit {
                             Index: columns[i].Index,
                             type: type,
                             cellRenderer: this.DateCellRenderer,
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-calendar" },
                             filter: 'agDateColumnFilter'
                             //sort: sortingDirction,
                         });
@@ -183,9 +188,11 @@ export class BIReportPreviewComponent implements OnInit {
                                 var pipe = new NumbersPipe();
                                 return pipe.transform(params.value, "N2");
                             },
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-list-ol" }
                         });
                     }
-                    else if (type == "booleanColumn"){
+                    else if (type == "booleanColumn") {
                         this.columnDefs.push({
                             colId: columns[i].Code,
                             headerName: columns[i].Code,
@@ -194,7 +201,7 @@ export class BIReportPreviewComponent implements OnInit {
                             filter: true,
                             width: columns[i].Width,
                             resizable: true,
-                           // cellClass: columns[i].DataTypeCode,
+                            // cellClass: columns[i].DataTypeCode,
                             Index: columns[i].Index,
                             type: type,
                             cellRenderer: params => {
@@ -202,6 +209,8 @@ export class BIReportPreviewComponent implements OnInit {
                                     return `<img src="./Images/CheckBoxIcon.png" class="CenterCenter" />`;
                                 }
                             },
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-check" }
                         });
                     }
                     else if (columns[i].Code == "Shipment Number") {
@@ -215,10 +224,15 @@ export class BIReportPreviewComponent implements OnInit {
                             resizable: true,
                             Index: columns[i].Index,
                             type: type,
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-text-height" },
                             cellRendererFramework: EditShipmentLinkRendererComponent,
+                            //cellRendererParams: {
+                            //   
+                            //}
                         });
                     }
-                    else  {
+                    else {
                         this.columnDefs.push({
                             colId: columns[i].Code,
                             headerName: columns[i].Code,
@@ -227,24 +241,29 @@ export class BIReportPreviewComponent implements OnInit {
                             filter: true,
                             width: columns[i].Width,
                             resizable: true,
+                            //cellClass: columns[i].DataTypeCode,
                             Index: columns[i].Index,
                             type: type,
+                            headerComponentFramework: AGGridCustomHeader,
+                            headerComponentParams: { menuIcon: "fa-text-height" }
                         });
                     }
                 }
             }
+
             this.agGrid.api.setColumnDefs(this.columnDefs);
             this.agGrid.api.refreshHeader();
             this.context = { componentParent: this };
         }
     }
+
     private GetColumnDataType(type: string) {
         var datatype = "";
         switch (type) {
             case "Date":
             case "DateTime":
                 {
-                    datatype = "dateColumn"; 
+                    datatype = "dateColumn";
                     break;
                 }
             case "Integer":
@@ -276,16 +295,19 @@ export class BIReportPreviewComponent implements OnInit {
 
         return datatype;
     }
+
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
         this.CountText = "";
         this.StartBusyIndicator();
-        this.RunReportCommand.emit({ MyData: arg.DWQueryData,FirstTime : true });
+        this.RunReportCommand.emit({ MyData: arg.DWQueryData, FirstTime: true });
     }
+
     private DateCellRenderer(params: any) {
         var datepipe = new DateTimePipe();
         return datepipe.transform(params.value, "SD");
     }
+
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
@@ -384,7 +406,7 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.queryId = this.DWQueryId;
         windowArgs.reportId = this.EntityPM.Id;
         windowArgs.reportName = this.EntityPM.Name;
-        windowArgs.BIReportXMLData = this.BIReportXMLData; 
+        windowArgs.BIReportXMLData = this.BIReportXMLData;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 500;
         logitudeWindow.Height = 200;
@@ -505,7 +527,7 @@ export class BIReportPreviewComponent implements OnInit {
         });
 
         if (sortsList != null && sortsList.length > 0) {
-            this.BIReportXMLData.DWQueryData.ColumnsSort = ""; 
+            this.BIReportXMLData.DWQueryData.ColumnsSort = "";
             sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 }).forEach(item => {
                 result.DWQueryData.ColumnsSort += item.colId + " " + item.sort + ",";
             });
@@ -532,7 +554,7 @@ export class BIReportPreviewComponent implements OnInit {
             }
         });
     }
-   
+
     ShowQueryBuilderClicked() {
         if (this.HasChanges) {
             this.UpdateBIReport(true);
@@ -573,7 +595,7 @@ export class BIReportPreviewComponent implements OnInit {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'BIReport' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
-                        this._EntityPMService.getSingle( "BIReport",this.EntityPM.Id).then((res: any) => {
+                        this._EntityPMService.getSingle("BIReport", this.EntityPM.Id).then((res: any) => {
                             res.subscribe((aa: any) => {
                                 this.BIReportName = aa.Result != null ? aa.Result.Name : "";
                             })
@@ -586,12 +608,12 @@ export class BIReportPreviewComponent implements OnInit {
         this.IsFilterValueChanged = false;
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
-    public  HasValidationError = false; 
+    public HasValidationError = false;
     OnRunReportComplete(MyData) {
         if (MyData.Msg == "ValidationError") {
             this.HasValidationError = true;
             this.rowData = [];
-           this.StopBusyIndicator();
+            this.StopBusyIndicator();
         }
         else {
             this.HasValidationError = false;
@@ -599,7 +621,7 @@ export class BIReportPreviewComponent implements OnInit {
             this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg, MyData.Count), 500);
             this.StopBusyIndicator();
         }
-       
+
         this.StopBusyIndicator();
     }
     OnComputeFiltersComplete(MyData) {

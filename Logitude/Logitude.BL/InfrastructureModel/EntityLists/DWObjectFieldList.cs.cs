@@ -26,6 +26,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string Category2 { get; set; }
         public string LOVAdditionalColumns { get; set; }
         public bool HideTree { get; set; }
+        public bool CannotFilter { get; set; }
+        public string HelpText { get; set; }
 
     }
 }

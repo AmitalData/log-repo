@@ -1035,7 +1035,7 @@ namespace WebFreight.Web.Helpers
             List<HtmlNode> ticketHeaderNode = new List<HtmlNode>();
             List<HtmlNode> ticketFooterNode = new List<HtmlNode>();
 
-
+             
 
             Dictionary<HtmlNode, HtmlNode> tablesDic = new Dictionary<HtmlNode, HtmlNode>();
             HtmlDocument document = null;
@@ -1047,6 +1047,9 @@ namespace WebFreight.Web.Helpers
                 htmlString = htmlString.Replace("</tbody>", "");
                 htmlString = htmlString.Replace("]</P>", "]</span></P>");
                 htmlString = htmlString.Replace("<P>[", "<P><span>[");
+                htmlString = htmlString.Replace("[PageBreak]", "<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>");
+
+
 
                 if (htmlString.Contains("[") && htmlString.Contains("]"))
                 {

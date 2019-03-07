@@ -831,8 +831,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return myResult;
         }
 
-
-
-
+        public IQueryable<Shipment> GetMissingMasterDataShipments()
+        {
+            return (from d in context.Shipments
+                    where d.ShipmentLevelCode != "H"
+                    && d.MasterShipmentDataId == null
+                    select d).OrderBy(o => o.CreateDateTime).Take(20);
+        }
     }
 }
