@@ -165,12 +165,12 @@ export class GatepassRequestComponent extends BaseComponent {
     }
 
     SetGatepassRequestStatus() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.GatepassRequestStatus)) {
+            this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+            this.UpdateCode = "1";
+        }
+
         switch (this.EntityPM.GatepassRequestStatus) {
-            case null:
-            case "":
-                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
-                this.UpdateCode = "1";
-                break;
             case "2":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
                 this.UpdateCode = "1";

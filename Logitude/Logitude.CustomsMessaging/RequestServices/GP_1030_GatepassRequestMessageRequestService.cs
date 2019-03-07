@@ -37,14 +37,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey3 = _CourierMasterPM.HAWB;
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
 
-            GatepassRequestPM myGatepassRequest = myGatepassRequestQueryService.GetSingle(requestParams.MasterCourierId, false, false);
-            myGatepassRequestMessage.gatepassNumber = myGatepassRequest.GatepassNumber;
+            GatepassRequestPM myGatepassRequestPM = myGatepassRequestQueryService.GetSingle(requestParams.MasterCourierId, false, false);
+            myGatepassRequestMessage.gatepassNumber = myGatepassRequestPM.GatepassNumber;
 
             CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(dbContext);
             CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(_CourierMasterPM.Tenant);
             myGatepassRequestMessage.ExternalID = CustomsSetting.CustomsAgentId;
 
-            myGatepassRequestMessage.originSiteCode = myGatepassRequest.OriginSiteCode;
+            myGatepassRequestMessage.originSiteCode = myGatepassRequestPM.OriginSiteCode;
             myGatepassRequestMessage.processTypeCode = 1;
             myGatepassRequestMessage.requestDate = DateTime.Now;
             myGatepassRequestMessage.customerActivityType = 7;
@@ -54,9 +54,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             List<GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite> myGatepassDestinationSiteList = new List<GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite>();
             GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite myGatepassDestinationSite = new GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite();
-            myGatepassDestinationSite.designateSiteCode = myGatepassRequest.DesignateSiteCode;
+            myGatepassDestinationSite.designateSiteCode = myGatepassRequestPM.DesignateSiteCode;
             int transportationTypeCode;
-            int.TryParse(myGatepassRequest.TransportationTypeCode, out transportationTypeCode);
+            int.TryParse(myGatepassRequestPM.TransportationTypeCode, out transportationTypeCode);
             myGatepassDestinationSite.transportationTypeCode = transportationTypeCode;
             myGatepassDestinationSite.isFinalDestination = false;
 
@@ -68,7 +68,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGP_NG_1030_MSG1_GatepassRequestMessage.GatepassRequestMessage = myGatepassRequestMessageList.ToArray();
 
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.RequestDescription = "בקשת העברה ";
+            this.MyRequestSheetParam.RequestDescription = "בקשת העברה " + _CourierMasterPM.AirlinePrefix + "-" + _CourierMasterPM.MAWB;
 
             return myGP_NG_1030_MSG1_GatepassRequestMessage;
         }
