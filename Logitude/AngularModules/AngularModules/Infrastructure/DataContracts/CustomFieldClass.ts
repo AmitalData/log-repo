@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
 import {ObjectTablePM} from '../EntityPMs/ObjectTablePM';
 import {AppTool, DateTool} from '../Tools';
@@ -165,75 +165,80 @@ export class CustomFieldClass {
 
 
     public GetFieldDataTypeValue(field: ObjectFieldPM, customField: string): any {
-        if (field != null && customField != null) {
-            var result: any=null;
-            switch (field.DataTypeCode.trim()) {
-                case "Text":
-                case "nText":
-                case "LookUp":
-                case "PickList":
-                    {
-                        result = customField + "";
-                        break;
-                    }
-                case "Date":
-                case "DateTime":
-                    {
-                        var date: Date = this.ConvertToDate(customField);
-                        result = date;
-                        break;
-                    }
-                case "UnsDecimal":
-                case "Decimal":
-                case "Double":
-                case "SigDouble":
-                    {
-                        var d: number = 0;
-                        if (customField.length >= 15) {
+        if (field != null) {
+            var result: any = null;
+            if (customField != null) {
+                switch (field.DataTypeCode.trim()) {
+                    case "Text":
+                    case "nText":
+                    case "LookUp":
+                    case "PickList":
+                        {
+                            result = customField + "";
+                            break;
+                        }
+                    case "Date":
+                    case "DateTime":
+                        {
+                            var date: Date = this.ConvertToDate(customField);
+                            result = date;
+                            break;
+                        }
+                    case "UnsDecimal":
+                    case "Decimal":
+                    case "Double":
+                    case "SigDouble":
+                        {
+                            var d: number = 0;
+                            if (customField.length >= 15) {
 
-                            //customField = customField.Insert(customField.Length - 3, ".");
-                            var sign = customField.substr(0, 1);
-                            var first = customField.substr(1, 12);
-                            var second = customField.substr(13, 3);
-                            customField = sign + first + '.' + second;
-                            //if (sign == '-') {
-                            //    customField = sign + first + '.' + second;
-                            //}
-                            //else {
-                            //    customField = first + '.' + second;
-                            //}
-                        }
-                        //decimal.TryParse(customField, out d);
-                        d = Number(customField);
+                                //customField = customField.Insert(customField.Length - 3, ".");
+                                var sign = customField.substr(0, 1);
+                                var first = customField.substr(1, 12);
+                                var second = customField.substr(13, 3);
+                                customField = sign + first + '.' + second;
+                                //if (sign == '-') {
+                                //    customField = sign + first + '.' + second;
+                                //}
+                                //else {
+                                //    customField = first + '.' + second;
+                                //}
+                            }
+                            //decimal.TryParse(customField, out d);
+                            d = Number(customField);
 
-                        result = d;
-                        break;
-                    }
-                case "Integer":
-                case "UnsInteger":
-                    {
-                        var i: number = 0;
-                        i = Number(customField);
-                        result = i;
-                        break;
-                    }
-                case "Boolean":
-                    {
-                        var b: boolean;
-                        if (customField.toLowerCase() == 'false') {
-                            b = false;
+                            result = d;
+                            break;
                         }
-                        else if (customField.toLowerCase() == 'true') {
-                            b = true;
+                    case "Integer":
+                    case "UnsInteger":
+                        {
+                            var i: number = 0;
+                            i = Number(customField);
+                            result = i;
+                            break;
                         }
-                        result = b;
-                        break;
-                    }
-                default:
-                    {
-                        result = null;
-                        break;
-                    }
+                    case "Boolean":
+                        {
+                            var b: boolean;
+                            if (customField.toLowerCase() == 'false') {
+                                b = false;
+                            }
+                            else if (customField.toLowerCase() == 'true') {
+                                b = true;
+                            }
+                            result = b;
+                            break;
+                        }
+                    default:
+                        {
+                            result = null;
+                            break;
+                        }
+                }
+            }
+            else if (field.DataTypeCode.trim() == "Boolean") {
+                result = false;
             }
             //this.ResolvedValue = result;
             return result;

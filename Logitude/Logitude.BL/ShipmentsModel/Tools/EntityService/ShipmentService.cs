@@ -377,7 +377,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.isProrateReceivablesPOCO = this.entityMasterData.ProrateReceivables;
                 }
 
-
                 if (entityPM.IsHybrid)//31-Mar fix for old consoles in hybrid without masterdata id
                 {
                     if (entityMasterData == null && entityPoco.ShipmentLevelCode != "H" && !entityPM.ConvertFromDirectToHouse && !entityPM.ConvertFromHouseToDirect)

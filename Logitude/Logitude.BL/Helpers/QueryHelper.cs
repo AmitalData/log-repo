@@ -53,43 +53,5 @@ namespace Logitude.BL.Helpers
                 }
             }
         }
-
-        //public static void CreateMissingMasterData(int tenant)
-        //{
-        //    IShipmentsContext context = ShipmentsContext.GetContext(tenant);
-        //    ShipmentRepository shipmentRepository = new ShipmentRepository(context);
-        //    ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-        //    ShipmentService shipmentService;
-
-        //    List<string> masterIds = (from a in context.ShipmentMasterDatas
-        //                              where a.Tenant == tenant
-        //                              select a.Id).ToList();
-
-        //    IQueryable<Shipment> shipments = (from a in context.Shipments
-        //                                      where a.ShipmentLevelCode != "H" && !masterIds.Contains(a.Id) && a.Tenant == tenant
-        //                                      select a);
-
-        //    int count = shipments.Count();
-
-        //    foreach (Shipment shipment in shipments)
-        //    {
-        //        ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipment.Id, tenant);
-                 
-        //        if (shipmentPM != null)
-        //        {
-        //            shipmentPM.ConvertFromHouseToDirect = true;
-        //            shipmentPM.DontCreateConvertEvent = true;
-
-        //            using (TransactionScope scope = TransactionFactory.GetTransaction())
-        //            {
-        //                shipmentService = new ShipmentService(context, shipmentPM, SecurityUtility.GetAuthenticatedUser());
-        //                shipmentService.Update(true);
-
-        //                scope.Complete();
-        //            }
-        //        }
-        //    }
-        //}
-
     }
 }
