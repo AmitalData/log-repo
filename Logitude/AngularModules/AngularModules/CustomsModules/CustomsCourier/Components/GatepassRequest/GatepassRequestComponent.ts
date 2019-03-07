@@ -147,7 +147,6 @@ export class GatepassRequestComponent extends BaseComponent {
     public set TransportationTypeCode(newValue: string) {
         this._TransportationTypeCode = newValue;
     }
-
     //#endregion\
 
     _ShowUpdateCode;
@@ -222,15 +221,11 @@ export class GatepassRequestComponent extends BaseComponent {
             });
         }
         else {
-            if (this.UpdateCode = "1") {
-                //this.EntityPM.GatepassNumber = CodeCounter.GetNumber("Customs.GatepassRequest", entityPM.Tenant);
-            }
             this._GatepassRequestPMService.update(this.EntityPM).subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 this.SendGatepassRequestMessage(customSendOptionsArgs);
             });
         }
-
     }
 
     SendGatepassRequestMessage(customSendOptionsArgs: CustomSendOptionsArgs) {

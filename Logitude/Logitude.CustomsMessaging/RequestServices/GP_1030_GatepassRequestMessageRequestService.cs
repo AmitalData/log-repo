@@ -41,7 +41,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(_CourierMasterPM.Tenant);
             myGatepassRequestMessage.ExternalID = CustomsSetting.CustomsAgentId;
 
-            myGatepassRequestMessage.originSiteCode = requestParams.OriginSiteCode;
+            myGatepassRequestMessage.originSiteCode = myGatepassRequest.OriginSiteCode;
             myGatepassRequestMessage.processTypeCode = 1;
             myGatepassRequestMessage.requestDate = DateTime.Now;
             myGatepassRequestMessage.customerActivityType = 7;
@@ -51,9 +51,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             List<GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite> myGatepassDestinationSiteList = new List<GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite>();
             GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite myGatepassDestinationSite = new GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite();
-            myGatepassDestinationSite.designateSiteCode = requestParams.DesignateSiteCode;
+            myGatepassDestinationSite.designateSiteCode = myGatepassRequest.DesignateSiteCode;
             int transportationTypeCode;
-            int.TryParse(requestParams.TransportationTypeCode, out transportationTypeCode);
+            int.TryParse(myGatepassRequest.TransportationTypeCode, out transportationTypeCode);
             myGatepassDestinationSite.transportationTypeCode = transportationTypeCode;
             myGatepassDestinationSite.isFinalDestination = false;
 

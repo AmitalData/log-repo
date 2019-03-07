@@ -14,10 +14,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     {
         protected override void OnCreating(GatepassRequestPM entityPM, EntityPM entityParentPM)
         {
-            entityPM.GatepassNumber = CodeCounter.GetNumber("Customs.GatepassRequest", entityPM.Tenant);
             entityPM.CustomsUpdateDateTime = DateTime.Now;
-
             base.OnCreating(entityPM, entityParentPM);
+        }
+
+        protected override void OnUpdating(GatepassRequestPM entityPM)
+        {
+            if(entityPM.UpdateCode == "1")
+            {
+                entityPM.GatepassNumber = CodeCounter.GetNumber("Customs.GatepassRequest", entityPM.Tenant);
+            }
+            base.OnUpdating(entityPM);
         }
     }
 }
