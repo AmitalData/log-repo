@@ -36,6 +36,8 @@ using UnifreightIIG.Common.FaultProceduralDetailsServiceReference;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
 using Logitude.Customs.BL.BL;
+using Logitude.Customs.BL.Messaging.Customs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -388,9 +390,55 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+            
 
+            using (var trans = TransactionFactory.GetNewTransaction())// I PREFERRED WITHOUT TRANS BUT  (TO 1345- 1415). .
+            {
+                OnSucceededSendDeclarationDelay1Min(requestParams);
+                trans.Complete();
+            }
             MyResponseData.ApplicationID = requestParams.ImportManifest;
             MyResponseData.Succeeded = true;
+        }
+
+        private void OnSucceededSendDeclarationDelay1Min(MANIFESTRequestRequestParams requestParams)
+        {
+
+            try
+            {
+                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+
+                var requestParams2750 = new GenericRequestParams()
+                {
+                    Tenant = requestParams.Tenant,
+                    //IsFakeResponse = true,
+                    //RequestName = requestName,
+                    //ResponseName = responseName,
+                    LoggingEnabled = true,
+                    LoggingObjectTableId = objectTableId,
+                    LoggingEntityId = _MyDeclarationPM.Id,
+                    //LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
+                    //LoggingEntityId2 = _CourierDeclarationPM,
+                    AppicationId = _MyDeclarationPM.Id,
+                    InterfaceTypeCode = "2750",
+
+                    //LoggingEntityReference = declarationNumber,
+                    LoggingUserId = requestParams.LoggingUserId,
+                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                   
+                };
+
+                SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false,DateTime.Now.AddMinutes(2));
+                LogMessagingUtil.Instance.AppendLine($" OnSucceededSendDeclarationDelay1Min SheetSBQ ({requestParams2750.PBId})");
+                
+
+            }
+            catch (System.Exception ee1)
+            {
+
+                LogMessagingUtil.Instance.AppendLine($"Exception!!!OnSucceededSendDeclarationDelay1Min({_MyDeclarationPM.Id}) : {ee1.Message}");
+                
+            }
         }
 
         private void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, EventContextTagModel myEventContextTagModel)
