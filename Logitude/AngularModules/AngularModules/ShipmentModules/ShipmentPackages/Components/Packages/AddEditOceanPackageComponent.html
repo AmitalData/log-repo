@@ -638,7 +638,7 @@
                                                         </td>
                                                     </tr>
 
-                                                    <tr style="height: 160px;">
+                                                    <tr *ngIf="IsLCLEntity" style="height: 160px;">
                                                         <td>
                                                             <table>
                                                                 <tr>
@@ -771,7 +771,7 @@
                                                                     <td>
                                                                         <table>
                                                                             <tr style="height: 20px;">
-                                                                                <td colspan="3">
+                                                                                <td colspan="5">
                                                                                     <table>
                                                                                         <tr style="height: 20px;">
                                                                                             <td class="SectionHeaderRow" style="vertical-align: middle;">
@@ -785,7 +785,7 @@
                                                                                 </td>
                                                                             </tr>
 
-                                                                            <!-- Reference 1 -->
+                                                                            <!-- Reference 1 | Reference 3 -->
                                                                             <tr class="FormFieldRow">
                                                                                 <td style="width: 110px;">
                                                                                     <LogLabel [ObjectFieldName]="'Reference1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -798,9 +798,17 @@
                                                                                 <td>
                                                                                     <div></div>
                                                                                 </td>
+
+                                                                                <td style="width: 110px;">
+                                                                                    <LogLabel [ObjectFieldName]="'Reference3'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td style="width: 185px;">
+                                                                                    <LogTextBox [ObjectFieldName]="'Reference3'" [Text]="DataContext.Reference3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                </td>
                                                                             </tr>
 
-                                                                            <!-- Reference 2 -->
+                                                                            <!-- Reference 2 | Reference 4-->
                                                                             <tr class="FormFieldRow">
                                                                                 <td style="width: 110px;">
                                                                                     <LogLabel [ObjectFieldName]="'Reference2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -813,10 +821,18 @@
                                                                                 <td>
                                                                                     <div></div>
                                                                                 </td>
+
+                                                                                <td style="width: 110px;">
+                                                                                    <LogLabel [ObjectFieldName]="'Reference4'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td style="width: 185px;">
+                                                                                    <LogTextBox [ObjectFieldName]="'Reference4'" [Text]="DataContext.Reference4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                </td>
                                                                             </tr>
 
-                                                                            <!-- Reference 3 -->
-                                                                            <tr class="FormFieldRow">
+
+                                                                            <!--<tr class="FormFieldRow">
                                                                                 <td style="width: 110px;">
                                                                                     <LogLabel [ObjectFieldName]="'Reference3'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                                 </td>
@@ -830,7 +846,7 @@
                                                                                 </td>
                                                                             </tr>
 
-                                                                            <!-- Reference 4 -->
+
                                                                             <tr class="FormFieldRow">
                                                                                 <td style="width: 110px;">
                                                                                     <LogLabel [ObjectFieldName]="'Reference4'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -843,19 +859,21 @@
                                                                                 <td>
                                                                                     <div></div>
                                                                                 </td>
-                                                                            </tr>
+                                                                            </tr>-->
 
                                                                             <tr>
-                                                                                <td colspan="3">
+                                                                                <td colspan="5">
                                                                                     <div></div>
                                                                                 </td>
                                                                             </tr>
+
                                                                         </table>
                                                                     </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
                                                     </tr>
+                                                  
                                                 </table>
 
                                                 <!-- Package Items -->
@@ -957,7 +975,7 @@
                                 </td>
                             </tr>
                         </table>
-                    </div>                    
+                    </div>
                 </ScrollViewer>
             </div>
         </td>

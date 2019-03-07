@@ -1199,7 +1199,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
             logWindow.Width = 940;
-            logWindow.Height = 620;
+            logWindow.Height = 610;
         }
 
         var itemComponent = new ShipmentPackageItem(itemPM, this, true);
@@ -1228,7 +1228,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
             logWindow.Width = 940;
-            logWindow.Height = 620;
+            logWindow.Height = 610;
         }
 
         logWindow.DataContext = itemComponent;
@@ -1415,6 +1415,13 @@ export class ShipmentPackageItem extends BaseComponent {
         this.SetUIProperties_Dangerous();
         this.SetUIProperties_BuildButton();
         this.SetUIProperties_Harmonize();
+        if (this.IsNewEntity) {
+            this.SetUIProperties_Cars(false);
+        }
+        else {
+            this.SetUIProperties_Cars(this.IsEditingFieldsEnabled);
+        }
+       
     }
     SetUIProperties_Package() {
         if (this.ShipmentPM.TransportModeId == "A") {
@@ -1637,6 +1644,15 @@ export class ShipmentPackageItem extends BaseComponent {
 
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
     }
+    SetUIProperties_Cars(isEnabled: boolean) {
+        this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Year", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("ChassisNumber", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
+    }
 
     public PackageTypeList: PackageTypeList;
     get PackageTypeTextCode() { return this.IsLCLEntity ? "ShipmentPackage.F.PackageTypeId" : "ShipmentPackage.F.ContainerTypeId"; }
@@ -1657,11 +1673,12 @@ export class ShipmentPackageItem extends BaseComponent {
                 this.IsContainerRefrigerated = false;
                 this.NonActiveContainer = false;
                 this.SetUIProperties_NonActiveContainer();
+                this.SetUIProperties_Cars(false);
             }
 
             else {
                 var myService: PackageTypeListService = new PackageTypeListService();
-                myService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                myService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: PackageTypeList = myResponse.Result;
                         if (list != null) {
@@ -1679,6 +1696,10 @@ export class ShipmentPackageItem extends BaseComponent {
                             }
 
                             this.SetUIProperties_NonActiveContainer();
+                            this.SetUIProperties_Cars(list.IsVehicle);
+                        }
+                        else {
+                            this.SetUIProperties_Cars(false);
                         }
                     }
                 });
@@ -2879,6 +2900,22 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("Reference3", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Reference4", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CommodityNumber", this.ObjectTableName, this.IsEditingEnabled);
+
+        if (this.IsNewEntity) {
+            this.SetUIPropertiesOfCars(false);
+        }
+        else {
+            this.SetUIPropertiesOfCars(this.IsEditingEnabled);
+        }
+    }
+    private SetUIPropertiesOfCars(isEnabled: boolean) {
+        this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Year", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("ChassisNumber", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
     }
 
     get PackageTypeId() { return this.EntityPM.PackageTypeId; }
@@ -2888,15 +2925,20 @@ export class InsideShipmentPackageItem extends BaseComponent {
 
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.PackageTypeName = null;
+                this.SetUIPropertiesOfCars(false);
             }
 
             else {
                 var myService: PackageTypeListService = new PackageTypeListService();
-                myService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
+                myService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: PackageTypeList = myResponse.Result;
                         if (list != null) {
-                            this.PackageTypeName = list.EnglishName;                            
+                            this.PackageTypeName = list.EnglishName;
+                            this.SetUIPropertiesOfCars(list.IsVehicle);
+                        }
+                        else {
+                            this.SetUIPropertiesOfCars(false);
                         }
                     }
                 });
@@ -3093,6 +3135,57 @@ export class InsideShipmentPackageItem extends BaseComponent {
 
         this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.Weight, this.ShipmentPM.Ratio, this.ShipmentPM.DimensionsUnitCode, this.ShipmentPM.VolumeUnitCode, this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode);
     }
+
+    get Make() { return this.EntityPM.Make; }
+    set Make(newValue: string) {
+        if (this.EntityPM.Make != newValue) {
+            this.EntityPM.Make = newValue;
+        }
+    }
+
+    get Model() { return this.EntityPM.Model; }
+    set Model(newValue: string) {
+        if (this.EntityPM.Model != newValue) {
+            this.EntityPM.Model = newValue;
+        }
+    }
+
+
+    get Year() { return this.EntityPM.Year; }
+    set Year(newValue: string) {
+        if (this.EntityPM.Year != newValue) {
+            this.EntityPM.Year = newValue;
+        }
+    }
+
+    get Color() { return this.EntityPM.Color; }
+    set Color(newValue: string) {
+        if (this.EntityPM.Color != newValue) {
+            this.EntityPM.Color = newValue;
+        }
+    }
+
+    get ChassisNumber() { return this.EntityPM.ChassisNumber; }
+    set ChassisNumber(newValue: string) {
+        if (this.EntityPM.ChassisNumber != newValue) {
+            this.EntityPM.ChassisNumber = newValue;
+        }
+    }
+
+    get RegistrationNumber() { return this.EntityPM.RegistrationNumber; }
+    set RegistrationNumber(newValue: string) {
+        if (this.EntityPM.RegistrationNumber != newValue) {
+            this.EntityPM.RegistrationNumber = newValue;
+        }
+    }
+
+    get CountryId() { return this.EntityPM.CountryId; }
+    set CountryId(newValue: string) {
+        if (this.EntityPM.CountryId != newValue) {
+            this.EntityPM.CountryId = newValue;
+        }
+    }
+
     ChooseCommodityClicked() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 775;

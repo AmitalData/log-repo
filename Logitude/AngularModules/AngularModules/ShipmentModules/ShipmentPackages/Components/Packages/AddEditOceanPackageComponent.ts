@@ -23,6 +23,7 @@ export class AddEditOceanPackageComponent {
     public ObjectTableName: string = "ShipmentPackage";
     public SelectedTabCode: string = "0";
     public IsFCLEntity: boolean = false;
+    public IsLCLEntity: boolean = false; 
     public ValidationErrorsList: string[] = [];
     constructor() {
 
@@ -33,6 +34,7 @@ export class AddEditOceanPackageComponent {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext.FillMethodsList();
         this.IsFCLEntity = dataContext.IsFCLEntity;
+        this.IsLCLEntity = dataContext.IsLCLEntity;
         this.SetLabels();
         this.Clone();
     }
