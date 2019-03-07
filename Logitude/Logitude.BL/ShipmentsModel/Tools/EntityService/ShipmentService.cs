@@ -4441,6 +4441,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         myNumberOfInsidePackagesDetails = string.IsNullOrEmpty(myNumberOfInsidePackagesDetails) ? myString : myNumberOfInsidePackagesDetails + ", " + myString;
                     }
                 }
+                
+
+
 
                 if (myNumberOfInsidePackagesDetails.Length > 500)
                 {

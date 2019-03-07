@@ -1233,6 +1233,15 @@ function BuildPackagesTabPageViewModel(shipment) {
             imgTemplate += "</div>";
             imgTemplate += "</div>";
 
+            var imgCarTemplate = "";
+            imgCarTemplate += "<div style='width:20px; height:20px; vertical-align:middle; margin-left: -5px; position: relative;'>";
+            imgCarTemplate += "<img src='../images/icons/infoICON.png' style='width:20px; height:20px; vertical-align:middle; visibility: #= CarIconVisibility #;' onmouseover='OnMouseOverPackageCarIcon(this)' onmouseleave='OnMouseLeavePackageCarIcon(this)' />";
+            imgCarTemplate += "<div style='width: 270px; height: 130px; margin-top: -75px; position: fixed; right: 60px; background: url(\"../images/icons/CellTooltip.png\") no-repeat; background-size: 100% 100%; visibility: #= CarHelpVisibility #;'>";
+            imgCarTemplate += "<div style='color: \\#1B90CB; height: 13px; font-size: 13px; line-height: 13px; margin-left: 10px; margin-top: 13px;'>Vehicle Details</div>";
+            imgCarTemplate += "<textarea style='width: 225px; height: 85px; margin-left: 10px; margin-top: 0px; line-height: 11px; background: transparent; font-size: 11px; resize: none; border: none !important; outline: none !important; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;' [readonly]='true' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>#= Vehicle Details  #</textarea>";
+            imgCarTemplate += "</div>";
+            imgCarTemplate += "</div>";
+
             if (IsLCLShipment(shipment)) {
                
 
@@ -1256,6 +1265,7 @@ function BuildPackagesTabPageViewModel(shipment) {
                 //PackagesGridColumns.push({ title: VolumetricTitle, field: "VolumetricWeight", width: "150px", template: "<div class='k-numeric'>#= VolumetricWeight #</div>" });
                 PackagesGridColumns.push({ title: GrossTitle, field: "GrossWeight", width: "120px", template: "<div class='k-numeric'>#= GrossWeight #</div>" });
                 PackagesGridColumns.push({ title: "", width: "25px", template: imgTemplate });
+                PackagesGridColumns.push({ title: "", width: "25px", template: imgCarTemplate });
 
                 $.each(shipment.ShipmentPackages, function (index, item) {
 
@@ -1276,23 +1286,33 @@ function BuildPackagesTabPageViewModel(shipment) {
                         Volume: itemVolume.toFixed(3),
                         //VolumetricWeight: itemVolumetricWeight.toFixed(3),
                         GrossWeight: itemGrossWeight.toFixed(3),
-                        Description: item.Description,
-                        DescriptionIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
-                        DescriptionHelpVisibility: "collapse",
-
                         CommodityCode: iCommodityCode,
                         CommodityName: iCommodityName,
 
+                        Description: item.Description,
+                        DescriptionIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
+                        DescriptionHelpVisibility: "collapse",
                         showDescription: function (e) {
                             if (e == true)
                             {
                                 this.set("DescriptionHelpVisibility", "visible");
                             }
-                               
                             else {
                                 this.set("DescriptionHelpVisibility", "collapse");
                             }
+                        },
+
+                        CarIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
+                        CarHelpVisibility: "collapse",
+                        showCarsIcon: function (e) {
+                            if (e == true) {
+                                this.set("CarHelpVisibility", "visible");
+                            }
+                            else {
+                                this.set("CarHelpVisibility", "collapse");
+                            }
                         }
+
                     });
                 });
             }
@@ -1308,6 +1328,7 @@ function BuildPackagesTabPageViewModel(shipment) {
                 //PackagesGridColumns.push({ title: VolumetricTitle, field: "VolumetricWeight", width: "150px", template: "<div class='k-numeric'>#= VolumetricWeight #</div>" });
                 PackagesGridColumns.push({ title: GrossTitle, field: "GrossWeight", width: "120px", template: "<div class='k-numeric'>#= GrossWeight #</div>" });
                 PackagesGridColumns.push({ title: "", width: "25px", template: imgTemplate });
+                PackagesGridColumns.push({ title: "", width: "25px", template: imgCarTemplate });
 
                 $.each(shipment.ShipmentPackages, function (index, item) {
 
@@ -1447,6 +1468,27 @@ function OnMouseLeavePackageDescriptionIcon(sender) {
         var data = grid.dataItem($(sender).closest("tr"));
         if (data) {
             data.showDescription(false);
+        }
+    }
+}
+
+function OnMouseOverPackageCarIcon(sender) {
+    var grid = $('#PackagesGrid').data('kendoGrid');
+
+    if (grid) {
+        var data = grid.dataItem($(sender).closest("tr"));
+        if (data) {
+            data.showCarsIcon(true);
+        }
+    }
+}
+function OnMouseLeavePackageCarIcon(sender) {
+    var grid = $('#PackagesGrid').data('kendoGrid');
+
+    if (grid) {
+        var data = grid.dataItem($(sender).closest("tr"));
+        if (data) {
+            data.showCarsIcon(false);
         }
     }
 }
