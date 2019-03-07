@@ -238,7 +238,7 @@
 
                     $.each(result.ARInvoices, function (index, item) {
 
-                        var amount = $.trim(item.GrandTotalInInvoiceCurrency) == "" ? 0 : item.GrandTotalInInvoiceCurrency;
+                        var amount = $.trim(item.AmountInInvoiceCurrency) == "" ? 0 : item.AmountInInvoiceCurrency;
                         var amountDue = $.trim(item.AmountDue) == "" ? 0 : item.AmountDue;
 
                         InvoicesGridDataSource.push({
