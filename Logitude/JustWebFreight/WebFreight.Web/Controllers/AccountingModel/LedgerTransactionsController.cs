@@ -427,12 +427,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
                 SecurityUtility.CheckContactFeature("ARPayment", "READ", authToken.Tenant);
 
+                if (arpaymentId == "undefined")
+                    arpaymentId = null;
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 //LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
                 LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
                 List<LedgerTransactionPM> openTransactions = query.GetARPaymentOpenTransactions(billToGLAccountId, tenant);
-                List<LedgerTransactionPM> reconciledTransactions = query.GetARPaymentReconciledTransactions(arpaymentId,billToGLAccountId, tenant);
+
+                List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>();
+                if (arpaymentId != null)
+                    reconciledTransactions = query.GetARPaymentReconciledTransactions(arpaymentId,billToGLAccountId, tenant);
 
                 IEnumerable<LedgerTransactionPM> finalTransactionsList 
                     = openTransactions
