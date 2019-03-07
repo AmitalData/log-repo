@@ -122,9 +122,22 @@ namespace DW_Editor_Tool.ViewModels
 			set { hideTree = value; FirePropertyChanged("HideTree"); }
 		}
 
-		// is Measurement , Aggregation Type
+        bool cannotFilter;
+        public bool CannotFilter
+        {
+            get { return cannotFilter; }
+            set { cannotFilter = value; FirePropertyChanged("CannotFilter"); }
+        }
 
-		public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension" }; } }
+        string helpText;
+        public string HelpText
+        {
+            get { return helpText; }
+            set { helpText = value; FirePropertyChanged("HelpText"); }
+        }
+        // is Measurement , Aggregation Type
+
+        public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension" }; } }
         public List<string> AggregationTypesList { get { return new List<string>() { "SUM", "COUNT" }; } }
 
         Visibility errorsVisibility = Visibility.Collapsed;
