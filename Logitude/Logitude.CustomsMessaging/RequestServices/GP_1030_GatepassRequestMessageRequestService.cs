@@ -29,7 +29,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessage myGatepassRequestMessage = new GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessage();
             myGatepassRequestMessage.CargoIdentifier = new cargoIdentifier();
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierType = 1;
-            myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey1 = _CourierMasterPM.DepartureDate.Value.Year.ToString();
+            if (_CourierMasterPM.DepartureDate != null)
+            {
+                myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey1 = _CourierMasterPM.DepartureDate.Value.Year.ToString();
+            }
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey2 = _CourierMasterPM.MAWB;
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey3 = _CourierMasterPM.HAWB;
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
