@@ -516,6 +516,25 @@ implements OnDestroy
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
 
+    private _SelectedDECToBatchSendButtonText: string = "";
+    public get SelectedDECToBatchSendButtonText(): string {
+        this._SelectedDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSend");
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            this._SelectedDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSend") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
+        }
+        return this._SelectedDECToBatchSendButtonText;
+    }
+
+    private _SelectedMNFToBatchSendButtonText: string = "";
+    public get SelectedMNFToBatchSendButtonText(): string {
+        this._SelectedMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSend");
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            this._SelectedMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSend") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
+        }
+        return this._SelectedMNFToBatchSendButtonText;
+    }
+
+
     RefreshStatistic() {
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetStatistic(this.entityPM.Id)

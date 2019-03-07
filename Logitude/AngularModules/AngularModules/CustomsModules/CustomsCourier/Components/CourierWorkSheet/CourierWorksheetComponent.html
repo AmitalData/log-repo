@@ -300,7 +300,7 @@
                                                                 <table *ngIf="_SelectedTabFilter.Code=='ALL' ">
                                                                     <tr>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
-                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:150px">
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                           [ButtonText]=_ReadyMNFToBatchSendButtonText
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
@@ -317,9 +317,9 @@
 
                                                                             </split-button>
                                                                         </td>
-                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:150px">
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
-                                                                                          [ButtonText]="'Customs.CourierMaster.O.ReadyMNFToSend' |TextCodeTranslationPipe"
+                                                                                          [ButtonText]=SelectedMNFToBatchSendButtonText
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
 
                                                                                 <div class="class-MENUSplitButton-content">
@@ -338,7 +338,7 @@
                                                                         <td style="width:1px"></td>
 
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
-                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:150px">
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
                                                                                           [ButtonText]=_ReadyDECToBatchSendButtonText
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
@@ -355,9 +355,9 @@
 
                                                                             </split-button>
                                                                         </td>
-                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:150px">
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('M')"
-                                                                                          [ButtonText]="'Customs.CourierMaster.O.ReadyDECToSend' |TextCodeTranslationPipe"
+                                                                                          [ButtonText]=SelectedDECToBatchSendButtonText
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
