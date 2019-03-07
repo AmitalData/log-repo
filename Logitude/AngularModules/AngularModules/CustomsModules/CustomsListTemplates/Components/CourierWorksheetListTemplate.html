@@ -71,8 +71,12 @@
         background: #D3D3D3;
         cursor: pointer;
     }
+    .DimLI {
+        opacity: 0.5;
+        cursor: default
+    }
 
-     .LogitudeCheckBox input:focus  {
+    .LogitudeCheckBox input:focus {
         border: 1px solid #3BB3E2;
     }
     
@@ -217,8 +221,8 @@
 
     <div class="TextTrimming" style="cursor:default;height:35px;width:120px;" *ngIf="fieldName == 'SendSplitButton'" (click)="ButtonClick($event)">
         <div style="text-align:right;margin-top:5px;cursor:default" (click)="ButtonClick($event)">
+            <!--[IsDisabled]="_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O'   "-->
             <split-button #currSplitButtonComponent
-                          [IsDisabled]="_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O'   "
                           [OnClickedShowMenuContent]="true"
                           (DefaultSplitButtonClicked)="PrepareSplitButtonMenuFilter()"
                           [ButtonText]="'שלח'"
@@ -229,18 +233,22 @@
                         <ul *ngIf="_IsSplitButtonMenuFilterReady" class="x-button-drop-menu" style="width:90px;">
 
                             <li>
-                                <span (click)="currSplitButtonComponent.DropdownDisplayClose();SendManifest($event);">מצהר</span>
+                                <span *ngIf="!(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )" (click)="currSplitButtonComponent.DropdownDisplayClose();SendManifest($event);">מצהר</span>
+                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )"  class="DimLI" >מצהר</span>
                             </li>
 
                             <li>
-                                <span (click)="currSplitButtonComponent.DropdownDisplayClose();SendDec($event);">הצהרה</span>
+                                <span *ngIf="!(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendDec($event);">הצהרה</span>
+                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  "  class="DimLI" >הצהרה</span>
                             </li>
                             <li>
-                                <span (click)="currSplitButtonComponent.DropdownDisplayClose();SendPay($event);">תשלום</span>
+                                <span *ngIf="!(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendPay($event);">תשלום</span>
+                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  "  class="DimLI" >תשלום</span>
                             </li>
 
                             <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true">
-                                <span (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב למסוף</span>
+                                <span *ngIf="_CourierWorksheet['AcceptanceStatusCode']==null" (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב למסוף</span>
+                                <span *ngIf="_CourierWorksheet['AcceptanceStatusCode']!=null" class="DimLI">ש.מ.ב למסוף</span>
                             </li>
 
                         </ul>
