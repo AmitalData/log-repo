@@ -97,7 +97,13 @@ export class AddEditInsidePackageComponent {
         this.myCloner.AddField('Reference2');
         this.myCloner.AddField('Reference3');
         this.myCloner.AddField('Reference4'); 
-        
+        this.myCloner.AddField('Make');
+        this.myCloner.AddField('Model');
+        this.myCloner.AddField('Year');
+        this.myCloner.AddField('Color');
+        this.myCloner.AddField('ChassisNumber');
+        this.myCloner.AddField('RegistrationNumber');
+        this.myCloner.AddField('CountryId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPackagePM);

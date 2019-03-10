@@ -244,6 +244,9 @@ export class DeliveryPackageItem extends BaseComponent {
         this.IsFCLEntity = fatherComponent.IsFCLEntity;
         this.IsAirShipment = fatherComponent.TransportModeId == "A" ? true : false;
         this.SetUIProperties();
+        if (this.IsNewEntity) {
+            this.SetUIPropertiesOfCars(false);
+        }
     }
 
     public IsContainer: boolean = false;
@@ -271,6 +274,7 @@ export class DeliveryPackageItem extends BaseComponent {
                     if (list != null) {
                         this.IsContainer = list.IsContainer;
                         this.SetUIProperties_IsContainer();
+                        this.SetUIPropertiesOfCars(this.IsEditingEnabled && list.IsVehicle);
                     }
                 }
             });
@@ -281,6 +285,15 @@ export class DeliveryPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled); 
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);              
+    }
+    private SetUIPropertiesOfCars(isEnabled: boolean) {
+        this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Year", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("ChassisNumber", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
     }
     SetUIProperties_IsContainer() {
         var isVolumeEnabled = false;
@@ -343,6 +356,7 @@ export class DeliveryPackageItem extends BaseComponent {
                 this.ShipperSeal = null;
                 this.IsContainer = false;
                 this.SetUIProperties_IsContainer();
+                this.SetUIPropertiesOfCars(false);
             }
 
             else {
@@ -366,6 +380,10 @@ export class DeliveryPackageItem extends BaseComponent {
                             }
 
                             this.SetUIProperties_IsContainer();
+                            this.SetUIPropertiesOfCars(list.IsVehicle);
+                        }
+                        else {
+                            this.SetUIPropertiesOfCars(false);
                         }
                     }
                 });
@@ -526,6 +544,55 @@ export class DeliveryPackageItem extends BaseComponent {
         return myDimensions;
     }
 
+    get Make() { return this.EntityPM.Make; }
+    set Make(newValue: string) {
+        if (this.EntityPM.Make != newValue) {
+            this.EntityPM.Make = newValue;
+        }
+    }
+
+    get Model() { return this.EntityPM.Model; }
+    set Model(newValue: string) {
+        if (this.EntityPM.Model != newValue) {
+            this.EntityPM.Model = newValue;
+        }
+    }
+
+
+    get Year() { return this.EntityPM.Year; }
+    set Year(newValue: string) {
+        if (this.EntityPM.Year != newValue) {
+            this.EntityPM.Year = newValue;
+        }
+    }
+
+    get Color() { return this.EntityPM.Color; }
+    set Color(newValue: string) {
+        if (this.EntityPM.Color != newValue) {
+            this.EntityPM.Color = newValue;
+        }
+    }
+
+    get ChassisNumber() { return this.EntityPM.ChassisNumber; }
+    set ChassisNumber(newValue: string) {
+        if (this.EntityPM.ChassisNumber != newValue) {
+            this.EntityPM.ChassisNumber = newValue;
+        }
+    }
+
+    get RegistrationNumber() { return this.EntityPM.RegistrationNumber; }
+    set RegistrationNumber(newValue: string) {
+        if (this.EntityPM.RegistrationNumber != newValue) {
+            this.EntityPM.RegistrationNumber = newValue;
+        }
+    }
+
+    get CountryId() { return this.EntityPM.CountryId; }
+    set CountryId(newValue: string) {
+        if (this.EntityPM.CountryId != newValue) {
+            this.EntityPM.CountryId = newValue;
+        }
+    }
     private ComputeVolume() {
         if (this.fatherComponent.ShipmentPM.Ratio == null) {
             this.fatherComponent.ShipmentPM.Ratio = AppTool.GetRatio(this.fatherComponent.ShipmentPM.DirectionId, this.fatherComponent.ShipmentPM.TransportModeId, this.fatherComponent.ShipmentPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);

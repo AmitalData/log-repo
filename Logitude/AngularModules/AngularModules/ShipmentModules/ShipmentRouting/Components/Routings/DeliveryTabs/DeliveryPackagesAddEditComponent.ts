@@ -95,6 +95,14 @@ export class DeliveryPackagesAddEditComponent extends BaseComponent {
         this.myCloner.AddField('Width');
         this.myCloner.AddField('Height');
         this.myCloner.AddField('Description');
+        this.myCloner.AddField('Make');
+        this.myCloner.AddField('Model');
+        this.myCloner.AddField('Year');
+        this.myCloner.AddField('Color');
+        this.myCloner.AddField('ChassisNumber');
+        this.myCloner.AddField('RegistrationNumber');
+        this.myCloner.AddField('CountryId');
+
         this.myCloner.AddEntity(this.EntityPM);
 
         if (this.DataContext.fatherComponent) {
