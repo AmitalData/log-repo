@@ -35,8 +35,9 @@ namespace WebFreight.Web.WcfApi
             Envelope envelope = new Envelope();
             CommunicationLog commLog = null;
             QueueResponse queueResponse = null;
-            //BrokeredMessage message = null;
-            try
+			string result = null;
+			//BrokeredMessage message = null;
+			try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
@@ -45,7 +46,7 @@ namespace WebFreight.Web.WcfApi
                     CacheManager.CacheWrapper = new MockCacheWrapper();
                 }
 
-                string result = null;
+                
 
                 string queueName = "externaltasksqueue" + tenant + priority;
                 DbQueueService queueservice = new DbQueueService(queueName, tenant);//QueueServiceManager.GetQueueService(queueName, 0);
@@ -179,7 +180,8 @@ namespace WebFreight.Web.WcfApi
 
                 }
 
-                return null;
+				result = LogitudeXmlSerializer.SerializeObjectToXmlString(envelope);
+				return result;
 
             }
         }

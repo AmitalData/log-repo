@@ -316,7 +316,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public CustomFieldClass Field21 { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field22 { get; set; }
-         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field23 { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field24 { get; set; }
@@ -1254,6 +1254,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string SecurityKey { get; set; }
         public double? TEU { get; set; }
 
+        public bool DontCreateConvertEvent { get; set; }
         public bool ConvertFromHouseToDirect { get; set; }
         public bool ConvertFromDirectToHouse { get; set; }
         public bool IsRefreshShipmentFollowUps { get; set; }
@@ -2319,7 +2320,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool IsRequestedDocuments { get; set; }
         public bool IsDigitalSignRequired { get; set; }
-        public bool IsDepositionCloseTask { get; set; }
+        public bool IsDepositionRequired { get; set; }
+        public string ImporterDepositionRequestDetails { get; set; }
+        
+        public bool IsShipmentComputedFieldChange { get; set; }
+
 
     }
 }

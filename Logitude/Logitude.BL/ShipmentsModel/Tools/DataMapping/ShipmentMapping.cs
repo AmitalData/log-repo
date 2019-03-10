@@ -2621,7 +2621,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationETA", changeTrackingPM.MainCarriageFinalDestinationETA, pm.MainCarriageFinalDestinationETA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationATA", changeTrackingPM.MainCarriageFinalDestinationATA, pm.MainCarriageFinalDestinationATA, "DateTime?", notifyPropertyChangeValuesList);
 
-  
+
+
+
+
+
+
+
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field3, pm.Field3, "Field3", notifyPropertyChangeValuesList);
@@ -2664,28 +2670,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field40, pm.Field40, "Field40", notifyPropertyChangeValuesList);
 
             //if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-            //{
-            //    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(pm.Tenant);
-            //    ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(pm.Id, pm.Tenant);
-            //    if (shipmentComputedFields != null)
-            //    {
-            //        if (pm.IsDigitalSignRequired != shipmentComputedFields.IsDigitalSignRequired)
-            //        {
-            //            NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsDigitalSignRequired", OldValue = pm.IsDigitalSignRequired, NewValue = shipmentComputedFields.IsDigitalSignRequired, PropertyType = "bool" };
-            //            notifyPropertyChangeValuesList.Add(values);
-            //        }
-
-            //        if (pm.IsRequestedDocuments != shipmentComputedFields.IsRequestedDocuments)
-            //        {
-            //            NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsRequestedDocuments", OldValue = pm.IsRequestedDocuments, NewValue = shipmentComputedFields.IsRequestedDocuments, PropertyType = "bool" };
-            //            notifyPropertyChangeValuesList.Add(values);
-            //        }
-
-            //        pm.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
-            //        pm.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
-
-            //    }
-            //}
+           // {
+                AddFieldChangedProperties(changeTrackingPM, "IsDigitalSignRequired", changeTrackingPM.IsDigitalSignRequired, pm.IsDigitalSignRequired, "bool", notifyPropertyChangeValuesList);
+                AddFieldChangedProperties(changeTrackingPM, "IsRequestedDocuments", changeTrackingPM.IsRequestedDocuments, pm.IsRequestedDocuments, "bool", notifyPropertyChangeValuesList);
+                AddFieldChangedProperties(changeTrackingPM, "IsDepositionRequired", changeTrackingPM.IsDepositionRequired, pm.IsDepositionRequired, "bool", notifyPropertyChangeValuesList);
+           // }
 
 
             return notifyPropertyChangeValuesList;
@@ -2741,6 +2730,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.IncotermId = houseShipment.IncotermId;
             shipmentPM.CustomerContactId = houseShipment.CustomerContactId;
             shipmentPM.AgentContactId = houseShipment.AgentContactId;
+
+            shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;
+            shipmentPM.IsDigitalSignRequired = houseShipment.IsDigitalSignRequired;
+            shipmentPM.IsRequestedDocuments = houseShipment.IsRequestedDocuments;
+
 
             shipmentPM.Field1 = houseShipment.Field1;
             shipmentPM.Field2 = houseShipment.Field2;

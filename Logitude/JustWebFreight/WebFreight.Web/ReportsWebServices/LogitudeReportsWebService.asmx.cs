@@ -2331,8 +2331,7 @@ namespace WebFreight.Web.ReportsWebServices
            // List<string> ConsigneeAdressIds = Shipments.Select(p => p.ConsigneeAddressId).ToList();
 
             List<ShipmentPackage> shipmentPackages = (from d in shipmentsContext.ShipmentPackages.Include("PackageType") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
-           // List<Card> Consiness = (from d in commonContext.Cards.Include("Address") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
-
+            // List<Card> Consiness = (from d in commonContext.Cards.Include("Address") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
 
 
             if (shipmentPackages.Count > 0)
@@ -2356,19 +2355,14 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Unit = Item.PackageType!=null?Item.PackageType.EnglishName:null;
                     shipment.RequestETD = dataView.FirstPickupETD;
                     shipment.EstimateETD = dataView.FirstPickupETA;
-                    if (!String.IsNullOrEmpty(dataView.Field2))
-                    {
-                        string year= dataView.Field2.Substring(0,4);
-                        string month = dataView.Field2.Substring(4, 2);
-                        string day = dataView.Field2.Substring(6, 2);
-
-                        shipment.RequestETA = DateTime.Parse(year+"/"+month+"/"+day);
-
-                    }
                     shipment.EstimateETA = dataView.MainCarriageFinalDestinationETA;
                     shipment.Shipper = dataView.ShipperName;
                     shipment.Pieces = Item.Quantity;
                     shipment.ContainerNr = Item.ContainerNumber;
+
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, dataView, shipment);
+
                     totalData.ShipmentPackages.Add(shipment);
 
                 }
@@ -10088,6 +10082,18 @@ namespace WebFreight.Web.ReportsWebServices
                         TMProject project = allProjects.Where(d => d.Id == item.ProjectId).FirstOrDefault();
                         if (project != null)
                         {
+                            if (project.CategoryId != null)
+                            {
+                                TMProjectCategory category = new TMProjectCategory();
+                                TMProjectCategoryRepository repo = new TMProjectCategoryRepository(tenant);
+                                category = repo.GetSingle(project.CategoryId, tenant);
+                                if (category != null)
+                                {
+                                    timSheetItem_Detailed.CategoryId = category.Id;
+                                    timSheetItem_Detailed.CategoryName = category.Name;
+                                }
+
+                            }
                             timSheetItem_Detailed.ExternalProjectNumber = project.ExternalProjectNumber;
                             timSheetItem_Detailed.ProjectName = project.Name;
                             timSheetItem_Detailed.ProjectNumber = project.ProjectNumber;

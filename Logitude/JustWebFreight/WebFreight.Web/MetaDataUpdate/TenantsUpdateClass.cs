@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Dictionary<string, TranslationHeader> tenantZeroTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(0).ToDictionary(d => d.Description, a => a);
             Dictionary<string, TranslationHeader> currentTenantTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(tenant).ToDictionary(d => d.Description, a => a);
             Dictionary<string, Measurement> tenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
-            ///Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> tenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EventType> tenantZeroEventTypes = null;
@@ -411,7 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadOtherFields(context);
                             //updateClass.loadQueries();
                             //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
+                            //updateClass.LoadObjectTableTabs(); 
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadMenustables();
                             //updateClass.LoadEventTypes();
@@ -426,6 +426,13 @@ namespace WebFreight.Web.MetaDataUpdate
                         {
                             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+
+                            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                            {
+                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                            }
+
                             break;
                         }
                     case "quote":
@@ -674,7 +681,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     stopWatch.Start();
 
                     //UpdateTranslationHeaders(tenant, tenantZeroTranslationHeaders, currentTenantTranslationHeaders, translationHeadersRepository);
-                    //UpdateMeasurements(tenant, tenantZeroMeasurements, currentTenantMeasurements, measurementsRepository);
+                    UpdateMeasurements(tenant, tenantZeroMeasurements, currentTenantMeasurements, measurementsRepository);
 
                     //===========================
 

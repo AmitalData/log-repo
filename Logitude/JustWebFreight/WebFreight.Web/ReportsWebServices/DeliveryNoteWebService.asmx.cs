@@ -481,6 +481,7 @@ namespace WebFreight.Web.ReportsWebServices
                                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
                                             + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
                                         deliveryNotedataprovider.ToAddressDescription = address.Description != null ? address.Description : "";
+
                                     }
                                 }
                             }
@@ -1152,7 +1153,8 @@ namespace WebFreight.Web.ReportsWebServices
                                         deliveryNotedataprovider.PickupAddress = DataProviders.General.GetAddress(address)
                                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
                                             + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
-                                        deliveryNotedataprovider.FromAddressDescription  = address.Description != null ? address.Description : "";
+                                        deliveryNotedataprovider.FromAddressDescription = address.Description != null ? address.Description : "";
+
                                     }
                                 }
                             }

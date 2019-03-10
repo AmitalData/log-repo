@@ -223,6 +223,8 @@ namespace WebFreight.Web.DataProviders
         public string ShipperPrimaryContactPhone { get; set; }
         public string ConsigneePrimaryContactName { get; set; }
         public string ConsigneePrimaryContactPhone { get; set; }
+
+        public string ConsolidatorName { get; set; }
     }
 
     public class CommodityLine

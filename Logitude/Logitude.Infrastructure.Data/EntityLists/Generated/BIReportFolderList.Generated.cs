@@ -33,7 +33,7 @@ namespace Logitude.Infrastructure.Data.EntityLists
        [DataMember]
        public string Description  { get; set; }
        [DataMember]
-       public int Index  { get; set; }
+       public int? Index  { get; set; }
        [DataMember]
        public string CreatedByUserName  { get; set; }
        [DataMember]

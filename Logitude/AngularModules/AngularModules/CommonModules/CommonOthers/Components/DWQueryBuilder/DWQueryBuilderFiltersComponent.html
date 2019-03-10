@@ -89,7 +89,7 @@
 </style>
 
 <div *ngFor="let item of SelectedFiltersDataSource; let i=index;">
-    <div *ngIf="item.IsGroup == false">
+    <div *ngIf="item.IsGroup == false" style="width:620px;">
         <div>
             <table style="height:30px;">
                 <tr style="height:30px;" class="MyFilterItem">
@@ -122,13 +122,13 @@
                     </td>
 
                  
-                    <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)" style="width:150px;" [ngSwitch]="item.ParentDataTypeCode">
+                    <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)"  [ngSwitch]="item.ParentDataTypeCode"><!--style="width:150px;"-->
 
                         <!-- Text -->
                         <div *ngSwitchCase="'Text'">
                             <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                             <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
-                                <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Text'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Text'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                             </div>
                         </div>
 
@@ -136,7 +136,7 @@
                         <div *ngSwitchCase="'nText'">
                             <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                             <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
-                                <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'nText'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'nText'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                             </div>
                         </div>
 
@@ -144,7 +144,7 @@
                         <div *ngSwitchCase="'Integer'">
                             <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                             <div style="width:180px;">
-                                <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Integer'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Integer'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                             </div>
                         </div>
 
@@ -152,7 +152,7 @@
                         <div *ngSwitchCase="'Double'">
                             <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                             <div style="width:180px;">
-                                <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Double'" [NoValidation]="true"></LogTextBox>
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Double'" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                             </div>
                         </div>
 
@@ -160,7 +160,7 @@
                         <div *ngSwitchCase="'Decimal'">
                             <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                             <div style="width:180px;">
-                                <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Decimal'" [NoValidation]="true"></LogTextBox>
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Decimal'" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                             </div>
                         </div>
 
@@ -224,7 +224,7 @@
                             </div>
                         </div>
                     </td>
-                    <td *ngIf="item.FilterType == 'Ask User'" [style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310">
+                    <td *ngIf="item.FilterType == 'Ask User'" ><!--[style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310"-->
                         <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
                     </td>
                 </tr>
@@ -248,7 +248,7 @@
         </div>
 
     </div>
-    <div class="GroupItem" *ngIf="item.IsGroup == true">
+    <div class="GroupItem" *ngIf="item.IsGroup == true" style="width:620px;">
         <div class="OperatorItem">
             <div style="display: table-cell;vertical-align: middle;">
                 <div class="Operator">
@@ -282,13 +282,13 @@
                                 <div style="width:7px;"></div>
                             </td>
 
-                            <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)" style="width:150px;" [ngSwitch]="item.ParentDataTypeCode">
+                            <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)" [ngSwitch]="item.ParentDataTypeCode"><!--style="width:150px;"-->
 
                                 <!-- Text -->
                                 <div *ngSwitchCase="'Text'">
                                     <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                     <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
-                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Text'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Text'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </div>
 
@@ -296,7 +296,7 @@
                                 <div *ngSwitchCase="'nText'">
                                     <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                     <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
-                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'nText'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'nText'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </div>
 
@@ -304,7 +304,7 @@
                                 <div *ngSwitchCase="'Integer'">
                                     <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                     <div style="width:180px;">
-                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Integer'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Integer'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </div>
 
@@ -312,7 +312,7 @@
                                 <div *ngSwitchCase="'Double'">
                                     <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                     <div style="width:180px;">
-                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Double'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Double'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </div>
 
@@ -320,7 +320,7 @@
                                 <div *ngSwitchCase="'Decimal'">
                                     <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                     <div style="width:180px;">
-                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Decimal'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Decimal'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </div>
 
@@ -383,7 +383,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td *ngIf="item.FilterType == 'Ask User'" [style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310">
+                            <td *ngIf="item.FilterType == 'Ask User'"> <!--[style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310"--> 
                                 <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
                             </td>
 

@@ -134,7 +134,9 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      QuoteId = a.QuoteId,
                                                      QuoteNumber= a.QuoteNumber,
                                                      SLAId = a.SLAId,
-                                                 });
+                                                     EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber: a.QuoteNumber,
+
+                                            });
             return query;
 		}
 
@@ -263,6 +265,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         OwnerEmail = a.Owner != null && a.Owner.Contact != null? a.Owner.Contact.Email : null,
                         QuoteId = a.QuoteId,
                         QuoteNumber = a.QuoteNumber,
+                        EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -384,6 +387,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 OwnerEmail = a.Owner != null && a.Owner.Contact != null ? a.Owner.Contact.Email : null,
                                                 QuoteId = a.QuoteId,
                                                 QuoteNumber = a.QuoteNumber,
+                                                EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
                                             });
             return query.ToList();
         }
@@ -474,6 +478,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 OwnerEmail = a.Owner != null && a.Owner.Contact != null ? a.Owner.Contact.Email : null,
                                                 QuoteId = a.QuoteId,
                                                 QuoteNumber = a.QuoteNumber,
+                                                EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
                                             });
             return query.ToList();
         }

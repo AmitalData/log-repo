@@ -738,6 +738,24 @@ export class ShipmentDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    CreateMissingMasters() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetCreateMissingMasterData';
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult: string = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 
 export class ShipmentsSummary {

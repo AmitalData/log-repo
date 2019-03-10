@@ -1468,6 +1468,7 @@ export class DateTool {
             myDateParts.DateObject = dateObject;
             myDateParts.Hours12 = myDateParts.Hours > 12 ? (myDateParts.Hours - 12) : myDateParts.Hours;
             myDateParts.DateTicks = myDateParts.DateObject.valueOf();
+            myDateParts.TotalMinutes = (myDateParts.Hours * 60) + myDateParts.Minutes;
         }
 
         return myDateParts;
@@ -2167,13 +2168,16 @@ export class FormatTool {
                         if (first == "." && !myResult.toString().toLowerCase().includes(",")) {
                             var arr = myResult.split('.');
                             var firstRound: boolean = true;
+                            var zero = /^0+$/;
+
                             if (arr.length == 2) {
-                                if (arr[1] == "00" || arr[1] == "0" || arr[1] == "000" || arr[1] == "0000") {
+                                if (arr[1].match(zero)) {
                                     side1 = arr[0];
                                 }
-                                else {
+                                else if(arr[0].match(zero)){
                                     side1 = "0";                                    
                                 }
+
                             }
                             else if (arr.length == 1) {
                                 side1 = arr[0];
@@ -2187,11 +2191,12 @@ export class FormatTool {
                                     firstRound = false;
                                 });
                             }
-                            if (arr.length>1)
-                            side2 = myResult.split('.')[myResult.split('.').length-1];
+                            if (arr.length > 1)
+                                if (myResult.includes(second))
+                                side2 = myResult.split(second)[myResult.split(second).length-1];
                         }
                         else {
-                            if (myResult.toString().toLowerCase().includes(",") && side1==".") {
+                            if (myResult.toString().toLowerCase().includes(",") && first==".") {
                                 side1 = myResult.split(',')[0];
                                 side2 = myResult.split(',')[1];
                             }
@@ -3061,6 +3066,7 @@ export class DateParts {
     public LocalYear: number = 0;
     public LocalMonth: number = 0;
     public LocalDay: number = 0;
+    public TotalMinutes: number = 0;
 }
 export class DateFormats {
     public AMPM: string;

@@ -25,7 +25,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //var pm = GetEntityPM(recoLine);
             return recoLine;
         }
-        
+        public List<ReconciliationLinePM> GetLineByTransactionIds(List<string> transId, int tenant)
+        {
+            List<ReconciliationLine> recoLines = (from a in context.ReconciliationLines
+                                           where transId.Contains(a.TransactionId) && a.Tenant == tenant
+                                           select a).ToList();
+
+            List<ReconciliationLinePM> pms = recoLines.Select(poco => GetEntityPM(poco)).ToList();
+
+            return pms;
+        }
+
 
 
     }

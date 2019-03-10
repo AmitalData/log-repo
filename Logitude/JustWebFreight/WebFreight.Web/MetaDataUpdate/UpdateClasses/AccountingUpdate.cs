@@ -1918,8 +1918,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation2", DefaultText = "GLAccount and its parent must be same chart of account", LocalDefaultText = "קבוצת מאזן עבור הכרטיס ווכרטיס האב שמקושר אליו חייבת להיות זהה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodcantUpdated", DefaultText = "The reconcile method can’t be updated, the GLAccount has transations", LocalDefaultText = "לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting", LocalDefaultText = "חשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Reference", LocalDefaultText = "אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due", LocalDefaultText = "לגביה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Document", LocalDefaultText = "אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due", LocalDefaultText = "פרעון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditDetails", DefaultText = "Credit Details", LocalDefaultText = "נתוני אשראי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditLimit", DefaultText = "Credit Limit", LocalDefaultText = "מסגרת אשראי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountingBalance", DefaultText = "Accounting Balance", LocalDefaultText = "יתרה חשבונאית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -2114,11 +2114,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             #region Messages
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ForeignAmountNotZero", DefaultText = "Foreign amount is empty", LocalDefaultText ="סכום במטח הינו חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.LocalAmountNotZero", DefaultText = "Local amount is empty", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",
-                LocalDefaultText="סכום במטבע הנהח הינו חובה "
+                LocalDefaultText="סכום במטבע מקומי הינו חובה "
             }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldHaveOneLineAtLeast", DefaultText = "There must be at least one journal line", LocalDefaultText= "חובה להזין לפחות פקודת יומן אחת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.CurrenyNotMatched", DefaultText = "Account Currncy does not equal to selected currecy code", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText ="מטבע כרטיס לא תואם את המבע הנבחר"}, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalAmountNotMatched", DefaultText = "Journal credit amount does not match the debit amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText = "סכום חובה שונה בסכום זכות "}, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldHaveOneLineAtLeast", DefaultText = "There must be at least one journal line", LocalDefaultText= "חובה להזין לפחות שורת פקודת יומן אחת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.CurrenyNotMatched", DefaultText = "Account Currncy does not equal to selected currecy code", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText ="מטבע הכרטיס לא תואם את המטבע הנבחר"}, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalAmountNotMatched", DefaultText = "Journal credit amount does not match the debit amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText = "סכום חובה שונה מסכום זכות "}, textCodeRepository, textcodes);
           //  AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalLinesAmountNotZero", DefaultText = "Invoice line amount field must not be zero", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ExchangeRateEmpty", DefaultText = "Exchange rate is not defined", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",
                 LocalDefaultText="לא הוגדר שער המרה"
@@ -2127,31 +2127,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 LocalDefaultText ="נא לבחור כרטיס זכות"}, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JLAccountingDateMustWithinJournalMonth",
-                LocalDefaultText="תאריך בשורה חייב להיות בטווח של התאיך החשבונאי של פ היומן",
+                LocalDefaultText="תאריך בשורה חייב להיות בטווח של החודש החשבונאי של פ היומן",
                 DefaultText = "Jornal Line Accounting Date must be within Accounting month of Journal", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FutureDateForbidden", DefaultText = "Future date is not allowed", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText= "תאריך עתידי"}, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FutureDateForbidden", DefaultText = "Future date is not allowed", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText= "לא ניתן  להקליד תאריך עתידי "}, textCodeRepository, textcodes);
 
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AccountIsBlocked", DefaultText = "Account card is blocked", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText = "כרטיס הנהלת החשבונות חסום " }, textCodeRepository, textcodes);
             
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeDebit", DefaultText = "Please select a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCreditAndCredit", DefaultText = "Please select a credit and a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeNotMatched", DefaultText = "Action Code does not Matched the account you picked", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCode", DefaultText = "Please Select Action Code", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DocumentDateBiggerDueDate", DefaultText = "Document date must be earlier then due date ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeDebit", DefaultText = "Please select a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText= "אנא בחר כרטיס חובה" }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCreditAndCredit", DefaultText = "Please select a credit and a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="אנא בחר כרטיס זכות וכרטיס חובה" }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeNotMatched", DefaultText = "Action Code does not Matched the account you picked", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="שגיאה" }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCode", DefaultText = "Please Select Action Code", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="אנא בחר ציין את את סוג השורה  חובה/זכות" }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DocumentDateBiggerDueDate", DefaultText = "Document date must be earlier then due date ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="התאריך החשבונאי חייב להיות מוקדם מתאריך האסמכתא" }, textCodeRepository, textcodes);
 
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateMustgreaterthancurrent", DefaultText = "Due Date ,Must be greater than current date ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateMustgreaterthancurrent", DefaultText = "Due Date ,Must be Equal or greater than current date ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="תאריך הפרעון צריך להיות גדול או שווה מהתאריך הנוכחי" }, textCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Journal.currencydoesnotexist", DefaultText = "Currency does not exist", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Journal.currencydoesnotexist", DefaultText = "Currency does not exist", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="המטבע לא קיים" }, textCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsMust", DefaultText = "Account Which is not a card must Control Account definition", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsNotMatch", DefaultText = "Control Account Is Not Match", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsMust", DefaultText = "Account Which is not a card must Control Account definition", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="חשבון שאיננו כרטיס תפעולי חייב להיות כרטיס מרכז" }, textCodeRepository, textcodes);
 
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsNotMatch", DefaultText = "Control Account Is Not Match", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="חשבון מרכז איננו תואם" }, textCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateIsMust", DefaultText = "Due Date Is Must", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateIsMust", DefaultText = "Due Date Is Must", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="תאריך פרעון הינו חובה" }, textCodeRepository, textcodes);
 
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FAMltiExchangerateNELA",
@@ -2174,7 +2177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 LocalDefaultText = "כל התאריכים חייבים אתחול"
             }, textCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldSelectTwoTransactions", DefaultText = "You should select at lease two transactions in order to create new reconcile", LocalDefaultText= "יש לבחור לפחות שתי תנועות ע''מ ליצור התאמה חדשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldSelectTwoTransactions", DefaultText = "You should select at lease two transactions in order to create new reconcile", LocalDefaultText= "יש לבחור לפחות שתי תנועות על מנת ליצור התאמה חדשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             #endregion

@@ -200,6 +200,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
         temp.placeholder = "";
         temp.style.background = "rgba(0, 0, 0, 0)";
+        temp.select();
     }
 
     FillPlaceHolder() {
@@ -368,9 +369,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
             queryColumnList[i].IndexOrder = i;
         }
     }
-    btnUp_Click() {
+    btnUp_Click(selectedItem) {
 
-        var item = this.FieldSelectedItem;
+        var item = selectedItem;//this.FieldSelectedItem;
         if (item != null) {
             //this.HasChanges = true;
             var i = this.SelectedFieldsDataSource.indexOf(item);
@@ -388,9 +389,14 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
 
     }
-
-    btnDown_Click() {
-        var item = this.FieldSelectedItem;
+    //ShowArrows: boolean = false;
+    ShowOrderArrows(item) {
+        this.FieldSelectedItem = item;
+    }
+    //ShowOrderArrows(item) {
+    //}
+    btnDown_Click(selectedItem) {
+        var item = selectedItem;//this.FieldSelectedItem;
         if (item != null) {
             //this.HasChanges = true;
 
@@ -430,6 +436,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (this.SelectedItem.Code == '[Full Date]') {
                 this.SelectedItem.ParentDataTypeCode = "LookUp";
                 this.SelectedItem.DataTypeCode = "DateTime";
+                this.SelectedItem.HasTree = true;
             }
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
@@ -465,8 +472,15 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
     }
     RootGroups: DWObjectFieldsDetails[] = [];
-    btnAddFilter_Click(item) {
-
+    btnAddFilter_Click(item: DWObjectFieldsDetails) {
+        if (item.CannotFilter == true) {
+            this.messageWindow.Width = 300;
+            this.messageWindow.Height = 150;
+            this.messageWindow.Title = "Not available for filtering";
+            this.messageWindow.Message = "This field is not available for filtering, you can use the code";
+            this.messageWindow.Show(this.messageWindow.Message);
+            return;
+        }
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
         if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
             //view.ParentDataTypeCode = "LookUp";
@@ -708,6 +722,14 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.DWQueryData.PageSize = 100;
 
         //if (this.DWQueryData.Filters) {
+        if (this.SelectedFiltersDataSource.length > 0 && this.ValidFiltersValues(this.SelectedFiltersDataSource[0]) != true) {
+            this.messageWindow.Width = 300;
+            this.messageWindow.Height = 150;
+            this.messageWindow.Title = "Invalid Filters";
+            this.messageWindow.Message = "There is an invalid input in one of the filters";
+            this.messageWindow.Show(this.messageWindow.Message);
+            return;
+        }
         if (this.SelectedFieldsDataSource.length > 0) {
 
 
@@ -812,6 +834,52 @@ export class DWQueryBuilderComponent extends BaseComponent {
         //        this.PreviewData(StopPreview);
         //    }
         //}
+
+
+    }
+
+    ValidFiltersValues(MyFilter: DWObjectFieldsDetails) {
+        if (MyFilter.FilterItems.length == 0) {
+            return true;
+        }
+        var Valid = true;
+        MyFilter.FilterItems.forEach((field) => {
+
+            if (field.FilterItems.length == 0) {
+                if (field.DataTypeCode && field.TextValue) {
+                        switch (field.DataTypeCode.toLowerCase()) {
+                            case 'text':
+                            case 'ntext':
+                            case 'DateTime':
+                            case 'Date':
+                                {
+                                    break;
+                                }
+                            default: {
+                                var val: number;
+
+                                if ((field.TextValue + "").indexOf(',') == -1) {
+                                    val = Number(field.TextValue);
+                                }
+
+                                if (isNaN(Number(val))) {
+                                    Valid = false;
+                                }
+                                break;
+                            }
+
+                        }
+                    
+                }
+
+            }
+            else {
+                this.ValidFiltersValues(field);
+            }
+
+        });
+
+        return Valid;
 
 
     }
@@ -1156,7 +1224,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
             //if (DWObjectField.FilterItems && DWObjectField.FilterItems.length == 0) {
             this.DisplayName = this.ComputeDisplayName(DWObjectField);
             //}
-
+            this.CannotFilter = DWObjectField.CannotFilter;
+            this.HelpText = DWObjectField.HelpText;
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
@@ -1196,6 +1265,14 @@ export class DWObjectFieldsDetails extends BaseComponent {
     private hideTree: boolean;
     public get HideTree() { return this.hideTree; }
     public set HideTree(newValue: boolean) { this.hideTree = newValue; }
+
+    private cannotFilter: boolean = false;
+    public get CannotFilter() { return this.cannotFilter; }
+    public set CannotFilter(newValue: boolean) { this.cannotFilter = newValue; }
+
+    private helpText: string;
+    public get HelpText() { return this.helpText; }
+    public set HelpText(newValue: string) { this.helpText = newValue; }
 
     Items: any[] = [];
     FilterItems: DWObjectFieldsDetails[] = [];

@@ -2248,6 +2248,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         SaleMeasurementId = item.SaleMeasurementId,
                         SaleMeasurementCode = item.SaleMeasurementCode,
                         SaleMeasurementShortName = item.SaleMeasurementShortName,
+                        SaleMeasurementLocalName = item.SaleMeasurementLocalName,
                         SaleQuantity = item.SaleQuantity,
                         SaleUnitPrice = item.SaleUnitPrice,
                         SaleTotalAmount = item.SaleTotalAmount,

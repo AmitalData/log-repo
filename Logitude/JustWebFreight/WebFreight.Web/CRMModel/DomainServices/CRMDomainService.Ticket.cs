@@ -56,6 +56,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
 
             ticketQuery = new TicketQueryService(crmContext);
             TicketPM entityPM = ticketQuery.GetSingle(id, true, false);
+            entityPM.EntityNumber = entityPM.ShipmentNumber != null ? entityPM.ShipmentNumber : entityPM.QuoteNumber;
 
             if (!string.IsNullOrEmpty(entityPM.SLAId))
             {

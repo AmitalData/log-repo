@@ -188,6 +188,9 @@
     <Content Include="2019.R1\02 - 2019\Day 25 [Khalid] Fill tenantmanagements bluesnapcontract QTYs.sql" />
     <Content Include="2019.R1\02 - 2019\Day 20 [Rabaia] TranzilaPaymentMessageAnalyzeWR.sql" />
     <Content Include="2019.R1\02 - 2019\Day24[Abed] RenameDWCategoriesGeneral.sql" />
+    <Content Include="2019.R1\02 - 2019\Day28[Abed] UpdatePackageTypePrintAsField.sql" />
+    <Content Include="2019.R1\03 - 2019\Day 07 [Samar] delete country Id field from tenant management.sql" />
+    <Content Include="2019.R1\03 - 2019\Day3[Abed] UpdateQuoteTemplateTextCodeFieldsChargeNots.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
@@ -548,6 +551,7 @@
     <Content Include="Main Branch\2019\02 - 2019\Day 7 [Islam] Fix for empty shpment masterdataid records.sql" />
     <Content Include="Main Branch\2019\02 - 2019\Day 3[Khalid] delete objectfield and textcodes bluesnapconttractcode.sql" />
     <Content Include="Main Branch\2019\02 - 2019\Day 14 [Abed]AddMoveTypeToQuoteTemplateTextCode.sql" />
+    <Content Include="Main Branch\2019\03 - 2019\Day 07 [Samar] create index for opportunity id on Quote.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
