@@ -10,6 +10,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -75,6 +76,15 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     {
                         //declarationPM.MamanStatusCode = "1";
                         mamanResponseSuccesed = true;
+                        if (responeECSpclMamanData.SpSpclCode == "2")
+                        {
+                            var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
+                            var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(settings.Tenant);
+                            DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(settings.DeclarationId, false, false);
+                            myDeclarationCourierStatusPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            myDeclarationCourierStatusPM.FastIndividualProcessCode = "I";
+                            myDeclarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);
+                        }
                     }
                     break;
                 
