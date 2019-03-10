@@ -25,6 +25,7 @@ export class DeclarationMamanSpecialActionComponent
     public ObjectTableName: string = "Customs.DeclarationMamanSpecialAction";
     public EntityPM: DeclarationMamanSpecialActionPM;
     public _FetchDeclarationMamanSpecialActionList: ObservableCollection;
+    _TerminalSuspentionNumber: string;
 
     
     constructor(public entityArgs: EntityArgs) {
@@ -34,6 +35,9 @@ export class DeclarationMamanSpecialActionComponent
     }
 
     SetWindowArgs(entityArgs: any) {
+        this._TerminalSuspentionNumber = entityArgs.TerminalSuspentionNumber;
+        this._TerminalSuspentionNumber = "dd";
+
         let list: DeclarationMamanSpecialActionList[] = entityArgs.MamanSpecialActionList;
         this._FetchDeclarationMamanSpecialActionList.InsertCollection(list);
     }
