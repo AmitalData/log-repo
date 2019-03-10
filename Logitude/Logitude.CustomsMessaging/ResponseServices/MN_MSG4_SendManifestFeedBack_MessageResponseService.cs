@@ -384,6 +384,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode))
             {
+                if (myEventContextTagModel.EventCode == "MNC")//ODELIA SAID MNC its success !
+                {
+                    using (var trans = TransactionFactory.GetNewTransaction())// I PREFERRED WITHOUT TRANS BUT  (TO 1345- 1415). .
+                    {
+                        OnSucceededSendDeclarationDelay1Min(requestParams);
+                        trans.Complete();
+                    }
+                }
+
                 string loggingUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
                 RaiseEvent(_MyDeclarationPM, loggingUserId, myEventContextTagModel);
             }
@@ -392,11 +401,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             myDeclarationUpdateService.Update(_MyDeclarationPM, true);
             
 
-            using (var trans = TransactionFactory.GetNewTransaction())// I PREFERRED WITHOUT TRANS BUT  (TO 1345- 1415). .
-            {
-                OnSucceededSendDeclarationDelay1Min(requestParams);
-                trans.Complete();
-            }
+    
             MyResponseData.ApplicationID = requestParams.ImportManifest;
             MyResponseData.Succeeded = true;
         }
