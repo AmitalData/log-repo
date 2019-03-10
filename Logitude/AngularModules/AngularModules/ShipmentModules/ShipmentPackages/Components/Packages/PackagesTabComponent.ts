@@ -1377,6 +1377,10 @@ export class ShipmentPackageItem extends BaseComponent {
         this.ValidateContainerNumber(this.ContainerNumber);
         this.BuildPackageItems();
         this.maxPackageItemsLineNumber = ArrayTool.Max(this.PackageItemsList.Collection, "LineNumber");
+
+        if (this.IsNewEntity) {
+            this.SetUIProperties_Cars(false);
+        }
     }
 
     public IsEditingEnabled: boolean = false;
@@ -1415,13 +1419,7 @@ export class ShipmentPackageItem extends BaseComponent {
         this.SetUIProperties_Dangerous();
         this.SetUIProperties_BuildButton();
         this.SetUIProperties_Harmonize();
-        if (this.IsNewEntity) {
-            this.SetUIProperties_Cars(false);
-        }
-        else {
-            this.SetUIProperties_Cars(this.IsEditingFieldsEnabled);
-        }
-       
+      
     }
     SetUIProperties_Package() {
         if (this.ShipmentPM.TransportModeId == "A") {
@@ -2855,6 +2853,9 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.ShipmentPackagePM = fatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         this.SetUIProperties();
+        if (this.IsNewEntity) {
+            this.SetUIPropertiesOfCars(false);
+        }
     }
 
     public IsEditingEnabled: boolean = false;
@@ -2900,13 +2901,6 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("Reference3", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Reference4", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CommodityNumber", this.ObjectTableName, this.IsEditingEnabled);
-
-        if (this.IsNewEntity) {
-            this.SetUIPropertiesOfCars(false);
-        }
-        else {
-            this.SetUIPropertiesOfCars(this.IsEditingEnabled);
-        }
     }
     private SetUIPropertiesOfCars(isEnabled: boolean) {
         this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
