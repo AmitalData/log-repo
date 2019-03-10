@@ -126,7 +126,7 @@ img {
                             <tr>
                                 <td style="width:5px;"></td>
 
-                                <td style="width:50px;">
+                                <td id="companyLogoArea" style="width:50px;">
                                     <img id="companyLogo" src="../HtmlHelpers/Images/Icons/Logo.png" style="width:50px; height:35px; vertical-align:bottom; position:absolute; top:2px;"/>                    
                                 </td>
 
