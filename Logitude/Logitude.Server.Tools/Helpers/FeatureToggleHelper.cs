@@ -12,7 +12,7 @@ namespace Logitude.Server.Tools.Helpers
 
         public static bool HasFeatureToggle(string toggleCode, int tenant)
         {
-            FeatureToggleRepository featureToggleRepository = new FeatureToggleRepository(0);
+            FeatureToggleRepository featureToggleRepository = new FeatureToggleRepository(tenant);
             return featureToggleRepository.HasFeatureToggle(toggleCode,tenant);
         }
 
