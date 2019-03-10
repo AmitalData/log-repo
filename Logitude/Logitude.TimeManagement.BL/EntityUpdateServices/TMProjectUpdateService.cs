@@ -43,7 +43,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
 
             TMProjectRepository entityRepository = new TMProjectRepository(entityPM.Tenant);
             List<string> ProjectNumbers = entityRepository.GetInnerTMProjectByNumber(entityPM.ProjectNumber, entityPM.Tenant);
-            List<string> EditedProjectNumbers = new List<string>();
+            List<int> EditedProjectNumbers = new List<int>();
             int ProjectId ;
             if (ProjectNumbers.Count==0)
                 ProjectId = 1;
@@ -52,12 +52,12 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 foreach(string item in ProjectNumbers)
                 {
                     string newitem = item.Replace(entityPM.ProjectNumber+"-", "");
-                    EditedProjectNumbers.Add(newitem.Split('-')[0]);
+                    EditedProjectNumbers.Add(int.Parse(newitem.Split('-')[0]));
                 }
 
-                string max = EditedProjectNumbers.Max();
-                string[] MaxArr = max.Split('-');
-                 ProjectId =int.Parse(MaxArr.Last())+1;
+                int max = EditedProjectNumbers.Max();
+               // string[] MaxArr = max.Split('-');
+                 ProjectId = max + 1;
             }
            
             return ProjectId+"";
