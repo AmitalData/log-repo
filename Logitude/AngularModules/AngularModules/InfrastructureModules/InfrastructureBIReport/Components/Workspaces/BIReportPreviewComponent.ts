@@ -18,7 +18,6 @@ import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMSer
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { DWObjectFieldsDetails } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { AGGridCustomHeader } from "../TemplateRenderer/AGGridCustomHeader";
 import { EditShipmentLinkRendererComponent } from "../TemplateRenderer/EditShipmentLinkRendererComponent";
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 
@@ -136,10 +135,10 @@ export class BIReportPreviewComponent implements OnInit {
             this.agGrid.api.refreshCells();
             //var count = this.agGrid.api.getDisplayedRowCount();
             if (count > 50000 || msg == "MT5000") {
-                this.CountText = "Showing the first 50,000 rows, scroll down or download the excel to view all."
+                this.CountText = "Showing the first 50,000 rows, download the excel to view all."
             }
             else {
-                this.CountText = "Number of rows: " + count;
+                this.CountText = count + " rows";
             }
 
         }
@@ -166,8 +165,6 @@ export class BIReportPreviewComponent implements OnInit {
                             Index: columns[i].Index,
                             type: type,
                             cellRenderer: this.DateCellRenderer,
-                            headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-calendar" },
                             filter: 'agDateColumnFilter'
                             //sort: sortingDirction,
                         });
@@ -188,8 +185,7 @@ export class BIReportPreviewComponent implements OnInit {
                                 var pipe = new NumbersPipe();
                                 return pipe.transform(params.value, "N2");
                             },
-                            headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-list-ol" }
+                           
                         });
                     }
                     else if (type == "booleanColumn") {
@@ -209,8 +205,7 @@ export class BIReportPreviewComponent implements OnInit {
                                     return `<img src="./Images/CheckBoxIcon.png" class="CenterCenter" />`;
                                 }
                             },
-                            headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-check" }
+                           
                         });
                     }
                     else if (columns[i].Code == "Shipment Number") {
@@ -224,8 +219,7 @@ export class BIReportPreviewComponent implements OnInit {
                             resizable: true,
                             Index: columns[i].Index,
                             type: type,
-                            headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-text-height" },
+                            
                             cellRendererFramework: EditShipmentLinkRendererComponent,
                             //cellRendererParams: {
                             //   
@@ -244,8 +238,7 @@ export class BIReportPreviewComponent implements OnInit {
                             //cellClass: columns[i].DataTypeCode,
                             Index: columns[i].Index,
                             type: type,
-                            headerComponentFramework: AGGridCustomHeader,
-                            headerComponentParams: { menuIcon: "fa-text-height" }
+                           
                         });
                     }
                 }
