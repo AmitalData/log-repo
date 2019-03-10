@@ -722,6 +722,10 @@
     <Compile Include="Migrations\201903031049372_SetIndexNotRequiredBIFolder_Samar.Designer.cs">
       <DependentUpon>201903031049372_SetIndexNotRequiredBIFolder_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.cs" />
+    <Compile Include="Migrations\201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.Designer.cs">
+      <DependentUpon>201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.cs" />
     <Compile Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.Designer.cs">
       <DependentUpon>201902241639523_add_ClosedTable_NumberFormat_Khalid.cs</DependentUpon>
@@ -733,6 +737,10 @@
     <Compile Include="Migrations\201903060906292_changeFieldType_ReconcileExternalBankPageLine.cs" />
     <Compile Include="Migrations\201903060906292_changeFieldType_ReconcileExternalBankPageLine.Designer.cs">
       <DependentUpon>201903060906292_changeFieldType_ReconcileExternalBankPageLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903100723477_AddDirectionFieldsToChargesType_Maheera.cs" />
+    <Compile Include="Migrations\201903100723477_AddDirectionFieldsToChargesType_Maheera.Designer.cs">
+      <DependentUpon>201903100723477_AddDirectionFieldsToChargesType_Maheera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.cs" />
     <Compile Include="Migrations\201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.Designer.cs">
@@ -1224,6 +1232,9 @@
     <EmbeddedResource Include="Migrations\201903031049372_SetIndexNotRequiredBIFolder_Samar.resx">
       <DependentUpon>201903031049372_SetIndexNotRequiredBIFolder_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.resx">
+      <DependentUpon>201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.resx">
       <DependentUpon>201902241639523_add_ClosedTable_NumberFormat_Khalid.cs</DependentUpon>
     </EmbeddedResource>
@@ -1232,6 +1243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903060906292_changeFieldType_ReconcileExternalBankPageLine.resx">
       <DependentUpon>201903060906292_changeFieldType_ReconcileExternalBankPageLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903100723477_AddDirectionFieldsToChargesType_Maheera.resx">
+      <DependentUpon>201903100723477_AddDirectionFieldsToChargesType_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.resx">
       <DependentUpon>201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.cs</DependentUpon>

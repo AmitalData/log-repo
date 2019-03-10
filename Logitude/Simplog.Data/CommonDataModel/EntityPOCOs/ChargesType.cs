@@ -75,5 +75,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
         public string VatTypeId { get; set; }
+
+        public bool IsImport { get; set; }
+        public bool IsDomestic { get; set; }
+        public bool IsExport { get; set; }
+        public bool IsDrop { get; set; }
+
+
     }
 }

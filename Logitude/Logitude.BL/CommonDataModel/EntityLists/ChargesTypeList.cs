@@ -68,5 +68,10 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsCustoms { get; set; }
         public string SATExternalId { get; set; }
         public bool IsExpense { get; set; }
+
+        public bool IsImport { get; set; }
+        public bool IsDomestic { get; set; }
+        public bool IsExport { get; set; }
+        public bool IsDrop { get; set; }
     }
 }

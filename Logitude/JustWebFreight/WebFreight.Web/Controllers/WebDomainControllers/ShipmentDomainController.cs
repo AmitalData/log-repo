@@ -1684,7 +1684,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             {
                                 ShipmentPM shipmentPM = iShipmentQuery.GetSinglePM(shipment.Id, tenant);
                                 shipmentPM.ConvertFromHouseToDirect = true;
-                                shipmentPM.DontCreateConvertEvent = true;
+                                //shipmentPM.DontCreateConvertEvent = true;
 
                                 string systemEmail = "system@tenant" + tenant + ".com";
                                 ShipmentService iShipmentService = new ShipmentService(iContext, shipmentPM, systemEmail);

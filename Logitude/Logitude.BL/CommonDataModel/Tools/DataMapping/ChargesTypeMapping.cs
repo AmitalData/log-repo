@@ -59,6 +59,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsBackToBack = entityPM.IsBackToBack;
             poco.SATExternalId = entityPM.SATExternalId;
             poco.IsExpense = entityPM.IsExpense;
+            poco.IsDomestic = entityPM.IsDomestic;
+            poco.IsDrop = entityPM.IsDrop;
+            poco.IsImport = entityPM.IsImport;
+            poco.IsExport = entityPM.IsExport;
 
             BuildSearchField(entityPM, poco);
         }
