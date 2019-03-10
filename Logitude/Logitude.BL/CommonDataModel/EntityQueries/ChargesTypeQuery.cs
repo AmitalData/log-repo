@@ -81,6 +81,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           IsBackToBack = a.IsBackToBack,
                           SATExternalId = a.SATExternalId,
                           IsExpense = a.IsExpense,
+                          IsDomestic = a.IsDomestic, 
+                          IsImport = a.IsImport, 
+                          IsDrop = a.IsDrop, 
+                          IsExport = a.IsExport, 
                       }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -149,6 +153,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsBackToBack = a.IsBackToBack,
                                   SATExternalId = a.SATExternalId,
                                   IsExpense = a.IsExpense,
+                                  IsDomestic = a.IsDomestic,
+                                  IsImport = a.IsImport,
+                                  IsDrop = a.IsDrop,
+                                  IsExport = a.IsExport,
                               }).FirstOrDefault();
 
                     ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -219,6 +227,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               IsBackToBack = a.IsBackToBack,
                               SATExternalId = a.SATExternalId,
                               IsExpense = a.IsExpense,
+                              IsDomestic = a.IsDomestic,
+                              IsImport = a.IsImport,
+                              IsDrop = a.IsDrop,
+                              IsExport = a.IsExport,
                           }).FirstOrDefault();
 
 
@@ -289,6 +301,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsBackToBack = a.IsBackToBack,
                                   SATExternalId = a.SATExternalId,
                                   IsExpense = a.IsExpense,
+                                  IsDomestic = a.IsDomestic,
+                                  IsImport = a.IsImport,
+                                  IsDrop = a.IsDrop,
+                                  IsExport = a.IsExport,
                               }).FirstOrDefault();
 
                     ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -365,6 +381,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               IsBackToBack = a.IsBackToBack,
                               SATExternalId = a.SATExternalId,
                               IsExpense = a.IsExpense,
+                              IsDomestic = a.IsDomestic,
+                              IsImport = a.IsImport,
+                              IsDrop = a.IsDrop,
+                              IsExport = a.IsExport,
                           }).FirstOrDefault();
 
 
@@ -427,6 +447,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     IsBackToBack = a.IsBackToBack,
                                                     SATExternalId = a.SATExternalId,
                                                     IsExpense = a.IsExpense,
+                                                    IsDomestic = a.IsDomestic,
+                                                    IsImport = a.IsImport,
+                                                    IsDrop = a.IsDrop,
+                                                    IsExport = a.IsExport,
                                                 };
             return charges;
         }
@@ -486,6 +510,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              IsBackToBack = a.IsBackToBack,
                              SATExternalId = a.SATExternalId,
                              IsExpense = a.IsExpense,
+                             IsDomestic = a.IsDomestic,
+                             IsImport = a.IsImport,
+                             IsDrop = a.IsDrop,
+                             IsExport = a.IsExport,
                          }).AsQueryable();
 
             IQueryable<ChargesTypePM> query2 = null;
@@ -568,6 +596,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      IsCustoms = f.IsCustoms,
                                                      SATExternalId = f.SATExternalId,
                                                      IsExpense = f.IsExpense,
+                                                     IsDomestic = f.IsDomestic,
+                                                     IsImport = f.IsImport,
+                                                     IsDrop = f.IsDrop,
+                                                     IsExport = f.IsExport,
                                                  };
             return result;
         }
@@ -623,6 +655,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    IsCustoms = f.IsCustoms,
                                                    SATExternalId = f.SATExternalId,
                                                    IsExpense = f.IsExpense,
+                                                   IsDomestic = f.IsDomestic,
+                                                   IsImport = f.IsImport,
+                                                   IsDrop = f.IsDrop,
+                                                   IsExport = f.IsExport,
                                                }).FirstOrDefault();
 
             return chargesTypeList;
@@ -682,6 +718,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              IsCustoms = f.IsCustoms,
                              SATExternalId = f.SATExternalId,
                              IsExpense = f.IsExpense,
+                             IsDomestic = f.IsDomestic,
+                             IsImport = f.IsImport,
+                             IsDrop = f.IsDrop,
+                             IsExport = f.IsExport,
                          }).OrderBy(d=>d.Code).Skip(skip).Take(take);
 
 
