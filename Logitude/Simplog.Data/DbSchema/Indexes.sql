@@ -655,3 +655,9 @@ ON [dbo].[ShipmentMasterDatas] ([Master],[AirlinePrefix])
 
 GO
 
+
+
+GO
+CREATE NONCLUSTERED INDEX [DocumentsFilings_Tenant_ForwarderDocumentId]
+ON [dbo].[DocumentsFilings] ([Tenant],[ForwarderDocumentId])
+

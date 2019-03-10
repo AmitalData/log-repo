@@ -141,6 +141,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append('0', 9);
                 }
+              
                 if (item.JournalNumber != null)
                 {
                     if (item.JournalNumber.Length > 10) { item.JournalNumber.Substring(0, 10); }
@@ -173,6 +174,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (entityPartnerCode != null)
                     {
+                        if(entityPartnerCode.PartnerCode == null)
+                        {
+
+                        }
                         if (entityPartnerCode.PartnerCode.Length > 3) { entityPartnerCode.PartnerCode = entityPartnerCode.PartnerCode.Substring(0, 3); }
                         myStringBuilder.Append(entityPartnerCode.PartnerCode.PadLeft(3, '0'));
                     }
@@ -261,8 +266,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         var partnerCode = computingPartnerTranslations.Where(d => d.ObjectTableName == "Currency" && d.OurCode == currency.Code).FirstOrDefault();
 
-                        if (partnerCode != null)
+                        if (partnerCode != null && !string.IsNullOrEmpty(partnerCode.PartnerCode))
                         {
+                          
                             if (partnerCode.PartnerCode.Length > 3) { partnerCode.PartnerCode = partnerCode.PartnerCode.Substring(0, 3); }
                             myStringBuilder.Append(partnerCode.PartnerCode.PadLeft(3, ' '));
                         }
@@ -2182,8 +2188,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     myStringBuilder.Append("a");
                  
-                    myStringBuilder.Append('0', 16);
-                    myStringBuilder.Append("1");
+                    myStringBuilder.Append('0', 12);
+                    myStringBuilder.Append("10000");
                     if (line.LocalCurrencyAmount != null)
                     {
                         string LocalCurrencyAmount = Format((decimal)line.LocalCurrencyAmount); //  Math.Abs((decimal) line.LocalCurrencyAmount).ToString().Replace(".", string.Empty);

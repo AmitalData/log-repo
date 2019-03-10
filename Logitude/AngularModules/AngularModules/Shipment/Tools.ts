@@ -1944,6 +1944,32 @@ export class ShipmentGenerator {
                             }
                     }
 
+                    switch (this.EntityPM.DirectionId) {
+                        case "E":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsExport);
+                                break;
+                            }
+
+                        case "I":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsImport);
+                                break;
+                            }
+
+                        case "D":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsDomestic);
+                                break;
+                            }
+
+                        case "R":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsDrop);
+                                break;
+                            }
+                    }
+
                     if (this.IsLCLEntity) {
                         allChargesTypes.sort((a, b) => { return a.ViewOrder - b.ViewOrder }).forEach((item) => {
                             var newRecord: ShipmentPayablePM = new ShipmentPayablePM(this.EntityPM);
@@ -2586,6 +2612,32 @@ export class ShipmentGenerator {
                         case "I":
                             {
                                 allChargesTypes = allChargesTypes.filter(r => r.IsInland);
+                                break;
+                            }
+                    }
+
+                    switch (this.EntityPM.DirectionId) {
+                        case "E":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsExport);
+                                break;
+                            }
+
+                        case "I":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsImport);
+                                break;
+                            }
+
+                        case "D":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsDomestic);
+                                break;
+                            }
+
+                        case "R":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsDrop);
                                 break;
                             }
                     }

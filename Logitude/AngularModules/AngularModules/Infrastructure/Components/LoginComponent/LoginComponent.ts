@@ -807,65 +807,48 @@ export class LoginComponent implements OnInit {
 
 
     private CheckTenantBlocking(userData: any) {
-        var isCheckedCompleted = false;
+        var isSystemBlocked = false;
         var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
 
         if (SessionLocator.TenantManagementJS.PaymentFailure) {
 
             if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
-                isCheckedCompleted = true;
+                isSystemBlocked = true;
                 SessionLocator.BlockType = "company";
             }
 
             else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
-                isCheckedCompleted = true;
+                isSystemBlocked = true;
                 SessionLocator.BlockType = "suspend";
-            }
-
-            else {
-                isCheckedCompleted = true;
-                this.LoadClosedTablesToWindow(userData.CurrentTenant);
             }
         }
 
-        if (!isCheckedCompleted) {
+        if (!isSystemBlocked) {
             if (SessionLocator.TenantManagementJS.IsTrial) {
 
                 if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
-                    isCheckedCompleted = true;
+                    isSystemBlocked = true;
                     SessionLocator.BlockType = "company";
                 }
 
                 else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
-                    isCheckedCompleted = true;
+                    isSystemBlocked = true;
                     SessionLocator.BlockType = "company";
-                }
-
-                else {
-                    isCheckedCompleted = true;
-                    this.LoadClosedTablesToWindow(userData.CurrentTenant);
                 }
             }
         }
 
-        if (!isCheckedCompleted) {
+        if (!isSystemBlocked) {
             if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
 
                 if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
-                    isCheckedCompleted = true;
+                    isSystemBlocked = true;
                     SessionLocator.BlockType = "company";
-                }
-
-                else {
-                    isCheckedCompleted = true;
-                    this.LoadClosedTablesToWindow(userData.CurrentTenant);
                 }
             }
         }
 
-       // if (!isCheckedCompleted) {
-            this.LoadClosedTablesToWindow(userData.CurrentTenant);
-      //  }
+        this.LoadClosedTablesToWindow(userData.CurrentTenant);
     }
 
     private timerToken: any;
