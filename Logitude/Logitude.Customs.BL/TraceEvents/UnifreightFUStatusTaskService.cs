@@ -84,7 +84,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
                     
-                    string requestData = GetMyFUStatusXML(tenant, myUnifreightFUStatusParam, DateTime.Now);
+                    string requestData = GetMyFUStatusXML(tenant, myUnifreightFUStatusParam, myUnifreightFUStatusParam.EventDateTime?? DateTime.Now);
 
 
                     //string requestData = GetEventRequestDATA(myUnifreightFUStatusParam, unifreightUserId, true);
@@ -147,6 +147,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
             myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
             myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
+            LogMessagingUtil.Instance.AppendLine("TASKID="+myYCULTASKPM_Packs.TASKID);
         }
 
         public string GetMyFUStatusXML(
