@@ -22,6 +22,8 @@ namespace WebFreight.Web.DataProviders
         public DateTime? DepartureDate { get; set; }
         public DateTime? ArrivalDate  { get; set; }
         public string Carrier { get; set; }
+        public string DepartualDateIndication { get; set; }
+        public string ArrivalDateIndication { get; set; }        
         public string CarrierNumber { get; set; }
         public string MasterNumber { get; set; }
         public string HouseNumber { get; set; }

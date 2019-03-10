@@ -4,6 +4,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -143,9 +146,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
 
             IShipmentsContext context = ShipmentsContext.GetContext(tenant);
-
+            ICommonDataContext Commoncontext = CommonDataContext.GetContext(tenant);
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(context);
-
+            CardRepository cardRepository = new CardRepository(Commoncontext);
+            EntityStatusRepository entityRepository = new EntityStatusRepository(webFreightContext);
+            PortRepository portRepository = new PortRepository(Commoncontext);
+            CountryRepository countryRepository = new CountryRepository(Commoncontext);
             IQueryable<Shipment> iQueryable_shipments = (from d in context.Shipments where d.Tenant == tenant select d).AsQueryable();
             if (!string.IsNullOrEmpty(Direction) && Direction != "All")
             {
@@ -188,45 +195,168 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             }
 
 
-            IQueryable<ShipmentPackage> shipmentPackages = (from d in context.ShipmentPackages.Include("PackageType") where d.Tenant == tenant select d).AsQueryable();
-            IQueryable<InsideShipmentPackage> InsideShipmentPackages = (from d in context.InsideShipmentPackages.Include("PackageType") where d.Tenant == tenant select d).AsQueryable();
+            IQueryable<ShipmentPackage> shipmentPackages = (from d in context.ShipmentPackages.Include("PackageType") where d.Tenant == tenant select d);
+            IQueryable<InsideShipmentPackage> InsideShipmentPackages = (from d in context.InsideShipmentPackages.Include("PackageType") where d.Tenant == tenant select d);
 
 
             var ShipmentPackagesAndInside = (from shipment in iQueryable_shipments
-                        join package in shipmentPackages on shipment.Id equals package.ShipmentId into shipmentpackage
-                        from dept in shipmentpackage.DefaultIfEmpty()
-                        join insidepackage in InsideShipmentPackages on dept.Id equals insidepackage.ShipmentPackageId into insideshipmentpackage
-                        from insidepackages in insideshipmentpackage.DefaultIfEmpty()
-                        select   new
+                                             join package in shipmentPackages on shipment.Id equals package.ShipmentId into shipmentpackage
+                                             from dept in shipmentpackage.DefaultIfEmpty()
+                                             join insidepackage in InsideShipmentPackages on dept.Id equals insidepackage.ShipmentPackageId into insideshipmentpackage
+                                             from insidepackages in insideshipmentpackage.DefaultIfEmpty()
+                                             join masterDatas in context.ShipmentMasterDatas on shipment.MasterShipmentDataId equals masterDatas.Id into masterShipment
+                                             from master in masterShipment.DefaultIfEmpty()
+                                             select new
 
-                        {
+                                             {
 
-                            ShipmentNumber=shipment.ShipmentNumber,
+                                                 ShipmentNumber = shipment.ShipmentNumber,
+                                                 CustomerId = shipment.CustomerId,
+                                                 StatusId = shipment.StatusId,
+                                                 POL = shipment.ShipmentLevelCode == "H" ? shipment.FromPortId : master.MainCarriageFromPortId,
+                                                 POD = shipment.ShipmentLevelCode == "H" ? shipment.ToPortId : master.MainCarriageFinalDestinationPortId,
+                                                 DepartualDate = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
+                                                 DepartualDateIndication = master.MainCarriageATD != null ? "Actual" : "Expected",
+                                                 ArrivalDate = master.MainCarriageATA != null ? master.MainCarriageATA : master.MainCarriageETA,
+                                                 ArrivalDateIndication = master.MainCarriageATA != null ? "Actual" : "Expected",
+                                                 TransportModeId=shipment.TransportModeId,
+                                                 Carrier = master.MainCarriageCarrierId,
+                                                 VesselId = master.MainCarriageVesselId,
+                                                 CarrierNumber = master.MainCarriageCarrierNumber,
+                                                 CarrierPrefix = master.MainCarriageCarrierPrefix,
+                                                 MasterNumber = shipment.TransportModeId=="A"?master.AirlinePrefix+master.Master:master.Master,
+                                                 HouseNumber = shipment.House,
+                                                 Make = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Make : null) : (dept != null ? dept.Make : null),
+                                                 Model = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Model : null) : (dept != null ? dept.Model : null),
+                                                 Year = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Year : null) : (dept != null ? dept.Year : null),
+                                                 Color = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Color : null) : (dept != null ? dept.Color : null),
+                                                 ChassisNumber = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.ChassisNumber : null) : (dept != null ? dept.ChassisNumber : null),
+                                                 RegistrationNumber = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.RegistrationNumber : null) : (dept != null ? dept.RegistrationNumber : null),
+                                                 CountryofManufacture = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.CountryId : null) : (dept != null ? dept.CountryId : null),
+                                                 ContainerNumber =dept!=null?dept.ContainerNumber:null,
+                                                 ContainerType = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.PackageType.Code : null) : (dept != null ? dept.PackageType.Code : null),
+                                                 VehicleType = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.PackageType.EnglishName : null) : (dept != null ? dept.PackageType.EnglishName : null),
+                                             }).ToList();
 
-                            CustomerId = shipment.CustomerId,
-                            ShipmentStatusId = shipment.StatusId,
-                            POL = shipment.Origin,
-                         //   POD = shipment.destinationport,
-                           // DepartualDate = shipment.o,
-                            ArrivalDate = shipment.FinalArrivalDate,
-                            Carrier = shipment.OnCarriageCarrierId,
-                            CarrierNumber = shipment.OnCarriageCarrierNumber,
-                            MasterNumber = shipment.MasterShipmentDataId,
-                            HouseNumber = shipment.House,
-                            
-                            val3 = shipment.FHLStatusCode,
-
-                            val4 = dept.PackageTypeId,
-                            val5 = dept.ContainerNumber,
-                            val6 = insidepackages.ShipmentPackageId,
-                            val7 = (int?)insidepackages.Tenant,
 
 
-                        }).ToList();
+            
 
-            //var shipments = list.Where(a => a.val1 != null).ToList();
-           // var shipmentpackages = list.Where(a => a.val4 != null).ToList();
-            //var shipmentinsidepackages = list.Where(a => a.val6 != null || a.val7 != null).ToList();
+            ShipmentPackagesAndInside.ForEach(item =>
+            {
+                VehiclePackageRecord package = new VehiclePackageRecord();
+                package.ShipmentNumber = item.ShipmentNumber;
+                package.MasterNumber = item.MasterNumber;
+                package.HouseNumber = item.HouseNumber;
+                package.Make = item.Make;
+                package.Model = item.Model;
+                package.Year = item.Year;
+                package.Color = item.Color;
+                package.ChassisNumber = item.ChassisNumber;
+                package.RegistrationNumber = item.RegistrationNumber;
+                package.ContainerNumber = item.ContainerNumber;
+                package.ContainerType = item.ContainerType;
+                package.VehicleType = item.VehicleType;
+
+                if (item.CustomerId!=null)
+                {
+                    Card Customer = cardRepository.GetSingleCard(item.CustomerId, tenant);
+                    if (Customer != null)
+                    {
+                        package.Customer = Customer.EnglishName;
+                    }
+
+                }
+
+
+                if (item.StatusId != null)
+                {
+                    EntityStatus Status = entityRepository.GetSingleEntityStatus(item.StatusId, tenant);
+                    if (Status != null)
+                    {
+                        package.Status = Status.Name;
+                    }
+
+                }
+
+                if (item.POL != null)
+                {
+                    Port port = portRepository.GetSinglePort(item.POL, tenant);
+                    if (port != null)
+                    {
+                        package.POL = port.EnglishName;
+                    }
+
+                }
+
+                if (item.POD != null)
+                {
+                    Port port = portRepository.GetSinglePort(item.POD, tenant);
+                    if (port != null)
+                    {
+                        package.POD = port.EnglishName;
+                    }
+                }
+
+
+
+                if (item.DepartualDate != null)
+                {
+                    package.DepartureDate = item.DepartualDate;
+                    package.DepartualDateIndication= item.DepartualDateIndication;                   
+                }
+                else
+                {
+                    package.DepartualDateIndication = null;
+                }
+
+                if (item.ArrivalDate != null)
+                {
+                    package.ArrivalDate = item.ArrivalDate;
+                    package.ArrivalDateIndication = item.ArrivalDateIndication;
+                }
+                else
+                {
+                    package.ArrivalDateIndication = null;
+                }
+
+                if (item.CountryofManufacture != null)
+                {
+                    Country country = countryRepository.GetSingleCountry(item.CountryofManufacture, tenant);
+                    if (country != null)
+                    {
+                        package.CountryofManufacture = country.EnglishName;
+                    }
+                }
+
+
+                if (item.Carrier != null)
+                {
+                    Card card = cardRepository.GetSingleCard(item.Carrier, tenant);
+                    if (card != null)
+                    {
+                        package.Carrier = card.EnglishName;
+                    }
+                }
+
+                
+                if (item.TransportModeId=="O")
+                {
+
+                    Vessel vessel = (from a in Commoncontext.Vessels where a.Id == item.VesselId && a.Tenant == tenant select a).FirstOrDefault();
+                     package.CarrierNumber = vessel!=null?( vessel.EnglishName + " / "):""+item.CarrierPrefix!=null? item.CarrierPrefix :"" + item.CarrierNumber!=null? item.CarrierNumber:"";
+                    
+                }
+                else
+                {
+                    package.CarrierNumber = item.CarrierPrefix+item.CarrierNumber;
+                }
+                myDataProvider.ShipmentPackages.Add(package);
+
+            });
+
+
+
 
 
             return myDataProvider;

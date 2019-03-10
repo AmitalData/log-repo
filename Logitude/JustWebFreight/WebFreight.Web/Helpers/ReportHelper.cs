@@ -1250,7 +1250,7 @@ namespace WebFreight.Web.Helpers
                     }
 
 
-                case "Vehicles":
+                case "VEHI":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(VehiclesDataProvider));
                         VehiclesDataProvider reportDataProvider = (VehiclesDataProvider)serializer.Deserialize(memorystream);
