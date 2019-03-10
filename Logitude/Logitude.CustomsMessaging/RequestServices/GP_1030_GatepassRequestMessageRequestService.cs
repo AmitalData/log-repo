@@ -29,21 +29,22 @@ namespace Logitude.CustomsMessaging.RequestServices
             GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessage myGatepassRequestMessage = new GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessage();
             myGatepassRequestMessage.CargoIdentifier = new cargoIdentifier();
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierType = 1;
-            myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey1 = _CourierMasterPM.DepartureDate.Value.Year.ToString();
+            if (_CourierMasterPM.DepartureDate != null)
+            {
+                myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey1 = _CourierMasterPM.DepartureDate.Value.Year.ToString();
+            }
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey2 = _CourierMasterPM.MAWB;
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey3 = _CourierMasterPM.HAWB;
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
-            GatepassRequestPM myGatepassRequest = myGatepassRequestQueryService.GetSingle(requestParams.MasterCourierId, false, false);
-            myGatepassRequestMessage.gatepassNumber = myGatepassRequest.GatepassNumber;
 
-            var declarationQS = new DeclarationQueryService(dbContext);
-            string forwarder = declarationQS.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
-            if(!string.IsNullOrEmpty(forwarder))
-            {
-                myGatepassRequestMessage.ExternalID = forwarder.Substring(forwarder.Length - 3);
-            }
+            GatepassRequestPM myGatepassRequestPM = myGatepassRequestQueryService.GetSingle(requestParams.MasterCourierId, false, false);
+            myGatepassRequestMessage.gatepassNumber = myGatepassRequestPM.GatepassNumber;
 
-            myGatepassRequestMessage.originSiteCode = requestParams.OriginSiteCode;
+            CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(dbContext);
+            CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(_CourierMasterPM.Tenant);
+            myGatepassRequestMessage.ExternalID = CustomsSetting.CustomsAgentId;
+
+            myGatepassRequestMessage.originSiteCode = myGatepassRequestPM.OriginSiteCode;
             myGatepassRequestMessage.processTypeCode = 1;
             myGatepassRequestMessage.requestDate = DateTime.Now;
             myGatepassRequestMessage.customerActivityType = 7;
@@ -53,9 +54,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             List<GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite> myGatepassDestinationSiteList = new List<GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite>();
             GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite myGatepassDestinationSite = new GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite();
-            myGatepassDestinationSite.designateSiteCode = requestParams.DesignateSiteCode;
+            myGatepassDestinationSite.designateSiteCode = myGatepassRequestPM.DesignateSiteCode;
             int transportationTypeCode;
-            int.TryParse(requestParams.TransportationTypeCode, out transportationTypeCode);
+            int.TryParse(myGatepassRequestPM.TransportationTypeCode, out transportationTypeCode);
             myGatepassDestinationSite.transportationTypeCode = transportationTypeCode;
             myGatepassDestinationSite.isFinalDestination = false;
 
@@ -67,7 +68,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGP_NG_1030_MSG1_GatepassRequestMessage.GatepassRequestMessage = myGatepassRequestMessageList.ToArray();
 
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.RequestDescription = "בקשת העברה ";
+            this.MyRequestSheetParam.RequestDescription = "בקשת העברה " + _CourierMasterPM.AirlinePrefix + "-" + _CourierMasterPM.MAWB;
 
             return myGP_NG_1030_MSG1_GatepassRequestMessage;
         }

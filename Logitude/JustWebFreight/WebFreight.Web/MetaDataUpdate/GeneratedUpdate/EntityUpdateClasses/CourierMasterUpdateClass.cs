@@ -2524,7 +2524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OPENCOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id, IndexOrder = 7, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OPENCOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1", QueryId = OPENCOURIERMASTERSQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OPENCOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = OPENCOURIERMASTERSQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -2547,7 +2547,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CLOSECOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id, IndexOrder = 7, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter CLOSECOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0", QueryId = CLOSECOURIERMASTERSQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CLOSECOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "IsOpen" && d.ObjectTableId == CourierMasterObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = CLOSECOURIERMASTERSQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      

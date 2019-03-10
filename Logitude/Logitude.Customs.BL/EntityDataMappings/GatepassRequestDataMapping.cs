@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -19,7 +20,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(GatepassRequestPM entityPM, GatepassRequest entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.MasterCourierId);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.MasterCourierId = entityPM.MasterCourierId;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
         }
 
         public void CustomPOCOToPM(GatepassRequestPM entityPM, GatepassRequest entityPOCO)

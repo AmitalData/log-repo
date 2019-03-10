@@ -167,7 +167,7 @@ namespace Logitude.Customs.BL.CloseTables
                 Partner = PartnerCode_ILOVS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
 
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.OVSStatusAvailabilitySpliterService,
                 Subject="Status/Availability ILOVS Raw"
             },
             new InterfaceDetails()
@@ -178,7 +178,7 @@ namespace Logitude.Customs.BL.CloseTables
                 Partner = PartnerCode_ILOVS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
 
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.OVSStatusAvailabilityService,
                 Subject="Status/Availability ILOVS",
                 ServerInternalDef= true
             },
@@ -248,6 +248,7 @@ namespace Logitude.Customs.BL.CloseTables
                     return new CourierOVSSpecialActionQService(@interface);
                 case AnalyzeQueueServiceEnum.OVSStatusAvailabilitySpliterService:
                     return new CourierOVSStatusAvailabilitySplitterQService(@interface);
+
                 case AnalyzeQueueServiceEnum.OVSStatusAvailabilityService:
                     return new CourierOVSStatusAvailabilityQService(@interface);
                 default:
