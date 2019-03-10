@@ -36,7 +36,7 @@ export class DeclarationMamanSpecialActionComponent
 
     SetWindowArgs(entityArgs: any) {
         this._TerminalSuspentionNumber = entityArgs.TerminalSuspentionNumber;
-        this._TerminalSuspentionNumber = "dd";
+        //this._TerminalSuspentionNumber = "dd";
 
         let list: DeclarationMamanSpecialActionList[] = entityArgs.MamanSpecialActionList;
         this._FetchDeclarationMamanSpecialActionList.InsertCollection(list);
