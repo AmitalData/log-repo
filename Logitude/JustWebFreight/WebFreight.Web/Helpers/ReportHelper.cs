@@ -1249,6 +1249,17 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+
+                case "VEHI":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(VehiclesDataProvider));
+                        VehiclesDataProvider reportDataProvider = (VehiclesDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "Vehicles", Name = "VehiclesDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
                 case "VDCA":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(VendorChargesAnalysisDataProvider));
@@ -1687,7 +1698,13 @@ namespace WebFreight.Web.Helpers
                         dataProvider = logitudeReportsWebService.LoadVDKDataProvider(filters, reportFliter.tenant);
                         break;
                     }
-
+                case "VEHI":
+                    {
+                        
+                        VehiclesManager myDataManager = new VehiclesManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                 case "VDCA":
                     {
                         VendorChargesAnalysisManager myDataManager = new VendorChargesAnalysisManager(filters, reportFliter.tenant);
