@@ -45,13 +45,13 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             ObjectTableRepository tableRep = new ObjectTableRepository(parameterArgs.Tenant);
 
             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(parameterArgs.Tenant);
-            DocumentType documentType = documentTypeRepository.GetDocumentTypeByCode("TDDP", parameterArgs.Tenant);
-            ObjectTable table = tableRep.GetObjectTableByName("TaxDeductionReport", 0, true);
+            //DocumentType documentType = documentTypeRepository.GetDocumentTypeByCode("TDDP", parameterArgs.Tenant);
+            //ObjectTable table = tableRep.GetObjectTableByName("TaxDeductionReport", 0, true);
             try
             {
                 DocumentsFilingPM docFilingPM = TaxDeductionReportService.Create856File(parameterArgs.ReportId, parameterArgs.Tenant);
                
-                DocumentOutPM documentOutPM = TaxDeductionReportService.CreateDocumentOut(documentType.Id, parameterArgs.ReportId, null, null, table.Id, parameterArgs.Tenant);
+                //DocumentOutPM documentOutPM = TaxDeductionReportService.CreateDocumentOut(documentType.Id, parameterArgs.ReportId, null, null, table.Id, parameterArgs.Tenant);
                 taxDeductionReportPM.StatusTypeCode = "3";
                 taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
                 taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
