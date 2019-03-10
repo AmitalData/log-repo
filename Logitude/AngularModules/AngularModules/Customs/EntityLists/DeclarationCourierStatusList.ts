@@ -56,6 +56,7 @@ export class DeclarationCourierStatusList {
 	CourierPendingReasonErrorPlace: string;
 	FastIndividualProcessCode: string;
 	ManualProcessCode: string;
+	TerminalSuspentionNumber: string;
 	
 }
  

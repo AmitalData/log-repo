@@ -52,6 +52,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.FastIndividualProcessCode).HasColumnName("FastIndividualProcessCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.ManualProcessCode).HasColumnName("ManualProcessCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.TerminalSuspentionNumber).HasColumnName("TerminalSuspentionNumber").HasMaxLength(6).IsUnicode(false);
         }
     }
 }
