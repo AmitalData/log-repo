@@ -2182,8 +2182,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     myStringBuilder.Append("a");
                  
-                    myStringBuilder.Append('0', 16);
-                    myStringBuilder.Append("1");
+                    myStringBuilder.Append('0', 12);
+                    myStringBuilder.Append("10000");
                     if (line.LocalCurrencyAmount != null)
                     {
                         string LocalCurrencyAmount = Format((decimal)line.LocalCurrencyAmount); //  Math.Abs((decimal) line.LocalCurrencyAmount).ToString().Replace(".", string.Empty);
