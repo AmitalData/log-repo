@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -14,12 +14,13 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 })
 
 export class LedgerTransactionsFilterControl extends BaseComponent implements OnInit {
+    ObjectTableName: string = "LedgerTransaction";
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
     entityResourceService: EntityResourceService = new EntityResourceService();
-    constructor() {
+    constructor(private CD:ChangeDetectorRef) {
         super();
 
         // get requierd resources
@@ -41,6 +42,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     SetUIProperties() {
         // this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
+        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
 
     }
 
@@ -72,20 +74,22 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
 
     ValidateDate() {
-        if (this.AgingForDate) {
-            var newDate = new Date();
-            var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate()+1, 0, 0, 0); // +1 is to include today date to allowed values
+        if (this.FromDate > this.ToDate) {
 
-            if (this.AgingForDate > currentDate) {
-                this.UIProperties.SetValidity("AgingForDate", "GLAccount", false, TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
-                return false;
-            } else {
-                this.UIProperties.SetValidity("AgingForDate", "GLAccount", true, "valid");
-                this.UIProperties.SetRequired("AgingForDate", "GLAccount", false);
-                return true;
-            }
+            setTimeout(() => {
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                this.CD.detectChanges();
+            }, 200);
+
+        } else {
+            setTimeout(() => {
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
+                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
+                this.CD.detectChanges();
+            }, 200);
+
         }
-        return true;
     }
 
     //private chartOfAccount: string;
@@ -178,6 +182,39 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     //#endregion
 
+    //#region Filter Methods
+    public filterSelectedValue: string = 'filter_accounting';
+    public _dateTypeCode: string = '1';
+    FilterItemClicked(itemValue: string) {
+        if (this.filterSelectedValue != itemValue) {
+            this.filterSelectedValue = itemValue;
+            this.FilterLines();
+        }
+    }
+    FilterLines() {
+
+        //Task 46666: Transaction Tab - date filter new design
+        // <DateTypeCode>2</DateTypeCode> 1/2/3
+        // Accounting- - code 1- חשבונאי
+        // Due - code 2 - לגביה
+        // Reference -code-3-  אסמכתא
+
+        // switch (this.filterSelectedValue) {
+        //     case 'filter_accounting':
+        //         this._dateTypeCode = '1';
+        //         break;
+        //     case 'filter_due':
+        //         this._dateTypeCode = '2';
+        //         break;
+        //     case 'filter_reference':
+        //         this._dateTypeCode = '3';
+        //         break;
+        //     default:
+        //         break;
+        // }
+    }
+    //#endregion
+
     RunButtonClicked() {
         this.SetUIProperties();
 
@@ -187,15 +224,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.ValidationErrorsList = [];
 
         //#region requierd fields
-        // if (!this.AgingForDate) { errors.push("Aging for date field is requierd"); }
-        //if (!this.Customer) { errors.push("Customer field is requierd"); }
-        // if (!this.NumberOfMonths) { errors.push("Number of months field is requierd"); }
+        if (!this.GLAccountId) { errors.push( TextCodeTranslator.Translate("GLTransactionReport.O.GLAccountZrequierd") ); }
         //#endregion
 
         //#region Date validation
-        // var isDateValid = this.ValidateDate();
-        // if (!isDateValid)
-        //     errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
+        if (this.FromDate > this.ToDate) {
+            errors.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+        }
         //#endregion
 
         if (errors.length == 0) {
@@ -246,5 +281,71 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.SelectedCategory = item;
     }
     //#endregion
+
+    //#region Properties
+    //OpenAmountHint: string = "";
+    private openAmountHint: string;
+    get OpenAmountHint() { return this.openAmountHint; }
+    set OpenAmountHint(value: string) {
+        if (this.openAmountHint != value) {
+            this.openAmountHint = value;
+        }
+    }
+
+    private fromDate: Date;
+    get FromDate() { return this.fromDate; }
+    set FromDate(value: Date) {
+        if (this.fromDate != value) {
+            this.fromDate = value;
+            this.ValidateDate();
+        }
+    }
+
+    toDate: Date;
+    get ToDate() { return this.toDate; }
+    set ToDate(value: Date) {
+        if (this.toDate != value) {
+            this.toDate = value;
+            this.ValidateDate();
+        }
+    }
+
+    private currencyId: string;
+    get CurrencyId() { return this.currencyId; }
+    set CurrencyId(value: string) {
+        if (this.currencyId != value) {
+            this.currencyId = value;
+        }
+    }
+
+
+    private attachedGLAccountCheckBox: boolean = false;
+    get AttachedGLAccountCheckBox() { return this.attachedGLAccountCheckBox; }
+    set AttachedGLAccountCheckBox(value: boolean) {
+        if (this.attachedGLAccountCheckBox != value) {
+            this.attachedGLAccountCheckBox = value;
+
+        }
+    }
+
+    private splittedByCurrencyCheckBox: boolean = false;
+    get SplittedByCurrencyCheckBox() { return this.splittedByCurrencyCheckBox; }
+    set SplittedByCurrencyCheckBox(value: boolean) {
+        if (this.splittedByCurrencyCheckBox != value) {
+            this.splittedByCurrencyCheckBox = value;
+
+        }
+    }
+
+    private _GLAccountId: string;
+    get GLAccountId() { return this._GLAccountId; }
+    set GLAccountId(value: string) {
+        if (this._GLAccountId != value) {
+            this._GLAccountId = value;
+        }
+    }
+
+    //#endregion
+
 
 }
