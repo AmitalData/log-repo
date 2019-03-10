@@ -1985,9 +1985,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.FutureDate", DefaultText = "Future date", LocalDefaultText = "תאריך עתידי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
+            // GLAccount Transactions Report
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountNo", DefaultText = "GL Account No.", LocalDefaultText = "מספר כרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountZrequierd", DefaultText = "GL Account field is requierd", LocalDefaultText = "חובה למלא את השדה מספר כרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.WithClosedTransactions", DefaultText = "With Closed Transactions", LocalDefaultText = "כלול תנועות סגורות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
 
 
-            
+
+
+
 
             #region Screens
 
