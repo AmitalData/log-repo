@@ -32,6 +32,7 @@ import {MultiSelectedValue, ValueDetails} from '../../../CommonModules/CommonOth
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
+import { filter } from 'rxjs/operators';
 ;
 
 @Component({
@@ -308,6 +309,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
         filters.Filter1Name = this.ObjectTableName;
         filters.Filter2Name = this.ObjectFieldName;
+        filters.Filter3Name = this.LOVAdditionalColumns;
         if (this.LOVAdditionalColumns) {
             filters.Filter3Name = this.LOVAdditionalColumns;
         }

@@ -93,13 +93,15 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("Category2", GetStringValue(fieldViewModel.Category2), fieldElement);
                 SetAttribute("LOVAdditionalColumns", GetStringValue(fieldViewModel.LOVAdditionalColumns), fieldElement);
 				SetAttribute("HideTree", fieldViewModel.HideTree.ToString().ToLower(), fieldElement);
+                SetAttribute("CannotFilter", fieldViewModel.CannotFilter.ToString().ToLower(), fieldElement);
+                SetAttribute("HelpText", GetStringValue(fieldViewModel.HelpText), fieldElement);
 
 
 
 
 
 
-			}
+            }
 
         }
 
@@ -186,11 +188,13 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.Category2 = GetAttributeStringValue(fieldNode.Attributes["Category2"]);
             fieldViewModel.LOVAdditionalColumns = GetAttributeStringValue(fieldNode.Attributes["LOVAdditionalColumns"]);
 			fieldViewModel.HideTree = GetAttributeBoolValue(fieldNode.Attributes["HideTree"]);
+            fieldViewModel.CannotFilter = GetAttributeBoolValue(fieldNode.Attributes["CannotFilter"]);
+            fieldViewModel.HelpText = GetAttributeStringValue(fieldNode.Attributes["HelpText"]);
 
 
 
 
-			return fieldViewModel;
+            return fieldViewModel;
         }
 
     
