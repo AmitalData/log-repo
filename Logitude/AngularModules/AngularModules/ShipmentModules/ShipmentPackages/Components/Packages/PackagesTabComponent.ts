@@ -1402,8 +1402,10 @@ export class ShipmentPackageItem extends BaseComponent {
 
         if (!this.IsEditingEnabled) {
             isEditingFieldsEnabled = false;
+            this.SetUIProperties_Cars(false);
         }
 
+ 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DeliveryId)) {
             var allPackages = this.ShipmentPM.ShipmentPackages.filter(f => f.DeliveryId == this.EntityPM.DeliveryId);
             if (allPackages.length > 1) {
@@ -1419,6 +1421,7 @@ export class ShipmentPackageItem extends BaseComponent {
         this.SetUIProperties_Dangerous();
         this.SetUIProperties_BuildButton();
         this.SetUIProperties_Harmonize();
+
       
     }
     SetUIProperties_Package() {
@@ -2885,6 +2888,11 @@ export class InsideShipmentPackageItem extends BaseComponent {
                     isDimensionEnabled = false;
                 }
             }
+           
+        }
+
+        if (!this.IsEditingEnabled) {
+            this.SetUIPropertiesOfCars(false);
         }
 
         this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingEnabled);
