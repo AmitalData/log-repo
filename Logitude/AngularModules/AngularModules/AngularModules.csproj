@@ -682,6 +682,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationCondition.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationEventTypeArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationFollowUp.ts" />
