@@ -10,6 +10,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -75,10 +76,18 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     {
                         //declarationPM.MamanStatusCode = "1";
                         mamanResponseSuccesed = true;
+                        if(responeECSpclMamanData.SpSpclCode == "2")
+                        {
+                            var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
+                            var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(settings.Tenant);
+                            DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(settings.DeclarationId, false, false);
+                            myDeclarationCourierStatusPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            myDeclarationCourierStatusPM.FastIndividualProcessCode = "I";
+                            myDeclarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);
+                        }
                     }
                     break;
-                
-                    
+                   
                 default:
                     //declarationPM.MamanStatusCode = "2";
                     break;
@@ -98,6 +107,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 case "5"://MamanSpecialCode.PrintDocuments
                     cfifilmFUStatus = "CDO";
                     break;
+                //case "6"://MamanSpecialCode.PrintDocuments
+                //    cfifilmFUStatus = "CDS";
+                //    break;
             }
             var toCancel = false;
             UnifreightEventMode unifreightEventMode= UnifreightEventMode.@new;
@@ -119,8 +131,6 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 {
                     //update Failed Status  + message !!!
                     pmDeclarationMamanSpecialAction.MamanSpecialActionStatusCode = "2";//2   Error   2,error
-
-
                     pmDeclarationMamanSpecialAction.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 }
                 else
