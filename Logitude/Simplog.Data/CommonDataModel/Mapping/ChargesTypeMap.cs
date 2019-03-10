@@ -73,6 +73,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.IsExpense).HasColumnName("IsExpense");
 
+            this.Property(t => t.IsImport).HasColumnName("IsImport");
+            this.Property(t => t.IsDomestic).HasColumnName("IsDomestic");
+            this.Property(t => t.IsExport).HasColumnName("IsExport");
+            this.Property(t => t.IsDrop).HasColumnName("IsDrop");
+
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
