@@ -130,7 +130,7 @@
 
                                                             <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;" [attr.title]="DisConnectFeatureTitle">
                                                                 <div class="NotMatchedButton"></div>
-                                                                <IconButton [Name]="'Disconnect'"   [IsSmall]="true" (click)="item.DisconnectClicked()" [IsEnabled]="item.ConnectButtonIsEnabled || IsEnabledDisconnect"></IconButton>
+                                                                <IconButton [Name]="'Disconnect'"   [IsSmall]="true" (click)="item.DisconnectClicked()" [IsEnabled]="item.ConnectButtonIsEnabled && IsEnabledDisconnect"></IconButton>
                                                             </td>
 
                                                             <td class="GridViewCell" [style.width.px]="NoColumnWidth" [style.min-width.px]="NoColumnWidth" [style.max-width.px]="NoColumnWidth">
