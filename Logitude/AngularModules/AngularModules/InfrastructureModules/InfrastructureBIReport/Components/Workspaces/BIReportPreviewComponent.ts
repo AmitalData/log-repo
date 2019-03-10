@@ -127,13 +127,10 @@ export class BIReportPreviewComponent implements OnInit {
             if (sortsList != null) {
                 sortsList = sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 });
                 this.IsSorting = true;
-                //  this.agGrid.api.setSortModel(sortsList);
+                //this.agGrid.api.setSortModel(sortsList);
             }
-            //var params = {
-            //    force: true,
-            //};
             this.agGrid.api.refreshCells();
-            //var count = this.agGrid.api.getDisplayedRowCount();
+
             if (count > 50000 || msg == "MT5000") {
                 this.CountText = "Showing the first 50,000 rows, download the excel to view all."
             }
@@ -218,12 +215,8 @@ export class BIReportPreviewComponent implements OnInit {
                             width: columns[i].Width,
                             resizable: true,
                             Index: columns[i].Index,
-                            type: type,
-                            
+                            //type: type,
                             cellRendererFramework: EditShipmentLinkRendererComponent,
-                            //cellRendererParams: {
-                            //   
-                            //}
                         });
                     }
                     else {
