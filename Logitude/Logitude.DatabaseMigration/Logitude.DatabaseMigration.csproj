@@ -722,6 +722,10 @@
     <Compile Include="Migrations\201903031049372_SetIndexNotRequiredBIFolder_Samar.Designer.cs">
       <DependentUpon>201903031049372_SetIndexNotRequiredBIFolder_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.cs" />
+    <Compile Include="Migrations\201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.Designer.cs">
+      <DependentUpon>201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.cs" />
     <Compile Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.Designer.cs">
       <DependentUpon>201902241639523_add_ClosedTable_NumberFormat_Khalid.cs</DependentUpon>
@@ -1219,6 +1223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903031049372_SetIndexNotRequiredBIFolder_Samar.resx">
       <DependentUpon>201903031049372_SetIndexNotRequiredBIFolder_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.resx">
+      <DependentUpon>201903060728317_AddingCantFilterAndHelpTextToDWObjectFields_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902241639523_add_ClosedTable_NumberFormat_Khalid.resx">
       <DependentUpon>201902241639523_add_ClosedTable_NumberFormat_Khalid.cs</DependentUpon>

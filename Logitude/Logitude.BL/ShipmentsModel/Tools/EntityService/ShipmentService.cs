@@ -373,11 +373,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (this.entityPM.ShipmentLevelCode == "C")
                 {
-                    if (!entityPM.DontCreateConvertEvent)
-                    {
-                        this.isProrateReceivablesPM = this.entityPM.ProrateReceivables;
-                        this.isProrateReceivablesPOCO = this.entityMasterData.ProrateReceivables;
-                    }
+                    this.isProrateReceivablesPM = this.entityPM.ProrateReceivables;
+                    this.isProrateReceivablesPOCO = this.entityMasterData.ProrateReceivables;
                 }
 
                 if (entityPM.IsHybrid)//31-Mar fix for old consoles in hybrid without masterdata id
@@ -409,11 +406,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (!loggedTenant.IsDocumentsArchive)
                     {
-                        if (!entityPM.DontCreateConvertEvent)
-                        {
-                            ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
-                            ShipmentValidating.ValidateRoutingDates(entityPM, this.shipmentPickUpsChangeSet, this.shipmentDeliveriesChangeSet);
-                        }
+                        ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
+                        ShipmentValidating.ValidateRoutingDates(entityPM, this.shipmentPickUpsChangeSet, this.shipmentDeliveriesChangeSet);
                     }
 
                     this.UpdateShipmentOrderPackagesCollection();
@@ -437,10 +431,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (!entityPM.IsHybrid && !loggedTenant.IsDocumentsArchive)
                     {
-                        if (!entityPM.DontCreateConvertEvent)
-                        {
-                            shipmentTracing.BeginTracing();
-                        }
+                        shipmentTracing.BeginTracing();
                     }
 
                     if (string.IsNullOrEmpty(entityPM.CustomFileId) && !string.IsNullOrEmpty(entityPoco.CustomFileId))

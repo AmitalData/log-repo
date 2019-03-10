@@ -135,6 +135,16 @@ export class DWObjectFieldPM {
     public set DimensionTableDisplayName(newValue: string) { if (this.dimensionTableDisplayName != newValue) { this.dimensionTableDisplayName = newValue; this.MarkAsDirty("DimensionTableDisplayName"); } }
        
 	 
+    private cannotFilter: boolean;
+    public get CannotFilter() { return this.cannotFilter; }
+    public set CannotFilter(newValue: boolean) { if (this.cannotFilter != newValue) { this.cannotFilter = newValue; this.MarkAsDirty("CannotFilter"); } }
+       
+	 
+    private helpText: string;
+    public get HelpText() { return this.helpText; }
+    public set HelpText(newValue: string) { if (this.helpText != newValue) { this.helpText = newValue; this.MarkAsDirty("HelpText"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		
