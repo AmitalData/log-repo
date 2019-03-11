@@ -1399,7 +1399,25 @@ export class ShipmentPackageItem extends BaseComponent {
         }
 
         var isEditingFieldsEnabled = true;
+        if (!this.IsEditingEnabled) {
+            isEditingFieldsEnabled = false;
+        }
 
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DeliveryId)) {
+            var allPackages = this.ShipmentPM.ShipmentPackages.filter(f => f.DeliveryId == this.EntityPM.DeliveryId);
+            if (allPackages.length > 1) {
+                this.IsDeliveryConnectedWithMultiContainers = true;
+            }
+        }
+
+        this.IsEditingFieldsEnabled = isEditingFieldsEnabled;
+        this.IsConnectedToRouting = isConnectedToRouting;
+        this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
+        this.SetUIProperties_Package();
+        this.SetUIProperties_Container();
+        this.SetUIProperties_Dangerous();
+        this.SetUIProperties_BuildButton();
+        this.SetUIProperties_Harmonize();
         if (!AppTool.IsNullOrEmpty(this.PackageTypeId)) {
             var myService: PackageTypeListService = new PackageTypeListService();
             myService.getSingle(this.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
@@ -1411,24 +1429,6 @@ export class ShipmentPackageItem extends BaseComponent {
                 }
             });
         }
- 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DeliveryId)) {
-            var allPackages = this.ShipmentPM.ShipmentPackages.filter(f => f.DeliveryId == this.EntityPM.DeliveryId);
-            if (allPackages.length > 1) {
-                this.IsDeliveryConnectedWithMultiContainers = true;
-            }
-        }        
-
-        this.IsEditingFieldsEnabled = isEditingFieldsEnabled;
-        this.IsConnectedToRouting = isConnectedToRouting;
-        this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
-        this.SetUIProperties_Package();
-        this.SetUIProperties_Container();
-        this.SetUIProperties_Dangerous();
-        this.SetUIProperties_BuildButton();
-        this.SetUIProperties_Harmonize();
-
-      
     }
     SetUIProperties_Package() {
         if (this.ShipmentPM.TransportModeId == "A") {
@@ -2906,18 +2906,6 @@ export class InsideShipmentPackageItem extends BaseComponent {
            
         }
 
-        if (!AppTool.IsNullOrEmpty(this.PackageTypeId)) {
-            var myService: PackageTypeListService = new PackageTypeListService();
-            myService.getSingle(this.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var list: PackageTypeList = myResponse.Result;
-                    if (list != null) {
-                        this.SetUIPropertiesOfCars(this.IsEditingEnabled && list.IsVehicle);
-                    }
-                }
-            });
-        }
-
         this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingEnabled);
@@ -2932,6 +2920,18 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("Reference3", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Reference4", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CommodityNumber", this.ObjectTableName, this.IsEditingEnabled);
+
+        if (!AppTool.IsNullOrEmpty(this.PackageTypeId)) {
+            var myService: PackageTypeListService = new PackageTypeListService();
+            myService.getSingle(this.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: PackageTypeList = myResponse.Result;
+                    if (list != null) {
+                        this.SetUIPropertiesOfCars(this.IsEditingEnabled && list.IsVehicle);
+                    }
+                }
+            });
+        }
     }
     private SetUIPropertiesOfCars(isEnabled: boolean) {
         if (this.IsEditingEnabled && !isEnabled) {

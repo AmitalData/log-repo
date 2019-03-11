@@ -124,6 +124,13 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
                     this.savedItem.Dimensions = this.warehouseEntryPackagePM.Dimensions;
                     this.savedItem.Instock = this.warehouseEntryPackagePM.Instock;
                     this.savedItem.Quantity = this.warehouseEntryPackagePM.Quantity;
+                    this.savedItem.Make = this.warehouseEntryPackagePM.Make;
+                    this.savedItem.Year = this.warehouseEntryPackagePM.Year;
+                    this.savedItem.ChassisNumber = this.warehouseEntryPackagePM.ChassisNumber;
+                    this.savedItem.RegistrationNumber = this.warehouseEntryPackagePM.RegistrationNumber;
+                    this.savedItem.CountryId = this.warehouseEntryPackagePM.CountryId;
+                    this.savedItem.Model = this.warehouseEntryPackagePM.Model;
+                    this.savedItem.Color = this.warehouseEntryPackagePM.Color;
                     this.savedItem.ContainerNumberWarning = this.warehouseEntryPackagePM.ContainerNumberWarning;
                 }
             }
@@ -159,6 +166,13 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
                 this.warehouseEntryPackagePM.Instock = this.savedItem.Instock;
                 this.warehouseEntryPackagePM.Quantity = this.savedItem.Quantity;
                 this.warehouseEntryPackagePM.ContainerNumberWarning = this.savedItem.ContainerNumberWarning;
+                this.warehouseEntryPackagePM.Make = this.savedItem.Make;
+                this.warehouseEntryPackagePM.Year = this.savedItem.Year;
+                this.warehouseEntryPackagePM.ChassisNumber = this.savedItem.ChassisNumber;
+                this.warehouseEntryPackagePM.RegistrationNumber = this.savedItem.RegistrationNumber;
+                this.warehouseEntryPackagePM.CountryId = this.savedItem.CountryId;
+                this.warehouseEntryPackagePM.Model = this.savedItem.Model;
+                this.warehouseEntryPackagePM.Color = this.savedItem.Color;
             }
 
             if (this.warehouseEntryPM && !this.IsParentDirty && this.warehouseEntryPM.IsDirty) this.warehouseEntryPM.IsDirty = this.IsParentDirty;
@@ -434,7 +448,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
                 }
 
                 myDimensions = myLength + "-" + myWidth + "-" + myHeight;
-            }
+            } 
 
         }
         return myDimensions;
@@ -489,9 +503,15 @@ export class WarehouseEntryPackageItem extends BaseComponent {
                         var list: PackageTypeList = myResponse.Result;
                         if (list != null) {
                             this.SetUIPropertiesOfCars(list.IsVehicle);
-                        }
-                        else {
-                            this.SetUIPropertiesOfCars(false);
+                            if (!list.IsVehicle) {
+                                this.Make = null;
+                                this.Model = null;
+                                this.Color = null;
+                                this.Year = null;
+                                this.CountryId = null;
+                                this.ChassisNumber = null;
+                                this.RegistrationNumber = null;
+                            }
                         }
                     }
                 });
@@ -500,15 +520,6 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     }
 
     private SetUIPropertiesOfCars(isEnabled: boolean) {
-        if (!isEnabled) {
-            this.Make = null;
-            this.Model = null;
-            this.Color = null;
-            this.Year = null;
-            this.CountryId = null;
-            this.ChassisNumber = null;
-            this.RegistrationNumber = null;
-        }
         this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);

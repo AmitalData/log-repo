@@ -166,15 +166,6 @@ export class PickupPackageItem extends BaseComponent {
       
     }
     private SetUIPropertiesOfCars(isEnabled: boolean) {
-        if (!isEnabled) {
-            this.Make = null;
-            this.Model = null;
-            this.Color = null;
-            this.Year = null;
-            this.CountryId = null;
-            this.ChassisNumber = null;
-            this.RegistrationNumber = null;
-        }
         this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);
@@ -271,10 +262,17 @@ export class PickupPackageItem extends BaseComponent {
 
                             this.SetUIProperties_IsContainer();
                             this.SetUIPropertiesOfCars(list.IsVehicle);
+                            if (!list.IsVehicle) {
+                                this.Make = null;
+                                this.Model = null;
+                                this.Color = null;
+                                this.Year = null;
+                                this.CountryId = null;
+                                this.ChassisNumber = null;
+                                this.RegistrationNumber = null;
+                            }
                         }
-                        else {
-                            this.SetUIPropertiesOfCars(false);
-                        }
+                        
                     }
                 });
             }
