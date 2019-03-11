@@ -201,6 +201,7 @@
                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                                     [LookUpTableName]="'GLAccount'" [DependencyFilter2Value]="'2'"
                                                     (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true"
+                                                    [HideAddLink]="true"
                                                     [HideColumns]="true">
                                                 </LogLov>
                                             </td>
@@ -264,7 +265,7 @@
                                                     [DataContext]="DataContext"></LogLabel>
                                             </td>
 
-                                            <td style="width:170px">
+                                            <td style="width:100px">
                                                 <LogLov [ObjectFieldName]="'CurrencyId'"
                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                                     [QueryFilterItems]="CurrencyFilters" [SelectedValue]="CurrencyId"
