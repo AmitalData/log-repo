@@ -36,6 +36,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
 
+
+        public override Action<TSH_MSG7_AgentPaymentReply> GetActionShrinkCustomResponse()
+        {
+            return (customResponse) =>
+            {
+
+                if (customResponse.PrintedPaymentForm != null)
+                {
+                    if (customResponse.PrintedPaymentForm.PrintedPaymentForm != null)
+                    {
+                        if (customResponse.PrintedPaymentForm.PrintedPaymentForm.content != null)
+                        {
+                            ;
+                            var MD5Hash = MD5HashUtil.GetMD5Hash(customResponse.PrintedPaymentForm.PrintedPaymentForm.content);
+                            customResponse.PrintedPaymentForm.PrintedPaymentForm.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);
+                        }
+                    }
+                }
+
+            };
+        }
+
         public override void Update(TSH_MSG7_AgentPaymentReply customResponse, GenericRequestParams requestParams)
         {
             //Analyze message 3052- Answer to the agent request for changing existing payment
