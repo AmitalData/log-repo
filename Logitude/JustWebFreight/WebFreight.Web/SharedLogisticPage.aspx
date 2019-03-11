@@ -133,13 +133,11 @@
                         <tr>
                             <td style="width:5px;"></td>
 
-                            <td style="width:50px;">
+                            <td id="companyLogoArea" style="width:50px;">
                                 <img id="companyLogo" src="HtmlHelpers/Images/Icons/Logo.png" style="width:50px; height:35px; vertical-align:bottom; position:absolute; top:2px;"/>                    
                             </td>
-                                                                                  
-<%--                             <td style="width:150px;">
-                                <img src="HtmlHelpers/Images/Icons/logo1248.jpg" style="width:150px; height:20px; vertical-align:bottom; position:absolute; top:2px;"/>                    
-                            </td>--%>
+                                                                                   
+
 
                             <td style="vertical-align:central; text-indent: 5px;">
                                 <span id="CompanyText" style="font-size:13px; color:#45494A"></span>

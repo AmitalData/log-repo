@@ -264,6 +264,7 @@
     <Compile Include="Helpers\DbEntityFunctions.cs" />
     <Compile Include="Helpers\DictionaryJsonConverter.cs" />
     <Compile Include="Helpers\EntityListFilter.cs" />
+    <Compile Include="Helpers\FeatureToggleHelper.cs" />
     <Compile Include="Helpers\FieldDbVaildUtil.cs" />
     <Compile Include="Helpers\FieldValueResolver.cs" />
     <Compile Include="Helpers\General.cs" />

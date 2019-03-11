@@ -2756,6 +2756,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     myStringBuilder.Append("400");
 
+                     if(item.DocumentReference == "ARP2320")
+                    {
+
+                    }
                     if (item.DocumentReference != null)
                     {
                         if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
@@ -2819,6 +2823,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                             myStringBuilder.Append("a" + line.BankId.PadLeft(10, '0'));
                         }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0',10);
+
+                        }
                         if (line.BankBranch != null)
                         {
                             if (line.BankBranch.Length > 10)
@@ -2828,7 +2838,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                             myStringBuilder.Append("a" + line.BankBranch.PadLeft(10, '0'));
                         }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 10);
 
+                        }
                         if (line.BankAccount != null )
                         {
                             if (line.BankAccount.Length > 15)
@@ -2838,6 +2853,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                             myStringBuilder.Append("a" + line.BankAccount.PadLeft(15, '0'));
                         }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+
+                        }
                         if (line.ChequeNumber != null )
                         {
                             if (line.ChequeNumber.Length > 10)
@@ -2846,6 +2867,12 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
 
                             myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 10);
+
                         }
                         //if (line.ChequeNumber != null)
                         //{
@@ -2857,7 +2884,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         //    myStringBuilder.Append("a" + line.ChequeNumber.PadLeft(10, '0'));
                         //}
-                            var valueDate = String.Format("{0:yyyyMMdd}", line.ValueDate);
+                        var valueDate = String.Format("{0:yyyyMMdd}", line.ValueDate);
                             if (valueDate != null)
                             {
                                 myStringBuilder.Append("a" + valueDate);
