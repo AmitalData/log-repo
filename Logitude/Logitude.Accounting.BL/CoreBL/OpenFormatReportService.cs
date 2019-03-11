@@ -2895,7 +2895,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 myStringBuilder.Append('0', 8);
                             }
 
-                        string amount = Format((decimal)line.LocalAmount); // line.LocalAmount.ToString().Replace(".", string.Empty);
+                        string amount = Format(line.LocalAmount); 
                         if (amount.Length > 15)
                             {
                                 amount = amount.Substring(0, 15);
@@ -3208,8 +3208,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 10);
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0', 8);
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 15);
+                    string localAmount = Format((decimal)item.DocumentAmountAndVATAmount);
+                    if (localAmount != null)
+                    {
+                        if (localAmount.Length > 15)
+                        {
+                            localAmount = localAmount.Substring(0, 15);
+                        }
+                        myStringBuilder.Append("a" + localAmount.PadLeft(15, '0'));
+
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
 
 
 
@@ -3383,7 +3396,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
 
 
-                            string localAmount = Format(line.LocalAmount); // line.LocalAmount.ToString().Replace(".", string.Empty);
+                            string localAmount = Format(line.LocalAmount); 
                             if (localAmount != null)
                             {
                                 if (localAmount.Length > 15)
@@ -3411,8 +3424,21 @@ namespace Logitude.Accounting.BL.CoreBL
                             myStringBuilder.Append('0', 10);
                             myStringBuilder.Append("a");
                             myStringBuilder.Append('0', 8);
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 15);
+                            string localAmount = Format((decimal)item.DocumentAmountAndVATAmount);
+                            if (localAmount != null)
+                            {
+                                if (localAmount.Length > 15)
+                                {
+                                    localAmount = localAmount.Substring(0, 15);
+                                }
+                                myStringBuilder.Append("a" + localAmount.PadLeft(15, '0'));
+
+                            }
+                            else
+                            {
+                                myStringBuilder.Append("a");
+                                myStringBuilder.Append('0', 15);
+                            }
 
                         }
 
