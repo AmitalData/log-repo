@@ -233,6 +233,11 @@ export class InsideShipmentPackagePM {
     public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
        
 	 
+    private countryName: string;
+    public get CountryName() { return this.countryName; }
+    public set CountryName(newValue: string) { if (this.countryName != newValue) { this.countryName = newValue; this.MarkAsDirty("CountryName"); } }
+       
+	 
 
     public OldEntityPM: InsideShipmentPackagePM;
 	    
