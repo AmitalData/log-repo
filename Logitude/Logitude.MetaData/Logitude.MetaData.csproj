@@ -578,6 +578,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentPayable.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDeliveryPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />
