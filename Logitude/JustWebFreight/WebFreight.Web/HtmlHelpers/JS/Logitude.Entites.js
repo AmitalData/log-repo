@@ -1235,10 +1235,9 @@ function BuildPackagesTabPageViewModel(shipment) {
 
             var imgCarTemplate = "";
             imgCarTemplate += "<div style='width:20px; height:20px; vertical-align:middle; margin-left: -5px; position: relative;'>";
-            imgCarTemplate += "<img src='../images/icons/infoICON.png' style='width:20px; height:20px; vertical-align:middle; visibility: #= CarIconVisibility #;' onmouseover='OnMouseOverPackageCarIcon(this)' onmouseleave='OnMouseLeavePackageCarIcon(this)' />";
-            imgCarTemplate += "<div style='width: 270px; height: 130px; margin-top: -75px; position: fixed; right: 60px; background: url(\"../images/icons/CellTooltip.png\") no-repeat; background-size: 100% 100%; visibility: #= CarHelpVisibility #;'>";
+            imgCarTemplate += "<img src='../images/icons/infoICON.png' style='width:20px; height:20px; vertical-align:middle; visibility: #= CarIconVisibility #;' onmouseover='OnMouseOverPackageCarIcon(this)' onmouseleave='OnMouseLeavePackageCarIcon(this)' />"; imgCarTemplate += "<div style='width: 270px; height: 130px; margin-top: -75px; position: fixed; right: 60px; background: url(\"../images/icons/CellTooltip.png\") no-repeat; background-size: 100% 100%; visibility: #= CarHelpVisibility #;'>";
             imgCarTemplate += "<div style='color: \\#1B90CB; height: 13px; font-size: 13px; line-height: 13px; margin-left: 10px; margin-top: 13px;'>Vehicle Details</div>";
-            imgCarTemplate += "<textarea style='width: 225px; height: 85px; margin-left: 10px; margin-top: 0px; line-height: 11px; background: transparent; font-size: 11px; resize: none; border: none !important; outline: none !important; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;' [readonly]='true' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>#= Vehicle Details  #</textarea>";
+            imgCarTemplate += "<textarea style='width: 225px; height: 85px; margin-left: 10px; margin-top: 0px; line-height: 11px; background: transparent; font-size: 11px; resize: none; border: none !important; outline: none !important; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;' [readonly]='true' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>#= VehicleDetails  #</textarea>";
             imgCarTemplate += "</div>";
             imgCarTemplate += "</div>";
 
@@ -1302,7 +1301,9 @@ function BuildPackagesTabPageViewModel(shipment) {
                             }
                         },
 
-                        CarIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
+                        VehicleDetails: item.Make + "/ " + item.Model + "/ " + item.Year + "/ " + item.Color + "/ " + item.ChassisNumber + "/ " +
+                                       item.RegistrationNumber + "/ " + item.CountryName + "\n",
+                        CarIconVisibility: $.trim(item.IsVehicle) != "" ? "visible" : "collapse",
                         CarHelpVisibility: "collapse",
                         showCarsIcon: function (e) {
                             if (e == true) {
@@ -1312,7 +1313,6 @@ function BuildPackagesTabPageViewModel(shipment) {
                                 this.set("CarHelpVisibility", "collapse");
                             }
                         }
-
                     });
                 });
             }
@@ -1353,7 +1353,6 @@ function BuildPackagesTabPageViewModel(shipment) {
                         Description: item.Description,
                         DescriptionIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
                         DescriptionHelpVisibility: "collapse",
-
                         showDescription: function (e) {
                             if (e == true) {
                                 this.set("DescriptionHelpVisibility", "visible");
@@ -1361,6 +1360,19 @@ function BuildPackagesTabPageViewModel(shipment) {
 
                             else {
                                 this.set("DescriptionHelpVisibility", "collapse");
+                            }
+                        },
+
+                        VehicleDetails: item.Make + "/ " + item.Model + "/ " + item.Year + "/ " + item.Color + "/ " + item.ChassisNumber + "/ " +
+                                       item.RegistrationNumber + "/ " + item.CountryName + "\n",
+                        CarIconVisibility: $.trim(item.IsVehicle) != "" ? "visible" : "collapse",
+                        CarHelpVisibility: "collapse",
+                        showCarsIcon: function (e) {
+                            if (e == true) {
+                                this.set("CarHelpVisibility", "visible");
+                            }
+                            else {
+                                this.set("CarHelpVisibility", "collapse");
                             }
                         }
                     });
