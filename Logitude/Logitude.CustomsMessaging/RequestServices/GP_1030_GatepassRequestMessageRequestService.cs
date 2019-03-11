@@ -68,7 +68,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGP_NG_1030_MSG1_GatepassRequestMessage.GatepassRequestMessage = myGatepassRequestMessageList.ToArray();
 
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.RequestDescription = "בקשת העברה " + _CourierMasterPM.AirlinePrefix + "-" + _CourierMasterPM.MAWB;
+            this.MyRequestSheetParam.RequestDescription = "בקשת העברה ש.מ.ר " + _CourierMasterPM.AirlinePrefix + "-" + _CourierMasterPM.MAWB;
 
             return myGP_NG_1030_MSG1_GatepassRequestMessage;
         }
