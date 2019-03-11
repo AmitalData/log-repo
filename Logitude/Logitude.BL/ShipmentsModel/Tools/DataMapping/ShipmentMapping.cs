@@ -26,6 +26,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
@@ -106,7 +107,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.IsManifestSentToAgent = entityPM.IsManifestSentToAgent;
             entityPoco.AgentSharedManifestRef = entityPM.AgentSharedManifestRef;
             entityPoco.ManifestLastSharingDate = entityPM.ManifestLastSharingDate;
-            
+
             if (entityPM.IsExceptionResolved)
             {
                 entityPoco.ExceptionDescription = null;
@@ -130,152 +131,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MapWeightsFields(entityPM, entityPoco, isNewEntity);
             MapXSDMessagesFields(entityPM, entityPoco, entityMasterData, isNewEntity);
 
-            if (entityPM.ShipmentLevelCode == "H")
-            {
-                entityPoco.MasterShipmentDataId = entityPM.MasterShipmentDataId;
-                entityPoco.FromPortId = entityPM.FromPortId;
-                entityPoco.ToPortId = entityPM.ToPortId;
-
-                if (entityPM.DirectionId == "I")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.FromPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-                else if (entityPM.DirectionId == "E")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-
-                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "A")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-
-                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "O")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-
-                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
-                {
-                    if (!string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
-                    {
-
-                        AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);
-
-                        Address toAddress = addressRepository.GetSingleAddress(entityPM.MainCarriageToAddressId, entityPM.Tenant);
-                        if (toAddress != null)
-                        {
-                            if (toAddress.Country != null)
-                            {
-                                entityPoco.CountryForStatisticsId = toAddress.Country.Id;
-                            }
-                        }
-
-                    }
-                }
-
-
-                else if (entityPM.DirectionId == "C")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.FromPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-
-                else if (entityPM.DirectionId == "R")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-            }
-
-            else
-            {
-                entityPM.FromPortId = entityMasterData.MainCarriageFromPortId;
-                entityPM.ToPortId = entityMasterData.MainCarriageFinalDestinationPortId;
-
-                entityPoco.FromPortId = entityPM.FromPortId;
-                entityPoco.ToPortId = entityPM.ToPortId;
-
-                if (entityPM.DirectionId == "I")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageFromPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-
-                else if (entityPM.DirectionId == "E")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageToPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-
-                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "A")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageToPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-
-                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "O")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
-                }
-
-                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
-                {
-                    if (!string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
-                    {
-                        
-                            AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);
-
-                            Address toAddress = addressRepository.GetSingleAddress(entityPM.MainCarriageToAddressId, entityPM.Tenant);
-                            if (toAddress != null)
-                            {
-                                if (toAddress.Country != null)
-                                {
-                                    entityPoco.CountryForStatisticsId = toAddress.Country.Id;
-                                }
-                            }
-                        
-                    }                  
-                }
-
-
-                else if (entityPM.DirectionId == "C")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.FromPortId, true);
-                    if (port != null)
-                    {
-                        Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                        entityPoco.CountryForStatisticsId = country.Id;
-                    }
-                
-                }
-
-                else if (entityPM.DirectionId == "R")
-                {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
-                    if (port != null)
-                    {
-                        Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                        entityPoco.CountryForStatisticsId = country.Id;
-                    }
-                   
-                }
-            }
+           
 
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
@@ -463,13 +319,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ENSNumber = entityPM.ENSNumber;
             entityPoco.ENSDate = entityPM.ENSDate;
             entityPoco.WarehouseLegWarehouseId = entityPM.WarehouseLegWarehouseId;
-            entityPoco.WarehouseLegAddressId= entityPM.WarehouseLegAddressId;
+            entityPoco.WarehouseLegAddressId = entityPM.WarehouseLegAddressId;
             entityPoco.WarehouseLegTerminalCode = entityPM.WarehouseLegTerminalCode;
-            entityPoco.WarehouseLegExpectedEntryDate= entityPM.WarehouseLegExpectedEntryDate;
-            entityPoco.WarehouseLegActualEntryDate= entityPM.WarehouseLegActualEntryDate;
-            entityPoco.WarehouseLegExpectedReleaseDate= entityPM.WarehouseLegExpectedReleaseDate;
-            entityPoco.WarehouseLegActualReleaseDate= entityPM.WarehouseLegActualReleaseDate;
-            entityPoco.WarehouseLegLastFreeDate= entityPM.WarehouseLegLastFreeDate;
+            entityPoco.WarehouseLegExpectedEntryDate = entityPM.WarehouseLegExpectedEntryDate;
+            entityPoco.WarehouseLegActualEntryDate = entityPM.WarehouseLegActualEntryDate;
+            entityPoco.WarehouseLegExpectedReleaseDate = entityPM.WarehouseLegExpectedReleaseDate;
+            entityPoco.WarehouseLegActualReleaseDate = entityPM.WarehouseLegActualReleaseDate;
+            entityPoco.WarehouseLegLastFreeDate = entityPM.WarehouseLegLastFreeDate;
             entityPoco.WarehouseLegRemarks = entityPM.WarehouseLegRemarks;
             entityPoco.WarehouseLegReference = entityPM.WarehouseLegReference;
             entityPoco.WarehouseLegCutOffDate = entityPM.WarehouseLegCutOffDate;
@@ -1708,7 +1564,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         myFinalDestinationPortId = entityMasterData.MainCarriageToPortId;
                     }
 
-                    
+
                     entityMasterData.MainCarriageFinalDestinationPortId = myFinalDestinationPortId;
                     entityMasterData.MainCarriageCarrierPrefix = entityPM.MainCarriageCarrierPrefix;
                     entityMasterData.Transshipment1CarrierPrefix = entityPM.Transshipment1CarrierPrefix;
@@ -1858,7 +1714,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityPoco.AgentId = entityPM.AgentId;
 
-        
+
             entityPoco.AgentAddressId = entityPM.AgentAddressId;
             entityPoco.AgentContactId = entityPM.AgentContactId;
             entityPoco.AgentReference1 = entityPM.AgentReference1;
@@ -2610,7 +2466,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "SalesmanUserId", changeTrackingPM.SalesmanUserId, pm.SalesmanUserId, "string", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "StatusId", changeTrackingPM.StatusId, pm.StatusId, "string", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IncotermId", changeTrackingPM.IncotermId, pm.IncotermId, "string", notifyPropertyChangeValuesList);
-            
+
             AddFieldChangedProperties(changeTrackingPM, "IsOperationalClosed", changeTrackingPM.IsOperationalClosed, pm.IsOperationalClosed, "bool", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IsAccountingClosed", changeTrackingPM.IsAccountingClosed, pm.IsAccountingClosed, "bool", notifyPropertyChangeValuesList);
 
@@ -2670,11 +2526,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field40, pm.Field40, "Field40", notifyPropertyChangeValuesList);
 
             //if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-           // {
-                AddFieldChangedProperties(changeTrackingPM, "IsDigitalSignRequired", changeTrackingPM.IsDigitalSignRequired, pm.IsDigitalSignRequired, "bool", notifyPropertyChangeValuesList);
-                AddFieldChangedProperties(changeTrackingPM, "IsRequestedDocuments", changeTrackingPM.IsRequestedDocuments, pm.IsRequestedDocuments, "bool", notifyPropertyChangeValuesList);
-                AddFieldChangedProperties(changeTrackingPM, "IsDepositionRequired", changeTrackingPM.IsDepositionRequired, pm.IsDepositionRequired, "bool", notifyPropertyChangeValuesList);
-           // }
+            // {
+            AddFieldChangedProperties(changeTrackingPM, "IsDigitalSignRequired", changeTrackingPM.IsDigitalSignRequired, pm.IsDigitalSignRequired, "bool", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "IsRequestedDocuments", changeTrackingPM.IsRequestedDocuments, pm.IsRequestedDocuments, "bool", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "IsDepositionRequired", changeTrackingPM.IsDepositionRequired, pm.IsDepositionRequired, "bool", notifyPropertyChangeValuesList);
+            // }
 
 
             return notifyPropertyChangeValuesList;
@@ -2694,11 +2550,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
 
 
-        private static void AddCustomFieldChangedProperties(ShipmentPM changeTrackingPM , CustomFieldClass oldFieldValue, CustomFieldClass newFieldValue , string fieldName, List<NotifyPropertyChangeValues> notifyPropertyChangeValuesList)
+        private static void AddCustomFieldChangedProperties(ShipmentPM changeTrackingPM, CustomFieldClass oldFieldValue, CustomFieldClass newFieldValue, string fieldName, List<NotifyPropertyChangeValues> notifyPropertyChangeValuesList)
         {
-            string oldValue = oldFieldValue!= null ? !string.IsNullOrEmpty( oldFieldValue.Value) ? oldFieldValue.Value : "" : "";
+            string oldValue = oldFieldValue != null ? !string.IsNullOrEmpty(oldFieldValue.Value) ? oldFieldValue.Value : "" : "";
             string newValue = newFieldValue != null ? !string.IsNullOrEmpty(newFieldValue.Value) ? newFieldValue.Value : "" : "";
-     
+
             if (oldValue != newValue)
             {
                 NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = fieldName, OldValue = oldValue, NewValue = newValue, PropertyType = "CustomFieldClass" };
@@ -2744,7 +2600,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.Field6 = houseShipment.Field6;
             shipmentPM.Field7 = houseShipment.Field7;
             shipmentPM.Field8 = houseShipment.Field8;
-            shipmentPM.Field9 = houseShipment.Field9; 
+            shipmentPM.Field9 = houseShipment.Field9;
             shipmentPM.Field10 = houseShipment.Field10;
             shipmentPM.Field11 = houseShipment.Field11;
             shipmentPM.Field12 = houseShipment.Field12;
@@ -2752,7 +2608,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.Field14 = houseShipment.Field14;
             shipmentPM.Field15 = houseShipment.Field15;
             shipmentPM.Field16 = houseShipment.Field16;
-            shipmentPM.Field17= houseShipment.Field17;
+            shipmentPM.Field17 = houseShipment.Field17;
             shipmentPM.Field18 = houseShipment.Field18;
             shipmentPM.Field19 = houseShipment.Field19;
             shipmentPM.Field20 = houseShipment.Field20;
@@ -2790,8 +2646,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
         }
 
-
+    }
 
 
     }
-}

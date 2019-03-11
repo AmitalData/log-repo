@@ -2739,6 +2739,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 }
 
                 QuoteUtilities.CopyQuoteCharges(this.EntityPM, this.sourceEntityPM, this.CopySaleIsChecked, this.CopyCostIsChecked);
+                this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
 
                 if (this.EntityPM.ExchangeRate == null) {
                     if (!AppTool.IsNullOrZero(this.sourceEntityPM.EstimateProfit) && !AppTool.IsNullOrZero(this.sourceEntityPM.ExchangeRate)) {
