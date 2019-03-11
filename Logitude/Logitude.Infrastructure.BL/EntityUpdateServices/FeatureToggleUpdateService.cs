@@ -6,6 +6,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,10 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
+
+                string featureToggle = "featuretoggle" + entityPM.ToggleCode + entityPM.TenantNumber;
+                if (CacheManager.CacheWrapper.Get(featureToggle) != null) CacheManager.CacheWrapper.Invalidate(featureToggle);
+             
                 entityPM.Id = IdCounter.GetNumber("FeatureToggle", entityPM.Tenant);
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
@@ -29,6 +34,8 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
         protected override void OnUpdating(FeatureTogglePM entityPM)
         {
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            string featureToggle = "featuretoggle" + entityPM.ToggleCode + entityPM.TenantNumber;
+            if (CacheManager.CacheWrapper.Get(featureToggle) != null) CacheManager.CacheWrapper.Invalidate(featureToggle);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {

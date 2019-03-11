@@ -193,7 +193,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         }
 
 
-        public HttpResponseMessage PutAuomationList(List<AutomationPM> automationPMList)
+        public HttpResponseMessage PutAuomationList(List<AutomationArgs> items)
         {
 
             try
@@ -204,7 +204,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     SecurityUtility.CheckContactFeature("Automation", "UPDATE", authToken.Tenant);
                     AutomationRepository entityRepository = new AutomationRepository(authToken.Tenant);
 
-                    foreach (AutomationPM entityPM in automationPMList)
+                    foreach (AutomationArgs entityPM in items)
                     {
                         string entityName = "Automation" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AutomationPM" + entityPM.Id + entityPM.Tenant;
