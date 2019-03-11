@@ -195,51 +195,103 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             }
 
 
-            IQueryable<ShipmentPackage> shipmentPackages = (from d in context.ShipmentPackages.Include("PackageType") where d.Tenant == tenant select d);
-            IQueryable<InsideShipmentPackage> InsideShipmentPackages = (from d in context.InsideShipmentPackages.Include("PackageType") where d.Tenant == tenant select d);
 
 
-            var ShipmentPackagesAndInside = (from shipment in iQueryable_shipments
-                                             join package in shipmentPackages on shipment.Id equals package.ShipmentId into shipmentpackage
-                                             from dept in shipmentpackage.DefaultIfEmpty()
-                                             join insidepackage in InsideShipmentPackages on dept.Id equals insidepackage.ShipmentPackageId into insideshipmentpackage
-                                             from insidepackages in insideshipmentpackage.DefaultIfEmpty()
-                                             join masterDatas in context.ShipmentMasterDatas on shipment.MasterShipmentDataId equals masterDatas.Id into masterShipment
-                                             from master in masterShipment.DefaultIfEmpty()
-                                             select new
+            IQueryable<ShipmentPackage> shipmentPackages;
+            IQueryable<InsideShipmentPackage> InsideShipmentPackages;
 
-                                             {
+                shipmentPackages = (from d in context.ShipmentPackages.Include("PackageType") where d.Tenant == tenant select d);
+                InsideShipmentPackages = (from d in context.InsideShipmentPackages.Include("PackageType") where d.Tenant == tenant select d);
+            List< ShipmentPackageData> ShipmentPackagesAndInside = new List<ShipmentPackageData>();
+            if (!string.IsNullOrEmpty(Packagetype))
+            {
+                     ShipmentPackagesAndInside = (from shipment in iQueryable_shipments
+                                 join package in shipmentPackages on shipment.Id equals package.ShipmentId into shipmentpackage
+                                 from dept in shipmentpackage.DefaultIfEmpty()
+                                 join insidepackage in InsideShipmentPackages on dept.Id equals insidepackage.ShipmentPackageId into insideshipmentpackage
+                                 from insidepackages in insideshipmentpackage.DefaultIfEmpty()
+                                 join masterDatas in context.ShipmentMasterDatas on shipment.MasterShipmentDataId equals masterDatas.Id into masterShipment
+                                 from master in masterShipment.DefaultIfEmpty()
+                                 where (dept.PackageType.IsVehicle || insidepackages.PackageType.IsVehicle) && (dept.PackageTypeId== Packagetype || insidepackages.PackageTypeId== Packagetype)
+                                 select new ShipmentPackageData()
+                                 {
 
-                                                 ShipmentNumber = shipment.ShipmentNumber,
-                                                 CustomerId = shipment.CustomerId,
-                                                 StatusId = shipment.StatusId,
-                                                 POL = shipment.ShipmentLevelCode == "H" ? shipment.FromPortId : master.MainCarriageFromPortId,
-                                                 POD = shipment.ShipmentLevelCode == "H" ? shipment.ToPortId : master.MainCarriageFinalDestinationPortId,
-                                                 DepartualDate = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
-                                                 DepartualDateIndication = master.MainCarriageATD != null ? "Actual" : "Expected",
-                                                 ArrivalDate = master.MainCarriageATA != null ? master.MainCarriageATA : master.MainCarriageETA,
-                                                 ArrivalDateIndication = master.MainCarriageATA != null ? "Actual" : "Expected",
-                                                 TransportModeId=shipment.TransportModeId,
-                                                 Carrier = master.MainCarriageCarrierId,
-                                                 VesselId = master.MainCarriageVesselId,
-                                                 CarrierNumber = master.MainCarriageCarrierNumber,
-                                                 CarrierPrefix = master.MainCarriageCarrierPrefix,
-                                                 MasterNumber = shipment.TransportModeId=="A"?master.AirlinePrefix+master.Master:master.Master,
-                                                 HouseNumber = shipment.House,
-                                                 Make = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Make : null) : (dept != null ? dept.Make : null),
-                                                 Model = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Model : null) : (dept != null ? dept.Model : null),
-                                                 Year = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Year : null) : (dept != null ? dept.Year : null),
-                                                 Color = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Color : null) : (dept != null ? dept.Color : null),
-                                                 ChassisNumber = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.ChassisNumber : null) : (dept != null ? dept.ChassisNumber : null),
-                                                 RegistrationNumber = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.RegistrationNumber : null) : (dept != null ? dept.RegistrationNumber : null),
-                                                 CountryofManufacture = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.CountryId : null) : (dept != null ? dept.CountryId : null),
-                                                 ContainerNumber =dept!=null?dept.ContainerNumber:null,
-                                                 ContainerType = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.PackageType.Code : null) : (dept != null ? dept.PackageType.Code : null),
-                                                 VehicleType = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.PackageType.EnglishName : null) : (dept != null ? dept.PackageType.EnglishName : null),
-                                             }).ToList();
+                                     ShipmentNumber = shipment.ShipmentNumber,
+                                     CustomerId = shipment.CustomerId,
+                                     StatusId = shipment.StatusId,
+                                     POL = shipment.ShipmentLevelCode == "H" ? shipment.FromPortId : master.MainCarriageFromPortId,
+                                     POD = shipment.ShipmentLevelCode == "H" ? shipment.ToPortId : master.MainCarriageFinalDestinationPortId,
+                                     DepartualDate = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
+                                     DepartualDateIndication = master.MainCarriageATD != null ? "Actual" : "Expected",
+                                     ArrivalDate = master.MainCarriageATA != null ? master.MainCarriageATA : master.MainCarriageETA,
+                                     ArrivalDateIndication = master.MainCarriageATA != null ? "Actual" : "Expected",
+                                     TransportModeId = shipment.TransportModeId,
+                                     Carrier = master.MainCarriageCarrierId,
+                                     VesselId = master.MainCarriageVesselId,
+                                     CarrierNumber = master.MainCarriageCarrierNumber,
+                                     CarrierPrefix = master.MainCarriageCarrierPrefix,
+                                     MasterNumber = shipment.TransportModeId == "A" ? master.AirlinePrefix + master.Master : master.Master,
+                                     HouseNumber = shipment.House,
+                                     Make = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Make : null) : (dept != null ? dept.Make : null),
+                                     Model = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Model : null) : (dept != null ? dept.Model : null),
+                                     Year = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Year : null) : (dept != null ? dept.Year : null),
+                                     Color = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Color : null) : (dept != null ? dept.Color : null),
+                                     ChassisNumber = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.ChassisNumber : null) : (dept != null ? dept.ChassisNumber : null),
+                                     RegistrationNumber = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.RegistrationNumber : null) : (dept != null ? dept.RegistrationNumber : null),
+                                     CountryofManufacture = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.CountryId : null) : (dept != null ? dept.CountryId : null),
+                                     ContainerNumber = dept != null ? dept.ContainerNumber : null,
+                                     ContainerType = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.PackageType.Code : null) : (dept != null ? dept.PackageType.Code : null),
+                                     VehicleType = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.PackageType.EnglishName : null) : (dept != null ? dept.PackageType.EnglishName : null),
+                                 }).ToList();
+
+            }
+            else
+            {
+                 ShipmentPackagesAndInside = (from shipment in iQueryable_shipments
+                                                 join package in shipmentPackages on shipment.Id equals package.ShipmentId into shipmentpackage
+                                                 from dept in shipmentpackage.DefaultIfEmpty()
+                                                 join insidepackage in InsideShipmentPackages on dept.Id equals insidepackage.ShipmentPackageId into insideshipmentpackage
+                                                 from insidepackages in insideshipmentpackage.DefaultIfEmpty()
+                                                 join masterDatas in context.ShipmentMasterDatas on shipment.MasterShipmentDataId equals masterDatas.Id into masterShipment
+                                                 from master in masterShipment.DefaultIfEmpty()
+                                                 where (dept.PackageType.IsVehicle || insidepackages.PackageType.IsVehicle) 
+                                                 select new ShipmentPackageData()
+
+                                                 {
+
+                                                     ShipmentNumber = shipment.ShipmentNumber,
+                                                     CustomerId = shipment.CustomerId,
+                                                     StatusId = shipment.StatusId,
+                                                     POL = shipment.ShipmentLevelCode == "H" ? shipment.FromPortId : master.MainCarriageFromPortId,
+                                                     POD = shipment.ShipmentLevelCode == "H" ? shipment.ToPortId : master.MainCarriageFinalDestinationPortId,
+                                                     DepartualDate = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
+                                                     DepartualDateIndication = master.MainCarriageATD != null ? "Actual" : "Expected",
+                                                     ArrivalDate = master.MainCarriageATA != null ? master.MainCarriageATA : master.MainCarriageETA,
+                                                     ArrivalDateIndication = master.MainCarriageATA != null ? "Actual" : "Expected",
+                                                     TransportModeId = shipment.TransportModeId,
+                                                     Carrier = master.MainCarriageCarrierId,
+                                                     VesselId = master.MainCarriageVesselId,
+                                                     CarrierNumber = master.MainCarriageCarrierNumber,
+                                                     CarrierPrefix = master.MainCarriageCarrierPrefix,
+                                                     MasterNumber = shipment.TransportModeId == "A" ? master.AirlinePrefix + master.Master : master.Master,
+                                                     HouseNumber = shipment.House,
+                                                     Make = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Make : null) : (dept != null ? dept.Make : null),
+                                                     Model = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Model : null) : (dept != null ? dept.Model : null),
+                                                     Year = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Year : null) : (dept != null ? dept.Year : null),
+                                                     Color = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.Color : null) : (dept != null ? dept.Color : null),
+                                                     ChassisNumber = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.ChassisNumber : null) : (dept != null ? dept.ChassisNumber : null),
+                                                     RegistrationNumber = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.RegistrationNumber : null) : (dept != null ? dept.RegistrationNumber : null),
+                                                     CountryofManufacture = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.CountryId : null) : (dept != null ? dept.CountryId : null),
+                                                     ContainerNumber = dept != null ? dept.ContainerNumber : null,
+                                                     ContainerType = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.PackageType.Code : null) : (dept != null ? dept.PackageType.Code : null),
+                                                     VehicleType = shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? (insidepackages != null ? insidepackages.PackageType.EnglishName : null) : (dept != null ? dept.PackageType.EnglishName : null),
+                                                 }).ToList();
+
+            }
+                 
 
 
-
+            
             
 
             ShipmentPackagesAndInside.ForEach(item =>
@@ -361,5 +413,36 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             return myDataProvider;
         }
+    }
+
+    public class ShipmentPackageData
+    {
+        public string ShipmentNumber { get; set; }
+        public string CustomerId { get; set; }
+        public string StatusId { get; set; }
+        public string POL { get; set; }
+        public string POD { get; set; }
+        public DateTime? DepartualDate { get; set; }
+        public string DepartualDateIndication { get; set; }
+        public DateTime? ArrivalDate { get; set; }
+        public string ArrivalDateIndication { get; set; }
+        public string TransportModeId { get; set; }
+        public string Carrier { get; set; }
+        public string VesselId { get; set; }
+        public string CarrierNumber { get; set; }
+        public string CarrierPrefix { get; set; }
+        public string MasterNumber { get; set; }
+        public string HouseNumber { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
+        public string ChassisNumber { get; set; }
+        public string RegistrationNumber { get; set; }
+        public string CountryofManufacture { get; set; }
+        public string ContainerNumber { get; set; }
+        public string ContainerType { get; set; }
+        public string VehicleType { get; set; }
+     
     }
 }
