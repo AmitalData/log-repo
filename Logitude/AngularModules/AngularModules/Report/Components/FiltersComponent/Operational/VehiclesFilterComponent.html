@@ -17,9 +17,6 @@
                     <td>
                         <table>
                             <tr>
-
-
-
                                 <td style="width:10px;">
                                     <div></div>
                                 </td>
@@ -34,45 +31,48 @@
                                     <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
                                 </td>
 
-                                <td style="width:10px"></td>
+                                <td style="width:15px"></td>
                                 <td style="width:30px">To</td>
                                 <td style="width:130px">
                                     <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
                                 </td>
-                                <td style="width:10px"><div></div></td>
+                                <td style="width:15px">
+                                    <div></div>
+                                </td>
                                 <td style="width:70px;min-width:70px;max-width:70px" class="Label">Customer</td>
                                 <td style="width:200px;">
-                                    <div style="width:200px;">
-
-                                        <LogLov [ObjectFieldName]="'CustomerId'"
-                                                [SelectedValue]="CustomerId"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'Card'"
-                                                [DependencyFilter1Value]="'AG,AL,CG,CS,SG,SL,TR,VD,WH'"
-                                                [DependencyFilter1IsList]="true">
-                                        </LogLov>
-
-                                    </div>
+                                    <LogLov [ObjectFieldName]="'CustomerId'"
+                                            [SelectedValue]="CustomerId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [DependencyFilter1Value]="'AG,AL,CG,CS,SG,SL,TR,VD,WH'"
+                                            [DependencyFilter1IsList]="true">
+                                    </LogLov>
                                 </td>
 
-                                <td style="width:10px"><div></div></td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
                                 <td style="width:80px;min-width:70px;max-width:70px" class="Label">Vehicle Type</td>
                                 <td style="width:180px;">
                                     <LogLov [ObjectFieldName]="'PackageTypeId'"
                                             [SelectedValue]="PackageTypeId"
                                             [ObjectTableName]=""
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'PackageType'"
-                                            >
+                                            [LookUpTableName]="'PackageType'">
                                     </LogLov>
                                 </td>
-                                <td style="width:10px"><div></div></td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
 
                                 <td style="width:140px;min-width:120px">
                                     <TransportsFilter (SelectedValueChanged)="SelectedTransportFilterCountries = $event"></TransportsFilter>
                                 </td>
-                                <td style="width:10px"><div></div></td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
 
                                 <td style="width:180px;min-width:180px">
 
@@ -80,7 +80,9 @@
 
 
                                 </td>
-                                <td style="width:10px"><div></div></td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
 
                                 <td style="width:90px;">
                                     <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
@@ -93,7 +95,7 @@
                         </table>
                     </td>
 
-                </tr>               
+                </tr>
 
 
             </table>
