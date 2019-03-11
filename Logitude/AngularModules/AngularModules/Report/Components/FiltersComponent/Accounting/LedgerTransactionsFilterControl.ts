@@ -1,12 +1,13 @@
-import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ReportFliter} from '../../../Components/Filters/ReportFliter';
-import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ReportFliter } from '../../../Components/Filters/ReportFliter';
+import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     moduleId: module.id,
@@ -20,24 +21,37 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
     entityResourceService: EntityResourceService = new EntityResourceService();
-    constructor(private CD:ChangeDetectorRef) {
+    public isRTL: boolean = false;
+    constructor(private CD: ChangeDetectorRef) {
         super();
+
+
+
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
 
         // get requierd resources
         this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => {
             this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe(response => { this.isReady = true; });
         });
 
-        // // set default value for no of months
-        // var newDate = new Date();
-        // var currentMonth = newDate.getMonth()+1;
-        // //this.NumberOfMonths = currentMonth - 6; // 6 backward
-        // this.NumberOfMonths = 6; // 6 backward
+
+        //#region Fill Date Default Values
+        var today = new Date();
+        this.ToDate = new Date();
+        var lastmonth = today.setMonth(today.getMonth() - 1);
+        this.FromDate = new Date(lastmonth);
+        //#endregion
+
+
+
 
     }
 
     ngOnInit() {
         this.SetUIProperties();
+
+
     }
 
     SetUIProperties() {
@@ -199,19 +213,19 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         // Due - code 2 - לגביה
         // Reference -code-3-  אסמכתא
 
-        // switch (this.filterSelectedValue) {
-        //     case 'filter_accounting':
-        //         this._dateTypeCode = '1';
-        //         break;
-        //     case 'filter_due':
-        //         this._dateTypeCode = '2';
-        //         break;
-        //     case 'filter_reference':
-        //         this._dateTypeCode = '3';
-        //         break;
-        //     default:
-        //         break;
-        // }
+        switch (this.filterSelectedValue) {
+            case 'filter_accounting':
+                this._dateTypeCode = '1';
+                break;
+            case 'filter_due':
+                this._dateTypeCode = '2';
+                break;
+            case 'filter_reference':
+                this._dateTypeCode = '3';
+                break;
+            default:
+                break;
+        }
     }
     //#endregion
 
@@ -224,10 +238,15 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.ValidationErrorsList = [];
 
         //#region requierd fields
-        if (!this.GLAccountId) { errors.push( TextCodeTranslator.Translate("GLTransactionReport.O.GLAccountZrequierd") ); }
+        if (!this.GLAccountId) { errors.push(TextCodeTranslator.Translate("GLTransactionReport.O.GLAccountZrequierd")); }
         //#endregion
 
         //#region Date validation
+        if(!this.FromDate)
+            errors.push(TextCodeTranslator.Translate("GLAccounts.O.fromfieldrequired"));
+        if(!this.ToDate)
+            errors.push(TextCodeTranslator.Translate("GLAccounts.O.tofieldrequired"));
+
         if (this.FromDate > this.ToDate) {
             errors.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
         }
@@ -245,12 +264,15 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             // }
 
             var myFilterItems: QueryFilterItem[] = [];
-            // myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
-            // myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
-            // myFilterItems.push(new QueryFilterItem("NumberOfMonths", this.NumberOfMonths, "Number"));
-            // myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
-            // myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
-            // myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
+            myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate ? this.FromDate : null));
+            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate ? this.ToDate : null));
+            myFilterItems.push(new QueryFilterItem("GLAccountId", this.GLAccountId ? this.GLAccountId : null));
+            myFilterItems.push(new QueryFilterItem("CurrencyId", this.CurrencyId ? this.CurrencyId : null));
+            myFilterItems.push(new QueryFilterItem("IsReconciled", this.IsReconciled ? this.IsReconciled : null));
+            myFilterItems.push(new QueryFilterItem("IncludeChildAccounts", this.IncludeChildAccounts ? this.IncludeChildAccounts : null));
+            myFilterItems.push(new QueryFilterItem("SearchFields", this.SearchFields ? this.SearchFields : null));
+            myFilterItems.push(new QueryFilterItem("DateTypeCode", this._dateTypeCode ? this._dateTypeCode : null));
+
 
             // myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             // myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
@@ -344,6 +366,36 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this._GLAccountId = value;
         }
     }
+
+
+    private _IsReconciled: boolean;
+    public get IsReconciled(): boolean {
+        return this._IsReconciled;
+    }
+    public set IsReconciled(v: boolean) {
+        this._IsReconciled = v;
+    }
+
+
+    private _IncludeChildAccounts: boolean;
+    public get IncludeChildAccounts(): boolean {
+        return this._IncludeChildAccounts;
+    }
+    public set IncludeChildAccounts(v: boolean) {
+        this._IncludeChildAccounts = v;
+    }
+
+
+    private _SearchFields: string;
+    public get SearchFields(): string {
+        return this._SearchFields;
+    }
+    public set SearchFields(v: string) {
+        this._SearchFields = v;
+    }
+
+
+
 
     //#endregion
 

@@ -56,8 +56,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public static void CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
+            //using (TransactionScope scope = TransactionFactory.GetTransaction())
+            //{
                 JournalRepository journalRepository = new JournalRepository(tenant);
                 List<Journal> journals = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
                 //List<string> invoiceIds = new List<string>();
@@ -349,7 +349,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     lineUpdateService.Update(linePM, true);
                 }
 
-            }
+            //}
         }
 
         public static BatchTaskExecutionPM CreatePNCFileInBatch(string taxReportId, int tenant)
