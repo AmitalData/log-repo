@@ -287,6 +287,15 @@ export class DeliveryPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);              
     }
     private SetUIPropertiesOfCars(isEnabled: boolean) {
+        if (!isEnabled) {
+            this.Make = null;
+            this.Model = null;
+            this.Color = null;
+            this.Year = null;
+            this.CountryId = null;
+            this.ChassisNumber = null;
+            this.RegistrationNumber = null;
+        }
         this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);

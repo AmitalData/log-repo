@@ -166,6 +166,15 @@ export class PickupPackageItem extends BaseComponent {
       
     }
     private SetUIPropertiesOfCars(isEnabled: boolean) {
+        if (!isEnabled) {
+            this.Make = null;
+            this.Model = null;
+            this.Color = null;
+            this.Year = null;
+            this.CountryId = null;
+            this.ChassisNumber = null;
+            this.RegistrationNumber = null;
+        }
         this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);
