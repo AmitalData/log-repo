@@ -57,6 +57,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     "CustomerAddress",
                     "DestLineDesc",
                     "DestLineCode",
+                    "DistributorHP",
+                    "DistributorName",
                     "DeclarationId",
                     "BaldarHp",
                     "OpenBaldarAwbDate"
@@ -96,6 +98,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             if (!myDeclarationPM.IsCourierDeclaration)
             {
                 throw new Exception($"Declaration Is not CourierDeclaration  declarationId={declarationId}");
+            }
+            if (myDeclarationPM.AcceptanceStatusCode != null)
+            {
+                throw new Exception("לא ניתן לשדר מסר ש.מ.ב לממן לאחר קליטת זמינות");
             }
             //CourierDeclarations
             //myCourierMasterQueryService.GetNotConnectedDeclaratins
@@ -139,6 +145,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 GetDefault("ISRAEL", "CGO_MMN_FORW", "NON", "NON", myDeclarationPM.Tenant);
             var rep = new CustomsAirlineRepository(myCourierMasterPM.Tenant);
             var customsAirline = rep.GetSingle(myCourierMasterPM.AirlineId, myCourierMasterPM.Tenant);
+
+
 
             var courierHawbMamanModel = new GWMessageECTHRData()
             {

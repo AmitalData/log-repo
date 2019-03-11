@@ -91,6 +91,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string StorageSiteCode { get; set; }
 	      
         public virtual DeliverySiteType DeliverySiteType { get; set; }
+        [Column("TruckerId")]
+	    public string TruckerId { get; set; }
     }
 }
 	 
