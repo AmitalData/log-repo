@@ -251,7 +251,7 @@
                                     </td>
 
                                     <td style="width: 230px;">
-                                        <LogTextBox [ObjectFieldName]="'Make'" [Text]="Make" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Make'" [Text]="warehouseEntryPackageItem.Make" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -266,7 +266,7 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'Model'" [Text]="Model" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Model'" [Text]="warehouseEntryPackageItem.Model" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -281,7 +281,7 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'Year'" [Text]="Year" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Year'" [Text]="warehouseEntryPackageItem.Year" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -296,7 +296,7 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'Color'" [Text]="Color" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Color'" [Text]="warehouseEntryPackageItem.Color" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -310,7 +310,7 @@
                                         <LogLabel [ObjectFieldName]="'ChassisNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
                                     </td>
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'ChassisNumber'" [Text]="ChassisNumber" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'ChassisNumber'" [Text]="warehouseEntryPackageItem.ChassisNumber" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
                                     </td>
                                     <td>
                                         <div></div>
@@ -323,7 +323,7 @@
                                         <LogLabel [ObjectFieldName]="'RegistrationNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
                                     </td>
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'RegistrationNumber'" [Text]="RegistrationNumber" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'RegistrationNumber'" [Text]="warehouseEntryPackageItem.RegistrationNumber" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
                                     </td>
                                     <td>
                                         <div></div>
@@ -337,7 +337,7 @@
                                     </td>
                                     <td>
                                         <LogLov [ObjectFieldName]="'CountryId'"
-                                                [SelectedValue]="CountryId"
+                                                [SelectedValue]="warehouseEntryPackageItem.CountryId"
                                                 [ObjectTableName]="'WarehouseEntryPackage'"
                                                 [DataContext]="warehouseEntryPackageItem"
                                                 [LookUpTableName]="'Country'">
