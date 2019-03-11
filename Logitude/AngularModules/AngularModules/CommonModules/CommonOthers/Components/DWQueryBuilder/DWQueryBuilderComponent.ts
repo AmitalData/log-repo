@@ -847,29 +847,33 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
             if (field.FilterItems.length == 0) {
                 if (field.DataTypeCode && field.TextValue) {
-                        switch (field.DataTypeCode.toLowerCase()) {
-                            case 'text':
-                            case 'ntext':
-                            case 'DateTime':
-                            case 'Date':
-                                {
-                                    break;
-                                }
-                            default: {
-                                var val: number;
-
-                                if ((field.TextValue + "").indexOf(',') == -1) {
-                                    val = Number(field.TextValue);
-                                }
-
-                                if (isNaN(Number(val))) {
-                                    Valid = false;
-                                }
+                    switch (field.DataTypeCode.toLowerCase()) {
+                        case 'text':
+                        case 'ntext':
+                            {
                                 break;
                             }
 
+                        case 'datetime':
+                        case 'date':
+                            {
+                                break;
+                            }
+                        default: {
+                            var val: number;
+
+                            if ((field.TextValue + "").indexOf(',') == -1) {
+                                val = Number(field.TextValue);
+                            }
+
+                            if (isNaN(Number(val))) {
+                                Valid = false;
+                            }
+                            break;
                         }
-                    
+
+                    }
+
                 }
 
             }
