@@ -93,39 +93,39 @@ export class TaxDeductionReportMenuButtonsHandler {
                                        
                     
 
-                    //var myPrintHelper = new GeneralPrintHelper("TaxDeductionReport", "TDDP", this.EntityPM.Id, null, this.EntityPM.Email, null);
-                    //if (myPrintHelper.IsLoadPrintControl) {
-                    //    ServiceLocator.SendTotangoUserActivity("TaxDeductionReport", "Print");
-                    //    myPrintHelper.ShowPrintControl();
-                    //}
+                    var myPrintHelper = new GeneralPrintHelper("TaxDeductionReport", "TDDP", this.EntityPM.Id, null, this.EntityPM.Email, null);
+                    if (myPrintHelper.IsLoadPrintControl) {
+                        ServiceLocator.SendTotangoUserActivity("TaxDeductionReport", "Print");
+                        myPrintHelper.ShowPrintControl();
+                    }
 
-                    this.documentTypeListExtendedService.getDocumentTypeListByCode("TDDP", this.EntityPM.Tenant).subscribe(myResult => {
+                    //this.documentTypeListExtendedService.getDocumentTypeListByCode("TDDP", this.EntityPM.Tenant).subscribe(myResult => {
                     
-                        var mm: ServiceResponse = myResult;
-                        if (!mm.HasError) {
-                            this.documentType = mm.Result;
+                    //    var mm: ServiceResponse = myResult;
+                    //    if (!mm.HasError) {
+                    //        this.documentType = mm.Result;
 
-                            if (this.documentType) {
+                    //        if (this.documentType) {
 
-                                this.documentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.documentType.Id, this.objectTable.Id, this.EntityPM.Id, this.EntityPM.Tenant).subscribe(myResult => {
+                    //            this.documentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.documentType.Id, this.objectTable.Id, this.EntityPM.Id, this.EntityPM.Tenant).subscribe(myResult => {
                                
-                                    var mm: ServiceResponse = myResult;
-                                    if (!mm.HasError) {
-                                        this.docFilingPM = mm.Result;
+                    //                var mm: ServiceResponse = myResult;
+                    //                if (!mm.HasError) {
+                    //                    this.docFilingPM = mm.Result;
 
-                                        if (this.docFilingPM) {
-                                            DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
+                    //                    if (this.docFilingPM) {
+                    //                        DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
 
 
-                                        }
-                                    }
+                    //                    }
+                    //                }
 
-                                });
+                    //            });
 
-                            }
-                        }
+                    //        }
+                    //    }
 
-                    });
+                    //});
 
 
                     //this._DocumentsFilingViewsExtService.get(this.EntityPM.Id, this.objectTable.Id).subscribe(myResult => {

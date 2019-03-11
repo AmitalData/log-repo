@@ -53,7 +53,16 @@
 
             success: function (result) {
 
-                jQuery("#companyLogo").attr('src', result);
+
+                var img = new Image();
+                img.onload = function () {
+                    var width = this.width > 200 ? "200px" : (this.width + "px"); 
+                    jQuery("#companyLogo").attr('src', result);
+                    jQuery("#companyLogo").css('width',width);
+                    jQuery("#companyLogoArea").css('width', width);
+                }
+                img.src = result;
+
 
             },
 

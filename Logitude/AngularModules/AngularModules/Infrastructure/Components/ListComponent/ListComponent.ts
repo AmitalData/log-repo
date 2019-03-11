@@ -2260,6 +2260,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
+
+                    case "Airline":
+                    case "ShippingLine":                        
+                        {
+                            isVisible = false;
+                            break;
+                        }
                 }
             }
         }

@@ -1,3 +1,4 @@
+/// <reference path="../../../datacontracts/automationargs.ts" />
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
@@ -43,7 +44,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {CodeNameClass} from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import {AutomationQueuedTask} from '../../../../Infrastructure/DataContracts/AutomationQueuedTask';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-
+import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 @Component({
     moduleId: module.id,
@@ -1168,7 +1169,20 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         if (resultEmailRecipientPMLists.length > 0) {
-            this._automationResultEmailRecipientExtendedService.update(resultEmailRecipientPMLists).subscribe(res => {
+
+            var automationArgsList: AutomationArgs[] = [];
+            resultEmailRecipientPMLists.forEach((item) => {
+
+                var automationArgs: AutomationArgs = new AutomationArgs();
+                    automationArgs.RecipientType = item.RecipientType,
+                    automationArgs.RecipientValue = item.RecipientValue,
+                    automationArgs.Tenant = SessionLocator.Tenant;
+                    automationArgs.AutomationsId = item.AutomationsId;
+                    automationArgs.Id = item.Id;
+                    automationArgsList.push(automationArgs);
+            });
+
+            this._automationResultEmailRecipientExtendedService.update(automationArgsList).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;

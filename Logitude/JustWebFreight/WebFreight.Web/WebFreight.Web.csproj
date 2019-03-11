@@ -1856,6 +1856,7 @@
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportService.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportBase.cs" />
     <Compile Include="CustomWebServices\Testers\Tester.cs" />
+    <Compile Include="DataContracts\AutomationArgs.cs" />
     <Compile Include="DataContracts\BIReportXMLData.cs" />
     <Compile Include="DataContracts\DWQueryDataResult.cs" />
     <Compile Include="DataContracts\WebHookTesterData.cs" />

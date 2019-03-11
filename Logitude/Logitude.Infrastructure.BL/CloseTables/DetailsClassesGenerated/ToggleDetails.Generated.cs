@@ -27,6 +27,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Test Toggle", 
                 SearchFields = "TST,Test Toggle", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "EnableAzureRootFolder", 
+                SearchFields = "EZR,EnableAzureRootFolder", 
+                Code = "EZR", 
+			});
 			
             return all;
        }
