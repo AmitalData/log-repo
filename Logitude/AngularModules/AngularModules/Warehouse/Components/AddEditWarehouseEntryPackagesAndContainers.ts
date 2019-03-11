@@ -294,7 +294,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.GrossWeightUnitCode = this.WarehouseEntryPM.GrossWeightUnitCode;
         this.ChargeableWeightUnitCode = this.WarehouseEntryPM.ChargeableWeightUnitCode;
         this.DimensionsUnitCode = this.WarehouseEntryPM.DimensionsUnitCode;
-        this.IsDependencyFilter2Value = this.IsContainer= this.EntityPM.IsContainer;
+        this.IsDependencyFilter2Value = this.IsContainer = this.EntityPM.IsContainer;
         this.SetLabel();
         this.SetUIProperties();
         this.SetUIPropertiesOfCars(false);
@@ -320,36 +320,48 @@ export class WarehouseEntryPackageItem extends BaseComponent {
 
         }
 
-            var isVolumeEnabled: boolean = false;
-            var isDimensionEnabled: boolean = false;
-            var isGrossWeightEnabled: boolean = false;
+        var isVolumeEnabled: boolean = false;
+        var isDimensionEnabled: boolean = false;
+        var isGrossWeightEnabled: boolean = false;
 
-                if (this.Quantity > 0) {
-                    isVolumeEnabled = true;
-                    isDimensionEnabled = true;
-                    isGrossWeightEnabled = true;
+        if (this.Quantity > 0) {
+            isVolumeEnabled = true;
+            isDimensionEnabled = true;
+            isGrossWeightEnabled = true;
 
-                    if (this.Height != null || this.Width != null || this.Length != null) {
-                        isVolumeEnabled = false;
-                    }
+            if (this.Height != null || this.Width != null || this.Length != null) {
+                isVolumeEnabled = false;
+            }
 
-                    else if (this.Volume != null) {
-                        isDimensionEnabled = false;
+            else if (this.Volume != null) {
+                isDimensionEnabled = false;
+            }
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.PackageTypeId)) {
+            var myService: PackageTypeListService = new PackageTypeListService();
+            myService.getSingle(this.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: PackageTypeList = myResponse.Result;
+                    if (list != null) {
+                        this.SetUIPropertiesOfCars(list.IsVehicle);
                     }
                 }
+            });
+        }
 
-            this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled);
-            this.UIProperties.SetEnabled("Width", this.ObjectTableName, isDimensionEnabled);
-            this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
-            this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
-            this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
-            this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled);
+        this.UIProperties.SetEnabled("Width", this.ObjectTableName, isDimensionEnabled);
+        this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
+        this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
+        this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
+        this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
     }
 
     ComputeVolume() {
 
-        this.Volume= AppTool.GetVolumeFromDimentions(this.DimensionsUnitCode, this.VolumeUnitCode, this.Width, this.Height, this.Length, this.Quantity);
-        
+        this.Volume = AppTool.GetVolumeFromDimentions(this.DimensionsUnitCode, this.VolumeUnitCode, this.Width, this.Height, this.Length, this.Quantity);
+
 
     }
 
@@ -441,7 +453,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     set VolumetricWeight(value: number) {
         if (this.EntityPM.VolumetricWeight != value) {
             this.EntityPM.VolumetricWeight = AppTool.Round(value, 3);
-           // this.fatherComponent.ComputeTotals();
+            // this.fatherComponent.ComputeTotals();
         }
     }
 
