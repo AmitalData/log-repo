@@ -396,7 +396,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 {
 
                     Vessel vessel = (from a in Commoncontext.Vessels where a.Id == item.VesselId && a.Tenant == tenant select a).FirstOrDefault();
-                     package.CarrierNumber =( vessel!=null?( vessel.EnglishName + " / "):"")+(item.CarrierPrefix!=null? item.CarrierPrefix :"" )+ (item.CarrierNumber!=null? item.CarrierNumber:"");
+                     //package.CarrierNumber =( vessel!=null?( vessel.EnglishName + " / "):"")+(item.CarrierPrefix!=null? item.CarrierPrefix :"" )+ (item.CarrierNumber!=null? item.CarrierNumber:"");
+                    package.CarrierNumber = vessel != null ? (vessel.EnglishName+"/"+""+( (item.CarrierPrefix != null ? item.CarrierPrefix : "")+(item.CarrierNumber != null ? item.CarrierNumber : ""))): (item.CarrierNumber != null ? item.CarrierNumber : "");
                     
                 }
                 else
