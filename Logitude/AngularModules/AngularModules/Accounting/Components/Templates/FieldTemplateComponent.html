@@ -264,12 +264,12 @@
 
                     </div>
                     <div *ngIf="FieldName == 'StatusEnglishName'">
-                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.color]="fontColor">
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;"  [style.text-align]="isRTL ? 'right' : 'left'" [style.color]="fontColor">
                             {{
                             FieldValue
                             }}
                         </div>
-                        <div *ngIf="!IsHeaderScreenTemplate" style="text-align: right; padding-left: 3px;">
+                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;"  [style.text-align]="isRTL ? 'right' : 'left'">
                             {{
                             FieldValue
                             }}
@@ -384,7 +384,23 @@
 
                 </div>
 
-            </div>
-        </td>
+                <!-- Tax Report -->
+                <!--<div *ngIf="ObjectTableName == 'TaxReport'">
+
+                    <div *ngIf="FieldName == 'StatusEnglishName'">
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{
+                            FieldValue
+                            }}
+                        </div>
+                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{
+                            FieldValue
+                            }}
+                        </div>
+                    </div>
+                </div>-->
+                </div>
+</td>
     </tr>
 </table>
