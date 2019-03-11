@@ -1286,7 +1286,7 @@ function BuildPackagesTabPageViewModel(shipment) {
                     itemVehicleDetailsVolume += $.trim(item.Color) == "" ? "" : item.Color + "/ ";
                     itemVehicleDetailsVolume += $.trim(item.ChassisNumber) == "" ? "" : item.ChassisNumber + "/ ";
                     itemVehicleDetailsVolume += $.trim(item.RegistrationNumber) == "" ? "" : item.RegistrationNumber + "/ ";
-                    itemVehicleDetailsVolume += $.trim(item.CountryName) == "" ? "" : item.CountryName + "\n";
+                    itemVehicleDetailsVolume += $.trim(item.CountryName) == "" ? "\n" : item.CountryName + "\n";
 
                     PackagesGridDataSource.push({
                         Type: itemType,
@@ -1358,7 +1358,7 @@ function BuildPackagesTabPageViewModel(shipment) {
                         itemVehicleDetailsVolume += $.trim(listItem.Color) == "" ? "" : listItem.Color + "/ ";
                         itemVehicleDetailsVolume += $.trim(listItem.ChassisNumber) == "" ? "" : listItem.ChassisNumber + "/ ";
                         itemVehicleDetailsVolume += $.trim(listItem.RegistrationNumber) == "" ? "" : listItem.RegistrationNumber + "/ ";
-                        itemVehicleDetailsVolume += $.trim(listItem.CountryName) == "" ? "" : listItem.CountryName + "\n";
+                        itemVehicleDetailsVolume += $.trim(listItem.CountryName) == "" ? "\n" : listItem.CountryName + "\n";
                     });
                     PackagesGridDataSource.push({
                         Type: itemType,
