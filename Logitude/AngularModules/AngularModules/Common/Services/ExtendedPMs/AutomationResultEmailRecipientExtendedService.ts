@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="../../../infrastructure/datacontracts/automationargs.ts" />
+
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
@@ -10,7 +11,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {AutomationResultEmailRecipientPM} from '../../EntityPMs/AutomationResultEmailRecipientPM';
-
+import {AutomationArgs} from '../../../Infrastructure/DataContracts/AutomationArgs'
 
 @Injectable()
 export class AutomationResultEmailRecipientExtendedService {
@@ -53,7 +54,7 @@ export class AutomationResultEmailRecipientExtendedService {
 
 
 
-    update(items: AutomationResultEmailRecipientPM[]) {
+    update(items: AutomationArgs[]) {
         return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -61,14 +62,14 @@ export class AutomationResultEmailRecipientExtendedService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            var resultEmailRecipientPMLists: AutomationResultEmailRecipientPM[] = [];
-            if (items) {
-                items.forEach((item) => {
-                    var mappedEntity = this.MapJsonToEntityPM(item);
-                    resultEmailRecipientPMLists.push(mappedEntity);
-                });
-            }
-            return this._http.put(this._apiUrl + '/putautomationresultemailrecipient', JSON.stringify(resultEmailRecipientPMLists),
+            //var resultEmailRecipientPMLists: AutomationResultEmailRecipientPM[] = [];
+            //if (items) {
+            //    items.forEach((item) => {
+            //        var mappedEntity = this.MapJsonToEntityPM(item);
+            //        resultEmailRecipientPMLists.push(mappedEntity);
+            //    });
+            //}
+            return this._http.put(this._apiUrl + '/putautomationresultemailrecipient', JSON.stringify(items),
                 { headers: authHeader }).map((res) => {
                     var pm = res.json();
                     return serviceResponse;

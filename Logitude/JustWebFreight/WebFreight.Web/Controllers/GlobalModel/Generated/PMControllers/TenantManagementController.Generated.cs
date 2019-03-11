@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
         public HttpResponseMessage GetSingle(int id)
         {
 		  try
-            {
+            { 
 			    string logKey = PerformanceLogger.LogCurrentTime();
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);

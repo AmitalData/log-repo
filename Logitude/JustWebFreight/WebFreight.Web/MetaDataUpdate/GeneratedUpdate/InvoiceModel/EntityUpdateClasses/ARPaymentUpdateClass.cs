@@ -37,7 +37,6 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.BL;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.BL;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.BL;

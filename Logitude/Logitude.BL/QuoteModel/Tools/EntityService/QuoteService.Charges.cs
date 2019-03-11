@@ -47,6 +47,33 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                             }
                     }
 
+                    switch (entityPM.DirectionId.ToUpper())
+                    {
+                        case "E":
+                            {
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsExport);
+                                break;
+                            }
+
+                        case "I":
+                            {
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsImport);
+                                break;
+                            }
+
+                        case "D":
+                            {
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsDomestic);
+                                break;
+                            }
+
+                        case "R":
+                            {
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsDrop);
+                                break;
+                            }
+                    }
+
                     List<ChargesType> list_ChargeTypes = new List<ChargesType>();
                     if (this.isLCLQuote)
                     {

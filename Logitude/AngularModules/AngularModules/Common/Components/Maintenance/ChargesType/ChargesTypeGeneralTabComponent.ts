@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -317,5 +317,33 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         if (this.EntityPM.SATExternalId != newValue) {
             this.EntityPM.SATExternalId = newValue;
         }
-    }       
+    }
+
+    get IsImport() { return this.EntityPM.IsImport; }
+    set IsImport(newValue: boolean) {
+        if (this.EntityPM.IsImport != newValue) {
+            this.EntityPM.IsImport = newValue;
+        }
+    }
+
+    get IsExport() { return this.EntityPM.IsExport; }
+    set IsExport(newValue: boolean) {
+        if (this.EntityPM.IsExport != newValue) {
+            this.EntityPM.IsExport = newValue;
+        }
+    }
+
+    get IsDrop() { return this.EntityPM.IsDrop; }
+    set IsDrop(newValue: boolean) {
+        if (this.EntityPM.IsDrop != newValue) {
+            this.EntityPM.IsDrop = newValue;
+        }
+    }
+
+    get IsDomestic() { return this.EntityPM.IsDomestic; }
+    set IsDomestic(newValue: boolean) {
+        if (this.EntityPM.IsDomestic != newValue) {
+            this.EntityPM.IsDomestic = newValue;
+        }
+    }
 }

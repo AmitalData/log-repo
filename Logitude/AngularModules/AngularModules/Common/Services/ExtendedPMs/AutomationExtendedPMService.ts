@@ -11,7 +11,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 
 import {AutomationPM} from '../../EntityPMs/AutomationPMExtended';
 
-
+import {AutomationArgs} from '../../../Infrastructure/DataContracts/AutomationArgs';
 
 @Injectable()
 export class AutomationExtendedPMService {
@@ -71,7 +71,7 @@ export class AutomationExtendedPMService {
     }
 
 
-    putAuomationList(automationPMList: any) {
+    putAuomationList(items: AutomationArgs[]) {
         return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -79,7 +79,7 @@ export class AutomationExtendedPMService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.put(this._apiUrl + '/putauomationlist', JSON.stringify(automationPMList),
+            return this._http.put(this._apiUrl + '/putauomationlist', JSON.stringify(items),
                 { headers: authHeader }).map((res) => {
                     var pm = res.json();
                     return serviceResponse;

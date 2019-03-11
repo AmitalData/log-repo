@@ -1,0 +1,306 @@
+<style>
+    .AbdullahTable {
+        table-layout: fixed;
+    }
+
+    .AbdullahTable tr {
+        height: 28px;
+    }
+
+    .spinner {
+        margin: 100px auto 0;
+        width: 70px;
+        text-align: center;
+        height: 100%;
+    }
+
+    .spinner>div {
+        height: 100%;
+        width: 14px;
+        height: 14px;
+        background-color: #83b7dd;
+
+        border-radius: 100%;
+        display: inline-block;
+        -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+        animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    }
+
+    .spinner .bounce1 {
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+    }
+
+    .spinner .bounce2 {
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+    }
+
+    @-webkit-keyframes sk-bouncedelay {
+
+        0%,
+        80%,
+        100% {
+            -webkit-transform: scale(0)
+        }
+
+        40% {
+            -webkit-transform: scale(1.0)
+        }
+    }
+
+    @keyframes sk-bouncedelay {
+
+        0%,
+        80%,
+        100% {
+            -webkit-transform: scale(0);
+            transform: scale(0);
+        }
+
+        40% {
+            -webkit-transform: scale(1.0);
+            transform: scale(1.0);
+        }
+    }
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.6;
+        cursor: default;
+    }
+</style>
+<style>
+    .FiltersMenu li {
+        /* width: fit-content !important; */
+        width: 75px;
+        padding: 0 7px;
+        border-width: 1px;
+        margin-right: -1px;
+    }
+
+    /* .FiltersMenu li:first-child, .FiltersMenu li:last-child{
+        border-radius: 0;
+    }
+
+    .FiltersMenu li:nth-child(1){
+        background: red;
+        color: red;
+    }
+    .FiltersMenu li:first-child{
+        background: blueviolet;
+        color: blueviolet;
+    } */
+
+
+    .aboodRTLFilterMenu li:first-child,
+    .aboodRTLFilterMenu li:last-child {
+        border-radius: 0;
+    }
+
+    .aboodRTLFilterMenu li:first-child {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .aboodRTLFilterMenu li:last-child {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+</style>
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="color:#1B90CB; font-size:15px; line-height: 15px;">
+                {{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}
+            </td>
+    </tr>
+
+
+
+    <!-- Filters and Balance -->
+    <tr style="height: 32px;" *ngIf="isReady">
+        <td colspan="4">
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <!-- Date -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 120px;" text-start>
+                                    <LogLabel [ObjectFieldName]="'GLAccountId'"
+                                        [Text]="'Accounting.General.O.Datefrom' | TextCodeTranslationPipe"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+
+                                <!-- Filter -->
+                                <td style="width: 235px;">
+                                    <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                                        <li float-start id="filter_accounting"
+                                            (click)="FilterItemClicked('filter_accounting')" style="height: 22px;"
+                                            [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
+                                            {{'GLAccounts.O.filter_accounting' | TextCodeTranslationPipe}}
+                                        </li>
+                                        <li float-start id="filter_reference"
+                                            (click)="FilterItemClicked('filter_reference')" style="height: 22px;"
+                                            [class.SelectedFilter]="filterSelectedValue === 'filter_reference'">
+                                            {{'GLAccounts.O.filter_reference' | TextCodeTranslationPipe}}
+                                        </li>
+                                        <li float-start id="filter_due" (click)="FilterItemClicked('filter_due')"
+                                            style="height: 22px;"
+                                            [class.SelectedFilter]="filterSelectedValue === 'filter_due'">
+                                            {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
+                                        </li>
+                                    </ul>
+                                </td>
+
+                                <td style="width: 120px;">
+                                    <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                        [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
+                                        [SelectedDateValue]="FromDate"></LogDatePicker>
+                                </td>
+
+                                <td style="width:15px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 30px;" text-start>{{'Accounting.General.O.To'
+                                                        | TextCodeTranslationPipe}}</td>
+
+                                <td style="width: 120px;">
+                                    <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                        [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
+                                        [SelectedDateValue]="ToDate"></LogDatePicker>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <!-- GLAccountId -->
+                                <td style="width:330px" colspan="2">
+                                    <table>
+
+                                        <tr>
+                                            <td style="width:120px">
+                                                <LogLabel [ObjectFieldName]="'GLAccountId'"
+                                                    [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                </LogLabel>
+                                            </td>
+
+                                            <td style="width:170px">
+                                                <LogLov [ObjectFieldName]="'GLAccountId'"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                    [LookUpTableName]="'GLAccount'" [DependencyFilter2Value]="'2'"
+                                                    (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true"
+                                                    [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <td>
+                                            <td>
+
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <!-- check box -->
+                                <td style="width:300px" colspan="5">
+                                    <table>
+
+                                        <tr>
+                                            <td>
+                                                <!-- with children checkbox-->
+                                                <div [style.float]="isRTL ? 'right' : 'left'">
+                                                    <div float-start style="width: 20px; padding-top: 2px;">
+                                                        <CheckBox (Checked)="AttachedGLAccountCheckBox = $event"
+                                                            [IsChecked]="AttachedGLAccountCheckBox" [IsEnabled]="false">
+                                                        </CheckBox>
+                                                    </div>
+                                                    <div float-end text-start
+                                                        style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                                        {{'GLTransactionReport.O.WithClosedTransactions' |
+                                                                                TextCodeTranslationPipe}}
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+
+
+                                        </tr>
+                                        <tr></tr>
+                                    </table>
+
+
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr class="FormFieldRow">
+                                <!-- CurrencyId -->
+                                <td style="width:330px" colspan="7">
+                                    <table>
+
+                                        <tr>
+                                            <td style="width:120px">
+                                                <LogLabel [ObjectFieldName]="'CurrencyId'"
+                                                    [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                                                    [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:170px">
+                                                <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                    [QueryFilterItems]="CurrencyFilters" [SelectedValue]="CurrencyId"
+                                                    [LookUpTableName]="'Currency'" [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <td>
+                                            <td>
+
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td colspan="2" style="width: 100px; padding: 0 40px;" class="Label">
+                                    <div style="width: 120px;" float-left>
+                                        <button class="GreenButton"
+                                            (click)="RunButtonClicked()">{{ 'AgingReport.O.RunReport' | TextCodeTranslationPipe }}</button>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
