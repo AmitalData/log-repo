@@ -1,5 +1,6 @@
 ﻿
 using Logitude.Customs.BL.EntityQueryServiceExt;
+using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
@@ -19,8 +20,10 @@ namespace WebFreight.Web.CustomModel
            
             // Query Service
             ContainerAccessor.Container.RegisterType<ICustomsDocumentQueryServiceExt, CustomsDocumentQueryServiceExt>("CustomsDocumentQueryServiceExt", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
-
+            ContainerAccessor.Container.RegisterType<ICustomsRequiredFieldsValidatorExt, CustomsRequiredFieldsValidator>("CustomsRequiredFieldsValidator", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
             
+
+
         }
     }
 }

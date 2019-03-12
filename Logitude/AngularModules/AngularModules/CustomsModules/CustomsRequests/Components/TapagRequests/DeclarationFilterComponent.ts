@@ -239,28 +239,28 @@ export class DeclarationFilterComponent
     }
 
     //#region Response Properties
-    get ExternalID() { return this.ResponseData.externalID; }
+    get ExternalID() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.externalID : null; }
     set ExternalID(value: string) {
         if (this.ResponseData.externalID != value) {
             this.ResponseData.externalID = value;
         }
     }
 
-    get CustomOfficeName() { return this.ResponseData.customOfficeName; }
+    get CustomOfficeName() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.customOfficeName : null; }
     set CustomOfficeName(value: string) {
         if (this.ResponseData.customOfficeName != value) {
             this.ResponseData.customOfficeName = value;
         }
     }
 
-    get ExternalName() { return this.ResponseData.name; }
+    get ExternalName() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.name : null; }
     set ExternalName(value: string) {
         if (this.ResponseData.name != value) {
             this.ResponseData.name = value;
         }
     }
 
-    get StatusName() { return this.ResponseData.statusName; }
+    get StatusName() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.statusName : null; }
     set StatusName(value: string) {
         if (this.ResponseData.statusName != value) {
             this.ResponseData.statusName = value;
@@ -278,7 +278,7 @@ export class DeclarationFilterComponent
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
-        if (AppTool.IsNullOrEmpty(this.RequestParams.DeclarationId) || AppTool.IsNullOrEmpty(this.DeclarationNumber)) {
+        if (AppTool.IsNullOrEmpty(this.DeclarationNumber)) {
             var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationNumberIsMandatory");
             this.ValidationErrorsList.push(msg);
         }

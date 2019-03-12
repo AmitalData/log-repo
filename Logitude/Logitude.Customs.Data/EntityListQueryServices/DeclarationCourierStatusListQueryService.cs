@@ -40,19 +40,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             //    var resQ = qMmmnActionError.ToList();
             //}        
             //TestSql(iQueryable);
-            
+            //ICustomsRequiredFieldsValidatorExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
+
+            //CustomsRequiredFieldErrors errorsForCourierDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForCourierDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
+
+            bool notValid = false;
             IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
                                                               join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
                                                               on a.DeclarationId equals d.Id
                                                               join c in context.CourierDeclarations
                                                               on a.DeclarationId equals c.DeclarationId
-
-
-                                                              //join mmnAction in qMmmnActionError
-                                                              //on a.DeclarationId equals mmnAction.id
-                                                              //into leftJoin
-                                                              //from ao in leftJoin.DefaultIfEmpty()
-
 
                                                               select new DeclarationCourierStatusList()
                                                               {
@@ -68,7 +65,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                   IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
                                                                   //IsACCTab = (d.MamanStatusCode == "2"), ???
-                                                                  CourierManifestStatusCode = a.CourierManifestStatusCode,
+                                                                  CourierManifestStatusCode =  a.CourierManifestStatusCode,
                                                                   CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
                                                                   CourierPaymentStatusCode = a.CourierPaymentStatusCode,
                                                                   IsCourierMissingClassification = a.IsCourierMissingClassification,

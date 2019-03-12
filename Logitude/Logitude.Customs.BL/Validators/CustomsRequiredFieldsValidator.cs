@@ -15,11 +15,14 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.Customs.BL.Validators
 {
-    public class CustomsRequiredFieldsValidator
+    public class CustomsRequiredFieldsValidator : ICustomsRequiredFieldsValidatorExt
     {
+
+
         public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForDeclaration(string declarationId, int tenant, DeclarationPM declarationPM = null)
         {
             DeclarationPM declaration = null;
@@ -1352,5 +1355,9 @@ namespace Logitude.Customs.BL.Validators
             return requiredErrors;
         }
 
+        public bool CheckRequiredFieldErrorsForCourierDeclaration(string declarationId, int tenant)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
