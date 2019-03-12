@@ -117,8 +117,8 @@
 
     <tr>
         <td style="color:#1B90CB; font-size:15px; line-height: 15px;">
-                {{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}
-            </td>
+            {{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}
+        </td>
     </tr>
 
 
@@ -130,6 +130,75 @@
                 <tr class="FormFieldRow">
                     <td>
                         <table>
+
+                            <tr class="FormFieldRow">
+                                <!-- GLAccountId -->
+                                <td style="width:330px" colspan="2">
+                                    <table>
+
+                                        <tr>
+                                            <td style="width:120px">
+                                                <LogLabel [ObjectFieldName]="'GLAccountId'"
+                                                    [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                </LogLabel>
+                                            </td>
+
+                                            <td style="width:170px">
+                                                <LogLov [ObjectFieldName]="'GLAccountId'"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                    [LookUpTableName]="'GLAccount'" [DependencyFilter2Value]="'2'"
+                                                    (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true"
+                                                    [HideAddLink]="true" [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <td>
+                                            <td>
+
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <!-- check box -->
+                                <td style="width:300px" colspan="5">
+                                    <table>
+
+                                        <tr>
+                                            <td>
+                                                <!-- with children checkbox-->
+                                                <div [style.float]="isRTL ? 'right' : 'left'">
+                                                    <div float-start style="width: 20px; padding-top: 2px;">
+                                                        <CheckBox (Checked)="AttachedGLAccountCheckBox = $event"
+                                                            [IsChecked]="AttachedGLAccountCheckBox" [IsEnabled]="false">
+                                                        </CheckBox>
+                                                    </div>
+                                                    <div float-end text-start
+                                                        style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                                        {{'GLTransactionReport.O.WithClosedTransactions' |
+                                                                                        TextCodeTranslationPipe}}
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+
+
+                                        </tr>
+                                        <tr></tr>
+                                    </table>
+
+
+
+                                </td>
+
+                            </tr>
+
                             <!-- Date -->
                             <tr class="FormFieldRow">
                                 <td style="width: 120px;" text-start>
@@ -184,76 +253,6 @@
                             </tr>
 
                             <tr class="FormFieldRow">
-                                <!-- GLAccountId -->
-                                <td style="width:330px" colspan="2">
-                                    <table>
-
-                                        <tr>
-                                            <td style="width:120px">
-                                                <LogLabel [ObjectFieldName]="'GLAccountId'"
-                                                    [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                </LogLabel>
-                                            </td>
-
-                                            <td style="width:170px">
-                                                <LogLov [ObjectFieldName]="'GLAccountId'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'GLAccount'" [DependencyFilter2Value]="'2'"
-                                                    (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true"
-                                                    [HideAddLink]="true"
-                                                    [HideColumns]="true">
-                                                </LogLov>
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                            <td>
-                                            <td>
-
-                                            </td>
-
-                                        </tr>
-                                    </table>
-                                </td>
-
-                                <!-- check box -->
-                                <td style="width:300px" colspan="5">
-                                    <table>
-
-                                        <tr>
-                                            <td>
-                                                <!-- with children checkbox-->
-                                                <div [style.float]="isRTL ? 'right' : 'left'">
-                                                    <div float-start style="width: 20px; padding-top: 2px;">
-                                                        <CheckBox (Checked)="AttachedGLAccountCheckBox = $event"
-                                                            [IsChecked]="AttachedGLAccountCheckBox" [IsEnabled]="false">
-                                                        </CheckBox>
-                                                    </div>
-                                                    <div float-end text-start
-                                                        style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
-                                                        {{'GLTransactionReport.O.WithClosedTransactions' |
-                                                                                TextCodeTranslationPipe}}
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-
-
-                                        </tr>
-                                        <tr></tr>
-                                    </table>
-
-
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr class="FormFieldRow">
                                 <!-- CurrencyId -->
                                 <td style="width:330px" colspan="7">
                                     <table>
@@ -292,6 +291,7 @@
                                 </td>
 
                             </tr>
+
                         </table>
                     </td>
                 </tr>

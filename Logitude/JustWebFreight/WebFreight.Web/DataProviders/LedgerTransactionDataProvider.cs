@@ -28,6 +28,10 @@ namespace WebFreight.Web.DataProviders
 
         // List
         public List<ReportLedgerTransaction> Transactions { get; set; }
+
+        // Balance
+        public List<GLAccountBalanceList> LocalOpenBalanceList { get; set; }
+        public List<GLAccountBalanceList> LocalClosedBalanceList { get; set; }
     }
 
     public class ReportLedgerTransaction
@@ -135,6 +139,22 @@ namespace WebFreight.Web.DataProviders
                 }
                 return result;
             }
+        }
+    }
+    public class GLAccountBalanceList
+    {
+        public string CurrencyId { get; set; }
+        public decimal? BalanceForeign { get; set; }
+        public decimal? BalanceLocal { get; set; }
+        public string ForeignCurrencySign { get; set; }
+        public string LocalCurrencySign { get; set; }
+        public string LocalBalanceWithSign
+        {
+            get { return string.Format("{0:N2} {1}", BalanceLocal, LocalCurrencySign); }
+        }
+        public string ForeignBalanceWithSign
+        {
+            get { return string.Format("{0:N2} {1}", BalanceForeign, ForeignCurrencySign); }
         }
     }
 }
