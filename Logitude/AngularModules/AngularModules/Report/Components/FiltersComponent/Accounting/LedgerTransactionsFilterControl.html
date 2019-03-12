@@ -171,7 +171,7 @@
                                         <tr>
                                             <td>
                                                 <!-- with children checkbox-->
-                                                <div [style.float]="isRTL ? 'right' : 'left'">
+                                                <!-- <div [style.float]="isRTL ? 'right' : 'left'">
                                                     <div float-start style="width: 20px; padding-top: 2px;">
                                                         <CheckBox (Checked)="AttachedGLAccountCheckBox = $event"
                                                             [IsChecked]="AttachedGLAccountCheckBox" [IsEnabled]="false">
@@ -182,7 +182,7 @@
                                                         {{'GLTransactionReport.O.WithClosedTransactions' |
                                                                                         TextCodeTranslationPipe}}
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </td>
 
                                         </tr>
@@ -247,6 +247,23 @@
                                         [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
                                         [SelectedDateValue]="ToDate"></LogDatePicker>
                                 </td>
+
+                                <!-- check box -->
+                                <td style="width:260px; padding: 0 20px;" colspan="1">
+                                    <!-- with children checkbox-->
+                                    <div [style.float]="isRTL ? 'right' : 'left'">
+                                        <div float-start style="width: 20px; padding-top: 2px;">
+                                            <CheckBox (Checked)="AttachedGLAccountCheckBox = $event" [IsChecked]="AttachedGLAccountCheckBox"
+                                                [IsEnabled]="false">
+                                            </CheckBox>
+                                        </div>
+                                        <div float-end text-start
+                                            style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                            {{'GLTransactionReport.O.WithClosedTransactions' | TextCodeTranslationPipe}}
+                                        </div>
+                                    </div>
+                                </td>
+
                                 <td>
                                     <div></div>
                                 </td>
@@ -254,7 +271,7 @@
 
                             <tr class="FormFieldRow">
                                 <!-- CurrencyId -->
-                                <td style="width:330px" colspan="7">
+                                <td colspan="7">
                                     <table>
 
                                         <tr>
@@ -283,8 +300,8 @@
                                     </table>
                                 </td>
 
-                                <td colspan="2" style="width: 100px; padding: 0 40px;" class="Label">
-                                    <div style="width: 120px;" float-left>
+                                <td colspan="2" class="Label">
+                                    <div style="width: 100px;" float-left>
                                         <button class="GreenButton"
                                             (click)="RunButtonClicked()">{{ 'AgingReport.O.RunReport' | TextCodeTranslationPipe }}</button>
                                     </div>
