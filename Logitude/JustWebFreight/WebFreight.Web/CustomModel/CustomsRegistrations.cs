@@ -20,8 +20,7 @@ namespace WebFreight.Web.CustomModel
            
             // Query Service
             ContainerAccessor.Container.RegisterType<ICustomsDocumentQueryServiceExt, CustomsDocumentQueryServiceExt>("CustomsDocumentQueryServiceExt", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
-            ContainerAccessor.Container.RegisterType<ICustomsRequiredFieldsValidatorExt, CustomsRequiredFieldsValidator>("CustomsRequiredFieldsValidator", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
-            
+           
 
 
         }

@@ -49,13 +49,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                               join c in context.CourierDeclarations
                                                               on a.DeclarationId equals c.DeclarationId
 
-
-                                                              //join mmnAction in qMmmnActionError
-                                                              //on a.DeclarationId equals mmnAction.id
-                                                              //into leftJoin
-                                                              //from ao in leftJoin.DefaultIfEmpty()
-
-
                                                               select new DeclarationCourierStatusList()
                                                               {
                                                                   DeclarationId = a.DeclarationId,
@@ -70,7 +63,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                   IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
                                                                   //IsACCTab = (d.MamanStatusCode == "2"), ???
-                                                                  CourierManifestStatusCode = a.CourierManifestStatusCode,
+                                                                  CourierManifestStatusCode = !_RequiredFieldErrorsForCourierDeclarationIsValid ? "M" : a.CourierManifestStatusCode,
                                                                   CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
                                                                   CourierPaymentStatusCode = a.CourierPaymentStatusCode,
                                                                   IsCourierMissingClassification = a.IsCourierMissingClassification,
