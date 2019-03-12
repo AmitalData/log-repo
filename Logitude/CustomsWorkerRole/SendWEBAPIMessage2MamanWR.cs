@@ -331,7 +331,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 }
                 else
                 {
-                    analyzer = customsPartnerFtpDetails.GetResponseService(courier2MamanCommSettings.MessageCode);
+                    throw new Exception("All send web api must have @intrface.ResponseCode ");
+                    ///analyzer = customsPartnerFtpDetails.GetResponseService(courier2MamanCommSettings.MessageCode);
                 }
 
                 analyzer.AnalyzeResponse(courier2MamanCommSettings, webAPIResultString);

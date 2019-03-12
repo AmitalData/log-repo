@@ -8,6 +8,7 @@ using Logitude.BL.Helpers;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
@@ -32,12 +33,12 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.Messaging.Maman
 {
-    public class CourierGWMessageECSpclMamanResponseService : IWebAPIMessage2MamanAnalyzer///using  by SendWEBAPIMessage2MamanWRWR
+    public class CourierGWMessageECSpclMamanResponseService //: IWebAPIMessage2MamanAnalyzer///using  by SendWEBAPIMessage2MamanWRWR
     {
 
 
 
-        public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
+        public void AnalyzeQResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
         {
 
 
@@ -167,8 +168,32 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
         }
 
-        
+
+#if true
+        public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
+        {
+            throw new Exception("use  SetInAnalyzeQResponseService by @intrface.ResponseCode");
+            var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+            var def = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECMMNSPCL_Response);
+            var commSetting = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
+            var analyzeQueueUtil = new AnalyzeQueueUtil();
+            var new_analyze = analyzeQueueUtil
+               .SaveMessageToAnalyzeQueue("", Encoding.UTF8.GetBytes(webAPIResultString), settings.Tenant,
+               commSetting, def,
+               new AnalyzeResultModel()
+               {
+                   EntityID = settings.DeclarationId,
+                   ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+
+               });
+
+            LogMessagingUtil.Instance.AppendLine($"new_analyze  CommunicationLogId = {new_analyze.CommunicationLogId}");
+
+        }
+
+
+#endif
     }
-   
+
 
 }

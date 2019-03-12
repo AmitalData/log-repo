@@ -16,10 +16,13 @@ namespace Logitude.Customs.BL.CloseTables
     public class CustomsPartnerFtpDetails
     {
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
-        public const string InterfaceName_ECTHR = "ECTHR";//EC = E-Commerce
+        public const string InterfaceName_ECMMNTHR_REQUEST = "ECTHR";//EC = E-Commerce
+        public const string InterfaceName_ECMMNTHR_RESPONE = "ECTH+RS";//EC = E-Commerce
         public const string InterfaceName_ECOVSTHR = "ECOVSTHR";//EC = E-Commerce
         public const string InterfaceName_ECOVSTHR_Response = "ECOVSTHR+RS";//EC = E-Commerce
-        public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
+        public const string InterfaceName_ECMMNSPCL_REQUEST = "ECSPCL";//EC = E-Commerce
+        public const string InterfaceName_ECMMNSPCL_Response = "ECSPCL+RS";//EC = E-Commerce
+
         public const string InterfaceName_ECOVSSPCL_REQUEST = "ECOVSSPCL+RQ";//EC = E-Commerce
         public const string InterfaceName_ECOVSSPCL_RESPONE = "ECOVSSPCL+RS";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
@@ -48,16 +51,30 @@ namespace Logitude.Customs.BL.CloseTables
             ,
             new InterfaceDetails()
             {
-                Code = InterfaceName_ECTHR,
+                Code = InterfaceName_ECMMNTHR_REQUEST,
                 Name = "ש.מ.ב לממן",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                 WEBAPICredentialType = CourierWEBAPICredentialType.Bearer
-                  
-                
+                 WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
+                ResponseCode = InterfaceName_ECMMNTHR_RESPONE
             }
             ,
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECMMNTHR_RESPONE,
+                Name = "ש.מ.ב מממן",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanQHAWBService,
+                Subject="ש.מ.ב מממן",
+                ServerInternalDef= true
+
+            }
+            ,
+            
             new InterfaceDetails()
             {
                 Code = InterfaceName_ECOVSTHR,
@@ -72,15 +89,29 @@ namespace Logitude.Customs.BL.CloseTables
 
             , new InterfaceDetails()
             {
-                Code = InterfaceName_ECSPCL,
+                Code = InterfaceName_ECMMNSPCL_REQUEST,
                 Name = "פעולות מיוחדות לממן",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                WEBAPICredentialType = CourierWEBAPICredentialType.Bearer
+                WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
+                ResponseCode =InterfaceName_ECMMNSPCL_Response,
             }
             ,
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECMMNSPCL_Response,
+                Name = "פעולות מיוחדות מממן",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
 
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanQSPCLService,
+                Subject="פעולות מיוחדות מממן",
+                ServerInternalDef= true
+
+            }
+            ,
             new InterfaceDetails()
             {
                 Code = InterfaceName_ECSTB,
@@ -251,25 +282,29 @@ namespace Logitude.Customs.BL.CloseTables
 
                 case AnalyzeQueueServiceEnum.OVSStatusAvailabilityService:
                     return new CourierOVSStatusAvailabilityQService(@interface);
+                case AnalyzeQueueServiceEnum.MamanQHAWBService:
+                    return new MamanQHAWBService(@interface);
+                case AnalyzeQueueServiceEnum.MamanQSPCLService:
+                    return new MamanQSPCLService(@interface);
                 default:
 
                     throw new Exception("No analyze service define " + @interface.Code);
                     break;
             }
         }
-
+#if false
         public IWebAPIMessage2MamanAnalyzer GetResponseService(/*Courier2MamanCommSettings courier2MamanCommSettings*/string MessageCode)
         {
             IWebAPIMessage2MamanAnalyzer analyzer = null;
 
             switch (/*courier2MamanCommSettings.*/MessageCode)
             {
-                case CustomsPartnerFtpDetails.InterfaceName_ECTHR:
+                case CustomsPartnerFtpDetails.InterfaceName_ECMMNTHR_REQUEST:
                     {
                         analyzer = new CourierGWMessageECTHRDataMamanResponseService();
                     }
                     break;
-                case CustomsPartnerFtpDetails.InterfaceName_ECSPCL:
+                case CustomsPartnerFtpDetails.InterfaceName_ECMMNSPCL_REQUEST:
                     {
                         analyzer = new CourierGWMessageECSpclMamanResponseService();
                     }
@@ -286,7 +321,7 @@ namespace Logitude.Customs.BL.CloseTables
 
             return analyzer;
         }
-
+#endif
 
     }
     public enum AnalyzeQueueServiceEnum
@@ -298,6 +333,8 @@ namespace Logitude.Customs.BL.CloseTables
         OVSSpecialActionService,
         OVSStatusAvailabilitySpliterService,
         OVSStatusAvailabilityService,
+        MamanQHAWBService,
+        MamanQSPCLService,
     }
     public enum CourierWEBAPICredentialType
     {
