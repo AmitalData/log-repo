@@ -148,7 +148,11 @@ namespace Logitude.Update
                     foreach (StatesPorts item in allDataLines)
                     {
                         Port portDB = myCommonContext.Ports.Where(p => p.Code == item.Port && p.Tenant == tenant && p.CountryId == country.Id).FirstOrDefault();
-                        State state = myCommonContext.States.Where(p => p.Code == item.State && p.Tenant == tenant).FirstOrDefault();
+                        State state = null;
+                        if (portDB != null)
+                        {
+                            state = myCommonContext.States.Where(p => p.Code == item.State && p.Tenant == tenant && p.CountryId==portDB.CountryId).FirstOrDefault();
+                        }
                         if (state != null && portDB != null)
                         {
                             portDB.StateId = state.Id;
@@ -323,7 +327,7 @@ namespace Logitude.Update
                     var myCount = 0;
                     foreach (StatesPorts item in allDataLines)
                     {
-                        State stateDB = myCommonContext.States.Where(p => p.Code == item.Port && p.Tenant == tenant).FirstOrDefault();
+                        State stateDB = myCommonContext.States.Where(p => p.Code == item.Port && p.Tenant == tenant && p.CountryId==country.Id).FirstOrDefault();
                         if (stateDB == null)
                         {
                             State state = new State();
