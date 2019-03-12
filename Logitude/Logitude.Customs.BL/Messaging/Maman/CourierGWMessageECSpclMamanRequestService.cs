@@ -106,7 +106,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 case MamanSpecialCode.PrintDocuments:
                     mamanSpecialActionCode = "5";
                     break;
-             
+                case MamanSpecialCode.Sban:
+                    mamanSpecialActionCode = "6";
+                    break;
+
             }
             return new ECSpclMamanMessage()
             {

@@ -17132,6 +17132,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddMamanSpecialAction(new MamanSpecialAction() { Code = "2", EnglishName = "Receiving a delay certificate", LocalName = "קליטה תעודת עיכוב" }, mamanSpecialActionRepository);
             AddClosedTables.AddMamanSpecialAction(new MamanSpecialAction() { Code = "4", EnglishName = "Sticker Printing", LocalName = "הדפסת מדבקה" }, mamanSpecialActionRepository);
             AddClosedTables.AddMamanSpecialAction(new MamanSpecialAction() { Code = "5", EnglishName = "Printing Documents", LocalName = "הדפסת מסמכים" }, mamanSpecialActionRepository);
+            AddClosedTables.AddMamanSpecialAction(new MamanSpecialAction() { Code = "6", EnglishName = "Sban", LocalName = "סב''ן" }, mamanSpecialActionRepository);
             mamanSpecialActionRepository.SubmitChanges();
         }
 

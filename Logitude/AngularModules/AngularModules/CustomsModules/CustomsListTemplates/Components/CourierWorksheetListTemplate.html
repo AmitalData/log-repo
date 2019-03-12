@@ -206,6 +206,12 @@
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','5');">
                             <span>ביטול הדפסת מסמכים</span>
                         </li>
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsSban" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','6');">
+                            <span>סב''ן</span>
+                        </li>
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsSban" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','6');">
+                            <span>ביטול סב''ן</span>
+                        </li>
                         <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] != 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'I');">
                             <span>העברה לפרטני</span>
                         </li>
