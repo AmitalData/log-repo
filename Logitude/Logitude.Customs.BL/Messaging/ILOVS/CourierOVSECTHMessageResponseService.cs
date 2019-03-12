@@ -29,7 +29,7 @@ using System.Threading.Tasks;
 namespace Logitude.Customs.BL.Messaging.ILOVS
 {
     public class CourierOVSECTHMessageResponseService
-        : IWebAPIMessage2MamanAnalyzer
+       // : IWebAPIMessage2MamanAnalyzer
     //: WebAPIMessage2MamanBase///using  by SendWEBAPIMessage2MamanWRWR
     {
 
@@ -78,6 +78,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
         public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
         {
+            throw new Exception("use  SetInAnalyzeQResponseService by @intrface.ResponseCode");
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
             var def =customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR_Response);
             var commSetting = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
