@@ -22,6 +22,6 @@
         //2	קליטה תעודת עיכוב	2, קליטה תעודת עיכוב Receiving a delay certificate	0
         //4	הדפסת מדבקה	4, הדפסת מדבקה   Sticker Printing	0
         //5	הדפסת מסמכים	5, הדפסת מסמכים  Printing Documents	0
-        //6 סבן
+        //6	סב''ן	6, סב''ן  Sban	0
     }
 }
