@@ -108,6 +108,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 case "5"://MamanSpecialCode.PrintDocuments
                     cfifilmFUStatus = "CDO";
                     break;
+                case "6"://MamanSpecialCode.Sban
+                    cfifilmFUStatus = "CDS";
+                    break;
             }
             var toCancel = false;
             UnifreightEventMode unifreightEventMode= UnifreightEventMode.@new;

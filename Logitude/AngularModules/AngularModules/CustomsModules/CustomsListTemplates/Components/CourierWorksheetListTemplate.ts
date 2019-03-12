@@ -76,6 +76,7 @@ export class CourierWorksheetListTemplate {
     IsReceivingDelayCertificate: boolean = false;
     IsPrintDocuments: boolean = false;
     IsMamanSticker: boolean = false;
+    IsSban: boolean = false;
 
     private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     private _CourierMasterService: CourierMasterService = new CourierMasterService();
@@ -391,6 +392,10 @@ export class CourierWorksheetListTemplate {
                                         declarationMamanSpecialActionPMItem.MamanSpecialActionCode = "מסמכים";//this.IsPrintDocuments = true;
                                     }
                                         break;
+                                    case "6": {
+                                        declarationMamanSpecialActionPMItem.MamanSpecialActionCode = "סב''ן";//this.IsSban = true;
+                                    }
+                                        break;
                                 }
                             });
 
@@ -480,6 +485,7 @@ export class CourierWorksheetListTemplate {
         this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
         this.IsReceivingDelayCertificate = false;
         this.IsPrintDocuments = false;
+        this.IsSban = false;
         this.DelayCertificateDetails = null;
         this.MamanStickerDetails = null;
         this.PrintDocumentsDetails = null;
@@ -518,6 +524,13 @@ export class CourierWorksheetListTemplate {
                                         this.PrintDocumentsDetails = declarationMamanSpecialActionPMItem;
                                         if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
                                             this.IsPrintDocuments = true;
+                                        }
+                                        break;
+                                    }
+                                    case "6": {
+                                        this.PrintDocumentsDetails = declarationMamanSpecialActionPMItem;
+                                        if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                            this.IsSban = true;
                                         }
                                         break;
                                     }
@@ -683,6 +696,20 @@ export class CourierWorksheetListTemplate {
                 else if (actionCode == "C") {
                     titleText = "ביטול הדפסת מסמכים";
                     questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מסמכים";
+                }
+                break;
+            }
+            case "6": {
+                if (actionCode == "U") {
+                    titleText = "סב''ן";
+                    questionText = "אשר שליחת מסר פעולה מיוחדת של שליחה לסב''ן";
+                    if (this.PrintDocumentsDetails != null) {
+                        declarationMamanSpecialActionPM = this.PrintDocumentsDetails;
+                    }
+                }
+                else if (actionCode == "C") {
+                    titleText = "ביטול סב''ן";
+                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של שליחה לסב''ן";
                 }
                 break;
             }
