@@ -152,8 +152,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityPM.UpdateDate = entityPM.CreateDate;
-                entityPM.CreatedByUserId = loggedContact.Id;
-                entityPM.UpdatedByUserId = loggedContact.Id;
+
+                if (loggedContact != null)
+                {
+                    entityPM.CreatedByUserId = loggedContact.Id;
+                    entityPM.UpdatedByUserId = loggedContact.Id;
+                }
+
                 entityPM.Code = CodeCounter.GetNumber("CustomsShipper", tenant).ToString();
                 
             }
@@ -161,7 +166,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             else
             {
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                entityPM.UpdatedByUserId = loggedContact.Id;
+                if (loggedContact != null)
+                {
+                    entityPM.UpdatedByUserId = loggedContact.Id;
+                }
             }
 
             this.InitializeCardFields();

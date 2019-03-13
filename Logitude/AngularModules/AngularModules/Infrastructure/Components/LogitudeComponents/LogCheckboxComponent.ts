@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Directive, ElementRef, Renderer, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
