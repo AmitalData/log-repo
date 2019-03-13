@@ -348,14 +348,6 @@ export class CourierWorksheetComponent extends BaseComponent
 
     SendALLCorrectDec(courierDeclarationStatusCode: string) {
 
-        if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
-            var myMessageWindow = new MessageWindow();
-            myMessageWindow.Width = 250;
-            myMessageWindow.Height = 150;
-            myMessageWindow.Show("חסרים שדות חובה ברמת הטיסה");
-            return;
-        }
-
         if (this._ReadyDECToBatchSend == 0 && courierDeclarationStatusCode == "R") {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -551,7 +543,7 @@ export class CourierWorksheetComponent extends BaseComponent
                             if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
                                 this._ReadyDECToBatchSend = 0;
                             }
-                            this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSendR") + ' (' + this._ReadyDECToBatchSend + ')';
+                            this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSendR") + ' (' + this._ReadyDECToBatchSend + ')';
                             break;
                         }
                         case "DECR_RV": {
@@ -568,7 +560,7 @@ export class CourierWorksheetComponent extends BaseComponent
                             if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
                                 this._ReadyMNFToBatchSend = 0;
                             }
-                            this._ReadyMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSendR") + ' (' + this._ReadyMNFToBatchSend + ')';
+                            this._ReadyMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSendR") + ' (' + this._ReadyMNFToBatchSend + ')';
                             break;
                         }
                         case "MNFR_RV": {
