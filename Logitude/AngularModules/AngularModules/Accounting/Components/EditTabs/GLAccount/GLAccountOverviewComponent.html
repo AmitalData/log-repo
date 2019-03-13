@@ -399,7 +399,7 @@
                                     <div class="content" style="padding: 5px 0;height: calc(100% - 120px);overflow: auto;">
                                         <ul *ngIf="!isNotesLoading && accountingNotesList.length > 0" class="accounting-notes-list">
 
-                                            <li *ngFor="let note of accountingNotesList">
+                                            <li *ngFor="let note of accountingNotesList" [attr.title]="GetNoteTitle(note)">
                                                 <!-- <span style="width:70px;color:gray; font-size: 9px;display: inline-block;">2018-02-15</span> -->
                                                 <span class="TextTrimming">{{note.Notes?note.Notes:'&nbsp;'}}</span>
                                                 <div class="btns" [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'">
