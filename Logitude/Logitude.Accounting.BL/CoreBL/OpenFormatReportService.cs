@@ -142,6 +142,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 9);
                 }
               
+                if(item.JournalNumber== "2004")
+                {
+
+                }
                 if (item.JournalNumber != null)
                 {
                     if (item.JournalNumber.Length > 10) { item.JournalNumber.Substring(0, 10); }
@@ -450,9 +454,18 @@ namespace Logitude.Accounting.BL.CoreBL
             var typeservice = TrailReportFactory.CreateNew(trailReportParam);
             List<TrailReportM> res1 = typeservice.Execute();
             typeservice.Dispose();
-           
+            var exceptedList = res1.Where(d => d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0).ToList();
+            List<string> exceptedGLAccounts = new List<string>();
+            if(exceptedList != null)
+            {
+                exceptedGLAccounts = exceptedList.Select(d => d.GLAccountId).ToList();
+            }
+            res1 = res1.Where(d => !(d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0)).ToList();
             IEnumerable< IGrouping<string,TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
+
+          
             var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
+            b110Data = b110Data.Where(d => !exceptedGLAccounts.Contains(d.GLAccountId)).ToList();
 
             foreach (B110Data item in b110Data)
             {
@@ -756,7 +769,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.TotalCredit = trailReportM.Select(d => d.LocalCredit).Sum();
                     if (item.OpeningBalance != null)
                     {
-                        string OpeningBalance = Format(item.OpeningBalance.Value); // Math.Abs((decimal)item.OpeningBalance).ToString();
+                        string OpeningBalance = Format(item.OpeningBalance.Value); 
                         if (item.OpeningBalance < 0)
                         {
                             myStringBuilder.Append("a");
