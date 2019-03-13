@@ -107,6 +107,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.IsManifestSentToAgent = entityPM.IsManifestSentToAgent;
             entityPoco.AgentSharedManifestRef = entityPM.AgentSharedManifestRef;
             entityPoco.ManifestLastSharingDate = entityPM.ManifestLastSharingDate;
+            entityPoco.CountryForStatisticsId = entityPM.CountryForStatisticsId;
 
             if (entityPM.IsExceptionResolved)
             {
@@ -131,7 +132,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MapWeightsFields(entityPM, entityPoco, isNewEntity);
             MapXSDMessagesFields(entityPM, entityPoco, entityMasterData, isNewEntity);
 
-           
+            if (entityPM.ShipmentLevelCode == "H")
+            {
+                entityPoco.MasterShipmentDataId = entityPM.MasterShipmentDataId;
+                entityPoco.FromPortId = entityPM.FromPortId;
+                entityPoco.ToPortId = entityPM.ToPortId;
+            }
+
+            else
+            {
+                entityPM.FromPortId = entityMasterData.MainCarriageFromPortId;
+                entityPM.ToPortId = entityMasterData.MainCarriageFinalDestinationPortId;
+
+                entityPoco.FromPortId = entityPM.FromPortId;
+                entityPoco.ToPortId = entityPM.ToPortId;
+            }
 
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);

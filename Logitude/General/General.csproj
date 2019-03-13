@@ -552,6 +552,8 @@
     <Content Include="Main Branch\2019\02 - 2019\Day 3[Khalid] delete objectfield and textcodes bluesnapconttractcode.sql" />
     <Content Include="Main Branch\2019\02 - 2019\Day 14 [Abed]AddMoveTypeToQuoteTemplateTextCode.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 07 [Samar] create index for opportunity id on Quote.sql" />
+    <Content Include="Main Branch\2019\03 - 2019\Day 13 [Abdullah] update searchfields of reconciliation.sql" />
+    <Content Include="Main Branch\2019\03 - 2019\Day 13 [Abdullah] update searchfields of reconciliationlines.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
