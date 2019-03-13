@@ -77,6 +77,7 @@ export class CourierWorksheetListTemplate {
     IsPrintDocuments: boolean = false;
     IsMamanSticker: boolean = false;
     IsSban: boolean = false;
+    IsMamanEnabled: boolean = false;
 
     private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     private _CourierMasterService: CourierMasterService = new CourierMasterService();
@@ -297,6 +298,7 @@ export class CourierWorksheetListTemplate {
             this._IsSplitButtonMenuFilterReady = true;
             this.CD.detectChanges();
         });
+
         this.CD.detectChanges();
     }
 
@@ -489,11 +491,15 @@ export class CourierWorksheetListTemplate {
         this.DelayCertificateDetails = null;
         this.MamanStickerDetails = null;
         this.PrintDocumentsDetails = null;
+        this.IsMamanEnabled = false;       
 
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
         myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
             let entitypm: DeclarationPM = rsptPMget.Result;
             if (entitypm != null && entitypm.Consignments != null) {
+                if (this.WebAPICourierGWMessageECTHRDataMaman.includes("ILMMN") && entitypm.Consignments[0].StorageSiteCode == "ILMMN") {
+                    this.IsMamanEnabled = true;
+                }
                 if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
                     this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
 

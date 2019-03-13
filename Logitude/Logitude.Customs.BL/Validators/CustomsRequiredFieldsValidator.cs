@@ -19,9 +19,8 @@ using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.Customs.BL.Validators
 {
-    public class CustomsRequiredFieldsValidator : ICustomsRequiredFieldsValidatorExt
+    public class CustomsRequiredFieldsValidator
     {
-
 
         public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForDeclaration(string declarationId, int tenant, DeclarationPM declarationPM = null)
         {
@@ -1355,9 +1354,5 @@ namespace Logitude.Customs.BL.Validators
             return requiredErrors;
         }
 
-        public bool CheckRequiredFieldErrorsForCourierDeclaration(string declarationId, int tenant)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
