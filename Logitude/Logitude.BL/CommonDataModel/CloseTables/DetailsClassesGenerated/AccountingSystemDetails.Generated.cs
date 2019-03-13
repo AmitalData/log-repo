@@ -38,10 +38,10 @@ namespace Logitude.BL.CommonDataModel
                 AllowAPInvoicesTransfer = true, 
                 AllowPositiveAmountsInTheCreditNote = true, 
                 InActive = false, 
+                AllowAPPaymentsTransfer = false, 
                 IsExternalCodesFromAPI = false, 
                 AllowARPaymentsTransfer = false, 
                 CanTransferToDropbox = false, 
-                AllowAPPaymentsTransfer = false, 
                 Name = "Hashavshevet", 
 			});
 			 
@@ -62,10 +62,10 @@ namespace Logitude.BL.CommonDataModel
                 AllowAPInvoicesTransfer = true, 
                 AllowPositiveAmountsInTheCreditNote = true, 
                 InActive = false, 
+                AllowAPPaymentsTransfer = true, 
                 IsExternalCodesFromAPI = false, 
                 AllowARPaymentsTransfer = true, 
                 CanTransferToDropbox = true, 
-                AllowAPPaymentsTransfer = true, 
                 Name = "Logitude Advanced Generic Interface", 
 			});
 			 
@@ -86,10 +86,10 @@ namespace Logitude.BL.CommonDataModel
                 AllowAPInvoicesTransfer = true, 
                 AllowPositiveAmountsInTheCreditNote = true, 
                 InActive = false, 
+                AllowAPPaymentsTransfer = true, 
                 IsExternalCodesFromAPI = false, 
                 AllowARPaymentsTransfer = true, 
                 CanTransferToDropbox = true, 
-                AllowAPPaymentsTransfer = true, 
                 Name = "Logitude Generic Interface", 
 			});
 			 
@@ -110,10 +110,10 @@ namespace Logitude.BL.CommonDataModel
                 AllowAPInvoicesTransfer = false, 
                 AllowPositiveAmountsInTheCreditNote = false, 
                 InActive = false, 
+                AllowAPPaymentsTransfer = false, 
                 IsExternalCodesFromAPI = false, 
                 AllowARPaymentsTransfer = false, 
                 CanTransferToDropbox = false, 
-                AllowAPPaymentsTransfer = false, 
                 Name = "None", 
 			});
 			 
@@ -131,62 +131,14 @@ namespace Logitude.BL.CommonDataModel
                 AllowMinusInvoiceLines = false, 
                 ShowDownloadScreen = false, 
                 AllowARInvoicesTransfer = true, 
-                AllowAPInvoicesTransfer = false, 
+                AllowAPInvoicesTransfer = true, 
                 AllowPositiveAmountsInTheCreditNote = false, 
-                InActive = true, 
+                InActive = false, 
+                AllowAPPaymentsTransfer = false, 
                 IsExternalCodesFromAPI = false, 
                 AllowARPaymentsTransfer = false, 
                 CanTransferToDropbox = false, 
-                AllowAPPaymentsTransfer = false, 
                 Name = "Quick Books", 
-			});
-			 
-            all.Add(new AccountingSystemDetails()
-            {    
-                Code = "QBOG", 
-                SearchFields = "QBOG,QuickBooks Online (Global)", 
-                IsExternalCodesFromTable = false, 
-                IsExternalCodesSyncEnabled = true, 
-                IsSingleTaxPerInvoice = false, 
-                IsSingleCurrencyAccount = true, 
-                AllowManuallyDueDate = false, 
-                IsJournalMode = false, 
-                IsTaxItemManaged = false, 
-                AllowMinusInvoiceLines = true, 
-                ShowDownloadScreen = false, 
-                AllowARInvoicesTransfer = true, 
-                AllowAPInvoicesTransfer = true, 
-                AllowPositiveAmountsInTheCreditNote = true, 
-                InActive = false, 
-                IsExternalCodesFromAPI = true, 
-                AllowARPaymentsTransfer = true, 
-                CanTransferToDropbox = false, 
-                AllowAPPaymentsTransfer = true, 
-                Name = "QuickBooks Online (Global)", 
-			});
-			 
-            all.Add(new AccountingSystemDetails()
-            {    
-                Code = "QBO", 
-                SearchFields = "QBO,QuickBooks Online (US)", 
-                IsExternalCodesFromTable = false, 
-                IsExternalCodesSyncEnabled = true, 
-                IsSingleTaxPerInvoice = true, 
-                IsSingleCurrencyAccount = true, 
-                AllowManuallyDueDate = false, 
-                IsJournalMode = false, 
-                IsTaxItemManaged = false, 
-                AllowMinusInvoiceLines = true, 
-                ShowDownloadScreen = false, 
-                AllowARInvoicesTransfer = true, 
-                AllowAPInvoicesTransfer = true, 
-                AllowPositiveAmountsInTheCreditNote = true, 
-                InActive = false, 
-                IsExternalCodesFromAPI = true, 
-                AllowARPaymentsTransfer = true, 
-                CanTransferToDropbox = false, 
-                AllowAPPaymentsTransfer = true, 
-                Name = "QuickBooks Online (US)", 
 			});
 			 
             all.Add(new AccountingSystemDetails()
@@ -206,11 +158,59 @@ namespace Logitude.BL.CommonDataModel
                 AllowAPInvoicesTransfer = true, 
                 AllowPositiveAmountsInTheCreditNote = true, 
                 InActive = false, 
+                AllowAPPaymentsTransfer = false, 
                 IsExternalCodesFromAPI = false, 
                 AllowARPaymentsTransfer = false, 
                 CanTransferToDropbox = false, 
-                AllowAPPaymentsTransfer = false, 
                 Name = "Rivheet", 
+			});
+			 
+            all.Add(new AccountingSystemDetails()
+            {    
+                Code = "QBO", 
+                SearchFields = "QBO,QuickBooks Online (US)", 
+                Name = "QuickBooks Online (US)", 
+                IsExternalCodesSyncEnabled = true, 
+                IsSingleTaxPerInvoice = true, 
+                IsSingleCurrencyAccount = true, 
+                AllowMinusInvoiceLines = true, 
+                AllowARInvoicesTransfer = true, 
+                AllowAPInvoicesTransfer = true, 
+                AllowPositiveAmountsInTheCreditNote = true, 
+                IsExternalCodesFromAPI = true, 
+                AllowARPaymentsTransfer = true, 
+                AllowAPPaymentsTransfer = true, 
+                IsExternalCodesFromTable = false, 
+                AllowManuallyDueDate = false, 
+                IsJournalMode = false, 
+                IsTaxItemManaged = false, 
+                ShowDownloadScreen = false, 
+                InActive = false, 
+                CanTransferToDropbox = false, 
+			});
+			 
+            all.Add(new AccountingSystemDetails()
+            {    
+                Code = "QBOG", 
+                SearchFields = "QBOG,QuickBooks Online (Global)", 
+                Name = "QuickBooks Online (Global)", 
+                IsExternalCodesSyncEnabled = true, 
+                IsSingleTaxPerInvoice = false, 
+                IsSingleCurrencyAccount = true, 
+                AllowMinusInvoiceLines = true, 
+                AllowARInvoicesTransfer = true, 
+                AllowAPInvoicesTransfer = true, 
+                AllowPositiveAmountsInTheCreditNote = true, 
+                IsExternalCodesFromAPI = true, 
+                AllowARPaymentsTransfer = true, 
+                AllowAPPaymentsTransfer = true, 
+                IsExternalCodesFromTable = false, 
+                AllowManuallyDueDate = false, 
+                IsJournalMode = false, 
+                IsTaxItemManaged = false, 
+                ShowDownloadScreen = false, 
+                InActive = false, 
+                CanTransferToDropbox = false, 
 			});
 			
             return all;
@@ -233,16 +233,16 @@ namespace Logitude.BL.CommonDataModel
 		    newPoco.AllowAPInvoicesTransfer = this.AllowAPInvoicesTransfer;  
 		    newPoco.AllowPositiveAmountsInTheCreditNote = this.AllowPositiveAmountsInTheCreditNote;  
 		    newPoco.InActive = this.InActive;  
+		    newPoco.AllowAPPaymentsTransfer = this.AllowAPPaymentsTransfer;  
 		    newPoco.IsExternalCodesFromAPI = this.IsExternalCodesFromAPI;  
 		    newPoco.AllowARPaymentsTransfer = this.AllowARPaymentsTransfer;  
 		    newPoco.CanTransferToDropbox = this.CanTransferToDropbox;  
-		    newPoco.AllowAPPaymentsTransfer = this.AllowAPPaymentsTransfer;  
 		    newPoco.Name = this.Name;   
         }
 
 		public string GetSearchFields(AccountingSystem rec)
         {   
-           return String.Concat(rec.Code,",",rec.IsExternalCodesFromTable,",",rec.IsExternalCodesSyncEnabled,",",rec.IsSingleTaxPerInvoice,",",rec.IsSingleCurrencyAccount,",",rec.AllowManuallyDueDate,",",rec.IsJournalMode,",",rec.IsTaxItemManaged,",",rec.AllowMinusInvoiceLines,",",rec.ShowDownloadScreen,",",rec.AllowARInvoicesTransfer,",",rec.AllowAPInvoicesTransfer,",",rec.AllowPositiveAmountsInTheCreditNote,",",rec.InActive,",",rec.IsExternalCodesFromAPI,",",rec.AllowARPaymentsTransfer,",",rec.CanTransferToDropbox,",",rec.AllowAPPaymentsTransfer,",",rec.Name,",");
+           return String.Concat(rec.Code,",",rec.IsExternalCodesFromTable,",",rec.IsExternalCodesSyncEnabled,",",rec.IsSingleTaxPerInvoice,",",rec.IsSingleCurrencyAccount,",",rec.AllowManuallyDueDate,",",rec.IsJournalMode,",",rec.IsTaxItemManaged,",",rec.AllowMinusInvoiceLines,",",rec.ShowDownloadScreen,",",rec.AllowARInvoicesTransfer,",",rec.AllowAPInvoicesTransfer,",",rec.AllowPositiveAmountsInTheCreditNote,",",rec.InActive,",",rec.AllowAPPaymentsTransfer,",",rec.IsExternalCodesFromAPI,",",rec.AllowARPaymentsTransfer,",",rec.CanTransferToDropbox,",",rec.Name,",");
         }
    }
 }
