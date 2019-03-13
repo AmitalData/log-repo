@@ -33,23 +33,23 @@ namespace WebFreight.Web.Helpers
 {
     public class ImporterDepositionHelper
     {
-        public async Task<Response> SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM)
+        public async Task<Response> SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM , int tenant)
         {
             Response response = new Response();
-            CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(importerDepositionPM.Tenant);
-            IQueryable<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessesByImporterVat(importerDepositionPM.ImporterVat);
+            CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
+            IQueryable<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessesByImporterVat(importerDepositionPM.ImporterVat , importerDepositionPM.Tenant);
             if (customerTenantAccessLists.Count() > 0)
             {
                 int? customerTenant = null;
-
                 if (customerTenantAccessLists.Count() > 1)
                 {
                     List<int> customerTenantIds = customerTenantAccessLists.Select(d => d.CustomerTenant).ToList();
-                    CustomerDepositionRepository customerDepositionRepository = new CustomerDepositionRepository(importerDepositionPM.Tenant);
+                    CustomerDepositionRepository customerDepositionRepository = new CustomerDepositionRepository(tenant);
                     customerTenant = customerDepositionRepository.GetLastCustomerDepositionCreated(customerTenantIds);
                 }
 
                 if (customerTenant == null) customerTenant = customerTenantAccessLists.FirstOrDefault().CustomerTenant;
+
                 string URI = string.Empty;
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -80,7 +80,9 @@ namespace WebFreight.Web.Helpers
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     token = User.Token;
                 }
-             
+
+                //token = "gDNp0Sp+D90SDbJ7S6N1dQINIBwDr5r01F8=";
+
                 if (!string.IsNullOrEmpty(token))
                 {
                     using (var client = new HttpClient())

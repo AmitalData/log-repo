@@ -1,3 +1,4 @@
+import { DateTool } from './../../../../Infrastructure/Tools';
 import { CardList } from './../../../../Common/EntityLists/CardList';
 import { CardListService } from './../../../../Common/Services/StandardLists/CardListService';
 import { CreditLimitSettingPM } from './../../../../Common/EntityPMs/CreditLimitSettingPM';
@@ -421,6 +422,16 @@ export class GLAccountOverviewComponent extends BaseComponent {
                     SessionLocator.CurrentSession.StopBusyIndicator();
                 }
             });
+    }
+    txt_updatedBy: string = TextCodeTranslator.Translate("AccountingNote.F.UpdatedByUserName");
+    GetNoteTitle(note:AccountingNoteList){
+        var result = "";
+        if(note){
+            var myFormats = DateTool.GetDateFormats(note.UpdateDate);
+            var formatedDate = myFormats.DateString + " " + myFormats.ShortTimeString;
+            result = this.txt_updatedBy + ' ' + note.UpdatedByUserName + ' (' + formatedDate + ') ';
+        }
+        return result;
     }
     //#endregion
 
