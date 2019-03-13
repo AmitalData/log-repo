@@ -10738,7 +10738,68 @@ namespace WebFreight.Web.ReportsWebServices
             // Fill Balance
             if (glaccountPM.IsMultiCurrency == true)
             {
-                // to be continued ...
+                // fetch foreign fields of currency
+
+
+                //open
+                transactionsDataProvider.LocalOpenBalanceList = new List<GLAccountBalanceList>();
+                if (balanceCallBack.StartBalanceForeignList.Count == 0)
+                {
+                    transactionsDataProvider.LocalOpenBalanceList.Add(new GLAccountBalanceList()
+                    {
+                        BalanceForeign = 0,
+                        BalanceLocal = 0,
+                        CurrencyId = "",
+                        LocalCurrencySign = "",
+                        ForeignCurrencySign = ""
+                    });
+                }
+                
+                foreach (var item in balanceCallBack.StartBalanceForeignList)
+                {
+                    // get currency
+                    CurrencyRepository currencyRepo = new CurrencyRepository(tenant);
+                    Currency currency = currencyRepo.GetSingleCurrency(item.CurrencyId, tenant);
+
+                    transactionsDataProvider.LocalOpenBalanceList.Add(new GLAccountBalanceList()
+                    {
+                        BalanceForeign = item.BalanceForeign,
+                        BalanceLocal = item.BalanceLocal,
+                        CurrencyId = item.CurrencyId,
+                        LocalCurrencySign = tenantPM.CurrencySign,
+                        ForeignCurrencySign = currency.Sign
+                    });
+                }
+
+                //closed
+                transactionsDataProvider.LocalClosedBalanceList = new List<GLAccountBalanceList>();
+                if (balanceCallBack.EndBalanceForeignList.Count == 0)
+                {
+                    transactionsDataProvider.LocalClosedBalanceList.Add(new GLAccountBalanceList()
+                    {
+                        BalanceForeign = 0,
+                        BalanceLocal = 0,
+                        CurrencyId = "",
+                        LocalCurrencySign = "",
+                        ForeignCurrencySign = ""
+                    });
+                }
+                
+                foreach (var item in balanceCallBack.EndBalanceForeignList)
+                {
+                    // get currency
+                    CurrencyRepository currencyRepo = new CurrencyRepository(tenant);
+                    Currency currency = currencyRepo.GetSingleCurrency(item.CurrencyId, tenant);
+
+                    transactionsDataProvider.LocalClosedBalanceList.Add(new GLAccountBalanceList()
+                    {
+                        BalanceForeign = item.BalanceForeign,
+                        BalanceLocal = item.BalanceLocal,
+                        CurrencyId = item.CurrencyId,
+                        LocalCurrencySign = tenantPM.CurrencySign,
+                        ForeignCurrencySign = currency.Sign
+                    });
+                }
             }
             else
             {
