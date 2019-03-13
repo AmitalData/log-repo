@@ -6661,8 +6661,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
             //Export
-            else if (entityPM.DirectionId == "E")
+            else if (entityPM.DirectionId == "E" )
             {
+                bool Assigned = false;
                 if (myLastDelivery != null)
                 {
                     switch (myLastDelivery.PickUpDeliveryToTypeCode)
@@ -6676,6 +6677,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                     if (toAddress != null)
                                     {
                                         entityPM.CountryForStatisticsId = toAddress.CountryId;
+                                        Assigned = true;
                                     }
                                 }
 
@@ -6688,6 +6690,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 if (!string.IsNullOrEmpty(myLastDelivery.ToAddressCountryId))
                                 {
                                     entityPM.CountryForStatisticsId = myLastDelivery.ToAddressCountryId;
+                                    Assigned = true;
                                 }
 
                                 break;
@@ -6701,6 +6704,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                     if (myPort != null)
                                     {
                                         entityPM.CountryForStatisticsId = myPort.CountryId;
+                                        Assigned = true;
                                     }
                                 }
 
@@ -6709,7 +6713,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                if (string.IsNullOrEmpty(entityPM.CountryForStatisticsId))
+                if (!Assigned)
                 {
                     if (!string.IsNullOrEmpty(entityPM.Transshipment3ToPortId))
                     {
@@ -6747,6 +6751,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                     }
                 }
+                
             }
 
             //Domestic
