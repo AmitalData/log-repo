@@ -22,6 +22,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 entityPM.Id = IdCounter.GetNumber("TMEmployeeTime", entityPM.Tenant);
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPM.FullDuration = entityPM.TimeInMinutes;
                 entityPM.NeedsProrating = true;
             }
         }
@@ -42,6 +43,11 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
             {
                 if(entityPM.TimeInMinutes != entityPOCO.TimeInMinutes)
                 {
+                    if (entityPM.ProratedDuration == 0)
+                    {
+                        entityPM.FullDuration = entityPM.TimeInMinutes;
+                    }
+
                     entityPM.NeedsProrating = true;
                 }
             }
