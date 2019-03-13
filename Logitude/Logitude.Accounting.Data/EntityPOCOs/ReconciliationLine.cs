@@ -47,6 +47,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int GroupNumber { get; set; }
         [Column("IsAdjustTransaction")]
 	    public bool IsAdjustTransaction { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 
