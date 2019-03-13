@@ -3611,6 +3611,11 @@ namespace Logitude.Accounting.BL.CoreBL
             ContactQuery contactQuery = new ContactQuery(tenant);
 
             ContactPM contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, tenant);
+            if(contact == null)
+            {
+                contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, 0);
+            }
+
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
           
@@ -4132,6 +4137,10 @@ namespace Logitude.Accounting.BL.CoreBL
             ContactQuery contactQuery = new ContactQuery(tenant);
 
             ContactPM contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, tenant);
+            if (contact == null)
+            {
+                contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, 0);
+            }
 
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("INI", tenant);
 
