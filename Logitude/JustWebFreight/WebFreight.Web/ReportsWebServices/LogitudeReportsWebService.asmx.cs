@@ -10734,6 +10734,7 @@ namespace WebFreight.Web.ReportsWebServices
             // Fill printed by user
             ContactRepository contactRepo = new ContactRepository(tenant);
             transactionsDataProvider.PrintedByUser = showLocals ? contact.LocalName : contact.EnglishName;
+            transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             // Fill Balance
             if (glaccountPM.IsMultiCurrency == true)
