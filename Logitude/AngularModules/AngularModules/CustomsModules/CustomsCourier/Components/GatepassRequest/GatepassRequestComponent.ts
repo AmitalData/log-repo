@@ -76,6 +76,7 @@ export class GatepassRequestComponent extends BaseComponent {
             }
             else {
                 this.EntityPM.MasterCourierId = this.CourierMasterPM.Id;
+                this.EntityPM.Tenant = this.CourierMasterPM.Tenant;
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
                 this.UpdateCode = "1";
             }
