@@ -8525,7 +8525,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     ARInvoiceVATRouting record = new ARInvoiceVATRouting();
 
-                    Shipment shipment = shipmentRepository.GetSingleShipment(invoice.MainEntityId, tenant);
+                    Shipment shipment = iQueryable_Shipments.Where(d => d.Id == invoice.MainEntityId).FirstOrDefault();
 
                     List<ARInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.ARInvoiceId == invoice.Id).ToList();
                     List<VATClass> myVATS = new List<VATClass>();
@@ -8650,6 +8650,8 @@ namespace WebFreight.Web.ReportsWebServices
                     if (shipment != null)
                     {
                         record.Routing = shipment.Routing;
+                        record.ProfitInLocalCurrency = shipment.ProfitInLocalCurrency;
+                        record.ProfitInProfitCurrency = shipment.ProfitInProfitCurrency;
 
                         if (!string.IsNullOrEmpty(shipment.CustomerReference1))
                         {

@@ -164,7 +164,7 @@ namespace CommunicationWorkerRole
             if (!string.IsNullOrEmpty(commLog.QueueName))
             {
                 SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, commLog.Tenant);
-                Communications.UpdateCommunicationLogStatus(commLog.Id, commLog.Tenant, null, "D", "after adding message to queue  TranzilaPayment " + DateTime.Now.ToString(), null);
+                //Communications.UpdateCommunicationLogStatus(commLog.Id, commLog.Tenant, null, "D", "after adding message to queue  TranzilaPayment " + DateTime.Now.ToString(), null);
             }
         }
 
