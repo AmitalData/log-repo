@@ -33,7 +33,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey1 = _CourierMasterPM.DepartureDate.Value.Year.ToString();
             }
-            myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey2 = _CourierMasterPM.MAWB;
+            myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey2 = _CourierMasterPM.AirlinePrefix + "-" + _CourierMasterPM.MAWB;
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey3 = _CourierMasterPM.HAWB;
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
 
@@ -58,7 +58,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             int transportationTypeCode;
             int.TryParse(myGatepassRequestPM.TransportationTypeCode, out transportationTypeCode);
             myGatepassDestinationSite.transportationTypeCode = transportationTypeCode;
-            myGatepassDestinationSite.isFinalDestination = false;
+            myGatepassDestinationSite.isFinalDestination = true;
 
             myGatepassDestinationSiteList.Add(myGatepassDestinationSite);
             myGatepassRequestMessage.GatepassDestinationSite = myGatepassDestinationSiteList.ToArray(); ;
