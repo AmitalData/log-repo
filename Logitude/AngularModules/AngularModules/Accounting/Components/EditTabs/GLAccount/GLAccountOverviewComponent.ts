@@ -371,8 +371,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
         windowArgs.AccountingNotePM = notePM;
 
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 400;
-        logitudeWindow.Height = 300;
+        logitudeWindow.Width = 450;
+        logitudeWindow.Height = 320;
         logitudeWindow.Title = notePM ? '' : TextCodeTranslator.Translate("Accounting.O.NewAccountingNote");
 
         logitudeWindow.WindowArgs = windowArgs;
