@@ -111,6 +111,11 @@ namespace WebFreight.Web.DataProviders
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public string AWBHandlingInformation { get; set; }
+
+        public string ConsolidatorName { get; set; }
+        public string ConsolidatorAddress { get; set; }
+        public string ReleasingAgentName { get; set; }
+        public string ReleasingAgentAddress { get; set; }
         #endregion
 
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
