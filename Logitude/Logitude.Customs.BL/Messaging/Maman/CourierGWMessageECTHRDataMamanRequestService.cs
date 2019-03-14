@@ -8,6 +8,8 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -57,6 +59,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     "CustomerAddress",
                     "DestLineDesc",
                     "DestLineCode",
+                    "DistributorHP",
+                    "DistributorName",
                     "DeclarationId",
                     "BaldarHp",
                     "OpenBaldarAwbDate"
@@ -97,6 +101,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 throw new Exception($"Declaration Is not CourierDeclaration  declarationId={declarationId}");
             }
+            if (myDeclarationPM.AcceptanceStatusCode != null)
+            {
+                throw new Exception("לא ניתן לשדר מסר ש.מ.ב לממן לאחר קליטת זמינות");
+            }
             //CourierDeclarations
             //myCourierMasterQueryService.GetNotConnectedDeclaratins
 
@@ -114,7 +122,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         }
 
         private GWMessageECTHRData CreateCourierHawbMamanMessage(
-            DeclarationPM myDeclarationPM,CourierMasterPM myCourierMasterPM)
+            DeclarationPM myDeclarationPM, CourierMasterPM myCourierMasterPM)
         {
             var ConsignmentPackageQualifierCode2 = myDeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
                 .Where(r1 => r1.PackageMeasureQualifierCode == "2")
@@ -139,6 +147,20 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 GetDefault("ISRAEL", "CGO_MMN_FORW", "NON", "NON", myDeclarationPM.Tenant);
             var rep = new CustomsAirlineRepository(myCourierMasterPM.Tenant);
             var customsAirline = rep.GetSingle(myCourierMasterPM.AirlineId, myCourierMasterPM.Tenant);
+
+            //Get Trucker details - Task 49270
+            string distributorHP = "";
+            string distributorName = "";
+            if (!string.IsNullOrWhiteSpace(myCourierMasterPM.TruckerId))
+            { 
+                CardRepository cardRep = new CardRepository(myCourierMasterPM.Tenant);
+                Card card = cardRep.GetSingleCard(myCourierMasterPM.TruckerId, myCourierMasterPM.Tenant);
+                if (card != null)
+                {
+                    distributorHP = card.VatNumber;
+                    distributorName = card.EnglishName;
+                }
+            }
 
             var courierHawbMamanModel = new GWMessageECTHRData()
             {
@@ -174,9 +196,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 CustomIkuv = myDeclarationPM.CourierSuspentionCode,//task 49300
                 //CustomIkuv = myDeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
-
-
-
+                DistributorHP = distributorHP,
+                DistributorName = distributorName,
 
 
             };

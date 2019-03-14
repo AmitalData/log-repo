@@ -248,6 +248,22 @@
     <Compile Include="Migrations\201902211453579_INFRASTRUCTUREBLABLA.Designer.cs">
       <DependentUpon>201902211453579_INFRASTRUCTUREBLABLA.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902281151282_TEXTbla.cs" />
+    <Compile Include="Migrations\201902281151282_TEXTbla.Designer.cs">
+      <DependentUpon>201902281151282_TEXTbla.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903031515368_AddMigrationGatepassChangeNumber.cs" />
+    <Compile Include="Migrations\201903031515368_AddMigrationGatepassChangeNumber.Designer.cs">
+      <DependentUpon>201903031515368_AddMigrationGatepassChangeNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903101005003_AdTerminalSuspentionNumber.cs" />
+    <Compile Include="Migrations\201903101005003_AdTerminalSuspentionNumber.Designer.cs">
+      <DependentUpon>201903101005003_AdTerminalSuspentionNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903101620062_AddMigrationTruckerIdCourier.cs" />
+    <Compile Include="Migrations\201903101620062_AddMigrationTruckerIdCourier.Designer.cs">
+      <DependentUpon>201903101620062_AddMigrationTruckerIdCourier.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -420,6 +436,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902211453579_INFRASTRUCTUREBLABLA.resx">
       <DependentUpon>201902211453579_INFRASTRUCTUREBLABLA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902281151282_TEXTbla.resx">
+      <DependentUpon>201902281151282_TEXTbla.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903031515368_AddMigrationGatepassChangeNumber.resx">
+      <DependentUpon>201903031515368_AddMigrationGatepassChangeNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903101005003_AdTerminalSuspentionNumber.resx">
+      <DependentUpon>201903101005003_AdTerminalSuspentionNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903101620062_AddMigrationTruckerIdCourier.resx">
+      <DependentUpon>201903101620062_AddMigrationTruckerIdCourier.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

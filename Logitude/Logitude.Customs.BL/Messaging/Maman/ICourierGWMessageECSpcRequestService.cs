@@ -18,7 +18,7 @@
         ReceivingDelayCertificate_DelayIt = 2,
         StickerPrinting = 4,
         PrintDocuments = 5,
-        Sban = 6
+        Sban = 6,
         //2	קליטה תעודת עיכוב	2, קליטה תעודת עיכוב Receiving a delay certificate	0
         //4	הדפסת מדבקה	4, הדפסת מדבקה   Sticker Printing	0
         //5	הדפסת מסמכים	5, הדפסת מסמכים  Printing Documents	0

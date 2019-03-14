@@ -15,8 +15,9 @@
         position: relative;
         cursor: pointer;
     }
-    .tbl3Label{
-        width:150px;
+
+    .tbl3Label {
+        width: 150px;
     }
 
     .dropdown {
@@ -43,61 +44,64 @@
         overflow: hidden;
         text-align: right;
         direction: rtl;
-    } 
-    .CWSTabHeader{
-        width:150px;
-        cursor: pointer;
-        font-size:16px;
-        font-weight:bold;
     }
-    .CWSTabHeader:hover {
+
+    .CWSTabHeader {
+        width: 150px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+        .CWSTabHeader:hover {
             background-color: #B3E2FF;
             /*border-top:0.1px solid #00BCD4;*/
-    }
+        }
 
-    .DetailsButton{
+    .DetailsButton {
         width: 120px;
         height: 28px;
-        text-align:center; 
-        color: #4db6ea; 
-        background-color:white; 
+        text-align: center;
+        color: #4db6ea;
+        background-color: white;
         border: 1px solid black;
         border-radius: 3px;
-        border-color:#4db6ea;
+        border-color: #4db6ea;
         cursor: pointer;
     }
 
-    .DetailsButton:hover {
-        box-shadow: 0px 0px 6px 0px #4db6ea;
-        text-shadow: 1px 1px white;
-    }
+        .DetailsButton:hover {
+            box-shadow: 0px 0px 6px 0px #4db6ea;
+            text-shadow: 1px 1px white;
+        }
 
     .x-button-drop-menu {
         position: absolute;
         top: 22px;
         z-index: 1000;
         text-align: center;
-        padding:1px;
+        padding: 1px;
         font-size: 15px;
         list-style: none;
         background-color: #F2F2F2;
         background-clip: padding-box;
         border: .5px solid #45494A;
-    }   
-     .x-button-drop-menu li span {
+    }
+
+        .x-button-drop-menu li span {
             display: block;
             clear: both;
             font-family: arial;
             color: #444;
             text-decoration: none;
             height: 22px;
-            line-height: 23px; 
-        }       
-     .x-button-drop-menu li span:hover {
-            background: #D3D3D3;
-            cursor: pointer;
+            line-height: 23px;
         }
 
+            .x-button-drop-menu li span:hover {
+                background: #D3D3D3;
+                cursor: pointer;
+            }
 </style>
 
 <span style="visibility:hidden"> CourierWorksheetComponent </span>
@@ -184,8 +188,7 @@
                                         <tr>
                                             <!--style="width:120px;cursor: pointer;font-size:15px"-->
                                             <!--Task 40816 [style.opacity]="0.7" (was [style.opacity]="item==_SelectedTabFilter ? 1 : 0.7") -->
-                                            <td 
-                                                class="CWSTabHeader"
+                                            <td class="CWSTabHeader"
                                                 [style.opacity]="0.7"
                                                 (click)="TabFilterClick(item)"
                                                 *ngFor="let item of _TabFilterList; ">
@@ -200,15 +203,16 @@
                                                                 <span style="font-size:13px;font-weight:bold; text-align:right" dir="ltr" *ngIf="item.Code == 'HOLD'"> ({{item.Total}}) {{item.Header}} </span>
                                                             </div>
                                                         </td>
-                                                        
+
                                                     </tr>
                                                     <tr style="height:2px"><td colspan="2"></td></tr>
-                                                    <tr style="height:5px"> <td colspan="2">
-                                                        <!--<div [style.border-bottom]="item==_SelectedTabFilter ? '5px solid #00BCD4' : '4px solid gray'"></div>-->
+                                                    <tr style="height:5px">
+                                                        <td colspan="2">
+                                                            <!--<div [style.border-bottom]="item==_SelectedTabFilter ? '5px solid #00BCD4' : '4px solid gray'"></div>-->
                                                             <div style="opacity: 0.7">
                                                                 <table>
                                                                     <tr>
-                                                                        <!--#008ee6 == > #00BCD4--> 
+                                                                        <!--#008ee6 == > #00BCD4-->
                                                                         <!--<td style="width:15px;"  [style.opacity]="item==_SelectedTabFilter ? '0.7' : '1'" ><div style="border-bottom:4px solid gray"></div></td> task 40816-->
                                                                         <td><div [style.border-bottom]="item==_SelectedTabFilter ? '4px solid #008ee6' : '4px solid gray'"></div></td>
                                                                         <!--<td style="width:15px;" [style.opacity]="item==_SelectedTabFilter ? '0.7' : '1'"><div style="border-bottom:4px solid gray"></div></td> task 40816-->
@@ -226,19 +230,19 @@
                                                         <td></td>
                                                     </tr>
                                                     <tr style="height:2px"><td colspan="2"></td></tr>
-                                                    <tr style="height:5px"> 
-                                                    <td colspan="2">
-                                                        <!--<div style="border-bottom:4px solid gray;"></div>-->    
-                                                        <div style="opacity: 0.7">
-                                                            <table>
-                                                                <tr>
-                                                                    <!--#008ee6 == > #00BCD4-->
-                                                                    <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
-                                                                    <td><div style="border-bottom:4px solid gray"></div></td>
-                                                                    <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
+                                                    <tr style="height:5px">
+                                                        <td colspan="2">
+                                                            <!--<div style="border-bottom:4px solid gray;"></div>-->
+                                                            <div style="opacity: 0.7">
+                                                                <table>
+                                                                    <tr>
+                                                                        <!--#008ee6 == > #00BCD4-->
+                                                                        <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
+                                                                        <td><div style="border-bottom:4px solid gray"></div></td>
+                                                                        <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -295,12 +299,12 @@
                                                 <td>
                                                     <table>
                                                         <tr>
-                                                            <td style="width:450px">
+                                                            <td style="width:480px">
                                                                 <!--All-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='ALL' ">
                                                                     <tr>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
-                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:180px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                           [ButtonText]=_ReadyMNFToBatchSendButtonText
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
@@ -317,7 +321,7 @@
 
                                                                             </split-button>
                                                                         </td>
-                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:200px">
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:180px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                           [ButtonText]=SelectedMNFToBatchSendButtonText
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
@@ -338,10 +342,10 @@
                                                                         <td style="width:1px"></td>
 
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
-                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:180px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
                                                                                           [ButtonText]=_ReadyDECToBatchSendButtonText
-                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
@@ -355,10 +359,10 @@
 
                                                                             </split-button>
                                                                         </td>
-                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:200px">
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:180px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('M')"
                                                                                           [ButtonText]=SelectedDECToBatchSendButtonText
-                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
@@ -373,7 +377,7 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td style="width:1px"></td>
-                                                                        <td><button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button></td>
+                                                                        <td style="width:100px"><button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button></td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
@@ -684,23 +688,23 @@
                                                                        [rowHeight]="40"
                                                                        [rows]="RowsItems"
                                                                        [PassAdditionalDataToTemplates]="true"
-                                                                       [MyScrollTop]="MyScrollTop"
-                                                                        >
+                                                                       [MyScrollTop]="MyScrollTop">
                                                             <!--[RowHoverColor]="'#C8C8FA'"
                                                                (CheckBoxChecked)="onCheckBoxChecked($event)"
-                                                                --><!--40970-->
-                                                            </logitude-grid>
+                                                                -->
+                                                            <!--40970-->
+                                                        </logitude-grid>
                                                         <!--
-                                                            
-                                                            [MyScrollTop]="MyScrollTop" 
-                                                                       [MySelectedRowIndex]="MySelectedRowIndex"  
+
+                                                            [MyScrollTop]="MyScrollTop"
+                                                                       [MySelectedRowIndex]="MySelectedRowIndex"
 
                                                             [QueryChangeEvent]="onQueryChangeEvent"
                                                             [EnableRowToolTip]="true"
                                                             [ToolTipWidth]="250"
                                                             [ToolTipHeight]="100"
                                                             [ToolTipBinding]="'Description'"
-                                                            
+
                                                             [CustomBackFromEdit]="CustomBackFromEditevent"
                                                         -->
                                                     </div>

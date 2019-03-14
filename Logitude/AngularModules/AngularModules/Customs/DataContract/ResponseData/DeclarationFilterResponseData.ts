@@ -14,9 +14,9 @@ export class DeclarationFilterResponseData extends ResponseDataBase {
 
 export class GeneralDetails {
     public customOfficeName: string;
-    public customOfficeNumber: number;
-    public declerationStatus: number;
-    public externalID?: number;
+    public customOfficeNumber: string;
+    public declerationStatus: string;
+    public externalID: string;
     public externalIDSpecified: boolean;
     public name: string;
     public statusName: string;

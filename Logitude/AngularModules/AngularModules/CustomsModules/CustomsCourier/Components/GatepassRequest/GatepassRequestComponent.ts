@@ -34,7 +34,7 @@ export class GatepassRequestComponent extends BaseComponent {
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _GatepassRequestPMService: GatepassRequestPMService = new GatepassRequestPMService()
 
-    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
+    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
     Loaded: boolean = false;
     constructor() {
         super();

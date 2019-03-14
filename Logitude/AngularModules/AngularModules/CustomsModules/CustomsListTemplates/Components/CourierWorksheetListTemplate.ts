@@ -491,7 +491,7 @@ export class CourierWorksheetListTemplate {
         this.DelayCertificateDetails = null;
         this.MamanStickerDetails = null;
         this.PrintDocumentsDetails = null;
-        this.IsMamanEnabled = false;       
+        this.IsMamanEnabled = false;
 
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
         myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
