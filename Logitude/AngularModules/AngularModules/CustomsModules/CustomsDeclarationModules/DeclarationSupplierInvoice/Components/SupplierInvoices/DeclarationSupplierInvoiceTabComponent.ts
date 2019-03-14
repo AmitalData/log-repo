@@ -646,6 +646,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         windowArgs.declarationPM = this.EntityPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         windowArgs.IsNewEntity = true;
+        windowArgs.NumberOfLoadedItems = 0;
         windowArgs.WindowTitle = windowTitle;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 995; // don't change this width!
