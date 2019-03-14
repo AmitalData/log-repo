@@ -474,6 +474,10 @@ SUCCESS={4}"
                 if (e.InnerException != null)
                 {
                     unifreightGenericService.MyGenericResponseObj.InnerException = e.InnerException.ToString();
+                    if (e.InnerException.InnerException != null)
+                    {
+                        unifreightGenericService.MyGenericResponseObj.InnerException += e.InnerException.InnerException.ToString();
+                    }
                 }
 
             }
