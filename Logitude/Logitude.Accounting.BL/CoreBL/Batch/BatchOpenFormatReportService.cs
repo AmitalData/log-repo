@@ -38,7 +38,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             try
             {
-                DocumentsFilingPM docFilingPM = OpenFormatReportService.CreateBKMVDATAFile(parameterArgs.ReportId, parameterArgs.Tenant);
+                DocumentsFilingPM docFilingPM = OpenFormatReportService.CreateBKMVDATAFile(parameterArgs.ReportId, parameterArgs.Tenant, parameterArgs.TestingMode);
 
                 DocumentsFilingPM INIdocFilingPM = OpenFormatReportService.CreateINIFile(parameterArgs.ReportId, parameterArgs.Tenant);
 
