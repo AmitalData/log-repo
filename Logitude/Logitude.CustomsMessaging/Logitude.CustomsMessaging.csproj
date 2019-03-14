@@ -123,10 +123,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.13\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.14\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.13\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.14\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -186,6 +186,7 @@
     <Compile Include="MessagingServices\DCAInUCB2755_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB8250_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBCTML_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBStorageSite_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniCustomTableZip_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniDebug01_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
@@ -406,6 +407,7 @@
     <Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBCTML_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomTableZip_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniDebug01_MsgResponseService.cs" />

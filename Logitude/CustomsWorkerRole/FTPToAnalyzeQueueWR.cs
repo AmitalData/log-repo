@@ -57,7 +57,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         
 INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('D', 'Done')
 INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('F', 'Fail')
-INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
+INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
+
      */
 
     //public class SendWebAPI2MamanGWMessageECTHRDataWR
@@ -246,20 +247,25 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 FTPService ftpService = new FTPService(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password);
                 Debug.WriteLine($"DirectoryListSimple({ftpDetail.Folder})");
                 var directoryFiles = ftpService.DirectoryListSimple(ftpDetail.Folder).ToList();
-
+                Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
                 {
+
+                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileExt})");
                     directoryFiles = directoryFiles.Where(f => (
                     Path.GetExtension(f)
-                    .Equals(customsPartnerFtpPM.FileExt, StringComparison.CurrentCultureIgnoreCase)))
+                    .Contains(customsPartnerFtpPM.FileExt)))
                     .ToList();
+                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 }
-                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
+                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileName))
                 {
+                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileName})");
                     directoryFiles = directoryFiles.Where(f => (
                      Path.GetFileNameWithoutExtension(f)
-                    .Equals(customsPartnerFtpPM.FileName, StringComparison.CurrentCultureIgnoreCase)))
+                    .Contains(customsPartnerFtpPM.FileName)))
                     .ToList();
+                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
                 }
                 directoryFiles = directoryFiles.Where(r => !String.IsNullOrWhiteSpace(r)).ToList();
                 directoryFiles = directoryFiles.OrderBy(fileName => fileName).ToList();

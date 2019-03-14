@@ -238,6 +238,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _MyDeclarationPM.Consignments[0].LoadingPortCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0,5);
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
                         }
+                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].OriginCountryCode) && !String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite))
+                        {
+                            _MyDeclarationPM.Consignments[0].OriginCountryCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0, 2);
+                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                        }
                         //If there are NO packages OR If there is one DUMMY package (without wight, quantity and pack type)
                         if (_MyDeclarationPM.Consignments[0].ConsignmentPackages == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 0 ||
                             (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&

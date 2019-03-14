@@ -40,16 +40,45 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class CustomsDocumentUpdateService : EntityUpdateService<CustomsDocument, CustomsDocumentPM, EntityPM>
     {
-
         protected override void OnCreating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
         {
             
             //entityPM.DocumentInId = IdCounter.GetNumber("Customs.CustomsDocument", entityPM.Tenant);
             entityPM.DocumentVersion = 1;
+            
 
         }
 
+        //לאחר ממשק UD2LT - קישור מסמך לטיקט, אם התיק הינו תיק בלדרות יש לבצע העלאה של המסמך למכס - מסר קלוט צרופה
+        public void AddPerfectCustomsDocumentMetaDataValues(CustomsDocumentPM entityPM)
+        {
+            if ( entityPM.CustomsDocumentMetaDataValues.Count == 0)
+            {
+                var customContext = CustomContext.GetContext(entityPM.Tenant);
+                var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
+                var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
+                entityPM.CustomsDocumentMetaDataValues = CustomDocumentTypeMetaData.Select(r => new CustomsDocumentMetaDataValuePM()
+                {
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    Tenant = entityPM.Tenant,
+                    CustomsDocumentId = entityPM.CustomsDocId,
+                    MetaDataTypeCode = r.MetaDataTypeCode,
+                    MetaDataValue = null,
+                }).ToList();
+
+                AutoSetOriginalDocumentTrue(entityPM);
+            }
+        }
         protected override void UpdateComposition(CustomsDocumentPM entityPM)
+        {
+            AutoSetOriginalDocumentTrue(entityPM);
+
+            CustomsDocumentMetaDataValueUpdateService customsDocumentMetaDataValueUpdateService = new CustomsDocumentMetaDataValueUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            customsDocumentMetaDataValueUpdateService.UpdateMulti(entityPM.CustomsDocumentMetaDataValues, entityPM.DeletedCustomsDocumentMetaDataValues, entityPM, false);
+
+        }
+
+        private void AutoSetOriginalDocumentTrue(CustomsDocumentPM entityPM)
         {
             ICustomContext context = MainContext as CustomContext;
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
@@ -62,11 +91,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     val.MetaDataValue = "True";
                 }
             }
-
-            CustomsDocumentMetaDataValueUpdateService customsDocumentMetaDataValueUpdateService = new CustomsDocumentMetaDataValueUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-            customsDocumentMetaDataValueUpdateService.UpdateMulti(entityPM.CustomsDocumentMetaDataValues, entityPM.DeletedCustomsDocumentMetaDataValues, entityPM, false);
-
         }
+
         public const string SetCustomsRequestSheetStatus = "SetCustomsRequestSheetStatus";
         private void AddHybridTaskDocumentFilingChange(DocumentsFilingPM documentsFilingPM)//Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
         {

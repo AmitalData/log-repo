@@ -206,27 +206,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             try
             {
-                if (_ReceivedBrokeredMessage.RetryNumber < 5)
-                {
-
-                    LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
-
-                    PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception
-
-                    _IQueueService.Complete();
-                    this.LogDoneItemInMemory();
-                }
-                else
-                {
-                    LogMessagingUtil.Instance.AppendLine("RetryNumber >= 5>>> Failed ");
-                    _WaitingCommLog.CommunicationStatusTypeCode = "F";
-                    _IQueueService.Complete();
-                }
-                LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
-                _CommunicationLogRep.Update(_WaitingCommLog);
-                _CommunicationLogRep.SubmitChanges();
-
-
+                SentWAPIComm();
 
             }
             catch (Exception exc)
@@ -246,6 +226,31 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
         }
 
+        private void SentWAPIComm(bool forceRetryFromTester=false)
+        {
+            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < 5)
+            {
+
+                LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
+
+                PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception
+                if (!forceRetryFromTester)
+                {
+                    _IQueueService.Complete();
+                }
+                
+                this.LogDoneItemInMemory();
+            }
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine("RetryNumber >= 5>>> Failed ");
+                _WaitingCommLog.CommunicationStatusTypeCode = "F";
+                _IQueueService.Complete();
+            }
+            LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
+            _CommunicationLogRep.Update(_WaitingCommLog);
+            _CommunicationLogRep.SubmitChanges();
+        }
 
 
         private bool PostWebAPIAnalyzeAndSaveCommDone()
@@ -331,7 +336,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 }
                 else
                 {
-                    analyzer = customsPartnerFtpDetails.GetResponseService(courier2MamanCommSettings.MessageCode);
+                    throw new Exception("All send web api must have @intrface.ResponseCode ");
+                    ///analyzer = customsPartnerFtpDetails.GetResponseService(courier2MamanCommSettings.MessageCode);
                 }
 
                 analyzer.AnalyzeResponse(courier2MamanCommSettings, webAPIResultString);
@@ -357,9 +363,20 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             return true;
         }
 
+        public void DebugStep(string communicationLogId, string @interface, int tenant)
+        {
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                _Tenant = tenant;
+                _CommunicationLogId = communicationLogId;
+                _Context = CommonDataContext.GetContext(_Tenant);
+                _CommunicationLogRep = new CommunicationLogRepository(_Context);
 
-
-
+                _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
+                SentWAPIComm(true);
+                scope.Complete();
+            }
+        }
     }
 
     public class WebAPI2BearerMamanMessage

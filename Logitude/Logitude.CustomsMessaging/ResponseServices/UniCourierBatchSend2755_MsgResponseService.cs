@@ -48,13 +48,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 listPM = qs.GetByMasterIDCourierPaymentStatusCode(requestParams.Tenant, requestParams.AppicationId, "R", "L");
             }
 
-            
 
+            listPM = listPM.Where(r => r.FastIndividualProcessCode == "F").ToList();
 
             if (listPM.Count == 0)
             {
                 mess.AppendLine($"There ARE  NOT any Declarations (LOW Val.) 'R'eady to (DEc.Payment) send  for master {requestParams.AppicationId} ");
             }
+            
             var dic = new Dictionary<string, string>();
             dic.Add("InternalBankId", customResponse.InternalBankId);
 

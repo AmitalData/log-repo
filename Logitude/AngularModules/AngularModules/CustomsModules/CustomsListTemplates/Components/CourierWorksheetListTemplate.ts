@@ -1,32 +1,32 @@
 
 declare var window: any;
 import { EditComponent } from "../../../Infrastructure/Components/EditComponent/EditComponent";
-import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
+import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { Component, ChangeDetectorRef } from '@angular/core';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {AppTool} from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { CustomsRequestMenuService } from '../../../Customs/Services/Others/CustomsRequestMenuService';
 import { CustomsRequestSheetExtendedPMService } from '../../../Customs/Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
 import { SendALLCorrectRequestParams } from '../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
 import { ResponseDataBase } from '../../../Customs/DataContract/ResponseData/ResponseDataBase';
 import { CustomsRequestsSheetPM } from '../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { CourierMasterService } from '../../../Customs/Services/Others/CourierMasterService';
-import {SendRequestVIA} from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import {ShowProgressBarParams, CustomMessageProgressComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
-import {DeclarationWebService} from '../../../Customs/Services/WebServices/DeclarationWebService';
+import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { ShowProgressBarParams, CustomMessageProgressComponent } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { DeclarationWebService } from '../../../Customs/Services/WebServices/DeclarationWebService';
 import { CourierWorksheetSharedDataService } from '../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { SendDeclarationService } from '../../../CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent';
 import { SendManifestService } from '../../../CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent';
-import {DeclarationPMService} from '../../../Customs/Services/StandardPMs/DeclarationPMService';
-import {DropdownMenuFilterComponent} from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/DropdownMenuFilterComponent';
-import {DeclarationCourierStatusPMService} from '../../../Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
+import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { DropdownMenuFilterComponent } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/DropdownMenuFilterComponent';
+import { DeclarationCourierStatusPMService } from '../../../Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
 import { DeclarationCourierStatusPM } from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
 import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
 import { DeclarationCourierStatusList } from '../../../Customs/EntityLists/DeclarationCourierStatusList';
@@ -76,6 +76,8 @@ export class CourierWorksheetListTemplate {
     IsReceivingDelayCertificate: boolean = false;
     IsPrintDocuments: boolean = false;
     IsMamanSticker: boolean = false;
+    IsSban: boolean = false;
+    IsMamanEnabled: boolean = false;
 
     private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     private _CourierMasterService: CourierMasterService = new CourierMasterService();
@@ -282,7 +284,7 @@ export class CourierWorksheetListTemplate {
     }
 
     _IsSplitButtonMenuFilterReady: boolean = false;
-    PrepareSplitButtonMenuFilter(){
+    PrepareSplitButtonMenuFilter() {
         this._IsSplitButtonMenuFilterReady = false;
         this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
@@ -296,6 +298,7 @@ export class CourierWorksheetListTemplate {
             this._IsSplitButtonMenuFilterReady = true;
             this.CD.detectChanges();
         });
+
         this.CD.detectChanges();
     }
 
@@ -391,20 +394,23 @@ export class CourierWorksheetListTemplate {
                                         declarationMamanSpecialActionPMItem.MamanSpecialActionCode = "מסמכים";//this.IsPrintDocuments = true;
                                     }
                                         break;
+                                    case "6": {
+                                        declarationMamanSpecialActionPMItem.MamanSpecialActionCode = "סב''ן";//this.IsSban = true;
+                                    }
+                                        break;
                                 }
                             });
 
-                            
-            
+
+
                             var logWindow = new LogitudeWindow();
                             logWindow.Width = 1000;
                             logWindow.Height = 350;
-                            logWindow.Title = "פעולות מיוחדות";
+                            logWindow.Title = "פעולות מיוחדות מול מסוף";
                             logWindow.WindowArgs = {
                                 MamanSpecialActionList: list
                             };
                             logWindow.ShowCloseButton = true;
-                            //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/AddEditMamanStickerComponent');
                             logWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/DeclarationMamanSpecialActionComponent');
                             logWindow.WindowClosed.subscribe(($event: any) => {
                                 //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
@@ -419,10 +425,10 @@ export class CourierWorksheetListTemplate {
 
         if (this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow
-            //myMessageWindow.Show("קיים Pending" + " \n " + " עם עצירה בתשלום הצהרה");
-            //myMessageWindow.Title = "קיים Pending";
-            //myMessageWindow.Show(" עם עצירה בתשלום הצהרה");
-            myMessageWindow.Show("לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. ");
+            myMessageWindow.Show(
+                //"לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. "
+                TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold")
+            );
             return;
         }
 
@@ -481,14 +487,19 @@ export class CourierWorksheetListTemplate {
         this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
         this.IsReceivingDelayCertificate = false;
         this.IsPrintDocuments = false;
+        this.IsSban = false;
         this.DelayCertificateDetails = null;
         this.MamanStickerDetails = null;
         this.PrintDocumentsDetails = null;
+        this.IsMamanEnabled = false;       
 
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
         myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
             let entitypm: DeclarationPM = rsptPMget.Result;
             if (entitypm != null && entitypm.Consignments != null) {
+                if (this.WebAPICourierGWMessageECTHRDataMaman.includes("ILMMN") && entitypm.Consignments[0].StorageSiteCode == "ILMMN") {
+                    this.IsMamanEnabled = true;
+                }
                 if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
                     this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
 
@@ -522,6 +533,13 @@ export class CourierWorksheetListTemplate {
                                         }
                                         break;
                                     }
+                                    case "6": {
+                                        this.PrintDocumentsDetails = declarationMamanSpecialActionPMItem;
+                                        if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                            this.IsSban = true;
+                                        }
+                                        break;
+                                    }
                                 }
                             });
 
@@ -544,7 +562,7 @@ export class CourierWorksheetListTemplate {
 
 
     CourierPendingReasonCommand(event, declarationId, mode) {
-      this.ButtonClick(event);
+        this.ButtonClick(event);
 
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
@@ -556,7 +574,7 @@ export class CourierWorksheetListTemplate {
                 windowArgs.DeclarationIdList = declarationIdList;
                 windowArgs.CourierHawb = this._CourierWorksheet.CourierHawb;
                 windowArgs.Mode = mode;
-                
+
                 if (mode == "Delete") {
                     var confirm = new ConfirmWindow();
                     confirm.Width = 350;
@@ -584,14 +602,14 @@ export class CourierWorksheetListTemplate {
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
                     logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                      this.RefreshData();
+                        this.RefreshData();
                     });
                 }
             }
         });
 
         this.CD.detectChanges();
-  }
+    }
 
     DeletePending(declarationCourierStatusPM: DeclarationCourierStatusPM) {
         SessionLocator.CurrentSession.StartBusyIndicatorSaving();
@@ -687,6 +705,20 @@ export class CourierWorksheetListTemplate {
                 }
                 break;
             }
+            case "6": {
+                if (actionCode == "U") {
+                    titleText = "סב''ן";
+                    questionText = "אשר שליחת מסר פעולה מיוחדת של שליחה לסב''ן";
+                    if (this.PrintDocumentsDetails != null) {
+                        declarationMamanSpecialActionPM = this.PrintDocumentsDetails;
+                    }
+                }
+                else if (actionCode == "C") {
+                    titleText = "ביטול סב''ן";
+                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של שליחה לסב''ן";
+                }
+                break;
+            }
         }
 
         var confirm = new ConfirmWindow();
@@ -747,8 +779,8 @@ export class CourierWorksheetListTemplate {
 
         SessionLocator.CurrentSession.StartBusyIndicatorSaving();
         this._DeclarationCourierStatusWebService.GetSetManualProcesscode(declarationId, manualProcessCode).subscribe((response: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                this.RefreshData();
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.RefreshData();
         });
     }
 }

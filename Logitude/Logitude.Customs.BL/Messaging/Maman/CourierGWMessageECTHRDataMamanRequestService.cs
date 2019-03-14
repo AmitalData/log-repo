@@ -41,7 +41,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         public  List<string> GetRequiredField(string messageToMaman)
         {
-            return ProxyUtil.GetRequiredField(messageToMaman,
+            return ProxyUtil.GetRequiredFieldInArrayJson(messageToMaman,
                             new List<string>()
                             {
                     "BaldarCode",
@@ -75,7 +75,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //myWebAPICourierGWMessageECTHRDataMamanService.BuildCommunicationLog(bytearray, tenant, declarationId);
 
                 var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
-                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECTHR, CustomsPartnerFtpDetails.PartnerCode_Mamam);
+                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECMMNTHR_REQUEST, CustomsPartnerFtpDetails.PartnerCode_Mamam);
 
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
@@ -171,7 +171,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //Task 46455:
                 DestLineCode = "9999999999",
                 DeclarationId = myDeclarationPM.DeclarationNumber,
-                CustomIkuv = myDeclarationPM.CourierSuspentionReasonCode,
+                CustomIkuv = myDeclarationPM.CourierSuspentionCode,//task 49300
+                //CustomIkuv = myDeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
 
 

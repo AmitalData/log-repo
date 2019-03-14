@@ -100,7 +100,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if(declarationPM.IsCourierDeclaration)
                             {
                                 declarationPM.CourierCustomStatusCode = "1";
-                                //declarationPM.IsClose = "1";
+
+                                LogMessagingUtil.Instance.AppendLine("Update DeclarationCourierStatusPM: IsClosedForFollowUp=true");
+                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(requestParams.Tenant);
+                                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                                DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id,false,true);
+                                declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                declarationCourierStatusPM.IsClosedForFollowUp = true;
+                                declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
                             }
                             declarationPM.IsClose = true;
                             MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525

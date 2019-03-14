@@ -190,6 +190,13 @@ export class AddEditCourierPendingReasonComponent
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
+        if (this.isNewRecord) {
+            var first3LettersNumber: number = +this.EntityPM.Code.substring(0, 3);
+            if (first3LettersNumber >= 900) {
+                errors.push("לא ניתן להגדיר קוד שמתחיל ב 900");
+            }
+        }
+
         if (errors.length > 0) {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList = errors;

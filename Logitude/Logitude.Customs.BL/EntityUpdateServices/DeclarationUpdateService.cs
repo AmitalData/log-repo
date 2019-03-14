@@ -483,121 +483,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 //    }
                 //}
-                Send2Masof(entityPM);
+                var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+                mySend2MasofIfNeededService.Send2Masof(entityPM);
 
             }
         }
 
-        private void Send2Masof(DeclarationPM drityEntityPM)
-        {
-            try
-            {
-
-                if (!drityEntityPM.IsCourierDeclaration || drityEntityPM.Consignments == null && drityEntityPM.ChangeSetOp == ChangeSetOperation.Delete)
-                {
-                    return;
-                }
-                var amitalContext = AmitalContext.GetContext(drityEntityPM.Tenant);
-                var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-                var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
-                def.DEFDATA = def.DEFDATA ?? "";
-
-                var list = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
-                if (def.DEFDATA.Contains("ILMMN")) // Maman
-                {
-                    list.Add("ILMMN");
-                }
-                if (def.DEFDATA.Contains("ILOVL")) // OVS
-                {
-                    list.Add("ILOVL");
-                }
-
-                if (list.Count == 0)
-                {
-                    return;
-                }
-                bool dataHaveChangeSendIt = false;
-                var myStorageSiteCode = drityEntityPM.Consignments
-                    .Where(r => !string.IsNullOrWhiteSpace(r.StorageSiteCode))
-                    .Where(r => list.Contains(r.StorageSiteCode))
-                    .Select(r => r.StorageSiteCode)
-                    .FirstOrDefault();
-                var qs = new DeclarationQueryService(drityEntityPM.Tenant);
-                var dbPM = qs.GetSingle(drityEntityPM.Id, true, false);
-                if (drityEntityPM.ChangeSetOp == ChangeSetOperation.Insert)
-                {
-                    dataHaveChangeSendIt = true;
-                }
-                string drityMessage = "";
-                string dbMessage = "";
-                if (def.DEFDATA.Contains("ILMMN") && myStorageSiteCode == "ILMMN") // Maman
-                {
-
-                    CourierGWMessageECTHRDataMamanRequestService courierGWMessageECTHRDataMamanService = null;
-                    if (!dataHaveChangeSendIt && dbPM != null)
-                    {
-                        courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
-                        dbMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(dbPM.Id, dbPM.Tenant, dbPM, null);
-                        drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
-                        if (dbMessage != drityMessage)
-                        {
-                            dataHaveChangeSendIt = true;
-                        }
-                    }
-                    if (dataHaveChangeSendIt)
-                    {
-
-                        List<string> requiredField = courierGWMessageECTHRDataMamanService.GetRequiredField(drityMessage);
-                        if (requiredField.Count > 0)
-                        {
-                            Debug.WriteLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
-                            return;// $"חסרים שדות חובה :{String.Join(",", requiredField)}";
-                        }
-                        var res = courierGWMessageECTHRDataMamanService.BuildComm2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityMessage);
-                        Debug.WriteLine(res);
-                    }
-
-
-
-                }
-                else if (def.DEFDATA.Contains("ILOVL") && myStorageSiteCode == "ILOVL") // OVS
-                {
-                    var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
-                    if (!dataHaveChangeSendIt && dbPM != null)
-                    {
-
-                        dbMessage = courierGWMessageECTHRDataMamanService.GetMessageUpdateHawbStatus(dbPM.Id, dbPM.Tenant, dbPM, null);
-                        drityMessage = courierGWMessageECTHRDataMamanService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
-                        if (dbMessage != drityMessage)
-                        {
-                            dataHaveChangeSendIt = true;
-                        }
-                    }
-                    if (dataHaveChangeSendIt)
-                    {
-
-                        List<string> requiredField = courierGWMessageECTHRDataMamanService.GetRequiredField(drityMessage);
-                        if (requiredField.Count > 0)
-                        {
-                            Debug.WriteLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
-                            return;// $"חסרים שדות חובה :{String.Join(",", requiredField)}";
-                        }
-                        var res = courierGWMessageECTHRDataMamanService.BuildUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityMessage);
-                        Debug.WriteLine(res);
-                    }
-
-                }
-
-            }
-            catch (Exception e)
-            {
-                //e.SetMess
-                //throw;
-            }
-
-
-
-        }
+        
 
         private void ResetMetadataVER(DeclarationPM entityPM)
         {
@@ -657,12 +549,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             }
 
-          
+            if (entityPM.IsCourierDeclaration && entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                if (CheckIfRequiredFieldForCourierHasChanged(entityPM, entityPOCO))
+                {
+                    entityPM.ManifestCargoStatusCode = null;
+                }
+            }
 
             base.OnUpdating(entityPM, entityPOCO);
         }
 
-        private bool CheckIfUpdatingAllowed(DeclarationPM myDeclarationPM)
+        public bool CheckIfUpdatingAllowed(DeclarationPM myDeclarationPM)
         {
             string text = "";
             var context = CustomContext.GetContext(myDeclarationPM.Tenant);
@@ -2258,6 +2156,77 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 util.CalculateInsurance(entityPM);
 
             }
+        }
+
+        public bool CheckIfRequiredFieldForCourierHasChanged(DeclarationPM entityPM, Declaration entityPOCO)
+        {
+            //Check Declaration fields
+            if (entityPOCO.AgentId != entityPM.AgentId || entityPOCO.ImporterName != entityPM.ImporterName || entityPOCO.ImporterAddress != entityPM.ImporterAddress)
+            {
+                return true;
+            }
+
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(entityPM);
+            //Check SupplierInvoice fields
+            if (entityPM.SupplierInvoices != null)
+            {
+                foreach (SupplierInvoicePM supplierInvoiceItem in entityPM.SupplierInvoices)
+                {
+                    foreach (SupplierInvoicePM dbOccsupplierInvoiceItem in dbOccDeclarationPM.SupplierInvoices)
+                    {
+                        if (supplierInvoiceItem.SequenceNumeric == dbOccsupplierInvoiceItem.SequenceNumeric)
+                        {
+                            if (supplierInvoiceItem.VendorId != dbOccsupplierInvoiceItem.VendorId
+                                || supplierInvoiceItem.IncotermCode != dbOccsupplierInvoiceItem.IncotermCode)
+                            {
+                                return true;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            //Check Consignments fields
+            if (entityPM.Consignments != null)
+            {
+                foreach (ConsignmentPM consignmentItem in entityPM.Consignments)
+                {
+                    foreach (ConsignmentPM dbOccconsignmentItem in dbOccDeclarationPM.Consignments)
+                    {
+                        if (consignmentItem.SequenceNumeric == dbOccconsignmentItem.SequenceNumeric)
+                        {
+                            if (consignmentItem.StorageSiteCode != dbOccconsignmentItem.StorageSiteCode
+                                || consignmentItem.ManifestNumber != dbOccconsignmentItem.ManifestNumber
+                                || consignmentItem.ThirdCargoID != dbOccconsignmentItem.ThirdCargoID
+                                || consignmentItem.CargoDescription != dbOccconsignmentItem.CargoDescription)
+                            {
+                                return true;
+                            }
+
+                            foreach (ConsignmentPackagePM consignmentPackageItem in consignmentItem.ConsignmentPackages)
+                            {
+                                foreach (ConsignmentPackagePM dbOccconsignmentPackageItem in dbOccconsignmentItem.ConsignmentPackages)
+                                {
+                                    if (consignmentPackageItem.LineNumber == dbOccconsignmentPackageItem.LineNumber)
+                                    {
+                                        if (consignmentPackageItem.PackageQuantity != dbOccconsignmentPackageItem.PackageQuantity
+                                            || consignmentPackageItem.GrossMassMeasure != dbOccconsignmentPackageItem.GrossMassMeasure
+                                            || consignmentPackageItem.PackageTypeCode != dbOccconsignmentPackageItem.PackageTypeCode)
+                                        {
+                                            return true;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

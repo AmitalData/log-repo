@@ -2512,6 +2512,25 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                //TML ==>https://www.abbreviations.com/abbreviation/terminal
+                Code = "UCBCMSS",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "שינוי אתר איחסון לבלדר ",// "Unifreight Courier *UCBCTML* Batch Send",
+                DcaPrefixName = "UnifreightCourierBatchTerminal_UCBCMSS_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+            });
+
 
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();

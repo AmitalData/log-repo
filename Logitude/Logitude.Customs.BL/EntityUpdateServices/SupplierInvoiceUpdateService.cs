@@ -34,6 +34,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.TraceEvents;
 using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.Customs.BL.Messaging.Maman;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -42,6 +43,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private bool _FromDec;
         private AmitalContext _AmitalContext;
         private ICustomContext _Context;
+        private DeclarationPM _DeclarationPM;
+
         public bool Multi_LastSIWillUpdateCCU { get; set; }//שינוי בלוגיקה לבניית CCU בעקבות משוב להצהרה/הגשה - פניה 303319  אבל במצב הראשון - אין צורך לשמור ולבנות CCU אחרי כל שמירה של כל חשבון ספק. מספיק לבנות את CCU פעם אחת בסיום כל השמירות.
         public bool UpdateFromDeclaration { get; set; }
         protected override void OnCreating(SupplierInvoicePM entityPM, EntityPM entityParentPM)
@@ -158,7 +161,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //    }
         //   // entityPM.InvoiceCounterKey = CodeCounter.GetNumber("Customs.SupplierInvoice", entityPM.Tenant);
         //}
+        protected override void OnUpdating(SupplierInvoicePM entityPM, SupplierInvoice entityPOCO)
+        {
+            if (_DeclarationPM != null && _DeclarationPM.IsCourierDeclaration)
+            {
+                bool pHaveChange = entityPM.InvoiceAmountInUSD != entityPOCO.InvoiceAmountInUSD;
+                if (pHaveChange)
+                {
 
+                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                    _DeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
+
+                    var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+                    mySend2MasofIfNeededService.Send2Masof(_DeclarationPM, pHaveChange);
+
+                }
+            }
+
+            base.OnUpdating(entityPM, entityPOCO);
+        }
         protected override void OnUpdating(SupplierInvoicePM entityPM)
         {
 
@@ -177,20 +198,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //    }
             //}
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-            DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+            _DeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
             
-            if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
+            if (_DeclarationPM != null && _DeclarationPM.IsConnectedToUnifreight)
             {
                 base.OnUpdating(entityPM);
                 SupplierInvoicePM dbOccSupplierInvoicePM = GetDBEntity(entityPM);
                 var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
-                unifreightFUStatusTaskService.DeleteINAFUStatus(declarationPM.Tenant, declarationPM.CustomFileNo);
+                unifreightFUStatusTaskService.DeleteINAFUStatus(_DeclarationPM.Tenant, _DeclarationPM.CustomFileNo);
 
                 if (dbOccSupplierInvoicePM != null && dbOccSupplierInvoicePM.IsValueForCustomsOnly != entityPM.IsValueForCustomsOnly)
                 {
                     string xml_status = "new";
                     if (entityPM.IsValueForCustomsOnly != true) xml_status = "del";
-                    RaiseStatus(declarationPM, "", "DFC", xml_status);
+                    RaiseStatus(_DeclarationPM, "", "DFC", xml_status);
                 }
             }
 
@@ -231,8 +252,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //calculate frieghts total
             //this.CalculateFrieghtTotals(entityPM, declarationPM);
             InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
-            util.CalculateFreightForInvoice(entityPM, declarationPM.TaxationDateTime);
-            entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(declarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
+            util.CalculateFreightForInvoice(entityPM, _DeclarationPM.TaxationDateTime);
+            entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(_DeclarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
 
             object entityPOCO; object entityPM1; object entityParentPM;
             this.GetAncestor(out entityPOCO, out entityPM1, out entityParentPM);
@@ -240,6 +261,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (myDec != null)
             {
                 this._FromDec = true;
+                
             }
 
             this.SetDeclarationChanged(entityPM);
@@ -1035,7 +1057,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (declarationPM != null && declarationPM.IsCourierDeclaration)
             {
-                DeclarationPM fullDeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
+                DeclarationQueryService cDeclarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                DeclarationPM fullDeclarationPM = cDeclarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
                 DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_Context, new Dictionary<string, IContext>(), entityPM.Tenant);
                 DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(fullDeclarationPM);
                 /*
