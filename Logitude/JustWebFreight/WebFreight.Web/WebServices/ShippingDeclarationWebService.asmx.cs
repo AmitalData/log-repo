@@ -415,7 +415,29 @@ namespace WebFreight.Web.WebServices
                 #endregion
 
                 #region Freight Location
-                if (!string.IsNullOrEmpty(shipment.FreightLocationId))
+                if(!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
+                {
+                    Card WarehouseLeg = (from a in commonContext.Cards
+                                         where a.Id == shipment.WarehouseLegWarehouseId
+                                         select a).FirstOrDefault();
+
+                    if (WarehouseLeg != null)
+                    {
+                        myDataProvider.FreightLocationAddress = WarehouseLeg.EnglishName;
+
+                        if (!string.IsNullOrEmpty(shipment.WarehouseLegAddressId))
+                        {
+                            Address warehouseAddress = addressRepository.GetSingleAddress(shipment.WarehouseLegAddressId, tenant);
+
+                            if (warehouseAddress != null)
+                            {
+                                myDataProvider.FreightLocationAddress += Environment.NewLine + DataProviders.General.GetAddress(warehouseAddress);
+                            }
+                        }
+                    }
+                }
+
+                else if (!string.IsNullOrEmpty(shipment.FreightLocationId))
                 {
                     Card freightLocationWarehouse = (from a in commonContext.Cards where a.Id ==  shipment.FreightLocationId select a).FirstOrDefault();
                     Address freightLocationWarehouseAddress = addressRepository.GetMainAddressByCardId(shipment.FreightLocationId, tenant);

@@ -1,4 +1,5 @@
-﻿
+﻿declare var CopyText: any;
+
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
@@ -27,7 +28,7 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
 
    shipmentComputedFieldExtendedService: ShipmentComputedFieldExtendedService;
     ShipmentId: string;
-
+    VendorCodeId: string;
     constructor(private _entityListService: EntityListService) {
         super();
   
@@ -45,6 +46,7 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
     DirectionId: string;
     ForwarderPartnerId: string;
     SetWindowArgs(args: any) {
+        this.VendorCodeId = Guid.newGuid();
         this.ShipmentId = !AppTool.IsNullOrEmpty(args.ShipmentId) ? args.ShipmentId : null;
         this.ForwardershipmentNumber = !AppTool.IsNullOrEmpty(args.ForwarderShipmentNumber) ? args.ForwarderShipmentNumber : null;
         this.DirectionId = !AppTool.IsNullOrEmpty(args.DirectionId) ? args.DirectionId : null;
@@ -57,9 +59,15 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
                 this.VendorName = result.length > 1 ? result[1]:"";
             }
         }
+
+
+
     }
 
-
+    CopyTextButtonClicked() {
+ 
+        CopyText(this.VendorCodeId);
+    }
     NewDepositionFormClcik() {
         ServiceLocator.SendTotangoUserActivity("CustomsShipper", "Deposition Link");
         var link = "https://forms.gov.il/globaldata/getsequence/getHtmlForm.aspx?formType=SOVE01_hasava@taxes.gov.il";
