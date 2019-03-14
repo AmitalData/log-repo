@@ -3818,35 +3818,45 @@ namespace Logitude.Accounting.BL.CoreBL
         public static List<C100Data> GetDepositC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
-            List<C100Data> c100s = (from a in accountingContext.BankDeposits
-                                    where (a.AccountingDate >= openFormatReportPM.FromDate && a.AccountingDate <= openFormatReportPM.ToDate) && a.Tenant == tenant
-                                    select new C100Data()
-                                    {
-                                       
-                                        DocumentType = "420",
-                                        DocumentReference = a.DepositNumber.ToString(),
-                                        DocumentCreateDate = a.CreateDate,
-                                        CustomerVendorName =null,
-                                        //AddressStreet = a.BillToAddress != null ? a.BillToAddress.Address1 : null,
-                                        //AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
-                                        //AddressZIPCode = a.BillToAddress != null ? a.BillToAddress.ZipCode : null,
-                                        //AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
-                                        //AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
-                                        //CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
-                                        CustomerVendorVatNumber = null,
-                                        ValueDate = a.AccountingDate,
-                                        TotalDocumentsAmountBeforeDiscount = null,
-                                        TotalDocumentsAmountAfterDiscount = null,
-                                        DocumentAmountAndVATAmount =(double) a.LocalDepositAmount,
-                                        DocuemntsReferenceDate = a.AccountingDate,
-                                        CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
-                                        GLAccountId = null,
-                                        IsCancelled = a.IsCanceled,
-                                        VendorId =null,
-                                        DepositId = a.Id,
-                                        CashBookType = a.CashBook.CashBookTypeCode,
-                                       
-                                    }).ToList();
+            List<C100Data> c100s;
+           
+            if(openFormatReportPM.FromDate == openFormatReportPM.ToDate)
+            {
+                openFormatReportPM.ToDate = openFormatReportPM.ToDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+              
+            }
+           
+                c100s = (from a in accountingContext.BankDeposits
+                         where (a.AccountingDate >= openFormatReportPM.FromDate && a.AccountingDate <= openFormatReportPM.ToDate) && a.Tenant == tenant
+                         select new C100Data()
+                         {
+
+                             DocumentType = "420",
+                             DocumentReference = a.DepositNumber.ToString(),
+                             DocumentCreateDate = a.CreateDate,
+                             CustomerVendorName = null,
+                             //AddressStreet = a.BillToAddress != null ? a.BillToAddress.Address1 : null,
+                             //AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
+                             //AddressZIPCode = a.BillToAddress != null ? a.BillToAddress.ZipCode : null,
+                             //AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
+                             //AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
+                             //CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
+                             CustomerVendorVatNumber = null,
+                             ValueDate = a.AccountingDate,
+                             TotalDocumentsAmountBeforeDiscount = null,
+                             TotalDocumentsAmountAfterDiscount = null,
+                             DocumentAmountAndVATAmount = (double)a.LocalDepositAmount,
+                             DocuemntsReferenceDate = a.AccountingDate,
+                             CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                             GLAccountId = null,
+                             IsCancelled = a.IsCanceled,
+                             VendorId = null,
+                             DepositId = a.Id,
+                             CashBookType = a.CashBook.CashBookTypeCode,
+
+                         }).ToList();
+            
+          
 
 
             return c100s;
