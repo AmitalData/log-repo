@@ -8,6 +8,7 @@ using Logitude.BL.Helpers;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using Logitude.Customs.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -31,7 +32,7 @@ using System.Threading.Tasks;
 namespace Logitude.Customs.BL.Messaging.Maman
 {
     public class CourierGWMessageECTHRDataMamanResponseService 
-        : IWebAPIMessage2MamanAnalyzer
+        //: IWebAPIMessage2MamanAnalyzer
     //: WebAPIMessage2MamanBase///using  by SendWEBAPIMessage2MamanWRWR
     {
 
@@ -182,7 +183,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 #endif
         //public void AnalyzeResponse(Courier2MamanCommSettings settings, GWMessageECTHRData  responeGWMessageECTHRData)
-        public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
+        public void AnalyzeQResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
         
         {
             
@@ -233,6 +234,28 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 myDeclarationUpdateService.Update(declarationPM, true);
                 scope.Complete();
             }
+        }
+
+
+        public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
+        {
+            throw new Exception("use  SetInAnalyzeQResponseService by @intrface.ResponseCode");
+            var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+            var def = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECMMNTHR_RESPONE);
+            var commSetting = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
+            var analyzeQueueUtil = new AnalyzeQueueUtil();
+            var new_analyze = analyzeQueueUtil
+               .SaveMessageToAnalyzeQueue("", Encoding.UTF8.GetBytes(webAPIResultString), settings.Tenant,
+               commSetting, def,
+               new AnalyzeResultModel()
+               {
+                   EntityID = settings.DeclarationId,
+                   ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+
+               });
+
+            LogMessagingUtil.Instance.AppendLine($"new_analyze  CommunicationLogId = {new_analyze.CommunicationLogId}");
+
         }
 
     }

@@ -74,6 +74,7 @@
     <Compile Include="RequestParams\NewVehicleRequestParams.Shared.cs" />
     <Compile Include="RequestParams\RTGSInfoQueryRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLCorrectRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SendALLStorageSiteRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendPayReadyLowRequestParams.Shared.cs" />
     <Compile Include="RequestParams\StorageEntranceUnloadingRequestParams.Shared.cs" />
     <Compile Include="RequestParams\TPG_NG_8244_ClaimFileFilterRequestParams.Shared.cs" />

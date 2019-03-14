@@ -55,6 +55,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FastIndividualProcessCode { get; set; }
         [Column("ManualProcessCode")]
 	    public string ManualProcessCode { get; set; }
+        [Column("TerminalSuspentionNumber")]
+	    public string TerminalSuspentionNumber { get; set; }
     }
 }
 	 

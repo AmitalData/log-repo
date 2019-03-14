@@ -20,7 +20,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public partial class DeclarationCourierStatusListQueryService
     {
-	    private IQueryable<DeclarationCourierStatusList> GetIqueryableList(IQueryable<DeclarationCourierStatus> iQueryable)
+        private bool _RequiredFieldErrorsForCourierDeclarationIsValid;
+
+        private IQueryable<DeclarationCourierStatusList> GetIqueryableList(IQueryable<DeclarationCourierStatus> iQueryable)
         {
             //var qMmmnActionError = (from action in context.DeclarationMamanSpecialActions
             //            .Where( r=> r.MamanSpecialActionStatusCode== "2" )
@@ -40,18 +42,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             //    var resQ = qMmmnActionError.ToList();
             //}        
             //TestSql(iQueryable);
+            
             IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
                                                               join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
                                                               on a.DeclarationId equals d.Id
                                                               join c in context.CourierDeclarations
                                                               on a.DeclarationId equals c.DeclarationId
-
-
-                                                              //join mmnAction in qMmmnActionError
-                                                              //on a.DeclarationId equals mmnAction.id
-                                                              //into leftJoin
-                                                              //from ao in leftJoin.DefaultIfEmpty()
-
 
                                                               select new DeclarationCourierStatusList()
                                                               {
@@ -67,7 +63,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                   IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
                                                                   //IsACCTab = (d.MamanStatusCode == "2"), ???
-                                                                  CourierManifestStatusCode = a.CourierManifestStatusCode,
+                                                                  CourierManifestStatusCode = !_RequiredFieldErrorsForCourierDeclarationIsValid ? "M" : a.CourierManifestStatusCode,
                                                                   CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
                                                                   CourierPaymentStatusCode = a.CourierPaymentStatusCode,
                                                                   IsCourierMissingClassification = a.IsCourierMissingClassification,
@@ -138,6 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
         {
+            //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
+            var courierMasterIdF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault();
+            string courierMasterId = (string)courierMasterIdF.FieldValue;
+            _RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
             return iQueryable;
         }
 	}

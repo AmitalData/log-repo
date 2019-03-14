@@ -155,7 +155,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CIFValue = a.CIFValue,
                                                      //   ConstraintCode = a.ConstraintCode,
                                                      // CreatedByUserId = a.CreatedByUserId,
-                                                     CustomerName = a.CustomerCard.LocalName != null ? a.CustomerCard.LocalName : a.CustomerCard.EnglishName,
+                                                     CustomerName = a.IsCourierDeclaration ? a.ImporterName : (a.CustomerCard.LocalName != null ? a.CustomerCard.LocalName : a.CustomerCard.EnglishName),
                                                      CustomFileNo = a.CustomFileNo,
                                                      DealValue = a.DealValue,
                                                      //  DeclarationDocumentId = a.DeclarationDocumentId,

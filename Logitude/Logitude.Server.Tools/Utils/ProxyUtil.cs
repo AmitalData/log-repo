@@ -11,6 +11,7 @@ namespace Logitude.Server.Tools.Utils
     public static class ProxyUtil// MiscService
     {
         public static Func<string, string, int, bool> SecurityUtilityCheckFeature { get; set; }
+        
 
         public static string JsonConvertSerialize(object obj)
         {

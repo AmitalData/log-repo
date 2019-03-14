@@ -147,6 +147,10 @@ implements OnDestroy
         switch (item.Code) {
             case "DECR": 
                 this._ReadyDECToBatchSend = item.Value;
+                if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                    this._ReadyDECToBatchSend = 0;
+                }
+                this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.General.O.FieldForTableIsRequired") + ' (' + this._ReadyDECToBatchSend + ')';
                 break;
             case "MNF":
                 this._SelectedMNFValue = 'C';
@@ -172,7 +176,7 @@ implements OnDestroy
     }
 
     CheckRequiredFields() {
-        this._CourierMasterService.GetRequiredFieldsForCourierMaster(this.entityPM.Id).subscribe((response: ServiceResponse) => {
+        this._CourierMasterService.GetRequiredFieldsForCourierMasterIncludeManifest(this.entityPM.Id).subscribe((response: ServiceResponse) => {
             if (response.Result) {
                 this._ValidationErrors = this.GetRequiredErrorsList(response.Result.RequiredFields);
             }
@@ -221,6 +225,14 @@ implements OnDestroy
 
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
 
+        if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("חסרים שדות חובה ברמת הטיסה");
+            return;
+        }
+
         if (this._ReadyMNFToBatchSend == 0 && courierDeclarationStatusCode == "R") {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -242,7 +254,6 @@ implements OnDestroy
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.HAWB = this.entityPM.HAWB;
-        currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
@@ -263,42 +274,6 @@ implements OnDestroy
                     this.RefreshButtonClicked();
                 });
             });
-
-    }
-    SendALLCorrectManifest_OLD(courierDeclarationStatusCode: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
-        if (courierDeclarationStatusCode == "M") {
-            if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
-                var currRequestParams = new SendALLCorrectRequestParams();
-                currRequestParams.LoggingEnabled = true;
-                currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-                currRequestParams.Tenant = SessionLocator.Tenant;
-                currRequestParams.CourierMasterId = this.entityPM.Id;
-                currRequestParams.HAWB = this.entityPM.HAWB;
-                currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-                this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
-                    .subscribe(res => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
-                        myMessageWindow.WindowClosed.subscribe(s => {
-                            this.RefreshButtonClicked();
-                        });
-                    });
-            }
-        }
-        else {
-            this._CourierMasterService.GetSendALLCorrectManifest(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
-                .subscribe(res => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    var myMessageWindow = new MessageWindow();
-                    myMessageWindow.Show(res.Result);
-                    myMessageWindow.WindowClosed.subscribe(s => {
-                        this.RefreshButtonClicked();
-                    });
-
-                });
-        }
 
     }
     
@@ -417,49 +392,6 @@ implements OnDestroy
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
     }
 
-    //SendALLCorrectDec_OLD(courierDeclarationStatusCode: string) {
-    //    SessionLocator.CurrentSession.StartBusyIndicatorCreating();
-    //    if (courierDeclarationStatusCode == "M") {
-    //        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
-    //            var currRequestParams = new SendALLCorrectRequestParams();
-    //            currRequestParams.LoggingEnabled = true;
-    //            currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-    //            currRequestParams.Tenant = SessionLocator.Tenant;
-    //            currRequestParams.CourierMasterId = this.entityPM.Id;
-    //            currRequestParams.HAWB = this.entityPM.HAWB;
-    //            currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-
-    //            currRequestParams.SelectedAvailableValue = this._SelectedAvailableValue;
-    //            currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
-    //            currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
-    //            currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
-    //            currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
-
-    //            this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
-    //                .subscribe(res => {
-    //                    SessionLocator.CurrentSession.StopBusyIndicator();
-    //                    var myMessageWindow = new MessageWindow();
-    //                    myMessageWindow.Show(res.Result);
-    //                    myMessageWindow.WindowClosed.subscribe(s => {
-    //                        this.RefreshButtonClicked();
-    //                    });
-    //                });
-    //        }
-    //    }
-    //    else {
-    //        this._CourierMasterService.GetSendALLCorrectDec(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
-    //            .subscribe(res => {
-    //                SessionLocator.CurrentSession.StopBusyIndicator();
-    //                var myMessageWindow = new MessageWindow();
-    //                myMessageWindow.Show(res.Result);
-    //                myMessageWindow.WindowClosed.subscribe(s => {
-    //                    this.RefreshButtonClicked();
-    //                });
-    //            });
-    //    }
-
-    //}
-
     SendALLSVG() {
 
         if (this._SVGTotal == 0) {
@@ -559,8 +491,10 @@ implements OnDestroy
     }
 
     _ReadyDECToBatchSend = 0;
+    _ReadyDECToBatchSendButtonText: string = "";
     _ReadyMNFToBatchSend = 0;
-    _PAYReadyNotFastindividual /*_ReadyLOWPAYToBatchSend*/= 0;
+    _ReadyMNFToBatchSendButtonText: string = "";
+    _PAYReadyNotFastindividual = 0;
     _SVGTotal = 0;
     _DOCTotal = 0;
     _DOC_U_Total = 0;
@@ -573,6 +507,25 @@ implements OnDestroy
     _ACC_WS_Total = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
+
+    private _SelectedDECToBatchSendButtonText: string = "";
+    public get SelectedDECToBatchSendButtonText(): string {
+        this._SelectedDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSend");
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            this._SelectedDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSend") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
+        }
+        return this._SelectedDECToBatchSendButtonText;
+    }
+
+    private _SelectedMNFToBatchSendButtonText: string = "";
+    public get SelectedMNFToBatchSendButtonText(): string {
+        this._SelectedMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSend");
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            this._SelectedMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSend") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
+        }
+        return this._SelectedMNFToBatchSendButtonText;
+    }
+
 
     RefreshStatistic() {
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
@@ -587,21 +540,35 @@ implements OnDestroy
                         case "DECR": {
                             //statements; 
                             this._ReadyDECToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._ReadyDECToBatchSend = 0;
+                            } 
+                            this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSendR") + ' (' + this._ReadyDECToBatchSend + ')';
                             break;
                         }
                         case "DECR_RV": {
                             //statements; 
                             this._CorrectDECToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._CorrectDECToBatchSend = 0;
+                            }
                             break;
                         }
                         case "MNFR": {
                             //statements; 
                             this._ReadyMNFToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._ReadyMNFToBatchSend = 0;
+                            }
+                            this._ReadyMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSendR") + ' (' + this._ReadyMNFToBatchSend + ')';
                             break;
                         }
                         case "MNFR_RV": {
                             //statements; 
                             this._CorrectMNFToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._CorrectMNFToBatchSend = 0;
+                            }
                             break;
                         }
                         case "SVG": {
@@ -918,140 +885,6 @@ implements OnDestroy
             
         return myout;
     }
-
-   /*getRowsOld(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-
-        if (filters == null) {
-            filters = new ApiQueryFilters();
-        }
-
-        filters.PageSize = take;
-        filters.PageIndex = skip;
-        filters.GetAll = false;
-        filters.GetCount = true;
-
-        filters.SortBy = sortingCol;
-        filters.SortDirection = sortingDir;
-        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
-            filters.SortBy = "CourierHawb";
-        }
-        if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
-            filters.SortDirection = "Descending";
-        }
-        filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
-        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-
-        switch (this._SelectedTabFilter.Code) {
-            case "ALL": {
-                break;
-            }
-            default: {
-                filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
-                break;
-            }
-        }
-
-        switch (this._SelectedBOLValue) {
-            case "L": {
-                filters.addAdditionalFilter("HighLowValue", "L", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "H": {
-                filters.addAdditionalFilter("HighLowValue", "H", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedStatusValue) {
-            case "O": {
-                filters.addAdditionalFilter("IsClosedForFollowUp", false, null, null, "Equals", false, false, false, "Boolean");
-                break;
-            }
-            case "C": {
-                filters.addAdditionalFilter("IsClosedForFollowUp", true, null, null, "Equals", false, false, false, "Boolean");
-                break;
-            }
-        }
-
-        switch (this._SelectedMNFValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedDECValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedDOCValue) {
-            case "C": {
-                filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "U": {
-                filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedTotalInvoiceValue) {
-            case "75": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
-                break;
-            }
-            case "500": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 76, 500, null, "Between", false, false, false, "number", false);
-                break;
-            }
-            case "1000": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 501, 1000, null, "Between", false, false, false, "number", false);
-                break;
-            }
-        }
-
-        switch (this._SelectedAvailableValue) {
-            case "AD": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "2", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "AV": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "1", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "NAV": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "0", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedACCValue) {
-            case "W": {
-                filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
-        }
-
-
-        var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
-
-        return myout;
-    }*/
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
 
@@ -1500,25 +1333,21 @@ implements OnDestroy
             return;
         }
 
-        //this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
-            //if (!response.HasError) {
-                var logitudeWindow = new LogitudeWindow();
-                var windowArgs: any = {};
-                windowArgs.CourierMasterPM = this.entityPM;
-                //windowArgs.Mode = mode;
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.CourierMasterPM = this.entityPM;
 
-                logitudeWindow.Width = 650;
-                logitudeWindow.Height = 350;
-                logitudeWindow.IsShowCloseButton = false;
-                logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
-                logitudeWindow.WindowArgs = windowArgs;
-                logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
-                logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    //this.RefreshData();
-                });
-            //}
-        //});
+        logitudeWindow.Width = 620;
+        logitudeWindow.Height = 400;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            //this.RefreshData();
+        });
     }
+
     SendALLTerminal() {
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -1556,8 +1385,25 @@ implements OnDestroy
                     }
                 }
             });
-        }
     }
+
+    ChangeStorageSiteMethod() {
+
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.CourierMasterPM = this.entityPM;
+        logitudeWindow.Width = 350;
+        logitudeWindow.Height = 250;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "שינוי אתר אחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshButtonClicked();
+        });
+    }
+
+}
 
 
     export class KeyValuePair {
