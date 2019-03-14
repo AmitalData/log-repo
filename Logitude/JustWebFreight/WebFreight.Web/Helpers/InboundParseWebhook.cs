@@ -146,6 +146,14 @@ namespace WebFreight.Web.Helpers
                             contactRepository.Add(contact);
                             contactRepository.SubmitChanges();
                         }
+                        else
+                        {
+                            contact = contactRepository.GetSingleContactByEmailSpecificTenant(emailDetails.Sender, 0);
+                            if (contact != null)
+                            {
+                                contactId = contact.Id;
+                            }
+                        }
                     }
                     else
                     {
