@@ -78,7 +78,7 @@ export class ReportComponent {
                                 }
 
                                 else if (item.Code == "SHID") {
-                                    if (SessionLocator.Tenant == 1526 || SessionLocator.Tenant == 1525 || SessionLocator.Tenant == 1524 || SessionLocator.Tenant == 1523 || SessionLocator.Tenant == 1608 || SessionLocator.Tenant == 1609 || SessionLocator.Tenant == 1684 ) {
+                                    if (SessionLocator.Tenant == 1526 || SessionLocator.Tenant == 1525 || SessionLocator.Tenant == 1524 || SessionLocator.Tenant == 1523 || SessionLocator.Tenant == 1608 || SessionLocator.Tenant == 1609 || SessionLocator.Tenant == 1684 || SessionLocator.TenantManagementJS.PackageCode == "DVMT"  ) {
                                         this.reportList.push(item);
                                     }
 
