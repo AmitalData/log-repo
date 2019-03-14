@@ -7,6 +7,7 @@ using Simplog.Server.Infrastructure.Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace WebFreight.Web.Azure.TopicQueues
@@ -28,11 +29,11 @@ namespace WebFreight.Web.Azure.TopicQueues
             {
                 try
                 {
-                    var brMessage = subscriptionClient.Receive();
+                    var brMessage = subscriptionClient.Receive(new TimeSpan(0,1,0));
                     if (brMessage != null)
                     {
 
-                        
+
                         var eventName = brMessage.Properties["EventName"].ToString();
                         var channelName = brMessage.Properties["ChannelName"].ToString();
                         var eventParameter = brMessage.Properties["EventParameter"].ToString();
@@ -61,6 +62,7 @@ namespace WebFreight.Web.Azure.TopicQueues
 
                         brMessage.Complete();
                     }
+                    Thread.Sleep(100);
                 }
                 catch { }
             }

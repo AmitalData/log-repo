@@ -218,6 +218,86 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 #endregion
 
+                #region Consolidator
+                if (!string.IsNullOrEmpty(master.ConsolidatorId))
+                {
+                    Card myCard = CardRepository.GetSingleCard(master.ConsolidatorId, tenant, true);
+                    if (myCard != null)
+                    {
+                        manifestDataProvider.ConsolidatorName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(master.ConsolidatorAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(master.ConsolidatorAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                if (myAddress.IsLocalLanguage && !string.IsNullOrEmpty(myCard.LocalName))
+                                {
+                                    manifestDataProvider.ConsolidatorName = myCard.LocalName;
+                                }
+
+                                manifestDataProvider.ConsolidatorAddress = DataProviders.General.GetAddress(myAddress);
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber) || !string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    manifestDataProvider.ConsolidatorAddress += System.Environment.NewLine;
+
+                                    if (!string.IsNullOrEmpty(myAddress.PhoneNumber))
+                                    {
+                                        manifestDataProvider.ConsolidatorAddress += "Tel: " + myAddress.PhoneNumber + " ";
+                                    }
+
+                                    if (!string.IsNullOrEmpty(myAddress.FaxNumber))
+                                    {
+                                        manifestDataProvider.ConsolidatorAddress += "Fax: " + myAddress.FaxNumber;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                #region ReleasingAgent
+                if (!string.IsNullOrEmpty(master.ReleasingAgentId))
+                {
+                    Card myCard = CardRepository.GetSingleCard(master.ReleasingAgentId, tenant, true);
+                    if (myCard != null)
+                    {
+                        manifestDataProvider.ReleasingAgentName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(master.ReleasingAgentAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(master.ReleasingAgentAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                if (myAddress.IsLocalLanguage && !string.IsNullOrEmpty(myCard.LocalName))
+                                {
+                                    manifestDataProvider.ReleasingAgentName = myCard.LocalName;
+                                }
+
+                                manifestDataProvider.ReleasingAgentAddress = DataProviders.General.GetAddress(myAddress);
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber) || !string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    manifestDataProvider.ReleasingAgentAddress += System.Environment.NewLine;
+
+                                    if (!string.IsNullOrEmpty(myAddress.PhoneNumber))
+                                    {
+                                        manifestDataProvider.ReleasingAgentAddress += "Tel: " + myAddress.PhoneNumber + " ";
+                                    }
+
+                                    if (!string.IsNullOrEmpty(myAddress.FaxNumber))
+                                    {
+                                        manifestDataProvider.ReleasingAgentAddress += "Fax: " + myAddress.FaxNumber;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
                 #region Agent Region
                 if (!string.IsNullOrEmpty(master.AgentId))
                 {

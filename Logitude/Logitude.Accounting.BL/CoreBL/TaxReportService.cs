@@ -604,7 +604,10 @@ namespace Logitude.Accounting.BL.CoreBL
             };
 
             document.FileData = file.Select(d => Convert.ToByte(d)).ToArray();
-            docService.Create(document, file.Select(d => Convert.ToByte(d)).ToArray(), loggedUser.Id);
+            var files = file.Select(d => Convert.ToByte(d)).ToArray();
+
+
+            docService.Create(document, files, loggedUser.Id);
 
 
             //get document out
