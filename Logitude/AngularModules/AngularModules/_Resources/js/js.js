@@ -372,3 +372,13 @@ var dragger = function () {
         },
     }
 }();
+
+
+function CopyText(id) {
+    var element = document.getElementById(id);
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+}
