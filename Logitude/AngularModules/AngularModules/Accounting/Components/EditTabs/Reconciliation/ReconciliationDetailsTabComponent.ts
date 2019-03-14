@@ -58,7 +58,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
     //#region Properties
 
     //get Number() { return this.EntityPM.Number; }
-    
+
     //#endregion
 
     private timerToken: any;
@@ -75,10 +75,14 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
 
     LoadData() {
         this.ItemSource = [];
+        this.originalItemSource = [];
+
         this.EntityPM.ReconciliationLines.forEach((line) => {
             var item = new ReconciliationLineModel(line, this.ColorMe(line));
             this.ItemSource.push(item);
         });
+        this.originalItemSource = this.ItemSource;
+
 
         this.CalculateTotals();
     }
@@ -102,21 +106,21 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
         }
     }
 
+    originalItemSource;
     FilterLines() {
-        //var lines = this.ItemSource;
+        var lines = this.originalItemSource;
 
-        //// Filtering
-        //if (!AppTool.IsNullOrEmpty(this.searchText)) {
-        //    lines = lines.filter((el) => {
-        //        if (el. != null)
-        //            if (el.ChequeNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
-        //        if (el.AccountNumber != null)
-        //            if (el.AccountNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
-        //        return false;
-        //    });
-        //}
-        //this.ItemSource = lines;
-        //this.NoRows = lines.length == 0;
+        // Filtering
+        if (!AppTool.IsNullOrEmpty(this.searchText)) {
+           lines = lines.filter((el) => {
+               var line = el.Line;
+               if (line.SearchFields != null)
+                   if (line.SearchFields.toLowerCase().includes(this.searchText.toLowerCase())) return true;
+               return false;
+           });
+        }
+        this.ItemSource = lines;
+        this.NoRows = lines.length == 0;
     }
 
     //#region Row Coloring
@@ -138,7 +142,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
         }
         return false;
     }
-    //#endregion 
+    //#endregion
 
     RefreshButtonClicked() {
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();

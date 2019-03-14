@@ -57,13 +57,17 @@ export class AccountingNoteComponent extends BaseComponent {
             {
                 // new
                 this.entityPM = new AccountingNotePM();
+                var loggedContact = SessionLocator.LoggedUserPM;
                 if(this.accountPM.CardId) {
                     this.entityPM.Tenant = SessionLocator.Tenant;
                     this.entityPM.CardId = this.accountPM.CardId;
                     this.entityPM.CreateDate = new Date();
                     this.entityPM.UpdateDate= new Date();
-                    this.entityPM.CreatedByUserId = "will";
-                    this.entityPM.UpdatedByUserId = "replaced";
+                    this.entityPM.CreatedByUserId = loggedContact.Id;
+                    this.entityPM.UpdatedByUserId = loggedContact.Id;
+                    this.entityPM.UpdatedByUserName = loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName);
+                    this.entityPM.CreatedByUserName = loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName);
+
                 }else{
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push("No card id in selected gl account!!!!!!!!!!");

@@ -1159,6 +1159,16 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "LTRP":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(LedgerTransactionsDataProvider));
+                        LedgerTransactionsDataProvider reportDataProvider = (LedgerTransactionsDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "LTRP", Name = "LedgerTransactionsDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
                 case "OSBC":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(OpenShipmentsByCustomerDataProvider));
@@ -1304,7 +1314,7 @@ namespace WebFreight.Web.Helpers
             }
 
             report.AutoLocalizeReportOnRun = true;
-
+            //report.Culture = "he-IL"; // we can use report globalization to translate lables, google "Glabalization manager stimulsoft" for more
             report.Render(false);
 
 
@@ -1700,6 +1710,12 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "LTRP":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
+
                     #endregion
             }
 
@@ -1756,6 +1772,8 @@ namespace WebFreight.Web.Helpers
                     case "OSBC":
                     case "PTVC":
                     case "LICM":
+                    case "LTRP":
+
                         return true;
 
                     default:
@@ -1810,6 +1828,7 @@ namespace WebFreight.Web.Helpers
                             InActive = report.InActive,
                             ReportGroupId = report.ReportGroupId,
                             FeatureId = report.FeatureId,
+                            LocalName = report.LocalName
                         };
                         reportRepository.Add(newReport);
                         myReports.Add(newReport);

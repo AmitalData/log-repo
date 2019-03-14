@@ -109,6 +109,17 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             // 5- store resultXML
             if(res != null)
             {
+                // Check rows if have exception message
+                List<AccountingIntegrityStep> integritySteps = res.MyAccountingIntegrityStep;
+                foreach (AccountingIntegrityStep step in integritySteps)
+                {
+                    if (!string.IsNullOrWhiteSpace(step.ExceptionMessage))
+                    {
+                        entityPM.HasException = true;
+                        break;
+                    }
+                }
+
                 // serialize resultXML
                 string stringXML = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res);
 

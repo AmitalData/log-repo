@@ -129,6 +129,16 @@ export class FieldTemplateComponent {
                 this.FieldValue = this.Entity.UserLocalName;
             }
         }
+
+        if (this.ObjectTableName == "TaxReport" && this.FieldName == "StatusEnglishName") {
+
+            if (SessionLocator.LoggedUserPM.DontShowLocal) {
+                this.FieldValue = this.Entity.StatusEnglishName;
+            }
+            else {
+                this.FieldValue = this.Entity.StatusLocalName;
+            }
+        }
     }
 
     Abs(num: number) {

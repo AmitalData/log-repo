@@ -142,6 +142,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 9);
                 }
               
+                if(item.JournalNumber== "2004")
+                {
+
+                }
                 if (item.JournalNumber != null)
                 {
                     if (item.JournalNumber.Length > 10) { item.JournalNumber.Substring(0, 10); }
@@ -450,9 +454,18 @@ namespace Logitude.Accounting.BL.CoreBL
             var typeservice = TrailReportFactory.CreateNew(trailReportParam);
             List<TrailReportM> res1 = typeservice.Execute();
             typeservice.Dispose();
-           
+            var exceptedList = res1.Where(d => d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0).ToList();
+            List<string> exceptedGLAccounts = new List<string>();
+            if(exceptedList != null)
+            {
+                exceptedGLAccounts = exceptedList.Select(d => d.GLAccountId).ToList();
+            }
+            res1 = res1.Where(d => !(d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0)).ToList();
             IEnumerable< IGrouping<string,TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
+
+          
             var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
+            b110Data = b110Data.Where(d => !exceptedGLAccounts.Contains(d.GLAccountId)).ToList();
 
             foreach (B110Data item in b110Data)
             {
@@ -756,7 +769,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.TotalCredit = trailReportM.Select(d => d.LocalCredit).Sum();
                     if (item.OpeningBalance != null)
                     {
-                        string OpeningBalance = Format(item.OpeningBalance.Value); // Math.Abs((decimal)item.OpeningBalance).ToString();
+                        string OpeningBalance = Format(item.OpeningBalance.Value); 
                         if (item.OpeningBalance < 0)
                         {
                             myStringBuilder.Append("a");
@@ -2895,7 +2908,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 myStringBuilder.Append('0', 8);
                             }
 
-                        string amount = Format((decimal)line.LocalAmount); // line.LocalAmount.ToString().Replace(".", string.Empty);
+                        string amount = Format(line.LocalAmount); 
                         if (amount.Length > 15)
                             {
                                 amount = amount.Substring(0, 15);
@@ -3208,8 +3221,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 10);
                     myStringBuilder.Append("a");
                     myStringBuilder.Append('0', 8);
-                    myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 15);
+                    string localAmount = Format((decimal)item.DocumentAmountAndVATAmount);
+                    if (localAmount != null)
+                    {
+                        if (localAmount.Length > 15)
+                        {
+                            localAmount = localAmount.Substring(0, 15);
+                        }
+                        myStringBuilder.Append("a" + localAmount.PadLeft(15, '0'));
+
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
 
 
 
@@ -3383,7 +3409,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
 
 
-                            string localAmount = Format(line.LocalAmount); // line.LocalAmount.ToString().Replace(".", string.Empty);
+                            string localAmount = Format(line.LocalAmount); 
                             if (localAmount != null)
                             {
                                 if (localAmount.Length > 15)
@@ -3411,8 +3437,21 @@ namespace Logitude.Accounting.BL.CoreBL
                             myStringBuilder.Append('0', 10);
                             myStringBuilder.Append("a");
                             myStringBuilder.Append('0', 8);
-                            myStringBuilder.Append("a");
-                            myStringBuilder.Append('0', 15);
+                            string localAmount = Format((decimal)item.DocumentAmountAndVATAmount);
+                            if (localAmount != null)
+                            {
+                                if (localAmount.Length > 15)
+                                {
+                                    localAmount = localAmount.Substring(0, 15);
+                                }
+                                myStringBuilder.Append("a" + localAmount.PadLeft(15, '0'));
+
+                            }
+                            else
+                            {
+                                myStringBuilder.Append("a");
+                                myStringBuilder.Append('0', 15);
+                            }
 
                         }
 
@@ -3572,6 +3611,11 @@ namespace Logitude.Accounting.BL.CoreBL
             ContactQuery contactQuery = new ContactQuery(tenant);
 
             ContactPM contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, tenant);
+            if(contact == null)
+            {
+                contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, 0);
+            }
+
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
           
@@ -3774,35 +3818,45 @@ namespace Logitude.Accounting.BL.CoreBL
         public static List<C100Data> GetDepositC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
-            List<C100Data> c100s = (from a in accountingContext.BankDeposits
-                                    where (a.AccountingDate >= openFormatReportPM.FromDate && a.AccountingDate <= openFormatReportPM.ToDate) && a.Tenant == tenant
-                                    select new C100Data()
-                                    {
-                                       
-                                        DocumentType = "420",
-                                        DocumentReference = a.DepositNumber.ToString(),
-                                        DocumentCreateDate = a.CreateDate,
-                                        CustomerVendorName =null,
-                                        //AddressStreet = a.BillToAddress != null ? a.BillToAddress.Address1 : null,
-                                        //AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
-                                        //AddressZIPCode = a.BillToAddress != null ? a.BillToAddress.ZipCode : null,
-                                        //AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
-                                        //AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
-                                        //CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
-                                        CustomerVendorVatNumber = null,
-                                        ValueDate = a.AccountingDate,
-                                        TotalDocumentsAmountBeforeDiscount = null,
-                                        TotalDocumentsAmountAfterDiscount = null,
-                                        DocumentAmountAndVATAmount =(double) a.LocalDepositAmount,
-                                        DocuemntsReferenceDate = a.AccountingDate,
-                                        CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
-                                        GLAccountId = null,
-                                        IsCancelled = a.IsCanceled,
-                                        VendorId =null,
-                                        DepositId = a.Id,
-                                        CashBookType = a.CashBook.CashBookTypeCode,
-                                       
-                                    }).ToList();
+            List<C100Data> c100s;
+           
+            if(openFormatReportPM.FromDate == openFormatReportPM.ToDate)
+            {
+                openFormatReportPM.ToDate = openFormatReportPM.ToDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+              
+            }
+           
+                c100s = (from a in accountingContext.BankDeposits
+                         where (a.AccountingDate >= openFormatReportPM.FromDate && a.AccountingDate <= openFormatReportPM.ToDate) && a.Tenant == tenant
+                         select new C100Data()
+                         {
+
+                             DocumentType = "420",
+                             DocumentReference = a.DepositNumber.ToString(),
+                             DocumentCreateDate = a.CreateDate,
+                             CustomerVendorName = null,
+                             //AddressStreet = a.BillToAddress != null ? a.BillToAddress.Address1 : null,
+                             //AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
+                             //AddressZIPCode = a.BillToAddress != null ? a.BillToAddress.ZipCode : null,
+                             //AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
+                             //AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
+                             //CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
+                             CustomerVendorVatNumber = null,
+                             ValueDate = a.AccountingDate,
+                             TotalDocumentsAmountBeforeDiscount = null,
+                             TotalDocumentsAmountAfterDiscount = null,
+                             DocumentAmountAndVATAmount = (double)a.LocalDepositAmount,
+                             DocuemntsReferenceDate = a.AccountingDate,
+                             CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                             GLAccountId = null,
+                             IsCancelled = a.IsCanceled,
+                             VendorId = null,
+                             DepositId = a.Id,
+                             CashBookType = a.CashBook.CashBookTypeCode,
+
+                         }).ToList();
+            
+          
 
 
             return c100s;
@@ -4093,6 +4147,10 @@ namespace Logitude.Accounting.BL.CoreBL
             ContactQuery contactQuery = new ContactQuery(tenant);
 
             ContactPM contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, tenant);
+            if (contact == null)
+            {
+                contact = contactQuery.GetSinglePM(openFormatReport.CreatedByUserId, 0);
+            }
 
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("INI", tenant);
 

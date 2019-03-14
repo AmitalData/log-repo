@@ -1,5 +1,5 @@
 <style>
-    
+
     .NoRows{
         text-align: center;
         color: #a0a0a0;
@@ -27,7 +27,7 @@
         overflow: hidden;
     }
 
-    
+
 
     .Disabled {
         background: #d80070;
@@ -104,7 +104,7 @@
 
                                     <td style="width: 330px;">
                                         <table>
-                                             LocalName 
+                                             LocalName
                                             <tr class="FormFieldRow">
                                                 <td style="width: 100px;">
                                                     <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
@@ -140,10 +140,10 @@
                     <!-- Toolbar -->
                     <tr style="height: 20px;">
                         <td style="padding: 4px;">
-                            <!--<div style="float: right; padding: 4px; width: 250px;">
-                                <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Cheque Number / Bank Account'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
-                            </div>-->
-                            <div style="width: 30px; float: right;">
+                            <div style="padding: 4px; width: 250px;" float-end>
+                                <SearchTextBox [ObjectTableName]="'ReconciliationLine'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                            </div>
+                            <div style="width: 30px;" float-end>
                                 <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
                             </div>
                         </td>
@@ -188,7 +188,7 @@
                                             </td>
 
                                             <td class="CellStretched" style="width: 110px; max-width: 110px;text-align: right; color:#00a192;" [class.red]="item.Line.ForeignAmountDebit > 0">
-                                                {{item.TransactionAmount| NumbersPipe:'N2' }} 
+                                                {{item.TransactionAmount| NumbersPipe:'N2' }}
                                             </td>
 
                                             <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right; color:#00a192;" [class.red]="item.Line.ReconciliationAmount<0">
@@ -209,7 +209,7 @@
                                                 {{item.Line.Notes}}
                                             </td>
 
-                                            
+
                                             <td><div></div></td>
 
                                         </tr>

@@ -6506,6 +6506,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentDeliveryPM myLastDelivery = deliveries.FirstOrDefault();
             ShipmentPickUpPM myFirstPickup = pickups.FirstOrDefault();
 
+            this.CountryForStatisticsId(myLastDelivery);
             this.ComputeOrigin(myFirstPickup);
 
             if (myFirstPickup != null)
@@ -6634,6 +6635,163 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             this.entityPM.LastFinalDestination = mainCarriageToPort.EnglishName;
                         }
                     }
+                }
+            }
+        }
+
+        private void CountryForStatisticsId(ShipmentDeliveryPM myLastDelivery)
+        {
+            string fromPortId = entityPM.MainCarriageFromPortId;
+            string toPortId = entityPM.MainCarriageToPortId;
+
+            if (entityPM.ShipmentLevelCode == "H")
+            {
+                fromPortId = entityPM.FromPortId;
+                toPortId = entityPM.ToPortId;
+            }
+
+            //Import
+            if (entityPM.DirectionId == "I")
+            {
+                PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, fromPortId, true);
+                if (port != null)
+                {
+                    entityPM.CountryForStatisticsId = port.CountryId;
+                }
+            }
+
+            //Export
+            else if (entityPM.DirectionId == "E")
+            {
+                if (myLastDelivery != null)
+                {
+                    switch (myLastDelivery.PickUpDeliveryToTypeCode)
+                    {
+                        case "PART":
+                            {
+                                if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
+                                {
+                                    AddressRepository addressRepository = new AddressRepository(CommonDataContext.GetContext(entityPM.Tenant));
+                                    Address toAddress = addressRepository.GetSingleAddress(myLastDelivery.ToAddressId, entityPM.Tenant);
+                                    if (toAddress != null)
+                                    {
+                                        entityPM.CountryForStatisticsId = toAddress.CountryId;
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "CASL":
+                            {
+
+                                if (!string.IsNullOrEmpty(myLastDelivery.ToAddressCountryId))
+                                {
+                                    entityPM.CountryForStatisticsId = myLastDelivery.ToAddressCountryId;
+                                }
+
+                                break;
+                            }
+
+                        case "PORT":
+                            {
+                                if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
+                                {
+                                    PortPM myPort = PortQuery.GetSinglePort(entityPM.Tenant, myLastDelivery.ToPortId, true);
+                                    if (myPort != null)
+                                    {
+                                        entityPM.CountryForStatisticsId = myPort.CountryId;
+                                    }
+                                }
+
+                                break;
+                            }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(entityPM.CountryForStatisticsId))
+                {
+                    if (!string.IsNullOrEmpty(entityPM.Transshipment3ToPortId))
+                    {
+                        PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.Transshipment3ToPortId, true);
+                        if (port != null)
+                        {
+                            entityPM.CountryForStatisticsId = port.CountryId;
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(entityPM.Transshipment2ToPortId))
+                    {
+                        PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.Transshipment2ToPortId, true);
+                        if (port != null)
+                        {
+                            entityPM.CountryForStatisticsId = port.CountryId;
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(entityPM.Transshipment1ToPortId))
+                    {
+                        PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.Transshipment1ToPortId, true);
+                        if (port != null)
+                        {
+                            entityPM.CountryForStatisticsId = port.CountryId;
+                        }
+                    }
+
+                    else
+                    {
+                        PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, toPortId, true);
+                        if (port != null)
+                        {
+                            entityPM.CountryForStatisticsId = port.CountryId;
+                        }
+                    }
+                }
+            }
+
+            //Domestic
+            else if (entityPM.DirectionId == "D")
+            {
+                if (entityPM.TransportModeId == "I")
+                {
+                    if (!string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
+                    {
+                        AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
+                        Address toAddress = addressRepository.GetSingleAddress(entityPM.MainCarriageToAddressId, entityPM.Tenant);
+                        if (toAddress != null)
+                        {
+                            entityPM.CountryForStatisticsId = toAddress.CountryId;
+                        }
+                    }
+                }
+
+                else
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, toPortId, true);
+                    if (port != null)
+                    {
+                        entityPM.CountryForStatisticsId = port.CountryId;
+                    }
+                }
+            }
+
+            //Customs
+            else if (entityPM.DirectionId == "C")
+            {
+                PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, fromPortId, true);
+                if (port != null)
+                {
+                    entityPM.CountryForStatisticsId = port.CountryId;
+                }
+            }
+
+            //Drop
+            else if (entityPM.DirectionId == "R")
+            {
+                PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, toPortId, true);
+                if (port != null)
+                {
+                    entityPM.CountryForStatisticsId = port.CountryId;
                 }
             }
         }

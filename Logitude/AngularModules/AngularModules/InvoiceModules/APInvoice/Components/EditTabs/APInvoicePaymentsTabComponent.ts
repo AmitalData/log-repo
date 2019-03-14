@@ -284,7 +284,7 @@ export class APInvoicePaymentItem {
         if (this.fatherComponent.EntityPM.AmountInInvoiceCurrency  < 0) {
             result = false;
         }
-        this.fatherComponent.IsEnabledConnect ? result = true : result = false;
+        this.fatherComponent.IsEnabledDisconnect ? result = true : result = false;
         return result;
     }
 
