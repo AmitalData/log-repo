@@ -343,12 +343,14 @@
             var defaultParam = new Object();
             //defaultParam.IsAutomaticReconcile = true;
 
-            defaultParam.AccountId = "1-59"; // 59-Diaz
-            defaultParam.Tenant = 1;
+            defaultParam.AccountId = "1-216872"; // 59-Diaz
+            defaultParam.Tenant = 1071;
             var QueryOperations = new Object();
             QueryOperations.IsFilteredReconciliation = true;
             QueryOperations.PageSize = 10;
             QueryOperations.PageIndex = 1;
+            QueryOperations.SortByColumnName = "SourceType";
+            QueryOperations.SortDirectin = "ascending";//Descending
             QueryOperations.DataCount = null;
             QueryOperations.QueryFilterItems = new Array();
             if (withMore) {
