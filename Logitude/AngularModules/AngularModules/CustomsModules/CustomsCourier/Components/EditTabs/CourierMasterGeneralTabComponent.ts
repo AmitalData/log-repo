@@ -179,6 +179,13 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get TruckerId() { return this.EntityPM.TruckerId; }
+    set TruckerId(value: string) {
+        if (this.EntityPM.TruckerId != value) {
+            this.EntityPM.TruckerId = value;
+        }
+    }
+
     AirLineIdLostFocus(value: any) {
 
         //this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.EntityPM.AirlineId, this.EntityPM.HAWB, this.EntityPM.MAWB).subscribe(Result => {

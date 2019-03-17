@@ -736,7 +736,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             myDeclarationUpdateService.IsFromCustomsFeedback = true;
             myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
-            if (!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
+            if(!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
             {
                 if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax != null)
                 {
@@ -755,7 +755,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             //var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
             //if (setting.IsConnectedToUniFreight)
-            if (_MyDeclarationPM.IsConnectedToUnifreight)
+                if (_MyDeclarationPM.IsConnectedToUnifreight)
             {
                 //<--- Yuval Chalup 09.11.2015 TASK-16498 - Update PaymentOrderNumber in Payment
                 if (customResponse.DeclarationPaymentDetails != null)

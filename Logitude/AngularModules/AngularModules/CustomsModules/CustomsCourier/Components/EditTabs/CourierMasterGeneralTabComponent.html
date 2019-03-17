@@ -292,5 +292,30 @@
         <td><div></div></td>
     </tr>
 
+    <tr style="height:40px; width:700px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogLov [ObjectFieldName]="'TruckerId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [SelectedValue]="TruckerId"
+                                [LookUpTableName]="'Trucker'">
+                        </LogLov>
+                    </td>
+                    <td style="width:30px"></td>
+                </tr>
+            </table>
+        </td>
+
+        <td><div></div></td>
+    </tr>
+
     <tr></tr>
 </table>

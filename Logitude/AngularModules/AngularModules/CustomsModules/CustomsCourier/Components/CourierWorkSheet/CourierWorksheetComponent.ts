@@ -1,16 +1,16 @@
 declare var window: any;
 import { BehaviorSubject } from 'rxjs';
-import {Observable} from 'rxjs/Observable';
-import {Guid} from '../../../../Infrastructure/Utilities/Guid';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable} from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Guid } from '../../../../Infrastructure/Utilities/Guid';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable } from '@angular/core';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
 import { CourierMasterService } from '../../../../Customs/Services/Others/CourierMasterService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
-import { ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -19,7 +19,7 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DeclarationEditComponentController } from '../../../../Customs/Controller/DeclarationEditComponentController';
-import { DropdownMenuFilterComponent }  from './DropdownMenuFilterComponent'
+import { DropdownMenuFilterComponent } from './DropdownMenuFilterComponent'
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SendPayReadyLowRequestParams } from '../../../../Customs/DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
@@ -36,24 +36,23 @@ import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/De
 
 
 export class CourierWorksheetComponent extends BaseComponent
-implements OnDestroy
-{
+    implements OnDestroy {
     ObjectTableName: string = "Customs.CourierMaster";
     DataContext: any = this;
     entityPM: CourierMasterPM;
     public ComponentBackground: string = "white";
     //private EntityResourceService: EntityResourceService = new EntityResourceService();
 
-  
-  private _RowsItems: any;
-  public get RowsItems(): any {
-    return this._RowsItems;
-  }
-  public set RowsItems(value: any) {
-    this._RowsItems = value;
-  }
 
-  private _SelectedRow: any;
+    private _RowsItems: any;
+    public get RowsItems(): any {
+        return this._RowsItems;
+    }
+    public set RowsItems(value: any) {
+        this._RowsItems = value;
+    }
+
+    private _SelectedRow: any;
     public get SelectedRow(): any {
         return this._SelectedRow;
     }
@@ -66,7 +65,7 @@ implements OnDestroy
     _EntityListService: EntityListService = new EntityListService();
 
     @ViewChild(DropdownMenuFilterComponent)
-    public MyDropdownMenuFilterComponent: DropdownMenuFilterComponent = new DropdownMenuFilterComponent(null,null);
+    public MyDropdownMenuFilterComponent: DropdownMenuFilterComponent = new DropdownMenuFilterComponent(null, null);
 
     public ComponentRef: ComponentRef<CourierWorksheetComponent>;
     _ValidationErrors: string[] = [];
@@ -98,7 +97,7 @@ implements OnDestroy
     @Output() CustomBackFromEditevent = new EventEmitter();
 
     //constructor(public entityArgs: EntityArgs) {
-    constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService,public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
         //this.entityPM = entityArgs.EntityPM;
@@ -121,11 +120,11 @@ implements OnDestroy
         //        });
         //);
         this.GetMamanPUR();
-        
+
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
-      //  this.PseventRowSelectEventSubscribe.unSubscribe();
+        //  this.PseventRowSelectEventSubscribe.unSubscribe();
     }
     ngOnInit() {
         this.BuildColumns();
@@ -133,7 +132,8 @@ implements OnDestroy
             .subscribe(message => {
                 if (message == "DoRefresh") {
                     this.RefreshButtonClicked();
-                }});
+                }
+            });
     }
 
     TabFilterClick(item) {
@@ -145,7 +145,7 @@ implements OnDestroy
         this._SelectedACCValue = 'A';
 
         switch (item.Code) {
-            case "DECR": 
+            case "DECR":
                 this._ReadyDECToBatchSend = item.Value;
                 if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
                     this._ReadyDECToBatchSend = 0;
@@ -217,7 +217,7 @@ implements OnDestroy
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
-    SearchFilter: string; 
+    SearchFilter: string;
     onSearchTextChangeEvent(text: string) {
         this.SearchFilter = text;
         this.RefreshList();
@@ -276,7 +276,7 @@ implements OnDestroy
             });
 
     }
-    
+
     SendReadyLOWPAYToBatch() {
 
         if (this._PAYReadyNotFastindividual == 0) {
@@ -295,7 +295,7 @@ implements OnDestroy
             logitudeWindow.Title = "בנק לתשלום";
             SessionLocator.CurrentSession.StopBusyIndicator();
             logitudeWindow.ComponentLoaded.subscribe(cmpRef => {
-            //    cmpRef.IsClosedLost = true;
+                //    cmpRef.IsClosedLost = true;
             });
             logitudeWindow.WindowClosed.subscribe(resultWindowClosed => {
                 let InternalBankId: string = resultWindowClosed;
@@ -333,16 +333,16 @@ implements OnDestroy
                             });
                     }
                 }
-                
+
             });
             logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetInternalBankComponent');
-          
+
             //''
             ;
         });
 
-        
-        
+
+
 
     }
 
@@ -405,13 +405,13 @@ implements OnDestroy
             this.Navigate();
         }
     }
-//////////////////////////////
+    //////////////////////////////
     private currentFilters: ApiQueryFilters;
-//    private currentSearchFields: string;
+    //    private currentSearchFields: string;
     private currentSortingCol: string;
     private currentSortingDir: string;
     Navigate() {
-//        this.CurrentQueryFilters = new ApiQueryFilters();
+        //        this.CurrentQueryFilters = new ApiQueryFilters();
         var MyFilters = new ApiQueryFilters();
 
         MyFilters.SortBy = this.currentSortingCol;
@@ -471,7 +471,7 @@ implements OnDestroy
         this.currentSortingCol = $event.colDef;
         this.currentSortingDir = $event.id;
     }
-//////////////////////////////
+    //////////////////////////////
 
     OnColumnResisedevent() { }
 
@@ -484,9 +484,9 @@ implements OnDestroy
     }
 
     RefreshList() {
-      
+
         setTimeout(() => {
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+            this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
     }
 
@@ -533,7 +533,7 @@ implements OnDestroy
             .subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
-                
+
                 list = res.Result;
                 list.forEach(item => {
                     switch (item.Key) {
@@ -542,7 +542,7 @@ implements OnDestroy
                             this._ReadyDECToBatchSend = item.Value;
                             if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
                                 this._ReadyDECToBatchSend = 0;
-                            } 
+                            }
                             this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSendR") + ' (' + this._ReadyDECToBatchSend + ')';
                             break;
                         }
@@ -630,8 +630,8 @@ implements OnDestroy
                             TabFilter.Total = item.Value;
                             break;
                         }
-                    } 
-                   
+                    }
+
                 });
 
             });
@@ -823,7 +823,7 @@ implements OnDestroy
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: false,
         });
-  
+
         this.columns.push({
             FieldName: 'CourierPendingReasonCode',
             DataTypeCode: 'String',
@@ -872,17 +872,17 @@ implements OnDestroy
         filters.GetCount = true;
 
         filters.SortBy = sortingCol;
-        filters.SortDirection = sortingDir; 
-/*        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
-            filters.SortBy = "CourierHawb";
-        }
-        if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
-            filters.SortDirection = "Descending";
-        }*/
+        filters.SortDirection = sortingDir;
+        /*        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
+                    filters.SortBy = "CourierHawb";
+                }
+                if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
+                    filters.SortDirection = "Descending";
+                }*/
         this.BuildFiltersForQuery(filters);
 
         var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
-            
+
         return myout;
     }
 
@@ -1131,12 +1131,12 @@ implements OnDestroy
     }
 
     public MyScrollTop: number = 0;
-  OnRowSelected(event) {
-    this.MyScrollTop = event.scrollTop;
-    if (this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction) {
-      this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = false;
-      return;  
-    }
+    OnRowSelected(event) {
+        this.MyScrollTop = event.scrollTop;
+        if (this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction) {
+            this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = false;
+            return;
+        }
         this.OnRowSelectedBL(event);
 
         //let timerToken = setTimeout(() => {
@@ -1146,7 +1146,7 @@ implements OnDestroy
         //}, 1000);
     }
 
-    preventSelect: boolean=false;
+    preventSelect: boolean = false;
     OnRowSelectedBL(event) {
         if (this.preventSelect) {
             return;
@@ -1154,108 +1154,108 @@ implements OnDestroy
         if (true)//(!this.preventSelect) {
             var selected = event.rowData;
 
-            if (selected) {
-                var customEditIdentityKey = Guid.newGuid();
-                var control = null;
-                var logitudeWindow = new LogitudeWindow();
-                var currentScreenCode = "";
-                var objectTableName = "";
-                var filters:any[] = [];
+        if (selected) {
+            var customEditIdentityKey = Guid.newGuid();
+            var control = null;
+            var logitudeWindow = new LogitudeWindow();
+            var currentScreenCode = "";
+            var objectTableName = "";
+            var filters: any[] = [];
 
-                switch (this._SelectedTabFilter.Code) {
-                    case "MNF":
-                        {
-                            if (this._SelectedMNFValue == 'C') {
-                                currentScreenCode = "DEGC";
-                                objectTableName = "Customs.Declaration";
-                            }
-                            else if (this._SelectedMNFValue == 'W') {
-                                currentScreenCode = "DCCA";
-                                objectTableName = "Customs.Declaration";
-                                let myfilters = {
-                                    "IsManifest": true,
-                                    "IsConstraintsVisible": false,
-                                };
-                                filters.push(myfilters);
-                            }
-                            break;
-                        }
-                    case "DEC":
-                        {
-                            if (this._SelectedDECValue == 'C') {
-                                currentScreenCode = "DEGC";
-                                objectTableName = "Customs.Declaration";
-                            }
-                            else if (this._SelectedDECValue == 'W') {
-                                currentScreenCode = "DCCA";
-                                objectTableName = "Customs.Declaration";
-                            }
-                            break;
-                        }
-                    case "DOC":
-                        {
-                            currentScreenCode = "DCCD";
+            switch (this._SelectedTabFilter.Code) {
+                case "MNF":
+                    {
+                        if (this._SelectedMNFValue == 'C') {
+                            currentScreenCode = "DEGC";
                             objectTableName = "Customs.Declaration";
-                            break;
                         }
-                    case "SVG":
-                        {
-                            currentScreenCode = "DCCF";
+                        else if (this._SelectedMNFValue == 'W') {
+                            currentScreenCode = "DCCA";
+                            objectTableName = "Customs.Declaration";
+                            let myfilters = {
+                                "IsManifest": true,
+                                "IsConstraintsVisible": false,
+                            };
+                            filters.push(myfilters);
+                        }
+                        break;
+                    }
+                case "DEC":
+                    {
+                        if (this._SelectedDECValue == 'C') {
+                            currentScreenCode = "DEGC";
+                            objectTableName = "Customs.Declaration";
+                        }
+                        else if (this._SelectedDECValue == 'W') {
+                            currentScreenCode = "DCCA";
                             objectTableName = "Customs.Declaration";
                         }
                         break;
-                    default:
-                        {
-                            currentScreenCode = "DEGC";
-                            objectTableName = "Customs.Declaration";
-                            break;
-                        }
-                }
-
-                if (!AppTool.IsNullOrEmpty(currentScreenCode)) {
-
-                    if (objectTableName == "Customs.Declaration") {
-                        SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = true;
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-                            .then(cmpRef => {
-                                cmpRef.instance.ComponentRef = cmpRef;
-                                cmpRef.instance.Run({
-                                    SelectedTabCode: currentScreenCode,
-                                    EntityId: selected.DeclarationId,
-                                    ObjectTableName: objectTableName,
-                                });
-                                cmpRef.instance.BackCompleted.subscribe(bk => {
-                                    if (SessionLocator.CurrentSession != null && SessionLocator.CurrentSession.CurrentWindow != null) {
-                                        SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = false;
-                                    }
-                                    this.OnBackFromEdit(selected.DeclarationId, event);
-                                });
-                                if (this._SelectedTabFilter.Code == "MNF" && this._SelectedMNFValue == 'W') {
-                                    cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
-                                        .subscribe(myResult => {
-                                            var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
-                                            myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
-                                            console.log("myDeclarationEditComponentController.CustomsAnswersShowManifest = true;");
-                                        });
-                                }
-                                if (currentScreenCode = "DCCF") {
-                                    cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
-                                        .subscribe(myResult => {
-                                            var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
-                                            myDeclarationEditComponentController.ShowDeclarationClassificationComponentTAB = true;
-                                            console.log("myDeclarationEditComponentController.DeclarationClassificationComponent = true;");
-                                        });
-                                }
-                                
-
-                            });
-
-                        //this.preventSelect = false;
-                        return;
                     }
+                case "DOC":
+                    {
+                        currentScreenCode = "DCCD";
+                        objectTableName = "Customs.Declaration";
+                        break;
+                    }
+                case "SVG":
+                    {
+                        currentScreenCode = "DCCF";
+                        objectTableName = "Customs.Declaration";
+                    }
+                    break;
+                default:
+                    {
+                        currentScreenCode = "DEGC";
+                        objectTableName = "Customs.Declaration";
+                        break;
+                    }
+            }
+
+            if (!AppTool.IsNullOrEmpty(currentScreenCode)) {
+
+                if (objectTableName == "Customs.Declaration") {
+                    SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = true;
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({
+                                SelectedTabCode: currentScreenCode,
+                                EntityId: selected.DeclarationId,
+                                ObjectTableName: objectTableName,
+                            });
+                            cmpRef.instance.BackCompleted.subscribe(bk => {
+                                if (SessionLocator.CurrentSession != null && SessionLocator.CurrentSession.CurrentWindow != null) {
+                                    SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = false;
+                                }
+                                this.OnBackFromEdit(selected.DeclarationId, event);
+                            });
+                            if (this._SelectedTabFilter.Code == "MNF" && this._SelectedMNFValue == 'W') {
+                                cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
+                                    .subscribe(myResult => {
+                                        var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
+                                        myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
+                                        console.log("myDeclarationEditComponentController.CustomsAnswersShowManifest = true;");
+                                    });
+                            }
+                            if (currentScreenCode = "DCCF") {
+                                cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
+                                    .subscribe(myResult => {
+                                        var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
+                                        myDeclarationEditComponentController.ShowDeclarationClassificationComponentTAB = true;
+                                        console.log("myDeclarationEditComponentController.DeclarationClassificationComponent = true;");
+                                    });
+                            }
+
+
+                        });
+
+                    //this.preventSelect = false;
+                    return;
                 }
             }
         }
+    }
 
     OnBackFromEdit(selectedEntityId, $event) {
         this.MyScrollTop = $event.scrollTop;
@@ -1295,7 +1295,7 @@ implements OnDestroy
                             this.RefreshButtonClicked();
                         })
                     });
-                    
+
                 });
             });
     }
@@ -1355,8 +1355,8 @@ implements OnDestroy
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.HAWB = this.entityPM.HAWB;
-       
-        
+
+
         this._CourierMasterService.PostSendALLTerminal(currRequestParams)
             .subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
@@ -1395,7 +1395,7 @@ implements OnDestroy
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי אתר אחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.Title = "שינוי אתר אחסון";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -1406,13 +1406,13 @@ implements OnDestroy
 }
 
 
-    export class KeyValuePair {
-        constructor(public Key: string, public Value) { }
-    }
+export class KeyValuePair {
+    constructor(public Key: string, public Value) { }
+}
 
-    export class TabFilter {
+export class TabFilter {
 
-        constructor(public Code: string,public Header: string, public Total?: number, public Filter? :string ) {
-        }
+    constructor(public Code: string, public Header: string, public Total?: number, public Filter?: string) {
     }
+}
 
