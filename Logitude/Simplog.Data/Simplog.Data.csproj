@@ -164,6 +164,7 @@
     <Content Include="InfrastructureModel\DeleteCustomerRecords.sql" />
     <Content Include="InfrastructureModel\DeleteTicketsRecords.sql" />
     <Content Include="ShipmentsModel\GetShipmentsCounts.sql" />
+    <Content Include="ShipmentsModel\UpdateShipmentARInvoices.sql" />
     <Content Include="ShipmentsModel\UpdateShipmentRegistryDate.sql" />
     <None Include="CommonDataModel\CommonDataContext.Views.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.Views.mssql.cs" />

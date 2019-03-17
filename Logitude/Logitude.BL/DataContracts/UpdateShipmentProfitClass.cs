@@ -38,7 +38,6 @@ namespace Logitude.BL.DataContracts
                 cn.Close();
             }
         }
-
         public static void UpdateReceivables(string shipmentId, int tenant, bool isInvoiceUpdated)
         {
             string strConnString = GetConnection(tenant);
@@ -61,8 +60,7 @@ namespace Logitude.BL.DataContracts
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }
-        }
-        
+        }        
         public static void UpdateProfit(string shipmentId, int tenant)
         {
             string strConnString = GetConnection(tenant);
@@ -107,7 +105,24 @@ namespace Logitude.BL.DataContracts
                 cn.Close();
             }
         }
+        public static void UpdateARInvoices(string shipmentId, int tenant)
+        {
+            string strConnString = GetConnection(tenant);
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("dbo.usp_UpdateShipmentARInvoices", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                SqlParameter param1 = new SqlParameter("@ShipmentId", SqlDbType.VarChar);
+                param1.Direction = ParameterDirection.Input;
+                param1.Value = shipmentId;
+                cmd.Parameters.Add(param1);
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+        }
         public static string GetConnection(int tenant)
         {
             GlobalDB currentDb;

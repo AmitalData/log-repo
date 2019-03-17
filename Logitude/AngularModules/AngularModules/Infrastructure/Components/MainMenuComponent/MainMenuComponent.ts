@@ -23,9 +23,9 @@ import { retry } from 'rxjs/operators';
 export class MainMenuComponent {
     public SelectedMenu: MainMenuItem;
     public MainMenuItems: Array<MainMenuItem>;
-    public MainMenuWidth: number = 142;
+    public MainMenuWidth: number = 145;
     private MainMenuWidthCollapsed: number = 45;
-    private MainMenuWidthOpened: number = 142;
+    private MainMenuWidthOpened: number = 145;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("MainMenuContainer", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;

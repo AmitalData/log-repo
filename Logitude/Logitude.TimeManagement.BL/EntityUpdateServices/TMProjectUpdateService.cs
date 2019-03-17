@@ -1,6 +1,8 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TimeManagement.BL.EntityPMs;
+using Logitude.TimeManagement.BL.TraceEvents;
+using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -34,7 +36,12 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 {
                     entityPM.ProjectNumber += "-" + GenerateNewId( entityPM);
                 }
+
+                TMProjectTracing.TraceNew(entityPM);
+
             }
+
+
         }
 
 
@@ -98,6 +105,14 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                     entityPM.CreatedByUserId = myLoggedUserId;
                 }
             }
+
+            TMProjectRepository tMProjectRepository = new TMProjectRepository(entityPM.Tenant);
+            TMProject poco = tMProjectRepository.GetSingle(entityPM.Id, entityPM.Tenant);
+            if (poco != null)
+            {
+                TMProjectTracing.TraceUpdate(entityPM, poco);
+            }
+
         }
     }
 }

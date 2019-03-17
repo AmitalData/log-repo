@@ -426,5 +426,6 @@ export class ShipmentList {
 		IsDepositionRequired: boolean;
 		ImporterDepositionRequestDetails: string;
 		ForwarderPartnerId: string;
+		ARInvoices: string;
 	
 }

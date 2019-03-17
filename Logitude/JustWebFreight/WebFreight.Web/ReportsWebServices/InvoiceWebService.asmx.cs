@@ -1228,9 +1228,17 @@ namespace WebFreight.Web.ReportsWebServices
                     currentInvoice.PrintByUserId = issuedByuser.Id;
                     currentInvoice.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-                    if (currentInvoice.StatusCode == "AD")
+                    switch (currentInvoice.StatusCode)
                     {
-                        currentInvoice.IsPrinted = true;
+                        case "AD":
+                        case "VD":
+                        case "PD":
+                        case "PP":
+                        case "AR":
+                            {
+                                currentInvoice.IsPrinted = true;
+                                break;
+                            }
                     }
 
                     invoiceRepository.Update(currentInvoice);
@@ -2730,9 +2738,17 @@ namespace WebFreight.Web.ReportsWebServices
                         entityPOCO.PrintByUserId = issuedByuser.Id;
                         entityPOCO.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-                        if (entityPOCO.StatusCode == "AD")
+                        switch (entityPOCO.StatusCode)
                         {
-                            entityPOCO.IsPrinted = true;
+                            case "AD":
+                            case "VD":
+                            case "PD":
+                            case "PP":
+                            case "AR":
+                                {
+                                    entityPOCO.IsPrinted = true;
+                                    break;
+                                }
                         }
 
                         invoiceRepository.Update(entityPOCO);

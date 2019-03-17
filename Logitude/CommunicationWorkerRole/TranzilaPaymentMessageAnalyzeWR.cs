@@ -104,9 +104,12 @@ namespace CommunicationWorkerRole
             DocumentRepository documentrepository = new DocumentRepository(commonContext);
             var MsgBody = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
             List<QueueTask> tasks = new List<QueueTask>();
+            //&AnalyzeQueueDateTime=0103191133
+            var AnalyzeQueueCreateDate = analyzeQueue.CreateDate.ToString("ddMMyyhhmm");
+            MsgBody = MsgBody + "&AnalyzeQueueDateTime=" + AnalyzeQueueCreateDate;
             tasks.Add(new QueueTask()
             {
-                Action = analyzeQueue.From + "Payment",
+                Action = analyzeQueue.From,
                 Parameters = new List<Logitude.Server.Tools.Parameter>()
                                 {
                                       new Logitude.Server.Tools.Parameter { Name = "Response", Value = MsgBody}
