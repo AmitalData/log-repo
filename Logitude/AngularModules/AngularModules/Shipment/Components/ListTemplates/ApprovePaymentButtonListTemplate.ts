@@ -15,7 +15,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
                 <tr style="height:1px;"> 
                     <td>
                         <div style="height:30px;">
-                         
+                            <button class="Button" (click)="EditButtonClicked()" style="width:57px;margin:4px;float: right">Edit</button>
                             <button *ngIf="ShowRemoveButton == true" class="Button" (click)="RemoveTasksButtonClicked()" style="width:85px;float: right;margin:4px;">Remove Tasks</button>
                              <button *ngIf="ShowButtons == true" class="Button" (click)="ApproveButtonClicked()" style="width:122px;;float: right;margin:4px;">Declaration Approval</button>
                             <button  *ngIf="ShowRenewButtons == true" class="RedButton"   (click)="RenewButtonClicked()" style="width:50px;float: right;margin:4px;">Renew</button>
@@ -60,7 +60,7 @@ export class ApprovePaymentButtonListTemplate {
         this.ShowRenewButtons = (this.rowData['IsDepositionRequired'] == true);
         if (SessionLocator.PrivateLableSettings) {
             this.ShowButtons = (this.rowData['IsImporterApprovalRequried'] == true);// && AppTool.IsNullOrEmpty(this.rowData['ApprovedByUserName'])
-            this.ShowRemoveButton = (this.rowData['IsDigitalSignRequired'] == true || this.rowData['IsRequestedDocuments'] == true);
+            this.ShowRemoveButton = (this.rowData['IsDigitalSignRequired'] == true || this.rowData['IsRequestedDocuments'] == true || this.rowData['IsDepositionRequired'] == true);
             //if (SessionLocator.PrivateLableSettings) {
             //    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
             //        if (res.Result == false) {
@@ -162,5 +162,36 @@ export class ApprovePaymentButtonListTemplate {
             }
         });
 
+    }
+
+    EditButtonClicked() {
+        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+            if (!myResult.HasError) {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var newWindow = new LogitudeWindow();
+                newWindow.Width = 600;
+                newWindow.Height = 150;
+                newWindow.Title = "Edit Shipment";
+                var windowArgs: any = {};
+                windowArgs.IsNew = false;
+                windowArgs.EntityPm = myResult.Result
+                newWindow.WindowArgs = windowArgs;
+                //newWindow.Add(control);
+                //if (SessionLocator.PrivateLableSettings) {
+                //    newWindow.Show('./Shipment/Components/Logbox/AddEditPrivateLabelShipmentComponent');
+                //}
+                //else {
+                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/EditLogBoxShipmentComponent');
+                //}
+                newWindow.WindowClosed.subscribe(($event: any) => {
+                    SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                    if ($event == "MyShipmentAdded") {
+                        SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+                    }
+                });
+            }
+        });
     }
 }

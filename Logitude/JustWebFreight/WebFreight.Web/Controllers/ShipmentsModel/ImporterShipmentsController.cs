@@ -932,6 +932,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.VersionApproved = entityAM.VersionApproved;
             }
+            if (entityAM.CustomsClearanceDate != null)
+            {
+                entityPM.IsDigitalSignRequired = false;
+                entityPM.IsRequestedDocuments = false;
+                entityPM.IsMissingDocument = false;
+            }
             entityPM.CustomsClearanceDate = entityAM.CustomsClearanceDate;
             if (Partner != null)
             {

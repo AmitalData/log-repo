@@ -2806,6 +2806,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             entityComputedFields.IsMissingDocuments = true;
                         }
                     }
+                    if (entityPM.CustomsClearanceDate != null)
+                    {
+                        entityComputedFields.IsMissingDocuments = false;
+                        entityComputedFields.IsRequestedDocuments = false;
+                        entityComputedFields.IsDigitalSignRequired = false;
+                    }
 
                     shipmentComputedFieldsRepository.Update(entityComputedFields);
                 }
