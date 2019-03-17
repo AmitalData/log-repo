@@ -82,10 +82,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ReconciliationDataMapping.PMPropertyNames.IsCancelled.ToString()
                      };
 
-                var propChanged = ChangeTrackingEntityPM.ChangedProperties.Where(f =>
+                List<NotifyPropertyChangeValues> propChanged = ChangeTrackingEntityPM.ChangedProperties.Where(f =>
                     !cancelledProp.Contains(f.PropertyName)).ToList();
+
+
                 //update 
-                if (propChanged.Any())
+                if (propChanged.Count == 1 && propChanged.First().PropertyName == "SearchFields")
+                { 
+                    // SearchFields updated after reconcile saved, why? in order to get saved reconciliation lines
+                }
+                else if (propChanged.Any())
                 {
                     throw new Exception("BLException :Approved Reconciliation Can Only Change To IsCancelled Property");
                 }
@@ -96,6 +102,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
+                LedgerTransactionRepository transactionRepository = new LedgerTransactionRepository(entityPM.Tenant);
+
+                // set searchfields
+                foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
+                {
+                    //get transaction
+                    LedgerTransaction transaction = transactionRepository.GetSingle(recoLine.TransactionId, recoLine.Tenant);
+                    if (transaction != null)
+                        PushSearchFieldText(entityPM, transaction.SearchFields);
+
+                }
 
 
                 LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
@@ -334,19 +351,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
 
 
-            // set searchfields
-            foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
-            {
-                //get transaction
-                LedgerTransaction transaction = repoLedger.GetSingle(recoLine.TransactionId, recoLine.Tenant);
-                if(transaction != null)
-                    PushSearchFieldText(entityPM, transaction.SearchFields);
-
-            }
-            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            ReconciliationUpdateService recoUpdateService = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            entityPM.ChangeSetOp = ChangeSetOperation.Update;
-            recoUpdateService.Update(entityPM, false);
+            //IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            //ReconciliationUpdateService recoUpdateService = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            //entityPM.ChangeSetOp = ChangeSetOperation.Update;
+            //recoUpdateService.Update(entityPM, false);
 
 
         }
