@@ -2324,6 +2324,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         
         public bool IsShipmentComputedFieldChange { get; set; }
 
-
+        public string PackagesTypesNames { get; set; }
+        public string PackagesTypesPrintAs { get; set; }
+        public string ContainersNumbers  { get; set; }
     }
 }

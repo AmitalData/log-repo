@@ -2399,12 +2399,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CalculateStatus = false;
 
             this.ComputeShipmentStatus();
-            if (!entityPM.IsHybrid)
-            {
-                this.UpdateCustomerWorkingDates();
-            }
-
-
+            this.UpdateCustomerWorkingDates();            
 
             if (isNewEntity)
             {
@@ -6390,32 +6385,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             else
             {
-                if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
+                if (!entityPM.IsHybrid)
                 {
-                    CustomerRepository customerRepository = new CustomerRepository(tenant);
-
-                    if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
+                    if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
                     {
-                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
-                        if (customer != null)
-                        {
-                            customer.LastShipmentDate = this.entityPM.CreateDateTime;
-                            customerRepository.Update(customer);
-                            customerRepository.SubmitChanges();
-                        }
-                    }
+                        CustomerRepository customerRepository = new CustomerRepository(tenant);
 
-                    if (!string.IsNullOrEmpty(this.entityPoco.CustomerId))
-                    {
-                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
-                        if (customer != null)
+                        if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
                         {
-                            Shipment shipment = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
-                            if (shipment != null)
+                            Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
+                            if (customer != null)
                             {
-                                customer.LastShipmentDate = shipment.CreateDateTime;
+                                customer.LastShipmentDate = this.entityPM.CreateDateTime;
                                 customerRepository.Update(customer);
                                 customerRepository.SubmitChanges();
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(this.entityPoco.CustomerId))
+                        {
+                            Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
+                            if (customer != null)
+                            {
+                                Shipment shipment = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
+                                if (shipment != null)
+                                {
+                                    customer.LastShipmentDate = shipment.CreateDateTime;
+                                    customerRepository.Update(customer);
+                                    customerRepository.SubmitChanges();
+                                }
                             }
                         }
                     }
