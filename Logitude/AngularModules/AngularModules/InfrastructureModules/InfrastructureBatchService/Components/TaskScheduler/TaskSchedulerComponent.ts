@@ -94,6 +94,8 @@ export class TaskSchedulerComponent  {
         newItem.TriggerType = "O";
 
         var logWindow = new LogitudeWindow();
+        logWindow.Height = 570;
+        logWindow.Width = 800;
         logWindow.Title = "Task Scheduler Details";
         logWindow.DataContext = new TaskSchedulerItemClass(newItem, this, true);
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
@@ -108,6 +110,8 @@ export class TaskSchedulerComponent  {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Task Scheduler Details";
         logWindow.DataContext = item;
+        logWindow.Height = 570;
+        logWindow.Width = 800;
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
