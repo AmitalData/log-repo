@@ -60,6 +60,9 @@ export class ResetPasswordComponent {
     HasCaptchaErrors: boolean = false;
     SubmitBtnClicked() {
         this.ShowbusyIndicator = true;
+
+
+
         if (!this.Email) {
             this.ShowbusyIndicator = false;
             this.HasErrors = true;
@@ -76,8 +79,11 @@ export class ResetPasswordComponent {
             this.ErrorMessage = "Please re-enter the characters you see in the image above";
         }
         else {
-            this.HasErrors = false;
 
+            this.Succeeded = false;
+            this.HasErrors = false;
+            this.ErrorMessage = "";
+            this.HasCaptchaErrors = false;
 
             var params = {
                 Email: this.Email,
@@ -86,8 +92,11 @@ export class ResetPasswordComponent {
                 CaptchaKey: this.CaptchaKey,
             }
 
+
+
             this._LoginService.PostRequestResetUserPassword(params).subscribe(userdata => {
                 this.ShowbusyIndicator = false;
+
 
                 if (!userdata.HasError) {
 
@@ -98,8 +107,6 @@ export class ResetPasswordComponent {
                 else {
 
                     this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
-                    //disableForm(false);
-           
 
                     if (userdata.InValidCaptcha) {
                         this.CaptchaCode = "";
@@ -109,24 +116,25 @@ export class ResetPasswordComponent {
 
                     }
 
-
-                    var errorMessage = "Submit failed! invalid email." + "<br/>";
+                    var errorMessage = "";
 
                     if (userdata.ExceptionMessage) alert(userdata.ExceptionMessage);
                     else {
                         if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the image above";
                         if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
                         if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "please contact your administrator.";
-                        if (userdata.InValidMailOrPassword) {
-                            errorMessage = "Submit failed! invalid email.";
-                            this.HasCaptchaErrors = false;
+                        if (errorMessage) {
+                            this.HasErrors = true;
+                            this.ErrorMessage = errorMessage;
                         }
-
-                        this.HasErrors = true;
-                        this.ErrorMessage = errorMessage;
+                        else {
+                            this.Succeeded = true;
+                            this.HasErrors = false;
+                            this.HideAreaCaptcha();
+                        }
                     }
 
-                    this.ErrorMessage = errorMessage;
+      
 
                 }
             });

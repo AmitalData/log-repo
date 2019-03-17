@@ -591,20 +591,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                     success: function (userdata) {
 
                         $("#busyIndicator").hide();
+                        $("#message").hide();
+                        $("#errorsList").hide();
 
+
+                        disableForm(false);
+                        
                         if (!userdata.HasError) {
                             $("#message").show();
                             HideCaptchaArea();
-
                         }
                         else {
 
                             captchaKey = userdata.CaptchaKey;
 
-                            disableForm(false);
+                           
 
-                            var errorMessage = "Submit failed! invalid email." + "<br/>";
-                             
                             if (userdata.InValidCaptcha) {
                                 if (areacaptcha.style.display == "block") {
                                     document.getElementById("captchaTextBox").value = "";
@@ -615,20 +617,25 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 
                                 areacaptcha.style.display = "block";
                                 $("#CaptchaImage").attr("src", userdata.CaptchaImage);
-                                 document.getElementById("captchaTextBox").value = "";
+                                document.getElementById("captchaTextBox").value = "";
+
                             }
 
-                            var errorMessage = "Submit failed! invalid email." + "<br/>";
+                            var errorMessage = "";
 
                             if (userdata.ExceptionMessage) alert(userdata.ExceptionMessage);
                             else {
-                                if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the <br /> image above";
-                                if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
-                                if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                                if (userdata.InValidMailOrPassword) errorMessage = "Submit failed! invalid email." + "<br/>";
 
-                                document.getElementById("errorsList").innerHTML = errorMessage;
-                                $("#errorsList").show();
+                                if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the <br /> image above";
+                                else if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+                                else if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                                if (errorMessage) {
+                                    document.getElementById("errorsList").innerHTML = errorMessage;
+                                    $("#errorsList").show();
+                                } else {
+                                    $("#message").show();
+                                    HideCaptchaArea();
+                                }
                             }
                         }
 
