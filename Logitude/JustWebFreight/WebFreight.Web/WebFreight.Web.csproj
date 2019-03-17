@@ -1520,6 +1520,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationCourierStatusWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\NotificationWebServiceController.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\OpenAccessController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PaymentOrderWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PhysicalCheckWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\CustomsRequierdFieldsController.cs" />

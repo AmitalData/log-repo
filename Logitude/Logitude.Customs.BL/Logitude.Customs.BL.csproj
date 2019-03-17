@@ -1649,6 +1649,8 @@
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CustomAnalyzerQueueBase.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\MamanQHAWBService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\MamanQSPCLService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSHAWBQService.cs" />

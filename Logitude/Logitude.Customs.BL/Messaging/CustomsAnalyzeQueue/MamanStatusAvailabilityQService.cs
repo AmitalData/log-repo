@@ -120,7 +120,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 PrimaryNum = _DeclarationPM.CustomFileNo,
                                 Mode = UnifreightEventMode.@new,
                                 StatusCode = "SMG",
-                                 EventDateTime= mySTBMessage.EventTime
+                                EventDateTime = mySTBMessage.EventTime
                             });
                         }
                         break;
@@ -146,6 +146,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                         break;
                 }
 
+                UpadteTerminalSuspentionNumber(mySTBMessage, theDecId);
 
             }
 
@@ -160,6 +161,18 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             }
             return res;
         }
+
+        private void UpadteTerminalSuspentionNumber(STBMessage mySTBMessage, string theDecId)
+        {
+            var customContext = CustomContext.GetContext(_CommunicationLog.Tenant);
+            var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_CommunicationLog.Tenant);
+            var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, false, false);
+            var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
+            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+            currentDeclarationCourierStatusPM.TerminalSuspentionNumber = mySTBMessage.FormNo;
+            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+        }
+
         void Update0001(string theDecId, int EventQty)
         {
             string AcceptanceStatusCode = "";
@@ -204,49 +217,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         private static STBMessage GetSTBMessage(string communicationsData)
         {
 #if false
-<?xml version="1.0"?>
-<MamanBaldarSTB xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <STBMessage>
-    <BaldarAwb>172663172644102886</BaldarAwb>
-    <BaldarHp>511247496</BaldarHp>
-    <BaldarOpenDate>111118</BaldarOpenDate>
-    <BaldarCode>1651</BaldarCode>
-    <EventCode>1234</EventCode>
-    <EventTime>2019-01-01T10:14:35.433269+02:00</EventTime>
-    <AirlineCode>LY</AirlineCode>
-    <Fltno>4444</Fltno>
-    <FltDate>2018-11-11T00:00:00</FltDate>
-    <LandTime>2018-11-11T12:12:12</LandTime>
-    <EventQty>1298</EventQty>
-    <Weight>1284.6</Weight>
-    <DeclarationId>18041081319590</DeclarationId>
-    <HataraTime>2019-01-01T10:14:35.433269+02:00</HataraTime>
-    <DestLineCode>1234567890</DestLineCode>
-    <DestLineName> ???</DestLineName>
-    <DistributorHp>511247496</DistributorHp>
-    <DistributorName> עמיטל</DistributorName>
-  </STBMessage>
-  <STBMessage>
-    <BaldarAwb>177553172644104455</BaldarAwb>
-    <BaldarHp>511247496</BaldarHp>
-    <BaldarOpenDate>241118</BaldarOpenDate>
-    <BaldarCode>4020</BaldarCode>
-    <EventCode>1234</EventCode>
-    <EventTime>2019-01-01T10:14:35.433269+02:00</EventTime>
-    <AirlineCode>UA</AirlineCode>
-    <Fltno>1122</Fltno>
-    <FltDate>2018-11-24T00:00:00</FltDate>
-    <LandTime>2018-11-24T12:12:12</LandTime>
-    <EventQty>345</EventQty>
-    <Weight>56.9</Weight>
-    <DeclarationId>18041081319590</DeclarationId>
-    <HataraTime>2019-01-01T10:14:35.433269+02:00</HataraTime>
-    <DestLineCode>1234567890</DestLineCode>
-    <DestLineName> ???</DestLineName>
-    <DistributorHp>511247496</DistributorHp>
-    <DistributorName> עמיטל</DistributorName>
-  </STBMessage>
-</MamanBaldarSTB>
+<STBMessage><BaldarAwb>DSV111111148N</BaldarAwb><BaldarHp>514193408</BaldarHp><OpenBaldarAwbDate>2019-03-03T00:00:00</OpenBaldarAwbDate><BaldarCode>0126</BaldarCode><EventCode>0001</EventCode><EventTime>2019-03-04T15:06:15.18</EventTime><AirlineCode>LY</AirlineCode><FltNo>145</FltNo><FltDate>2019-03-01T00:00:00</FltDate><LandTime xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /><EventQty>1</EventQty><Weight>1.80</Weight><DeclarationId>19041091143378</DeclarationId><HataraTime xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /><DestLineCode>9999999999</DestLineCode><DestLineDesc>כללי</DestLineDesc><DistributorHP>123456789</DistributorHP><DistributorName>כללי</DistributorName><FormNo xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></STBMessage>
 #endif
 
             var mySTBMessage = new STBMessage();
@@ -260,6 +231,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
             mySTBMessage.EventTime = (DateTime)GetXElement(myXElementSTBMessage, "EventTime");//<EventTime>2019-01-01T10:14:35.433269+02:00</EventTime>
             mySTBMessage.EventQty = (int)GetXElement(myXElementSTBMessage, "EventQty");//<EventQty>1298</EventQty>
+            mySTBMessage.FormNo = (string)GetXElement(myXElementSTBMessage, "FormNo");//<EventQty>1298</EventQty>
 
 
             return mySTBMessage;
@@ -287,6 +259,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         public string EventCode { get; internal set; }
         public DateTime EventTime { get; internal set; }
         public int EventQty { get; internal set; }
+        public string FormNo { get; set; }
+
     }
     public class MamanStatusAvailabilityTesterService
     {

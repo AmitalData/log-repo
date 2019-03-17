@@ -373,6 +373,26 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         }
 
     }
+    EditCasualSupplier() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        var windowTitle = "נתונים נוספים לספק";
+
+        var logWindow = new LogitudeWindow();
+        
+        ///this.Type = "Importer";
+        logWindow.Width = 550;
+        logWindow.Height = 250;
+
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/CasualSupplierDetailsComponent');
+    }
     EditImporter() {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();

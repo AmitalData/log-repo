@@ -12383,7 +12383,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #endregion
 
             #region Procedural Faults Queries
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ProceduralFault.Q.ProceduralFaults", DefaultText = "Procedural Faults", LocalDefaultText = "מספר ליקוי", ObjectTableId = proceduralFaultTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ProceduralFault.Q.ProceduralFaults", DefaultText = "Procedural Faults", LocalDefaultText = "ליקויים", ObjectTableId = proceduralFaultTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
 
 
 
@@ -13511,8 +13511,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ReleaseGoods.O.StorageSite", DefaultText = "Storage Site", LocalDefaultText = "אתר אחסון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             #region MainMenu
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Notifications", DefaultText = "Notifications", LocalDefaultText = "הודעה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ProceduralFaults", DefaultText = "Procedural Faults", LocalDefaultText = "מספר ליקוי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Notifications", DefaultText = "Notifications", LocalDefaultText = "מרכז התראות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ProceduralFaults", DefaultText = "Procedural Faults", LocalDefaultText = "ליקויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Vehicles", DefaultText = "Vehicles", LocalDefaultText = "כלי רכב", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsCollateral", DefaultText = "Customs Collateral", LocalDefaultText = "בטוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CourierMaster", DefaultText = "Courier Master", LocalDefaultText = "בלדר ראשי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
@@ -17132,6 +17132,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddMamanSpecialAction(new MamanSpecialAction() { Code = "2", EnglishName = "Receiving a delay certificate", LocalName = "קליטה תעודת עיכוב" }, mamanSpecialActionRepository);
             AddClosedTables.AddMamanSpecialAction(new MamanSpecialAction() { Code = "4", EnglishName = "Sticker Printing", LocalName = "הדפסת מדבקה" }, mamanSpecialActionRepository);
             AddClosedTables.AddMamanSpecialAction(new MamanSpecialAction() { Code = "5", EnglishName = "Printing Documents", LocalName = "הדפסת מסמכים" }, mamanSpecialActionRepository);
+            AddClosedTables.AddMamanSpecialAction(new MamanSpecialAction() { Code = "6", EnglishName = "Sban", LocalName = "סב''ן" }, mamanSpecialActionRepository);
             mamanSpecialActionRepository.SubmitChanges();
         }
 

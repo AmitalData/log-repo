@@ -1686,6 +1686,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         case "5":
                             mamanSpecialCode = MamanSpecialCode.PrintDocuments;
                             break;
+                        case "6":
+                            mamanSpecialCode = MamanSpecialCode.Sban;
+                            break;
                     }
 
                     actionResultString = courierGWMessageECSpclRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);

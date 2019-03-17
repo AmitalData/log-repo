@@ -33,7 +33,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey1 = _CourierMasterPM.DepartureDate.Value.Year.ToString();
             }
-            myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey2 = _CourierMasterPM.MAWB;
+            myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey2 = _CourierMasterPM.AirlinePrefix + "-" + _CourierMasterPM.MAWB;
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey3 = _CourierMasterPM.HAWB;
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
 
@@ -58,7 +58,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             int transportationTypeCode;
             int.TryParse(myGatepassRequestPM.TransportationTypeCode, out transportationTypeCode);
             myGatepassDestinationSite.transportationTypeCode = transportationTypeCode;
-            myGatepassDestinationSite.isFinalDestination = false;
+            myGatepassDestinationSite.isFinalDestination = true;
 
             myGatepassDestinationSiteList.Add(myGatepassDestinationSite);
             myGatepassRequestMessage.GatepassDestinationSite = myGatepassDestinationSiteList.ToArray(); ;
@@ -68,7 +68,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGP_NG_1030_MSG1_GatepassRequestMessage.GatepassRequestMessage = myGatepassRequestMessageList.ToArray();
 
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.RequestDescription = "בקשת העברה " + _CourierMasterPM.AirlinePrefix + "-" + _CourierMasterPM.MAWB;
+            this.MyRequestSheetParam.RequestDescription = "בקשת העברה ש.מ.ר " + _CourierMasterPM.AirlinePrefix + "-" + _CourierMasterPM.MAWB;
 
             return myGP_NG_1030_MSG1_GatepassRequestMessage;
         }

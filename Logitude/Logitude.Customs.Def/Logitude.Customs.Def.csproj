@@ -406,6 +406,7 @@
     <Compile Include="EntityPMs\VehiclePM.cs" />
     <Compile Include="EntityPMs\VehicleValidator.cs" />
     <Compile Include="EntityQueryServicesExt\ICustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServicesExt\ICustomsRequiredFieldsValidatorExt.cs" />
     <Compile Include="Messaging\Customs\RequestSheetContext.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DeclarationErrorView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -239,7 +239,7 @@ export class DeclarationFilterComponent
     }
 
     //#region Response Properties
-    get ExternalID() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.externalID: null; }
+    get ExternalID() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.externalID : null; }
     set ExternalID(value: string) {
         if (this.ResponseData.externalID != value) {
             this.ResponseData.externalID = value;
@@ -260,7 +260,7 @@ export class DeclarationFilterComponent
         }
     }
 
-    get StatusName() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ?  this.ResponseData.GeneralDetailsData.statusName : null; }
+    get StatusName() { return this.ResponseData != null && this.ResponseData.GeneralDetailsData != null ? this.ResponseData.GeneralDetailsData.statusName : null; }
     set StatusName(value: string) {
         if (this.ResponseData.statusName != value) {
             this.ResponseData.statusName = value;
