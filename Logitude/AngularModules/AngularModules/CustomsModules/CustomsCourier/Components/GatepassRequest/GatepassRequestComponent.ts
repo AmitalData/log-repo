@@ -248,6 +248,7 @@ export class GatepassRequestComponent extends BaseComponent {
         this.EntityPM.OriginSiteCode = this.OriginSiteCode;
         this.EntityPM.DesignateSiteCode = this.DesignateSiteCode;
         this.EntityPM.TransportationTypeCode = this.TransportationTypeCode;
+        this.EntityPM.GatepassRequestStatus = null;
         if (this.IsNew) {
             this._GatepassRequestPMService.insert(this.EntityPM).subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
