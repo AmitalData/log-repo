@@ -2000,7 +2000,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);           
             entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(entityId, tenant);
 
-            if (entityPM.ShipmentTypeId == "FCLD")
+            if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
             {
                 if (entityPM.PackageType1Id != null)
                 {

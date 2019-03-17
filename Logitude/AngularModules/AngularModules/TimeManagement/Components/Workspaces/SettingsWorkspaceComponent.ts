@@ -1,4 +1,4 @@
-﻿import {Component, QueryList} from '@angular/core';
+import {Component, QueryList} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
@@ -93,7 +93,7 @@ export class SettingsWorkspaceComponent {
 
     ProjectsClicked() {
         var displayTitle = "All Projects";
-        var code = "All Projects";
+        var code = "Active Projects";
         var listArgs = new ListComponentArgs();
         listArgs.QueryCode = code;
         listArgs.ObjectTableName = "TMProject";

@@ -247,6 +247,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     string longMaster = this.GetLongMaster(myShipment);
                     string myDirectionPartner = myShipment.DirectionId == "I" ? myShipment.ConsigneeName : myShipment.ShipperName;
 
+                    string customerExternalID = null;
+                    if (!string.IsNullOrEmpty(myShipment.CustomerId))
+                    {
+                        Card customer = myCommonContext.Cards.Where(d => d.Id == myShipment.CustomerId).FirstOrDefault();
+                        if (customer != null)
+                        {
+                            customerExternalID = customer.ReceivablesAccountingCard;
+                        }
+                    }
+
                     if (this.IncludeEstimations)
                     {
                         if (this.HasAmount(myShipment.OpenPayablesInLocalCurrency))
@@ -259,6 +269,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.DirectionPartner = myDirectionPartner;
                             myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                             myRecord.Salesman = myShipment.SalesmanUserName;
+                            myRecord.CustomerExternalID = customerExternalID;
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
@@ -287,7 +298,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                         myRecord.Payables = this.IsLocalCurrency ? invoice.AmountInLocalCurrency : invoice.AmountInProfitCurrency;
                         myRecord.Salesman = myShipment.SalesmanUserName;
-
+                        myRecord.CustomerExternalID = customerExternalID;
                         myRecord.InvoiceNumber = invoice.InvoiceNumber;
                         myRecord.InvoiceDate = invoice.InvoiceDate;
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
@@ -327,7 +338,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.BranchExternalId = myBranch.ExternalId;
                         }
 
-
                         myDataProvider.Shipments.Add(myRecord);
                         #endregion
                     }
@@ -343,7 +353,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                         myRecord.Receivables = this.IsLocalCurrency ? invoice.AmountInLocalCurrency : invoice.AmountInProfitCurrency;
                         myRecord.Salesman = myShipment.SalesmanUserName;
-
+                        myRecord.CustomerExternalID = customerExternalID;
                         myRecord.InvoiceNumber = invoice.InvoiceNumber;
                         myRecord.InvoiceDate = invoice.InvoiceDate;
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
@@ -569,6 +579,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     string longMaster = this.GetLongMaster(myShipment);
                     string myDirectionPartner = myShipment.DirectionId == "I" ? myShipment.ConsigneeName : myShipment.ShipperName;
 
+                    string customerExternalID = null;
+                    if (!string.IsNullOrEmpty(myShipment.CustomerId))
+                    {
+                        Card customer = myCommonContext.Cards.Where(d => d.Id == myShipment.CustomerId).FirstOrDefault();
+                        if (customer != null)
+                        {
+                            customerExternalID = customer.ReceivablesAccountingCard;
+                        }
+                    }
+
                     if (this.IncludeEstimations)
                     {
                         if (this.HasAmount(myShipment.OpenPayablesInLocalCurrency))
@@ -588,6 +608,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                     myRecord.Salesman = myShipment.SalesmanUserName;
                                     myRecord.OpenPayables = myRecord.Payables;
+                                    myRecord.CustomerExternalID = customerExternalID;
 
                                     if (myBranch != null)
                                     {
@@ -643,6 +664,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                     myRecord.Salesman = myShipment.SalesmanUserName;
                                     myRecord.OpenReceivables = myRecord.Receivables;
+                                    myRecord.CustomerExternalID = customerExternalID;
 
                                     if (myBranch != null)
                                     {
@@ -704,6 +726,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
+                                myRecord.CustomerExternalID = customerExternalID;
 
                                 if (myCurrency != null)
                                 {
@@ -792,6 +815,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
+                                myRecord.CustomerExternalID = customerExternalID;
 
                                 if (myCurrency != null)
                                 {
