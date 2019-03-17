@@ -92,7 +92,7 @@ export class TaskSchedulerComponent  {
         newItem.CreatedBy = SessionLocator.LoggedUserId;
         newItem.UpdatedBy = SessionLocator.LoggedUserId;
         newItem.TriggerType = "O";
-
+        newItem.Type = "Task";
         var logWindow = new LogitudeWindow();
         logWindow.Height = 570;
         logWindow.Width = 800;
