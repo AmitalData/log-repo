@@ -106,7 +106,7 @@ namespace CommunicationWorkerRole
             List<QueueTask> tasks = new List<QueueTask>();
             tasks.Add(new QueueTask()
             {
-                Action = analyzeQueue.From + "Payment",
+                Action = analyzeQueue.From,
                 Parameters = new List<Logitude.Server.Tools.Parameter>()
                                 {
                                       new Logitude.Server.Tools.Parameter { Name = "Response", Value = MsgBody}
