@@ -38,7 +38,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
 
         public int RepeatInMinutes { get; set; }
 
-        public bool IsLastRunError { get; set; } 
-
+        public bool IsLastRunError { get; set; }
+        public string Type { get; set; }
     }
 }

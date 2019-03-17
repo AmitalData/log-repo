@@ -150,6 +150,16 @@ export class TasksSchedulerPM {
     public set IsLastRunError(newValue: boolean) { if (this.isLastRunError != newValue) { this.isLastRunError = newValue; this.MarkAsDirty("IsLastRunError"); } }
        
 	 
+    private type: string;
+    public get Type() { return this.type; }
+    public set Type(newValue: string) { if (this.type != newValue) { this.type = newValue; this.MarkAsDirty("Type"); } }
+       
+	 
+    private schedulerDetailsXML: string;
+    public get SchedulerDetailsXML() { return this.schedulerDetailsXML; }
+    public set SchedulerDetailsXML(newValue: string) { if (this.schedulerDetailsXML != newValue) { this.schedulerDetailsXML = newValue; this.MarkAsDirty("SchedulerDetailsXML"); } }
+       
+	 
 
     public OldEntityPM: TasksSchedulerPM;
 		

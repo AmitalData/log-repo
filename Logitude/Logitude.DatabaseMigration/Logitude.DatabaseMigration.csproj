@@ -754,6 +754,10 @@
     <Compile Include="Migrations\201903131734080_UpdateFieldLength_SearchField_Reconciliaition.Designer.cs">
       <DependentUpon>201903131734080_UpdateFieldLength_SearchField_Reconciliaition.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903171343457_AbedAddNewFieldToTableTasksScheduler.cs" />
+    <Compile Include="Migrations\201903171343457_AbedAddNewFieldToTableTasksScheduler.Designer.cs">
+      <DependentUpon>201903171343457_AbedAddNewFieldToTableTasksScheduler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201903171351017_UpdateField.cs" />
     <Compile Include="Migrations\201903171351017_UpdateField.Designer.cs">
       <DependentUpon>201903171351017_UpdateField.cs</DependentUpon>
@@ -1267,6 +1271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903131734080_UpdateFieldLength_SearchField_Reconciliaition.resx">
       <DependentUpon>201903131734080_UpdateFieldLength_SearchField_Reconciliaition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903171343457_AbedAddNewFieldToTableTasksScheduler.resx">
+      <DependentUpon>201903171343457_AbedAddNewFieldToTableTasksScheduler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903171351017_UpdateField.resx">
       <DependentUpon>201903171351017_UpdateField.cs</DependentUpon>

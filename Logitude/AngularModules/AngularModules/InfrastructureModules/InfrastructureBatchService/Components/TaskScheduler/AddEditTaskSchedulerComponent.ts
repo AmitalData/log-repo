@@ -20,6 +20,7 @@ export class AddEditTaskSchedulerComponent {
     public ObjectTableName: string = "TasksScheduler";
     public OkBtnId: string;
     public ValidationErrorsList: string[];
+    GeneralAreaHeight: string = "200px";
 
     constructor() {
 
@@ -28,6 +29,8 @@ export class AddEditTaskSchedulerComponent {
     SetDataContext(dataContext: TaskSchedulerItemClass) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
+        if (this.EntityPM.Type == "FTP") this.GeneralAreaHeight = "275px";
+
         this.Clone();
 
 
@@ -223,6 +226,7 @@ export class AddEditTaskSchedulerComponent {
     }
 
     CancelButtonClicked() {
+        this.RejectChanges();
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
@@ -243,6 +247,8 @@ export class AddEditTaskSchedulerComponent {
         this.myCloner.AddField('Wednesday');
         this.myCloner.AddField('Thursday');
         this.myCloner.AddField('Friday');
+        this.myCloner.AddField('TriggerType');
+      
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {

@@ -754,6 +754,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string Category4Id { get; set; }
         public string Category5Id { get; set; }
         public string AccountTypeCode { get; set; }
+        public string DateTypeCode { get; set; }
 
         public string SearchFields { get; set; }
 
