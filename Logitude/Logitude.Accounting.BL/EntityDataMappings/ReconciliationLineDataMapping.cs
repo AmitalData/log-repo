@@ -17,11 +17,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         {
             AddPOCOPropertyName(POCOPropertyNames.ReconciliationId);
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
+            AddPOCOPropertyName(POCOPropertyNames.SearchFields);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 entityPOCO.ReconciliationId = entityPM.ReconciliationId;
                 entityPOCO.Line = entityPM.Line;
                 entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.SearchFields = entityPM.SearchFields;
+
             }
         }
 
@@ -42,6 +45,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.JournalId);
             this.CustomMappedPMProperties.Add(PMPropertyNames.JournalId);
             this.CustomMappedPMProperties.Add(PMPropertyNames.JournalId);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.SearchFields);
 
             if (entityPOCO.CurrencyId != null)
             {
@@ -75,6 +79,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.JournalNumber = transaction.JournalNumber;
                     entityPM.JournalId = transaction.JournalId;
                     entityPM.OpenAmountCurrencySign = transaction.OpenAmountCurrencySign;
+                    entityPM.SearchFields = transaction.SearchFields;
                 }
             }
         }

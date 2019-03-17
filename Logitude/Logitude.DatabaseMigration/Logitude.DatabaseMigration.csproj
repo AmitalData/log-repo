@@ -746,6 +746,14 @@
     <Compile Include="Migrations\201903100723477_AddDirectionFieldsToChargesType_Maheera.Designer.cs">
       <DependentUpon>201903100723477_AddDirectionFieldsToChargesType_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903131623296_NewField_SearchFields_ReconciliationLine.cs" />
+    <Compile Include="Migrations\201903131623296_NewField_SearchFields_ReconciliationLine.Designer.cs">
+      <DependentUpon>201903131623296_NewField_SearchFields_ReconciliationLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903131734080_UpdateFieldLength_SearchField_Reconciliaition.cs" />
+    <Compile Include="Migrations\201903131734080_UpdateFieldLength_SearchField_Reconciliaition.Designer.cs">
+      <DependentUpon>201903131734080_UpdateFieldLength_SearchField_Reconciliaition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1250,7 +1258,12 @@
     <EmbeddedResource Include="Migrations\201903100723477_AddDirectionFieldsToChargesType_Maheera.resx">
       <DependentUpon>201903100723477_AddDirectionFieldsToChargesType_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\201903131623296_NewField_SearchFields_ReconciliationLine.resx">
+      <DependentUpon>201903131623296_NewField_SearchFields_ReconciliationLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903131734080_UpdateFieldLength_SearchField_Reconciliaition.resx">
+      <DependentUpon>201903131734080_UpdateFieldLength_SearchField_Reconciliaition.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

@@ -53,7 +53,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreatedByUserName, 
 	         Status, 
 	         UserLocalName, 
-	         StatusLocalName,
+	         StatusLocalName, 
+	         TestingMode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
