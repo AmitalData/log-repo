@@ -385,7 +385,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         
         ///this.Type = "Importer";
         logWindow.Width = 550;
-        logWindow.Height = 350;
+        logWindow.Height = 250;
 
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = true;

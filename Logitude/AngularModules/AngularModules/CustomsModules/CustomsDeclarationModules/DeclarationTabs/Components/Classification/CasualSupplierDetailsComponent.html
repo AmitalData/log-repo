@@ -1,4 +1,7 @@
 <style>
+    .MyLable {
+        width: 150px;
+    }
     .EditMe {
         width: 250px;
     }
@@ -8,7 +11,7 @@
 
 
     <tr style="height:32px" class="FormFieldRow" >
-        <td>
+        <td class="MyLable">
             <LogLabel [ObjectFieldName]="'CasualSupplierName'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext" [Text]="'שם ספק'"></LogLabel>
         </td>
@@ -16,16 +19,18 @@
             <LogTextBox [ObjectFieldName]="'CasualSupplierName'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierName"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
+        <td></td>
     </tr>
-    <tr style="height:32px" class="FormFieldRow" >
-        <td>
+    <tr style="height:32px" class="FormFieldRow">
+        <td class="MyLable">
             <LogLabel [ObjectFieldName]="'CasualSupplierAddress'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext" [Text]="'כתובת ספק'"></LogLabel>
         </td>
-        <td class="EditMe" >
+        <td class="EditMe">
             <LogTextBox [ObjectFieldName]="'CasualSupplierAddress'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierAddress"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
+        <td></td>
     </tr>
 
     <tr><td><div></div></td></tr>
