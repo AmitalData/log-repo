@@ -1,10 +1,65 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<style>
+    .EditMe {
+        width: 250px;
+    }
+</style>
+<table style="margin:5px">
 
-</body>
-</html>
+
+
+    <tr style="height:32px" class="FormFieldRow" >
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualSupplierName'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext" [Text]="'שם ספק'"></LogLabel>
+        </td>
+        <td class="EditMe">
+            <LogTextBox [ObjectFieldName]="'CasualSupplierName'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierName"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+    </tr>
+    <tr style="height:32px" class="FormFieldRow" >
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualSupplierAddress'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext" [Text]="'כתובת ספק'"></LogLabel>
+        </td>
+        <td class="EditMe" >
+            <LogTextBox [ObjectFieldName]="'CasualSupplierAddress'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierAddress"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+    </tr>
+
+    <tr><td><div></div></td></tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <!--<button class="Button" (click)="DeleteImporterDetailsButtonClicked()" *ngIf="ImporterVisibility  && isCourierDeclaration">נקה נתונים</button>-->
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+</table>

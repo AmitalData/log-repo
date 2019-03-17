@@ -23,6 +23,8 @@ import { GuaranteeDataComponent } from './Components/Tapag/GuaranteeDataComponen
 
 import { DeclarationClassificationComponent } from './Components/Classification/DeclarationClassificationComponent';
 import { SInvoiceClassificationTabComponent } from './Components/Classification/SInvoiceClassificationTabComponent';
+import { CasualSupplierDetailsComponent } from './Components/Classification/CasualSupplierDetailsComponent';
+
 
 export const Components =
     [
@@ -50,7 +52,7 @@ export const Components =
 
     DeclarationClassificationComponent,
     SInvoiceClassificationTabComponent,
-
+        CasualSupplierDetailsComponent,
 
 
     ];
@@ -85,7 +87,8 @@ export class ModuleDeclarations {
           case "GuaranteeDataComponent": { myResult = GuaranteeDataComponent; break; }
 
           case "DeclarationClassificationComponent": { myResult = DeclarationClassificationComponent; break; }
-          case "SInvoiceClassificationTabComponent": { myResult = SInvoiceClassificationTabComponent; break; }
+            case "SInvoiceClassificationTabComponent": { myResult = SInvoiceClassificationTabComponent; break; }
+            case "CasualSupplierDetailsComponent": { myResult = CasualSupplierDetailsComponent; break; }
         }
 
         return myResult;
