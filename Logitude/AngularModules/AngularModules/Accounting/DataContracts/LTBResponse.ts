@@ -16,4 +16,5 @@ export class BalanceCurrency {
     CurrencyCode: string;
     CurrencySign: string;
     BalanceForeign: string;
+    BalanceLocal: string;
 }

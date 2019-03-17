@@ -365,6 +365,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool testingMode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool TestingMode  
+	   {
+	    
+	     get
+		{
+		   return testingMode;
+		 }
+		 set
+		 {
+		   if(testingMode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TestingMode",OldValue=testingMode,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   testingMode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

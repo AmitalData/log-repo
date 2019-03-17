@@ -604,7 +604,10 @@ namespace Logitude.Accounting.BL.CoreBL
             };
 
             document.FileData = file.Select(d => Convert.ToByte(d)).ToArray();
-            docService.Create(document, file.Select(d => Convert.ToByte(d)).ToArray(), loggedUser.Id);
+            var files = file.Select(d => Convert.ToByte(d)).ToArray();
+
+
+            docService.Create(document, files, loggedUser.Id);
 
 
             //get document out
@@ -735,5 +738,6 @@ namespace Logitude.Accounting.BL.CoreBL
         //public TaxReportPM ReportPM { get; set; }
         public string ReportId { get; set; }
         public int Tenant { get; set; }
+        public bool TestingMode { get; set; }
     }
 }

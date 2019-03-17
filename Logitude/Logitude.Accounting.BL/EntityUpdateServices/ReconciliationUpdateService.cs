@@ -153,8 +153,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
-            
 
+
+        }
+
+        void PushSearchFieldText(ReconciliationPM entityPM, string text)
+        {
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                string trimmedText = text.ToLower().Trim();
+
+                if (entityPM.SearchFields == null)
+                {
+                    entityPM.SearchFields = "";
+                }
+                else
+                {
+                    bool isTextFoundInField = entityPM.SearchFields.Contains(trimmedText);
+                    if (isTextFoundInField == false)
+                    {
+                        entityPM.SearchFields += trimmedText + ",";
+                    }
+                }  
+            }
         }
 
         public ReconciliationPM CancellReconciliation(string reconciliationId, int tenant)
@@ -311,6 +332,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             var repoLedger = new LedgerTransactionRepository(MainContext as IAccountingContext);
             repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
+
+
+            // set searchfields
+            foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
+            {
+                //get transaction
+                LedgerTransaction transaction = repoLedger.GetSingle(recoLine.TransactionId, recoLine.Tenant);
+                if(transaction != null)
+                    PushSearchFieldText(entityPM, transaction.SearchFields);
+
+            }
+
         }
 
         //protected override void Trace(ReconciliationPM entityPM, Reconciliation entityPOCO, string changesXml)
