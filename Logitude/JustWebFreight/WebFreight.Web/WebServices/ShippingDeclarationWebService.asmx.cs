@@ -742,6 +742,17 @@ namespace WebFreight.Web.WebServices
                 }
                 #endregion
 
+                #region IssuingCarrier
+                if (!string.IsNullOrEmpty(shipment.IssuingCarrierAgentId))
+                {
+                    Card myIssuingCarrier = (from a in commonContext.Cards where a.Id == shipment.IssuingCarrierAgentId select a).FirstOrDefault();
+                    if(myIssuingCarrier != null)
+                    {
+                        myDataProvider.IssuingCarrierAgentName = myIssuingCarrier.EnglishName;
+                    }
+                }
+                #endregion
+
                 #region Custom Agent Import|Broker
                 if (!string.IsNullOrEmpty(shipment.CustomAgentImportId))
                 {
