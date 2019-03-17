@@ -738,5 +738,6 @@ namespace Logitude.Accounting.BL.CoreBL
         //public TaxReportPM ReportPM { get; set; }
         public string ReportId { get; set; }
         public int Tenant { get; set; }
+        public bool TestingMode { get; set; }
     }
 }

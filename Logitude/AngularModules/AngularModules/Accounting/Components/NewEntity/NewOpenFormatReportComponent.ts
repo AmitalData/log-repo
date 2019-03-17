@@ -69,7 +69,13 @@ export class NewOpenFormatReportComponent extends BaseComponent {
             }
         }
     }
-
+    get TestingMode() { return this.entityPM.TestingMode; }
+    set TestingMode(value: boolean) {
+        if (this.entityPM.TestingMode != value) {
+            this.entityPM.TestingMode = value;
+          
+        }
+    }
 
     ValidationErrorsList: string[] = [];
     OkButtonClicked() {

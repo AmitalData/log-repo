@@ -1828,6 +1828,7 @@ namespace WebFreight.Web.Helpers
                             InActive = report.InActive,
                             ReportGroupId = report.ReportGroupId,
                             FeatureId = report.FeatureId,
+                            LocalName = report.LocalName
                         };
                         reportRepository.Add(newReport);
                         myReports.Add(newReport);
