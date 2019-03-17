@@ -67,6 +67,13 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 //ProccessReceivedMessage();
                 fileName = fileName ?? "";
                 fileName = fileName.Split('/')[fileName.Split('/').Length - 1].ToLower();
+                bool maxAsFeatue = true;
+                if (maxAsFeatue)
+                {
+                    int maxFileName = 120;
+                    fileName = fileName.Substring(0, Math.Min(fileName.Length, maxFileName));
+
+                }
                 var analyzeQueueReposiory = new AnalyzeQueueRepository();
 
                 analyzeQueue = new AnalyzeQueue()

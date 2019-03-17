@@ -231,12 +231,17 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
             }
         }
-
+        static List<string> _BadFileNamesCache = new List<string>();
+        static DateTime _LastClearCacheBadFileNames = DateTime.MinValue;
         private void DownloadFTPFiles(CustomsPartnerFtpPM customsPartnerFtpPM)
         {
 
             try
             {
+                if (DateTime.Now.Subtract( _LastClearCacheBadFileNames)> TimeSpan.FromHours(1))
+                {
+                    ClearBadFileNamesCache();
+                }
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
                     .Where(r => r.Code == customsPartnerFtpPM.InterfaceName).First();
@@ -271,7 +276,11 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 directoryFiles = directoryFiles.OrderBy(fileName => fileName).ToList();
                 foreach (string fileName in directoryFiles)
                 {
-
+                    if (_BadFileNamesCache.Contains(fileName))
+                    {
+                        Debug.WriteLine($"continue>BadFileNamesCache({fileName})");
+                        continue;
+                    }
                     var fileWithFolder = ftpDetail.Folder + "/" + fileName;
                     Debug.WriteLine($"ftpService.Download({fileWithFolder})");
 					string p_message = "";
@@ -282,11 +291,20 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                     Debug.WriteLine($"SaveMessageToAnalyzeQueue");
                     var analyzeQueueUtil = new AnalyzeQueueUtil();
 
-                    
-                    analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, customsPartnerFtpPM.Tenant, "",defInterfaceDetails,null);
+                    try
+                    {
+                        analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, customsPartnerFtpPM.Tenant, "", defInterfaceDetails, null);
 
-                    Debug.WriteLine($"ftpService.Delete({fileName})");
-                    ftpService.Delete(fileWithFolder);
+                        Debug.WriteLine($"ftpService.Delete({fileName})");
+                        ftpService.Delete(fileWithFolder);
+
+                    }
+                    catch (Exception ex1)
+                    {
+                        _BadFileNamesCache.Add(fileName);
+                        ExceptionHandler.HandleException(ex1, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex1.Message, null);
+
+                    }
                 }
 
             }
@@ -297,6 +315,11 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
             }
         }
 
+        private void ClearBadFileNamesCache()
+        {
+            _LastClearCacheBadFileNames = DateTime.Now;
+            _BadFileNamesCache.Clear();
+        }
     }
 
 
