@@ -38,7 +38,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public int RepeatInMinutes { get; set; }
 
-        public bool IsLastRunError { get; set; } 
+        public bool IsLastRunError { get; set; }
+        public string Type { get; set; }
+        public string SchedulerDetailsXML { get; set; }
 
     }
 }
