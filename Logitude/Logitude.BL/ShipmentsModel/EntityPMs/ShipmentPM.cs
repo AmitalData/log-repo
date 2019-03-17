@@ -2328,5 +2328,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string PackagesTypesNames { get; set; }
         public string PackagesTypesPrintAs { get; set; }
         public string ContainersNumbers  { get; set; }
+        public string ARInvoices { get; set; }
+
     }
 }

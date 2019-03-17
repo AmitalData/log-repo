@@ -1149,9 +1149,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AdditionalChargesId = shipment.AdditionalChargesId;
             shipmentPM.FreightPayerId = shipment.FreightPayerId;
             shipmentPM.FreightPayerAddressId = shipment.FreightPayerAddressId;
+            shipmentPM.ARInvoices = shipment.ARInvoices;
 
-            #region ppcc region
-            string ppcc = "";
+        #region ppcc region
+        string ppcc = "";
             if (shipment.FreightPrepaidCollectId == "P")
             {
                 ppcc = "PP";
@@ -11222,7 +11223,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ForwarderPartnerId = f.ForwarderPartnerId,
                                From = f.From,
                                To = f.To,
-                               Origin = f.Origin
+                               Origin = f.Origin,
+                               ARInvoices = f.ARInvoices,
                            };
             return myResult;
         }
@@ -11557,7 +11559,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
                     From = f.From,
                     To = f.To,
-                    Origin = f.Origin
+                    Origin = f.Origin,
+                    ARInvoices = f.ARInvoices,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11810,6 +11813,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Origin = f.Origin,
                     DeclarationDate = f.DeclarationDate,
                     DeclarationNumber = f.DeclarationNumber,
+                    ARInvoices = f.ARInvoices,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
