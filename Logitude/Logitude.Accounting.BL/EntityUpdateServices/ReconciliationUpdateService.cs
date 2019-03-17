@@ -343,6 +343,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     PushSearchFieldText(entityPM, transaction.SearchFields);
 
             }
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            ReconciliationUpdateService recoUpdateService = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            entityPM.ChangeSetOp = ChangeSetOperation.Update;
+            recoUpdateService.Update(entityPM, false);
+
 
         }
 
