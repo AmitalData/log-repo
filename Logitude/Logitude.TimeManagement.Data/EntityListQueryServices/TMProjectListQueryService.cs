@@ -45,6 +45,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
                                                    BudgetId = a.BudgetId,
                                                    CategoryId = a.CategoryId,
                                                    IsProrated = a.IsProrated, 
+                                                   CategoryName=a.TMProjectCategory!=null?a.TMProjectCategory.Name:null,
                                                });
             return query;
         }
