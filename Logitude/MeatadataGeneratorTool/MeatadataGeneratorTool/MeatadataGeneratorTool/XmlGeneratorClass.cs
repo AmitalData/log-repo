@@ -1076,7 +1076,9 @@ namespace MeatadataGeneratorTool
                     SetAttribute("Id", GetStringValue(f.Id), fieldElement, null);
                 }
                 SetAttribute("FieldName", GetStringValue(f.FieldName), fieldElement, null);
-                SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
+				SetAttribute("GeneratedComponentPath", GetStringValue(f.GeneratedComponentPath), fieldElement, null);
+
+				SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
                 SetAttribute("IsNew", f.IsNew.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsChecked", f.IsChecked.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsDeleted", f.IsDeleted.ToString().ToLower(), fieldElement, null);
