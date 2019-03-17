@@ -65,7 +65,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         BudgetId, 
 	         CategoryId, 
 	         IsProrated, 
-	         ExternalProjectNumber,
+	         ExternalProjectNumber, 
+	         CategoryName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

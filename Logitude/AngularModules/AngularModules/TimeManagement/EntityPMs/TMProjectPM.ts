@@ -124,6 +124,11 @@ export class TMProjectPM {
     public set ExternalProjectNumber(newValue: string) { if (this.externalProjectNumber != newValue) { this.externalProjectNumber = newValue; this.MarkAsDirty("ExternalProjectNumber"); } }
        
 	 
+    private categoryName: string;
+    public get CategoryName() { return this.categoryName; }
+    public set CategoryName(newValue: string) { if (this.categoryName != newValue) { this.categoryName = newValue; this.MarkAsDirty("CategoryName"); } }
+       
+	 
 
     public OldEntityPM: TMProjectPM;
 		
