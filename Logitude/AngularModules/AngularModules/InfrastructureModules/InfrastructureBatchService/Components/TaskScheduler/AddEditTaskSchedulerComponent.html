@@ -98,20 +98,39 @@
                                                                     </td>
 
                                                                     <td style="width:50%">
-                                                                        <table>
+
+                                                                        <table *ngIf="Type == 'Task'">
 
                                                                             <tr class="FormFieldRow">
                                                                                 <td style="width:80px;vertical-align:central">
-
                                                                                     <LogLabel [ObjectFieldName]="'ServiceClassName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
                                                                                 </td>
                                                                                 <td style="width:150px;">
                                                                                     <div style="height: 100%; width: 100%;">
-                                                                                        <LogTextBox [ObjectFieldName]="'ServiceClassName'" [Text]="DataContext.Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                        <LogTextBox [ObjectFieldName]="'ServiceClassName'" [Text]="DataContext.ServiceClassName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
+
+                                                                            <tr>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </table>
+
+                                                                        <table *ngIf="Type == 'FTP'">
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td style="width:80px;vertical-align:central">
+                                                                                    <LogLabel [Text]="'Host'" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:150px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Host'" [Text]="DataContext.Host" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                             
 
                                                                             <tr>
                                                                                 <td></td>

@@ -1,8 +1,10 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Logitude.BL.InfrastructureModel.DataContracts;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,6 +43,12 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsLastRunError { get; set; }
         public string Type { get; set; }
         public string SchedulerDetailsXML { get; set; }
+
+
+
+        [DataMember]
+        public SchedulerDetails SchedulerDetailsData { get; set; }
+        
 
     }
 }

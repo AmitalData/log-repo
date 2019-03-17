@@ -6,7 +6,7 @@ import {InfrastructureDomainService} from '../../../../Infrastructure/Services/I
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TaskSchedulerHistoryList} from '../../../../Infrastructure/EntityLists/TaskSchedulerHistoryList';
 import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
-
+import {SchedulerDetails, FTPSchedulerDetails} from '../../../../Infrastructure/DataContracts/SchedulerDetails';
 @Component({
     moduleId: module.id,
     templateUrl: './TaskSchedulerComponent.html',
@@ -43,6 +43,15 @@ export class TaskSchedulerComponent  {
             }
         });
     }
+
+  
+    public RefreshTasksSchedular(entityPM: TasksSchedulerPM) {
+        this.loadedDataList = this.loadedDataList.filter(d => d.Id != entityPM.Id);
+        this.loadedDataList.push(entityPM);
+        this.BuildItemsSource();
+
+    }
+
 
     BuildItemsSource() {
         this.ItemsSource = [];
@@ -133,6 +142,17 @@ export class TaskSchedulerItemClass extends BaseComponent {
     public EntityPM: TasksSchedulerPM;
     public ObjectTableName: string = "TasksScheduler";
     public IsNew: boolean = false;
+
+    Host: string;
+    Folder: string;
+    UserName: string;
+    Password: string;
+    From: string;
+    Subject: string;
+    Prefix: string;
+    Extension: string;
+
+
     constructor(item: TasksSchedulerPM, public fatherComponent: TaskSchedulerComponent, isNew: boolean = false) {
         super();
         this.EntityPM = item;
@@ -249,5 +269,17 @@ export class TaskSchedulerItemClass extends BaseComponent {
         if (this.EntityPM.Friday != newValue) {
             this.EntityPM.Friday = newValue;
         }
+    }
+
+
+    SetFTPSchedulerDetails(fTPDetails: FTPSchedulerDetails) {
+        this.Host = fTPDetails.Host;
+        this.Folder = fTPDetails.Folder;
+        this.UserName = fTPDetails.UserName;
+        this.Password = fTPDetails.Password;
+        this.From = fTPDetails.From;
+        this.Subject = fTPDetails.Subject;
+        this.Prefix = fTPDetails.Prefix;
+        this.Extension = fTPDetails.Extension;
     }
 }

@@ -406,6 +406,7 @@
     <Compile Include="GlobalModel\Tools\DataMapping\WebhookKeysMapping.cs" />
     <Compile Include="GlobalModel\Tools\EntityService\WebhookKeysService.cs" />
     <Compile Include="Helpers\FullAccountingHelper.cs" />
+    <Compile Include="InfrastructureModel\DataContracts\SchedulerDetails.cs" />
     <Compile Include="InvoiceModel\APIDataContract\AccountingPaymentMethod.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPayment.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\CreditCardType.Generated.cs" />

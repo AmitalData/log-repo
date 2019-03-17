@@ -1583,6 +1583,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableRulesController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableViewsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\RatesTableViewsController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\SchedulerExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\SignUpController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\TenantSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\TextCodesController.cs" />

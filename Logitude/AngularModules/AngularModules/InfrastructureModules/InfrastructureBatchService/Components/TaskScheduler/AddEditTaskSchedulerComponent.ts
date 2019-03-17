@@ -1,43 +1,98 @@
-﻿import {Component} from '@angular/core';
+﻿
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
-import {TasksSchedulerPMService} from '../../../../Infrastructure/Services/StandardPMs/TasksSchedulerPMService';
+
 import {TaskSchedulerItemClass} from './TaskSchedulerComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {SchedulerDetails, FTPSchedulerDetails} from '../../../../Infrastructure/DataContracts/SchedulerDetails';
+import {SchedulerExtendedPMService} from '../../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 
 @Component({
     moduleId: module.id,
     templateUrl: './AddEditTaskSchedulerComponent.html',
 })
 
-export class AddEditTaskSchedulerComponent {
+export class AddEditTaskSchedulerComponent  {
     public EntityPM: TasksSchedulerPM;
     public DataContext: TaskSchedulerItemClass;
     public ObjectTableName: string = "TasksScheduler";
     public OkBtnId: string;
     public ValidationErrorsList: string[];
-    GeneralAreaHeight: string = "200px";
+    public GeneralAreaHeight: string = "200px";
+    public SchedulerDetailsData: any;
+    Type: string;
+
+     schedulerExtendedPMService: SchedulerExtendedPMService;
 
     constructor() {
-
+        this.schedulerExtendedPMService = new SchedulerExtendedPMService();
     }
 
     SetDataContext(dataContext: TaskSchedulerItemClass) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
-        if (this.EntityPM.Type == "FTP") this.GeneralAreaHeight = "275px";
+        this.Type = this.EntityPM.Type;
+
+        this.BuildSchedulerDetailsData();
 
         this.Clone();
+        this.SetTigger(this.DataContext.TriggerType);
 
-
-
-        this.SetTigger(dataContext.TriggerType);
     }
 
+
+
+    BuildSchedulerDetailsData() {
+        if (this.Type == "FTP") {
+            this.GeneralAreaHeight = "275px";
+            if (this.EntityPM.SchedulerDetailsData) {
+                this.SchedulerDetailsData = this.EntityPM.SchedulerDetailsData;
+                this.SetSchedulerDetailsData();
+            }
+           else if (this.EntityPM.Id) {
+                this.LoadSchedulerDetailsData();
+            } else  {
+                this.SchedulerDetailsData = new SchedulerDetails();
+                this.SchedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
+                this.SetSchedulerDetailsData();
+            }
+        }
+    }
+
+  
+    LoadSchedulerDetailsData() {
+
+        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+
+        this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResponse.HasError) {
+                this.SchedulerDetailsData = myResponse.Result;
+                this.SetSchedulerDetailsData();
+            }
+
+            else {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+
+
+    SetSchedulerDetailsData() {
+        if (this.SchedulerDetailsData) {
+            if (this.Type == "FTP" && this.SchedulerDetailsData.FTPDetails) {
+                this.DataContext.SetFTPSchedulerDetails(this.SchedulerDetailsData.FTPDetails);
+            }
+        }
+    }
 
     StartTimeTabTitle: string = "One Time";
    
@@ -133,6 +188,17 @@ export class AddEditTaskSchedulerComponent {
     }
 
     OKButtonClicked() {
+
+
+        if (this.Type == "FTP") {
+            this.DataContext.ServiceClassName = "ServiceClassName";
+            if (this.SchedulerDetailsData.FTPDetails.Host != this.DataContext.Host) {
+                this.SchedulerDetailsData.FTPDetails.Host = this.DataContext.Host;
+                this.EntityPM.IsDirty = true;
+            }
+        }
+
+
         var errors: string[] = [];
         Validator.TryValidateObject(this.DataContext.EntityPM, this.ObjectTableName, errors);
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -176,17 +242,22 @@ export class AddEditTaskSchedulerComponent {
             }
         }
 
-        this.ValidationErrorsList = errors;
 
+
+        this.EntityPM.SchedulerDetailsData = this.SchedulerDetailsData;
+        this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-            var service: TasksSchedulerPMService = new TasksSchedulerPMService();            
+          
 
             if (this.DataContext.IsNew) {
-                service.insert(this.EntityPM).subscribe(myResult => {
+
+                this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         SessionLocator.CurrentSession.CloseCurrentWindow();
+                        //this.EntityPM = myResult;
+                        //this.EntityPM.IsDirty = false;
                         this.DataContext.fatherComponent.GetTasksSchedular();
                     }
 
@@ -202,9 +273,10 @@ export class AddEditTaskSchedulerComponent {
                 if (this.EntityPM.IsDirty) {
                     this.EntityPM.UpdatedBy = SessionLocator.LoggedUserId;
 
-                    service.update(this.EntityPM).subscribe(myResult => {
+                    this.schedulerExtendedPMService.update(this.EntityPM).subscribe(myResult => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
+                            //this.EntityPM.IsDirty = false;
                             SessionLocator.CurrentSession.CloseCurrentWindow();
                             this.DataContext.fatherComponent.GetTasksSchedular();
                         }

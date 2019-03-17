@@ -694,6 +694,7 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\ComponentArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\KeyCode.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ParameterComponentArgs.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\TenantManagementJS.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportFolderList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportList.ts" />
