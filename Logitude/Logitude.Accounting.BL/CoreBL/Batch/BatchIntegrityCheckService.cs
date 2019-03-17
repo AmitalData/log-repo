@@ -113,7 +113,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 List<AccountingIntegrityStep> integritySteps = res.MyAccountingIntegrityStep;
                 foreach (AccountingIntegrityStep step in integritySteps)
                 {
-                    if (!string.IsNullOrWhiteSpace(step.ExceptionMessage))
+                    if (step.BadRows>0 && step.ShouldFix == true)
+                    //if (!string.IsNullOrWhiteSpace(step.ExceptionMessage))
                     {
                         entityPM.HasException = true;
                         break;
