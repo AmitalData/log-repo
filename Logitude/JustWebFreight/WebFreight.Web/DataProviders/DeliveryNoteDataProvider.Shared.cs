@@ -116,6 +116,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNotes { get; set; }
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
+        public string ShipperReference2 { get; set; }
         public int? TotalNumberOfPackages { get; set; }
         public double? TotalGrossWeight { get; set; }
         public double? TotalVolume { get; set; }
@@ -147,7 +148,6 @@ namespace WebFreight.Web.DataProviders
         public string UserName { get; set; }
         public string IssuingCarrierAgentName { get; set; }
         public string IssuingCarrierAgentAddress { get; set; }
-        public string ShipperReference2 { get; set; }
         public string ConsigneeReference2 { get; set; }
         public string TransportMode { get; set; }
         public string ShipmentSalesman { get; set; }
