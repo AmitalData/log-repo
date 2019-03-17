@@ -20,6 +20,7 @@ export class AddEditTaskSchedulerComponent {
     public ObjectTableName: string = "TasksScheduler";
     public OkBtnId: string;
     public ValidationErrorsList: string[];
+
     constructor() {
 
     }
@@ -29,67 +30,14 @@ export class AddEditTaskSchedulerComponent {
         this.EntityPM = dataContext.EntityPM;
         this.Clone();
 
-        this.SelectedTabCode = "INFO";
+
 
         this.SetTigger(dataContext.TriggerType);
     }
 
-    private selectedTabCode: string;
-    get SelectedTabCode() { return this.selectedTabCode; }
-    set SelectedTabCode(value: string) {
-        if (this.selectedTabCode != value) {
-            this.selectedTabCode = value;
-        }
-    }
 
-    TriggerTabIndexColor: string = "rgba(110, 113, 114, 0.37)";
-    TriggerTabTextColor: string = "rgba(110, 113, 114, 0.37)";
-    TriggerTabBackground: string = "rgba(110, 113, 114, 0.12)";
-
-    StartTabIndexColor: string = "rgba(110, 113, 114, 0.37)";
-    StartTabTextColor: string = "rgba(110, 113, 114, 0.37)";
-    StartTabBackground: string = "rgba(110, 113, 114, 0.12)";
-
-    FinishTabIndexColor: string = "rgba(110, 113, 114, 0.37)";
-    FinishTabTextColor: string = "rgba(110, 113, 114, 0.37)";
-    FinishTabBackground: string = "rgba(110, 113, 114, 0.12)";
-    
     StartTimeTabTitle: string = "One Time";
-    NextButtonClicked() {
-        if (this.SelectedTabCode == "INFO") {
-            this.SelectedTabCode = "TRIG";
-            this.TriggerTabBackground = "#1B90CB";
-            this.TriggerTabIndexColor = "#FFFFFF";
-            this.TriggerTabTextColor = "#1B90CB";
-        }
-
-        else if (this.SelectedTabCode == "TRIG") {
-            this.SelectedTabCode = "STRT";
-            this.StartTabBackground = "#1B90CB";
-            this.StartTabIndexColor = "#FFFFFF";
-            this.StartTabTextColor = "#1B90CB";
-        }
-
-        else if (this.SelectedTabCode == "STRT") {
-            this.SelectedTabCode = "FINH";
-            this.FinishTabBackground = "#1B90CB";
-            this.FinishTabIndexColor = "#FFFFFF";
-            this.FinishTabTextColor = "#1B90CB";
-        }
-    }
-    BackButtonClicked() {
-        if (this.SelectedTabCode == "TRIG") {
-            this.SelectedTabCode = "INFO";
-        }
-
-        else if (this.SelectedTabCode == "STRT") {
-            this.SelectedTabCode = "TRIG";
-        }
-
-        else if (this.SelectedTabCode == "FINH") {
-            this.SelectedTabCode = "STRT";
-        }
-    }
+   
 
     private isOneTime: boolean; 
     get IsOneTime() { return this.isOneTime; }
@@ -181,7 +129,7 @@ export class AddEditTaskSchedulerComponent {
         }
     }
 
-    FinishButtonClicked() {
+    OKButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.DataContext.EntityPM, this.ObjectTableName, errors);
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -274,7 +222,7 @@ export class AddEditTaskSchedulerComponent {
         }
     }
 
-    CloseButtonClicked() {
+    CancelButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 

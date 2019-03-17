@@ -1024,7 +1024,7 @@ namespace WebFreight.Web.Security
             if (!string.IsNullOrEmpty(email))
             {
                 List<string> allowedPackages = new List<string>();
-                ContactInfo myContactInfo = GetContactInfo(email, tenant);
+                ContactInfo myContactInfo = GetContactInfo(email, tenant,true);
                 if (myContactInfo != null)
                 {
                     allowedPackages = myContactInfo.PackagesCodes;

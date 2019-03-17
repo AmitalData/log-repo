@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.CoreBL
             D120Count = 0;
             rowsCount = 0;
             isQuantity = false;
-           
+            a = null;
         OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
             OpenFormatReportPM openFormatReportPM = openFormatReportQueryService.GetSingle(openFormatReportId, false, false);
             TenantQuery tenantQuery = new TenantQuery(tenant);
@@ -872,7 +872,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 45);
 
                 }
-                myStringBuilder.Append("a0000");
+                myStringBuilder.Append(a);
+                myStringBuilder.Append("0000");
                 if (card != null && card.VatNumber != null)
                 {
                     if (card.VatNumber.Length > 9) { card.VatNumber.Substring(0, 9); }
@@ -2805,7 +2806,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     else
                     {
-                        myStringBuilder.Append("a0001");
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append("0001");
                     }
 
                     myStringBuilder.Append(a);
