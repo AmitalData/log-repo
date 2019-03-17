@@ -76,7 +76,7 @@ namespace WebFreight.Web
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
             AuthenticationToken auttoken = authenticationTokenRepository.GetSingleToken(logintokenparam.Token);
             if (auttoken != null)
-            {
+            { 
                 LoginParameters loginParameters = new LoginParameters() { Email = auttoken.Email, GetToken = true, IsUser = true, Password = auttoken.Password + "@HashPassword" };
                 if (!string.IsNullOrEmpty(logintokenparam.CardId))
                 {
