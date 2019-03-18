@@ -358,6 +358,7 @@
     <Compile Include="FTPToAnalyzeQueueWorkerRole.cs" />
     <Compile Include="INTTRAAnalyzerWorkerRole.cs" />
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
+    <Compile Include="TFSAggregatorWorkerRole.cs" />
     <Compile Include="TranzilaPaymentMessageAnalyzeWR.cs" />
     <Compile Include="MobileSMSWorkerRole.cs" />
     <Compile Include="PrivateLabelDenialWorkerRole.cs" />
