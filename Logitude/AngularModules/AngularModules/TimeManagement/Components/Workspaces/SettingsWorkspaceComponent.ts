@@ -1,4 +1,4 @@
-﻿import {Component, QueryList} from '@angular/core';
+import {Component, QueryList} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
@@ -93,7 +93,7 @@ export class SettingsWorkspaceComponent {
 
     ProjectsClicked() {
         var displayTitle = "All Projects";
-        var code = "All Projects";
+        var code = "Active Projects";
         var listArgs = new ListComponentArgs();
         listArgs.QueryCode = code;
         listArgs.ObjectTableName = "TMProject";
@@ -115,6 +115,24 @@ export class SettingsWorkspaceComponent {
         var listArgs = new ListComponentArgs();
         listArgs.QueryCode = code;
         listArgs.ObjectTableName = "Sprint";
+        listArgs.DisplayTitle = displayTitle;
+        listArgs.BackButtonTitle = "Settings";
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
+    }
+
+    BudgetClicked() {
+        var displayTitle = "All Budgets";
+        var code = "All Budgets";
+        var listArgs = new ListComponentArgs();
+        listArgs.QueryCode = code;
+        listArgs.ObjectTableName = "TMBudget";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Settings";
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
