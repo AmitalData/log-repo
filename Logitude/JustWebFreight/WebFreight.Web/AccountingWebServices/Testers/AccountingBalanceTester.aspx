@@ -131,7 +131,7 @@
                 this.From =  lastMonth;
                 this.To = today;
                 this.IncludeChildAccounts = true;
-
+                this.DateTypeCode = "1";
                 this.PageSize =100;
                 this.CurrZeroPage =0;
 

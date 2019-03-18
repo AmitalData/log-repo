@@ -14,373 +14,496 @@
                             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
                         </td>
                     </tr>
-
-                    <tr style="height:200px">
-
+                    <tr>
                         <td>
-                            <div style="height:100%;width:100%; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
-                                <table style="border :none;">
+                            <ScrollViewer>
+                                <table>
+                                    <tr [style.height]="GeneralAreaHeight" style="height:200px">
 
-                                    <tr style="height:25px">
                                         <td>
-                                            <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:300px">
-                                                            <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">General</p>
+                                            <div style="height:100%;width:100%; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                                <table style="border :none;">
+
+                                                    <tr style="height:25px">
+                                                        <td>
+                                                            <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:300px">
+                                                                            <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">General</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
                                                         </td>
                                                     </tr>
-                                                </table>
-                                            </div>
-                                        </td>
-                                    </tr>
 
-                                    <tr style="height:3px">
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <tr style="height:170px">
-                                        <td style="vertical-align:top; left:5px;">
-
-                                            <table>
-                                                <tr>
-                                                    <td style="width:45%">
-                                                        <table>
-
-                                                            <tr class="FormFieldRow">
-                                                                <td style="width:60px;vertical-align:central">
-
-                                                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
-                                                                </td>
-                                                                <td style="width:150px;">
-                                                                    <div style="height: 100%; width: 100%;">
-                                                                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="DataContext.Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr style="height:5px"><td colspan="2"></td></tr>
-                                                            <tr class="FormFieldRow">
-                                                                <td style="width:60px;vertical-align:top">
-                                                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-                                                                <td style="width:150px;height:50px">
-                                                                    <div style="height:50px; width: 100%;">
-                                                                        <LogTextBox style="height:50px" [ObjectFieldName]="'Description'" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                                                    </div>
-
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr style="height:5px"><td colspan="2"></td></tr>
-                                                            <tr class="FormFieldRow">
-                                                                <td style="width:60px;vertical-align:central">
-                                                                    <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-
-                                                                <td style="width:150px;">
-                                                                    <CheckBox [IsChecked]="EntityPM.InActive" (Checked)="EntityPM.InActive = $event"></CheckBox>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-
-                                                    <td style="width:5%;">
-                                                        <div></div>
-                                                    </td>
-
-                                                    <td style="width:50%">
-                                                        <table>
-
-                                                            <tr class="FormFieldRow">
-                                                                <td style="width:80px;vertical-align:central">
-
-                                                                    <LogLabel [ObjectFieldName]="'ServiceClassName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
-                                                                </td>
-                                                                <td style="width:150px;">
-                                                                    <div style="height: 100%; width: 100%;">
-                                                                        <LogTextBox [ObjectFieldName]="'ServiceClassName'" [Text]="DataContext.Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-
-
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-
-
-                    <tr style="height:25px"><td></td></tr>
-
-                    <tr style="height:200px">
-
-                        <td>
-                            <div style="height:100%;width:100%; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
-                                <table style="border :none;">
-
-                                    <tr style="height:25px">
-                                        <td>
-                                            <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:300px">
-                                                            <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">Recurring</p>
+                                                    <tr style="height:3px">
+                                                        <td>
+                                                            <div></div>
                                                         </td>
                                                     </tr>
-                                                </table>
-                                            </div>
-                                        </td>
-                                    </tr>
 
-                                    <tr style="height:3px">
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
+                                                    <tr style="height:100%">
+                                                        <td style="vertical-align:top; left:5px;">
 
-                                    <tr style="height:170px">
-                                        <td style="vertical-align:top;">
-                                            <table>
-                                                <tr style="height:1px;">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width:10px"></td>
-                                                                <td style="width:105px">
-                                                                    <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsOneTime == true" (Checked)="SetTigger('O')" [Text]="'One Time'" [Top]="5"></RadioButton>
-
-
-                                                                </td>
-                                                                <td style="width:80px">
-
-                                                                    <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsDaily == true" (Checked)="SetTigger('D')" [Text]="'Daily'" [Top]="5"></RadioButton>
-
-
-                                                                </td>
-                                                                <td style="width:80px">
-
-                                                                    <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsWeekly == true" (Checked)="SetTigger('W')" [Text]="'Weekly'" [Top]="5"></RadioButton>
-
-                                                                </td>
-                                                                <td style="width:80px">
-                                                                    <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsMonthly == true" (Checked)="SetTigger('M')" [Text]="'Monthly'" [Top]="5"></RadioButton>
-                                                                </td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-
-
-
-                                                </tr>
-                                                <tr style="height:5px"></tr>
-
-                                                <tr style="height:1px;border-bottom:1px solid lightgray"><td></td></tr>
-                                                <tr style="height:10px"></tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="MediaFill">
                                                             <table>
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width:110px;">
-                                                                        <LogLabel [ObjectFieldName]="'StartDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td style="width:220px;">
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:90px">
-                                                                                    <LogDatePicker [ObjectFieldName]="'StartDateTime'" [SelectedDateValue]="DataContext.StartDateTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                                                </td>
-
-                                                                                <td style="width: 5px;">
-                                                                                    <div></div>
-                                                                                </td>
-
-                                                                                <td>
-                                                                                    <LogDatePicker [ObjectFieldName]="'StartDateTime'" [SelectedDateValue]="DataContext.StartDateTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'"></LogDatePicker>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-
-
-                                                                <tr class="FormFieldRow">
-                                                                    <td>
-                                                                        <LogLabel [ObjectFieldName]="'RepeatInMinutes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogTextBox [ObjectFieldName]="'RepeatInMinutes'" [Text]="DataContext.RepeatInMinutes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr style="height:1px;" *ngIf="DataContext.TriggerType == 'W'">
-                                                                    <td>
-                                                                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Days'"></LogLabel>
-                                                                    </td>
-
-                                                                    <td colspan="2">
-                                                                        <table>
-                                                                            <tr style="height:28px;">
-                                                                                <td>
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width:20px;">
-                                                                                                <LogCheckBox [ObjectFieldName]="'Sunday'" [Checked]="DataContext.Sunday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                            </td>
-                                                                                            <td style="width:70px;">
-                                                                                                <label class="Label">Sunday</label>
-                                                                                            </td>
-
-                                                                                            <td style="width:10px;">
-                                                                                                <div></div>
-                                                                                            </td>
-
-                                                                                            <td style="width:20px;">
-                                                                                                <LogCheckBox [ObjectFieldName]="'Monday'" [Checked]="DataContext.Monday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                            </td>
-                                                                                            <td style="width:70px;">
-                                                                                                <label class="Label">Monday</label>
-                                                                                            </td>
-
-                                                                                            <td style="width:10px;">
-                                                                                                <div></div>
-                                                                                            </td>
-
-                                                                                            <td style="width:20px;">
-                                                                                                <LogCheckBox [ObjectFieldName]="'Tuesday'" [Checked]="DataContext.Tuesday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                            </td>
-                                                                                            <td style="width:70px;">
-                                                                                                <label class="Label">Tuesday</label>
-                                                                                            </td>
-
-                                                                                            <td style="width:10px;">
-                                                                                                <div></div>
-                                                                                            </td>
-
-                                                                                            <td style="width:20px;">
-                                                                                                <LogCheckBox [ObjectFieldName]="'Wednesday'" [Checked]="DataContext.Wednesday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                            </td>
-                                                                                            <td style="width:70px;">
-                                                                                                <label class="Label">Wednesday</label>
-                                                                                            </td>
-
-                                                                                            <td>
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr style="height:28px;">
-                                                                                <td>
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width:20px;">
-                                                                                                <LogCheckBox [ObjectFieldName]="'Thursday'" [Checked]="DataContext.Thursday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                            </td>
-                                                                                            <td style="width:70px;">
-                                                                                                <label class="Label">Thursday</label>
-                                                                                            </td>
-
-                                                                                            <td style="width:10px;">
-                                                                                                <div></div>
-                                                                                            </td>
-
-                                                                                            <td style="width:20px;">
-                                                                                                <LogCheckBox [ObjectFieldName]="'Friday'" [Checked]="DataContext.Friday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                            </td>
-                                                                                            <td style="width:70px;">
-                                                                                                <label class="Label">Friday</label>
-                                                                                            </td>
-
-                                                                                            <td style="width:10px;">
-                                                                                                <div></div>
-                                                                                            </td>
-
-                                                                                            <td style="width:20px;">
-                                                                                                <LogCheckBox [ObjectFieldName]="'Satarday'" [Checked]="DataContext.Satarday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                            </td>
-                                                                                            <td style="width:70px;">
-                                                                                                <label class="Label">Satarday</label>
-                                                                                            </td>
-
-                                                                                            <td>
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr class="FormFieldRow" *ngIf="DataContext.TriggerType == 'M'">
-                                                                    <td>
-                                                                        <LogLabel [ObjectFieldName]="'MonthlyDay'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Day Number'"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogTextBox [ObjectFieldName]="'MonthlyDay'" [Text]="DataContext.MonthlyDay" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-
                                                                 <tr>
-                                                                    <td>
+                                                                    <td style="width:45%">
+                                                                        <table>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td style="width:90px;vertical-align:central">
+
+                                                                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="DataContext.Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td></td>
+                                                                            </tr>
+
+                                                                            <tr style="height:5px"><td colspan="2"></td></tr>
+                                                                            <tr style="height:50px;">
+                                                                                <td style="width:90px;vertical-align:top">
+                                                                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;height:50px">
+                                                                                    <LogTextBox [ObjectFieldName]="'Description'" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                                                </td>
+                                                                                <td></td>
+                                                                            </tr>
+
+                                                                            <tr style="height:5px"><td colspan="2"></td></tr>
+                                                                            <tr class="FormFieldRow">
+                                                                                <td style="width:90px;vertical-align:central">
+                                                                                    <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+
+                                                                                <td style="width:250px;">
+                                                                                    <CheckBox [IsChecked]="EntityPM.InActive" (Checked)="EntityPM.InActive = $event"></CheckBox>
+                                                                                </td>
+                                                                                <td></td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td colspan="3"></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                    <td style="width:5%;">
                                                                         <div></div>
+                                                                    </td>
+
+                                                                    <td style="width:50%">
+
+                                                                        <table *ngIf="DataContext.Type == 'Task'">
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td></td>
+                                                                                <td style="width:125px;vertical-align:central">
+                                                                                    <LogLabel [ObjectFieldName]="'ServiceClassName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'ServiceClassName'" [Text]="DataContext.ServiceClassName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                      
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td colspan="3"></td>
+                                                                            </tr>
+                                                                        </table>
+
+                                                                        <table *ngIf="DataContext.Type == 'FTP'">
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td></td>
+                                                                                <td style="width:90px;vertical-align:central">
+                                                                                    <LogLabel [Text]="'Host'" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Host'" [Text]="DataContext.Host" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                       
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td></td>
+                                                                                <td style="width:90px;vertical-align:central">
+                                                                                    <LogLabel [Text]="'Folder'" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Folder'" [Text]="DataContext.Folder" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                    
+                                                                            </tr>
+
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td></td>
+                                                                                <td style="width:90px;vertical-align:central">
+                                                                                    <LogLabel [Text]="'UserName'" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'UserName'" [Text]="DataContext.UserName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                         
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td></td>
+                                                                                <td style="width:90px;vertical-align:central">
+                                                                                    <LogLabel [Text]="'Password'" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Password'" [Text]="DataContext.Password" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                         
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td></td>
+                                                                                <td style="width:90px;vertical-align:central">
+                                                                                    <LogLabel [Text]="'From'" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'From'" [Text]="DataContext.From" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                            
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td></td>
+                                                                                <td style="width:90px;vertical-align:central">
+                                                                                    <LogLabel [Text]="'Subject'" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Subject'" [Text]="DataContext.Subject" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                        
+                                                                            </tr>
+
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td></td>
+                                                                                <td style="width:90px;vertical-align:central">
+                                                                                    <LogLabel [Text]="'Prefix'" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="DataContext.Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                     
+                                                                            </tr>
+
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td></td>
+                                                                                <td style="width:90px;vertical-align:central">
+                                                                                    <LogLabel [Text]="'Extension'" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:250px;">
+                                                                                    <div style="height: 100%; width: 100%;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Extension'" [Text]="DataContext.Extension" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+                                                                       
+                                                                            </tr>
+
+
+                                                                            <tr>
+                                                                                <td colspan="3"></td>
+                                                                            </tr>
+                                                                        </table>
                                                                     </td>
                                                                 </tr>
                                                             </table>
-                                                        </div>
-                                                    </td>
-                                                </tr>
 
-                                            </table>
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </td>
                                     </tr>
-                                </table>
 
-                            </div>
+                                    <tr style="height:25px"><td></td></tr>
+
+                                    <tr style="height:200px">
+
+                                        <td>
+                                            <div style="height:100%;width:100%; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                                <table style="border :none;">
+
+                                                    <tr style="height:25px">
+                                                        <td>
+                                                            <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:300px">
+                                                                            <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">Recurring</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:3px">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:170px">
+                                                        <td style="vertical-align:top;">
+                                                            <table>
+                                                                <tr style="height:1px;">
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:10px"></td>
+                                                                                <td style="width:105px">
+                                                                                    <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsOneTime == true" (Checked)="SetTigger('O')" [Text]="'One Time'" [Top]="5"></RadioButton>
+
+
+                                                                                </td>
+                                                                                <td style="width:80px">
+
+                                                                                    <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsDaily == true" (Checked)="SetTigger('D')" [Text]="'Daily'" [Top]="5"></RadioButton>
+
+
+                                                                                </td>
+                                                                                <td style="width:80px">
+
+                                                                                    <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsWeekly == true" (Checked)="SetTigger('W')" [Text]="'Weekly'" [Top]="5"></RadioButton>
+
+                                                                                </td>
+                                                                                <td style="width:80px">
+                                                                                    <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsMonthly == true" (Checked)="SetTigger('M')" [Text]="'Monthly'" [Top]="5"></RadioButton>
+                                                                                </td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+
+
+                                                                </tr>
+                                                                <tr style="height:5px"></tr>
+
+                                                                <tr style="height:1px;border-bottom:1px solid lightgray"><td></td></tr>
+                                                                <tr style="height:10px"></tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="MediaFill">
+                                                                            <table>
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width:110px;">
+                                                                                        <LogLabel [ObjectFieldName]="'StartDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td style="width:220px;">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width:90px">
+                                                                                                    <LogDatePicker [ObjectFieldName]="'StartDateTime'" [SelectedDateValue]="DataContext.StartDateTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                                                </td>
+
+                                                                                                <td style="width: 5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogDatePicker [ObjectFieldName]="'StartDateTime'" [SelectedDateValue]="DataContext.StartDateTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'"></LogDatePicker>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'RepeatInMinutes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'RepeatInMinutes'" [Text]="DataContext.RepeatInMinutes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height:1px;" *ngIf="DataContext.TriggerType == 'W'">
+                                                                                    <td>
+                                                                                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Days'"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td colspan="2">
+                                                                                        <table>
+                                                                                            <tr style="height:28px;">
+                                                                                                <td>
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:20px;">
+                                                                                                                <LogCheckBox [ObjectFieldName]="'Sunday'" [Checked]="DataContext.Sunday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                            </td>
+                                                                                                            <td style="width:70px;">
+                                                                                                                <label class="Label">Sunday</label>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:10px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:20px;">
+                                                                                                                <LogCheckBox [ObjectFieldName]="'Monday'" [Checked]="DataContext.Monday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                            </td>
+                                                                                                            <td style="width:70px;">
+                                                                                                                <label class="Label">Monday</label>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:10px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:20px;">
+                                                                                                                <LogCheckBox [ObjectFieldName]="'Tuesday'" [Checked]="DataContext.Tuesday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                            </td>
+                                                                                                            <td style="width:70px;">
+                                                                                                                <label class="Label">Tuesday</label>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:10px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:20px;">
+                                                                                                                <LogCheckBox [ObjectFieldName]="'Wednesday'" [Checked]="DataContext.Wednesday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                            </td>
+                                                                                                            <td style="width:70px;">
+                                                                                                                <label class="Label">Wednesday</label>
+                                                                                                            </td>
+
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr style="height:28px;">
+                                                                                                <td>
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:20px;">
+                                                                                                                <LogCheckBox [ObjectFieldName]="'Thursday'" [Checked]="DataContext.Thursday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                            </td>
+                                                                                                            <td style="width:70px;">
+                                                                                                                <label class="Label">Thursday</label>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:10px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:20px;">
+                                                                                                                <LogCheckBox [ObjectFieldName]="'Friday'" [Checked]="DataContext.Friday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                            </td>
+                                                                                                            <td style="width:70px;">
+                                                                                                                <label class="Label">Friday</label>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:10px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:20px;">
+                                                                                                                <LogCheckBox [ObjectFieldName]="'Satarday'" [Checked]="DataContext.Satarday" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                            </td>
+                                                                                                            <td style="width:70px;">
+                                                                                                                <label class="Label">Satarday</label>
+                                                                                                            </td>
+
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" *ngIf="DataContext.TriggerType == 'M'">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'MonthlyDay'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Day Number'"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'MonthlyDay'" [Text]="DataContext.MonthlyDay" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr><td></td></tr>
+                                </table>
+                            </ScrollViewer>
                         </td>
                     </tr>
 
-                    <tr><td></td></tr>
 
                 </table>
             </td>

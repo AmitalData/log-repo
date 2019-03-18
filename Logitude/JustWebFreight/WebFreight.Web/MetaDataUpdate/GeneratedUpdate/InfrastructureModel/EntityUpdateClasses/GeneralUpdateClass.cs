@@ -2074,6 +2074,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMHDepositions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Depositions", DefaultText = "Depositions",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GeneralTextCode_GeneralOYes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Yes", DefaultText = "Yes",LocalDefaultText = @"כן", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralONo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.No", DefaultText = "No",LocalDefaultText = @"לא", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

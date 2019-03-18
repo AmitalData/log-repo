@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
             entityPM.SearchFields = ///Task:25238 GetentityPM.AccountId + "," + 
-                entityPM.Number;
+                entityPM.Number+",";
         }
 
         protected override void OnUpdating(ReconciliationPM entityPM)
@@ -109,6 +109,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     //get transaction
                     LedgerTransaction transaction = transactionRepository.GetSingle(recoLine.TransactionId, recoLine.Tenant);
+                    recoLine.SearchFields = transaction.SearchFields;
+
                     if (transaction != null)
                         PushSearchFieldText(entityPM, transaction.SearchFields);
 

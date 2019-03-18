@@ -1,40 +1,89 @@
-﻿import {Component} from '@angular/core';
+﻿
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
-import {TasksSchedulerPMService} from '../../../../Infrastructure/Services/StandardPMs/TasksSchedulerPMService';
+
 import {TaskSchedulerItemClass} from './TaskSchedulerComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {SchedulerDetails, FTPSchedulerDetails} from '../../../../Infrastructure/DataContracts/SchedulerDetails';
+import {SchedulerExtendedPMService} from '../../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 
 @Component({
     moduleId: module.id,
     templateUrl: './AddEditTaskSchedulerComponent.html',
 })
 
-export class AddEditTaskSchedulerComponent {
+export class AddEditTaskSchedulerComponent  {
     public EntityPM: TasksSchedulerPM;
     public DataContext: TaskSchedulerItemClass;
     public ObjectTableName: string = "TasksScheduler";
     public OkBtnId: string;
     public ValidationErrorsList: string[];
+    public GeneralAreaHeight: string = "200px";
+    schedulerExtendedPMService: SchedulerExtendedPMService;
 
     constructor() {
-
+        this.schedulerExtendedPMService = new SchedulerExtendedPMService();
     }
 
     SetDataContext(dataContext: TaskSchedulerItemClass) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
+
+        this.BuildSchedulerDetailsData();
+
         this.Clone();
+        this.SetTigger(this.DataContext.TriggerType);
 
-
-
-        this.SetTigger(dataContext.TriggerType);
     }
 
+
+
+    BuildSchedulerDetailsData() {
+        if (this.DataContext.Type == "FTP") {
+            this.GeneralAreaHeight = "275px";
+            if (this.EntityPM.SchedulerDetailsData) {
+                this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
+            }
+           else if (this.EntityPM.Id) {
+                this.LoadSchedulerDetailsData();
+            } else  {
+               var schedulerDetailsData = new SchedulerDetails();
+               schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
+               this.SetSchedulerDetailsData(schedulerDetailsData);
+            }
+        }
+    }
+
+  
+    LoadSchedulerDetailsData() {
+
+        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+
+        this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResponse.HasError) {
+
+                this.SetSchedulerDetailsData(myResponse.Result);
+            }
+
+            else {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+
+
+    SetSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
+        this.DataContext.SetSchedulerDetailsData(schedulerDetailsData);
+    }
 
     StartTimeTabTitle: string = "One Time";
    
@@ -130,9 +179,23 @@ export class AddEditTaskSchedulerComponent {
     }
 
     OKButtonClicked() {
+
+
         var errors: string[] = [];
-        Validator.TryValidateObject(this.DataContext.EntityPM, this.ObjectTableName, errors);
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+
+        if (this.DataContext.Type == "FTP") {
+            this.DataContext.ServiceClassName = "ServiceClassName";
+
+            if (AppTool.IsNullOrEmpty(this.DataContext.From)) {
+                errors.push(msg.replace("%FieldName", "From"));
+            }
+
+        }
+
+        Validator.TryValidateObject(this.DataContext.EntityPM, this.ObjectTableName, errors);
+
         
         if (AppTool.IsNullOrEmpty(this.DataContext.Name)) {
             errors.push(msg.replace("%FieldName", "Name"));
@@ -153,6 +216,11 @@ export class AddEditTaskSchedulerComponent {
         if (AppTool.IsNullOrEmpty(this.DataContext.TriggerType)) {
             errors.push(msg.replace("%FieldName", "Trigger Type"));
         }
+
+
+
+
+
         else {
             switch (this.DataContext.TriggerType) {
                 case "W":
@@ -173,18 +241,23 @@ export class AddEditTaskSchedulerComponent {
             }
         }
 
-        this.ValidationErrorsList = errors;
 
+
+        this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+        this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-            var service: TasksSchedulerPMService = new TasksSchedulerPMService();            
+          
 
             if (this.DataContext.IsNew) {
-                service.insert(this.EntityPM).subscribe(myResult => {
+
+                this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         SessionLocator.CurrentSession.CloseCurrentWindow();
-                        this.DataContext.fatherComponent.GetTasksSchedular();
+                        this.EntityPM = myResponse.Result;
+                        this.EntityPM.IsDirty = false;
+                        this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
                     }
 
                     else {
@@ -199,11 +272,13 @@ export class AddEditTaskSchedulerComponent {
                 if (this.EntityPM.IsDirty) {
                     this.EntityPM.UpdatedBy = SessionLocator.LoggedUserId;
 
-                    service.update(this.EntityPM).subscribe(myResult => {
+                    this.schedulerExtendedPMService.update(this.EntityPM).subscribe(myResult => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
+                            this.EntityPM = myResponse.Result;
+                            this.EntityPM.IsDirty = false;
                             SessionLocator.CurrentSession.CloseCurrentWindow();
-                            this.DataContext.fatherComponent.GetTasksSchedular();
+                            this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
                         }
 
                         else {
@@ -223,6 +298,7 @@ export class AddEditTaskSchedulerComponent {
     }
 
     CancelButtonClicked() {
+        this.RejectChanges();
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
@@ -243,6 +319,8 @@ export class AddEditTaskSchedulerComponent {
         this.myCloner.AddField('Wednesday');
         this.myCloner.AddField('Thursday');
         this.myCloner.AddField('Friday');
+        this.myCloner.AddField('TriggerType');
+      
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {

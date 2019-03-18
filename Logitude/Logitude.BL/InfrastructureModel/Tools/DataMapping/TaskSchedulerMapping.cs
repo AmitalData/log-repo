@@ -41,6 +41,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.UpdateDateTime = DateTime.Now;
             TaskScheduler.UpdatedBy = TaskSchedulerPM.UpdatedBy;
             TaskScheduler.Wednesday = TaskSchedulerPM.Wednesday;
+            TaskScheduler.Type = TaskSchedulerPM.Type;
+            TaskScheduler.SchedulerDetailsXML = TaskSchedulerPM.SchedulerDetailsXML;
+
         }
     }
 }

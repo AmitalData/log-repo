@@ -70,6 +70,7 @@ export class WarehouseEntryList {
 	FromPartnerId: string;
 	ToPartnerId: string;
 	ChargeableWeightUnitCode: string;
+	TotalVolumetricWeight: number;
 	
 }
  

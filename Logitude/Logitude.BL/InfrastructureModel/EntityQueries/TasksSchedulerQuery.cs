@@ -24,6 +24,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository = new TasksSchedulerRepository(tenant);
         }
 
+        public string GetSchedulerDetailsXmalById(string schedulerId, int tenant)
+        {
+
+            string result = (from a in repository.context.TasksSchedulers
+                             where a.Tenant == tenant && a.Id == schedulerId
+                             select a.SchedulerDetailsXML).FirstOrDefault();
+
+            return result;
+
+        }
+
         public TasksSchedulerQuery(TasksSchedulerRepository TasksSchedulerRepository)
         {
             repository = TasksSchedulerRepository;
@@ -59,7 +70,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tuesday = a.Tuesday,
                         UpdateDateTime = a.UpdateDateTime,
                         UpdatedBy = a.UpdatedBy,
-                        Wednesday = a.Wednesday
+                        Wednesday = a.Wednesday,
+                        Type = a.Type,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
+
                         
                     }).FirstOrDefault();
         }
@@ -93,7 +107,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tuesday = a.Tuesday,
                         UpdateDateTime = a.UpdateDateTime,
                         UpdatedBy = a.UpdatedBy,
-                        Wednesday = a.Wednesday
+                        Wednesday = a.Wednesday ,
+                        Type = a.Type,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
                     }).FirstOrDefault();
         }
 
@@ -127,7 +143,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tuesday = a.Tuesday,
                         UpdateDateTime = a.UpdateDateTime,
                         UpdatedBy = a.UpdatedBy,
-                        Wednesday = a.Wednesday
+                        Wednesday = a.Wednesday,
+                        Type = a.Type,
+
                     }).ToList();
         }
 
@@ -160,7 +178,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                Tuesday = a.Tuesday,
                                                                UpdateDateTime = a.UpdateDateTime,
                                                                UpdatedBy = a.UpdatedBy,
-                                                               Wednesday = a.Wednesday
+                                                               Wednesday = a.Wednesday,
+                                                               Type = a.Type,
                                                            };
             return result;
         }
@@ -194,7 +213,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tuesday = a.Tuesday,
                         UpdateDateTime = a.UpdateDateTime,
                         UpdatedBy = a.UpdatedBy,
-                        Wednesday = a.Wednesday
+                        Wednesday = a.Wednesday,
+                        Type = a.Type,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
                     }).FirstOrDefault();
         }
     }

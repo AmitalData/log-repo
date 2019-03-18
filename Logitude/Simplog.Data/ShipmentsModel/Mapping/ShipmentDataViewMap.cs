@@ -391,6 +391,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.From).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.To).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.Origin).HasMaxLength(150).IsUnicode(false);
+            this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentDataView");
@@ -868,12 +869,11 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ContainerLastStatusDate).HasColumnName("ContainerLastStatusDate");
             this.Property(t => t.From).HasColumnName("From");
             this.Property(t => t.To).HasColumnName("To");
-
-
-
             this.Property(t => t.Origin).HasColumnName("Origin");
             this.Property(t => t.DeclarationDate).HasColumnName("DeclarationDate");
             this.Property(t => t.DeclarationNumber).HasColumnName("DeclarationNumber");
+            this.Property(t => t.ARInvoices).HasColumnName("ARInvoices");
+
         }
     }
 }
