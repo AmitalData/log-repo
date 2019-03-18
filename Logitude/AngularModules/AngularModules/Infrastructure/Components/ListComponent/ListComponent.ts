@@ -440,6 +440,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public TenantPM: TenantPM;
     MethodName: string = null;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private SessionEvent: any = null;
     constructor(private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
         this.ComponentIndex = SessionLocator.CurrentSession.GetNewListComponentIndex();
 
@@ -455,6 +456,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
             })
         );
+
+        this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "NewAirlineShippingLineClosed") {
+                this.RefreshBtnClick();
+            }
+        });
+
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     }
     name: string;

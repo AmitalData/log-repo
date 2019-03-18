@@ -627,20 +627,23 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     VatTypeFilterClicked() {
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
+            var vatType = this.VatTypeId;
+
             var loadingDate = this.EntityPM.InvoiceDate;
             if (loadingDate == null) {
                 loadingDate = DateTool.GetCurrentDateAsUtc();
             }
+
+            this.VatTypeId = null;
 
             this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     this.VatTypePercentagesList = myResponse.Result;
 
                     this.ItemsSource.forEach(item => {
-                        item.VatTypeId = this.VatTypeId;
+                        item.VatTypeId = vatType;
                     });
-
-                    this.VatTypeId = null;
+                   
                     this.SetGridColumnsWidth();
                 }
             });
