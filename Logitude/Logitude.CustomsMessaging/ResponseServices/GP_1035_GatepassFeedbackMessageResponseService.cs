@@ -28,10 +28,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(GP_NG_1035_MSG2_GatepassFeedbackMessage customResponse, GatepassRequestMessageRequestParams requestParams)
         {
-
             ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
             var gatepassRequestQueryService = new GatepassRequestQueryService(customContext);
             var gatepassRequestUpdateService = new GatepassRequestUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+            CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(customContext);
 
             this.MyResponseData = new GatepassFeedbackMessageResponseData();
             this.MyResponseData.Succeeded = true;
@@ -60,14 +60,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this._GatepassRequestPM = gatepassRequestQueryService.GetGatepassRequestByGatepassNumber(gatepassFeedbackMessageItem.gatepassNumber, requestParams.Tenant);
                 if (this._GatepassRequestPM != null)
                 {
-                    if(this._GatepassRequestPM.CustomsUpdateDateTime != null && this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date > gatepassFeedbackMessageItem.dateTime)
+                    CourierMasterPM courierMasterPM = myCourierMasterQueryService.GetSingle(_GatepassRequestPM.MasterCourierId, false, false);
+                    if (courierMasterPM != null)
+                    {
+                        this.MyResponseData.UserMessage = "משוב לבקשת העברה" + courierMasterPM.AirlinePrefix + "-" + courierMasterPM.MAWB;
+                    }
+
+                    if (this._GatepassRequestPM.CustomsUpdateDateTime != null && this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date > gatepassFeedbackMessageItem.dateTime)
                     {
                         LogMessagingUtil.Instance.AppendLine("GatepassFeedbackMessage was rejected because it is out of date");
                         this.MyResponseData.HasException = true;
                         this.MyResponseData.UserMessage = "המסר נדחה בגלל שהוא עדכני לשעה " + gatepassFeedbackMessageItem.dateTime.Date.ToString("g") + " ויש עדכון משעה " + this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date.ToString("g");
                         return;
                     }
-                    
+
                     this._GatepassRequestPM.ChangeSetOp = ChangeSetOperation.Update;
                     this._GatepassRequestPM.CustomsUpdateDateTime = gatepassFeedbackMessageItem.dateTime;
 
@@ -76,10 +82,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         StatusDateTime = DateTime.Now,
                     };
 
-                    switch(gatepassFeedbackMessageItem.recordCategory)
+                    switch (gatepassFeedbackMessageItem.recordCategory)
                     {
                         case 1: // מסר משוב על קליטת בקשת העברה
-                            if(gatepassFeedbackMessageItem.gatepassStatus == 1)
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 1)
                             {
                                 this._GatepassRequestPM.GatepassRequestStatus = "2";
                                 myEventContextTagModel.EventCode = "VGE";
