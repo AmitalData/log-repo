@@ -13,7 +13,7 @@
                     </td>
 
                     <td style="width: 85px;">
-                        <button class="Button" (click)="NewTaskClicked()">Add New Task</button>
+                        <button class="Button" (click)="NewTaskClicked()">Add New {{SchedulerType}}</button>
                     </td>
 
                     <td>
@@ -29,7 +29,7 @@
     </tr>
 
     <!-- Tasks -->
-    <tr style="height:500px;">
+    <tr style="height:450px;">
         <td>
             <div class="MediaFill">
                 <div class="SimpleGridView">
@@ -127,7 +127,7 @@
     </tr>
 
     <!-- History -->
-    <tr style="height:220px;">
+    <tr style="height:200px;">
         <td>
             <table *ngIf="IsHistoryGridVsisible">
                 <tr>
@@ -182,7 +182,7 @@
         </td>
     </tr>
 
-    <tr style="height: 32px;">
+    <!--<tr style="height: 32px;">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
@@ -196,5 +196,5 @@
                 </tr>
             </table>
         </td>
-    </tr>
+    </tr>-->
 </table>

@@ -1085,9 +1085,9 @@ export class MaintenanceComponent {
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 1100;
                         logWindow.Height = 1000;
-                        logWindow.Title = "Task Scheduler";
+                        logWindow.Title = "Scheduler";
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/MainSchedulerComponent');
                     });
                     break;
                 }

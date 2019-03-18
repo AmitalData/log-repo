@@ -20,15 +20,23 @@ export class TaskSchedulerComponent  {
     constructor() {
         this.infraDomainService = new InfrastructureDomainService();
 
-        this.GetTasksSchedular();
+       
     }
-    
+
+
+    SchedulerType: string = "";
+    public LoadData(schedulerType: string) {
+        this.SchedulerType = schedulerType;
+        this.GetTasksSchedular();
+    }     
+
+
     public GetTasksSchedular() {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
 
         this.IsHistoryGridVsisible = false;
 
-        this.infraDomainService.GetAllTasksSchedulerPMs().subscribe(myResult => {
+        this.infraDomainService.GetAllTasksSchedulerPMs(this.SchedulerType).subscribe(myResult => {
             if (myResult == null) {
                 this.ItemsSource = [];
             }
@@ -105,11 +113,11 @@ export class TaskSchedulerComponent  {
         newItem.CreatedBy = SessionLocator.LoggedUserId;
         newItem.UpdatedBy = SessionLocator.LoggedUserId;
         newItem.TriggerType = "O";
-        newItem.Type = "Task";
+        newItem.Type = this.SchedulerType;
         var logWindow = new LogitudeWindow();
-        logWindow.Height = newItem.Type == "Task" ? 570 : 645 ;
+        logWindow.Height = this.SchedulerType == "FTP" ? 645 : 570;
         logWindow.Width = 800;
-        logWindow.Title = "Task Scheduler Details";
+        logWindow.Title = this.SchedulerType + " Scheduler Details";
         logWindow.DataContext = new TaskSchedulerItemClass(newItem, this, true);
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
         logWindow.WindowClosed.subscribe(s => {
@@ -121,9 +129,9 @@ export class TaskSchedulerComponent  {
 
     EditClicked(item: TaskSchedulerItemClass) {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Task Scheduler Details";
+        logWindow.Title = this.SchedulerType  + " Scheduler Details";
         logWindow.DataContext = item;
-        logWindow.Height = item.Type == "Task" ? 570 : 645;
+        logWindow.Height = this.SchedulerType == "FTP" ? 645 : 570;
         logWindow.Width = 800;
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
         logWindow.WindowClosed.subscribe(s => {
