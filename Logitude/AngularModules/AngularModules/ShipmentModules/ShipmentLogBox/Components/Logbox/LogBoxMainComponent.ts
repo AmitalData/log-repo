@@ -271,33 +271,50 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ServerSideSortable: true,
             SortByName: "ShipperName"
         });
-        this.columns.push({
-            FieldName: 'StatusName',
-            DataTypeCode: 'String',
-            Display: 'Status',
-            Styles: { width: '120px' },
-            HtmlListComponentName: 'StatusCellDisplayListTemplate',
-            HtmlListComponentUrl: './Shipment/Components/ListTemplates/StatusCellDisplayListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: "StatusName"
-        });
-        if (this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"))) {
+        if (this.SelectedFilter == "Action Required") {
             this.columns.push({
-                FieldName: 'StatusDate',
+                FieldName: 'Task',
                 DataTypeCode: 'String',
-                Display: 'Status Date',
-                Styles: { width: '125px' },
-                HtmlListComponentName: 'DateCellDisplayListTemplate',
-                HtmlListComponentUrl: './Shipment/Components/ListTemplates/DateCellDisplayListTemplate',
+                Display: 'Task',
+                Styles: { width: '220px' },
+                HtmlListComponentName: 'TaskCellDisplayListTemplate',
+                HtmlListComponentUrl: './Shipment/Components/ListTemplates/TaskCellDisplayListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: true,
-                SortByName: "StatusDate"
+                ServerSideSortable: false,
+                SortByName: "Task"
             });
-        }
-        else {
             this.HoverTemplateIndex = 5;
         }
+        else {
+            this.columns.push({
+                FieldName: 'StatusName',
+                DataTypeCode: 'String',
+                Display: 'Status',
+                Styles: { width: '120px' },
+                HtmlListComponentName: 'StatusCellDisplayListTemplate',
+                HtmlListComponentUrl: './Shipment/Components/ListTemplates/StatusCellDisplayListTemplate',
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                SortByName: "StatusName"
+            });
+            if (this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"))) {
+                this.columns.push({
+                    FieldName: 'StatusDate',
+                    DataTypeCode: 'String',
+                    Display: 'Status Date',
+                    Styles: { width: '125px' },
+                    HtmlListComponentName: 'DateCellDisplayListTemplate',
+                    HtmlListComponentUrl: './Shipment/Components/ListTemplates/DateCellDisplayListTemplate',
+                    IsCustomTemplate: true,
+                    ServerSideSortable: true,
+                    SortByName: "StatusDate"
+                });
+            }
+            else {
+                this.HoverTemplateIndex = 5;
+            }
+        }
+        
         //this.columns.push({
         //    FieldName: 'RequestedDocumentsCount',
         //    DataTypeCode: 'String',
