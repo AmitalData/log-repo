@@ -24,10 +24,7 @@ export class AddEditTaskSchedulerComponent  {
     public OkBtnId: string;
     public ValidationErrorsList: string[];
     public GeneralAreaHeight: string = "200px";
-    public SchedulerDetailsData: any;
-    Type: string;
-
-     schedulerExtendedPMService: SchedulerExtendedPMService;
+    schedulerExtendedPMService: SchedulerExtendedPMService;
 
     constructor() {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
@@ -36,7 +33,6 @@ export class AddEditTaskSchedulerComponent  {
     SetDataContext(dataContext: TaskSchedulerItemClass) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
-        this.Type = this.EntityPM.Type;
 
         this.BuildSchedulerDetailsData();
 
@@ -48,18 +44,17 @@ export class AddEditTaskSchedulerComponent  {
 
 
     BuildSchedulerDetailsData() {
-        if (this.Type == "FTP") {
+        if (this.DataContext.Type == "FTP") {
             this.GeneralAreaHeight = "275px";
             if (this.EntityPM.SchedulerDetailsData) {
-                this.SchedulerDetailsData = this.EntityPM.SchedulerDetailsData;
-                this.SetSchedulerDetailsData();
+                this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
             }
            else if (this.EntityPM.Id) {
                 this.LoadSchedulerDetailsData();
             } else  {
-                this.SchedulerDetailsData = new SchedulerDetails();
-                this.SchedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
-                this.SetSchedulerDetailsData();
+               var schedulerDetailsData = new SchedulerDetails();
+               schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
+               this.SetSchedulerDetailsData(schedulerDetailsData);
             }
         }
     }
@@ -72,8 +67,8 @@ export class AddEditTaskSchedulerComponent  {
         this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
-                this.SchedulerDetailsData = myResponse.Result;
-                this.SetSchedulerDetailsData();
+
+                this.SetSchedulerDetailsData(myResponse.Result);
             }
 
             else {
@@ -86,12 +81,8 @@ export class AddEditTaskSchedulerComponent  {
 
 
 
-    SetSchedulerDetailsData() {
-        if (this.SchedulerDetailsData) {
-            if (this.Type == "FTP" && this.SchedulerDetailsData.FTPDetails) {
-                this.DataContext.SetFTPSchedulerDetails(this.SchedulerDetailsData.FTPDetails);
-            }
-        }
+    SetSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
+        this.DataContext.SetSchedulerDetailsData(schedulerDetailsData);
     }
 
     StartTimeTabTitle: string = "One Time";
@@ -190,18 +181,21 @@ export class AddEditTaskSchedulerComponent  {
     OKButtonClicked() {
 
 
-        if (this.Type == "FTP") {
+        var errors: string[] = [];
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+
+        if (this.DataContext.Type == "FTP") {
             this.DataContext.ServiceClassName = "ServiceClassName";
-            if (this.SchedulerDetailsData.FTPDetails.Host != this.DataContext.Host) {
-                this.SchedulerDetailsData.FTPDetails.Host = this.DataContext.Host;
-                this.EntityPM.IsDirty = true;
+
+            if (AppTool.IsNullOrEmpty(this.DataContext.From)) {
+                errors.push(msg.replace("%FieldName", "From"));
             }
+
         }
 
-
-        var errors: string[] = [];
         Validator.TryValidateObject(this.DataContext.EntityPM, this.ObjectTableName, errors);
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
         
         if (AppTool.IsNullOrEmpty(this.DataContext.Name)) {
             errors.push(msg.replace("%FieldName", "Name"));
@@ -222,6 +216,11 @@ export class AddEditTaskSchedulerComponent  {
         if (AppTool.IsNullOrEmpty(this.DataContext.TriggerType)) {
             errors.push(msg.replace("%FieldName", "Trigger Type"));
         }
+
+
+
+
+
         else {
             switch (this.DataContext.TriggerType) {
                 case "W":
@@ -244,7 +243,7 @@ export class AddEditTaskSchedulerComponent  {
 
 
 
-        this.EntityPM.SchedulerDetailsData = this.SchedulerDetailsData;
+        this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             SessionLocator.CurrentSession.StartBusyIndicatorSaving();
@@ -256,9 +255,9 @@ export class AddEditTaskSchedulerComponent  {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         SessionLocator.CurrentSession.CloseCurrentWindow();
-                        //this.EntityPM = myResult;
-                        //this.EntityPM.IsDirty = false;
-                        this.DataContext.fatherComponent.GetTasksSchedular();
+                        this.EntityPM = myResponse.Result;
+                        this.EntityPM.IsDirty = false;
+                        this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
                     }
 
                     else {
@@ -276,9 +275,10 @@ export class AddEditTaskSchedulerComponent  {
                     this.schedulerExtendedPMService.update(this.EntityPM).subscribe(myResult => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
-                            //this.EntityPM.IsDirty = false;
+                            this.EntityPM = myResponse.Result;
+                            this.EntityPM.IsDirty = false;
                             SessionLocator.CurrentSession.CloseCurrentWindow();
-                            this.DataContext.fatherComponent.GetTasksSchedular();
+                            this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
                         }
 
                         else {

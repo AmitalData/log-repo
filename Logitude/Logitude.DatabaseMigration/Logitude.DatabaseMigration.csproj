@@ -766,6 +766,10 @@
     <Compile Include="Migrations\201903171619213_AddShipmentARInvoicesField.Designer.cs">
       <DependentUpon>201903171619213_AddShipmentARInvoicesField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903180648027_AddInactiveFieldToTMBudget_Samar.cs" />
+    <Compile Include="Migrations\201903180648027_AddInactiveFieldToTMBudget_Samar.Designer.cs">
+      <DependentUpon>201903180648027_AddInactiveFieldToTMBudget_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201903180911133_AddWarehouseEntryVolumetricWeightField.cs" />
     <Compile Include="Migrations\201903180911133_AddWarehouseEntryVolumetricWeightField.Designer.cs">
       <DependentUpon>201903180911133_AddWarehouseEntryVolumetricWeightField.cs</DependentUpon>
@@ -1288,6 +1292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903171619213_AddShipmentARInvoicesField.resx">
       <DependentUpon>201903171619213_AddShipmentARInvoicesField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903180648027_AddInactiveFieldToTMBudget_Samar.resx">
+      <DependentUpon>201903180648027_AddInactiveFieldToTMBudget_Samar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903180911133_AddWarehouseEntryVolumetricWeightField.resx">
       <DependentUpon>201903180911133_AddWarehouseEntryVolumetricWeightField.cs</DependentUpon>
