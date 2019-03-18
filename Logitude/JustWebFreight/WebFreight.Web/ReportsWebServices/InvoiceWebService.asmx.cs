@@ -1235,6 +1235,7 @@ namespace WebFreight.Web.ReportsWebServices
                         case "PD":
                         case "PP":
                         case "AR":
+                        case "AC":
                             {
                                 currentInvoice.IsPrinted = true;
                                 break;
@@ -2745,6 +2746,7 @@ namespace WebFreight.Web.ReportsWebServices
                             case "PD":
                             case "PP":
                             case "AR":
+                            case "AC":
                                 {
                                     entityPOCO.IsPrinted = true;
                                     break;
