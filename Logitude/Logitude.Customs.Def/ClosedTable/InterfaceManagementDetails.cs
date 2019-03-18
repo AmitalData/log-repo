@@ -2414,7 +2414,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "1035",
                 InOut = InOutEnum.I.ToString(),
                 Description = "משוב לבקשת העברה",
-                DcaPrefixName = "GP_MSG02_GatepassFeedbackMessage_Out.",
+                DcaPrefixName = "SendGP_MSG1035_GatepassFeedbackMessage_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
