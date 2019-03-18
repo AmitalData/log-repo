@@ -111,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tasks Scheduler",
-			      				    Code =  "73bb",
+			      				    Code =  "2c77",
 			      				    Name =  "TasksScheduler",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -1659,6 +1659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "SchedulerDetailsData",
+					  						OldFieldName =  "SchedulerDetailsData",
 					  						ObjectTableName =  "TasksScheduler",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1678,6 +1679,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SchedulerDetailsData",
 					  						ListPropertyPath =  "SchedulerDetailsData",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1726,6 +1728,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable TasksSchedulerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TasksScheduler" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature TasksSchedulerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TasksSchedulerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TasksSchedulerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TasksSchedulerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.PackageFeature", NameTextCodeDefaultText = "TasksScheduler Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature TasksSchedulerFeature_TASK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASK", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.TASK", NameTextCodeDefaultText = @"Task" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature TasksSchedulerFeature_FTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FTP", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.FTP", NameTextCodeDefaultText = @"FTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}
