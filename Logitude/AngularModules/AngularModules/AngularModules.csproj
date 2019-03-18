@@ -736,6 +736,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\SchedulerExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\WebhookKeysExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportFolderListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportListService.ts" />
