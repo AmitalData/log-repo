@@ -195,6 +195,14 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
             }
 
+            if (isNewState)
+            {
+                if (entityPM.NewConcurrencyGUID == null)
+                {
+                    entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                }
+            }
+
             entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
         }
