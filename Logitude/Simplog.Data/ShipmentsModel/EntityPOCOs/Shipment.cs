@@ -730,7 +730,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string OnCarriageAdditionalTransportModeCode { get; set; }
         public virtual PickUpDeliveryTransportMode OnCarriageAdditionalTransportMode { get; set; }
-                
+
         public DateTime? FirstPickupETD { get; set; }
         public DateTime? FirstPickupETA { get; set; }
         public bool SplitOnCarriage { get; set; }
@@ -763,5 +763,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Address FreightPayerAddress { get; set; }
 
         public bool HasContainerException { get; set; }
+        public string ARInvoices { get; set; }
     }
 }

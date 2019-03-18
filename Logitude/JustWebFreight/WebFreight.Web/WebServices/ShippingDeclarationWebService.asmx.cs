@@ -135,6 +135,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.CompleteShipmentType = shipment.TransportModeName + " " + shipment.DirectionName;
                 myDataProvider.ChargeableWeight = shipment.ChargeableWeight;
                 myDataProvider.ProjectNumber = shipment.ProjectNumber;
+                myDataProvider.ARInvoices = shipment.ARInvoices;
 
                 if (shipment.DocumentsClosingDate != null)
                 {
@@ -415,7 +416,29 @@ namespace WebFreight.Web.WebServices
                 #endregion
 
                 #region Freight Location
-                if (!string.IsNullOrEmpty(shipment.FreightLocationId))
+                if(!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
+                {
+                    Card WarehouseLeg = (from a in commonContext.Cards
+                                         where a.Id == shipment.WarehouseLegWarehouseId
+                                         select a).FirstOrDefault();
+
+                    if (WarehouseLeg != null)
+                    {
+                        myDataProvider.FreightLocationAddress = WarehouseLeg.EnglishName;
+
+                        if (!string.IsNullOrEmpty(shipment.WarehouseLegAddressId))
+                        {
+                            Address warehouseAddress = addressRepository.GetSingleAddress(shipment.WarehouseLegAddressId, tenant);
+
+                            if (warehouseAddress != null)
+                            {
+                                myDataProvider.FreightLocationAddress += Environment.NewLine + DataProviders.General.GetAddress(warehouseAddress);
+                            }
+                        }
+                    }
+                }
+
+                else if (!string.IsNullOrEmpty(shipment.FreightLocationId))
                 {
                     Card freightLocationWarehouse = (from a in commonContext.Cards where a.Id ==  shipment.FreightLocationId select a).FirstOrDefault();
                     Address freightLocationWarehouseAddress = addressRepository.GetMainAddressByCardId(shipment.FreightLocationId, tenant);
@@ -716,6 +739,17 @@ namespace WebFreight.Web.WebServices
                     if (trucker != null)
                     { 
                         myDataProvider.CarrierNumber = trucker.Card.EnglishName + " " + shipment.MainCarriageCarrierNumber;
+                    }
+                }
+                #endregion
+
+                #region IssuingCarrier
+                if (!string.IsNullOrEmpty(shipment.IssuingCarrierAgentId))
+                {
+                    Card myIssuingCarrier = (from a in commonContext.Cards where a.Id == shipment.IssuingCarrierAgentId select a).FirstOrDefault();
+                    if(myIssuingCarrier != null)
+                    {
+                        myDataProvider.IssuingCarrierAgentName = myIssuingCarrier.EnglishName;
                     }
                 }
                 #endregion

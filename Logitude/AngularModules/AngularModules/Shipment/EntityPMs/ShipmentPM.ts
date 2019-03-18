@@ -4224,6 +4224,15 @@ export class ShipmentPM {
         }
     }
 
+    private aRInvoices: string;
+    public get ARInvoices() { return this.aRInvoices; }
+    public set ARInvoices(newValue: string) {
+        if (this.aRInvoices != newValue) {
+            this.aRInvoices = newValue;
+            this.MarkAsDirty("ARInvoices");
+        }
+    }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

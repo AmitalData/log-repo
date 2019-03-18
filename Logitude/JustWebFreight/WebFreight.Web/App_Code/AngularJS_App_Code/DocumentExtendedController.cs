@@ -19,10 +19,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-                Authentication();
+                Authentication(tenant);
+
                 DocumentRepository documentRepository = new DocumentRepository(tenant);
                 Document document = documentRepository.GetSingleDocument(tenant, documentId);
                 return Request.CreateResponse(HttpStatusCode.OK, document);
+
+
+
             }
             catch (Exception ex)
             {
@@ -34,7 +38,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-                Authentication();
+                Authentication(tenant);
+
                 DocumentRepository documentRepository = new DocumentRepository(tenant);
                 Document document = documentRepository.GetSingleDocument(tenant, documentId);
                 documentRepository.Remove(document);
@@ -49,14 +54,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
 
-
-
-        private static void Authentication()
+        private static void Authentication(int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            //SecurityUtility.CheckContactFeature("Document", "READ", authToken.Tenant);
+            if (tenant != authToken.Tenant)
+            {
+                throw new Exception("Sorry! this user is not authorized!");
+            }
         }
 
 
