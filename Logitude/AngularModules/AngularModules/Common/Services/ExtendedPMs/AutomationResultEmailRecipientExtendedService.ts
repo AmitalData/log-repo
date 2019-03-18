@@ -54,19 +54,31 @@ export class AutomationResultEmailRecipientExtendedService {
 
 
 
-    update(items: any) {
+
+
+    update(items: AutomationArgs[]) {
         return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
             authHeader.append('Content-Type', 'application/json');
+    
 
+            //var resultEmailRecipientPMLists: AutomationResultEmailRecipientPM[] = [];
+            //if (items) {
+            //    items.forEach((item) => {
+            //        var mappedEntity = this.MapJsonToEntityPM(item);
+            //        resultEmailRecipientPMLists.push(mappedEntity);
+            //    });
+            //}
             return this._http.put(this._apiUrl + '/putautomationresultemailrecipient', JSON.stringify(items),
                 { headers: authHeader }).map((res) => {
+                    var result = res.json();
 
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();
-                    var pm = res.json();
+                    serviceResponse.Result = result;
                     return serviceResponse;
+
                 }).catch(ServiceHelper.HandleServiceError);
         }
         );
