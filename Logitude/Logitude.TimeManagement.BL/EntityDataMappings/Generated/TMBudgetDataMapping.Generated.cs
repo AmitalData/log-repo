@@ -25,7 +25,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         SearchFields, 
-	         Name,
+	         Name, 
+	         Inactive,
 	      }
 
 
@@ -35,7 +36,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         SearchFields, 
-	         Name,
+	         Name, 
+	         Inactive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -57,6 +59,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
             {
 				entityPOCO.Name = entityPM.Name;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+				entityPOCO.Inactive = entityPM.Inactive;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -85,6 +92,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 					entityPM.Name = entityPOCO.Name;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
+            {
+					entityPM.Inactive = entityPOCO.Inactive;
+            }
+
 		}
 
 		public void PMToOldPM(TMBudgetPM entityPM, TMBudgetPM oldEntityPM)
@@ -104,6 +116,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
             {
                 oldEntityPM.Name = entityPM.Name;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+                oldEntityPM.Inactive = entityPM.Inactive;
             }
 			
 		}

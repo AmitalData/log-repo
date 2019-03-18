@@ -329,12 +329,15 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
 
     AddNewEntityClicked() {
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            SessionLocator.CurrentSession.CloseCurrentWindow(); 
+
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;            
             logWindow.Title = this.NewEntityButtonLabel;
 
             logWindow.WindowClosed.subscribe((event: any) => {
+                SessionLocator.CurrentSession.FireEvent("NewAirlineShippingLineClosed");
                 CachedDataManager.RefreshTableData(this.ObjectTableName, true);
             });
 
