@@ -43,6 +43,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RunResult = a.RunResult,
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        EndDateTimeUTC = a.EndDateTimeUTC
 
                     }).FirstOrDefault();
         }
@@ -60,6 +62,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RunResult = a.RunResult,
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        EndDateTimeUTC = a.EndDateTimeUTC
                     }).FirstOrDefault();
         }
 
@@ -76,6 +80,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RunResult = a.RunResult,
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        EndDateTimeUTC = a.EndDateTimeUTC
                     }).FirstOrDefault();
         }
 
@@ -93,6 +99,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RunResult = a.RunResult,
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        EndDateTimeUTC = a.EndDateTimeUTC
                     }).ToList();
         }
 
@@ -109,6 +117,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                               RunResult = a.RunResult,
                                                               StartDateTime = a.StartDateTime,
                                                               TaskId = a.TaskId,
+                                                              StartDateTimeUTC = a.StartDateTimeUTC,
+                                                              EndDateTimeUTC = a.EndDateTimeUTC
                                                           };
             return result;
         }

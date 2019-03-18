@@ -42,6 +42,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.RunResult).HasColumnName("RunResult");
             this.Property(t => t.StartDateTime).HasColumnName("StartDateTime");
             this.Property(t => t.TaskId).HasColumnName("TaskId");
+            this.Property(t => t.StartDateTimeUTC).HasColumnName("StartDateTimeUTC");
+            this.Property(t => t.EndDateTimeUTC).HasColumnName("EndDateTimeUTC");
 
             this.HasRequired(t => t.TaskScheduler).WithMany()
                .HasForeignKey(d => d.TaskId)

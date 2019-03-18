@@ -14,5 +14,7 @@ export class TaskSchedulerHistoryList {
 		RunResult: string;
 		TaskId: string;
 		IsError: boolean;
+		StartDateTimeUTC: Date;
+		EndDateTimeUTC: Date;
 	
 }
