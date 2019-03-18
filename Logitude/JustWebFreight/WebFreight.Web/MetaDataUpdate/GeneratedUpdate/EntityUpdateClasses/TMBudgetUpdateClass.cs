@@ -84,6 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    OldDBTableName =  "TMBudgetManagements",
 			      				    ObjectTableSingular =  "TMBudget",
 			      				    ObjectTablePlural =  "TMBudgets",
+			      				    DescriptionDefaultText =  "Define and manage the budget of all projects.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -113,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Budget",
-			      				    Code =  "0798",
+			      				    Code =  "17f3",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "TimeManagement",
@@ -142,7 +143,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -184,6 +187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -198,12 +202,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  70,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  70,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -218,6 +224,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TMBudget",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -239,13 +246,97 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Inactive",
+					  						OldFieldName =  "Inactive",
+					  						ObjectTableName =  "TMBudget",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Inactive",
+					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TMBudget",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Inactive",
+					  						DefaultText =  "Inactive",
+					  						ListFieldLable =  "InactiveListLable",
+					  						ListLableDefaultText =  "Inactive",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup TMBudgetQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "17f3", Name = " Query Group" }, queryGroupRepository);
+						QueryGroup TMBudgetQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9d64", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable TMBudgetObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TMBudget" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> TMBudgetObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TMBudget").ToList();   
+
+			   TextCode TMBudgetTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMBudget.Q.AllBudgets", DefaultText = @"All Budgets",LocalDefaultText = "All Budgets", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature TMBudgetFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMBudget.Q.AllBudgets", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudgetFeatures.AllBudgets", NameTextCodeDefaultText = "All Budgets", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AllBudgetsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMBudgetTextCode_0.Id, Code = "All Budgets",  QueryGroupCode = "17f3", IndexOrder = 0, Tenant = 0, ObjectTableId = TMBudgetObjectTable.Id, QuerySection = "TMBudget", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMBudgetFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn AllBudgetsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBudgetsQuery.Id, IndexOrder = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TMBudgetObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllBudgetsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBudgetsQuery.Id, IndexOrder = 1, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TMBudgetObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -256,10 +347,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TMBudgetGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMBudget.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TMBudgetObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen TMBudgetGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMBudget.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TMBudgetObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
             ScreenField TMBudgetGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMBudgetGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField TMBudgetGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TMBudgetGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
+	      
+
+	         Screen TMBudgetTMBudgetHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMBudget.HeaderScreen", Name = "TMBudgetHeaderScreen", ObjectTableId = TMBudgetObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField TMBudgetTMBudgetHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField TMBudgetTMBudgetHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    TMBudgetObjectTable.HeaderScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id;
+	   		  
 
 	    }
 
@@ -270,12 +373,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode TMBudgetGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMBudget.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TMBudgetGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMBudget.Tab.General", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudgetFeatures.GEBG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode TMBudgetEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMBudget.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature TMBudgetEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMBudget.Tab.Events", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudgetFeatures.EVBG", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GEBG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMBudgetGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TMBudgetObjectTable.Id, TabNameTextCodeId = TMBudgetGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVBG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMBudgetEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TMBudgetObjectTable.Id, TabNameTextCodeId = TMBudgetEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
