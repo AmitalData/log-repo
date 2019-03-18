@@ -126,4 +126,22 @@ export class SettingsWorkspaceComponent {
                 });
         });
     }
+
+    BudgetClicked() {
+        var displayTitle = "All Budgets";
+        var code = "All Budgets";
+        var listArgs = new ListComponentArgs();
+        listArgs.QueryCode = code;
+        listArgs.ObjectTableName = "TMBudget";
+        listArgs.DisplayTitle = displayTitle;
+        listArgs.BackButtonTitle = "Settings";
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
+    }
 }

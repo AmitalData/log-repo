@@ -1032,13 +1032,15 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     public RunVatTypeFilterMethod() {
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
+            var vatType = this.VatTypeId;
+            this.VatTypeId = null;
+
             if (this.ItemsSource != null) {
                 this.ItemsSource.Collection.forEach(item => {
-                    item.VatTypeId = this.VatTypeId;
+                    item.VatTypeId = vatType;
                 });
             }
-
-            this.VatTypeId = null;
+                        
             this.ComputeTotals();
         }
     }

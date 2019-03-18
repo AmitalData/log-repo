@@ -46,8 +46,12 @@ export class TaskSchedulerComponent  {
 
   
     public RefreshTasksSchedular(entityPM: TasksSchedulerPM) {
-        this.loadedDataList = this.loadedDataList.filter(d => d.Id != entityPM.Id);
-        this.loadedDataList.push(entityPM);
+        var index = this.loadedDataList.indexOf(entityPM);
+        if (index > -1) {
+            this.loadedDataList[index] = entityPM;
+        } else this.loadedDataList.push(entityPM);
+
+       
         this.BuildItemsSource();
 
     }
@@ -103,7 +107,7 @@ export class TaskSchedulerComponent  {
         newItem.TriggerType = "O";
         newItem.Type = "Task";
         var logWindow = new LogitudeWindow();
-        logWindow.Height = 570;
+        logWindow.Height = newItem.Type == "Task" ? 570 : 645 ;
         logWindow.Width = 800;
         logWindow.Title = "Task Scheduler Details";
         logWindow.DataContext = new TaskSchedulerItemClass(newItem, this, true);
@@ -119,7 +123,7 @@ export class TaskSchedulerComponent  {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Task Scheduler Details";
         logWindow.DataContext = item;
-        logWindow.Height = 570;
+        logWindow.Height = item.Type == "Task" ? 570 : 645;
         logWindow.Width = 800;
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
         logWindow.WindowClosed.subscribe(s => {
@@ -143,16 +147,11 @@ export class TaskSchedulerItemClass extends BaseComponent {
     public ObjectTableName: string = "TasksScheduler";
     public IsNew: boolean = false;
 
-    Host: string;
-    Folder: string;
-    UserName: string;
-    Password: string;
-    From: string;
-    Subject: string;
-    Prefix: string;
-    Extension: string;
+ 
 
 
+    FTPDetails: FTPSchedulerDetails;
+    SchedulerDetailsData: SchedulerDetails = new SchedulerDetails();
     constructor(item: TasksSchedulerPM, public fatherComponent: TaskSchedulerComponent, isNew: boolean = false) {
         super();
         this.EntityPM = item;
@@ -272,14 +271,112 @@ export class TaskSchedulerItemClass extends BaseComponent {
     }
 
 
-    SetFTPSchedulerDetails(fTPDetails: FTPSchedulerDetails) {
-        this.Host = fTPDetails.Host;
-        this.Folder = fTPDetails.Folder;
-        this.UserName = fTPDetails.UserName;
-        this.Password = fTPDetails.Password;
-        this.From = fTPDetails.From;
-        this.Subject = fTPDetails.Subject;
-        this.Prefix = fTPDetails.Prefix;
-        this.Extension = fTPDetails.Extension;
+    get Type() {
+        return this.EntityPM.Type ? this.EntityPM.Type : "";
+    }
+   
+    get Host() {
+        return this.FTPDetails ? this.FTPDetails.Host : "";
+    }
+    set Host(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Host != newValue) {
+            this.FTPDetails.Host = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+    get Folder() {
+        return this.FTPDetails ? this.FTPDetails.Folder : "";
+    }
+    set Folder(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Folder != newValue) {
+            this.FTPDetails.Folder = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+    get UserName() {
+        return this.FTPDetails ? this.FTPDetails.UserName : "";
+    }
+    set UserName(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.UserName != newValue) {
+            this.FTPDetails.UserName = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+
+    get Password() {
+        return this.FTPDetails ? this.FTPDetails.Password : "";
+    }
+    set Password(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Password != newValue) {
+            this.FTPDetails.Password = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+
+    get From() {
+        return this.FTPDetails ? this.FTPDetails.From : "";
+    }
+    set From(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.From != newValue) {
+            this.FTPDetails.From = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+
+    get Subject() {
+        return this.FTPDetails ? this.FTPDetails.Subject : "";
+    }
+    set Subject(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Subject != newValue) {
+            this.FTPDetails.Subject = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+    get Prefix() {
+        return this.FTPDetails ? this.FTPDetails.Prefix : "";
+    }
+    set Prefix(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Prefix != newValue) {
+            this.FTPDetails.Prefix = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+    get Extension() {
+        return this.FTPDetails ? this.FTPDetails.Extension : "";
+    }
+    set Extension(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Extension != newValue) {
+            this.FTPDetails.Extension = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+
+    SetSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
+        this.SchedulerDetailsData = schedulerDetailsData;
+        if (schedulerDetailsData) {
+            if (this.EntityPM.Type == "FTP") {
+                if (!schedulerDetailsData.FTPDetails) {
+                    schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
+                }
+                this.FTPDetails = schedulerDetailsData.FTPDetails;
+
+
+            }
+        }
     }
 }

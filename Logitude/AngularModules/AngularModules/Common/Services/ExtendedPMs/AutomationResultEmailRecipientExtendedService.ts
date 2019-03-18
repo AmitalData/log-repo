@@ -54,13 +54,14 @@ export class AutomationResultEmailRecipientExtendedService {
 
 
 
+
+
     update(items: AutomationArgs[]) {
         return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
             authHeader.append('Content-Type', 'application/json');
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
+    
 
             //var resultEmailRecipientPMLists: AutomationResultEmailRecipientPM[] = [];
             //if (items) {
@@ -71,8 +72,13 @@ export class AutomationResultEmailRecipientExtendedService {
             //}
             return this._http.put(this._apiUrl + '/putautomationresultemailrecipient', JSON.stringify(items),
                 { headers: authHeader }).map((res) => {
-                    var pm = res.json();
+                    var result = res.json();
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = result;
                     return serviceResponse;
+
                 }).catch(ServiceHelper.HandleServiceError);
         }
         );
