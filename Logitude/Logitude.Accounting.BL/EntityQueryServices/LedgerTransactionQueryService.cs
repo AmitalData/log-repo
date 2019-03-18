@@ -517,9 +517,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, int year, int openMonth, int closedMonth, int tenant)
+        public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, DateTime closedDate, DateTime openDate, int tenant)
         {
-            return repository.GetClosedPeriodTransactions(accountId, year, openMonth, closedMonth, tenant);
+            return repository.GetClosedPeriodTransactions(accountId, closedDate, openDate, tenant);
         }
 
         public List<B100Data> GetTransactionsByDate( DateTime fromDate, DateTime toDate, int tenant)

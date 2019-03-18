@@ -80,6 +80,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             return lists;
         }
+        public List<AccountingPeriodPM> GetAccountingPeriodsByTenantAndType(string periodTypeCode, int tenant)
+        {
+            List<AccountingPeriod> accountingPeriods = null;
+            accountingPeriods = repository.GetAccountingPeriodsByTenantAndType(periodTypeCode, tenant);
+            List<AccountingPeriodPM> pms = accountingPeriods.Select(poco => GetEntityPM(poco)).ToList();
+            return pms;
+        }
         public List<AccountingPeriodPM> GetAccountingPeriodByType(string periodTypeCode, int tenant)
         {
             List<AccountingPeriod> accountingPeriods = null;
