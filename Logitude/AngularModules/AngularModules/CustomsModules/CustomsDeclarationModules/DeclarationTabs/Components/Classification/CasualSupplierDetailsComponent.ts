@@ -27,7 +27,7 @@ export class CasualSupplierDetailsComponent extends BaseComponent {
 
     constructor() {
         super();
-
+        this.UIProperties.SetEnabled("CasualSupplierName", this.ObjectTableName, false);
 
     }
 
