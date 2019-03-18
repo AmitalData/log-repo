@@ -20,7 +20,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(GatepassRequestPM entityPM)
         {
-            if(entityPM.UpdateCode == "1")
+            if(entityPM.UpdateCode == "1" && string.IsNullOrEmpty(entityPM.GatepassRequestStatus))
             {
                 entityPM.GatepassNumber = CodeCounter.GetNumber("Customs.GatepassRequest", entityPM.Tenant);
             }

@@ -15,11 +15,13 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.Customs.BL.Validators
 {
     public class CustomsRequiredFieldsValidator
     {
+
         public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForDeclaration(string declarationId, int tenant, DeclarationPM declarationPM = null)
         {
             DeclarationPM declaration = null;
