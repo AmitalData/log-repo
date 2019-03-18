@@ -3,12 +3,15 @@ import {EditBatchServiceComponent} from './Components/BatchService/EditBatchServ
 import {TaskSchedulerComponent} from './Components/TaskScheduler/TaskSchedulerComponent';
 import {AddEditTaskSchedulerComponent} from './Components/TaskScheduler/AddEditTaskSchedulerComponent';
 
+import {MainSchedulerComponent} from './Components/TaskScheduler/MainSchedulerComponent';
+
 export const Components =
     [
         BatchServicesComponent,
         TaskSchedulerComponent,
         AddEditTaskSchedulerComponent,
         EditBatchServiceComponent,
+        MainSchedulerComponent,
     ];
 
 export class ModuleDeclarations {
@@ -21,6 +24,7 @@ export class ModuleDeclarations {
             case "TaskSchedulerComponent": { myResult = TaskSchedulerComponent; break; }
             case "AddEditTaskSchedulerComponent": { myResult = AddEditTaskSchedulerComponent; break; }
             case "EditBatchServiceComponent": { myResult = EditBatchServiceComponent; break; }
+            case "MainSchedulerComponent": { myResult = MainSchedulerComponent; break; }
         }
 
         return myResult;

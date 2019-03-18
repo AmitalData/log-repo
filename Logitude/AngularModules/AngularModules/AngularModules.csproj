@@ -261,6 +261,7 @@
     <Content Include="Images\numberIcon.png" />
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
+    <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
@@ -654,6 +655,7 @@
     <TypeScriptCompile Include="e2e\CRM\CRMModule-spec.ts" />
     <TypeScriptCompile Include="e2e\CRM\CRMModule.ts" />
     <TypeScriptCompile Include="e2e\CRM\Opportunities\NewOpportunity.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.ts" />
