@@ -126,17 +126,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        protected override void AfterUpdating(TaxReportPM entityPM, EntityPM entityParentPM) {
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+        protected override void AfterUpdating(TaxReportPM entityPM, EntityPM entityParentPM)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
+            TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
+                List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
+                TaxReportService.CalculateReportTotals(entityPM, lines);
+                entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                taxReportUpdateService.Update(entityPM, true);
             }
+
         }
 
         protected override void OnUpdating(TaxReportPM entityPM, TaxReport entityPOCO)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
             TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
 
             if (entityPOCO.IsCancelled == false && entityPM.IsCancelled == true)
             {
@@ -146,27 +156,51 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                // recalculate totals
-                List<TaxReportLineList> lines = (reportLineListQueryService.GetReportLines(entityPM.Id, entityPOCO.Tenant)).ToList();
-
-
-                entityPM.TaxableOutputAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
-                entityPM.OutputTaxAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
-                entityPM.ExemptTaxableOutput = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
-                entityPM.OutputLinesCount = lines.Where(d => d.OutputOrInput == "O").Count();
-                entityPM.OtherInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
-                entityPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1" ).Count();
-                entityPM.EquipmentInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
 
                 //updates
                 if (!entityPM.IsNew)
                 {
                     entityPM.LastUpdateDate = DateTime.Now;
+
+                    // update totals
+                    List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(entityPM.Id, entityPM.Tenant).ToList();
+                    List<TaxReportLinePM> linesPM = new List<TaxReportLinePM>();
+                    lines.ForEach(d =>
+                    {
+                        var item = new TaxReportLinePM()
+                        {
+                            Tenant = d.Tenant,
+                            LastUpdateDateTime = d.LastUpdateDateTime,
+                            UpdatedByUserId = d.UpdatedByUserId,
+                            SearchFields = d.SearchFields,
+                            TaxReportId = d.TaxReportId,
+                            Line = d.Line,
+                            OutputOrInput = d.OutputOrInput,
+                            LineTypeCode = d.LineTypeCode,
+                            VatNumber = d.VatNumber,
+                            Reference = d.Reference,
+                            ReferecneGroup = d.ReferecneGroup,
+                            ReferenceDate = d.ReferenceDate,
+                            VatAmount = d.VatAmount,
+                            VatableInvoiceAmount = d.VatableInvoiceAmount,
+                            StatusCode = d.StatusCode,
+                            TransmitStatusCode = d.TransmitStatusCode,
+                            JournalId = d.JournalId,
+                            IsManuallyChanged = d.IsManuallyChanged,
+                            IsEquipment = d.IsEquipment,
+                            StatusLocalName = d.StatusLocalName,
+                            StatusEnglishName = d.StatusEnglishName,
+                            JournalNumber = d.JournalNumber
+                        };
+                        linesPM.Add(item);
+                    });
+                    TaxReportService.CalculateReportTotals(entityPM, linesPM);
+                    entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                    taxReportUpdateService.Update(entityPM, true);
                 }
                 entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
 
             }
-
 
             base.OnUpdating(entityPM, entityPOCO);
         }
