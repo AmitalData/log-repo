@@ -57,7 +57,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     "CustomerAddress",
                     "DestLineDesc",
                     "DestLineCode",
-                    "DeclarationId",
+                    ///במסר שטר מטען בלדר תאורטי שדה מס' הצהרה יהפוך להיות O במקום M יש להוריד את הבדיקה של השדה משדות החובה- אפיון  "DeclarationId",
                     "BaldarHp",
                     "OpenBaldarAwbDate"
                             }
