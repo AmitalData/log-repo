@@ -29,6 +29,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -595,7 +597,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                 else
                                 {
-                                    IQueryable<ShipmentList> myResult = myDomainService.GetShipmentFilters(arrayOfBytes, tenant);
+                                    //IQueryable<ShipmentList> myResult = myDomainService.GetShipmentFilters(arrayOfBytes, tenant);
+
+                                    IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
+                                    IQueryable<Shipment> iQueryable = (from d in iContext.Shipments where d.Tenant == tenant select d);
+
+                                    if (!string.IsNullOrEmpty(SearchFields))
+                                    {
+                                        iQueryable = iQueryable.Where(d => d.SearchFields != null);
+                                        iQueryable = iQueryable.Where(d => d.SearchFields.ToLower().Contains(SearchFields.ToLower()));
+                                    }
+
+                                    iQueryable = iQueryable.OrderByDescending(d => d.CreateDateTime);
+                                    iQueryable = System.Data.Entity.QueryableExtensions.Skip(iQueryable, () => 0);
+                                    iQueryable = System.Data.Entity.QueryableExtensions.Take(iQueryable, () => 10);
+
+                                    List<ShipmentList> myResult = (from x in iQueryable.Include("Direction").Include("TransportMode").Include("CustomerCard")
+                                                                   select new ShipmentList()
+                                                                   {
+                                                                       Id = x.Id,
+                                                                       Tenant = x.Tenant,
+                                                                       ShipmentNumber = x.ShipmentNumber,
+                                                                       DirectionId = x.DirectionId,
+                                                                       TransportModeId = x.TransportModeId,
+                                                                       CustomerId = x.CustomerId,
+                                                                       DirectionName = x.Direction == null ? null : x.Direction.Name,
+                                                                       TransportModeName = x.TransportMode == null ? null : x.TransportMode.Name,
+                                                                       CustomerName = x.CustomerCard == null ? null : x.CustomerCard.EnglishName,
+                                                                   }).ToList();
+
                                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                                 }
 
