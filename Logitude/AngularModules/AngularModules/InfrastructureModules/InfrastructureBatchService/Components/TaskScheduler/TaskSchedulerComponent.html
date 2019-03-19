@@ -20,7 +20,7 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 85px;">
+                    <td *ngIf="HasUTCFeature == true" style="width: 85px;">
                         <button class="Button" (click)="ShowUTCTimesClicked()">{{ShowUTCTimesLabel}}</button>
                     </td>
 

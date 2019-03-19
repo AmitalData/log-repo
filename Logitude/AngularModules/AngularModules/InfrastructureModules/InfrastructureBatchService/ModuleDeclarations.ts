@@ -4,7 +4,8 @@ import {TaskSchedulerComponent} from './Components/TaskScheduler/TaskSchedulerCo
 import {AddEditTaskSchedulerComponent} from './Components/TaskScheduler/AddEditTaskSchedulerComponent';
 
 import { MainSchedulerComponent } from './Components/TaskScheduler/MainSchedulerComponent';
-import { SchedulerDateListTemplate } from './Components/TaskScheduler/SchedulerDateListTemplate';
+import { SchedulerDateListTemplate } from './Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate';
+import { SchedulerDurationListTemplate } from './Components/TaskScheduler/ListTemplates/SchedulerDurationListTemplate';
 
 
 export const Components =
@@ -29,6 +30,7 @@ export class ModuleDeclarations {
             case "EditBatchServiceComponent": { myResult = EditBatchServiceComponent; break; }
             case "MainSchedulerComponent": { myResult = MainSchedulerComponent; break; }
             case "SchedulerDateListTemplate": { myResult = SchedulerDateListTemplate; break; }
+            case "SchedulerDurationListTemplate": { myResult = SchedulerDurationListTemplate; break; }
 
         }
 

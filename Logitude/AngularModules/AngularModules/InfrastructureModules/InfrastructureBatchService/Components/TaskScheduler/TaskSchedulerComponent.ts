@@ -10,6 +10,7 @@ import { SchedulerDetails, FTPSchedulerDetails } from '../../../../Infrastructur
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     moduleId: module.id,
@@ -27,8 +28,12 @@ export class TaskSchedulerComponent implements OnInit  {
     filterAgrs: ApiQueryFilters;
     ShowUTCTimesLabel: string = "Show UTC Time";
     ShowUTCTimeEnabled: boolean = false;
+    HasUTCFeature: boolean = false;
     constructor(private _entityListService: EntityListService) {
         this.infraDomainService = new InfrastructureDomainService();
+        if (FeatureLocator.HasFeaturePermession("TasksScheduler", "SHOWUTCBUTTON")) {
+            this.HasUTCFeature = true;
+        }
        
     }
 
@@ -171,7 +176,7 @@ export class TaskSchedulerComponent implements OnInit  {
                 Display: 'Start Date',
                 Styles: { width: '200px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
-                HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
+                HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: true,
                 SortByName: "StartDateTime"
@@ -182,7 +187,7 @@ export class TaskSchedulerComponent implements OnInit  {
                 Display: 'End Date',
                 Styles: { width: '200px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
-                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
+                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: true,
                 SortByName: "EndDateTime"
@@ -195,7 +200,7 @@ export class TaskSchedulerComponent implements OnInit  {
                 Display: 'Start Date UTC',
                 Styles: { width: '200px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
-                HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
+                HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: true,
                 SortByName: "StartDateTime"
@@ -206,12 +211,22 @@ export class TaskSchedulerComponent implements OnInit  {
                 Display: 'End Date UTC',
                 Styles: { width: '200px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
-                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
+                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: true,
                 SortByName: "EndDateTime"
             });
         }
+        this.columns.push({
+            FieldName: "Duration",
+            DataTypeCode: 'String',
+            Display: 'Duration',
+            Styles: { width: '200px' },
+            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true
+        });
         /////
         this.columns.push({
             FieldName: "RunResult",
