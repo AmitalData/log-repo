@@ -10677,6 +10677,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Category5Id = category5Id,
                 AccountTypeCode = ACCOUNT_TYPE_CODE,
                 SearchFields = searchFields,
+                DateTypeCode = _dateTypeCode,
                 //CallBack = xxxx,
             };
             var ledgerTransactionCardIndexService = new LedgerTransactionCardIndexService(accountingContext, myLedgerTransactionCardIndexFilter);
