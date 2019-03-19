@@ -108,17 +108,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (entityPM.ConvertShipmentToLCL)
                     {
-                        entityPM.ConvertShipmentToLCL = false;
-                        entityPM.ConvertShipmentToFCL = false;
-
                         this.CreateTraceEvent("CNFL", entityPM.EventNote);
                     }
 
-                    if (entityPM.ConvertShipmentToFCL)
+                    else if (entityPM.ConvertShipmentToFCL)
                     {
-                        entityPM.ConvertShipmentToLCL = false;
-                        entityPM.ConvertShipmentToFCL = false;
-
                         this.CreateTraceEvent("CNLF", entityPM.EventNote);
                     }
 
