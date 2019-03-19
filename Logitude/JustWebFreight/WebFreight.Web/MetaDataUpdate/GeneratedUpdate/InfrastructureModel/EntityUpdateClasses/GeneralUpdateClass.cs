@@ -111,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "25fd",
+			      				    Code =  "b8b9",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -521,6 +521,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_SHAREDINVOICES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDINVOICES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SharedInvoices", NameTextCodeDefaultText = @"Shared Logistics Invoices" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_EXTERNALAPIS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALAPIS", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ExternalAPIs", NameTextCodeDefaultText = @"External API" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_SCHEDULERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SCHEDULERS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Schedulers", NameTextCodeDefaultText = @"Schedulers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

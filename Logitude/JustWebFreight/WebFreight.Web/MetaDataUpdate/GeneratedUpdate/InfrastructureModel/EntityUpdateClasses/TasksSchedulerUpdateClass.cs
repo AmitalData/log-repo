@@ -1661,7 +1661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					 						FieldName =  "SchedulerDetailsData",
 					  						OldFieldName =  "SchedulerDetailsData",
 					  						ObjectTableName =  "TasksScheduler",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Byte[]",
 					  						MinLength =  0,
 					  						MaxLength =  5000,
 					  						IsRequired =  false,

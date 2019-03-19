@@ -22,6 +22,9 @@ export class TaskSchedulerComponent implements OnInit  {
     public HistoryItemsSource: TaskSchedulerHistoryList[] = []; 
     private loadedDataList: TasksSchedulerPM[] = [];
     private infraDomainService: InfrastructureDomainService;
+    IsEnableAddButton: boolean = false;
+
+   
     public columns: any[] = null;
     @Output() CustomColumnsReady = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
@@ -33,7 +36,8 @@ export class TaskSchedulerComponent implements OnInit  {
         this.infraDomainService = new InfrastructureDomainService();
         if (FeatureLocator.HasFeaturePermession("TasksScheduler", "SHOWUTCBUTTON")) {
             this.HasUTCFeature = true;
-        }
+		}
+		if (FeatureLocator.HasFeaturePermession("TasksScheduler", "NEW")) this.IsEnableAddButton = true;
        
     }
 
