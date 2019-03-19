@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr style="height: 1px;">
         <td>
@@ -133,48 +133,54 @@
                 <tr>
                     <td>
                         <div class="MediaFill">
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeader">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 200px; min-width: 200px; max-width: 200px;">Start Date Time</td>
-                                            <td style="width: 200px; min-width: 200px; max-width: 200px;">End Date Time</td>
-                                            <td style="width: 90px; min-width: 90px; max-width: 90px;">Run Result</td>
-                                            <td class="LastChild">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <div class="SimpleGridViewBody">
-                                    <table>
-                                        <tr class="SimpleGridViewRow" *ngFor="let item of HistoryItemsSource">
-                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                {{item.StartDateTime}}
-                                            </td>
-
-                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                {{item.EndDateTime}}
-                                            </td>
-
-                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
-                                                {{item.RunResult}}
-                                            </td>
-                                            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="4">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+                            <div style="background-color:white;border-radius: 0 0 0 7px;">
+                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'Shipment'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
+                                               [columns]="columns" [autoLoad]="true" [CustomColumnsReady]="CustomColumnsReady" [IsCustomTemplate] ="true"
+                                               >
+                                </logitude-grid>
                             </div>
+                            <!--<div class="SimpleGridView">
+        <div class="SimpleGridViewHeader">
+            <table>
+                <tr>
+                    <td style="width: 200px; min-width: 200px; max-width: 200px;">Start Date Time</td>
+                    <td style="width: 200px; min-width: 200px; max-width: 200px;">End Date Time</td>
+                    <td style="width: 90px; min-width: 90px; max-width: 90px;">Run Result</td>
+                    <td class="LastChild">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="SimpleGridViewBody">
+            <table>
+                <tr class="SimpleGridViewRow" *ngFor="let item of HistoryItemsSource">
+                    <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                        {{item.StartDateTime}}
+                    </td>
+
+                    <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                        {{item.EndDateTime}}
+                    </td>
+
+                    <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                        {{item.RunResult}}
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>-->
                         </div>
                     </td>
                 </tr>

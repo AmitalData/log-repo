@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -6,23 +6,34 @@ import {InfrastructureDomainService} from '../../../../Infrastructure/Services/I
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TaskSchedulerHistoryList} from '../../../../Infrastructure/EntityLists/TaskSchedulerHistoryList';
 import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
-import {SchedulerDetails, FTPSchedulerDetails} from '../../../../Infrastructure/DataContracts/SchedulerDetails';
+import { SchedulerDetails, FTPSchedulerDetails } from '../../../../Infrastructure/DataContracts/SchedulerDetails';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+
 @Component({
     moduleId: module.id,
     templateUrl: './TaskSchedulerComponent.html',
 })
 
-export class TaskSchedulerComponent  {
+export class TaskSchedulerComponent implements OnInit  {
     public ItemsSource: TaskSchedulerItemClass[] = [];
     public HistoryItemsSource: TaskSchedulerHistoryList[] = []; 
     private loadedDataList: TasksSchedulerPM[] = [];
     private infraDomainService: InfrastructureDomainService;
-    constructor() {
-        this.infraDomainService = new InfrastructureDomainService();
+    public columns: any[] = null;
+    @Output() CustomColumnsReady = new EventEmitter();
+    @Output() MenuHeaderchangeevent = new EventEmitter();
+    filterAgrs: ApiQueryFilters;
 
+    constructor(private _entityListService: EntityListService) {
+        this.infraDomainService = new InfrastructureDomainService();
        
     }
 
+    ngOnInit() {
+        this.LoadTaskHistories();
+    }
 
     SchedulerType: string = "";
     public LoadData(schedulerType: string) {
@@ -85,7 +96,8 @@ export class TaskSchedulerComponent  {
         }
 
         else {
-            this.LoadHistoryList();
+            //this.LoadHistoryList();
+            this.LoadTaskHistories();
         }
     }
     
@@ -147,6 +159,129 @@ export class TaskSchedulerComponent  {
 
     CloseButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
+    }
+
+    BuildColumns() { 
+        this.columns = [];
+        this.columns.push({
+            FieldName: "StartDateTime",
+            DataTypeCode: 'String',
+            Display: 'Start Date',
+            Styles: { width: '200px' },
+            HtmlListComponentName: 'ReferenceNumberCellDisplayListTemplate',
+            HtmlListComponentUrl: './Shipment/Components/ListTemplates/ReferenceNumberCellDisplayListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: "StartDateTime"
+        });
+        this.columns.push({
+            FieldName: "EndDateTime",
+            DataTypeCode: 'String',
+            Display: 'End Date',
+            Styles: { width: '200px' },
+            HtmlListComponentName: 'ReferenceNumberCellDisplayListTemplate',
+            HtmlListComponentUrl: './Shipment/Components/ListTemplates/ReferenceNumberCellDisplayListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: "EndDateTime"
+        });
+        this.columns.push({
+            FieldName: "RunResult",
+            DataTypeCode: 'String',
+            Display: 'Run Result',
+            Styles: { width: '200px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false
+        });
+         
+        this.CustomColumnsReady.emit(this.columns);
+    }
+
+    DataSource = {
+        pageSize: 20,
+        rowCount: null,
+       
+        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+          
+            return tempo;
+        },
+    };
+
+    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+       
+        filters = new ApiQueryFilters();
+        //filters.SortBy = "StatusDate";
+        //filters.SortDirection = "Descending";
+        
+        if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
+            if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+                filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+            }
+            this.filterAgrs.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Contains", true, false, false, "String");
+        }
+         
+
+
+        filters.GetCount = getCount;
+        filters.PageIndex = skip;
+        filters.PageSize = take;
+        if (sortingCol) {
+            filters.SortBy = sortingCol;
+        }
+        if (sortingDir) {
+            filters.SortDirection = sortingDir;
+        }
+        filters.Tenant = SessionLocator.Tenant;
+         
+        return this._entityListService.getByFilters("Shipment", filters);
+    }
+    private LoadTaskHistories() {
+        this.IsHistoryGridVsisible = true;
+        this.BuildColumns();
+       
+        this.filterAgrs = new ApiQueryFilters();
+        
+         
+        if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
+            this.filterAgrs.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Contains", true, false, false, "String");
+        }
+
+        //if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'IsCancelled').length > 0) {
+        //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsCancelled');
+        //}
+        //this.filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
+
+        //}
+
+        //this.filterAgrs.addAdditionalFilter("IsMissingDocument", false, null, null, "Equals", false, false, false, "Boolean");
+        //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, false, false, "Boolean");
+        //this.filterAgrs.addAdditionalFilter("ForwarderShipmentNumber", false, null, null, "Equals", false, false, false, "Boolean");
+        //this.filterAgrs.addAdditionalFilter("IsRequestedDocuments", false, null, null, "Equals", false, false, false, "Boolean");
+        //if (this.SelectedTransportFilter != "All") {
+        //    this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
+        //}
+        //else {
+        //    if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'TransportModeId').length > 0) {
+        //        this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'TransportModeId');
+        //    }
+        //}
+        //if (this.SelectedArchiveFilter != "All") {
+        //    this.filterAgrs.addAdditionalFilter("IsOperationalClosed", this.SelectedArchiveFilter == "O" ? false : true, null, null, "Equals", false, true, false, "string", this.SelectedArchiveFilter == "All" ? true : false);
+        //}
+        //else {
+        //    if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'IsOperationalClosed').length > 0) {
+        //        this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsOperationalClosed');
+        //    }
+        //}
+
+        //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", this.SelectedTransportFilter == "O" ? false : true, null, null, "Equals", false, true, false, "string", true);
+
+        //this.filterAgrs.addAdditionalFilter("ForwarderShipmentNumber", "null", null, null, "Equals", false, true, false, "string", true);
+
+        //this.filterAgrs.addAdditionalFilter("IsRequestedDocuments", true, null, null, "Equals", false, true, false, "string", true);
+ 
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 }
 
