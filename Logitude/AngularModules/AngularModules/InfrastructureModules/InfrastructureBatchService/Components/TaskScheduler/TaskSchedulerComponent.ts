@@ -25,7 +25,8 @@ export class TaskSchedulerComponent implements OnInit  {
     @Output() CustomColumnsReady = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
     filterAgrs: ApiQueryFilters;
-
+    ShowUTCTimesLabel: string = "Show UTC Time";
+    ShowUTCTimeEnabled: boolean = false;
     constructor(private _entityListService: EntityListService) {
         this.infraDomainService = new InfrastructureDomainService();
        
@@ -163,28 +164,55 @@ export class TaskSchedulerComponent implements OnInit  {
 
     BuildColumns() { 
         this.columns = [];
-        this.columns.push({
-            FieldName: "StartDateTime",
-            DataTypeCode: 'String',
-            Display: 'Start Date',
-            Styles: { width: '200px' },
-            HtmlListComponentName: 'ReferenceNumberCellDisplayListTemplate',
-            HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: "StartDateTime"
-        });
-        this.columns.push({
-            FieldName: "EndDateTime",
-            DataTypeCode: 'String',
-            Display: 'End Date',
-            Styles: { width: '200px' },
-            HtmlListComponentName: 'ReferenceNumberCellDisplayListTemplate',
-            HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: "EndDateTime"
-        });
+        if (this.ShowUTCTimeEnabled == false) {
+            this.columns.push({
+                FieldName: "StartDateTime",
+                DataTypeCode: 'String',
+                Display: 'Start Date',
+                Styles: { width: '200px' },
+                HtmlListComponentName: 'SchedulerDateListTemplate',
+                HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                SortByName: "StartDateTime"
+            });
+            this.columns.push({
+                FieldName: "EndDateTime",
+                DataTypeCode: 'String',
+                Display: 'End Date',
+                Styles: { width: '200px' },
+                HtmlListComponentName: 'SchedulerDateListTemplate',
+                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                SortByName: "EndDateTime"
+            });
+        }
+        else {
+            this.columns.push({
+                FieldName: "StartDateTimeUTC",
+                DataTypeCode: 'String',
+                Display: 'Start Date UTC',
+                Styles: { width: '200px' },
+                HtmlListComponentName: 'SchedulerDateListTemplate',
+                HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                SortByName: "StartDateTime"
+            });
+            this.columns.push({
+                FieldName: "EndDateTimeUTC",
+                DataTypeCode: 'String',
+                Display: 'End Date UTC',
+                Styles: { width: '200px' },
+                HtmlListComponentName: 'SchedulerDateListTemplate',
+                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                SortByName: "EndDateTime"
+            });
+        }
+        /////
         this.columns.push({
             FieldName: "RunResult",
             DataTypeCode: 'String',
@@ -283,6 +311,18 @@ export class TaskSchedulerComponent implements OnInit  {
  
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
+
+    ShowUTCTimesClicked() {
+        if (this.ShowUTCTimeEnabled == true) {
+            this.ShowUTCTimeEnabled = false;
+            this.ShowUTCTimesLabel = "Show UTC Time";
+        }
+        else {
+            this.ShowUTCTimeEnabled = true;
+            this.ShowUTCTimesLabel = "Hide UTC Time";
+        }
+        this.LoadTaskHistories();
+    }
 }
 
 export class TaskSchedulerItemClass extends BaseComponent {
@@ -305,8 +345,11 @@ export class TaskSchedulerItemClass extends BaseComponent {
     get CreateDate() { return this.EntityPM.CreateDateTime; }
     get NextRunTime() { return this.EntityPM.NextRunTime; }
     get LastRunTime() { return this.EntityPM.LastRunTime; }
+    get NextRunTimeUTC() { return this.EntityPM.NextRunTimeUTC; }
+    get LastRunTimeUTC() { return this.EntityPM.LastRunTimeUTC; }
     get LastRunResult() { return this.EntityPM.LastRunResult; }
     get StartDate() { return this.EntityPM.StartDateTime; }
+    get StartDateUTC() { return this.EntityPM.StartDateTimeUTC; }
 
     get Name() { return this.EntityPM.Name; }
     set Name(newValue: string) {

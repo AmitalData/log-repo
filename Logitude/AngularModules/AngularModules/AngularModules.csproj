@@ -655,6 +655,7 @@
     <TypeScriptCompile Include="e2e\CRM\CRMModule-spec.ts" />
     <TypeScriptCompile Include="e2e\CRM\CRMModule.ts" />
     <TypeScriptCompile Include="e2e\CRM\Opportunities\NewOpportunity.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerDateListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />

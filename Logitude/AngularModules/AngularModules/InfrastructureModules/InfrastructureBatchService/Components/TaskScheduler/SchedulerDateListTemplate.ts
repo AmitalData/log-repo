@@ -3,7 +3,7 @@ import {Component,ChangeDetectorRef} from '@angular/core';
 @Component({
 
     template: `
-                <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;color:green;">{{dateValue | DateTimePipe:'DTL12'}}</div>
+                <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;color:green;">{{dateValue | DateTimePipe:'DTLL12'}}</div>
             `, 
 })
 
