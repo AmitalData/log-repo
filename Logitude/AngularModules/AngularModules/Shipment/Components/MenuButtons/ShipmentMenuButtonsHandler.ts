@@ -366,16 +366,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                 this.SplitShipmentApply();
                                 break;
                             }
+                        }
 
-                            case "ConvertShipmentToLCL": {
-                                this.DoConvertShipmentType("ToLCL");
-                                break;
-                            }
+                        if (this.IsConvertToLCLClicked) {
+                            this.DoConvertShipmentType("ToLCL");
+                        }
 
-                            case "ConvertShipmentToFCL": {
-                                this.DoConvertShipmentType("ToFCL");
-                                break;
-                            }
+                        if (this.IsConvertToFCLClicked) {
+                            this.DoConvertShipmentType("ToFCL");
                         }
 
                         if (this.Reload) {
@@ -411,6 +409,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.isButtonClicked = false;
         this.MenuButtonCode = null;
         this.Reload = false;
+        this.IsConvertToLCLClicked = false;
+        this.IsConvertToFCLClicked = false;
     }
     Validate() {
         var validator = new ShipmentValidator();
@@ -1005,11 +1005,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         });
     }
 
+    private IsConvertToLCLClicked: boolean = false;
+    private IsConvertToFCLClicked: boolean = false;
     private ConvertShipmentToLCLClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
 
         if (errors.length == 0) {
+            this.IsConvertToLCLClicked = true;
             this.OkButton();
         }
     }
@@ -1018,6 +1021,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
 
         if (errors.length == 0) {
+            this.IsConvertToFCLClicked = true;
             this.OkButton();
         }
     }

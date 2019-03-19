@@ -2689,7 +2689,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
 
                         entityPM.TEU = null;
-                        entityPM.PackagesQuantity = null;
+                        entityPM.NumberOfPackages = null;
+                        entityPM.NumberOfContainers = null;
                         entityPM.GrossWeight = null;
                         entityPM.ChargeableWeight = null;
                         entityPM.VolumetricWeight = null;
