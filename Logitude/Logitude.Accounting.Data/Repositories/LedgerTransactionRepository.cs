@@ -1005,15 +1005,29 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
         }
 
-        public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, int year, int openMonth, int closedMonth, int tenant)
+        public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, DateTime closedDate, DateTime openDate, int tenant)
         {
-            var closedDate = new DateTime(year, closedMonth, DateTime.DaysInMonth(year, closedMonth));
-            var openDate = new DateTime(year, openMonth, 1);
+            // there is two closed periods:
+            // 1- from start of year till closed date
+            // 2- from last day in open month till end of the year
 
-            IQueryable<LedgerTransaction> records = (from a in context.LedgerTransactions
-                                        where a.AccountId == accountId && a.Tenant == tenant
-                                            && (a.AccountingDate <= closedDate || a.AccountingDate >= openDate)
-                                        select a);
+            DateTime yearStartDate = new DateTime(closedDate.Year, 1, 1, 0, 0, 0);
+            DateTime leftClosedPeriodToDate = closedDate;
+
+            DateTime rightClosedPeriodFromDate = new DateTime(openDate.Year, openDate.Month, DateTime.DaysInMonth(openDate.Year, openDate.Month), 23, 59, 59);
+            DateTime yearEndDate = new DateTime(openDate.Year, 12, DateTime.DaysInMonth(openDate.Year, 12), 23, 59, 59);
+
+            IQueryable<LedgerTransaction> records
+                = (from a in context.LedgerTransactions
+                   where a.AccountId == accountId && a.Tenant == tenant
+                       && (
+                               (a.AccountingDate >= yearStartDate && a.AccountingDate <= leftClosedPeriodToDate)
+                               ||
+                               (a.AccountingDate >= rightClosedPeriodFromDate && a.AccountingDate <= yearEndDate)
+                           )
+                   select a);
+
+
             return records;
         }
 

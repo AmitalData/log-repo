@@ -59,14 +59,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             ValidateMasterNumber(entityPM);
             ValidateShipmentBookingFields(entityPM, isNewEntity);
             ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
+            ValidateConvertShipmentType(entityPM);
             //ValidateMultiVatPercentages(entityPM, myCommonContext);
-           
+
             if (!entityPM.IsHybrid)
             {
                 ValidateMasterTypeDueToTransportMode(entityPM);
                 ValidateMainCarriageCarrierDueToTransportMode(entityPM);
                 ValidatePartnerTypes(entityPM);
-            } 
+            }
         }
 
         private static void ValidateProductTypePermission(ShipmentPM entityPM, ICommonDataContext myCommonContext)
@@ -873,18 +874,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             IShipmentsContext iContext = ShipmentsContext.GetContext(myTenant);
 
                             var iQueryable = (from myShipment in iContext.Shipments
-                                          join db_Masters in iContext.ShipmentMasterDatas
-                                          on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
-                                          from myMasterData in ShipmentsMasters.DefaultIfEmpty()
+                                              join db_Masters in iContext.ShipmentMasterDatas
+                                              on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                              from myMasterData in ShipmentsMasters.DefaultIfEmpty()
 
-                                          where myShipment.Tenant == myTenant
-                                          && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
-                                          && myShipment.IsCancelled == false
-                                          && myShipment.DirectionId == myDirectionId
-                                          && myShipment.TransportModeId == myTransportModeId
-                                          && myMasterData.Master == myMasterField
-                                          && myMasterData.AirlinePrefix == myAirlinePrefixField
-                                          select myShipment);
+                                              where myShipment.Tenant == myTenant
+                                              && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
+                                              && myShipment.IsCancelled == false
+                                              && myShipment.DirectionId == myDirectionId
+                                              && myShipment.TransportModeId == myTransportModeId
+                                              && myMasterData.Master == myMasterField
+                                              && myMasterData.AirlinePrefix == myAirlinePrefixField
+                                              select myShipment);
 
                             if (!string.IsNullOrEmpty(entityId))
                             {
@@ -961,14 +962,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateMainCarriageCarrierDueToTransportMode(ShipmentPM entityPM)
         {
-            if(!string.IsNullOrEmpty(entityPM.MainCarriageCarrierId))
+            if (!string.IsNullOrEmpty(entityPM.MainCarriageCarrierId))
             {
                 CardRepository cardRepository = new CardRepository(entityPM.Tenant);
                 Card myCarrier = cardRepository.GetSingleCard(entityPM.MainCarriageCarrierId, entityPM.Tenant);
-                if(myCarrier != null)
+                if (myCarrier != null)
                 {
                     string myPartnerType = myCarrier.PartnerTypeId;
-                    if(!string.IsNullOrEmpty(myPartnerType))
+                    if (!string.IsNullOrEmpty(myPartnerType))
                     {
                         switch (entityPM.TransportModeId)
                         {
@@ -1001,7 +1002,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         }
                     }
                 }
-            }            
+            }
         }
 
         private static void ValidatePartnerTypes(ShipmentPM entityPM)
@@ -1015,14 +1016,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             if (!string.IsNullOrEmpty(entityPM.ShipperId))
             {
                 myCard = cardRepository.GetSingleCard(entityPM.ShipperId, entityPM.Tenant);
-                if(myCard != null)
+                if (myCard != null)
                 {
                     if (entityPM.ShipmentLevelCode == "C")
                     {
-                        if(myCard.PartnerTypeId != "AG")
+                        if (myCard.PartnerTypeId != "AG")
                         {
                             throw new ApplicationException("Shipper partner type should be agent");
-                        }                        
+                        }
                     }
 
                     else
@@ -1199,7 +1200,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     }
                 }
             }
-            
+
             //if (!string.IsNullOrEmpty(entityPM.Notify1Id))
             //{
 
@@ -1214,6 +1215,33 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             //{
 
             //}
+        }
+
+        private static void ValidateConvertShipmentType(ShipmentPM entityPM)
+        {
+            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
+            {
+                if (!string.IsNullOrEmpty(entityPM.QuoteId))
+                {
+                    throw new ApplicationException("Cannot change shipment type when connected to a quote");
+                }
+
+                else if (entityPM.ShipmentPackages.Where(d => !string.IsNullOrEmpty(d.DeliveryId)).Any()
+                    || entityPM.ShipmentPackages.Where(d => !string.IsNullOrEmpty(d.EmptyContainerReturnId)).Any())
+                {
+                    throw new ApplicationException("Cannot change shipment type when shipment packages are connected to a delivery or empty container return");
+                }
+
+                else if (entityPM.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(entityPM.MasterShipmentDataId))
+                {
+                    throw new ApplicationException("Cannot change shipment type when connected to a Master shipment");
+                }
+
+                else if (entityPM.ShipmentLevelCode == "C" && entityPM.ShipmentConsoleShipments.Count > 0)
+                {
+                    throw new ApplicationException("Cannot change shipment type when connected to house shipments ");
+                }
+            }
         }
     }
 }

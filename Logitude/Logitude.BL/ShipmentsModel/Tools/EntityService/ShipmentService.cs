@@ -461,10 +461,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
-
-
-              
-
+                    
                     this.ApplyUpdatingMasterHouses();
 
                     RunStoredProcedures();
@@ -2684,6 +2681,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.UpdateQuoteUsage();
                     }
 
+                    if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
+                    {
+                        foreach (ShipmentPackagePM pm in entityPM.ShipmentPackages)
+                        {
+                            this.DeleteShipmentPackage(pm);
+                        }
+
+                        entityPM.TEU = null;
+                        entityPM.PackagesQuantity = null;
+                        entityPM.GrossWeight = null;
+                        entityPM.ChargeableWeight = null;
+                        entityPM.VolumetricWeight = null;
+                        entityPM.Volume = null;
+
+                        if (entityPM.ConvertShipmentToLCL)
+                        {
+                            entityPM.ShipmentTypeId = "LCLD";
+                        }
+
+                        else if(entityPM.ConvertShipmentToFCL)
+                        {
+                            entityPM.ShipmentTypeId = "FCLD";
+                        }
+                    }
+                    
                     if (entityPM.ConvertFromDirectToHouse)
                     {
                         #region
