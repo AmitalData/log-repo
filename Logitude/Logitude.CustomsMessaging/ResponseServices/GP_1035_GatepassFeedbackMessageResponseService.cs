@@ -84,72 +84,83 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     switch (gatepassFeedbackMessageItem.recordCategory)
                     {
-                        case 1: // מסר משוב על קליטת בקשת העברה
-                            if (gatepassFeedbackMessageItem.gatepassStatus == 1)
+                        case 1: //  Receiving a transfer request
+
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 2 || gatepassFeedbackMessageItem.gatepassStatus == 3 || gatepassFeedbackMessageItem.gatepassStatus == 4 || gatepassFeedbackMessageItem.gatepassStatus == 5 || gatepassFeedbackMessageItem.gatepassStatus == 10) // Correct
+                            {
+                                this._GatepassRequestPM.GatepassRequestStatus = "1";
+                                myEventContextTagModel.EventCode = "VGR";
+                                myEventContextTagModel.EventRemarks = "בקשת העברה ממתינה לאישור";
+                            }
+                            else // Not Correct
                             {
                                 this._GatepassRequestPM.GatepassRequestStatus = "2";
                                 myEventContextTagModel.EventCode = "VGE";
                                 myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
                                 this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
                             }
-                            else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
-                            {
-                                this._GatepassRequestPM.GatepassRequestStatus = "1";
-                                myEventContextTagModel.EventCode = "VGR";
-                                myEventContextTagModel.EventRemarks = "בקשת העברה ממתינה לאישור";
-                            }
                             break;
-                        case 2: // מסר משוב על קליטת בקשת ביטול
-                            if (gatepassFeedbackMessageItem.gatepassStatus == 1)
+                        case 2: // Receiving a cancellation request 
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 2 || gatepassFeedbackMessageItem.gatepassStatus == 3 || gatepassFeedbackMessageItem.gatepassStatus == 4 || gatepassFeedbackMessageItem.gatepassStatus == 5 || gatepassFeedbackMessageItem.gatepassStatus == 10) // Correct
+                            {
+                                this._GatepassRequestPM.GatepassRequestStatus = "5";
+                                myEventContextTagModel.EventCode = "VGR";
+                                myEventContextTagModel.EventRemarks = "בקשת ביטול העברה ממתינה לאישור";
+                            }
+                            else // Not Correct
                             {
                                 this._GatepassRequestPM.GatepassRequestStatus = "6";
                                 myEventContextTagModel.EventCode = "VGE";
                                 myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
                                 this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
                             }
-                            else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
-                            {
-                                this._GatepassRequestPM.GatepassRequestStatus = "5";
-                                myEventContextTagModel.EventCode = "VGR";
-                                myEventContextTagModel.EventRemarks = "בקשת ביטול העברה ממתינה לאישור";
-                            }
                             break;
-                        case 3: // מסר אישור/דחייה בקשת העברה
-                            if (gatepassFeedbackMessageItem.gatepassStatus == 2)
+                        case 3: // Receiving approval/rejection transfer request
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 2 || gatepassFeedbackMessageItem.gatepassStatus == 10) // Approved 
                             {
+                                this._GatepassRequestPM.GatepassRequestStatus = "3";
+                                myEventContextTagModel.EventCode = "VGA";
                                 switch (gatepassFeedbackMessageItem.gatepassReturnCode)
                                 {
                                     case 2:
-                                        this._GatepassRequestPM.GatepassRequestStatus = "3";
-                                        myEventContextTagModel.EventCode = "VGA";
                                         myEventContextTagModel.EventRemarks = GetReturnCode(gatepassFeedbackMessageItem.gatepassReturnCode, _GatepassRequestPM.Tenant);
                                         break;
+                                }
+                            }
+                            else if (gatepassFeedbackMessageItem.gatepassStatus == 3 || gatepassFeedbackMessageItem.gatepassStatus == 4 || gatepassFeedbackMessageItem.gatepassStatus == 5 || gatepassFeedbackMessageItem.gatepassStatus == 9 || gatepassFeedbackMessageItem.gatepassStatus == 11)// Rejected
+                            {
+                                this._GatepassRequestPM.GatepassRequestStatus = "4";
+                                myEventContextTagModel.EventCode = "VGD";
+                                switch (gatepassFeedbackMessageItem.gatepassReturnCode)
+                                {
                                     case 3:
                                     case 4:
-                                        this._GatepassRequestPM.GatepassRequestStatus = "4";
-                                        myEventContextTagModel.EventCode = "VGD";
                                         myEventContextTagModel.EventRemarks = GetReturnCode(gatepassFeedbackMessageItem.gatepassReturnCode, _GatepassRequestPM.Tenant);
-
                                         break;
                                 }
                             }
                             break;
-                        case 4: // מסר אישור/דחייה בקשת ביטול
-                            if (gatepassFeedbackMessageItem.gatepassStatus == 2)
+                        case 4: // Receiving approval/rejection a cancellation request
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 6 || gatepassFeedbackMessageItem.gatepassStatus == 7 || gatepassFeedbackMessageItem.gatepassStatus == 8 || gatepassFeedbackMessageItem.gatepassStatus == 10) // Cancelling Approved
                             {
+                                _GatepassRequestPM.GatepassRequestStatus = "7";
+                                myEventContextTagModel.EventCode = "VGA";
                                 switch (gatepassFeedbackMessageItem.gatepassReturnCode)
                                 {
                                     case 5:
-                                        this._GatepassRequestPM.GatepassRequestStatus = "7";
-                                        myEventContextTagModel.EventCode = "VGA";
                                         myEventContextTagModel.EventRemarks = GetReturnCode(gatepassFeedbackMessageItem.gatepassReturnCode, _GatepassRequestPM.Tenant);
                                         break;
+                                }
+                            }
+                            else if (gatepassFeedbackMessageItem.gatepassStatus == 3 || gatepassFeedbackMessageItem.gatepassStatus == 4 || gatepassFeedbackMessageItem.gatepassStatus == 5 || gatepassFeedbackMessageItem.gatepassStatus == 9 || gatepassFeedbackMessageItem.gatepassStatus == 11) // Cancelling Rejected
+                            {
+                                _GatepassRequestPM.GatepassRequestStatus = "8";
+                                myEventContextTagModel.EventCode = "VGD";
+                                switch (gatepassFeedbackMessageItem.gatepassReturnCode)
+                                {
                                     case 6:
                                     case 7:
-                                        this._GatepassRequestPM.GatepassRequestStatus = "8";
-                                        myEventContextTagModel.EventCode = "VGD";
                                         myEventContextTagModel.EventRemarks = GetReturnCode(gatepassFeedbackMessageItem.gatepassReturnCode, _GatepassRequestPM.Tenant);
-
                                         break;
                                 }
                             }
@@ -157,7 +168,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     RaiseEvent(myEventContextTagModel);
                     gatepassRequestUpdateService.Update(this._GatepassRequestPM, true);
-
                 }
                 else
                 {
