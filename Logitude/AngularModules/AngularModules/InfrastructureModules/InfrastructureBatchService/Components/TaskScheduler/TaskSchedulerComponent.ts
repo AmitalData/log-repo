@@ -7,6 +7,8 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TaskSchedulerHistoryList} from '../../../../Infrastructure/EntityLists/TaskSchedulerHistoryList';
 import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
 import {SchedulerDetails, FTPSchedulerDetails} from '../../../../Infrastructure/DataContracts/SchedulerDetails';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+
 @Component({
     moduleId: module.id,
     templateUrl: './TaskSchedulerComponent.html',
@@ -17,10 +19,12 @@ export class TaskSchedulerComponent  {
     public HistoryItemsSource: TaskSchedulerHistoryList[] = []; 
     private loadedDataList: TasksSchedulerPM[] = [];
     private infraDomainService: InfrastructureDomainService;
+    IsEnableAddButton: boolean = false;
+
     constructor() {
         this.infraDomainService = new InfrastructureDomainService();
 
-       
+        if (FeatureLocator.HasFeaturePermession("TasksScheduler", "NEW")) this.IsEnableAddButton = true;
     }
 
 

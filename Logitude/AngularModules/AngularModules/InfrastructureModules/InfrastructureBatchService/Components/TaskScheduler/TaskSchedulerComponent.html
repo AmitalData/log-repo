@@ -13,7 +13,7 @@
                     </td>
 
                     <td style="width: 85px;">
-                        <button class="Button" (click)="NewTaskClicked()">Add New {{SchedulerType}}</button>
+                        <button [disabled]="!IsEnableAddButton" class="Button" (click)="NewTaskClicked()">Add New {{SchedulerType}}</button>
                     </td>
 
                     <td>
