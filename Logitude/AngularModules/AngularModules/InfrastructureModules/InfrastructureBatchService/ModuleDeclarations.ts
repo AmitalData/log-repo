@@ -16,6 +16,7 @@ export const Components =
         EditBatchServiceComponent,
         MainSchedulerComponent,
         SchedulerDateListTemplate,
+        SchedulerDurationListTemplate,
     ];
 
 export class ModuleDeclarations {
