@@ -360,22 +360,43 @@ export class ApplicationTimersManager {
 
     private AddPeformanceLogs() {
         try {
+            var AllLogsList: PerformanceLog[] = [];
             for (var key in sessionStorage) {
                 if (key.indexOf("PerformanceLogs") != -1) {
 
                     var logJson = window.sessionStorage.getItem(key)
                     var performanceLog: PerformanceLog = JSON.parse(logJson);
                     performanceLog.LogDateTimeLocal = new Date();
-                    this.performanceLogService.insert(performanceLog).subscribe(response => {
-                       
-                        window.sessionStorage.removeItem(["PerformanceLogs", response.Result.Id]);
-
-                    }, error => {
-                        console.error("Adding Performance Log Timer: ", error);
-                    });
+                    AllLogsList.push(performanceLog);
+                    //PerformanceLogs,5d816163-030d-4d76-a5ef-c19a43951e0b
 
 
+                    //this.performanceLogService.insert(performanceLog).subscribe(response => {
+
+                    //    window.sessionStorage.removeItem(["PerformanceLogs", response.Result.Id]);
+
+                    //}, error => {
+                    //    console.error("Adding Performance Log Timer: ", error);
+                    //});
                 }
+
+            }
+
+            //if (logsList.length <= 20) {
+            var tobeAddedLogsList: PerformanceLog[] = [];
+            let count = 0;
+            for (var lk in AllLogsList) {
+                tobeAddedLogsList.push(AllLogsList[lk]);
+                window.sessionStorage.removeItem(["PerformanceLogs", AllLogsList[lk].Id]);
+                count++;
+                if (count == 20)
+                    break;
+            }
+            if (tobeAddedLogsList.length > 0) {
+                this.performanceLogService.insertLogsList(tobeAddedLogsList).subscribe(response => {
+                }, error => {
+                    console.error("Adding Performance Log Timer: ", error);
+                });
             }
         }
         catch (e) { console.error(e); }

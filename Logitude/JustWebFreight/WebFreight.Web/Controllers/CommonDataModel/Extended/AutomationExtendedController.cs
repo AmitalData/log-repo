@@ -95,8 +95,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         AutomationService service = new AutomationService(MyContext, entityPM.Tenant);
                 
                         service.Create(entityPM);
-         
-                     
+                      
+
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
@@ -180,6 +180,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     }
 
                     service.Update(entityPM);
+
+                    entityPM.AutomationXML = null;
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, entityPM);
