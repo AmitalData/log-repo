@@ -67,7 +67,7 @@ namespace WebFreight.Web.WcfApi
                     foreach (var item in featuresList)
                     {
                         AzureLog.SaveLogsInStorage("( " + item.FeatureCode + " " + item.ObjectTableName + " HasAccess => " + item.HasAccess + " ) ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
-
+                        item.HasAccess = true; 
 
                     }
                     //SecurityUtility.CheckCustomContactTableFeatures(featuresList, HttpContext.Current.User.Identity.Name, tenant);//
