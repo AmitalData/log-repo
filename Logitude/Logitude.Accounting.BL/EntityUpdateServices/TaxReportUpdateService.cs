@@ -195,8 +195,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         linesPM.Add(item);
                     });
                     TaxReportService.CalculateReportTotals(entityPM, linesPM);
-                    entityPM.ChangeSetOp = ChangeSetOperation.Update;
-                    taxReportUpdateService.Update(entityPM, true);
+
                 }
                 entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
 

@@ -39,6 +39,9 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
+    <Feature Code="&quot;TASK&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;TasksScheduler.Features.TASK&quot;" FeatureDefaultText="&quot;Task&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;FTP&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;TasksScheduler.Features.FTP&quot;" FeatureDefaultText="&quot;FTP&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+
     <Feature Code="&quot;SHOWUTCBUTTON&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;TasksScheduler.Features.SHOWUTCBUTTON&quot;" FeatureDefaultText="&quot;Show UTC Button&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
