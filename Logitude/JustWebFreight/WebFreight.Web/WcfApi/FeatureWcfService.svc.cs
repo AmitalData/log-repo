@@ -25,6 +25,15 @@ namespace WebFreight.Web.WcfApi
         public List<FeatureAccessInfo> GetActiveFeaturesForUser(List<FeatureAccessInfo> featuresList, int tenant, ref Response response)
         {
             var myEmail = HttpContext.Current.User.Identity.Name;
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AzureLog.SaveLogsInStorage("( Token : " + token + " ) => this is the coming Token ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+            }
+            catch (Exception)
+            {
+                 
+            }
             if (string.IsNullOrEmpty(myEmail))
             {
                 AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => HttpContext.Current.User.Identity.Name is null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
