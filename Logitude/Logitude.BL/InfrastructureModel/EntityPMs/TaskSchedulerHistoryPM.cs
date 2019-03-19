@@ -18,6 +18,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public DateTime? EndDateTime { get; set; }
         public string RunResult { get; set; }
         public string TaskId { get; set; } 
-        public bool IsError { get; set; } 
+        public bool IsError { get; set; }
+        public DateTime? StartDateTimeUTC { get; set; }
+        public DateTime? EndDateTimeUTC { get; set; }
     }
 }

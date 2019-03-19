@@ -20,162 +20,162 @@ export class TasksSchedulerPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this);
           this.IsDirty = false;
       }
- 	 
-    
+
+
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
+
+
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-       
-	 
+
+
     private createDateTime: Date;
     public get CreateDateTime() { return this.createDateTime; }
     public set CreateDateTime(newValue: Date) { if (this.createDateTime != newValue) { this.createDateTime = newValue; this.MarkAsDirty("CreateDateTime"); } }
-       
-	 
+
+
     private createdBy: string;
     public get CreatedBy() { return this.createdBy; }
     public set CreatedBy(newValue: string) { if (this.createdBy != newValue) { this.createdBy = newValue; this.MarkAsDirty("CreatedBy"); } }
-       
-	 
+
+
     private updateDateTime: Date;
     public get UpdateDateTime() { return this.updateDateTime; }
     public set UpdateDateTime(newValue: Date) { if (this.updateDateTime != newValue) { this.updateDateTime = newValue; this.MarkAsDirty("UpdateDateTime"); } }
-       
-	 
+
+
     private updatedBy: string;
     public get UpdatedBy() { return this.updatedBy; }
     public set UpdatedBy(newValue: string) { if (this.updatedBy != newValue) { this.updatedBy = newValue; this.MarkAsDirty("UpdatedBy"); } }
-       
-	 
+
+
     private name: string;
     public get Name() { return this.name; }
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
-       
-	 
+
+
     private description: string;
     public get Description() { return this.description; }
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
-       
-	 
+
+
     private nextRunTime: Date;
     public get NextRunTime() { return this.nextRunTime; }
     public set NextRunTime(newValue: Date) { if (this.nextRunTime != newValue) { this.nextRunTime = newValue; this.MarkAsDirty("NextRunTime"); } }
-       
-	 
+
+
     private lastRunTime: Date;
     public get LastRunTime() { return this.lastRunTime; }
     public set LastRunTime(newValue: Date) { if (this.lastRunTime != newValue) { this.lastRunTime = newValue; this.MarkAsDirty("LastRunTime"); } }
-       
-	 
+
+
     private lastRunResult: string;
     public get LastRunResult() { return this.lastRunResult; }
     public set LastRunResult(newValue: string) { if (this.lastRunResult != newValue) { this.lastRunResult = newValue; this.MarkAsDirty("LastRunResult"); } }
-       
-	 
+
+
     private inActive: boolean;
     public get InActive() { return this.inActive; }
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
-       
-	 
+
+
     private serviceClassName: string;
     public get ServiceClassName() { return this.serviceClassName; }
     public set ServiceClassName(newValue: string) { if (this.serviceClassName != newValue) { this.serviceClassName = newValue; this.MarkAsDirty("ServiceClassName"); } }
-       
-	 
+
+
     private triggerType: string;
     public get TriggerType() { return this.triggerType; }
     public set TriggerType(newValue: string) { if (this.triggerType != newValue) { this.triggerType = newValue; this.MarkAsDirty("TriggerType"); } }
-       
-	 
+
+
     private satarday: boolean;
     public get Satarday() { return this.satarday; }
     public set Satarday(newValue: boolean) { if (this.satarday != newValue) { this.satarday = newValue; this.MarkAsDirty("Satarday"); } }
-       
-	 
+
+
     private sunday: boolean;
     public get Sunday() { return this.sunday; }
     public set Sunday(newValue: boolean) { if (this.sunday != newValue) { this.sunday = newValue; this.MarkAsDirty("Sunday"); } }
-       
-	 
+
+
     private monday: boolean;
     public get Monday() { return this.monday; }
     public set Monday(newValue: boolean) { if (this.monday != newValue) { this.monday = newValue; this.MarkAsDirty("Monday"); } }
-       
-	 
+
+
     private tuesday: boolean;
     public get Tuesday() { return this.tuesday; }
     public set Tuesday(newValue: boolean) { if (this.tuesday != newValue) { this.tuesday = newValue; this.MarkAsDirty("Tuesday"); } }
-       
-	 
+
+
     private wednesday: boolean;
     public get Wednesday() { return this.wednesday; }
     public set Wednesday(newValue: boolean) { if (this.wednesday != newValue) { this.wednesday = newValue; this.MarkAsDirty("Wednesday"); } }
-       
-	 
+
+
     private thursday: boolean;
     public get Thursday() { return this.thursday; }
     public set Thursday(newValue: boolean) { if (this.thursday != newValue) { this.thursday = newValue; this.MarkAsDirty("Thursday"); } }
-       
-	 
+
+
     private friday: boolean;
     public get Friday() { return this.friday; }
     public set Friday(newValue: boolean) { if (this.friday != newValue) { this.friday = newValue; this.MarkAsDirty("Friday"); } }
-       
-	 
+
+
     private monthlyDay: number;
     public get MonthlyDay() { return this.monthlyDay; }
     public set MonthlyDay(newValue: number) { if (this.monthlyDay != newValue) { this.monthlyDay = newValue; this.MarkAsDirty("MonthlyDay"); } }
-       
-	 
+
+
     private startDateTime: Date;
     public get StartDateTime() { return this.startDateTime; }
     public set StartDateTime(newValue: Date) { if (this.startDateTime != newValue) { this.startDateTime = newValue; this.MarkAsDirty("StartDateTime"); } }
-       
-	 
+
+
     private repeatInMinutes: number;
     public get RepeatInMinutes() { return this.repeatInMinutes; }
     public set RepeatInMinutes(newValue: number) { if (this.repeatInMinutes != newValue) { this.repeatInMinutes = newValue; this.MarkAsDirty("RepeatInMinutes"); } }
-       
-	 
+
+
     private isLastRunError: boolean;
     public get IsLastRunError() { return this.isLastRunError; }
     public set IsLastRunError(newValue: boolean) { if (this.isLastRunError != newValue) { this.isLastRunError = newValue; this.MarkAsDirty("IsLastRunError"); } }
-       
-	 
+
+
     private type: string;
     public get Type() { return this.type; }
     public set Type(newValue: string) { if (this.type != newValue) { this.type = newValue; this.MarkAsDirty("Type"); } }
-       
-	 
+
+
     private schedulerDetailsXML: string;
     public get SchedulerDetailsXML() { return this.schedulerDetailsXML; }
     public set SchedulerDetailsXML(newValue: string) { if (this.schedulerDetailsXML != newValue) { this.schedulerDetailsXML = newValue; this.MarkAsDirty("SchedulerDetailsXML"); } }
-       
-	 
+
+
     private schedulerDetailsData: any;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
     public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
-       
-	 
+
+
 
     public OldEntityPM: TasksSchedulerPM;
-		
+
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
         this.IsDirty = true;
-		  	
+
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TasksScheduler");
-           
+
         }
     }
     private MyClone: TasksSchedulerPM;
@@ -188,4 +188,4 @@ export class TasksSchedulerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -82,6 +82,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                         service.Create(entityPM);
 
+                        entityPM.SchedulerDetailsXML = null;
+
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
@@ -128,7 +130,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
 
                     service.Update(entityPM);
-
+                    entityPM.SchedulerDetailsXML = null;
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                 }

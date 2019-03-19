@@ -54,21 +54,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public static string FilePath = @"E:\PCN874.txt";
 
-        public static void CreateTaxReportLines(TaxReportPM taxReport, int tenant)
+        public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
-            //using (TransactionScope scope = TransactionFactory.GetTransaction())
-            //{
                 JournalRepository journalRepository = new JournalRepository(tenant);
                 List<Journal> journals = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
-                //List<string> invoiceIds = new List<string>();
-
-                //foreach(Journal a in journals)
-                //{
-                //    invoiceIds.Add(a.AccountingEntityId);
-                //}
 
                 ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
-                //List<ARInvoice> aRInvoices = aRInvoiceRepository.GetInvoicesListFromIdListByDate(invoiceIds, TaxReportMonth, tenant);
 
                 IAccountingContext MyContext = AccountingContext.GetContext(taxReport.Tenant);
                 TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
@@ -312,17 +303,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
 
-                if (reportLinesList.Count > 0)
-                {
-                    taxReport.TaxableOutputAmount = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
-                    taxReport.OutputTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
-                    taxReport.ExemptTaxableOutput = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
-                    taxReport.OutputLinesCount = reportLinesList.Where(d => d.OutputOrInput == "O").Count();
-                    taxReport.OtherInputsTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
-                    taxReport.InputLinesCount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1").Count();
-                    taxReport.EquipmentInputsTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
-                }
 
+                CalculateReportTotals(taxReport, reportLinesList);
 
                 taxReport.TaxableOutputsWithDiffPercent = 0;
                 taxReport.OutputTaxAmountWithDiffPercent = 0;
@@ -349,7 +331,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     lineUpdateService.Update(linePM, true);
                 }
 
-            //}
+            return reportLinesList;
         }
 
         public static BatchTaskExecutionPM CreatePNCFileInBatch(string taxReportId, int tenant)
@@ -558,6 +540,19 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 return docOut;
+            }
+        }
+        public static void CalculateReportTotals(TaxReportPM taxReportPM, List<TaxReportLinePM> lines)
+        {
+            if (lines.Count > 0)
+            {
+                taxReportPM.TaxableOutputAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
+                taxReportPM.OutputTaxAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
+                taxReportPM.ExemptTaxableOutput = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
+                taxReportPM.OutputLinesCount = lines.Where(d => d.OutputOrInput == "O").Count();
+                taxReportPM.OtherInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
+                taxReportPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1").Count();
+                taxReportPM.EquipmentInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
             }
         }
 

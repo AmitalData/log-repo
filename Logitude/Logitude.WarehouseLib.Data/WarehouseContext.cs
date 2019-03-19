@@ -85,6 +85,8 @@ namespace Logitude.WarehouseLib.Data
 				
 			modelBuilder.Entity<WarehouseEntry>().Property(x => x.TotalVolume).HasPrecision(18, 3);
 				
+			modelBuilder.Entity<WarehouseEntry>().Property(x => x.TotalVolumetricWeight).HasPrecision(18, 3);
+				
 			modelBuilder.Entity<WarehouseEntryPackage>().Property(x => x.Weight).HasPrecision(16, 3);
 				
 			modelBuilder.Entity<WarehouseEntryPackage>().Property(x => x.Volume).HasPrecision(16, 3);

@@ -149,6 +149,41 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).ToList();
         }
 
+        public List<TasksSchedulerPM> GetTasksSchedulerPMsBByType(string type,int Tenant)
+        {
+            return (from a in repository.context.TasksSchedulers
+                    where a.Tenant == Tenant && a.Type == type
+                    select new TasksSchedulerPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        CreateDateTime = a.CreateDateTime,
+                        CreatedBy = a.CreatedBy,
+                        Description = a.Description,
+                        Friday = a.Friday,
+                        InActive = a.InActive,
+                        IsLastRunError = a.IsLastRunError,
+                        LastRunResult = a.LastRunResult,
+                        LastRunTime = a.LastRunTime,
+                        Monday = a.Monday,
+                        Name = a.Name,
+                        NextRunTime = a.NextRunTime,
+                        RepeatInMinutes = a.RepeatInMinutes,
+                        Satarday = a.Satarday,
+                        ServiceClassName = a.ServiceClassName,
+                        StartDateTime = a.StartDateTime,
+                        Sunday = a.Sunday,
+                        Thursday = a.Thursday,
+                        TriggerType = a.TriggerType,
+                        Tuesday = a.Tuesday,
+                        UpdateDateTime = a.UpdateDateTime,
+                        UpdatedBy = a.UpdatedBy,
+                        Wednesday = a.Wednesday,
+                        Type = a.Type,
+
+                    }).ToList();
+        }
+
 
         public IQueryable<TasksSchedulerList> GetIQueryableEntityList(IQueryable<TasksScheduler> iQueryable)
         {
