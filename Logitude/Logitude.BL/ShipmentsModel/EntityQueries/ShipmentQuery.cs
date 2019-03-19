@@ -2141,6 +2141,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     }
                 }
 
+                if(myPackagesNames.Length > 1000)
+                {
+                    myPackagesNames = myPackagesNames.Substring(0, 1000);
+                }
+
+                if (myPackagesPrintAs.Length > 1000)
+                {
+                    myPackagesPrintAs = myPackagesPrintAs.Substring(0, 1000);
+                }
+
+                if (myContainersNumbers.Length > 1000)
+                {
+                    myContainersNumbers = myContainersNumbers.Substring(0, 1000);
+                }
+
                 shipmentPM.PackagesTypesNames = myPackagesNames;
                 shipmentPM.PackagesTypesPrintAs = myPackagesPrintAs;
                 shipmentPM.ContainersNumbers = myContainersNumbers;

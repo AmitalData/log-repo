@@ -2238,7 +2238,9 @@
     <Compile Include="Helpers\TableQueryReflector.cs" />
     <Compile Include="Helpers\MessageArgs.cs" />
     <Compile Include="Helpers\TermsofUseArgs.cs" />
+    <Compile Include="Helpers\TFSAggregatorAnalyzer.cs" />
     <Compile Include="Helpers\TFSAnalyzer.cs" />
+    <Compile Include="Helpers\TFSAggregatorParseWebhook.cs" />
     <Compile Include="Helpers\TFSParseWebhook.cs" />
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
@@ -4930,6 +4932,7 @@
     <Compile Include="ReportsWebServices\LogitudeReports\ShipmentProfitVSQuoteEstimateManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\StatisticsByCustomerManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\EmployeeTimeSheetManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysProjectManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VendorChargesAnalysisManager.cs" />
     <Compile Include="ReportsWebServices\OpportunitySummaryWebService.asmx.cs">
       <DependentUpon>OpportunitySummaryWebService.asmx</DependentUpon>

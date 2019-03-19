@@ -9988,6 +9988,8 @@ namespace WebFreight.Web.ReportsWebServices
             double totalWIWorkedDays_Employee = 0;
             double totalWIWorkedDays = 0;
 
+            bool isUsingNewCode = false;
+
             if (iQueryable.Count() > 0)
             {
                 var daysList = (from d in iQueryable
@@ -10137,7 +10139,25 @@ namespace WebFreight.Web.ReportsWebServices
                         timSheetItem_Detailed.WINumber = item.WINumber;
                         timSheetItem_Detailed.Description = item.Description;
 
-                        TMEmployeeTime myTMEmployeeTime = employeeTimeRepository.GetSingleByPrjectandEmployeeandWIandDescription(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, tenant);
+                        TMEmployeeTime myTMEmployeeTime = null;
+
+                        if (isUsingNewCode)
+                        {
+                            myTMEmployeeTime = (from d in myContext.TMEmployeeTimes
+                                                where d.Tenant == tenant
+                                                && d.ProjectId == item.ProjectId
+                                                && d.Description == item.Description
+                                                && d.EmployeeUserId == item.EmployeeUserId
+                                                && d.WINumber == item.WINumber
+                                                && System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(item.DateOfWork)
+                                                select d).FirstOrDefault();
+                        }
+
+                        else
+                        {
+                            myTMEmployeeTime = employeeTimeRepository.GetSingleByPrjectandEmployeeandWIandDescription(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, tenant);
+                        }
+
                         var wIWorkedHours_Employee = Math.Round(myTMEmployeeTime.FullDuration / 60.0, 2);
                         totalWIWorkedDays_Employee += wIWorkedHours_Employee;
                         timSheetItem_Detailed.TotalWIWorkedDays_Employee = DateFormat(wIWorkedHours_Employee);

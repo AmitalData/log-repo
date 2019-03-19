@@ -140,7 +140,10 @@ export class ApprovePaymentButtonListTemplate {
         var newWindow = new LogitudeWindow();
         newWindow.Width = 600;
         newWindow.Height = 230;
-        newWindow.Title = "נדרש תצהיר עבור תיק עמילות" + " " + this.rowData['ForwarderShipmentNumber'];
+        var forwarderShipmentNumber = this.rowData['ForwarderShipmentNumber'];
+        if (AppTool.IsNullOrEmpty(forwarderShipmentNumber)) forwarderShipmentNumber = "";
+
+        newWindow.Title = "נדרש תצהיר עבור תיק עמילות" + " " + forwarderShipmentNumber;
         var windowArgs: any = {};
 
         if (this.rowData) {
