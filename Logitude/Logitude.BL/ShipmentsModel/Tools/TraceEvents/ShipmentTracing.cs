@@ -106,6 +106,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.CreateTraceEvent("CSHD", entityPM.EventNote);
                     }
 
+                    if (entityPM.ConvertShipmentToLCL)
+                    {
+                        entityPM.ConvertShipmentToLCL = false;
+                        entityPM.ConvertShipmentToFCL = false;
+
+                        this.CreateTraceEvent("CNFL", entityPM.EventNote);
+                    }
+
+                    if (entityPM.ConvertShipmentToFCL)
+                    {
+                        entityPM.ConvertShipmentToLCL = false;
+                        entityPM.ConvertShipmentToFCL = false;
+
+                        this.CreateTraceEvent("CNLF", entityPM.EventNote);
+                    }
+
                     if (!entityPM.MarkFollowUpsAsDone)
                     {
                         this.CreateTraceEvent("USHI");
