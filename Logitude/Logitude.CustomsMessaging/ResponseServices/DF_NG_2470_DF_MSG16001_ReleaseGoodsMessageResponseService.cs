@@ -200,6 +200,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 return;
             }
+            var consignment1st = declarationPM.Consignments.FirstOrDefault() ?? new ConsignmentPM();
+            LogMessagingUtil.Instance.AppendLine("2470 consignment1st.StorageSiteCode=" + consignment1st.StorageSiteCode ?? "none");
+            if (consignment1st.StorageSiteCode != "ILMMN")
+            {
+                return;
+            }
+            LogMessagingUtil.Instance.AppendLine("send 2470 2 ILMMN");
+
             var customsResponseXml = XmlGenericUtil<DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage>.SerializeObject(customResponse);
             var customsResponseBytes = System.Text.UTF8Encoding.UTF8.GetBytes(customsResponseXml);
             var myFTPOutMaman2470ReleaseGoodService = new FTPOutMaman2470ReleaseGoodService();
