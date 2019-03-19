@@ -75,19 +75,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityPoco.DirectionId = entityPM.DirectionId;
                 }
             }
+
             if (!string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber))
             {
                 entityPoco.ComputedForwarderShipmentNumber = entityPM.ForwarderShipmentNumber;
             }
+
             else
             {
                 entityPoco.ComputedForwarderShipmentNumber = entityPM.Id;
             }
+
             if (entityPM.IsHybrid)
             {
                 entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
             }
 
+            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
+            {
+                entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
+
+                entityPM.ConvertShipmentToLCL = false;
+                entityPM.ConvertShipmentToFCL = false;
+            }            
 
             entityPoco.NoFreightFile = entityPM.NoFreightFile;
 

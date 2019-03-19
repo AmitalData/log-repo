@@ -43,6 +43,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.Wednesday = TaskSchedulerPM.Wednesday;
             TaskScheduler.Type = TaskSchedulerPM.Type;
             TaskScheduler.SchedulerDetailsXML = TaskSchedulerPM.SchedulerDetailsXML;
+            TaskScheduler.StartDateTimeUTC = TaskSchedulerPM.StartDateTimeUTC;
+            TaskScheduler.LastRunTimeUTC = TaskSchedulerPM.LastRunTimeUTC;
+            TaskScheduler.NextRunTimeUTC = TaskSchedulerPM.NextRunTimeUTC == null ? TaskSchedulerPM.StartDateTimeUTC : TaskSchedulerPM.NextRunTimeUTC;
+
 
         }
     }

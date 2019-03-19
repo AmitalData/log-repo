@@ -76,7 +76,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
+                    
                     this.SetUIProperties();
                     this.SetGenerateData();
                     this.BuildItemsSource();
@@ -90,9 +91,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.SetUIProperties();
-                    this.SetGenerateData();
-                    this.BuildItemsSource();
+                    this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
+                    this.OnResourcesReady();
+                    //this.SetUIProperties();
+                    //this.SetGenerateData();
+                    //this.BuildItemsSource();
                 }
             });
 
@@ -159,10 +164,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsInsideButtonVisible: boolean = false;
     private AllPackageTypes: PackageTypeList[] = [];
     OnResourcesReady() {
+        var isInsideButtonVisible = true;
 
         if (this.IsFCLEntity) {
-            var isInsideButtonVisible = true;
-
             if (!AppTool.IsNullOrEmpty(this.EntityPM.ShipmentTypeId)) {
                 var myShipmentTypeId = this.EntityPM.ShipmentTypeId.toUpperCase();
                 if (myShipmentTypeId.indexOf("MYG") > -1) {
@@ -170,15 +174,18 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     isInsideButtonVisible = false;
                 }
             }
-
-            this.IsInsideButtonVisible = isInsideButtonVisible;
-
+            
             if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
                 this.IsContainersFUVisible = true;
             }
         }
+        else {
+            isInsideButtonVisible = false
+        }
 
-        this.SetLabels()
+        this.IsInsideButtonVisible = isInsideButtonVisible;
+
+        this.SetLabels();
         this.SetUIProperties();
         this.SetGenerateData();
         this.BuildItemsSource();

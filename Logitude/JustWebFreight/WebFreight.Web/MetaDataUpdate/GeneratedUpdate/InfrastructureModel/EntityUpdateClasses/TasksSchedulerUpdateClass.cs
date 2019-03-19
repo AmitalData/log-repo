@@ -111,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tasks Scheduler",
-			      				    Code =  "2c77",
+			      				    Code =  "4571",
 			      				    Name =  "TasksScheduler",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -1661,7 +1661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					 						FieldName =  "SchedulerDetailsData",
 					  						OldFieldName =  "SchedulerDetailsData",
 					  						ObjectTableName =  "TasksScheduler",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Byte[]",
 					  						MinLength =  0,
 					  						MaxLength =  5000,
 					  						IsRequired =  false,
@@ -1710,6 +1710,183 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NextRunTimeUTC",
+					  						OldFieldName =  "NextRunTimeUTC",
+					  						ObjectTableName =  "TasksScheduler",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "NextRunTimeUTC",
+					  						ListPropertyPath =  "NextRunTimeUTC",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TasksScheduler",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "NextRunTimeUTC",
+					  						DefaultText =  "NextRunTimeUTC",
+					  						ListFieldLable =  "NextRunTimeUTCListLable",
+					  						ListLableDefaultText =  "NextRunTimeUTC",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastRunTimeUTC",
+					  						OldFieldName =  "LastRunTimeUTC",
+					  						ObjectTableName =  "TasksScheduler",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastRunTimeUTC",
+					  						ListPropertyPath =  "LastRunTimeUTC",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TasksScheduler",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastRunTimeUTC",
+					  						DefaultText =  "LastRunTimeUTC",
+					  						ListFieldLable =  "LastRunTimeUTCListLable",
+					  						ListLableDefaultText =  "LastRunTimeUTC",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StartDateTimeUTC",
+					  						OldFieldName =  "StartDateTimeUTC",
+					  						ObjectTableName =  "TasksScheduler",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StartDateTimeUTC",
+					  						ListPropertyPath =  "StartDateTimeUTC",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TasksScheduler",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StartDateTimeUTC",
+					  						DefaultText =  "StartDateTimeUTC",
+					  						ListFieldLable =  "StartDateTimeUTCListLable",
+					  						ListLableDefaultText =  "StartDateTimeUTC",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -1739,6 +1916,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature TasksSchedulerFeature_TASK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASK", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.TASK", NameTextCodeDefaultText = @"Task" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature TasksSchedulerFeature_FTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FTP", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.FTP", NameTextCodeDefaultText = @"FTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
+	    
+
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature TasksSchedulerFeature_SHOWUTCBUTTON = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHOWUTCBUTTON", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.SHOWUTCBUTTON", NameTextCodeDefaultText = @"Show UTC Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

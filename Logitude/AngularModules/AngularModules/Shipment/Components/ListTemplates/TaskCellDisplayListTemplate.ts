@@ -31,7 +31,7 @@ export class TaskCellDisplayListTemplate {
                 this.CellValue = (this.CellValue ? (this.CellValue + " \\ Requested Document") : "Requested Document");
             }
             if (rowData["IsImporterApprovalRequried"] == true) {
-                this.CellValue = (this.CellValue ? (this.CellValue + " \\ Approval Requried") : "Approval Requried");
+                this.CellValue = (this.CellValue ? (this.CellValue + " \\ Declaration Approval") : "Declaration Approval");
             }
             if (rowData["IsDigitalSignRequired"] == true) {
                 this.CellValue = (this.CellValue ? (this.CellValue + " \\ Sign Required") : "Sign Required");

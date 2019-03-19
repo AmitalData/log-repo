@@ -111,9 +111,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Task Scheduler History",
-			      				    Code =  "bceb",
+			      				    Code =  "e919",
 			      				    Name =  "TaskSchedulerHistory",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Infrastructure",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -133,6 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "StartDateTimeUTC",
+					  						OldFieldName =  "StartDateTimeUTC",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -152,6 +154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StartDateTimeUTC",
 					  						ListPropertyPath =  "StartDateTimeUTC",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -190,6 +193,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EndDateTimeUTC",
+					  						OldFieldName =  "EndDateTimeUTC",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -209,6 +213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EndDateTimeUTC",
 					  						ListPropertyPath =  "EndDateTimeUTC",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
