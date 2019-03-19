@@ -386,7 +386,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 if (myEventContextTagModel.EventCode == "MNC")//ODELIA SAID MNC its success !
                 {
-                    _MyDeclarationPM.TaxationDateTime = DateTime.Now.Date;//לפני השליחה יש לעדכן את תאריך חישוב המיסים לתאריך נוכחי על מנת להמנע מטיוטה שגויה
+                    if (_MyDeclarationPM.TaxationDateTime < DateTime.Now.Date)
+                    {
+                        _MyDeclarationPM.TaxationDateTime = DateTime.Now.Date;//לפני השליחה יש לעדכן את תאריך חישוב המיסים לתאריך נוכחי על מנת להמנע מטיוטה שגויה
+                    }
                     using (var trans = TransactionFactory.GetNewTransaction())// I PREFERRED WITHOUT TRANS BUT  (TO 1345- 1415). .
                     {
                         OnSucceededSendDeclarationDelay1Min(requestParams);
