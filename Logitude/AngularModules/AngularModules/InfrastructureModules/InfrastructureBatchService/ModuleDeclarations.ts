@@ -1,9 +1,11 @@
-﻿import {BatchServicesComponent} from './Components/BatchService/BatchServicesComponent';
+import {BatchServicesComponent} from './Components/BatchService/BatchServicesComponent';
 import {EditBatchServiceComponent} from './Components/BatchService/EditBatchServiceComponent';
 import {TaskSchedulerComponent} from './Components/TaskScheduler/TaskSchedulerComponent';
 import {AddEditTaskSchedulerComponent} from './Components/TaskScheduler/AddEditTaskSchedulerComponent';
 
-import {MainSchedulerComponent} from './Components/TaskScheduler/MainSchedulerComponent';
+import { MainSchedulerComponent } from './Components/TaskScheduler/MainSchedulerComponent';
+import { SchedulerDateListTemplate } from './Components/TaskScheduler/SchedulerDateListTemplate';
+
 
 export const Components =
     [
@@ -12,6 +14,7 @@ export const Components =
         AddEditTaskSchedulerComponent,
         EditBatchServiceComponent,
         MainSchedulerComponent,
+        SchedulerDateListTemplate,
     ];
 
 export class ModuleDeclarations {
@@ -25,6 +28,8 @@ export class ModuleDeclarations {
             case "AddEditTaskSchedulerComponent": { myResult = AddEditTaskSchedulerComponent; break; }
             case "EditBatchServiceComponent": { myResult = EditBatchServiceComponent; break; }
             case "MainSchedulerComponent": { myResult = MainSchedulerComponent; break; }
+            case "SchedulerDateListTemplate": { myResult = SchedulerDateListTemplate; break; }
+
         }
 
         return myResult;

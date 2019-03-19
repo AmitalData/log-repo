@@ -96,6 +96,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.SchedulerDetailsXML).HasColumnName("SchedulerDetailsXML");
             this.Property(t => t.Type).HasColumnName("Type");
+            this.Property(t => t.NextRunTimeUTC).HasColumnName("NextRunTimeUTC");
+            this.Property(t => t.LastRunTimeUTC).HasColumnName("LastRunTimeUTC");
+            this.Property(t => t.StartDateTimeUTC).HasColumnName("StartDateTimeUTC");
+
 
         }
     }

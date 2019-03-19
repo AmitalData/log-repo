@@ -169,7 +169,7 @@ export class TaskSchedulerComponent implements OnInit  {
             Display: 'Start Date',
             Styles: { width: '200px' },
             HtmlListComponentName: 'ReferenceNumberCellDisplayListTemplate',
-            HtmlListComponentUrl: './Shipment/Components/ListTemplates/ReferenceNumberCellDisplayListTemplate',
+            HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "StartDateTime"
@@ -180,7 +180,7 @@ export class TaskSchedulerComponent implements OnInit  {
             Display: 'End Date',
             Styles: { width: '200px' },
             HtmlListComponentName: 'ReferenceNumberCellDisplayListTemplate',
-            HtmlListComponentUrl: './Shipment/Components/ListTemplates/ReferenceNumberCellDisplayListTemplate',
+            HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "EndDateTime"
@@ -218,7 +218,7 @@ export class TaskSchedulerComponent implements OnInit  {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                 filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
             }
-            this.filterAgrs.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Contains", true, false, false, "String");
+            filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals",false, false, false, "String");
         }
          
 
@@ -234,7 +234,7 @@ export class TaskSchedulerComponent implements OnInit  {
         }
         filters.Tenant = SessionLocator.Tenant;
          
-        return this._entityListService.getByFilters("Shipment", filters);
+        return this._entityListService.getByFilters("TaskSchedulerHistory", filters);
     }
     private LoadTaskHistories() {
         this.IsHistoryGridVsisible = true;

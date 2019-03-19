@@ -160,9 +160,24 @@ export class TasksSchedulerPM {
     public set SchedulerDetailsXML(newValue: string) { if (this.schedulerDetailsXML != newValue) { this.schedulerDetailsXML = newValue; this.MarkAsDirty("SchedulerDetailsXML"); } }
        
 	 
-    private schedulerDetailsData: any;
+    private nextRunTimeUTC: Date;
+    public get NextRunTimeUTC() { return this.nextRunTimeUTC; }
+    public set NextRunTimeUTC(newValue: Date) { if (this.nextRunTimeUTC != newValue) { this.nextRunTimeUTC = newValue; this.MarkAsDirty("NextRunTimeUTC"); } }
+       
+	 
+    private lastRunTimeUTC: Date;
+    public get LastRunTimeUTC() { return this.lastRunTimeUTC; }
+    public set LastRunTimeUTC(newValue: Date) { if (this.lastRunTimeUTC != newValue) { this.lastRunTimeUTC = newValue; this.MarkAsDirty("LastRunTimeUTC"); } }
+       
+	 
+    private startDateTimeUTC: Date;
+    public get StartDateTimeUTC() { return this.startDateTimeUTC; }
+    public set StartDateTimeUTC(newValue: Date) { if (this.startDateTimeUTC != newValue) { this.startDateTimeUTC = newValue; this.MarkAsDirty("StartDateTimeUTC"); } }
+       
+	 
+    private schedulerDetailsData: string;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
-    public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
+    public set SchedulerDetailsData(newValue: string) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
        
 	 
 
