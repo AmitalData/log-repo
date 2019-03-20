@@ -19,6 +19,10 @@ namespace WebFreight.Web.DataProviders
         public string Status { get; set; }
         public string POL { get; set; }
         public string POD { get; set; }
+
+        public string POLCode { get; set; }
+        public string PODCode { get; set; }
+
         public DateTime? DepartureDate { get; set; }
         public DateTime? ArrivalDate  { get; set; }
         public string Carrier { get; set; }

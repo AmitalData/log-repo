@@ -219,12 +219,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                      ShipmentNumber = shipment.ShipmentNumber,
                                      CustomerId = shipment.CustomerId,
                                      StatusId = shipment.StatusId,
-                                     POL = shipment.ShipmentLevelCode == "H" ? shipment.FromPortId : master.MainCarriageFromPortId,
-                                     POD = shipment.ShipmentLevelCode == "H" ? shipment.ToPortId : master.MainCarriageFinalDestinationPortId,
-                                     DepartualDate = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
-                                     DepartualDateIndication = master.MainCarriageATD != null ? "Actual" : "Expected",
-                                     ArrivalDate = master.MainCarriageATA != null ? master.MainCarriageATA : master.MainCarriageETA,
-                                     ArrivalDateIndication = master.MainCarriageATA != null ? "Actual" : "Expected",
+                                     POL = shipment.ShipmentLevelCode == "H" ? shipment.FromPortId : master.Transshipment3FromPortId != null ? master.Transshipment3FromPortId : master.Transshipment2FromPortId != null ? master.Transshipment2FromPortId : master.Transshipment1FromPortId != null ? master.Transshipment1FromPortId : master.MainCarriageFromPortId,
+                                     POD = shipment.ShipmentLevelCode == "H" ? shipment.ToPortId : master.Transshipment3ToPortId != null ? master.Transshipment3ToPortId : master.Transshipment2ToPortId != null ? master.Transshipment2ToPortId : master.Transshipment1ToPortId != null ? master.Transshipment1ToPortId : master.MainCarriageFinalDestinationPortId,
+                                     DepartualDate = master.Transshipment3ATD != null ? master.Transshipment3ATD : master.Transshipment2ATD != null ? master.Transshipment2ATD : master.Transshipment1ATD != null ? master.Transshipment1ATD : master.MainCarriageATD != null ? master.MainCarriageATD : master.Transshipment3ETD != null ? master.Transshipment3ETD : master.Transshipment2ETD != null ? master.Transshipment2ETD : master.Transshipment1ETD != null ? master.Transshipment1ETD : master.MainCarriageETD,
+                                     DepartualDateIndication = master.Transshipment3ATD != null ? "(Actual)" : master.Transshipment2ATD != null ? "(Actual)" : master.Transshipment1ATD != null ? "(Actual)" : master.MainCarriageATD != null ? "(Actual)" : "(Expected)",
+                                     ArrivalDate = master.Transshipment3ATA != null ? master.Transshipment3ATA : master.Transshipment2ATA != null ? master.Transshipment2ATA : master.Transshipment1ATA != null ? master.Transshipment1ATA : master.MainCarriageATA != null ? master.MainCarriageATA : master.Transshipment3ETA != null ? master.Transshipment3ETA : master.Transshipment2ETA != null ? master.Transshipment2ETA : master.Transshipment1ETA != null ? master.Transshipment1ETA : master.MainCarriageETA,
+                                     ArrivalDateIndication = master.Transshipment3ATA != null ? "(Actual)" : master.Transshipment2ATA != null ? "(Actual)" : master.Transshipment1ATA != null ? "(Actual)" : master.MainCarriageATA != null ? "(Actual)" : "(Expected)",
                                      TransportModeId = shipment.TransportModeId,
                                      Carrier = master.MainCarriageCarrierId,
                                      VesselId = master.MainCarriageVesselId,
@@ -262,12 +262,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                      ShipmentNumber = shipment.ShipmentNumber,
                                                      CustomerId = shipment.CustomerId,
                                                      StatusId = shipment.StatusId,
-                                                     POL = shipment.ShipmentLevelCode == "H" ? shipment.FromPortId : master.MainCarriageFromPortId,
-                                                     POD = shipment.ShipmentLevelCode == "H" ? shipment.ToPortId : master.MainCarriageFinalDestinationPortId,
-                                                     DepartualDate = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
-                                                     DepartualDateIndication = master.MainCarriageATD != null ? "Actual" : "Expected",
-                                                     ArrivalDate = master.MainCarriageATA != null ? master.MainCarriageATA : master.MainCarriageETA,
-                                                     ArrivalDateIndication = master.MainCarriageATA != null ? "Actual" : "Expected",
+                                                     POL = shipment.ShipmentLevelCode == "H" ? shipment.FromPortId : master.Transshipment3FromPortId!=null?master.Transshipment3FromPortId:master.Transshipment2FromPortId!=null?master.Transshipment2FromPortId: master.Transshipment1FromPortId!=null?master.Transshipment1FromPortId: master.MainCarriageFromPortId,
+                                                     POD = shipment.ShipmentLevelCode == "H" ? shipment.ToPortId : master.Transshipment3ToPortId != null ? master.Transshipment3ToPortId : master.Transshipment2ToPortId != null ? master.Transshipment2ToPortId : master.Transshipment1ToPortId != null ? master.Transshipment1ToPortId :master.MainCarriageFinalDestinationPortId,
+                                                     DepartualDate = master.Transshipment3ATD != null ? master.Transshipment3ATD : master.Transshipment2ATD != null ? master.Transshipment2ATD : master.Transshipment1ATD != null ? master.Transshipment1ATD : master.MainCarriageATD != null ? master.MainCarriageATD :master.Transshipment3ETD != null ? master.Transshipment3ETD : master.Transshipment2ETD != null ? master.Transshipment2ETD : master.Transshipment1ETD != null ? master.Transshipment1ETD : master.MainCarriageETD,
+                                                     DepartualDateIndication = master.Transshipment3ATD != null ? "(Actual)" : master.Transshipment2ATD != null ? "(Actual)" : master.Transshipment1ATD != null ? "(Actual)" : master.MainCarriageATD != null ? "(Actual)" : "(Expected)",
+                                                     ArrivalDate = master.Transshipment3ATA != null ? master.Transshipment3ATA : master.Transshipment2ATA != null ? master.Transshipment2ATA : master.Transshipment1ATA != null ? master.Transshipment1ATA : master.MainCarriageATA != null ? master.MainCarriageATA :master.Transshipment3ETA != null ? master.Transshipment3ETA : master.Transshipment2ETA != null ? master.Transshipment2ETA : master.Transshipment1ETA != null ? master.Transshipment1ETA : master.MainCarriageETA,
+                                                     ArrivalDateIndication = master.Transshipment3ATA != null ? "(Actual)" : master.Transshipment2ATA != null ? "(Actual)" : master.Transshipment1ATA != null ? "(Actual)" : master.MainCarriageATA != null ? "(Actual)" : "(Expected)",
                                                      TransportModeId = shipment.TransportModeId,
                                                      Carrier = master.MainCarriageCarrierId,
                                                      VesselId = master.MainCarriageVesselId,
@@ -337,6 +337,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     if (port != null)
                     {
                         package.POL = port.EnglishName;
+                        package.POLCode = port.Code;
                     }
 
                 }
@@ -347,6 +348,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     if (port != null)
                     {
                         package.POD = port.EnglishName;
+                        package.PODCode = port.Code;
+
                     }
                 }
 
