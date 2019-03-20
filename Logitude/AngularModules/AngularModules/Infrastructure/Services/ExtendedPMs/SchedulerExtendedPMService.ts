@@ -1,4 +1,4 @@
-﻿
+
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
@@ -22,6 +22,28 @@ export class SchedulerExtendedPMService {
     constructor() {
         this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SchedulerExtended';
+    }
+
+    GetSchedulerHistoryLogs(HistoryId: string) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSchedulerHistoryLogs?' + 'historyId=' + HistoryId, {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
     }
 
     GetSchedulerDetailsById(schedulerId: string) {

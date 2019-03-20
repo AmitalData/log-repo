@@ -50,6 +50,29 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
 
+        public HttpResponseMessage GetSchedulerHistoryLogs(string historyId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.CheckContactFeature("TasksScheduler", "READ", authToken.Tenant);
+                SchedulerLogsQuery LogsQuery = new SchedulerLogsQuery(tenant);
+                var HistoryLogs = LogsQuery.GetSchedulerLogsByHistory(historyId);
+             
+
+                return Request.CreateResponse(HttpStatusCode.OK, HistoryLogs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage Post(TasksSchedulerPM entityPM)
         {
             if (ModelState.IsValid)

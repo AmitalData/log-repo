@@ -407,6 +407,11 @@
     <Compile Include="GlobalModel\Tools\EntityService\WebhookKeysService.cs" />
     <Compile Include="Helpers\FullAccountingHelper.cs" />
     <Compile Include="InfrastructureModel\DataContracts\SchedulerDetails.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\SchedulerLogsList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\SchedulerLogsPM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\SchedulerLogsQuery.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerLogsMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\SchedulerLogsService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\AccountingPaymentMethod.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPayment.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\CreditCardType.Generated.cs" />
