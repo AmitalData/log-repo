@@ -43,7 +43,8 @@ export class HomeComponent implements OnDestroy{
     IsShowLastSuccessfulLoginComponent: boolean = true;
     public IfBlueSnapContracts: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-private BluesnapContractService: BluesnapContractPMService= new BluesnapContractPMService();
+    private BluesnapContractService: BluesnapContractPMService = new BluesnapContractPMService();
+    public ShowNewReleaseToolTip: boolean = false;
     constructor() {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
@@ -59,9 +60,8 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         if (!this.IsNewSignupTenant) {
             this.InitializeAppHeader();
             this.CheckAmitalBrowserInUse();
-        }   
-
-
+        }  
+        
         if (!SessionInfo.KeepUserLoggedIn) {
             // sessionTimeout
             var sessionTimeout: DetectUserInActivity = new DetectUserInActivity();
@@ -70,10 +70,11 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             // tokenExpiration
             var tokenExpiration: DetectUserInActivity = new DetectUserInActivity(true);
             tokenExpiration.Start(SessionInfo.WebTokenLifeTimeInMinutes, SessionInfo.WebTokenExpirationWarningInMinutes , "M");//(3, 1, "M")
-
-
         }
 
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ReleaseNotesURL) && SessionLocator.LoggedUserPM.ShowNewReleaseToolTip) {
+            this.ShowNewReleaseToolTip = true;
+        }
     }
 
     OnSessionMouseUp($event) {
@@ -138,7 +139,6 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
     public IsCurrenciesRatesVisible: boolean = false;
     public IsBluesnapAccount: boolean = false;
     public IsCountryIsrael: boolean = false;
-    
     
     InitializeAppHeader() {
         this.EnvironmentUrl = Environment.GetEnvironmentUrl();
@@ -1537,9 +1537,7 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
        // this.SignoutCompleted.emit('Block');
 
     }
-
-
-
+    
     Clos555e(tabItem: SessionTabItem) {
 
         var itemIndex = this.Tabs.indexOf(tabItem);
@@ -1689,11 +1687,10 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         let cpath: string = path ? `; path=${path}` : '';
         document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
-
-
-
-
-
+    
+    ViewReleaseNotes() {
+        window.open(ObjectsLocator.GlobalSetting.ReleaseNotesURL);
+    }
 }
 
 export class SessionTabItem {
