@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             var context = CustomContext.GetContext(settings.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
             var myCourierMasterQueryService = new CourierMasterQueryService(context);
-            var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, false, false);
+            var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, true, false);
             declarationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
 
