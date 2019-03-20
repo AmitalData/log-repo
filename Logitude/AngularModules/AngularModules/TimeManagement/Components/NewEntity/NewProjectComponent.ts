@@ -38,6 +38,7 @@ export class NewProjectComponent extends BaseComponent {
         this.EntityPM.ProjectNumber = args.EntityArgs.ProjectNumber;
         this.EntityPM.Id = args.EntityArgs.Id;
         this.EntityPM.IsInnerProject = true;
+        this.EntityPM.CategoryId = args.EntityArgs.CategoryId;
     }
 
     get CustomerId() {

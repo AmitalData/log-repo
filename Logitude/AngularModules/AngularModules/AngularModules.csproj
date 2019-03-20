@@ -388,6 +388,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
+    <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
@@ -2027,6 +2028,7 @@
     <Content Include="_Resources\Images\Icons\AccessLevels\OR.png" />
     <Content Include="_Resources\Images\Icons\AccessLevels\PR.png" />
     <Content Include="_Resources\Images\Icons\AccessLevels\US.png" />
+    <Content Include="_Resources\Images\Icons\All\ArrowForward.png" />
     <Content Include="_Resources\Images\Icons\All\CheckBoxIcon.png" />
     <Content Include="_Resources\Images\Icons\All\copy.png" />
     <Content Include="_Resources\Images\Icons\All\Help.png" />

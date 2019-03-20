@@ -101,7 +101,15 @@ namespace MeatadataGeneratorTool
             set { fieldName = value; IsChecked = true; FirePropertyChanged("FieldName"); this.SetPMandList(value); }
         }
 
-        string oldfieldName;
+		 string generatedComponentPath ;
+
+		public string GeneratedComponentPath
+		{
+			get { return generatedComponentPath; }
+			set { generatedComponentPath = value; FirePropertyChanged("GeneratedComponentPath"); }
+		}
+
+		string oldfieldName;
         //[Required(ErrorMessage = "Field 'FieldName' is required.")]
         public string OldFieldName
         {
