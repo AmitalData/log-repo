@@ -73,8 +73,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public bool IsIncrementalDWRunning { get; set; }
         public int EmailSendingQuota { get; set; }
         public DateTime? DWNextRunTime { get; set; }
-        
-
-
+        public string ReleaseNotesURL { get; set; }
     }
 }

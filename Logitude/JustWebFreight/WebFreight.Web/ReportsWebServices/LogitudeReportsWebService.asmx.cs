@@ -10625,8 +10625,8 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             // Get filter values 
-            DateTime fromDate = GetQueryFilterItemValue<DateTime>(filterItem_FromDate);
-            DateTime toDate = GetQueryFilterItemValue<DateTime>(filterItem_ToDate);
+            DateTime fromDate_filter = GetQueryFilterItemValue<DateTime>(filterItem_FromDate);
+            DateTime toDate_filter = GetQueryFilterItemValue<DateTime>(filterItem_ToDate);
             string glAccountId = GetQueryFilterItemValue<string>(filterItem_GLAccountId);
             string currencyId = GetQueryFilterItemValue<string>(filterItem_CurrencyId);
             bool isReconciled = GetQueryFilterItemValue<bool>(filterItem_IsReconciled);
@@ -10634,6 +10634,10 @@ namespace WebFreight.Web.ReportsWebServices
             string searchFields = GetQueryFilterItemValue<string>(filterItem_SearchFields);
             string _dateTypeCode = GetQueryFilterItemValue<string>(filterItem_DateTypeCode);
 
+
+
+            DateTime fromDate = new DateTime(fromDate_filter.Year, fromDate_filter.Month, fromDate_filter.Day, 0, 0, 0);
+            DateTime toDate = new DateTime(toDate_filter.Year, toDate_filter.Month, DateTime.DaysInMonth(toDate_filter.Year, toDate_filter.Month), 23, 59, 59);
 
             #endregion
 
@@ -10677,6 +10681,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Category5Id = category5Id,
                 AccountTypeCode = ACCOUNT_TYPE_CODE,
                 SearchFields = searchFields,
+                DateTypeCode = _dateTypeCode,
                 //CallBack = xxxx,
             };
             var ledgerTransactionCardIndexService = new LedgerTransactionCardIndexService(accountingContext, myLedgerTransactionCardIndexFilter);

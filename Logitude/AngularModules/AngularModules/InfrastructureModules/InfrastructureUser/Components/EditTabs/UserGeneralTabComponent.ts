@@ -307,13 +307,17 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
     }
     
-    public get ShowLocalNameInLOV () { return this.EntityPM.ShowLocalNameInLOV ; }
+    public get ShowLocalNameInLOV () { return this.EntityPM.ShowLocalNameInLOV; }
     public set ShowLocalNameInLOV (value: boolean) {
         if (this.EntityPM.ShowLocalNameInLOV  != value) {
             this.EntityPM.ShowLocalNameInLOV  = value;
         }
     }
 
-
-
+    public get ShowNewReleaseToolTip() { return this.EntityPM.ShowNewReleaseToolTip; }
+    public set ShowNewReleaseToolTip(value: boolean) {
+        if (this.EntityPM.ShowNewReleaseToolTip != value) {
+            this.EntityPM.ShowNewReleaseToolTip = value;
+        }
+    }
 }
