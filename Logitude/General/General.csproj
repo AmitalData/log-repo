@@ -189,6 +189,8 @@
     <Content Include="2019.R1\02 - 2019\Day 20 [Rabaia] TranzilaPaymentMessageAnalyzeWR.sql" />
     <Content Include="2019.R1\02 - 2019\Day24[Abed] RenameDWCategoriesGeneral.sql" />
     <Content Include="2019.R1\02 - 2019\Day28[Abed] UpdatePackageTypePrintAsField.sql" />
+    <Content Include="2019.R1\03 - 2019\Day 19 [Khalid] Fill FillOperationalLastCloseDateBy backward.sql" />
+    <Content Include="2019.R1\03 - 2019\Day 17 [Khalid] Add WorkerRole TFSAggregator.sql" />
     <Content Include="2019.R1\03 - 2019\Day 07 [Samar] delete country Id field from tenant management.sql" />
     <Content Include="2019.R1\03 - 2019\Day 21 [Abed] DeleteOldAPILogsStoredProc.sql" />
     <Content Include="2019.R1\03 - 2019\Day 21 [Abed] DeleteOldQueueMessageMoreDetails.sql" />
