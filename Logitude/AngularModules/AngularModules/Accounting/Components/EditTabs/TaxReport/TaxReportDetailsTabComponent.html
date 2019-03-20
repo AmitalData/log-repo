@@ -213,7 +213,7 @@
 
                                                 <td style="width: 120px;" (dblclick)="FilterItemClicked('ExemptTransactions')">
                                                     <LogTextBox [ObjectFieldName]="'ExemptTaxableOutput'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                [Text]="ExemptTaxableOutput" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
 
                                                 <td>
@@ -261,7 +261,7 @@
 
                                                 <td style="width: 120px;" (dblclick)="FilterItemClicked('TaxableTransactions')">
                                                     <LogTextBox [ObjectFieldName]="'TaxableOutputAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                [Text]="TaxableOutputAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
 
                                                 <td>
@@ -310,7 +310,7 @@
 
                                                 <td (dblclick)="FilterItemClicked('TaxableTransactions')">
                                                     <LogTextBox [ObjectFieldName]="'OutputTaxAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    [Text]="OutputTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -326,7 +326,7 @@
 
                                                 <td (dblclick)="FilterItemClicked('InputsEquipments')">
                                                     <LogTextBox [ObjectFieldName]="'EquipmentInputsTaxAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    [Text]="EquipmentInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -342,7 +342,7 @@
 
                                                 <td (dblclick)="FilterItemClicked('InputsOther')">
                                                     <LogTextBox [ObjectFieldName]="'OtherInputsTaxAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    [Text]="OtherInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -358,7 +358,7 @@
 
                                                 <td (dblclick)="FilterItemClicked('All')">
                                                     <LogTextBox [ObjectFieldName]="'AmountForPayRefund'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    [Text]="AmountForPayRefund"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>

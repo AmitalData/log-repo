@@ -43,7 +43,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsLastRunError { get; set; }
         public string Type { get; set; }
         public string SchedulerDetailsXML { get; set; }
-
+        public DateTime? NextRunTimeUTC { get; set; }
+        public DateTime? LastRunTimeUTC { get; set; }
+        public DateTime? StartDateTimeUTC { get; set; }
 
 
         [DataMember]

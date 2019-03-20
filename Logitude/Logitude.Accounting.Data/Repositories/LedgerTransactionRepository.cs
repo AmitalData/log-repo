@@ -398,6 +398,62 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         }
 
 
+        public IQueryable<LedgerTransaction> GetQueryOrderByDateTypeAndIdByRec(int tenant, List<string> listOfAccId, DateTime @from, DateTime to,
+       string currencyId,
+       string searchByFilter, bool? isReconciled, string dateType)
+        {
+            var q = (from rec in context.LedgerTransactions
+                     where rec.Tenant == tenant
+                     where listOfAccId.Contains(rec.AccountId) //less than 1000
+                     select rec
+                     );
+            //if (context.ToString().StartsWith("Fake"))
+            //{
+            //    q = (from rec in q
+            //         where rec.AccountingDate.Date >= @from
+            //         where rec.AccountingDate.Date <= to
+            //         select rec
+            //        );
+            //}
+            //else
+            //{
+            //    q = (from rec in q
+            //         where EntityFunctions.TruncateTime(rec.AccountingDate) >= @from
+            //         where EntityFunctions.TruncateTime(rec.AccountingDate) <= to
+            //         select rec
+            //         );
+            //}
+            q = QFilterByDateTruncateTimeInclusive(dateType, @from, to, q);
+
+            if (!string.IsNullOrWhiteSpace(currencyId))
+            {
+                q = q.Where(rec => rec.CurrencyId == currencyId);
+            }
+            if (isReconciled.HasValue && isReconciled.Value == true)
+            {
+                q = q.Where(rec => rec.IsReconciled == true);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchByFilter))
+            {
+                q = q.Where(rec => rec.SearchFields.Contains(searchByFilter));
+            }
+
+            q = (from rec in q
+                 orderby rec.AccountingDate, rec.Id
+                 select rec);
+
+
+            return q;
+
+
+
+        }
+
+
+
+
+
         public IQueryable<LedgerTransaction> GetNotReconciled(string gLAccountId, int tenant)
         {
             var q = (from record in context.LedgerTransactions
@@ -1005,15 +1061,29 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
         }
 
-        public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, int year, int openMonth, int closedMonth, int tenant)
+        public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, DateTime closedDate, DateTime openDate, int tenant)
         {
-            var closedDate = new DateTime(year, closedMonth, DateTime.DaysInMonth(year, closedMonth));
-            var openDate = new DateTime(year, openMonth, 1);
+            // there is two closed periods:
+            // 1- from start of year till closed date
+            // 2- from last day in open month till end of the year
 
-            IQueryable<LedgerTransaction> records = (from a in context.LedgerTransactions
-                                        where a.AccountId == accountId && a.Tenant == tenant
-                                            && (a.AccountingDate <= closedDate || a.AccountingDate >= openDate)
-                                        select a);
+            DateTime yearStartDate = new DateTime(closedDate.Year, 1, 1, 0, 0, 0);
+            DateTime leftClosedPeriodToDate = closedDate;
+
+            DateTime rightClosedPeriodFromDate = new DateTime(openDate.Year, openDate.Month, DateTime.DaysInMonth(openDate.Year, openDate.Month), 23, 59, 59);
+            DateTime yearEndDate = new DateTime(openDate.Year, 12, DateTime.DaysInMonth(openDate.Year, 12), 23, 59, 59);
+
+            IQueryable<LedgerTransaction> records
+                = (from a in context.LedgerTransactions
+                   where a.AccountId == accountId && a.Tenant == tenant
+                       && (
+                               (a.AccountingDate >= yearStartDate && a.AccountingDate <= leftClosedPeriodToDate)
+                               ||
+                               (a.AccountingDate >= rightClosedPeriodFromDate && a.AccountingDate <= yearEndDate)
+                           )
+                   select a);
+
+
             return records;
         }
 

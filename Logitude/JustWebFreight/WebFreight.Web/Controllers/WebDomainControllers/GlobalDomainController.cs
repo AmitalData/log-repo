@@ -112,6 +112,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.ReportsRunUsingWR = mySetting.ReportsRunUsingWR;
                         myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
                         myResult.DeploymentStage = mySetting.DeploymentStage;
+                        myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
 
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
@@ -639,6 +640,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool ReportsRunUsingWR { get; set; }
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }
+        public string ReleaseNotesURL { get; set; }
     }
 
     public class TenantManagementJS

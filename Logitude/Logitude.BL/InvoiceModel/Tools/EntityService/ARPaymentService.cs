@@ -1679,8 +1679,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         GLAccountPM FillGLAccountFields(ARPaymentPM paymentPM)
         {
             GLAccountPM gla = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
-            paymentPM.GLAccountId = gla.Id;
-            paymentPM.GLAccountRecoMethodCode = gla.ReconcileMethodCode;
+            if (gla != null)
+            {
+                paymentPM.GLAccountId = gla.Id;
+                paymentPM.GLAccountRecoMethodCode = gla.ReconcileMethodCode;
+            }
             return gla;
         }
 

@@ -11,7 +11,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SchedulerDetails, FTPSchedulerDetails} from '../../../../Infrastructure/DataContracts/SchedulerDetails';
 import {SchedulerExtendedPMService} from '../../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
-
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 @Component({
     moduleId: module.id,
     templateUrl: './AddEditTaskSchedulerComponent.html',
@@ -25,9 +25,10 @@ export class AddEditTaskSchedulerComponent  {
     public ValidationErrorsList: string[];
     public GeneralAreaHeight: string = "200px";
     schedulerExtendedPMService: SchedulerExtendedPMService;
-
+    IsEnableSaveButton: boolean = false;
     constructor() {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
+        if (FeatureLocator.HasFeaturePermession("TasksScheduler", "UPDATE")) this.IsEnableSaveButton = true;
     }
 
     SetDataContext(dataContext: TaskSchedulerItemClass) {

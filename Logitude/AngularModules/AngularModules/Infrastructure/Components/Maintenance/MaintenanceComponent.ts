@@ -513,6 +513,19 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
+
+        if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "MNG";
+            item.Icon = "List"
+            item.Code = "MASC";
+            item.ObjectTableName = "TasksScheduler";
+            item.TextCode = "General.Features.Schedulers";
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
+        }
+        
         if (FeatureLocator.HasFeaturePermession("General", "MAINCUSTOMERS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "Par";
@@ -572,13 +585,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "BatchServicesLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "MNG";
-            item.Icon = "List"
-            item.Code = "TMNG";
-            item.ObjectTableName = "TasksScheduler";
-            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
         }
 
         else {
@@ -1080,14 +1087,19 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent');
                     break;
                 }
-                case "TMNG": {
+                case "MASC": {
                     this._entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
+
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 1100;
                         logWindow.Height = 1000;
-                        logWindow.Title = "Task Scheduler";
+                        if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ")) {
+                            logWindow.Width =800;
+                            logWindow.Height = 500;
+                        }
+                        logWindow.Title = "Schedulers";
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/MainSchedulerComponent');
                     });
                     break;
                 }
@@ -1406,7 +1418,7 @@ class MaintenanceMenuItem {
             var r = "";
         }
 
-        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG") {
+        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG" || this.Code == "MASC") {
             myResult = TextCodeTranslator.TranslateTable(this.item.TextCode);
         }
 
