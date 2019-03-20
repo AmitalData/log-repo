@@ -359,6 +359,8 @@
     <Compile Include="INTTRAAnalyzerWorkerRole.cs" />
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
     <Compile Include="TMQueueMessageBuilderWorkerRole.cs" />
+    <Compile Include="Tasks\DeleteOldAPILogsTask.cs" />
+    <Compile Include="Tasks\DeleteOldQueueMessageMoreDetailsTask.cs" />
     <Compile Include="TFSAggregatorWorkerRole.cs" />
     <Compile Include="TranzilaPaymentMessageAnalyzeWR.cs" />
     <Compile Include="MobileSMSWorkerRole.cs" />
