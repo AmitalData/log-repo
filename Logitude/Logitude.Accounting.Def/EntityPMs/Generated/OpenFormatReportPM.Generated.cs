@@ -388,6 +388,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string pDFRerportXML ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PDFRerportXML  
+	   {
+	    
+	     get
+		{
+		   return pDFRerportXML;
+		 }
+		 set
+		 {
+		   if(pDFRerportXML != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PDFRerportXML",OldValue=pDFRerportXML,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   pDFRerportXML=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

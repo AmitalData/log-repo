@@ -32,7 +32,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         FromDate, 
 	         ToDate, 
 	         StatusTypeCode, 
-	         ErrorMessage,
+	         ErrorMessage, 
+	         PDFRerportXML,
 	      }
 
 
@@ -54,7 +55,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Status, 
 	         UserLocalName, 
 	         StatusLocalName, 
-	         TestingMode,
+	         TestingMode, 
+	         PDFRerportXML,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -111,6 +113,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorMessage))
             {
 				entityPOCO.ErrorMessage = entityPM.ErrorMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PDFRerportXML))
+            {
+				entityPOCO.PDFRerportXML = entityPM.PDFRerportXML;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -174,6 +181,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ErrorMessage = entityPOCO.ErrorMessage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PDFRerportXML))
+            {
+					entityPM.PDFRerportXML = entityPOCO.PDFRerportXML;
+            }
+
 		}
 
 		public void PMToOldPM(OpenFormatReportPM entityPM, OpenFormatReportPM oldEntityPM)
@@ -230,6 +242,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.ErrorMessage = entityPM.ErrorMessage;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PDFRerportXML))
+            {
+                oldEntityPM.PDFRerportXML = entityPM.PDFRerportXML;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(OpenFormatReportPM entityPM)
@@ -246,6 +263,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ErrorMessage)) //T4 find type == nText 
             {
                 entityPM.ErrorMessage = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ErrorMessage));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.PDFRerportXML)) //T4 find type == nText 
+            {
+                entityPM.PDFRerportXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PDFRerportXML));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
