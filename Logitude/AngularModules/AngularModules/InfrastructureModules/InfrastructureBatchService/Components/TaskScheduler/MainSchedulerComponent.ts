@@ -41,7 +41,6 @@ export class MainSchedulerComponent implements OnInit {
         if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ")) this.IsShowPackageNotIncludeMessage = true;
 
 
-
         if (this.IsShowTaskScheduler && this.IsShowTabFTBScheduler) this.IsShowComponentWithTabs = true;
         else if (this.IsShowTaskScheduler || this.IsShowTabFTBScheduler) this.IsShowComponentWithOutTabs = true;
         else this.IsShowPackageNotIncludeMessage = true; 

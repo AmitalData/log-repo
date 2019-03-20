@@ -243,8 +243,9 @@ export class AddEditTaskSchedulerComponent  {
         }
 
 
-
-        this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+        
+        if (this.EntityPM.Type == "FTB") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+    
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             SessionLocator.CurrentSession.StartBusyIndicatorSaving();

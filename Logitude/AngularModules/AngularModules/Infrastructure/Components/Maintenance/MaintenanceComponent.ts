@@ -1093,10 +1093,12 @@ export class MaintenanceComponent {
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 1100;
                         logWindow.Height = 1000;
-                        if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ")) {
+                        if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ") || (!FeatureLocator.HasFeaturePermession("TasksScheduler", "TASK") && !FeatureLocator.HasFeaturePermession("TasksScheduler", "FTP"))) {
                             logWindow.Width =800;
                             logWindow.Height = 500;
                         }
+
+
                         logWindow.Title = "Schedulers";
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/MainSchedulerComponent');

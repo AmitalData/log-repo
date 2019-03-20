@@ -135,6 +135,8 @@ export class TaskSchedulerComponent implements OnInit  {
         newItem.CreatedBy = SessionLocator.LoggedUserId;
         newItem.UpdatedBy = SessionLocator.LoggedUserId;
         newItem.TriggerType = "O";
+        newItem.Tenant = SessionLocator.Tenant;
+        
         newItem.Type = this.SchedulerType;
         var logWindow = new LogitudeWindow();
         logWindow.Height = this.SchedulerType == "FTP" ? 645 : 570;
