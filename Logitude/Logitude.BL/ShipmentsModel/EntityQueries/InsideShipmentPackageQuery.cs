@@ -22,7 +22,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public List<InsideShipmentPackagePM> GetInsideShipmentPackages(string shipmentPackageId, int tenant)
         {
-            List<InsideShipmentPackagePM> myResult = (from a in repository.context.InsideShipmentPackages.Include("PackageType")
+            List<InsideShipmentPackagePM> myResult = (from a in repository.context.InsideShipmentPackages.Include("PackageType").Include("Country")
                                                       where a.Tenant == tenant && a.ShipmentPackageId == shipmentPackageId
                                                       select new InsideShipmentPackagePM()
                                                       {
@@ -66,6 +66,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                           ChassisNumber = a.ChassisNumber,
                                                           RegistrationNumber = a.RegistrationNumber,
                                                           CountryId = a.CountryId,
+                                                          CountryName = a.Country != null ? a.Country.EnglishName : "",
                                                       }).ToList();
 
             return myResult;

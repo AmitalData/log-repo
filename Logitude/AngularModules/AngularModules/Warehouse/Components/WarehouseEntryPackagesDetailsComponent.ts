@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {BaseComponent} from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -385,35 +385,42 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
             //this.TotalGrossWeight = this.warehouseEntryPM.TotalGrossWeight ? this.warehouseEntryPM.TotalGrossWeight : 0;
             //this.TotalVolume = this.warehouseEntryPM.TotalVolume ? this.warehouseEntryPM.TotalVolume : 0;
             this.warehouseEntryPM.WarehouseEntryPackages.forEach((item) => {
-                    var savedItem = new WarehouseEntryPackagePM(null);
-                    savedItem.PackageTypeId = item.PackageTypeId;
-                    savedItem.ContainerNumber = item.ContainerNumber;
-                    savedItem.Length = item.Length;
-                    savedItem.Height = item.Height;
-                    savedItem.Width = item.Width;
-                    savedItem.Volume = item.Volume;
-                    savedItem.Weight = item.Weight;
-                    savedItem.Description = item.Description;
-                    savedItem.Seal = item.Seal;
-                    savedItem.Harmonize = item.Harmonize;
-                    savedItem.Location = item.Location;
-                    savedItem.Dimensions = item.Dimensions;
-                    savedItem.Instock = item.Instock;
-                    savedItem.Quantity = item.Quantity;
-                    savedItem.ContainerNumberWarning = item.ContainerNumberWarning;
-                    savedItem.Id = item.Id;
-                    savedItem.CreateDate = item.CreateDate;
-                    savedItem.UpdateDate = item.UpdateDate;
-                    savedItem.CreatedByUserId = item.CreatedByUserId;
-                    savedItem.UpdatedByUserId = item.UpdatedByUserId;
-                    savedItem.WarehouseEntryId = item.WarehouseEntryId;
-                    savedItem.PackageTypeName = item.PackageTypeName;
-                    savedItem.IsContainer = item.IsContainer;
+                var savedItem = new WarehouseEntryPackagePM(null);
+                savedItem.PackageTypeId = item.PackageTypeId;
+                savedItem.ContainerNumber = item.ContainerNumber;
+                savedItem.Length = item.Length;
+                savedItem.Height = item.Height;
+                savedItem.Width = item.Width;
+                savedItem.Volume = item.Volume;
+                savedItem.Weight = item.Weight;
+                savedItem.Description = item.Description;
+                savedItem.Seal = item.Seal;
+                savedItem.Harmonize = item.Harmonize;
+                savedItem.Location = item.Location;
+                savedItem.Dimensions = item.Dimensions;
+                savedItem.Instock = item.Instock;
+                savedItem.Quantity = item.Quantity;
+                savedItem.ContainerNumberWarning = item.ContainerNumberWarning;
+                savedItem.Id = item.Id;
+                savedItem.CreateDate = item.CreateDate;
+                savedItem.UpdateDate = item.UpdateDate;
+                savedItem.CreatedByUserId = item.CreatedByUserId;
+                savedItem.UpdatedByUserId = item.UpdatedByUserId;
+                savedItem.WarehouseEntryId = item.WarehouseEntryId;
+                savedItem.PackageTypeName = item.PackageTypeName;
+                savedItem.IsContainer = item.IsContainer;
+                savedItem.Make = item.Make;
+                savedItem.Year = item.Year;
+                savedItem.ChassisNumber = item.ChassisNumber;
+                savedItem.RegistrationNumber = item.RegistrationNumber;
+                savedItem.CountryId = item.CountryId;
+                savedItem.Model = item.Model;
+                savedItem.Color = item.Color;
 
-                    this.savedItems.push(savedItem);
-                    this.WarehouseEntryPackagesLists.push(item);
+                this.savedItems.push(savedItem);
+                this.WarehouseEntryPackagesLists.push(item);
 
-                });
+            });
         }
 
         //if (!this.IsFromFullWarehouseEntryComponent) {

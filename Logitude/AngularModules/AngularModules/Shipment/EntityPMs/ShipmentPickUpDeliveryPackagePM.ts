@@ -1,8 +1,8 @@
 
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {PickUpDeliveryPackageHarmonizePM} from './PickUpDeliveryPackageHarmonizePM';
+import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
+import { PickUpDeliveryPackageHarmonizePM } from './PickUpDeliveryPackageHarmonizePM';
 
 export class ShipmentPickUpDeliveryPackagePM {
 

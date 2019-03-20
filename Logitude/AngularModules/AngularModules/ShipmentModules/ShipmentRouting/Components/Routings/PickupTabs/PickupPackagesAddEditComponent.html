@@ -196,7 +196,7 @@
                     <td style="width: 300px;">
                         <table>
 
-                            <tr>
+                            <tr style="height: 100px;">
                                 <td>
                                     <table>
                                         <tr class="FormFieldRow">
@@ -228,7 +228,7 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr  style="vertical-align:top;">
                                 <td>
                                     <table>
                                         <tr style="height:32px;">
@@ -240,7 +240,7 @@
                                         <!-- Make -->
                                         <tr class="FormFieldRow">
                                             <td style="width: 110px;">
-                                                <LogLabel [ObjectFieldName]="'Make'"  [NoObjectField]="true" [Text]="'Make'"  [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'Make'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td style="width: 230px;">
@@ -255,7 +255,7 @@
                                         <!-- Model -->
                                         <tr class="FormFieldRow">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'Model'" [NoObjectField]="true" [Text]="'Model'" [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'Model'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td>
@@ -270,7 +270,7 @@
                                         <!-- Year  -->
                                         <tr class="FormFieldRow">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'Year'" [NoObjectField]="true" [Text]="'Year'" [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td>
@@ -285,7 +285,7 @@
                                         <!-- Color  -->
                                         <tr class="FormFieldRow">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'Color'" [NoObjectField]="true" [Text]="'Color'"  [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'Color'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td>
@@ -300,7 +300,7 @@
                                         <!-- Chassis Number  -->
                                         <tr class="FormFieldRow">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'ChassisNumber'" [NoObjectField]="true" [Text]="'Chassis Number'" [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'ChassisNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td>
                                                 <LogTextBox [ObjectFieldName]="'ChassisNumber'" [Text]="DataContext.ChassisNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
@@ -313,7 +313,7 @@
                                         <!-- Registration Number  -->
                                         <tr class="FormFieldRow">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'RegistrationNumber'" [NoObjectField]="true" [Text]="'Registration Number'" [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'RegistrationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td>
                                                 <LogTextBox [ObjectFieldName]="'RegistrationNumber'" [Text]="DataContext.RegistrationNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
@@ -326,7 +326,7 @@
                                         <!-- CountryId -->
                                         <tr class="FormFieldRow">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'CountryId'" [NoObjectField]="true" [Text]="'Country of Manufacture'" [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td>
                                                 <LogLov [ObjectFieldName]="'CountryId'"

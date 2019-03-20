@@ -1225,20 +1225,20 @@ function BuildPackagesTabPageViewModel(shipment) {
         else {
 
             var imgTemplate = "";
-            imgTemplate += "<div style='width:20px; height:20px; vertical-align:middle; margin-left: -5px; position: relative;'>";
+            imgTemplate += "<div style='width:20px; height:20px; vertical-align:middle; margin-left: -5px; position: relative;' onmouseleave='OnMouseLeavePackageDescriptionIcon(this)'>";
             imgTemplate += "<img src='../images/icons/infoICON.png' style='width:20px; height:20px; vertical-align:middle; visibility: #= DescriptionIconVisibility #;' onmouseover='OnMouseOverPackageDescriptionIcon(this)' onmouseleave='OnMouseLeavePackageDescriptionIcon(this)' />";
-            imgTemplate += "<div style='width: 270px; height: 130px; margin-top: -75px; position: fixed; right: 60px; background: url(\"../images/icons/CellTooltip.png\") no-repeat; background-size: 100% 100%; visibility: #= DescriptionHelpVisibility #;'>";
+            imgTemplate += "<div style='width: 270px; height: 130px; margin-top: -75px; position: fixed; right: 90px; background: url(\"../images/icons/CellTooltip.png\") no-repeat; background-size: 100% 100%; visibility: #= DescriptionHelpVisibility #;'>";
             imgTemplate += "<div style='color: \\#1B90CB; height: 13px; font-size: 13px; line-height: 13px; margin-left: 10px; margin-top: 13px;'>Description</div>";
             imgTemplate += "<textarea style='width: 225px; height: 85px; margin-left: 10px; margin-top: 0px; line-height: 11px; background: transparent; font-size: 11px; resize: none; border: none !important; outline: none !important; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;' [readonly]='true' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>#= Description #</textarea>";
             imgTemplate += "</div>";
             imgTemplate += "</div>";
 
             var imgCarTemplate = "";
-            imgCarTemplate += "<div style='width:20px; height:20px; vertical-align:middle; margin-left: -5px; position: relative;'>";
+            imgCarTemplate += "<div style='width:20px; height:20px; vertical-align:middle; margin-left: -5px; position: relative;' onmouseleave='OnMouseLeavePackageCarIcon(this)'>";
             imgCarTemplate += "<img src='../images/icons/infoICON.png' style='width:20px; height:20px; vertical-align:middle; visibility: #= CarIconVisibility #;' onmouseover='OnMouseOverPackageCarIcon(this)' onmouseleave='OnMouseLeavePackageCarIcon(this)' />";
             imgCarTemplate += "<div style='width: 270px; height: 130px; margin-top: -75px; position: fixed; right: 60px; background: url(\"../images/icons/CellTooltip.png\") no-repeat; background-size: 100% 100%; visibility: #= CarHelpVisibility #;'>";
             imgCarTemplate += "<div style='color: \\#1B90CB; height: 13px; font-size: 13px; line-height: 13px; margin-left: 10px; margin-top: 13px;'>Vehicle Details</div>";
-            imgCarTemplate += "<textarea style='width: 225px; height: 85px; margin-left: 10px; margin-top: 0px; line-height: 11px; background: transparent; font-size: 11px; resize: none; border: none !important; outline: none !important; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;' [readonly]='true' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>#= Vehicle Details  #</textarea>";
+            imgCarTemplate += "<textarea style='width: 225px; height: 85px; margin-left: 10px; margin-top: 0px; line-height: 11px; background: transparent; font-size: 11px; resize: none; border: none !important; outline: none !important; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;' [readonly]='true' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>#= VehicleDetails  #</textarea>";
             imgCarTemplate += "</div>";
             imgCarTemplate += "</div>";
 
@@ -1279,6 +1279,15 @@ function BuildPackagesTabPageViewModel(shipment) {
                     var iCommodityCode = $.trim(item.CommodityNumber) == "" ? "" : item.CommodityNumber;
                     var iCommodityName = $.trim(item.CommodityName) == "" ? "" : item.CommodityName;
 
+                    var itemVehicleDetailsVolume = ""; 
+                    itemVehicleDetailsVolume += $.trim(item.Make) == "" ? "" : item.Make + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.Model) == "" ? "" : item.Model + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.Year) == "" ? "" : item.Year + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.Color) == "" ? "" : item.Color + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.ChassisNumber) == "" ? "" : item.ChassisNumber + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.RegistrationNumber) == "" ? "" : item.RegistrationNumber + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.CountryName) == "" ? "\n" : item.CountryName + "\n";
+
                     PackagesGridDataSource.push({
                         Type: itemType,
                         Quantity: itemQuantity,
@@ -1302,7 +1311,8 @@ function BuildPackagesTabPageViewModel(shipment) {
                             }
                         },
 
-                        CarIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
+                        VehicleDetails: itemVehicleDetailsVolume,
+                        CarIconVisibility: $.trim(item.IsVehicle) != "" ? "visible" : "collapse",
                         CarHelpVisibility: "collapse",
                         showCarsIcon: function (e) {
                             if (e == true) {
@@ -1312,7 +1322,6 @@ function BuildPackagesTabPageViewModel(shipment) {
                                 this.set("CarHelpVisibility", "collapse");
                             }
                         }
-
                     });
                 });
             }
@@ -1341,6 +1350,16 @@ function BuildPackagesTabPageViewModel(shipment) {
                     //var itemVolumetricWeight = $.trim(item.VolumetricWeight) == "" ? 0 : item.VolumetricWeight;
                     var itemGrossWeight = $.trim(item.Weight) == "" ? 0 : item.Weight;
 
+                    var itemVehicleDetailsVolume = "";
+                    $.each(item.InsideShipmentPackages, function (index, listItem) {
+                        itemVehicleDetailsVolume += $.trim(listItem.Make) == "" ? "" : listItem.Make + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.Model) == "" ? "" : listItem.Model + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.Year) == "" ? "" : listItem.Year + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.Color) == "" ? "" : listItem.Color + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.ChassisNumber) == "" ? "" : listItem.ChassisNumber + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.RegistrationNumber) == "" ? "" : listItem.RegistrationNumber + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.CountryName) == "" ? "\n" : listItem.CountryName + "\n";
+                    });
                     PackagesGridDataSource.push({
                         Type: itemType,
                         Quantity: itemQuantity,
@@ -1353,7 +1372,6 @@ function BuildPackagesTabPageViewModel(shipment) {
                         Description: item.Description,
                         DescriptionIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
                         DescriptionHelpVisibility: "collapse",
-
                         showDescription: function (e) {
                             if (e == true) {
                                 this.set("DescriptionHelpVisibility", "visible");
@@ -1361,6 +1379,18 @@ function BuildPackagesTabPageViewModel(shipment) {
 
                             else {
                                 this.set("DescriptionHelpVisibility", "collapse");
+                            }
+                        },
+
+                        VehicleDetails: itemVehicleDetailsVolume,
+                        CarIconVisibility: $.trim(item.IsVehicle) != "" ? "visible" : "collapse",
+                        CarHelpVisibility: "collapse",
+                        showCarsIcon: function (e) {
+                            if (e == true) {
+                                this.set("CarHelpVisibility", "visible");
+                            }
+                            else {
+                                this.set("CarHelpVisibility", "collapse");
                             }
                         }
                     });
@@ -1394,7 +1424,7 @@ function BuildPackagesTabPageViewModel(shipment) {
         columns: PackagesGridColumns,
         dataSource: {
             data: PackagesGridDataSource
-        }
+        },
     });
     
     // Summary

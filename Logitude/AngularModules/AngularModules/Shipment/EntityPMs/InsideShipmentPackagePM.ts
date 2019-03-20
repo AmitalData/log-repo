@@ -197,38 +197,47 @@ export class InsideShipmentPackagePM {
     public get CommodityName() { return this.commodityName; }
     public set CommodityName(newValue: string) { if (this.commodityName != newValue) { this.commodityName = newValue; this.MarkAsDirty("CommodityName"); } }
        
+	 
     private make: string;
     public get Make() { return this.make; }
     public set Make(newValue: string) { if (this.make != newValue) { this.make = newValue; this.MarkAsDirty("Make"); } }
-
+       
+	 
     private model: string;
     public get Model() { return this.model; }
     public set Model(newValue: string) { if (this.model != newValue) { this.model = newValue; this.MarkAsDirty("Model"); } }
-
+       
+	 
     private year: string;
     public get Year() { return this.year; }
     public set Year(newValue: string) { if (this.year != newValue) { this.year = newValue; this.MarkAsDirty("Year"); } }
-
-
+       
+	 
     private color: string;
     public get Color() { return this.color; }
     public set Color(newValue: string) { if (this.color != newValue) { this.color = newValue; this.MarkAsDirty("Color"); } }
-
-
+       
+	 
     private chassisNumber: string;
     public get ChassisNumber() { return this.chassisNumber; }
     public set ChassisNumber(newValue: string) { if (this.chassisNumber != newValue) { this.chassisNumber = newValue; this.MarkAsDirty("ChassisNumber"); } }
-
-
+       
+	 
     private registrationNumber: string;
     public get RegistrationNumber() { return this.registrationNumber; }
     public set RegistrationNumber(newValue: string) { if (this.registrationNumber != newValue) { this.registrationNumber = newValue; this.MarkAsDirty("RegistrationNumber"); } }
-
+       
+	 
     private countryId: string;
     public get CountryId() { return this.countryId; }
     public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
-
-
+       
+	 
+    private countryName: string;
+    public get CountryName() { return this.countryName; }
+    public set CountryName(newValue: string) { if (this.countryName != newValue) { this.countryName = newValue; this.MarkAsDirty("CountryName"); } }
+       
+	 
 
     public OldEntityPM: InsideShipmentPackagePM;
 	    

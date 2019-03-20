@@ -262,10 +262,17 @@ export class PickupPackageItem extends BaseComponent {
 
                             this.SetUIProperties_IsContainer();
                             this.SetUIPropertiesOfCars(list.IsVehicle);
+                            if (!list.IsVehicle) {
+                                this.Make = null;
+                                this.Model = null;
+                                this.Color = null;
+                                this.Year = null;
+                                this.CountryId = null;
+                                this.ChassisNumber = null;
+                                this.RegistrationNumber = null;
+                            }
                         }
-                        else {
-                            this.SetUIPropertiesOfCars(false);
-                        }
+                        
                     }
                 });
             }
