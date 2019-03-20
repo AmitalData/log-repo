@@ -12296,6 +12296,17 @@ namespace WebFreight.Web.ReportsWebServices
 
                     ShipmentDetals shipment = new ShipmentDetals();
 
+                    shipment.Openedby = Item.CreatedByUserName;
+                    if (!string.IsNullOrEmpty(Item.OperationalClosedByUserId))
+                    {
+                        ContactRepository contactRepository = new ContactRepository(commonContext);
+                        Contact contact = contactRepository.GetSingleContact(Item.OperationalClosedByUserId, tenant);
+                        if (contact != null)
+                        {
+                            shipment.OperationalClosedby = contact.EnglishName;
+                        }
+                    }
+
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Item, shipment);
 
                     if (firstShipmentPackage != null)
@@ -12353,8 +12364,20 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (myLastDelivery != null)
                     {
+                        if (!string.IsNullOrEmpty(myLastDelivery.CarrierId))
+                        {
+                            Card truckerCard = CardRepository.GetSingleCard(myLastDelivery.CarrierId, tenant, true);
+                            if (truckerCard != null)
+                            {
+                                shipment.TruckerName = truckerCard.EnglishName;
+                            }
+                        }
+
                         switch (myLastDelivery.PickUpDeliveryToTypeCode)
                         {
+
+                           
+
                             case "PART":
                                 {
                                     if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
@@ -12363,7 +12386,6 @@ namespace WebFreight.Web.ReportsWebServices
                                         if (myPartner != null)
                                         {
                                             shipment.DeliveryToName = myPartner.EnglishName;
-
                                             Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault();//addressRepository.GetMainAddressByCardId(myLastDelivery.ToPartnerCardId, tenant);
                                             if (myPartnerAddress != null)
                                             {
@@ -12381,6 +12403,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.ToPortId, true);
                                         if (myPort != null)
                                         {
+
                                             shipment.DeliveryToName = myPort.EnglishName;
                                             shipment.DeliveryTocity = myPort.StateName;
                                         }

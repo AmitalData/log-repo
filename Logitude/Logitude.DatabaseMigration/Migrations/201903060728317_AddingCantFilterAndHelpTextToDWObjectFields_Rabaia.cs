@@ -7,8 +7,8 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.DWObjectFields", "CannotFilter", c => c.Boolean(nullable: false));
-            AddColumn("dbo.DWObjectFields", "HelpText", c => c.String(maxLength: 2000, unicode: false));
+            //AddColumn("dbo.DWObjectFields", "CannotFilter", c => c.Boolean(nullable: false));
+            //AddColumn("dbo.DWObjectFields", "HelpText", c => c.String(maxLength: 2000, unicode: false));
         }
         
         public override void Down()

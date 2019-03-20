@@ -106,6 +106,10 @@ namespace WebFreight.Web.DataProviders
         public string Reference3 { get; set; }
         public string Reference4 { get; set; }
 
+        public string Openedby { get; set; }
+        public string OperationalClosedby { get; set; }
+        public string TruckerName { get; set; }
+
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
