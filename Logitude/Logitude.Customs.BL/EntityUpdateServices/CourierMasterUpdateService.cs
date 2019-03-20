@@ -151,20 +151,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            //if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            //{
-            //    CourierMasterPM dbOccCourierMasterPM = GetDBEntity(entityPM.Id, entityPM.Tenant);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                CourierMasterPM dbOccCourierMasterPM = GetDBEntity(entityPM.Id, entityPM.Tenant);
 
-            //    if(entityPM.GatewayPortCode != dbOccCourierMasterPM.GatewayPortCode ||
-            //        entityPM.OriginPortCode != dbOccCourierMasterPM.OriginPortCode ||
-            //        entityPM.MAWB != dbOccCourierMasterPM.MAWB ||
-            //        entityPM.MAWBTypeCode != dbOccCourierMasterPM.MAWBTypeCode ||
-            //        entityPM.AirlineId != dbOccCourierMasterPM.AirlineId ||
-            //        entityPM.WeightValueCode != dbOccCourierMasterPM.WeightValueCode)
-            //    {
-            //        toSetDeclarationChanged = true;
-            //    }
-            //}
+                if ((entityPM.GatewayPortCode != null && entityPM.GatewayPortCode != dbOccCourierMasterPM.GatewayPortCode) ||
+                    (entityPM.OriginPortCode != null && entityPM.OriginPortCode != dbOccCourierMasterPM.OriginPortCode) ||
+                    (entityPM.MAWB != null && entityPM.MAWB != dbOccCourierMasterPM.MAWB) ||
+                    (entityPM.MAWBTypeCode != null && entityPM.MAWBTypeCode != dbOccCourierMasterPM.MAWBTypeCode) ||
+                    (entityPM.AirlineId != null && entityPM.AirlineId != dbOccCourierMasterPM.AirlineId) ||
+                    (entityPM.WeightValueCode != null && entityPM.WeightValueCode != dbOccCourierMasterPM.WeightValueCode))
+                {
+                    toSetDeclarationChanged = true;
+                }
+            }
 
             base.OnUpdating(entityPM, entityPOCO);
         }
@@ -323,49 +323,42 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            //if(toSetDeclarationChanged == true)
-            //{
-            //    string setCourierManifestStatusCode = "R";
-            //    string setDeclarationsList = "";
+            if (toSetDeclarationChanged == true)
+            {
+                string setCourierManifestStatusCode = "R";
+                string setDeclarationsList = "";
 
-            //    CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
-            //    List<string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
-            //    if (declarations != null)
-            //    {
-            //        CustomsRequiredFieldErrors errorsForCourierDeclaration = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(entityPM.Id, entityPM.Tenant);
-            //        if (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count() > 0)
-            //        {
-            //            setCourierManifestStatusCode = "M";
-            //        }
-            //        else
-            //        {
-            //            setCourierManifestStatusCode = "R";
-            //        }
+                CustomsRequiredFieldErrors errorsForCourierDeclaration = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(entityPM.Id, entityPM.Tenant);
+                if (errorsForCourierDeclaration == null || (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields == null))
+                {
+                    CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
+                    List<string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
+                    if (declarations != null)
+                    {
+                        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPM.Tenant);
+                        foreach (var declarationId in declarations)
+                        {
+                            DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, false, false);
+                            if (myDeclarationCourierStatusPM.CourierManifestStatusCode != "M" && myDeclarationCourierStatusPM.CourierManifestStatusCode != "R")
+                            {
+                                if (setDeclarationsList == "")
+                                {
+                                    setDeclarationsList = string.Concat("'", declarationId, "'");
+                                }
+                                else
+                                {
+                                    setDeclarationsList = string.Concat(setDeclarationsList, ",", "'", declarationId, "'");
+                                }
+                            }
+                        }
 
-            //        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPM.Tenant);
-            //        foreach (var declarationId in declarations)
-            //        {
-            //            DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, false, false);
-            //            if (myDeclarationCourierStatusPM.CourierManifestStatusCode != "M" &&
-            //                (setCourierManifestStatusCode != "R" || (setCourierManifestStatusCode == "R" && myDeclarationCourierStatusPM.CourierManifestStatusCode != "R")) )
-            //            {
-            //                if(setDeclarationsList == "")
-            //                {
-            //                    setDeclarationsList = string.Concat("'",declarationId, "'");
-            //                }
-            //                else
-            //                {
-            //                setDeclarationsList = string.Concat(setDeclarationsList, "," , "'", declarationId, "'");
-            //                }
-            //            }
-            //        }
-
-            //        if(!string.IsNullOrWhiteSpace(setDeclarationsList))
-            //        {
-            //            this.SetDeclarationChanged(setDeclarationsList, setCourierManifestStatusCode, entityPM.Tenant);
-            //        }
-            //    }
-            //}
+                        if (!string.IsNullOrWhiteSpace(setDeclarationsList))
+                        {
+                            this.SetDeclarationChanged(setDeclarationsList, setCourierManifestStatusCode, entityPM.Tenant);
+                        }
+                    }
+                }
+            }
         }
 
 

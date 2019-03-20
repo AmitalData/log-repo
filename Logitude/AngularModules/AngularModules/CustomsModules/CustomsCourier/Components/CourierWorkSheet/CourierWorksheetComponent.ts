@@ -172,13 +172,13 @@ export class CourierWorksheetComponent extends BaseComponent
     SetWindowArgs(windowArgs) {
         this.entityPM = windowArgs.CurrentEntity;
         this.CheckRequiredFields();
-        this.RefreshButtonClicked();
     }
 
     CheckRequiredFields() {
         this._CourierMasterService.GetRequiredFieldsForCourierMasterIncludeManifest(this.entityPM.Id).subscribe((response: ServiceResponse) => {
             if (response.Result) {
                 this._ValidationErrors = this.GetRequiredErrorsList(response.Result.RequiredFields);
+                this.RefreshButtonClicked();
             }
         });
     }
@@ -1292,7 +1292,6 @@ export class CourierWorksheetComponent extends BaseComponent
                         res.subscribe((aa: any) => {
                             this.entityPM = aa.Result;
                             this.CheckRequiredFields();
-                            this.RefreshButtonClicked();
                         })
                     });
 
@@ -1395,7 +1394,7 @@ export class CourierWorksheetComponent extends BaseComponent
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי אתר אחסון";
+        logitudeWindow.Title = "שינוי אתר אחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
