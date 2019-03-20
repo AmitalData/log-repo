@@ -40,5 +40,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
 
         public bool IsLastRunError { get; set; }
         public string Type { get; set; }
+        public DateTime? NextRunTimeUTC { get; set; }
+        public DateTime? LastRunTimeUTC { get; set; }
+        public DateTime? StartDateTimeUTC { get; set; }
     }
 }
