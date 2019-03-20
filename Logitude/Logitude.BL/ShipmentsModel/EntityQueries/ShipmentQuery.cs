@@ -1266,6 +1266,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Notes = shipment.Notes;
             shipmentPM.CreateDateTime = shipment.CreateDateTime;
             shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
+            shipmentPM.OperationalClosedByUserId = shipment.OperationalClosedByUserId;
+
             shipmentPM.SalesmanUserId = shipment.SalesmanUserId;
             shipmentPM.AccountManagerUserId = shipment.AccountManagerUserId;
             shipmentPM.ShipmentNumber = shipment.ShipmentNumber;
@@ -3113,6 +3115,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.BranchId = shipment.BranchId;
             shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
+            shipmentPM.OperationalClosedByUserId = shipment.OperationalClosedByUserId;
             shipmentPM.SalesmanUserId = shipment.SalesmanUserId;
             shipmentPM.AccountManagerUserId = shipment.AccountManagerUserId;
             shipmentPM.MainCarriageTransportModeId = shipment.TransportModeId;
