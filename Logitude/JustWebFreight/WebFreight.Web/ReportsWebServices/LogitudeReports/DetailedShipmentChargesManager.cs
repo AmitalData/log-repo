@@ -187,7 +187,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myDataProvider.From = this.GetDateString(this.FromDate);
             myDataProvider.To = this.GetDateString(this.ToDate);
             myDataProvider.Shipments = new List<ArchivoExportadoShipmentItem>();
-
             IQueryable<ShipmentDataView> iQueryable_Shipments = this.GetIQueryableShipments();
 
             if (this.IncludeCancelledShipments)
@@ -270,6 +269,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                             myRecord.Salesman = myShipment.SalesmanUserName;
                             myRecord.CustomerExternalID = customerExternalID;
+                            myRecord.Shipper = myShipment.ShipperName;
+                            myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
+                            myRecord.Consignee = myShipment.ConsigneeName;
+                            myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
+
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
@@ -302,6 +306,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.InvoiceNumber = invoice.InvoiceNumber;
                         myRecord.InvoiceDate = invoice.InvoiceDate;
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
+                        myRecord.Shipper = myShipment.ShipperName;
+                        myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
+                        myRecord.Consignee = myShipment.ConsigneeName;
+                        myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -357,7 +365,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.InvoiceNumber = invoice.InvoiceNumber;
                         myRecord.InvoiceDate = invoice.InvoiceDate;
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
-
+                        myRecord.Shipper = myShipment.ShipperName;
+                        myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
+                        myRecord.Consignee = myShipment.ConsigneeName;
+                        myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
                         {
@@ -561,6 +572,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
                 #endregion
 
+                
                 Currency SelectedCurrency = allCurrencies.Where(d => d.Code == this.SelectedCurrencyCode).FirstOrDefault();
                 if (SelectedCurrency != null)
                 {
@@ -609,7 +621,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Salesman = myShipment.SalesmanUserName;
                                     myRecord.OpenPayables = myRecord.Payables;
                                     myRecord.CustomerExternalID = customerExternalID;
-
+                                    myRecord.Shipper = myShipment.ShipperName;
+                                    myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
+                                    myRecord.Consignee = myShipment.ConsigneeName;
+                                    myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                                     if (myBranch != null)
                                     {
                                         myRecord.BranchCode = myBranch.Code;
@@ -665,7 +680,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Salesman = myShipment.SalesmanUserName;
                                     myRecord.OpenReceivables = myRecord.Receivables;
                                     myRecord.CustomerExternalID = customerExternalID;
-
+                                    myRecord.Shipper = myShipment.ShipperName;
+                                    myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
+                                    myRecord.Consignee = myShipment.ConsigneeName;
+                                    myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                                     if (myBranch != null)
                                     {
                                         myRecord.BranchCode = myBranch.Code;
@@ -727,7 +745,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
                                 myRecord.CustomerExternalID = customerExternalID;
-
+                                myRecord.Shipper = myShipment.ShipperName;
+                                myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
+                                myRecord.Consignee = myShipment.ConsigneeName;
+                                myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                                 if (myCurrency != null)
                                 {
                                     myRecord.InvoiceCurrencyCode = myCurrency.Code;
@@ -816,7 +837,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
                                 myRecord.CustomerExternalID = customerExternalID;
-
+                                myRecord.Shipper = myShipment.ShipperName;
+                                myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
+                                myRecord.Consignee = myShipment.ConsigneeName;
+                                myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                                 if (myCurrency != null)
                                 {
                                     myRecord.InvoiceCurrencyCode = myCurrency.Code;
