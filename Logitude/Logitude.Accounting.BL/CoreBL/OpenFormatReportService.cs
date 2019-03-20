@@ -1589,7 +1589,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (line.VatPercentage != null)
                     {
-                        string VatPercentage =  line.VatPercentage.ToString();
+                       // string VatPercentage =  line.VatPercentage.ToString();
+                        string VatPercentage = Format((decimal)line.VatPercentage);
                         if (VatPercentage.Length > 4) { VatPercentage = VatPercentage.Substring(0, 4); }
                         myStringBuilder.Append(a + VatPercentage.PadLeft(4, '0'));
                     }
