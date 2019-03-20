@@ -112,9 +112,9 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
             if (!string.IsNullOrEmpty(wINumber))
             {
                 ITimeManagementContext context = this.MainContext as TimeManagementContext;
-                TMEmployeeTimeQueryService queryService = new TMEmployeeTimeQueryService(context);
-                List<TMEmployeeTimePM> itemsList = queryService.GetTimeSheetByWINumberList(entityPM.Id, wINumber, tenant);
-                completedWork = (itemsList.Select(a => a.TimeInMinutes).Sum() + entityPM.TimeInMinutes) / 60.0;
+
+                var minutes = (from d in context.TMEmployeeTimes where d.Tenant == tenant && d.WINumber == wINumber && d.Id != entityPM.Id select d).Sum(s => s.TimeInMinutes);
+                completedWork = (minutes + entityPM.TimeInMinutes) / 60.00;
                 try
                 {
                     DbQueueService queueservice = new DbQueueService(queueName, tenant);
