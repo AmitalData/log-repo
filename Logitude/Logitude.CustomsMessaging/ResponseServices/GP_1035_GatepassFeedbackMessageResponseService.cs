@@ -46,6 +46,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
+            //Checking for Exceptions
+            if (customResponse.ResponseContentHeader.Exception != null)
+            {
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = true;
+                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription;
+                LogMessagingUtil.Instance.AppendLine(customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription);
+            }
+
             foreach (var gatepassFeedbackMessageItem in customResponse.GatepassFeedbackMessage)
             {
                 this._GatepassRequestPM = gatepassRequestQueryService.GetGatepassRequestByGatepassNumber(gatepassFeedbackMessageItem.gatepassNumber, requestParams.Tenant);
@@ -75,6 +84,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 this._GatepassRequestPM.GatepassRequestStatus = "2";
                                 myEventContextTagModel.EventCode = "VGE";
                                 myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
+                                this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
                             }
                             else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
                             {
@@ -89,6 +99,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 this._GatepassRequestPM.GatepassRequestStatus = "6";
                                 myEventContextTagModel.EventCode = "VGE";
                                 myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
+                                this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
                             }
                             else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
                             {

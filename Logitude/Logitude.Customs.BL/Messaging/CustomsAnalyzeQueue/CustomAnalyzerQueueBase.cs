@@ -2,6 +2,7 @@
 using Logitude.Customs.Def.ClosedTable;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -84,6 +85,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 LogMessagingUtil.Instance.Clear();
                 _AnalyzeResultModel = this.AnalyzeData(communicationsData);
                 ;
+                _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel(); 
+                LogMessagingUtil.Instance.AppendLine(ProxyUtil.JsonConvertSerialize(_AnalyzeResultModel));
                 UpdateAnlayzeQ();
             }
 

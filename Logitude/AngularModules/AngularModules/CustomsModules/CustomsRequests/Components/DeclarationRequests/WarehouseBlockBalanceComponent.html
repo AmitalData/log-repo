@@ -246,7 +246,7 @@
                                                 <LogLabel [ObjectFieldName]="'StorageEntryPortChargeBalance'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.StorageEntryPortChargeBalance'"> </LogLabel>
                                             </td>
                                             <td style="width: 140px;">
-                                                <LogTextBox [ObjectFieldName]="'StorageEntryPortChargeBalance'" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                                <LogTextBox [ObjectFieldName]="'StorageEntryPortChargeBalance'" [Text]="StorageEntryPortChargeBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
                                             </td>
 
                                             <td><div></div></td>
@@ -257,8 +257,8 @@
                                             <td style="width: 100px;">
                                                 <LogLabel [ObjectFieldName]="'StorageEntryTransportBalance'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.StorageEntryTransportBalance'"> </LogLabel>
                                             </td>
-                                            <td style="width: 140px;">
-                                                <LogTextBox [ObjectFieldName]="'StorageEntryTransportBalance'" [Text]="StorageEntryTransportBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            <td style="width: 140px; text-align:left">
+                                                <LogTextBox style="text-align:left" [IsFreeText]="true" [ObjectFieldName]="'StorageEntryTransportBalance'" [Text]="StorageEntryTransportBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
                                             </td>
 
                                             <td><div style="width:10px"></div></td>
@@ -266,8 +266,8 @@
                                             <td style="width: 130px;">
                                                 <LogLabel [ObjectFieldName]="'StorageEntryInsuranceBalance'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.StorageEntryInsuranceBalance'"> </LogLabel>
                                             </td>
-                                            <td style="width: 140px;">
-                                                <LogTextBox [ObjectFieldName]="'StorageEntryInsuranceBalance'" [Text]="StorageEntryInsuranceBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            <td style="width: 140px; text-align:left">
+                                                <LogTextBox style="width: 140px; text-align:left" [ObjectFieldName]="'StorageEntryInsuranceBalance'" [Text]="StorageEntryInsuranceBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
                                             </td>
 
                                             
@@ -294,7 +294,7 @@
                                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ActionList">
 
                                         <!-- ActionDate -->
-                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                        <log-column [width]="'80'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.ActionDate' | TextCodeTranslationPipe"
                                                     [binding]="'ActionDate'">
                                             <log-cell-template template="let item" #logcelltemplate>
@@ -338,7 +338,7 @@
                                         </log-column>
 
                                         <!-- ValueAfterAction -->
-                                        <log-column [width]="'120'" [Alignment]="'right'"
+                                        <log-column [width]="'130'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.ValueAfterAction' | TextCodeTranslationPipe"
                                                     [binding]="'ValueAfterAction'">
                                             <log-cell-template template="let item" #logcelltemplate>
@@ -351,7 +351,7 @@
                                         </log-column>
 
                                         <!-- GovernmentProcedureTypeText -->
-                                        <log-column [width]="'110'" [Alignment]="'right'"
+                                        <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.GovernmentProcedureType' | TextCodeTranslationPipe"
                                                     [binding]="'GovernmentProcedureTypeText'">
                                             <log-cell-template template="let item" #logcelltemplate>

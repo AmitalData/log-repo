@@ -34,7 +34,7 @@ export class GatepassRequestComponent extends BaseComponent {
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _GatepassRequestPMService: GatepassRequestPMService = new GatepassRequestPMService()
 
-    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
+    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
     Loaded: boolean = false;
     constructor() {
         super();
@@ -50,7 +50,6 @@ export class GatepassRequestComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.CourierMasterPM = args.CourierMasterPM;
             this.EntityPM = new GatepassRequestPM();
-            this.UpdateCode = "1";
 
             if (AppTool.IsNullOrEmpty(this.CourierMasterPM.MAWB)) {
                 var myMessageWindow = new MessageWindow();
@@ -59,21 +58,29 @@ export class GatepassRequestComponent extends BaseComponent {
                 myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען");
                 this.CancelButtonClicked();
             }
-
-            this._GatepassRequestPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
-                let entityPMResult = rsptPMget.Result;
-                if (entityPMResult != null) {
-                    this.IsNew = false;
-                    this.EntityPM = entityPMResult;
-                    this.GatepassNumber = this.EntityPM.GatepassNumber.toString();
-                    this.GatepassRequestStatus = this.EntityPM.GatepassRequestStatus;
-                }
-                else {
-                    this.EntityPM.MasterCourierId = this.CourierMasterPM.Id;
-                }
-                this.SetGatepassRequestStatus();
-            });
+            this.SetGatepassRequest();
+            
         }
+    }
+
+    SetGatepassRequest() {
+
+        this._GatepassRequestPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
+            let entityPMResult = rsptPMget.Result;
+            if (entityPMResult != null) {
+                this.IsNew = false;
+                this.EntityPM = entityPMResult;
+                this.GatepassNumber = this.EntityPM.GatepassNumber.toString();
+                this.GatepassRequestStatus = this.EntityPM.GatepassRequestStatus;
+                this.SetGatepassRequestStatus();
+            }
+            else {
+                this.EntityPM.MasterCourierId = this.CourierMasterPM.Id;
+                this.EntityPM.Tenant = this.CourierMasterPM.Tenant;
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+                this.UpdateCode = "1";
+            }
+        });
     }
 
     SetScreenFieldsEditability(isDisplayOnly: boolean) {
@@ -86,6 +93,11 @@ export class GatepassRequestComponent extends BaseComponent {
     public get MAWB() { return this.CourierMasterPM.MAWB; }
     public set MAWB(newValue: string) {
         this.CourierMasterPM.MAWB = newValue;
+    }
+
+    public get AirlinePrefix() { return this.CourierMasterPM.AirlinePrefix; }
+    public set AirlinePrefix(newValue: string) {
+        this.CourierMasterPM.AirlinePrefix = newValue;
     }
 
     public get HAWB() { return this.CourierMasterPM.HAWB; }
@@ -105,10 +117,28 @@ export class GatepassRequestComponent extends BaseComponent {
         this._GatepassRequestStatus = newValue;
     }
 
+    private _GatepassRequestStatusName: string;
+    public get GatepassRequestStatusName() { return this._GatepassRequestStatusName; }
+    public set GatepassRequestStatusName(newValue: string) {
+        this._GatepassRequestStatusName = newValue;
+    }
+
     private _UpdateCode: string;
     public get UpdateCode() { return this._UpdateCode; }
     public set UpdateCode(newValue: string) {
         this._UpdateCode = newValue;
+        if (newValue == "2") {
+            this.OriginSiteCode = this.EntityPM.OriginSiteCode;
+            this.DesignateSiteCode = this.EntityPM.DesignateSiteCode;
+            this.TransportationTypeCode = this.EntityPM.TransportationTypeCode;
+            this.SetScreenFieldsEditability(true);
+        }
+        else {
+            this.OriginSiteCode = null;
+            this.DesignateSiteCode = null;
+            this.TransportationTypeCode = null;
+            this.SetScreenFieldsEditability(false);
+        }
     }
 
     private _OriginSiteCode: string;
@@ -128,7 +158,6 @@ export class GatepassRequestComponent extends BaseComponent {
     public set TransportationTypeCode(newValue: string) {
         this._TransportationTypeCode = newValue;
     }
-
     //#endregion\
 
     _ShowUpdateCode;
@@ -136,29 +165,52 @@ export class GatepassRequestComponent extends BaseComponent {
         this._ShowUpdateCode = enumvalue;
     }
 
-    SetGatepassRequestStatus(){
-        switch (this.EntityPM.UpdateCode) {
-            case "":
+    SetGatepassRequestStatus() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.GatepassRequestStatus)) {
+            this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+            this.UpdateCode = "1";
+        }
+
+        switch (this.EntityPM.GatepassRequestStatus) {
             case "2":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+                this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת העברה שגויה";
+                break;
             case "4":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
+                this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת העברה נדחתה";
+                break;
             case "7":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
                 this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת ביטול העברה אושרה";
                 break;
             case "1":
                 this.UpdateCodeList = [{ 'EnumId': 2, 'Name': 'ביטול' }];
                 this.UpdateCode = "2";
-                this.SetScreenFieldsEditability(true);
+                this.GatepassRequestStatusName = "ממתין לאישור העברה";
                 break;
             case "3":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
+                this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת העברה אושרה";
+                break;
             case "6":
+                this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
+                this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת ביטול העברה שגויה";
+                break;
             case "8":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
                 this.UpdateCode = "1";
+                this.GatepassRequestStatusName = "בקשת ביטול העברה נדחתה";
                 break;
             case "5":
                 this.UpdateCodeList = [];
                 this.UpdateCode = "";
+                this.GatepassRequestStatusName = "ממתין לאישור ביטול העברה";
                 break;
         }
     }
@@ -169,13 +221,16 @@ export class GatepassRequestComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (AppTool.IsNullOrEmpty(this.OriginSiteCode)) {
-            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.CustomsBlockListInWarehouse.O.FromDateMandatory"));
+            this.ValidationErrorsList.push("חובה להזין מאתר אחסון");
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.OriginSiteCodeMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.DesignateSiteCode)) {
-            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.CustomsBlockListInWarehouse.O.ToDateMandatory"));
+            this.ValidationErrorsList.push("חובה להזין לאתר אחסון");
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.DesignateSiteCodeMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.TransportationTypeCode)) {
-            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.CustomsBlockListInWarehouse.O.StorageSiteNumberMandatory"));
+            this.ValidationErrorsList.push("חובה להזין הובלה");
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.TransportationTypeCodeMandatory"));
         }
 
 
@@ -193,6 +248,7 @@ export class GatepassRequestComponent extends BaseComponent {
         this.EntityPM.OriginSiteCode = this.OriginSiteCode;
         this.EntityPM.DesignateSiteCode = this.DesignateSiteCode;
         this.EntityPM.TransportationTypeCode = this.TransportationTypeCode;
+        this.EntityPM.GatepassRequestStatus = null;
         if (this.IsNew) {
             this._GatepassRequestPMService.insert(this.EntityPM).subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
@@ -205,7 +261,6 @@ export class GatepassRequestComponent extends BaseComponent {
                 this.SendGatepassRequestMessage(customSendOptionsArgs);
             });
         }
-
     }
 
     SendGatepassRequestMessage(customSendOptionsArgs: CustomSendOptionsArgs) {
@@ -228,8 +283,7 @@ export class GatepassRequestComponent extends BaseComponent {
             .ShowProgressBar(currRequestParams.PBId,
                 "שליחת בקשה העברה", true)
             .then((res) => {
-                //this.ResponseData = res;
-                //this.OnMassageDisplayMethod();
+                this.SetGatepassRequest();
             }
             ).catch((err) => {
                 this.ValidationErrorsList.push(err);

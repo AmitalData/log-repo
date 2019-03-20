@@ -2414,7 +2414,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "1035",
                 InOut = InOutEnum.I.ToString(),
                 Description = "משוב לבקשת העברה",
-                DcaPrefixName = "GP_MSG02_GatepassFeedbackMessage_Out.",
+                DcaPrefixName = "SendGP_MSG1035_GatepassFeedbackMessage_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
@@ -2502,6 +2502,25 @@ namespace Logitude.Customs.Def.ClosedTable
                 InOut = InOutEnum.I.ToString(),
                 Description = "שידור הגשה בלדר ",// "Unifreight Courier *UCBCTML* Batch Send",
                 DcaPrefixName = "UnifreightCourierBatchTerminal_UCBCTML_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                //TML ==>https://www.abbreviations.com/abbreviation/terminal
+                Code = "UCBCMSS",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "שינוי אתר איחסון לבלדר ",// "Unifreight Courier *UCBCTML* Batch Send",
+                DcaPrefixName = "UnifreightCourierBatchTerminal_UCBCMSS_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,

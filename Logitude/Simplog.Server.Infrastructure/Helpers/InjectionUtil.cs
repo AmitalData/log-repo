@@ -79,6 +79,8 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
         }
 
+        public static Func<string, int, bool> GetRequiredFieldErrorsForCourierDeclarationIsValid { get; set; }
+
         public static void Init(
             Func<IAmitalRestrictOwnerService> CreateAmitalRestrictOwnerModelService,
             Func<int> getTenantFromToken,

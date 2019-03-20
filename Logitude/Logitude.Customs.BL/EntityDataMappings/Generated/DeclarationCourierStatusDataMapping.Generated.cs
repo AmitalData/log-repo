@@ -36,7 +36,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PendingRemarks, 
 	         SpecialActionStatus, 
 	         FastIndividualProcessCode, 
-	         ManualProcessCode,
+	         ManualProcessCode, 
+	         TerminalSuspentionNumber,
 	      }
 
 
@@ -90,7 +91,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SpecialActionsErrorXml, 
 	         CourierPendingReasonErrorPlace, 
 	         FastIndividualProcessCode, 
-	         ManualProcessCode,
+	         ManualProcessCode, 
+	         TerminalSuspentionNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -167,6 +169,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManualProcessCode))
             {
 				entityPOCO.ManualProcessCode = entityPM.ManualProcessCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TerminalSuspentionNumber))
+            {
+				entityPOCO.TerminalSuspentionNumber = entityPM.TerminalSuspentionNumber;
 			}
 			}
 
@@ -248,6 +255,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ManualProcessCode = entityPOCO.ManualProcessCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TerminalSuspentionNumber))
+            {
+					entityPM.TerminalSuspentionNumber = entityPOCO.TerminalSuspentionNumber;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -322,6 +334,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManualProcessCode))
             {
                 oldEntityPM.ManualProcessCode = entityPM.ManualProcessCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TerminalSuspentionNumber))
+            {
+                oldEntityPM.TerminalSuspentionNumber = entityPM.TerminalSuspentionNumber;
             }
 			
 		}

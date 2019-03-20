@@ -1124,6 +1124,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string terminalSuspentionNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TerminalSuspentionNumber  
+	   {
+	    
+	     get
+		{
+		   return terminalSuspentionNumber;
+		 }
+		 set
+		 {
+		   if(terminalSuspentionNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TerminalSuspentionNumber",OldValue=terminalSuspentionNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   terminalSuspentionNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -1520,6 +1520,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationCourierStatusWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\NotificationWebServiceController.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\OpenAccessController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PaymentOrderWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PhysicalCheckWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\CustomsRequierdFieldsController.cs" />
@@ -2734,7 +2735,6 @@
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
     <None Include="Properties\PublishProfiles\sendgrid.pubxml" />

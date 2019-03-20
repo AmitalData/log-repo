@@ -848,6 +848,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string storageSiteCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteCode  
+	   {
+	    
+	     get
+		{
+		   return storageSiteCode;
+		 }
+		 set
+		 {
+		   if(storageSiteCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteCode",OldValue=storageSiteCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteCode=value;
+		   }
+			
+		 }
+	   }
+	  private string storageSiteName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteName  
+	   {
+	    
+	     get
+		{
+		   return storageSiteName;
+		 }
+		 set
+		 {
+		   if(storageSiteName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteName",OldValue=storageSiteName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteName=value;
+		   }
+			
+		 }
+	   }
+	  private string truckerId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckerId  
+	   {
+	    
+	     get
+		{
+		   return truckerId;
+		 }
+		 set
+		 {
+		   if(truckerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckerId",OldValue=truckerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckerId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

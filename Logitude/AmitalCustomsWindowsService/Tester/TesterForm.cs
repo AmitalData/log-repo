@@ -505,6 +505,13 @@ namespace AmitalCustomsWindowsService.Tester
 
                     }
                     break;
+                case "SendWEBAPIMessage2MamanWR":
+                    {
+                        var SendWEBAPIMessage2MamanWR = new SendWEBAPIMessage2MamanWR();
+                        SendWEBAPIMessage2MamanWR.DebugStep(_TBID.Text, _CBInterfaceID.Text, GetTenant());
+
+                    }
+                    break;
                 default:
                     CustomsWorkerRole.Test.clsTester.DebugRQStep(
                 _CBInterfaceID.Text, GetTenant(), _TBID.Text,

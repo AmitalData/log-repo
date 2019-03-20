@@ -68,6 +68,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DepartureDate).HasColumnName("DepartureDate");
 
             this.Property(t => t.WeightValueCode).HasColumnName("WeightValueCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.TruckerId).HasColumnName("TruckerId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

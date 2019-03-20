@@ -110,6 +110,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string FastIndividualProcessCode  { get; set; }
        [DataMember]
        public string ManualProcessCode  { get; set; }
+       [DataMember]
+       public string TerminalSuspentionNumber  { get; set; }
    }
 
 }

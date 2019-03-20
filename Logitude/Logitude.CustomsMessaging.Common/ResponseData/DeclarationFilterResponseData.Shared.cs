@@ -20,9 +20,9 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
         public class GeneralDetails
         {
             public string customOfficeName { get; set; }
-            public int customOfficeNumber { get; set; }
-            public int declerationStatus { get; set; }
-            public int? externalID { get; set; }
+            public string customOfficeNumber { get; set; }
+            public string declerationStatus { get; set; }
+            public string externalID { get; set; }
             public bool externalIDSpecified { get; set; }
             public string name { get; set; }
             public string statusName { get; set; }

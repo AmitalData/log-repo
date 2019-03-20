@@ -44,7 +44,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ShortHAWB, 
 	         FlightNumber, 
 	         DepartureDate, 
-	         WeightValueCode,
+	         WeightValueCode, 
+	         StorageSiteCode, 
+	         TruckerId,
 	      }
 
 
@@ -86,7 +88,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EstimatedArrivalDateOnly, 
 	         EstimatedArrivalTimeOnly, 
 	         WeightValueCode, 
-	         WeightValueName,
+	         WeightValueName, 
+	         StorageSiteCode, 
+	         StorageSiteName, 
+	         TruckerId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -203,6 +208,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WeightValueCode))
             {
 				entityPOCO.WeightValueCode = entityPM.WeightValueCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageSiteCode))
+            {
+				entityPOCO.StorageSiteCode = entityPM.StorageSiteCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+				entityPOCO.TruckerId = entityPM.TruckerId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -326,6 +341,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.WeightValueCode = entityPOCO.WeightValueCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StorageSiteCode))
+            {
+					entityPM.StorageSiteCode = entityPOCO.StorageSiteCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TruckerId))
+            {
+					entityPM.TruckerId = entityPOCO.TruckerId;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -440,6 +465,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WeightValueCode))
             {
                 oldEntityPM.WeightValueCode = entityPM.WeightValueCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageSiteCode))
+            {
+                oldEntityPM.StorageSiteCode = entityPM.StorageSiteCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+                oldEntityPM.TruckerId = entityPM.TruckerId;
             }
 			
 		}

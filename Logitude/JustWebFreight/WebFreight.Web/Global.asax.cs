@@ -56,6 +56,7 @@ using Logitude.Server.Tools.Counters;
 using WebFreight.Web.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Resolvers;
+using Logitude.Customs.BL.Validators;
 
 namespace WebFreight.Web
 {
@@ -151,6 +152,20 @@ namespace WebFreight.Web
                 };
                 InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, new IISManager());
                 ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
+                InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
+                    (string courierMasterId, int tenant) =>
+                 {
+                     var courierMasterRequiredErrors = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierMasterId, tenant);
+                     if (courierMasterRequiredErrors != null)
+                     {
+                         return courierMasterRequiredErrors.RequiredFields.Count == 0;
+
+                     }
+                     else
+                     {
+                         return true;
+                     }
+                 };
 
 
 
