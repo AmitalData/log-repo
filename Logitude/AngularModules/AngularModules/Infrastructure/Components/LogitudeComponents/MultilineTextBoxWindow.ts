@@ -16,12 +16,16 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 
 export class MultilineTextBoxWindow implements OnInit {
     public DataContext: any;
+    DisplayMode: boolean = false;
 
     constructor() {
     }
 
     SetWindowArgs(args){
         this.Text = args.TextValue;
+        if (args.DisplayMode) {
+            this.DisplayMode = args.DisplayMode;
+        }
     }
 
     private text: string;

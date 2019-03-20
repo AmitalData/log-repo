@@ -26,7 +26,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskSchedulerHistory.EndDateTimeUTC = TaskSchedulerHistoryPM.EndDateTimeUTC;
             TaskSchedulerHistory.IsError = TaskSchedulerHistoryPM.IsError;
             TaskSchedulerHistory.RunResult = TaskSchedulerHistoryPM.RunResult;
-            TaskSchedulerHistory.TaskId = TaskSchedulerHistoryPM.TaskId; 
+            TaskSchedulerHistory.TaskId = TaskSchedulerHistoryPM.TaskId;
+            TaskSchedulerHistory.LogFirstLine = TaskSchedulerHistoryPM.LogFirstLine;
+            TaskSchedulerHistory.LogType = TaskSchedulerHistoryPM.LogType;
         }
     }
 }

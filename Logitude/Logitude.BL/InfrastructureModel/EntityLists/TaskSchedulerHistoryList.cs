@@ -21,5 +21,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsError { get; set; }
         public DateTime? StartDateTimeUTC { get; set; }
         public DateTime? EndDateTimeUTC { get; set; }
+        public string LogType { get; set; }
+        public string LogFirstLine { get; set; }
     }
 }

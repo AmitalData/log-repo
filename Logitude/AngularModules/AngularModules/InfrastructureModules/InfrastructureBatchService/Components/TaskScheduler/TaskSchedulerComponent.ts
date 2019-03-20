@@ -66,8 +66,9 @@ export class TaskSchedulerComponent implements OnInit  {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     this.loadedDataList = myResponse.Result;
-
+                   
                     this.BuildItemsSource();
+                    this.LoadTaskHistories();
                 }
             }
         });
@@ -180,9 +181,9 @@ export class TaskSchedulerComponent implements OnInit  {
                 Display: 'Start Date',
                 Styles: { width: '200px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
-                HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
+                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: true,
+                ServerSideSortable: false,
                 SortByName: "StartDateTime"
             });
             this.columns.push({
@@ -193,7 +194,7 @@ export class TaskSchedulerComponent implements OnInit  {
                 HtmlListComponentName: 'SchedulerDateListTemplate',
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: true,
+                ServerSideSortable: false,
                 SortByName: "EndDateTime"
             });
         }
@@ -204,9 +205,9 @@ export class TaskSchedulerComponent implements OnInit  {
                 Display: 'Start Date UTC',
                 Styles: { width: '200px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
-                HtmlListComponentUrl: './InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
+                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: true,
+                ServerSideSortable: false,
                 SortByName: "StartDateTime"
             });
             this.columns.push({
@@ -217,7 +218,7 @@ export class TaskSchedulerComponent implements OnInit  {
                 HtmlListComponentName: 'SchedulerDateListTemplate',
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: true,
+                ServerSideSortable: false,
                 SortByName: "EndDateTime"
             });
         }
@@ -229,17 +230,27 @@ export class TaskSchedulerComponent implements OnInit  {
             HtmlListComponentName: 'SchedulerDateListTemplate',
             HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
             IsCustomTemplate: true,
-            ServerSideSortable: true
+            ServerSideSortable: false
         });
-        /////
         this.columns.push({
-            FieldName: "RunResult",
+            FieldName: "Log",
             DataTypeCode: 'String',
-            Display: 'Run Result',
-            Styles: { width: '200px' },
+            Display: 'Log',
+            Styles: { width: '280px' },
+            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: false
         });
+        /////
+        //this.columns.push({
+        //    FieldName: "RunResult",
+        //    DataTypeCode: 'String',
+        //    Display: 'Run Result',
+        //    Styles: { width: '200px' },
+        //    IsCustomTemplate: true,
+        //    ServerSideSortable: false
+        //});
          
         this.CustomColumnsReady.emit(this.columns);
     }
@@ -260,12 +271,19 @@ export class TaskSchedulerComponent implements OnInit  {
         filters = new ApiQueryFilters();
         //filters.SortBy = "StatusDate";
         //filters.SortDirection = "Descending";
-        
-        if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
+        if (!this.SelectedRow) {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                 filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
             }
-            filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals",false, false, false, "String");
+            filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
+        }
+        else {
+            if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
+                if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+                    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+                }
+                filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
+            }
         }
          
 
@@ -288,7 +306,9 @@ export class TaskSchedulerComponent implements OnInit  {
         this.BuildColumns();
        
         this.filterAgrs = new ApiQueryFilters();
-        
+        if (!this.SelectedRow) {
+            return;
+        }
          
         if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
             this.filterAgrs.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Contains", true, false, false, "String");

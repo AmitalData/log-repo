@@ -6,17 +6,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class TaskSchedulerHistoryList {
+export class SchedulerLogsList {
    		Id: string;
 		Tenant: number;
-		StartDateTime: Date;
-		EndDateTime: Date;
-		RunResult: string;
-		TaskId: string;
-		IsError: boolean;
-		StartDateTimeUTC: Date;
-		EndDateTimeUTC: Date;
-		LogType: string;
-		LogFirstLine: string;
+		CreateDate: Date;
+		Log: string;
+		HistoryId: string;
 	
 }

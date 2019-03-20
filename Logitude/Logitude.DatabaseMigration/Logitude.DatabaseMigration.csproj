@@ -778,6 +778,14 @@
     <Compile Include="Migrations\201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.Designer.cs">
       <DependentUpon>201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.cs" />
+    <Compile Include="Migrations\201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.Designer.cs">
+      <DependentUpon>201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903201402516_FixingSchedulerLogsRelation_Rabaia.cs" />
+    <Compile Include="Migrations\201903201402516_FixingSchedulerLogsRelation_Rabaia.Designer.cs">
+      <DependentUpon>201903201402516_FixingSchedulerLogsRelation_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1305,6 +1313,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.resx">
       <DependentUpon>201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.resx">
+      <DependentUpon>201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201402516_FixingSchedulerLogsRelation_Rabaia.resx">
+      <DependentUpon>201903201402516_FixingSchedulerLogsRelation_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
