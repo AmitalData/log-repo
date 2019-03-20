@@ -92,12 +92,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsDistributor).HasColumnName("IsDistributor");
             this.Property(t => t.DistributorCode).HasColumnName("DistributorCode");
             this.Property(t => t.Technology).HasColumnName("Technology");
-            this.Property(t => t.SetAngularAsDefault).HasColumnName("SetAngularAsDefault");
-            
+            this.Property(t => t.SetAngularAsDefault).HasColumnName("SetAngularAsDefault");            
             this.Property(t => t.DocumentFilingInbox).HasColumnName("DocumentFilingInbox");
             this.Property(t => t.ShowLogBoxToolTip).HasColumnName("ShowLogBoxToolTip");
             this.Property(t => t.ShowLocalNameInLOV).HasColumnName("ShowLocalNameInLOV");
             this.Property(t => t.UserRoles).HasColumnName("UserRoles");
+            this.Property(t => t.ShowNewReleaseToolTip).HasColumnName("ShowNewReleaseToolTip");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
