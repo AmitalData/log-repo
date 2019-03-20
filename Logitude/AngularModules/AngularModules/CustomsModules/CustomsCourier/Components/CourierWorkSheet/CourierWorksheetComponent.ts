@@ -172,13 +172,13 @@ implements OnDestroy
     SetWindowArgs(windowArgs) {
         this.entityPM = windowArgs.CurrentEntity;
         this.CheckRequiredFields();
-        this.RefreshButtonClicked();
     }
 
     CheckRequiredFields() {
         this._CourierMasterService.GetRequiredFieldsForCourierMasterIncludeManifest(this.entityPM.Id).subscribe((response: ServiceResponse) => {
             if (response.Result) {
                 this._ValidationErrors = this.GetRequiredErrorsList(response.Result.RequiredFields);
+                this.RefreshButtonClicked();
             }
         });
     }
@@ -1292,7 +1292,6 @@ implements OnDestroy
                         res.subscribe((aa: any) => {
                             this.entityPM = aa.Result;
                             this.CheckRequiredFields();
-                            this.RefreshButtonClicked();
                         })
                     });
                     
