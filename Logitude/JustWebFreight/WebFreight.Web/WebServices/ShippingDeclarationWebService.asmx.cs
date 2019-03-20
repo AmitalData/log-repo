@@ -2755,7 +2755,7 @@ namespace WebFreight.Web.WebServices
                             packageline.PackageType = packagetype != null ? packagetype.EnglishName : "";//package.PackageType.IsContainer != true ? "Package" : "Container";                    
                         }
 
-                        if (packagetype.IsContainer && !string.IsNullOrEmpty(package.ContainerNumber))
+                        if (!string.IsNullOrEmpty(package.ContainerNumber))
                         {   
                             string containerNo = package.ContainerNumber;
                             str.Append(containerNo);
