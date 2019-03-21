@@ -1,7 +1,3 @@
-
- 
-
- 
 IF OBJECT_ID('[dbo].[DeleteOldAPILogsTask]', 'P') IS NOT NULL
 drop procedure [dbo].[DeleteOldAPILogsTask]
 GO
@@ -16,7 +12,7 @@ as
 begin
 
 
-delete from [dbo].[APILogData] where id in (select id from [dbo].[APILogs] where [CreateDate] < GETDATE() - 90 )
+delete from [dbo].[APILogsData] where id in (select id from [dbo].[APILogs] where [CreateDate] < GETDATE() - 90 )
 delete from [dbo].[APILogs] where [CreateDate] < GETDATE() - 90
 
 end
