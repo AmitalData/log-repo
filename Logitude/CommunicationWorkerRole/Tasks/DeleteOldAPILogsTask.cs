@@ -4,24 +4,27 @@ using Simplog.Data.Helpers;
 using System.Data;
 using System.Data.SqlClient;
 
-public class DeleteOldAPILogsTask : TaskManagerBase
+namespace CommunicationWorkerRole.Tasks
 {
-    public DeleteOldAPILogsTask(string Id, int tenant)
-        : base(Id, tenant)
+    public class DeleteOldAPILogsTask : TaskManagerBase
     {
-
-    }
-    public override void StartTask()
-    {
-        string strConnString = TenantServerConfigration.GetDbConnection(0);
-        using (SqlConnection cn = new SqlConnection(strConnString))
+        public DeleteOldAPILogsTask(string Id, int tenant)
+            : base(Id, tenant)
         {
-            SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldAPILogsTask]", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cn.Open();
-            var output = cmd.ExecuteNonQuery();
-            cn.Close();
+
         }
-   
+        public override void StartTask()
+        {
+            string strConnString = TenantServerConfigration.GetDbConnection(0);
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldAPILogsTask]", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cn.Open();
+                var output = cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+
+        }
     }
 }
