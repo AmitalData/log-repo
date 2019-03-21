@@ -31,6 +31,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -67,7 +68,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
             entityPM.SearchFields = ///Task:25238 GetentityPM.AccountId + "," + 
-                entityPM.Number+",";
+                entityPM.Number + ",";
         }
 
         protected override void OnUpdating(ReconciliationPM entityPM)
@@ -88,7 +89,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 //update 
                 if (propChanged.Count == 1 && propChanged.First().PropertyName == "SearchFields")
-                { 
+                {
                     // SearchFields updated after reconcile saved, why? in order to get saved reconciliation lines
                 }
                 else if (propChanged.Any())
@@ -117,39 +118,54 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
 
+                // fill ReconciledWithTransactionId field 
                 LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
                 ReconcileExternalPageLineQueryService pageLineQuery = new ReconcileExternalPageLineQueryService(entityPM.Tenant);
-                    LedgerTransactionUpdateService transactionService = new LedgerTransactionUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                    ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+                LedgerTransactionUpdateService transactionService = new LedgerTransactionUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
 
-                    //List<string> LedgerTransactionIds = EntityPM.ReconciliationLines.Where(d => d.TransactionId  != null).Select(d => d.TransactionId).ToList();
-
-                //List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
-              
-             
-
-                    //foreach (var transactionPM in LedgerTransactions)
-                    //{
-                                        
-                    //    if (transactionPM.SourceTypeCode == "3")
-                    //    {
-                    //        List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
-
-                    //        foreach (ARPaymentChequePM item in aRPaymentChequePMs)
-                    //        {
-                    //            item.StatusCode = "8";
-                    //        item.ChangeSetOp = ChangeSetOperation.Update;
-                    //            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                    //            aRPaymentChequeUpdateService.Update(item, true);
-                    //        }
-                    //    }
-                       
-                    //}
-
-                 
-
+                // get transactions
+                List<string> ledgerTransactionIds = entityPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(d => d.TransactionId).ToList();
+                List<LedgerTransactionPM> ledgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(ledgerTransactionIds, entityPM.Tenant);
 
                 
+                if (ledgerTransactions.Any(d=>d.SourceTypeCode == AccountingEntityValues.ARPayment))
+                {
+                    LedgerTransactionPM paymentTransaction = ledgerTransactions.Find(d => d.SourceTypeCode == AccountingEntityValues.ARPayment);
+                    if (paymentTransaction == null) throw new ApplicationException("Cannot find payment transaction on reco lines");
+                    foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
+                    {
+                        if(recoLine.TransactionId != paymentTransaction.Id)
+                        {
+                            recoLine.ReconciledWithTransactionId = paymentTransaction.Id;
+                        }
+                    }
+
+                }
+
+
+                //foreach (var transactionPM in LedgerTransactions)
+                //{
+
+                //    if (transactionPM.SourceTypeCode == "3")
+                //    {
+                //        List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
+
+                //        foreach (ARPaymentChequePM item in aRPaymentChequePMs)
+                //        {
+                //            item.StatusCode = "8";
+                //        item.ChangeSetOp = ChangeSetOperation.Update;
+                //            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                //            aRPaymentChequeUpdateService.Update(item, true);
+                //        }
+                //    }
+
+                //}
+
+
+
+
+
                 var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((MainContext as IAccountingContext), entityPM);
                 var validationResult = ReconciliationValidator.IsReconciliationValid(entityPM, validContext);
                 if (validationResult != null)
@@ -193,7 +209,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         entityPM.SearchFields += trimmedText + ",";
                     }
-                }  
+                }
             }
         }
 
@@ -242,12 +258,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     throw new Exception("Updating Reconciliation allowed only to cancell");
                 }
             }
-            if(_CancelledAction == true)
+            if (_CancelledAction == true)
             {
                 //get journal of reconciliation - WI39779
                 JournalQueryService journalQuery = new JournalQueryService(entityPM.Tenant);
                 JournalPM journal = journalQuery.GetByAccountingEntityId(entityPM.Id, entityPM.Tenant);
-                if(journal != null)
+                if (journal != null)
                 {
                     // Void it!
                     var tenant = entityPM.Tenant;
@@ -398,47 +414,47 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.Validate(entityPM);
         }
 
-		protected override void Trace(ReconciliationPM entityPM, Reconciliation entityPOCO, string changesXml)
-		{
-			ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
-			if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-			{
-				//create trace event with created type.
-				EventTracerArgs eventTracerArgs = new EventTracerArgs()
-				{
-					EntityId = entityPM.Id,
-					Tenant = entityPM.Tenant,
-					UserId = loggedContact.Id,
-					ObjectTableName = "Reconciliation",
-					IsAddedManually = false,
-					EventTypeCode = "CREV",
-					Notes = "",
-				};
-				EventTracer.CreateTraceEvent(eventTracerArgs);
-			}
-			else
-			{
-				if (entityPM.IsCancelled != entityPOCO.IsCancelled)
-				{
-					//create trace event with created type.
-					EventTracerArgs eventTracerArgs = new EventTracerArgs()
-					{
-						EntityId = entityPM.Id,
-						Tenant = entityPM.Tenant,
-						UserId = loggedContact.Id,
-						ObjectTableName = "Reconciliation",
-						IsAddedManually = false,
-						EventTypeCode = "CNCL",
-						Notes = "",
-					};
-					EventTracer.CreateTraceEvent(eventTracerArgs);
-				}
-			}
+        protected override void Trace(ReconciliationPM entityPM, Reconciliation entityPOCO, string changesXml)
+        {
+            ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                //create trace event with created type.
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "Reconciliation",
+                    IsAddedManually = false,
+                    EventTypeCode = "CREV",
+                    Notes = "",
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            else
+            {
+                if (entityPM.IsCancelled != entityPOCO.IsCancelled)
+                {
+                    //create trace event with created type.
+                    EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = loggedContact.Id,
+                        ObjectTableName = "Reconciliation",
+                        IsAddedManually = false,
+                        EventTypeCode = "CNCL",
+                        Notes = "",
+                    };
+                    EventTracer.CreateTraceEvent(eventTracerArgs);
+                }
+            }
 
-			base.Trace(entityPM, entityPOCO, changesXml);
-		}
+            base.Trace(entityPM, entityPOCO, changesXml);
+        }
 
-		public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
         public static ContactPM GetLoggedContact(int tenant)
         {
