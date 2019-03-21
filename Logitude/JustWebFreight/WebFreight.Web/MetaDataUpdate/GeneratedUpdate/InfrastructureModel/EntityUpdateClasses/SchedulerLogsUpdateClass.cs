@@ -70,7 +70,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
-   public class TaskSchedulerHistoryUpdateClass
+   public class SchedulerLogsUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -78,12 +78,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "TaskSchedulerHistory",
-			      				    IsNew =  false,
-			      				    DBTableName =  "TaskSchedulerHistory",
-			      				    OldDBTableName =  "TaskSchedulerHistory",
-			      				    ObjectTableSingular =  "Task Scheduler History",
-			      				    ObjectTablePlural =  "Task Scheduler Histories",
+	             				    ObjectTableName =  "SchedulerLogs",
+			      				    IsNew =  true,
+			      				    DBTableName =  "SchedulerLogs",
+			      				    OldDBTableName =  "SchedulerLogs",
+			      				    ObjectTableSingular =  "SchedulerLogs",
+			      				    ObjectTablePlural =  "SchedulerLogs",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -102,17 +102,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "CreateDate",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  true,
+			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Task Scheduler History",
-			      				    Code =  "fd17",
-			      				    Name =  "TaskSchedulerHistory",
+			      				    DefaultText =  "Scheduler Logs",
+			      				    Code =  "167c",
+			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
 			      				    NoTS =  false,
@@ -122,7 +123,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    SearchFields =  "TaskSchedulerHistory,TaskSchedulerHistory,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -133,13 +133,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "StartDateTimeUTC",
-					  						OldFieldName =  "StartDateTimeUTC",
-					  						ObjectTableName =  "TaskSchedulerHistory",
+					 						FieldName =  "CreateDate",
+					  						OldFieldName =  "CreateDate",
+					  						ObjectTableName =  "SchedulerLogs",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -152,8 +152,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StartDateTimeUTC",
-					  						ListPropertyPath =  "StartDateTimeUTC",
+					  						PMPropertyPath =  "CreateDate",
+					  						ListPropertyPath =  "CreateDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -162,7 +162,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TaskSchedulerHistory",
+					  						ValidForQuerySection1 =  "SchedulerLogs",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -171,13 +171,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StartDateTimeUTC",
-					  						DefaultText =  "StartDateTimeUTC",
-					  						ListFieldLable =  "StartDateTimeUTCListLable",
-					  						ListLableDefaultText =  "StartDateTimeUTC",
+					  						FullFieldLable =  "CreateDate",
+					  						DefaultText =  "Create Date",
+					  						ListFieldLable =  "CreateDateListLable",
+					  						ListLableDefaultText =  "Create Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
+					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
@@ -192,12 +192,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "EndDateTimeUTC",
-					  						OldFieldName =  "EndDateTimeUTC",
-					  						ObjectTableName =  "TaskSchedulerHistory",
-					  						FieldsDataType =  "DateTime",
+					 						FieldName =  "Log",
+					  						OldFieldName =  "Log",
+					  						ObjectTableName =  "SchedulerLogs",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  3000,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -205,14 +205,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  3000,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "EndDateTimeUTC",
-					  						ListPropertyPath =  "EndDateTimeUTC",
+					  						PMPropertyPath =  "Log",
+					  						ListPropertyPath =  "Log",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -221,7 +221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TaskSchedulerHistory",
+					  						ValidForQuerySection1 =  "SchedulerLogs",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -230,10 +230,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "EndDateTimeUTC",
-					  						DefaultText =  "EndDateTimeUTC",
-					  						ListFieldLable =  "EndDateTimeUTCListLable",
-					  						ListLableDefaultText =  "EndDateTimeUTC",
+					  						FullFieldLable =  "Log",
+					  						DefaultText =  "Log",
+					  						ListFieldLable =  "LogListLable",
+					  						ListLableDefaultText =  "Log",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -251,11 +251,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "LogFirstLine",
-					  						ObjectTableName =  "TaskSchedulerHistory",
+					 						FieldName =  "HistoryId",
+					  						OldFieldName =  "TaskId",
+					  						ObjectTableName =  "SchedulerLogs",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  1000,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -263,14 +264,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1000,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "LogFirstLine",
-					  						ListPropertyPath =  "LogFirstLine",
+					  						PMPropertyPath =  "HistoryId",
+					  						ListPropertyPath =  "HistoryId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -278,7 +280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TaskSchedulerHistory",
+					  						ValidForQuerySection1 =  "SchedulerLogs",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -287,67 +289,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "LogFirstLine",
-					  						DefaultText =  "LogFirstLine",
-					  						ListFieldLable =  "LogFirstLineListLable",
-					  						ListLableDefaultText =  "LogFirstLine",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "LogType",
-					  						ObjectTableName =  "TaskSchedulerHistory",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  200,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  200,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "LogType",
-					  						ListPropertyPath =  "LogType",
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TaskSchedulerHistory",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "LogType",
-					  						DefaultText =  "LogType",
-					  						ListFieldLable =  "LogTypeListLable",
-					  						ListLableDefaultText =  "LogType",
+					  						FullFieldLable =  "HistoryId",
+					  						DefaultText =  "HistoryId",
+					  						ListFieldLable =  "HistoryIdListLable",
+					  						ListLableDefaultText =  "HistoryId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -378,14 +323,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable TaskSchedulerHistoryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaskSchedulerHistory" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable SchedulerLogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SchedulerLogs" && d.Tenant == 0).FirstOrDefault(); 
    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable TaskSchedulerHistoryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaskSchedulerHistory" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable SchedulerLogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SchedulerLogs" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -399,7 +344,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = TaskSchedulerHistoryObjectTable.Id,
+                ObjectTableId = SchedulerLogsObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -417,7 +362,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = TaskSchedulerHistoryObjectTable.Id,
+                ObjectTableId = SchedulerLogsObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

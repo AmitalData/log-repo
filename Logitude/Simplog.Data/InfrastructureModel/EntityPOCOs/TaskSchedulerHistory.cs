@@ -23,5 +23,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public DateTime? EndDateTimeUTC { get; set; }
         [ForeignKey("TaskId")]
         public virtual TasksScheduler TaskScheduler { get; set; }
+        public string LogType { get; set; }
+        public string LogFirstLine { get; set; }
+
     }
 }

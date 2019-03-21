@@ -70,6 +70,16 @@ export class TaskSchedulerHistoryPM {
     public set EndDateTimeUTC(newValue: Date) { if (this.endDateTimeUTC != newValue) { this.endDateTimeUTC = newValue; this.MarkAsDirty("EndDateTimeUTC"); } }
        
 	 
+    private logType: string;
+    public get LogType() { return this.logType; }
+    public set LogType(newValue: string) { if (this.logType != newValue) { this.logType = newValue; this.MarkAsDirty("LogType"); } }
+       
+	 
+    private logFirstLine: string;
+    public get LogFirstLine() { return this.logFirstLine; }
+    public set LogFirstLine(newValue: string) { if (this.logFirstLine != newValue) { this.logFirstLine = newValue; this.MarkAsDirty("LogFirstLine"); } }
+       
+	 
 
     public OldEntityPM: TaskSchedulerHistoryPM;
 		
