@@ -638,7 +638,7 @@
                                                         </td>
                                                     </tr>
 
-                                                    <tr style="height: 1px;">
+                                                    <tr style="height: 90px;vertical-align:top;">
                                                         <td>
                                                             <table>
                                                                 <tr>
@@ -727,7 +727,7 @@
                                                         </td>
                                                     </tr>
 
-                                                    <tr *ngIf="IsLCLEntity && DataContext.IsVehicleDetails" style="height: 160px;"> 
+                                                    <tr *ngIf="IsLCLEntity && DataContext.IsVehicleDetails" style="height: 160px;">
                                                         <td>
                                                             <table>
                                                                 <tr>
@@ -843,11 +843,18 @@
                                                         </td>
                                                     </tr>
 
+                                                    <tr *ngIf="!(IsLCLEntity && DataContext.IsVehicleDetails)" style="height: 160px;">
+                                                        <td>
+                                                            <div> </div>
+                                                        </td>
+                                                    </tr>
+
                                                     <tr>
                                                         <td>
                                                             <div></div>
                                                         </td>
                                                     </tr>
+
                                                 </table>
 
                                                 <!-- Package Items -->
