@@ -11,7 +11,7 @@ using WebFreight.Web.CustomWebServices.BL.XLSExport;
 
 namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 {
-    
+    //http://localhost:9996/api/CommunicationLogStep/GetExportExcelByLogId/?mainInterfaceCode=8347&logId=1-775051&tenant=1
     public class ExchangeRateExport: XLSExportBase<CD_NG_8347_Web01_CurrencyRateSearchRequestParams, CD_NG_8348_Web02_CurrencyRateDetailResponseData>, IExcelExport
     {
         
@@ -28,7 +28,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
         {
             get
             {
-                throw new NotImplementedException();
+                return 880;
             }
         }
 
