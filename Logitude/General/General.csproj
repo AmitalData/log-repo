@@ -192,6 +192,8 @@
     <Content Include="2019.R1\03 - 2019\Day 19 [Khalid] Fill FillOperationalLastCloseDateBy backward.sql" />
     <Content Include="2019.R1\03 - 2019\Day 17 [Khalid] Add WorkerRole TFSAggregator.sql" />
     <Content Include="2019.R1\03 - 2019\Day 07 [Samar] delete country Id field from tenant management.sql" />
+    <Content Include="2019.R1\03 - 2019\Day 15 [Maheera] Add TMQueueMessageBuilderWorkerRole.sql" />
+    <Content Include="2019.R1\03 - 2019\Day3[Abed] UpdateQuoteTemplateTextCodeFieldsChargeNots.sql" />
     <Content Include="2019.R1\03 - 2019\Day 21 [Abed] DeleteOldAPILogsStoredProc.sql" />
     <Content Include="2019.R1\03 - 2019\Day 21 [Abed] DeleteOldQueueMessageMoreDetails.sql" />
     <Content Include="2019.R1\03 - 2019\Day 20 [Abed] Deleting Old RecordsFromAPILogsAndQueueMessageMoreDetails.sql" />
@@ -1781,6 +1783,7 @@
     <Content Include="Usefull Scripts\SearchFields\[Ayman] ShipmentsContainers.sql" />
     <Content Include="Usefull Scripts\SearchFields\[Ayman] Users.sql" />
     <Content Include="Usefull Scripts\SearchFields\[Samar] Quote Search Fields.sql" />
+    <Content Include="Usefull Scripts\TM\SelectData.sql" />
     <Content Include="Warehouse\BuildDimension\BuildBrancheDimensionTable.sql" />
     <Content Include="Warehouse\BuildDimension\BuildCardsDimensionTable.sql" />
     <Content Include="Warehouse\BuildDimension\BuildCurrencyDimensionTable.sql" />

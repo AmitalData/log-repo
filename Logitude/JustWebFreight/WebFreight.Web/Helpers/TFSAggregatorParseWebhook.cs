@@ -77,7 +77,7 @@ namespace WebFreight.Web.Helpers
                             WorkItem parentItem = GetWorkItemById(int.Parse(parent));
                             if (parentItem != null)
                             {
-                                var effort = Convert.ToSingle(parentItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.Effort"));
+                                var effort = Convert.ToSingle(parentItem.Fields.GetValueOrDefault("Custom.TasksEffort"));
                                 var completedwork = Convert.ToSingle(parentItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.CompletedWork"));
 
                                 List<WorkItemRelation> itemss = parentItem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Forward").ToList();
@@ -102,7 +102,7 @@ namespace WebFreight.Web.Helpers
                                         {
 
                                             Operation = Operation.Replace,
-                                            Path = "/fields/Microsoft.VSTS.Scheduling.Effort",
+                                            Path = "/fields/Custom.TasksEffort",
                                             Value = EffotSum
                                         });
                                         witClient.UpdateWorkItemAsync(patchDocument, int.Parse((parentItem.Id + "")));

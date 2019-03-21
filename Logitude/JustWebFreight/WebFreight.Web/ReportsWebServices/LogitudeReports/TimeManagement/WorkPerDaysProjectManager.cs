@@ -1,5 +1,6 @@
 ﻿using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 {
@@ -28,10 +30,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private bool IncludeInnerProject = false;
         private ITimeManagementContext iContext;
         private IQueryable<TMProject> iQueryable_Projects = null;
-        private IQueryable<TMEmployeeTime> iQueryable_DataTime = null;
-        private IQueryable<TMProjectCategory> iQueryable_Categories = null;
-
-        private WorkDaysPerProjectDataProvider myDataProvider;
+        private IQueryable<TMEmployeeTime> iQueryable_EmployeeTimes = null;
+        private List<TMProjectCategory> AllCategories = null;
+        private WorkDaysPerProjectDataProvider iDataProvider;
         public WorkPerDaysProjectManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -125,11 +126,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
         public byte[] GetData()
         {
-            WorkDaysPerProjectDataProvider myDataProvider = this.LoadDataProvider();
+            this.LoadDataProvider();
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(WorkDaysPerProjectDataProvider));
             MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            xmlSerializer.Serialize(memoryStream, iDataProvider);
             memoryStream.Seek(0, SeekOrigin.Begin);
 
             StreamReader streamReader = new StreamReader(memoryStream);
@@ -138,68 +139,98 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             return bytearray;
         }
 
-        private WorkDaysPerProjectDataProvider LoadDataProvider()
+        private void LoadDataProvider()
         {
-            this.myDataProvider = new WorkDaysPerProjectDataProvider()
+            this.iDataProvider = new WorkDaysPerProjectDataProvider()
             {
                 SummarizedWorkHoursPerProjectList = new List<WorkDaysPerProjectData>(),
                 DetailedWorkHoursPerProjectList = new List<WorkDaysPerProjectData>(),
                 ProjectsByCategoryGroupList = new List<ProjectsByCategoryGroup>(),
             };
 
+            this.iContext = TimeManagementContext.GetContext(tenant);
+            this.AllCategories = (from d in iContext.TMProjectCategories where d.Tenant == tenant select d).ToList();
+
             this.BuildReportHeader();
 
             if (this.fromDate != null && this.toDate != null)
             {
-                this.iContext = TimeManagementContext.GetContext(tenant);
-
                 this.BuildSourceData();
                 this.BuildReportData();
             }
-
-            return myDataProvider;
         }
-
-
         private void BuildReportHeader()
         {
-            myDataProvider.FromDate = this.fromDate;
-            myDataProvider.ToDate = this.toDate;
-            myDataProvider.BudgetId = this.budgetId;
-            myDataProvider.EmployeeUserId = this.employeeUserId;
-            myDataProvider.CategoryId = this.categoryId;
-            myDataProvider.CustomerId = this.customerId;
-            myDataProvider.OwnerId = this.ownerId;
-            myDataProvider.ProjectId = this.projectId;
+            iDataProvider.FromDate = this.fromDate;
+            iDataProvider.ToDate = this.toDate;
+            iDataProvider.BudgetId = this.budgetId;
+            iDataProvider.EmployeeUserId = this.employeeUserId;
+            iDataProvider.CategoryId = this.categoryId;
+            iDataProvider.CustomerId = this.customerId;
+            iDataProvider.OwnerId = this.ownerId;
+            iDataProvider.ProjectId = this.projectId;
+
+            if (!string.IsNullOrEmpty(this.ownerId))
+            {
+                Contact iContact = ContactRepository.GetSingleContact(this.ownerId, tenant, true);
+                if (iContact != null)
+                {
+                    iDataProvider.OwnerName = iContact.EnglishName;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.employeeUserId))
+            {
+                Contact iContact = ContactRepository.GetSingleContact(this.employeeUserId, tenant, true);
+                if (iContact != null)
+                {
+                    iDataProvider.EmployeeName = iContact.EnglishName;
+                }
+            }
 
             if (!string.IsNullOrEmpty(this.customerId))
             {
                 Card iCard = CardRepository.GetSingleCard(this.customerId, this.tenant, true);
                 if (iCard != null)
                 {
-                    myDataProvider.CustomerName = iCard.EnglishName;
+                    iDataProvider.CustomerName = iCard.EnglishName;
                 }
             }
 
-            if (!string.IsNullOrEmpty(this.employeeUserId))
+            if (!string.IsNullOrEmpty(this.projectId))
             {
-                Contact contact = ContactRepository.GetSingleContact(employeeUserId, tenant, true);
-                if (contact != null)
+                TMProject iProject = (from d in this.iContext.TMProjects where d.Id == this.projectId select d).FirstOrDefault();
+                if (iProject != null)
                 {
-                    myDataProvider.EmployeeName = contact.EnglishName;
+                    iDataProvider.ProjectName = iProject.Name;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.categoryId))
+            {
+                TMProjectCategory iCategory = this.AllCategories.Where(d => d.Id == this.categoryId).FirstOrDefault();
+                if (iCategory != null)
+                {
+                    iDataProvider.CategoryName = iCategory.Name;
                 }
             }
         }
         private void BuildSourceData()
         {
             this.iQueryable_Projects = (from d in iContext.TMProjects where d.Tenant == tenant && d.IsProrated == false select d);
-            this.iQueryable_DataTime = (from d in iContext.TMEmployeeTimes where d.Tenant == tenant && d.ProjectId != null select d);
-            this.iQueryable_Categories = (from d in iContext.TMProjectCategories where d.Tenant == tenant select d);
+            this.iQueryable_EmployeeTimes = (from d in iContext.TMEmployeeTimes where d.Tenant == tenant select d);
+            this.iQueryable_EmployeeTimes = this.iQueryable_EmployeeTimes.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+            this.iQueryable_EmployeeTimes = this.iQueryable_EmployeeTimes.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
 
             if (!string.IsNullOrEmpty(this.projectId))
             {
                 iQueryable_Projects = iQueryable_Projects.Where(d => d.Id == this.projectId);
-                iQueryable_DataTime = iQueryable_DataTime.Where(d => d.ProjectId == this.projectId);
+                iQueryable_EmployeeTimes = iQueryable_EmployeeTimes.Where(d => d.ProjectId == this.projectId);
+            }
+
+            if (!string.IsNullOrEmpty(this.employeeUserId))
+            {
+                iQueryable_EmployeeTimes = iQueryable_EmployeeTimes.Where(d => d.EmployeeUserId == this.employeeUserId);
             }
 
             if (!string.IsNullOrEmpty(this.ownerId))
@@ -234,93 +265,330 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         }
         private void BuildReportData()
         {
-            List<TMProject> AllProjects = iQueryable_Projects.ToList();
-            List<TMProjectCategory> AllCategories = new List<TMProjectCategory>();
+            this.BuildDetailedWorkHours();
+            this.BuildProjectsByCategory();
+        }
 
-            List<string> AllProjectsIds = AllProjects.Select(s => s.Id).ToList();
-            List<TMEmployeeTime> AllDataList = (from d in iQueryable_DataTime where AllProjectsIds.Contains(d.ProjectId) select d).ToList();
+        private void BuildDetailedWorkHours()
+        {
+            // https://stackoverflow.com/questions/530925/linq-using-inner-join-group-and-sum           
 
-            var DataGroup = (from d in AllDataList
-                             group d by new { d.DateOfWork, d.EmployeeUserId, d.ProjectId, d.WINumber, d.Description } into g
-                             select new
-                             {
-                                 DateOfWork = g.Key.DateOfWork,
-                                 EmployeeUserId = g.Key.EmployeeUserId,
-                                 ProjectId = g.Key.ProjectId,
-                                 WINumber = g.Key.WINumber,
-                                 Description = g.Key.Description,
-                             });
+            var iQueryable_List = (
+                                   (from EmployeeTimes in iQueryable_EmployeeTimes
+                                    join Projects in iQueryable_Projects on EmployeeTimes.ProjectId equals Projects.Id
+                                    where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != ""
+                                    group EmployeeTimes by new
+                                    {
+                                        EmployeeTimes.DateOfWork.Year,
+                                        EmployeeTimes.DateOfWork.Month,
+                                        EmployeeTimes.DateOfWork.Day,
+                                        EmployeeTimes.EmployeeUserId,
+                                        EmployeeTimes.ProjectId,
+                                        EmployeeTimes.WINumber,
+                                        EmployeeTimes.Description,
+                                        Projects.Name,
+                                        Projects.ProjectNumber,
+                                        Projects.ExternalProjectNumber,
+                                        Projects.CustomerId,
+                                        Projects.OwnerId,
+                                        Projects.CategoryId,
+                                        ProjectDescription = Projects.Description,
+                                    } into g
 
-            if (DataGroup.Count() > 0)
+                                    select new
+                                    {
+                                        Year = g.Key.Year,
+                                        Month = g.Key.Month,
+                                        Day = g.Key.Day,
+                                        EmployeeUserId = g.Key.EmployeeUserId,
+                                        WINumber = g.Key.WINumber,
+                                        Description = g.Key.Description,
+                                        ProjectId = g.Key.ProjectId,
+                                        ProjectName = g.Key.Name,
+                                        ProjectNumber = g.Key.ProjectNumber,
+                                        ExternalProjectNumber = g.Key.ExternalProjectNumber,
+                                        TimeInMinutes = g.Sum(s => s.TimeInMinutes),
+                                        FullDuration = g.Sum(s => s.FullDuration),
+                                        CustomerId = g.Key.CustomerId,
+                                        OwnerId = g.Key.OwnerId,
+                                        CategoryId = g.Key.CategoryId,
+                                        ProjectDescription = g.Key.ProjectDescription,
+                                    })
+
+                                   .Union
+
+                                   (from EmployeeTimes in iQueryable_EmployeeTimes
+                                    where EmployeeTimes.ProjectId == null || EmployeeTimes.ProjectId == ""
+                                    group EmployeeTimes by new
+                                    {
+                                        EmployeeTimes.DateOfWork.Year,
+                                        EmployeeTimes.DateOfWork.Month,
+                                        EmployeeTimes.DateOfWork.Day,
+                                        EmployeeTimes.EmployeeUserId,
+                                        EmployeeTimes.ProjectId,
+                                        EmployeeTimes.WINumber,
+                                        EmployeeTimes.Description,
+                                    } into g
+                                    select new
+                                    {
+                                        Year = g.Key.Year,
+                                        Month = g.Key.Month,
+                                        Day = g.Key.Day,
+                                        EmployeeUserId = g.Key.EmployeeUserId,
+                                        WINumber = g.Key.WINumber,
+                                        Description = g.Key.Description,
+                                        ProjectId = g.Key.ProjectId,
+                                        ProjectName = "",
+                                        ProjectNumber = "",
+                                        ExternalProjectNumber = "",
+                                        TimeInMinutes = g.Sum(s => s.TimeInMinutes),
+                                        FullDuration = g.Sum(s => s.FullDuration),
+                                        CustomerId = "",
+                                        OwnerId = "",
+                                        CategoryId = "",
+                                        ProjectDescription = "",
+                                    })
+                                    ).ToList();
+
+
+            List<WorkDaysPerProjectData> iList = new List<WorkDaysPerProjectData>();
+
+            foreach (var item in iQueryable_List)
             {
-                foreach (var item in DataGroup)
+                WorkDaysPerProjectData itemRecord = new WorkDaysPerProjectData()
                 {
-                    WorkDaysPerProjectData SummarizedItem = new WorkDaysPerProjectData();
+                    CategoryId = item.CategoryId,
+                    ProjectName = item.ProjectName,
+                    ProjectNumber = item.ProjectNumber,
+                    ProjectDescription = item.ProjectDescription,
+                    DateOfWork = new DateTime(item.Year, item.Month, item.Day),
+                    WINumber = item.WINumber,
+                    Description = item.Description,
+                    ExternalProjectNumber = item.ExternalProjectNumber,
+                    TotalMinutes = item.FullDuration,
+                    TotalWIWorkedDays_Employee = this.GetTimeFormatFromMinutes(item.FullDuration),
+                    OwnerName = this.iDataProvider.OwnerName,
+                    EmployeeName = this.iDataProvider.EmployeeName,
+                    CustomerName = this.iDataProvider.CustomerName,
+                    CategoryName = this.iDataProvider.CategoryName,                     
+                };
 
-                    List<TMEmployeeTime> itemGrouplist = AllDataList.Where(d => d.ProjectId == item.ProjectId).ToList();
-
-                    TMProject iProject = AllProjects.Where(d => d.Id == item.ProjectId).FirstOrDefault();
-                    if (iProject != null)
+                if (string.IsNullOrEmpty(itemRecord.OwnerName))
+                {
+                    if (!string.IsNullOrEmpty(item.OwnerId))
                     {
-                        SummarizedItem.ProjectName = iProject.Name;
-                        SummarizedItem.ProjectNumber = iProject.ProjectNumber;
-                        SummarizedItem.Description = iProject.Description;
-
-                        if (!string.IsNullOrEmpty(iProject.CustomerId))
+                        Contact iContact = ContactRepository.GetSingleContact(item.OwnerId, this.tenant, true);
+                        if (iContact != null)
                         {
-                            Card iCard = CardRepository.GetSingleCard(iProject.CustomerId, this.tenant, true);
-                            if (iCard != null)
-                            {
-                                SummarizedItem.CustomerName = iCard.EnglishName;
-                            }
+                            itemRecord.OwnerName = iContact.EnglishName;
                         }
-
-                        if (!string.IsNullOrEmpty(iProject.CategoryId))
+                    }
+                }
+                if (string.IsNullOrEmpty(itemRecord.EmployeeName))
+                {
+                    if (!string.IsNullOrEmpty(item.EmployeeUserId))
+                    {
+                        Contact iContact = ContactRepository.GetSingleContact(item.EmployeeUserId, this.tenant, true);
+                        if (iContact != null)
                         {
-                            TMProjectCategory iCategory = AllCategories.Where(d => d.Id == iProject.CategoryId).FirstOrDefault();
-                            if (iCategory == null)
-                            {
-                                iCategory = (from d in this.iQueryable_Categories where d.Id == iProject.CategoryId select d).FirstOrDefault();
-
-                                if (iCategory != null)
-                                {
-                                    AllCategories.Add(iCategory);
-                                }
-                            }
-
-                            if (iCategory != null)
-                            {
-                                SummarizedItem.CategoryId = iCategory.Id;
-                                SummarizedItem.CategoryName = iCategory.Name;
-                            }
+                            itemRecord.EmployeeName = iContact.EnglishName;
                         }
-
-                        //var wIWorkedDays = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2) / 8;
-                        //totalWIWorkedDays += wIWorkedDays;
-                        //timSheetItem.TotalWIWorkedDays = DateFormat(wIWorkedDays);
-                        //timSheetItem.TotalWIWorkedDays_number = wIWorkedDays;
-
-                        this.myDataProvider.SummarizedWorkHoursPerProjectList.Add(SummarizedItem);
+                    }
+                }
+                if (string.IsNullOrEmpty(itemRecord.CustomerName))
+                {
+                    if (!string.IsNullOrEmpty(item.CustomerId))
+                    {
+                        Card iCard = CardRepository.GetSingleCard(item.CustomerId, this.tenant, true);
+                        if (iCard != null)
+                        {
+                            itemRecord.CustomerName = iCard.EnglishName;
+                        }
+                    }
+                }
+                if (string.IsNullOrEmpty(itemRecord.CategoryName))
+                {
+                    if (!string.IsNullOrEmpty(item.CategoryId))
+                    {
+                        TMProjectCategory iCategory = this.AllCategories.Where(d => d.Id == item.CategoryId).FirstOrDefault();
+                        if (iCategory != null)
+                        {
+                            itemRecord.CategoryName = iCategory.Name;
+                        }
                     }
                 }
 
-                if (this.myDataProvider.SummarizedWorkHoursPerProjectList.Count > 0)
-                {
-                    List<ProjectsByCategoryGroup> finalResults = (from p in myDataProvider.SummarizedWorkHoursPerProjectList
-                                                                  group p by new { p.CategoryId, p.CategoryName } into g
-                                                                  select new ProjectsByCategoryGroup()
-                                                                  {
-                                                                      CategoryId = g.Key.CategoryId,
-                                                                      CategoryName = g.Key.CategoryName,
-                                                                      ProjectsRecordList = g.ToList(),
-                                                                      //Total = DateFormat((Math.Round(g.Sum(s => s.TotalWIWorkedDays_number), 2))),
-                                                                  }).ToList();
+                iList.Add(itemRecord);
+            }
 
-                    myDataProvider.ProjectsByCategoryGroupList = finalResults.OrderBy(d => d.CategoryName).ToList();
+            this.iDataProvider.DetailedWorkHoursPerProjectList = iList.OrderBy(o => o.DateOfWork).ToList();
+
+            if (this.iDataProvider.DetailedWorkHoursPerProjectList.Count > 0)
+            {
+                double iTotalMinutes = this.iDataProvider.DetailedWorkHoursPerProjectList.Sum(s => s.TotalMinutes);
+
+                this.iDataProvider.Total_TotalWIWorkedHours_Employee = this.GetTimeFormatFromMinutes(iTotalMinutes);
+            }
+        }
+        private void BuildProjectsByCategory()
+        {
+            if (this.iDataProvider.DetailedWorkHoursPerProjectList.Count > 0)
+            {
+                List<ProjectsByCategoryGroup> DataGroups =
+                    (from x in this.iDataProvider.DetailedWorkHoursPerProjectList
+                     group x by new { x.CategoryId, x.CategoryName } into g
+                     select new ProjectsByCategoryGroup()
+                     {
+                         CategoryId = g.Key.CategoryId,
+                         CategoryName = g.Key.CategoryName,
+                     }).ToList();
+
+                foreach(ProjectsByCategoryGroup item in DataGroups)
+                {
+                    List<WorkDaysPerProjectData> lines = this.iDataProvider.DetailedWorkHoursPerProjectList.Where(d => d.CategoryId == item.CategoryId).ToList();
+
+                    item.Total = this.GetDaysFormatFromMinutes(lines.Sum(s => s.TotalMinutes));
+
+                    item.ProjectsRecordList = (from d in lines
+                                               group d by new { d.ProjectName, d.ProjectNumber, d.ProjectDescription } into g
+                                               select new WorkDaysPerProjectData()
+                                               {
+                                                   ProjectName = g.Key.ProjectName,
+                                                   ProjectNumber = g.Key.ProjectNumber,
+                                                   Description = g.Key.ProjectDescription,
+                                                   TotalMinutes = g.Sum(s => s.TotalMinutes),
+                                                   TotalWIWorkedDays_number = g.Sum(s => s.TotalMinutes),
+                                                   TotalWIWorkedDays = this.GetDaysFormatFromMinutes(g.Sum(s => s.TotalMinutes)),
+                                               }).ToList();
+                }
+
+                this.iDataProvider.ProjectsByCategoryGroupList = DataGroups.OrderBy(d => d.CategoryName).ToList();
+            }
+        }
+
+        private string GetTimeFormatFromMinutes(double minutes)
+        {
+            string iResult = "";
+
+            if (minutes != 0)
+            {
+                TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
+
+                iResult = (int)iTimeSpan.TotalHours + ":" + iTimeSpan.Minutes.ToString("00");
+
+                if (minutes < 0)
+                {
+                    iResult = "- " + iResult;
                 }
             }
 
+            return iResult;
+        }
+        private string GetDaysFormatFromMinutes(double minutes)
+        {
+            string iResult = "";
 
+            if (minutes != 0)
+            {
+                TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
+
+
+                double TotalHours = minutes / 60;
+
+                int iDays = (int)(TotalHours / 8);
+                double Hours = TotalHours % 8;
+                double iHours = Math.Round(Hours / 8, 2);
+
+                iResult = iDays + ":" + iHours.ToString().Replace("0.", "").PadRight(2, '0');
+
+                if (minutes < 0)
+                {
+                    iResult = "- " + iResult;
+                }
+            }
+
+            return iResult;
+        }
+
+        private void temp()
+        {
+            //var iQueryable_List1 = (from EmployeeTimes in iQueryable_EmployeeTimes
+            //                        join Projects in iQueryable_Projects on EmployeeTimes.ProjectId equals Projects.Id
+            //                        where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != ""
+            //                        group EmployeeTimes by new
+            //                        {
+            //                            EmployeeTimes.DateOfWork.Year,
+            //                            EmployeeTimes.DateOfWork.Month,
+            //                            EmployeeTimes.DateOfWork.Day,
+            //                            EmployeeTimes.EmployeeUserId,
+            //                            EmployeeTimes.ProjectId,
+            //                            EmployeeTimes.WINumber,
+            //                            EmployeeTimes.Description,
+            //                            Projects.Name,
+            //                            Projects.ProjectNumber,
+            //                            Projects.ExternalProjectNumber,
+            //                            Projects.CustomerId,
+            //                            Projects.OwnerId,
+            //                            Projects.CategoryId,
+            //                            ProjectDescription = Projects.Description,
+            //                        }
+
+            //           into g
+
+            //                        select new
+            //                        {
+            //                            Year = g.Key.Year,
+            //                            Month = g.Key.Month,
+            //                            Day = g.Key.Day,
+            //                            EmployeeUserId = g.Key.EmployeeUserId,
+            //                            WINumber = g.Key.WINumber,
+            //                            Description = g.Key.Description,
+            //                            ProjectId = g.Key.ProjectId,
+            //                            ProjectName = g.Key.Name,
+            //                            ProjectNumber = g.Key.ProjectNumber,
+            //                            ExternalProjectNumber = g.Key.ExternalProjectNumber,
+            //                            TimeInMinutes = g.Sum(s => s.TimeInMinutes),
+            //                            FullDuration = g.Sum(s => s.FullDuration),
+            //                            CustomerId = g.Key.CustomerId,
+            //                            OwnerId = g.Key.OwnerId,
+            //                            CategoryId = g.Key.CategoryId,
+            //                            ProjectDescription = g.Key.ProjectDescription,
+            //                        }).ToList();
+
+            //var iQueryable_List2 = (from EmployeeTimes in iQueryable_EmployeeTimes
+            //                        where EmployeeTimes.ProjectId == null || EmployeeTimes.ProjectId == ""
+            //                        group EmployeeTimes by new
+            //                        {
+            //                            EmployeeTimes.DateOfWork.Year,
+            //                            EmployeeTimes.DateOfWork.Month,
+            //                            EmployeeTimes.DateOfWork.Day,
+            //                            EmployeeTimes.EmployeeUserId,
+            //                            EmployeeTimes.ProjectId,
+            //                            EmployeeTimes.WINumber,
+            //                            EmployeeTimes.Description,
+            //                        }
+
+            //           into g
+
+            //                        select new
+            //                        {
+            //                            Year = g.Key.Year,
+            //                            Month = g.Key.Month,
+            //                            Day = g.Key.Day,
+            //                            EmployeeUserId = g.Key.EmployeeUserId,
+            //                            WINumber = g.Key.WINumber,
+            //                            Description = g.Key.Description,
+            //                            ProjectId = g.Key.ProjectId,
+            //                            ProjectName = "",
+            //                            ProjectNumber = "",
+            //                            ExternalProjectNumber = "",
+            //                            TimeInMinutes = g.Sum(s => s.TimeInMinutes),
+            //                            FullDuration = g.Sum(s => s.FullDuration),
+            //                            CustomerId = "",
+            //                            OwnerId = "",
+            //                            CategoryId = "",
+            //                            ProjectDescription = "",
+            //                        }).ToList();
         }
     }
 }
