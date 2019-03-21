@@ -112,9 +112,18 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
             if (!string.IsNullOrEmpty(wINumber))
             {
                 ITimeManagementContext context = this.MainContext as TimeManagementContext;
+                var list = (from d in context.TMEmployeeTimes where d.Tenant == tenant && d.WINumber == wINumber && d.Id != entityPM.Id select d).ToList();
 
-                var minutes = (from d in context.TMEmployeeTimes where d.Tenant == tenant && d.WINumber == wINumber && d.Id != entityPM.Id select d).Sum(s => s.TimeInMinutes);
-                completedWork = (minutes + entityPM.TimeInMinutes) / 60.00;
+                if (list != null)
+                {
+                    var minutes = list.Sum(s => s.TimeInMinutes);
+                    completedWork = (minutes + entityPM.TimeInMinutes) / 60.00;
+                }
+                else
+                {
+                    completedWork = entityPM.TimeInMinutes/ 60.00;
+                }
+
                 try
                 {
                     DbQueueService queueservice = new DbQueueService(queueName, tenant);
@@ -142,6 +151,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "TMEmployeeTimeUpdateService SendQueueMessage() Method", null, ip);
                     throw;
                 }
+
             }
         }
     }
