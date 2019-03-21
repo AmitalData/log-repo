@@ -138,6 +138,8 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string ToPartnerId  { get; set; }
        [DataMember]
        public string ChargeableWeightUnitCode  { get; set; }
+       [DataMember]
+       public decimal TotalVolumetricWeight  { get; set; }
    }
 
 }

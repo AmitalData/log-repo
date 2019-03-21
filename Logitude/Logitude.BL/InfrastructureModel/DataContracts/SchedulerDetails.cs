@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.BL.InfrastructureModel.DataContracts
+{
+    [DataContract(Namespace = "")]
+    public class SchedulerDetails
+    {
+        [DataMember]
+        public FTPSchedulerDetails FTPDetails { get; set; }
+
+    }
+
+    [DataContract(Namespace = "")]
+    public class FTPSchedulerDetails
+    {
+        [DataMember]
+        public string Host { get; set; }
+        [DataMember]
+        public string Folder { get; set; }
+        [DataMember]
+        public string UserName { get; set; }
+        [DataMember]
+        public string Password { get; set; }
+        [DataMember]
+        public string From { get; set; }
+        [DataMember]
+        public string Subject { get; set; }
+        [DataMember]
+        public string Prefix { get; set; }
+        [DataMember]
+        public string Extension { get; set; }
+
+
+    }
+
+
+
+}

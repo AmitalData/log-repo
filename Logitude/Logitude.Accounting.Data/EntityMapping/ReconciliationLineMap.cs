@@ -40,6 +40,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.GroupNumber).HasColumnName("GroupNumber");
 
             this.Property(t => t.IsAdjustTransaction).HasColumnName("IsAdjustTransaction");
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
         }
     }
 }

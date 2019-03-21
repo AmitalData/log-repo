@@ -82,8 +82,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                 var query =
-                    ledgerTransactionRepository.GetQueryOrderAccDateAndIdByRec(_Param.Tenant, _allIdAccounts, _Param.From, _Param.To,
-                    _Param.CurrencyId, _SearchByFilter, _Param.IsReconciled);
+                    ledgerTransactionRepository.GetQueryOrderByDateTypeAndIdByRec(_Param.Tenant, _allIdAccounts, _Param.From, _Param.To,
+                    _Param.CurrencyId, _SearchByFilter, _Param.IsReconciled, _Param.DateTypeCode);
 
 
 

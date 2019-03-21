@@ -511,6 +511,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool IsDepositionRequired { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
         public string ForwarderPartnerId { get; set; }
+        public string ARInvoices { get; set; }
 
     }
 }

@@ -46,8 +46,15 @@
                                 <div *ngIf="DataTypeCode == 'Boolean'">
 
                                     <div *ngIf=IsHeaderScreenTemplate>
+
+                                        <div *ngIf="FieldValue">{{'General.O.Yes' | TextCodeTranslationPipe}}</div>
+                                        <div *ngIf="!FieldValue">{{'General.O.No' | TextCodeTranslationPipe}}</div>
+
+                                        <!--
                                         <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
                                         <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
+                                        -->
+
                                     </div>
 
                                     <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">

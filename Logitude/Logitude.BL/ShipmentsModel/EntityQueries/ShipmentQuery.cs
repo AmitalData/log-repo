@@ -1149,9 +1149,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AdditionalChargesId = shipment.AdditionalChargesId;
             shipmentPM.FreightPayerId = shipment.FreightPayerId;
             shipmentPM.FreightPayerAddressId = shipment.FreightPayerAddressId;
+            shipmentPM.ARInvoices = shipment.ARInvoices;
 
-            #region ppcc region
-            string ppcc = "";
+        #region ppcc region
+        string ppcc = "";
             if (shipment.FreightPrepaidCollectId == "P")
             {
                 ppcc = "PP";
@@ -1781,28 +1782,28 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ShipmentOrderPackages = shipmentOrderPackageQuery.GetShipmentOrderPackagesByShipment(shipment.Id, shipment.Tenant);
                 #endregion
 
+                #region Shipment Assembleies
+                ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(repository.context);
+                ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
+
+                shipmentPM.ShipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipment.Id, shipment.Tenant);
+                #endregion
+
                 #region Packages | Commodities
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(repository.context);
                 ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(shipmentPackageRepository);
 
                 ShipmentCommodityRepository shipmentCommodityRepository = new ShipmentCommodityRepository(repository.context);
                 ShipmentCommodityQuery shipmentCommodityQuery = new ShipmentCommodityQuery(shipmentCommodityRepository);
-
-                ShipmentReceivableRepository shipmentReceivablesRepository = new ShipmentReceivableRepository(repository.context);
-                ShipmentReceivableQuery shipmentReceivablesQuery = new ShipmentReceivableQuery(shipmentReceivablesRepository);
-
-                ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(repository.context);
-                ShipmentPayableQuery shipmentPayableQuery = new ShipmentPayableQuery(shipmentPayableRepository);
-
-                ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(repository.context);
-                ShipmentAWBPrintOnlyQuery shipmentAwbPrintOnlyQuery = new ShipmentAWBPrintOnlyQuery(shipmentAWBPrintOnlyRepository);
-
+                #endregion
+                
                 #region shipment order packages
                 shipmentPM.ShipmentOrderPackages = shipmentOrderPackageQuery.GetShipmentOrderPackagesByShipment(shipment.Id, shipment.Tenant);
                 #endregion
 
                 #region shipment receivables
-
+                ShipmentReceivableRepository shipmentReceivablesRepository = new ShipmentReceivableRepository(repository.context);
+                ShipmentReceivableQuery shipmentReceivablesQuery = new ShipmentReceivableQuery(shipmentReceivablesRepository);
                 shipmentPM.ShipmentReceivables = shipmentReceivablesQuery.GetShipmentReceivablePMsByShipmentId(shipment.Id, shipment.Tenant);
 
                 foreach (ShipmentReceivablePM item in shipmentPM.ShipmentReceivables)
@@ -1812,7 +1813,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region shipment payables
+                ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(repository.context);
+                ShipmentPayableQuery shipmentPayableQuery = new ShipmentPayableQuery(shipmentPayableRepository);
                 shipmentPM.ShipmentPayables = shipmentPayableQuery.GetShipmentPayablePMsByShipment(shipment.Id, shipment.Tenant);
+
                 foreach (ShipmentPayablePM item in shipmentPM.ShipmentPayables)
                 {
                     item.ShipmentNumber = shipment.ShipmentNumber;
@@ -1847,33 +1851,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ShipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipment.Id, shipment.ShipmentNumber, shipment.Tenant);
                 #endregion
 
-                //#region Payables
-                //ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(repository.context);
-                //ShipmentPayableQuery shipmentPayableQuery = new ShipmentPayableQuery(shipmentPayableRepository);
-
-                //shipmentPM.ShipmentPayables = shipmentPayableQuery.GetShipmentPayablePMsByShipment(shipment.Id, shipment.Tenant);
-                //foreach (ShipmentPayablePM item in shipmentPM.ShipmentPayables)
-                //{
-                //    item.ShipmentNumber = shipment.ShipmentNumber;
-                //}
-                //#endregion
-
-                //#region Receivables
-                //ShipmentReceivableRepository shipmentReceivablesRepository = new ShipmentReceivableRepository(repository.context);
-                //ShipmentReceivableQuery shipmentReceivablesQuery = new ShipmentReceivableQuery(shipmentReceivablesRepository);
-
-                //shipmentPM.ShipmentReceivables = shipmentReceivablesQuery.GetShipmentReceivablePMsByShipmentId(shipment.Id, shipment.Tenant);
-
-                //foreach (ShipmentReceivablePM item in shipmentPM.ShipmentReceivables)
-                //{
-                //    item.ShipmentNumber = shipment.ShipmentNumber;
-                //}
-                //#endregion
-
                 #region AWB Print Onlies
-                //ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(repository.context);
-                //ShipmentAWBPrintOnlyQuery shipmentAwbPrintOnlyQuery = new ShipmentAWBPrintOnlyQuery(shipmentAWBPrintOnlyRepository);
-
+                ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(repository.context);
+                ShipmentAWBPrintOnlyQuery shipmentAwbPrintOnlyQuery = new ShipmentAWBPrintOnlyQuery(shipmentAWBPrintOnlyRepository);
                 shipmentPM.ShipmentAWBPrintOnlies = shipmentAwbPrintOnlyQuery.GetShipmentAWBPrintOnlyPMsByShipment(shipment.Id, shipment.Tenant);
                 #endregion
 
@@ -1996,8 +1976,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentConsoleShipmentQuery.BuildConsoleShipments(shipmentPM);
                 }
                 #endregion
-            }
-            #endregion
+            }            
 
             #region Pickups & Deliveries
 
@@ -2122,17 +2101,52 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
             #endregion
-
-            #region Shipment Assembleies
-            ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(repository.context);
-            ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
-
-            shipmentPM.ShipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipment.Id, shipment.Tenant);
-            #endregion
-
+            
             // Edited by Ayman
             if (shipmentPM.ShipmentPackages != null)
             {
+                // By Samar: for message variables
+                string myContainersNumbers = null;
+                string myPackagesNames = null;
+                string myPackagesPrintAs = null;
+                foreach (ShipmentPackagePM packagePM in shipmentPM.ShipmentPackages)
+                {
+                    if (string.IsNullOrEmpty(myContainersNumbers))
+                    {
+                        myContainersNumbers = packagePM.ContainerNumber;
+                    }
+
+                    else
+                    {
+                        myContainersNumbers += ", " + packagePM.ContainerNumber;
+                    }
+
+                    if (string.IsNullOrEmpty(myPackagesNames))
+                    {
+                        myPackagesNames = packagePM.PackageTypeName;
+                    }
+
+                    else
+                    {
+                        myPackagesNames += ", " + packagePM.PackageTypeName;
+                    }
+
+                    if (string.IsNullOrEmpty(myPackagesPrintAs))
+                    {
+                        myPackagesPrintAs = packagePM.PrintAs;
+                    }
+
+                    else
+                    {
+                        myPackagesPrintAs += ", " + packagePM.PrintAs;
+                    }
+                }
+
+                shipmentPM.PackagesTypesNames = myPackagesNames;
+                shipmentPM.PackagesTypesPrintAs = myPackagesPrintAs;
+                shipmentPM.ContainersNumbers = myContainersNumbers;
+                // end 
+
                 var myGroup = (from a in shipmentPM.ShipmentPackages
                                where a.IsContainer && a.PackageTypeId != null
                                group a by a.PackageTypeId into g
@@ -11209,7 +11223,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ForwarderPartnerId = f.ForwarderPartnerId,
                                From = f.From,
                                To = f.To,
-                               Origin = f.Origin
+                               Origin = f.Origin,
+                               ARInvoices = f.ARInvoices,
                            };
             return myResult;
         }
@@ -11544,7 +11559,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
                     From = f.From,
                     To = f.To,
-                    Origin = f.Origin
+                    Origin = f.Origin,
+                    ARInvoices = f.ARInvoices,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11797,6 +11813,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Origin = f.Origin,
                     DeclarationDate = f.DeclarationDate,
                     DeclarationNumber = f.DeclarationNumber,
+                    ARInvoices = f.ARInvoices,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

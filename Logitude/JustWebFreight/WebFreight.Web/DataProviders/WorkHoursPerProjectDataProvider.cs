@@ -17,8 +17,8 @@ namespace WebFreight.Web.DataProviders
         public string OwnerName { get; set; }
         public string ProjectName { get; set; }
         public string ProjectId { get; set; }
-        public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
         public DateTime? Today_DateTime { get; set; }
         public string Total_TotalWIWorkedHours { get; set; }
 

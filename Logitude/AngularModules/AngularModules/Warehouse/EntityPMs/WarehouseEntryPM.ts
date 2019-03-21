@@ -364,6 +364,11 @@ export class WarehouseEntryPM {
     public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
        
 	 
+    private totalVolumetricWeight: number;
+    public get TotalVolumetricWeight() { return this.totalVolumetricWeight; }
+    public set TotalVolumetricWeight(newValue: number) { if (this.totalVolumetricWeight != newValue) { this.totalVolumetricWeight = newValue; this.MarkAsDirty("TotalVolumetricWeight"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPM;
 		

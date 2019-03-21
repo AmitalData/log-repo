@@ -64,7 +64,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.INTTRAProdFTPHost).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.INTTRATestFTPHost).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.OceanInsightsToken).HasMaxLength(200).IsUnicode(false);
-           
+            this.Property(t => t.ReleaseNotesURL).HasMaxLength(600).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Settings");
@@ -110,7 +110,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.SignAppVersion).HasColumnName("SignAppVersion");
             this.Property(t => t.DocumentFilingEmailDomain).HasColumnName("DocumentFilingEmailDomain");
             this.Property(t => t.ReportsRunUsingWR).HasColumnName("ReportsRunUsingWR");
-            this.Property(t => t.DWNextRunTime).HasColumnName("DWNextRunTime");
+            this.Property(t => t.DWNextRunTime).HasColumnName("DWNextRunTime");            
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -138,7 +138,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsFullBuildDWRunning).HasColumnName("IsFullBuildDWRunning");
             this.Property(t => t.IsIncrementalDWRunning).HasColumnName("IsIncrementalDWRunning");
             this.Property(t => t.EmailSendingQuota).HasColumnName("EmailSendingQuota");
-
+            this.Property(t => t.ReleaseNotesURL).HasColumnName("ReleaseNotesURL");
         }
     }
 }

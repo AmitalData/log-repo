@@ -60,6 +60,26 @@ export class TaskSchedulerHistoryPM {
     public set IsError(newValue: boolean) { if (this.isError != newValue) { this.isError = newValue; this.MarkAsDirty("IsError"); } }
        
 	 
+    private startDateTimeUTC: Date;
+    public get StartDateTimeUTC() { return this.startDateTimeUTC; }
+    public set StartDateTimeUTC(newValue: Date) { if (this.startDateTimeUTC != newValue) { this.startDateTimeUTC = newValue; this.MarkAsDirty("StartDateTimeUTC"); } }
+       
+	 
+    private endDateTimeUTC: Date;
+    public get EndDateTimeUTC() { return this.endDateTimeUTC; }
+    public set EndDateTimeUTC(newValue: Date) { if (this.endDateTimeUTC != newValue) { this.endDateTimeUTC = newValue; this.MarkAsDirty("EndDateTimeUTC"); } }
+       
+	 
+    private logType: string;
+    public get LogType() { return this.logType; }
+    public set LogType(newValue: string) { if (this.logType != newValue) { this.logType = newValue; this.MarkAsDirty("LogType"); } }
+       
+	 
+    private logFirstLine: string;
+    public get LogFirstLine() { return this.logFirstLine; }
+    public set LogFirstLine(newValue: string) { if (this.logFirstLine != newValue) { this.logFirstLine = newValue; this.MarkAsDirty("LogFirstLine"); } }
+       
+	 
 
     public OldEntityPM: TaskSchedulerHistoryPM;
 		

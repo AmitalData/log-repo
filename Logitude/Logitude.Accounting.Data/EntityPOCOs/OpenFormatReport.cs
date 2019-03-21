@@ -47,6 +47,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual OpenFormatReportStatus OpenFormatReportStatus { get; set; }
         [Column("ErrorMessage")]
 	    public string ErrorMessage { get; set; }
+        [Column("PDFRerportXML")]
+	    public string PDFRerportXML { get; set; }
     }
 }
 	 

@@ -54,6 +54,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                               Status= a.OpenFormatReportStatus != null? a.OpenFormatReportStatus.EnglishName:null,
                                               UserLocalName = a.CreatedByUser.Contact.LocalName,
                                               StatusLocalName = a.OpenFormatReportStatus != null ? a.OpenFormatReportStatus.LocalName:null,
+                                              PDFRerportXML = a.PDFRerportXML,
                                           //    DateTypeName = a.OpenFormatDateType != null? a.OpenFormatDateType.LocalName : null
 					
 		                    	            });

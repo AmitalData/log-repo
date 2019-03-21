@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
             entityPM.SearchFields = ///Task:25238 GetentityPM.AccountId + "," + 
-                entityPM.Number;
+                entityPM.Number+",";
         }
 
         protected override void OnUpdating(ReconciliationPM entityPM)
@@ -82,10 +82,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ReconciliationDataMapping.PMPropertyNames.IsCancelled.ToString()
                      };
 
-                var propChanged = ChangeTrackingEntityPM.ChangedProperties.Where(f =>
+                List<NotifyPropertyChangeValues> propChanged = ChangeTrackingEntityPM.ChangedProperties.Where(f =>
                     !cancelledProp.Contains(f.PropertyName)).ToList();
+
+
                 //update 
-                if (propChanged.Any())
+                if (propChanged.Count == 1 && propChanged.First().PropertyName == "SearchFields")
+                { 
+                    // SearchFields updated after reconcile saved, why? in order to get saved reconciliation lines
+                }
+                else if (propChanged.Any())
                 {
                     throw new Exception("BLException :Approved Reconciliation Can Only Change To IsCancelled Property");
                 }
@@ -96,6 +102,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
+                LedgerTransactionRepository transactionRepository = new LedgerTransactionRepository(entityPM.Tenant);
+
+                // set searchfields
+                foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
+                {
+                    //get transaction
+                    LedgerTransaction transaction = transactionRepository.GetSingle(recoLine.TransactionId, recoLine.Tenant);
+                    recoLine.SearchFields = transaction.SearchFields;
+
+                    if (transaction != null)
+                        PushSearchFieldText(entityPM, transaction.SearchFields);
+
+                }
 
 
                 LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
@@ -153,8 +172,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
-            
 
+
+        }
+
+        void PushSearchFieldText(ReconciliationPM entityPM, string text)
+        {
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                string trimmedText = text.ToLower().Trim();
+
+                if (entityPM.SearchFields == null)
+                {
+                    entityPM.SearchFields = "";
+                }
+                else
+                {
+                    bool isTextFoundInField = entityPM.SearchFields.Contains(trimmedText);
+                    if (isTextFoundInField == false)
+                    {
+                        entityPM.SearchFields += trimmedText + ",";
+                    }
+                }  
+            }
         }
 
         public ReconciliationPM CancellReconciliation(string reconciliationId, int tenant)
@@ -311,6 +351,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             var repoLedger = new LedgerTransactionRepository(MainContext as IAccountingContext);
             repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
+
+
+            //IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            //ReconciliationUpdateService recoUpdateService = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            //entityPM.ChangeSetOp = ChangeSetOperation.Update;
+            //recoUpdateService.Update(entityPM, false);
+
+
         }
 
         //protected override void Trace(ReconciliationPM entityPM, Reconciliation entityPOCO, string changesXml)

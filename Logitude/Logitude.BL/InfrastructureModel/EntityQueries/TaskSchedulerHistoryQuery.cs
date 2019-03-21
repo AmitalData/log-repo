@@ -43,6 +43,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RunResult = a.RunResult,
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        EndDateTimeUTC = a.EndDateTimeUTC,
+                        LogFirstLine = a.LogFirstLine,
+                        LogType = a.LogType
 
                     }).FirstOrDefault();
         }
@@ -60,6 +64,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RunResult = a.RunResult,
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        EndDateTimeUTC = a.EndDateTimeUTC,
+                        LogFirstLine = a.LogFirstLine,
+                        LogType = a.LogType
                     }).FirstOrDefault();
         }
 
@@ -76,6 +84,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RunResult = a.RunResult,
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        EndDateTimeUTC = a.EndDateTimeUTC,
+                        LogFirstLine = a.LogFirstLine,
+                        LogType = a.LogType
                     }).FirstOrDefault();
         }
 
@@ -93,6 +105,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RunResult = a.RunResult,
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        EndDateTimeUTC = a.EndDateTimeUTC,
+                        LogFirstLine = a.LogFirstLine,
+                        LogType = a.LogType
                     }).ToList();
         }
 
@@ -109,6 +125,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                               RunResult = a.RunResult,
                                                               StartDateTime = a.StartDateTime,
                                                               TaskId = a.TaskId,
+                                                              StartDateTimeUTC = a.StartDateTimeUTC,
+                                                              EndDateTimeUTC = a.EndDateTimeUTC,
+                                                              LogFirstLine = a.LogFirstLine,
+                                                              LogType = a.LogType
                                                           };
             return result;
         }

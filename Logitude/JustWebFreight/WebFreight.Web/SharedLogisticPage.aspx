@@ -689,7 +689,7 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; font-size:11px; color: #= StatusColor #;">${StatusName}</div>                       
 
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:7px;"></div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:130px; font-size:11px; color: #= StatusColor #;">Delivery Date</div>  
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:150px; font-size:11px; color: #= StatusColor #;">Requested Delivery Date</div>  
                     </div>
 
                     <div style="height:25px; vertical-align:central;">
@@ -710,7 +710,7 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; font-size:11px; color: #= StatusColor #; margin-top:-10px;">${StatusDate}</div> 
 
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:7px;"></div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:130px; font-size:11px; color: #= StatusColor #; margin-top:-10px;">${DeliveryDate}</div> 
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:150px; font-size:11px; color: #= StatusColor #; margin-top:-10px;">${DeliveryDate}</div> 
 
                     </div>
 
@@ -728,7 +728,7 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:60px;"></div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; font-size:11px; color: Orange;" title="#= LastLogDateLong #"></div>
 
-                        <div class="ValueTextStyle TemplateItem" style="position: absolute; left: 300px; bottom: 5px; height: 15px; width: 380px; line-height: 15px; font-size:10px;" title="#= DescriptionOfGoods #">${DescriptionOfGoods}</div> 
+                        <div class="ValueTextStyle TemplateItem" style="position: absolute; left: 300px; bottom: 5px; height: 15px; width: 400px; line-height: 15px; font-size:10px;" title="#= DescriptionOfGoods #">${DescriptionOfGoods}</div> 
                     </div>
 
                 </div>

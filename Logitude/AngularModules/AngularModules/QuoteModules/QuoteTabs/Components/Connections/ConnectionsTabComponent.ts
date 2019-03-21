@@ -26,14 +26,14 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.myDomainService = new QuoteDomainService();
-        
+
         this.Listen();
         this.LoadData();
     }
 
     ngOnInit() {
         if (this.EntityPM != null) {
-            
+
         }
     }
 
@@ -52,7 +52,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.LoadData();                    
+                    this.LoadData();
                 }
             });
 
@@ -112,14 +112,14 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         this.ShipmentsItemsSource = this.ItemsSource.filter(d => d.ObjectTable == "Shipment");
         this.TicketsItemsSource = this.ItemsSource.filter(d => d.ObjectTable == "Ticket");
         this.OpportunitiesItemsSource = this.ItemsSource.filter(d => d.ObjectTable == "Opportunity");
-        
+
         this.IsShipmentGridVisible = this.ShipmentsItemsSource.length == 0 ? false : true;
         this.IsTicketsGridVisible = this.TicketsItemsSource.length == 0 ? false : true;
-        this.IsOpportunitiesGridVisible = this.OpportunitiesItemsSource.length == 0 ? false : true; 
+        this.IsOpportunitiesGridVisible = this.OpportunitiesItemsSource.length == 0 ? false : true;
 
         this.ShipmentsGridHeight = this.ComputeGridHeight(this.ShipmentsItemsSource);
         this.TicketsGridHeight = this.ComputeGridHeight(this.TicketsItemsSource);
-        this.OpportunitiesGridHeight = this.ComputeGridHeight(this.OpportunitiesItemsSource); 
+        this.OpportunitiesGridHeight = this.ComputeGridHeight(this.OpportunitiesItemsSource);
     }
 
     private ComputeGridHeight(list: any[]): number {
@@ -141,7 +141,18 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             height = 250;
         }
 
-        return height;    
+        return height;
+    }
+
+    public ViewOpportunityClicked(entity: QuoteConnectedEntityItem) {
+        if (entity != null) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: entity.EntityId, ObjectTableName: "Opportunity", BackButtonLabel: " Quotes" });
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => { });
+                });
+        }
     }
 }
 
@@ -190,5 +201,5 @@ class QuoteConnectedEntityItem {
                     });
                 });
         }
-    }
+    } 
 }

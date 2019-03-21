@@ -1425,7 +1425,7 @@ namespace WebFreight.Web.ReportsWebServices
                         packageline.PackageQuantity = package.Quantity != null ? package.Quantity.Value.ToString() : "";
                         packageline.PackageType = package.PackageType != null ? package.PackageType.EnglishName : "Package";
                         packageline.PackageVolume = package.Volume != null ? (package.Volume + " " + shipment.VolumeUnitCode) : "";// + "  CBM" : "";
-
+                        packageline.SealNumber = package.ShipperSeal;
                         packageline.Width = package.Width == null ? "" : package.Width.ToString();
                         packageline.Height = package.Height == null ? "" : package.Height.ToString();
                         packageline.Length = package.Length == null ? "" : package.Length.ToString();
