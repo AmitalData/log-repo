@@ -195,6 +195,7 @@
     <Content Include="2019.R1\03 - 2019\Day 21 [Abed] DeleteOldQueueMessageMoreDetailsProcedure.sql" />
     <Content Include="2019.R1\03 - 2019\Day 20 [Abed] Deleting Old RecordsFromAPILogsAndQueueMessageMoreDetails.sql" />
     <Content Include="2019.R1\03 - 2019\Day 03 [Abed] UpdateQuoteTemplateTextCodeFieldsChargeNots.sql" />
+    <Content Include="2019.R1\03 - 2019\Day 21 [Abed]CustomerTenantAccessesAddSomeFieldsToSearchField.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
