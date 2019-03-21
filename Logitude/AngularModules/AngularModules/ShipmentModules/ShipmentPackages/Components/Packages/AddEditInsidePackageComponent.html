@@ -229,7 +229,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr style="vertical-align:top;">
+                                    <tr *ngIf="DataContext.IsVehicleDetails" style="vertical-align:top;">
                                         <td>
                                             <table>
                                                 <tr style="height:32px;">
@@ -240,11 +240,11 @@
 
                                                 <!-- Make -->
                                                 <tr class="FormFieldRow">
-                                                    <td style="width: 110px;">
+                                                    <td style="width: 160px;">
                                                         <LogLabel [ObjectFieldName]="'Make'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                     </td>
 
-                                                    <td style="width: 230px;">
+                                                    <td style="width: 180px;">
                                                         <LogTextBox [ObjectFieldName]="'Make'" [Text]="DataContext.Make" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                     </td>
 

@@ -111,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Inside Shipment Package",
-			      				    Code =  "5318",
+			      				    Code =  "d87c",
 			      				    Name =  "InsideShipmentPackage",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -1143,6 +1143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Make",
+					  						OldFieldName =  "Make",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1162,6 +1163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Make",
 					  						ListPropertyPath =  "Make",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1197,6 +1199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Model",
+					  						OldFieldName =  "Model",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1216,6 +1219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Model",
 					  						ListPropertyPath =  "Model",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1251,6 +1255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Year",
+					  						OldFieldName =  "Year",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1270,6 +1275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Year",
 					  						ListPropertyPath =  "Year",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1305,6 +1311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Color",
+					  						OldFieldName =  "Color",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1324,6 +1331,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Color",
 					  						ListPropertyPath =  "Color",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1359,6 +1367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ChassisNumber",
+					  						OldFieldName =  "ChassisNumber",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1378,6 +1387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ChassisNumber",
 					  						ListPropertyPath =  "ChassisNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1394,7 +1404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChassisNumber",
-					  						DefaultText =  "ChassisNumber",
+					  						DefaultText =  "Chassis Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1413,6 +1423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "RegistrationNumber",
+					  						OldFieldName =  "RegistrationNumber",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1432,6 +1443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RegistrationNumber",
 					  						ListPropertyPath =  "RegistrationNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1467,6 +1479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CountryId",
+					  						OldFieldName =  "CountryId",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -1487,6 +1500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CountryId",
 					  						ListPropertyPath =  "CountryId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

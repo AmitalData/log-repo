@@ -1363,6 +1363,8 @@ export class ShipmentPackageItem extends BaseComponent {
     public Row: any;
     public IsCommodityNameVisible: boolean = false;
     public IsCommodityNumberVisible: boolean = false;
+    public IsVehicleDetails: boolean = false;
+
     constructor(entity: ShipmentPackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -1380,6 +1382,7 @@ export class ShipmentPackageItem extends BaseComponent {
 
         if (this.IsNewEntity) {
             this.SetUIProperties_Cars(false);
+            this.IsVehicleDetails = false;
         }
     }
 
@@ -1425,6 +1428,7 @@ export class ShipmentPackageItem extends BaseComponent {
                     var list: PackageTypeList = myResponse.Result;
                     if (list != null) {
                         this.SetUIProperties_Cars(this.IsEditingEnabled && list.IsVehicle);
+                        this.IsVehicleDetails = list.IsVehicle;
                     }
                 }
             });
@@ -1690,6 +1694,7 @@ export class ShipmentPackageItem extends BaseComponent {
                 this.NonActiveContainer = false;
                 this.SetUIProperties_NonActiveContainer();
                 this.SetUIProperties_Cars(false);
+                this.IsVehicleDetails = false;
             }
 
             else {
@@ -1713,9 +1718,11 @@ export class ShipmentPackageItem extends BaseComponent {
 
                             this.SetUIProperties_NonActiveContainer();
                             this.SetUIProperties_Cars(list.IsVehicle);
+                            this.IsVehicleDetails = list.IsVehicle;
                         }
                         else {
                             this.SetUIProperties_Cars(false);
+                            this.IsVehicleDetails = false;
                         }
                     }
                 });
@@ -2864,6 +2871,8 @@ export class InsideShipmentPackageItem extends BaseComponent {
     public ShipmentPackagePM: ShipmentPackagePM;
     public ObjectTableName: string = "InsideShipmentPackage";
     public IsNewEntity: boolean = false;
+    public IsVehicleDetails: boolean = false;
+
     constructor(entity: InsideShipmentPackagePM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -2873,6 +2882,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.SetUIProperties();
         if (this.IsNewEntity) {
             this.SetUIPropertiesOfCars(false);
+            this.IsVehicleDetails = false;
         }
     }
 
@@ -2928,6 +2938,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
                     var list: PackageTypeList = myResponse.Result;
                     if (list != null) {
                         this.SetUIPropertiesOfCars(this.IsEditingEnabled && list.IsVehicle);
+                        this.IsVehicleDetails = list.IsVehicle;
                     }
                 }
             });
@@ -2960,6 +2971,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.PackageTypeName = null;
                 this.SetUIPropertiesOfCars(false);
+                this.IsVehicleDetails = false;
             }
 
             else {
@@ -2970,10 +2982,13 @@ export class InsideShipmentPackageItem extends BaseComponent {
                         if (list != null) {
                             this.PackageTypeName = list.EnglishName;
                             this.SetUIPropertiesOfCars(list.IsVehicle);
+                            this.IsVehicleDetails = list.IsVehicle;
                         }
                         else {
                             this.SetUIPropertiesOfCars(false);
+                            this.IsVehicleDetails = false;
                         }
+
                     }
                 });
             }
@@ -3233,6 +3248,8 @@ export class PackageItem extends BaseComponent {
     public EntityPM: ShipmentPackageItemPM;
     public ObjectTableName: string = "ShipmentPackageItem";
     public IsNewEntity: boolean = false;
+
+
     constructor(entity: ShipmentPackageItemPM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
         this.EntityPM = entity;

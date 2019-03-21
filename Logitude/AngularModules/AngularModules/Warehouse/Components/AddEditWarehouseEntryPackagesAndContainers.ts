@@ -283,8 +283,6 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
 
 
 export class WarehouseEntryPackageItem extends BaseComponent {
-
-
     EntityPM: WarehouseEntryPackagePM;
     VolumeLabel: string;
     VolumetricWeightLabel: string;
@@ -299,6 +297,8 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     IsDependencyFilter2Value: boolean;
     IsContainer: boolean = false;
     WarehouseEntryPM: WarehouseEntryPM;
+    public IsVehicleDetails: boolean = false;
+
     constructor(entity: WarehouseEntryPackagePM, public fatherComponent: AddEditWarehouseEntryPackagesAndContainers = null) {
         super();
         this.FatherComponent = fatherComponent;
@@ -312,6 +312,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.SetLabel();
         this.SetUIProperties();
         this.SetUIPropertiesOfCars(false);
+        this.IsVehicleDetails = false;
     }
 
 
@@ -359,6 +360,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
                     var list: PackageTypeList = myResponse.Result;
                     if (list != null) {
                         this.SetUIPropertiesOfCars(list.IsVehicle);
+                        this.IsVehicleDetails = list.IsVehicle;
                     }
                 }
             });
@@ -495,6 +497,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
             this.EntityPM.PackageTypeId = value;
             if (AppTool.IsNullOrEmpty(value)) {
                 this.SetUIPropertiesOfCars(false);
+                this.IsVehicleDetails =false;
             }
             else {
                 var myService: PackageTypeListService = new PackageTypeListService();
@@ -503,6 +506,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
                         var list: PackageTypeList = myResponse.Result;
                         if (list != null) {
                             this.SetUIPropertiesOfCars(list.IsVehicle);
+                            this.IsVehicleDetails = list.IsVehicle;
                             if (!list.IsVehicle) {
                                 this.Make = null;
                                 this.Model = null;

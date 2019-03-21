@@ -236,6 +236,8 @@ export class DeliveryPackageItem extends BaseComponent {
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
     public IsAirShipment: boolean = false;
+    public IsVehicleDetails: boolean = false;
+
     constructor(item: ShipmentPickUpDeliveryPackagePM, public fatherComponent: DeliveryPackagesTabComponent, isNewEntity: boolean = false) {
         super();
         this.EntityPM = item;
@@ -246,6 +248,7 @@ export class DeliveryPackageItem extends BaseComponent {
         this.SetUIProperties();
         if (this.IsNewEntity) {
             this.SetUIPropertiesOfCars(false);
+            this.IsVehicleDetails = false;
         }
     }
 
@@ -275,6 +278,7 @@ export class DeliveryPackageItem extends BaseComponent {
                         this.IsContainer = list.IsContainer;
                         this.SetUIProperties_IsContainer();
                         this.SetUIPropertiesOfCars(this.IsEditingEnabled && list.IsVehicle);
+                        this.IsVehicleDetails = list.IsVehicle;
                     }
                 }
             });
@@ -357,6 +361,7 @@ export class DeliveryPackageItem extends BaseComponent {
                 this.IsContainer = false;
                 this.SetUIProperties_IsContainer();
                 this.SetUIPropertiesOfCars(false);
+                this.IsVehicleDetails = false;
             }
 
             else {
@@ -381,6 +386,7 @@ export class DeliveryPackageItem extends BaseComponent {
 
                             this.SetUIProperties_IsContainer();
                             this.SetUIPropertiesOfCars(list.IsVehicle);
+                            this.IsVehicleDetails = list.IsVehicle;
                             if (!list.IsVehicle) {
                                 this.Make = null;
                                 this.Model = null;
