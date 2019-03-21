@@ -60,7 +60,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //בעת שליחת המסר תבוצע שליפה של טבלת DeclarationMamanSpecialAction לפי מפתח הצהרה + קוד פעולה מיוחדת, והנתונים יישלחו לפי קוד פעולה שהמשתמש בחר + נתונים מ DB של הצהרה + DeclarationMamanSpecialAction
             var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(settings.Tenant);
             var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(settings.DeclarationId, responeECSpclMamanData.SpSpclCode, false, false);
-
+            if (pmDeclarationMamanSpecialAction == null)
+            {
+                throw new Exception("AnalyzeQResponse():pmDeclarationMamanSpecialAction == null");
+            }
 #endif
 
 
