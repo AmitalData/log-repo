@@ -146,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL
             myStringBuilder.Append(a);
             myStringBuilder.Append("&OF1.31&");
             myStringBuilder.Append(' ', 50);
-            myStringBuilder.Append('\n');
+             myStringBuilder.AppendLine();
             //B100
             int counter = 1;
             foreach (B100Data item in b100Data)
@@ -449,7 +449,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
             }
 
           
@@ -1035,7 +1035,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 myStringBuilder.Append(a);
                 myStringBuilder.Append(' ', 16);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
             }
 
             //C100
@@ -1479,7 +1479,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
                 //D110
                 List<ARInvoiceLinePM> lines = aRInvoiceLinePMs.Where(d => d.ARInvoiceId == item.ARInvoiceId).ToList();
                 foreach (ARInvoiceLinePM line in lines)
@@ -1659,7 +1659,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 21);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
             }
 
@@ -2167,7 +2167,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
 
                 //D110
                 List<APInvoiceLinePM> lines = aPInvoiceLinePMs.Where(d => d.APInvoiceId == item.APInvoiceId).ToList();
@@ -2372,7 +2372,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 21);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
             }
 
@@ -2778,7 +2778,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
 
                 //D120
                 List<ARPaymentChequePM> lines = cheques.Where(d => d.PaymentId == item.ARPaymentId).ToList();
@@ -3003,7 +3003,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
             }
 
@@ -3194,7 +3194,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
 
                 //D120
 
@@ -3312,7 +3312,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
 
                 else
@@ -3528,7 +3528,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a);
                         myStringBuilder.Append(' ', 60);
 
-                        myStringBuilder.Append('\n');
+                         myStringBuilder.AppendLine();
                     }
                 }
 
@@ -4113,7 +4113,8 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append("0");
             stringBuilder.Append(' ',46);
 
-            stringBuilder.Append("\n");
+             stringBuilder.AppendLine();
+            
             stringBuilder.Append("B100");
             if (B100Count.ToString().Length >15)
             {
@@ -4124,7 +4125,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + B100Count.ToString().PadLeft(15, '0'));
             }
-            stringBuilder.Append("\n");
+            stringBuilder.AppendLine();
             stringBuilder.Append("B110");
             if (B110Count.ToString().Length > 15)
             {
@@ -4135,7 +4136,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + B110Count.ToString().PadLeft(15, '0'));
             }
-            stringBuilder.Append("\n");
+             stringBuilder.AppendLine();
             stringBuilder.Append("C100");
             if (C100Count.ToString().Length > 15)
             {
@@ -4146,7 +4147,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + C100Count.ToString().PadLeft(15, '0'));
             }
-            stringBuilder.Append("\n");
+            stringBuilder.AppendLine();
             stringBuilder.Append("D110");
             if (D110Count.ToString().Length > 15)
             {
@@ -4158,7 +4159,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 stringBuilder.Append(a + D110Count.ToString().PadLeft(15, '0'));
             }
 
-            stringBuilder.Append("\n");
+             stringBuilder.AppendLine();
             stringBuilder.Append("D120");
             if (D120Count.ToString().Length > 15)
             {
