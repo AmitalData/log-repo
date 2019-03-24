@@ -347,6 +347,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             {
                                                                 Id = a.Id,
                                                                 CustomerTenant = a.CustomerTenant,
+                                                                Tenant = a.Tenant,
                                                             });
             return results;
         }

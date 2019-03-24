@@ -1,8 +1,10 @@
 ﻿
 using CommunicationWorkerRole.Tasks;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using System.Transactions;
 
 namespace CommunicationWorkerRole.Tasks
 {
@@ -22,13 +24,20 @@ namespace CommunicationWorkerRole.Tasks
             int numberOfExecuteRows = 1000;
             while (numberOfExecuteRows == 1000)
             {
+
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    SqlCommand cmd = new SqlCommand("delete top(1000) from [dbo].[APILogsData] where id in (select id from [dbo].[APILogs] where [CreateDate] < GETDATE() - 90 )", cn);
-                    cn.Open();
-                    numberOfExecuteRows = cmd.ExecuteNonQuery();
-                    cn.Close();
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        SqlCommand cmd = new SqlCommand("delete top(1000) from [dbo].[APILogsData] where id in (select id from [dbo].[APILogs] where [CreateDate] < GETDATE() - 90 )", cn);
+                        cmd.CommandTimeout = 1000000;
+                        cn.Open();
+                        numberOfExecuteRows = cmd.ExecuteNonQuery();
+                        cn.Close();
+                        scope.Complete();
+                    }
                 }
+
             }
             #endregion
 
@@ -39,10 +48,15 @@ namespace CommunicationWorkerRole.Tasks
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    SqlCommand cmd = new SqlCommand("delete top(1000) from [dbo].[APILogs] where [CreateDate] < GETDATE() - 90", cn);
-                    cn.Open();
-                    numberOfExecuteRows = cmd.ExecuteNonQuery();
-                    cn.Close();
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        SqlCommand cmd = new SqlCommand("delete top(1000) from [dbo].[APILogs] where [CreateDate] < GETDATE() - 90", cn);
+                        cmd.CommandTimeout = 1000000;
+                        cn.Open();
+                        numberOfExecuteRows = cmd.ExecuteNonQuery();
+                        cn.Close();
+                        scope.Complete();
+                    }
                 }
             }
 
