@@ -1068,7 +1068,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
                         var myResult = pmResponse.Result;
                         this.CurrentEntityPM = myResult;
-                        this.SaveAutomationResultEmailRecipient();
+                        this.SaveAutomation();
                     }
 
                     else {
@@ -1082,7 +1082,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
             
-                    this.SaveAutomationResultEmailRecipient();
+                    this.SaveAutomation();
                 }
 
                 else this.CloseButtonClicked();
@@ -1102,10 +1102,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.AutomationSetSLAValue.SLAId = value;
     }
     
-    SaveAutomationResultEmailRecipient() {
+    BuildAutomationResultEmailRecipient() {
         var resultEmailRecipientPMLists: AutomationResultEmailRecipientPM[] = [];
 
-        if (this.CurrentEntityPM.ResultCode == "EMAIL") {
             this.ParticipantsList.forEach((userid) => {
                 if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == userid && (d.RecipientType == "Fixed"))[0]) {
                     var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM();
@@ -1152,36 +1151,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     }
                 }
             });
-        }
+        
 
-        if (resultEmailRecipientPMLists.length > 0) {
+        return resultEmailRecipientPMLists;
 
-            var automationArgsList: AutomationArgs[] = [];
-            resultEmailRecipientPMLists.forEach((item) => {
-
-                var automationArgs: AutomationArgs = new AutomationArgs();
-                    automationArgs.RecipientType = item.RecipientType,
-                    automationArgs.RecipientValue = item.RecipientValue,
-                    automationArgs.Tenant = SessionLocator.Tenant;
-                    automationArgs.AutomationsId = item.AutomationsId;
-                    automationArgs.Id = item.Id;
-                    automationArgsList.push(automationArgs);
-            });
-
-            this._automationResultEmailRecipientExtendedService.update(automationArgsList).subscribe(res => {
-                var pmResponse: ServiceResponse = res;
-                if (!pmResponse.HasError) {
-                    var myResult = pmResponse.Result;
-                    this.SaveAutomation();
-                }
-
-                else {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                }
-            });
-        }
-
-        else this.SaveAutomation();
     }
 
     SaveAutomation() {
@@ -1227,6 +1200,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.AautomationConditionLists = automationConditionList;
         automatedBackup.IsAutomationResultEmailAllActiveUsers = this.IsAutomationResultEmailAllActiveUsers;
 
+        
+
+        if (this.CurrentEntityPM.ResultCode == "EMAIL") this.CurrentEntityPM.AutomationResultEmailRecipientLists = this.BuildAutomationResultEmailRecipient();
         if (this.CurrentEntityPM.ResultCode == "FIELDSET") automatedBackup.AutomationSetValueLists = automationSetValuelist;
         else if (this.CurrentEntityPM.ResultCode == "SETSLA") automatedBackup.AutomationSetSLAValue = this.AutomationSetSLAValue;
         else if (this.IsFollowUp()) automatedBackup.AutomationFollowUp = this.AutomationFollowUp;
