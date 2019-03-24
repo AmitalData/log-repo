@@ -1548,6 +1548,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             IAccountingContext ctx = AccountingContext.GetContext(paymentPM.Tenant);
             ReconciliationPM _reco = new ReconciliationPM();
             _reco.ChangeSetOp = ChangeSetOperation.Insert;
+            _reco.Number = "get";
             _reco.Tenant = paymentPM.Tenant;
             _reco.AccountId = paymentPM.GLAccountId;
             _reco.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);

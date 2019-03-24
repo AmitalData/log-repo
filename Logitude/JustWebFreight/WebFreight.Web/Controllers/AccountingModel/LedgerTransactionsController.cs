@@ -450,17 +450,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     arpaymentId = null;
 
                 var accountingContext = AccountingContext.GetContext(tenant);
-                //LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
                 LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
-                List<LedgerTransactionPM> openTransactions = query.GetARPaymentOpenTransactions(billToGLAccountId, tenant);
 
+                // get opened transactions
+                //List<LedgerTransactionPM> openTransactions = query.GetARPaymentOpenTransactions(billToGLAccountId, tenant);
+
+                // get reconciled transactions
                 List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>();
-                if (arpaymentId != null)
-                    reconciledTransactions = query.GetARPaymentReconciledTransactions(arpaymentId,billToGLAccountId, tenant);
+                if (arpaymentId != null) reconciledTransactions = query.GetARPaymentReconciledTransactions(arpaymentId,billToGLAccountId, tenant);
 
+                // get partailly reconciled transactions
+                List<LedgerTransactionPM> partiallyReconciledTransactions = new List<LedgerTransactionPM>();
+                if (arpaymentId != null) partiallyReconciledTransactions = query.GetARPaymentPartiallyReconciledTransactions(arpaymentId, billToGLAccountId, tenant);
+
+                // concat them to one list
                 IEnumerable<LedgerTransactionPM> finalTransactionsList 
-                    = openTransactions
-                    .Concat(reconciledTransactions)
+                    = 
+                    //openTransactions
+                    reconciledTransactions
+                    //.Concat(reconciledTransactions)
+                    .Concat(partiallyReconciledTransactions)
                     .OrderByDescending(d => d.IsReconciled).ToList();
 
 

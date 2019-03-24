@@ -178,7 +178,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.NotifyAddressId = entityPM.NotifyAddressId;
             entityPoco.NotifyContactId = entityPM.NotifyContactId;
             entityPoco.NumberOfFollowUps = entityPM.NumberOfFollowUps;
-
+            entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
             BuildSearchField(entityPM, entityPoco);
         }
 

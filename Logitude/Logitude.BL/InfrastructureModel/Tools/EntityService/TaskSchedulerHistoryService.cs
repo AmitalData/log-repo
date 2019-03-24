@@ -14,6 +14,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -51,7 +52,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             TaskSchedulerHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-
+            //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, theEntityPm.Tenant);
+            //SchedulerLogsPM SchedulerLog = new SchedulerLogsPM() { Tenant = theEntityPm.Tenant, HistoryId = theEntityPm.Id };
+            //SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+            //SchedulerLog.Log = "Start Runing the Scheduler";
+            //SchedulerLogsService.Create(SchedulerLog);
         }
 
         public void Update(TaskSchedulerHistoryPM theEntityPm)
@@ -64,6 +69,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             TaskSchedulerHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, theEntityPm.Tenant);
+            //SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(theEntityPm.Tenant);
+
+            //SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(theEntityPm.Id);
+            //SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+            //SchedulerLog.Log = "Start Runing the Scheduler";
+            //SchedulerLogsService.Create(SchedulerLog);
         }
 
     }
