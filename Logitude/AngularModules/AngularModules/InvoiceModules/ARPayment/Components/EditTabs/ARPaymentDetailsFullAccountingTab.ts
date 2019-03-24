@@ -1,3 +1,4 @@
+import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { ReconcileEventManager } from './../../../../Accounting/Utilities/ReconcileEventManager';
 import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
@@ -70,6 +71,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ARPaymentChequeStatusColor = "black";
 
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
+    _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
     private _glaService: GLAccountListService = new GLAccountListService();
 
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
@@ -297,17 +299,38 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 });
         }
     }
-    OpenReco(recoId) {
-        if (!AppTool.IsNullOrEmpty(recoId)) {
-            // this.showAlert = false;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                        // SessionLocator.CurrentSession.CloseCurrentWindow();
-                    });
+    OpenReco(recoNumber) {
+        if (!AppTool.IsNullOrEmpty(recoNumber)) {
+
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+            this._ReconciliationExtendedPMService.getByNumber(recoNumber)
+                .subscribe(myResult => {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                    var mm: ServiceResponse = myResult;
+                    if (!mm.HasError) {
+
+                        var reco:any = mm.Result;
+                        var recoId = reco.Id;
+
+                         // this.showAlert = false;
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
+                            cmpRef.instance.BackCompleted.subscribe(bk => {
+                                // SessionLocator.CurrentSession.CloseCurrentWindow();
+                            });
+                        });
+                    }
+                    else {
+
+                    }
                 });
+
+
+
 
         }
     }
@@ -1683,6 +1706,8 @@ export class TransactionLineModel extends BaseComponent {
         this.OriginalAmount = this.CalculateOriginalAmount();
         this.OriginalAmountCurrency = this.CalculatOriginalCurruncy();
         this.Status = this.GetStatus();
+
+        this.RecociliationNumbers = this.getRecoLinkList();
     }
     //#region Properties
 
@@ -1782,6 +1807,12 @@ export class TransactionLineModel extends BaseComponent {
     public set Status(v: string) {
         this._Status = v;
     }
+
+
+    public get ReconciledAmount() : number {
+        return this.OriginalAmount - this.originalOpenAmount;
+    }
+
 
     //#endregion
 
@@ -1884,5 +1915,16 @@ export class TransactionLineModel extends BaseComponent {
             }
 
         }
+    }
+
+    RecociliationNumbers: string[] = [];
+    getRecoLinkList(){
+        var res: string[] = [];
+
+        if(this.RecoNumber){
+            res = this.RecoNumber.split(',');
+        }
+        return res;
+
     }
 }

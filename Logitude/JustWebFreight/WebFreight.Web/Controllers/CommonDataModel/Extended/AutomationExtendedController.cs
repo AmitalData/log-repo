@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
@@ -144,6 +145,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                     AutomationService service = new AutomationService(MyContext, entityPM.Tenant);
 
+                    SaveAutomationResultEmailRecipientLists(entityPM.AutomationResultEmailRecipientLists, MyContext);
+
                     if (entityPM.IsChangeAutomationXaml && entityPM.AutomatedDataBackup != null)
                     {
                         System.Type type1 = typeof(AutomationCondition);
@@ -193,6 +196,50 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private void SaveAutomationResultEmailRecipientLists(List<AutomationResultEmailRecipientPM> automationResultEmailRecipientLists , ICommonDataContext myContext)
+        {
+            if (automationResultEmailRecipientLists!=null && automationResultEmailRecipientLists.Count() > 0)
+            {
+                AutomationResultEmailRecipientRepository entityRepository = new AutomationResultEmailRecipientRepository(myContext);
+                foreach (AutomationResultEmailRecipientPM item in automationResultEmailRecipientLists)
+                {
+                    AutomationResultEmailRecipient Poco = new AutomationResultEmailRecipient();
+                    if (string.IsNullOrEmpty(item.Id))
+                    {
+                        item.Id = item.Id = IdCounter.GetNumber("AutomationResultEmailRecipient", item.Tenant).ToString();
+                        MapEntity(item, Poco, true);
+                        entityRepository.Add(Poco);
+                        TableLastUpdateClass.UpdateTableHistory(item.Tenant, "AutomationResultEmailRecipient");
+
+                    }
+                    else
+                    {
+                        MapEntity(item, Poco, true);
+                        entityRepository.Remove(Poco);
+
+                    }
+                }
+
+                entityRepository.SubmitChanges();
+            }
+        }
+
+        private static void MapEntity(AutomationResultEmailRecipientPM entityPM, AutomationResultEmailRecipient entityPOCO, bool isNewState)
+        {
+            if (isNewState)
+            {
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
+
+
+            entityPOCO.AutomationsId = entityPM.AutomationsId;
+            entityPOCO.RecipientType = entityPM.RecipientType;
+            entityPOCO.RecipientValue = entityPM.RecipientValue;
+
+        }
+
 
 
         public HttpResponseMessage PutAuomationList(List<AutomationArgs> items)

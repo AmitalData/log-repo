@@ -94,7 +94,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.SubmitChanges();
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("SchedularQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() } }, null, null, null, Poco.NextRunTime);
+            queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() } }, null, null, null, Poco.NextRunTimeUTC);
 
         }
 

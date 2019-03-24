@@ -2,6 +2,7 @@
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.SystemLogs;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,10 +27,7 @@ namespace CommunicationWorkerRole.Tasks
             Tenant = tenant;
         }
         public void Run()
-        {
-
-
-
+        { 
             try
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -37,6 +35,7 @@ namespace CommunicationWorkerRole.Tasks
                     TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
                     IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
                     TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
+                    
                     TaskSchedulerHistoryPM TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = TaskId };
                     TaskSchedulerHistoryService.Create(TaskSchedulerHistory);
                     TaskHistoryId = TaskSchedulerHistory.Id;
@@ -56,8 +55,10 @@ namespace CommunicationWorkerRole.Tasks
                     var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
                     if (TaskSchedulerHistory != null)
                     {
-                        TaskSchedulerHistory.EndDateTime = DateTime.Now;
+                        TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
+                        TaskSchedulerHistory.EndDateTimeUTC = DateTime.UtcNow;
                         TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                        LogInfo("Done Execution ..");
 
                     }
                     scope.Complete();
@@ -75,7 +76,8 @@ namespace CommunicationWorkerRole.Tasks
                         TaskSchedulerHistoryPM TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
                         if (TaskSchedulerHistory != null)
                         {
-                            TaskSchedulerHistory.EndDateTime = DateTime.Now;
+                            TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
+                            TaskSchedulerHistory.EndDateTimeUTC = DateTime.UtcNow;
                             TaskSchedulerHistory.IsError = true;
                             TaskSchedulerHistory.RunResult = "Error " + ex.Message;
                             IWebFreightContext objectContext = new WebFreightContext();
@@ -103,6 +105,115 @@ namespace CommunicationWorkerRole.Tasks
         public virtual void StartTask()
         {
 
+        }
+
+        public void LogInfo(string Message)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
+                SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
+                SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
+                TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(Tenant);
+                var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
+                TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
+
+                if (TaskSchedulerHistory != null)
+                {
+                    SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
+                    if (SchedulerLog == null)
+                    {
+                        SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
+                        SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                        SchedulerLog.Log = Message;
+                        SchedulerLogsService.Create(SchedulerLog);
+                        TaskSchedulerHistory.LogType = "Info";
+                        TaskSchedulerHistory.LogFirstLine = Message;
+                        TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                    }
+                    else
+                    {
+                        SchedulerLog.Log += Environment.NewLine + Message;
+                        SchedulerLogsService.Update(SchedulerLog);
+                    }
+                }
+                scope.Complete();
+            } 
+        }
+
+        public void Logwarning(string Message)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
+                SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
+                SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
+                TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(Tenant);
+                var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
+                TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
+
+                if (TaskSchedulerHistory != null)
+                {
+                    SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
+                    if (SchedulerLog == null)
+                    {
+                        SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
+                        SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                        SchedulerLog.Log = Message;
+                        SchedulerLogsService.Create(SchedulerLog);
+                        TaskSchedulerHistory.LogType = "Warning";
+                        TaskSchedulerHistory.LogFirstLine = Message;
+                        TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                    }
+                    else
+                    {
+                        TaskSchedulerHistory.LogType = "Warning";
+                        TaskSchedulerHistory.LogFirstLine = Message;
+                        TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                        SchedulerLog.Log += Environment.NewLine + Message;
+                        SchedulerLogsService.Update(SchedulerLog);
+                    }
+                }
+                scope.Complete();
+            }
+           
+        }
+
+        public void LogException(string Message)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
+                SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
+                SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
+                TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(Tenant);
+                var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
+                TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
+
+                if (TaskSchedulerHistory != null)
+                {
+                    SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
+                    if (SchedulerLog == null)
+                    {
+                        SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
+                        SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                        SchedulerLog.Log = Message;
+                        SchedulerLogsService.Create(SchedulerLog);
+                        TaskSchedulerHistory.LogType = "Exception";
+                        TaskSchedulerHistory.LogFirstLine = Message;
+                        TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                    }
+                    else
+                    {
+                        TaskSchedulerHistory.LogType = "Exception";
+                        TaskSchedulerHistory.LogFirstLine = Message;
+                        TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                        SchedulerLog.Log += Environment.NewLine + Message;
+                        SchedulerLogsService.Update(SchedulerLog);
+                    }
+                }
+                scope.Complete();
+            } 
         }
     }
 }

@@ -308,6 +308,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string FromCountryName { get; set; }
         public string ToCountryCode { get; set; }
         public string ToCountryName { get; set; }
+        public bool ConvertToFCL { get; set; }
+        public bool ConvertToLCL { get; set; }
 
         public bool IsQuoteDataExternal { get; set; }
         public bool IsQuoteDocumentExternal { get; set; }

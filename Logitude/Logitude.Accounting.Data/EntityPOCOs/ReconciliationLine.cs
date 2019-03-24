@@ -49,6 +49,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool IsAdjustTransaction { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("ReconciledWithTransactionId")]
+	    public string ReconciledWithTransactionId { get; set; }
     }
 }
 	 

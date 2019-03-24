@@ -33,8 +33,13 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;">
+                    <td style="width: 57px;" *ngIf="DisplayMode == false">
                         <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    
+
+                    <td style="width: 57px;" *ngIf="DisplayMode == true">
+                        <button class="RedButton" (click)="OkButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>

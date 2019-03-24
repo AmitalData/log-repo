@@ -30,6 +30,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? GrossWeightInKG { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
+        public string OperationalClosedByUserId { get; set; }
 
         public string CurrentUserId { get; set; }
         public int Tenant { get; set; }

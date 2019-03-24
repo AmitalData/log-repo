@@ -66,6 +66,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string OpenAmountCurrencySign  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+       [DataMember]
+       public string ReconciledWithTransactionId  { get; set; }
    }
 
 }
