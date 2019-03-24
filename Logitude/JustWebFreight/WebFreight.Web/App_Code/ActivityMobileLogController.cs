@@ -22,7 +22,7 @@ namespace WebFreight.Web.App_Code
                 ActivityLog.SendTotangoContactActivity(email, module, activity, tenant, false, cardId, null);
             }
 
-            else
+            else 
             {
                 ActivityLog.SendTotangoContactActivity(email, module, activity, tenant, true, cardId, "Mobile");
             }

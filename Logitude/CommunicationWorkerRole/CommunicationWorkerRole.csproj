@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0AC4EEB0-3668-4012-88DA-F519D268F3AA}</ProjectGuid>
+    <ProjectGuid>{BA2A42B8-A348-4D44-984C-1D718CB20B6F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CommunicationWorkerRole</RootNamespace>

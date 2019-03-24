@@ -94,6 +94,7 @@
     <Compile Include="Accounting\IntegrationTests\JournalLineUpdateUnitTest.cs" />
     <Compile Include="Accounting\IntegrationTests\JournalUpdateUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountCustomDataMappingUnitTest.cs" />
+    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountTraceEventServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankDeposit\BankDepositOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\EntityMapping\ChartOfAccountDataMappingUnderTest.cs" />
     <Compile Include="Accounting\UniTests\JournalDataMappingUnitTest.cs" />

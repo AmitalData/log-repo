@@ -72,6 +72,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
        public AutomatedBackup AutomatedDataBackup { get; set; }
 
 
+
+        [DataMember]
+        public List<AutomationResultEmailRecipientPM> AutomationResultEmailRecipientLists { get; set; }
+        
+
        [DataMember]
        public bool IsChangeAutomationXaml { get; set; }
     }

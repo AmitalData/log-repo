@@ -37,7 +37,10 @@ namespace WebFreight.Web.Helpers
         {
             Response response = new Response();
             CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-            IQueryable<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessesByImporterVat(importerDepositionPM.ImporterVat , importerDepositionPM.Tenant);
+            IQueryable<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessesByImporterVat(importerDepositionPM.ImporterVat );
+            if (importerDepositionPM.Tenant != null) customerTenantAccessLists = customerTenantAccessLists.Where(d => d.Tenant == importerDepositionPM.Tenant);
+      
+
             if (customerTenantAccessLists.Count() > 0)
             {
                 int? customerTenant = null;
