@@ -31,6 +31,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
             var gatepassRequestQueryService = new GatepassRequestQueryService(customContext);
+            var myCourierMasterQueryService = new CourierMasterQueryService(customContext);
             var gatepassRequestUpdateService = new GatepassRequestUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
 
             this.MyResponseData = new GatepassFeedbackMessageResponseData();
@@ -60,7 +61,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this._GatepassRequestPM = gatepassRequestQueryService.GetGatepassRequestByGatepassNumber(gatepassFeedbackMessageItem.gatepassNumber, requestParams.Tenant);
                 if (this._GatepassRequestPM != null)
                 {
-                    if(this._GatepassRequestPM.CustomsUpdateDateTime != null && this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date > gatepassFeedbackMessageItem.dateTime)
+                    CourierMasterPM courierMasterPM = myCourierMasterQueryService.GetSingle(_GatepassRequestPM.MasterCourierId, false, false);
+                    if (courierMasterPM != null)
+                    {
+                        this.MyResponseData.UserMessage = " משוב לבקשת העברה" + courierMasterPM.AirlinePrefix + "-" + courierMasterPM.MAWB;
+                    }
+                    if (this._GatepassRequestPM.CustomsUpdateDateTime != null && this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date > gatepassFeedbackMessageItem.dateTime)
                     {
                         LogMessagingUtil.Instance.AppendLine("GatepassFeedbackMessage was rejected because it is out of date");
                         this.MyResponseData.HasException = true;

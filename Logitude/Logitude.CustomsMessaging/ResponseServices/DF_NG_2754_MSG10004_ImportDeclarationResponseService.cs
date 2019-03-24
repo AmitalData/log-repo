@@ -736,26 +736,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
             myDeclarationUpdateService.IsFromCustomsFeedback = true;
             myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
-            if(!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
+            if (!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
             {
-                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
+                if (currentDeclarationCourierStatusPM != null)
                 {
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
-                    if (currentDeclarationCourierStatusPM != null)
+                    if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
                     {
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                         currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
                         currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                         LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 900");
+                    }
+                    else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
+                    {
+                        currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 900");
+                    }
+                    if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                     }
                 }
             }
 
             //var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
             //if (setting.IsConnectedToUniFreight)
-                if (_MyDeclarationPM.IsConnectedToUnifreight)
+            if (_MyDeclarationPM.IsConnectedToUnifreight)
             {
                 //<--- Yuval Chalup 09.11.2015 TASK-16498 - Update PaymentOrderNumber in Payment
                 if (customResponse.DeclarationPaymentDetails != null)
