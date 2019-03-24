@@ -8,7 +8,7 @@ import {TaskSchedulerHistoryList} from '../../../../Infrastructure/EntityLists/T
 import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
 import { SchedulerDetails, FTPSchedulerDetails } from '../../../../Infrastructure/DataContracts/SchedulerDetails';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
@@ -176,6 +176,16 @@ export class TaskSchedulerComponent implements OnInit  {
 
     BuildColumns() { 
         this.columns = [];
+        this.columns.push({
+            FieldName: "Log",
+            DataTypeCode: 'String',
+            Display: 'Log',
+            Styles: { width: '280px' },
+            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: false
+        });
         if (this.ShowUTCTimeEnabled == false) {
             this.columns.push({
                 FieldName: "StartDateTime",
@@ -235,10 +245,10 @@ export class TaskSchedulerComponent implements OnInit  {
             ServerSideSortable: false
         });
         this.columns.push({
-            FieldName: "Log",
+            FieldName: "ViewLog",
             DataTypeCode: 'String',
             Display: 'Log',
-            Styles: { width: '280px' },
+            Styles: { width: '100px' },
             HtmlListComponentName: 'SchedulerDateListTemplate',
             HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
             IsCustomTemplate: true,
@@ -431,6 +441,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     set StartDateTime(newValue: Date) {
         if (this.EntityPM.StartDateTime != newValue) {
             this.EntityPM.StartDateTime = newValue;
+            this.EntityPM.StartDateTimeUTC = new Date(newValue.getUTCFullYear(), newValue.getUTCMonth(), newValue.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds(), newValue.getUTCMilliseconds());
         }
     }
 

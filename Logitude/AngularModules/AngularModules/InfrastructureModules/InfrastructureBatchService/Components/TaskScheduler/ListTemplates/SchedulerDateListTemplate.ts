@@ -58,7 +58,12 @@ export class SchedulerDateListTemplate {
             if (!myResponse.HasError) {
 
                 var windowArgs: any = {};
-                windowArgs.TextValue = myResponse.Result.Log;
+                if (myResponse.Result) {
+                    windowArgs.TextValue = myResponse.Result.Log;
+                }
+                else {
+                    windowArgs.TextValue = "";
+                }
                 windowArgs.DisplayMode = true;
 
                 var wind = new LogitudeWindow();

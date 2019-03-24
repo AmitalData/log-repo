@@ -774,6 +774,10 @@
     <Compile Include="Migrations\201903180911133_AddWarehouseEntryVolumetricWeightField.Designer.cs">
       <DependentUpon>201903180911133_AddWarehouseEntryVolumetricWeightField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903181109480_AddingUTCDates_Rabaia.cs" />
+    <Compile Include="Migrations\201903181109480_AddingUTCDates_Rabaia.Designer.cs">
+      <DependentUpon>201903181109480_AddingUTCDates_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.cs" />
     <Compile Include="Migrations\201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.Designer.cs">
       <DependentUpon>201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.cs</DependentUpon>
@@ -1318,6 +1322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903180911133_AddWarehouseEntryVolumetricWeightField.resx">
       <DependentUpon>201903180911133_AddWarehouseEntryVolumetricWeightField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903181109480_AddingUTCDates_Rabaia.resx">
+      <DependentUpon>201903181109480_AddingUTCDates_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.resx">
       <DependentUpon>201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.cs</DependentUpon>
