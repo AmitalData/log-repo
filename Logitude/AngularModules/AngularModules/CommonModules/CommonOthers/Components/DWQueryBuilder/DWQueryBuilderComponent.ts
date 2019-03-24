@@ -476,6 +476,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 this.SelectedItem.DataTypeCode = "DateTime";
                 this.SelectedItem.HasTree = true;
             }
+            if (this.SelectedItem.Name == 'Full Date') {
+                this.SelectedItem.HasTree = false;
+            }
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
             this.SelectedFieldsDataSource = this.ResetIndexes(tempData);
@@ -525,9 +528,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (view.Code == '[Full Date]') {
                 view.ParentDataTypeCode = "DateTime";
                 view.DataTypeCode = "DateTime";
+                this.SelectedItem.HasTree = true;
             }
             else {
                 view.ParentDataTypeCode = "LookUp";
+            }
+            if (this.SelectedItem.Name == 'Full Date') {
+                this.SelectedItem.HasTree = false;
             }
             if (item.BaseDWObjectField.DataTypeCode == "LookUp" || item.BaseDWObjectField.DataTypeCode == "Dimension") {
                 view.ParentDimTabelName = item.BaseDWObjectField.DimensionTableCode;

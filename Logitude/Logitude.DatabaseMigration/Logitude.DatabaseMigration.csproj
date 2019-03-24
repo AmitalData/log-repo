@@ -802,6 +802,10 @@
     <Compile Include="Migrations\201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.Designer.cs">
       <DependentUpon>201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.cs" />
+    <Compile Include="Migrations\201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.Designer.cs">
+      <DependentUpon>201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1323,6 +1327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903180648027_AddInactiveFieldToTMBudget_Samar.resx">
       <DependentUpon>201903180648027_AddInactiveFieldToTMBudget_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.resx">
+      <DependentUpon>201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903180911133_AddWarehouseEntryVolumetricWeightField.resx">
       <DependentUpon>201903180911133_AddWarehouseEntryVolumetricWeightField.cs</DependentUpon>

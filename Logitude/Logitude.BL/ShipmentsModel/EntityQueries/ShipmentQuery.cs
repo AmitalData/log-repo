@@ -1267,6 +1267,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Notes = shipment.Notes;
             shipmentPM.CreateDateTime = shipment.CreateDateTime;
             shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
+            shipmentPM.OperationalClosedByUserId = shipment.OperationalClosedByUserId;
+
             shipmentPM.SalesmanUserId = shipment.SalesmanUserId;
             shipmentPM.AccountManagerUserId = shipment.AccountManagerUserId;
             shipmentPM.ShipmentNumber = shipment.ShipmentNumber;
@@ -2140,6 +2142,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
                         myPackagesPrintAs += ", " + packagePM.PrintAs;
                     }
+                }
+
+                if(!string.IsNullOrEmpty(myPackagesNames) && myPackagesNames.Length > 1000)
+                {
+                    myPackagesNames = myPackagesNames.Substring(0, 1000);
+                }
+
+                if (!string.IsNullOrEmpty(myPackagesPrintAs) && myPackagesPrintAs.Length > 1000)
+                {
+                    myPackagesPrintAs = myPackagesPrintAs.Substring(0, 1000);
+                }
+
+                if (!string.IsNullOrEmpty(myContainersNumbers) && myContainersNumbers.Length > 1000)
+                {
+                    myContainersNumbers = myContainersNumbers.Substring(0, 1000);
                 }
 
                 shipmentPM.PackagesTypesNames = myPackagesNames;
@@ -3114,6 +3131,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.BranchId = shipment.BranchId;
             shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
+            shipmentPM.OperationalClosedByUserId = shipment.OperationalClosedByUserId;
             shipmentPM.SalesmanUserId = shipment.SalesmanUserId;
             shipmentPM.AccountManagerUserId = shipment.AccountManagerUserId;
             shipmentPM.MainCarriageTransportModeId = shipment.TransportModeId;

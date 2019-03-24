@@ -29,7 +29,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? LocalCustomsTransmissionsStatusDate { get; set; }
         public string LocalCustomsSentByUserId { get; set; }
         public string LocalCustomsSentByUserName { get; set; }
-
+        public string OperationalClosedByUserId { get; set; }
         public string ComputedStatusId { get; set; }
         public DateTime? ComputedStatusDate { get; set; }
         public  string ComputedStatusName { get; set; }
