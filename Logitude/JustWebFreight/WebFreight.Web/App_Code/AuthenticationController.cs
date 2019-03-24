@@ -30,7 +30,7 @@ using Simplog.Server.Infrastructure.Azure;
 using Microsoft.Practices.Unity;
 using System.IO;
 using Logitude.Server.Tools;
-using Logitude.SystemLogs;
+using Logitude.SystemLogs; 
 using System.ServiceModel;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Diagnostics;
