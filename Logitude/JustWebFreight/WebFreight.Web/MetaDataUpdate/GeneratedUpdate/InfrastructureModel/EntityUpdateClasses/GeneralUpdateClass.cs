@@ -1674,7 +1674,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOAllBankAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AllBankAccounts", DefaultText = "All Bank Accounts",LocalDefaultText = @"כל חשבונות הבנק", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralODate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Date", DefaultText = "Date",LocalDefaultText = @"תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_AccountingGeneralOBankPagesFromFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.BankPagesFromFile", DefaultText = "Insert Bank Pages From File", LocalDefaultText = @"טען דפי בנק מקובץ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+
+            TextCode GeneralTextCode_AccountingGeneralODate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Date", DefaultText = "Date",LocalDefaultText = @"תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOBanksQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.BanksQuery", DefaultText = "Banks Query",LocalDefaultText = @"שאילתות בנק", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

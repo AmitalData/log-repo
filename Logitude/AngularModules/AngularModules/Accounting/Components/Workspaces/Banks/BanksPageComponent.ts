@@ -336,7 +336,18 @@ export class BanksPageComponent {
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewBankAccountComponent');
     }
+    LoadBankPagesFromFile() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 600;
+        logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.BankPagesFromFile");
+        logWindow.WindowArgs = {};
+        logWindow.WindowClosed.subscribe(($event: any) => {
 
+        });
+        logWindow.Show('./Accounting/Components/NewEntity/LoadRecoExPageComponent');
+
+    }
     ViewBankAccountQuery(myQueryCode: string) {
         if (myQueryCode != null) {
 
