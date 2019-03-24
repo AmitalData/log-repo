@@ -247,7 +247,7 @@ export class TaskSchedulerComponent implements OnInit  {
         this.columns.push({
             FieldName: "ViewLog",
             DataTypeCode: 'String',
-            Display: 'Log',
+            Display: '',
             Styles: { width: '100px' },
             HtmlListComponentName: 'SchedulerDateListTemplate',
             HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
