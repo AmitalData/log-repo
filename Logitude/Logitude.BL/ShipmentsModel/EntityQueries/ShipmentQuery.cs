@@ -238,6 +238,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                         shipmentPM.TenantZeroAirlineGLSHKFVRFVA = tenantZeroAirline.GLSHKFVRFVA;
                                         shipmentPM.TenantZeroAirlineGLSHKNeedsRegistration = tenantZeroAirline.GLSHKNeedsRegistration;
                                     }
+
+                                    scope.Complete();
                                 }
                             }
                         }
@@ -389,7 +391,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PortPM mainCarriageFromPort = portQuery.GetSinglePM(masterData.MainCarriageFromPortId, masterData.Tenant);
                     if (mainCarriageFromPort != null)
                     {
-                        //shipmentPM.FromCountryId = mainCarriageFromPort.CountryId;
+                        shipmentPM.FromCountryId = mainCarriageFromPort.CountryId;
                         shipmentPM.FromCountryIsEC = mainCarriageFromPort.CountryEC;
                         shipmentPM.FromPort = mainCarriageFromPort.Code;
                         shipmentPM.FromPortCountry = mainCarriageFromPort.CountryName;
@@ -406,7 +408,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PortPM mainCarriageToPort = portQuery.GetSinglePM(masterData.MainCarriageToPortId, masterData.Tenant);
                     if (mainCarriageToPort != null)
                     {
-                        //shipmentPM.ToCountryId = mainCarriageToPort.CountryId;
+                        shipmentPM.ToCountryId = mainCarriageToPort.CountryId;
                         shipmentPM.ToCountryIsEC = mainCarriageToPort.CountryEC;
                         shipmentPM.ToPort = mainCarriageToPort.Code;
                         shipmentPM.ToPortName = mainCarriageToPort.EnglishName;
@@ -1147,9 +1149,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AdditionalChargesId = shipment.AdditionalChargesId;
             shipmentPM.FreightPayerId = shipment.FreightPayerId;
             shipmentPM.FreightPayerAddressId = shipment.FreightPayerAddressId;
+            shipmentPM.ARInvoices = shipment.ARInvoices;
 
-            #region ppcc region
-            string ppcc = "";
+        #region ppcc region
+        string ppcc = "";
             if (shipment.FreightPrepaidCollectId == "P")
             {
                 ppcc = "PP";
@@ -1779,28 +1782,28 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ShipmentOrderPackages = shipmentOrderPackageQuery.GetShipmentOrderPackagesByShipment(shipment.Id, shipment.Tenant);
                 #endregion
 
+                #region Shipment Assembleies
+                ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(repository.context);
+                ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
+
+                shipmentPM.ShipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipment.Id, shipment.Tenant);
+                #endregion
+
                 #region Packages | Commodities
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(repository.context);
                 ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(shipmentPackageRepository);
 
                 ShipmentCommodityRepository shipmentCommodityRepository = new ShipmentCommodityRepository(repository.context);
                 ShipmentCommodityQuery shipmentCommodityQuery = new ShipmentCommodityQuery(shipmentCommodityRepository);
-
-                ShipmentReceivableRepository shipmentReceivablesRepository = new ShipmentReceivableRepository(repository.context);
-                ShipmentReceivableQuery shipmentReceivablesQuery = new ShipmentReceivableQuery(shipmentReceivablesRepository);
-
-                ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(repository.context);
-                ShipmentPayableQuery shipmentPayableQuery = new ShipmentPayableQuery(shipmentPayableRepository);
-
-                ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(repository.context);
-                ShipmentAWBPrintOnlyQuery shipmentAwbPrintOnlyQuery = new ShipmentAWBPrintOnlyQuery(shipmentAWBPrintOnlyRepository);
-
+                #endregion
+                
                 #region shipment order packages
                 shipmentPM.ShipmentOrderPackages = shipmentOrderPackageQuery.GetShipmentOrderPackagesByShipment(shipment.Id, shipment.Tenant);
                 #endregion
 
                 #region shipment receivables
-
+                ShipmentReceivableRepository shipmentReceivablesRepository = new ShipmentReceivableRepository(repository.context);
+                ShipmentReceivableQuery shipmentReceivablesQuery = new ShipmentReceivableQuery(shipmentReceivablesRepository);
                 shipmentPM.ShipmentReceivables = shipmentReceivablesQuery.GetShipmentReceivablePMsByShipmentId(shipment.Id, shipment.Tenant);
 
                 foreach (ShipmentReceivablePM item in shipmentPM.ShipmentReceivables)
@@ -1810,7 +1813,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region shipment payables
+                ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(repository.context);
+                ShipmentPayableQuery shipmentPayableQuery = new ShipmentPayableQuery(shipmentPayableRepository);
                 shipmentPM.ShipmentPayables = shipmentPayableQuery.GetShipmentPayablePMsByShipment(shipment.Id, shipment.Tenant);
+
                 foreach (ShipmentPayablePM item in shipmentPM.ShipmentPayables)
                 {
                     item.ShipmentNumber = shipment.ShipmentNumber;
@@ -1845,33 +1851,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ShipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipment.Id, shipment.ShipmentNumber, shipment.Tenant);
                 #endregion
 
-                //#region Payables
-                //ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(repository.context);
-                //ShipmentPayableQuery shipmentPayableQuery = new ShipmentPayableQuery(shipmentPayableRepository);
-
-                //shipmentPM.ShipmentPayables = shipmentPayableQuery.GetShipmentPayablePMsByShipment(shipment.Id, shipment.Tenant);
-                //foreach (ShipmentPayablePM item in shipmentPM.ShipmentPayables)
-                //{
-                //    item.ShipmentNumber = shipment.ShipmentNumber;
-                //}
-                //#endregion
-
-                //#region Receivables
-                //ShipmentReceivableRepository shipmentReceivablesRepository = new ShipmentReceivableRepository(repository.context);
-                //ShipmentReceivableQuery shipmentReceivablesQuery = new ShipmentReceivableQuery(shipmentReceivablesRepository);
-
-                //shipmentPM.ShipmentReceivables = shipmentReceivablesQuery.GetShipmentReceivablePMsByShipmentId(shipment.Id, shipment.Tenant);
-
-                //foreach (ShipmentReceivablePM item in shipmentPM.ShipmentReceivables)
-                //{
-                //    item.ShipmentNumber = shipment.ShipmentNumber;
-                //}
-                //#endregion
-
                 #region AWB Print Onlies
-                //ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(repository.context);
-                //ShipmentAWBPrintOnlyQuery shipmentAwbPrintOnlyQuery = new ShipmentAWBPrintOnlyQuery(shipmentAWBPrintOnlyRepository);
-
+                ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(repository.context);
+                ShipmentAWBPrintOnlyQuery shipmentAwbPrintOnlyQuery = new ShipmentAWBPrintOnlyQuery(shipmentAWBPrintOnlyRepository);
                 shipmentPM.ShipmentAWBPrintOnlies = shipmentAwbPrintOnlyQuery.GetShipmentAWBPrintOnlyPMsByShipment(shipment.Id, shipment.Tenant);
                 #endregion
 
@@ -1994,8 +1976,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentConsoleShipmentQuery.BuildConsoleShipments(shipmentPM);
                 }
                 #endregion
-            }
-            #endregion
+            }            
 
             #region Pickups & Deliveries
 
@@ -2120,17 +2101,52 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
             #endregion
-
-            #region Shipment Assembleies
-            ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(repository.context);
-            ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
-
-            shipmentPM.ShipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipment.Id, shipment.Tenant);
-            #endregion
-
+            
             // Edited by Ayman
             if (shipmentPM.ShipmentPackages != null)
             {
+                // By Samar: for message variables
+                string myContainersNumbers = null;
+                string myPackagesNames = null;
+                string myPackagesPrintAs = null;
+                foreach (ShipmentPackagePM packagePM in shipmentPM.ShipmentPackages)
+                {
+                    if (string.IsNullOrEmpty(myContainersNumbers))
+                    {
+                        myContainersNumbers = packagePM.ContainerNumber;
+                    }
+
+                    else
+                    {
+                        myContainersNumbers += ", " + packagePM.ContainerNumber;
+                    }
+
+                    if (string.IsNullOrEmpty(myPackagesNames))
+                    {
+                        myPackagesNames = packagePM.PackageTypeName;
+                    }
+
+                    else
+                    {
+                        myPackagesNames += ", " + packagePM.PackageTypeName;
+                    }
+
+                    if (string.IsNullOrEmpty(myPackagesPrintAs))
+                    {
+                        myPackagesPrintAs = packagePM.PrintAs;
+                    }
+
+                    else
+                    {
+                        myPackagesPrintAs += ", " + packagePM.PrintAs;
+                    }
+                }
+
+                shipmentPM.PackagesTypesNames = myPackagesNames;
+                shipmentPM.PackagesTypesPrintAs = myPackagesPrintAs;
+                shipmentPM.ContainersNumbers = myContainersNumbers;
+                // end 
+
                 var myGroup = (from a in shipmentPM.ShipmentPackages
                                where a.IsContainer && a.PackageTypeId != null
                                group a by a.PackageTypeId into g
@@ -2215,7 +2231,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ConsigneeNotImporterReference = shipment.ConsigneeNotImporterReference;
             shipmentPM.ProjectNumber = shipment.ProjectNumber;
 
-
+            
             bool iDangerousShipmentPackages = true;
             if (shipment.IsDangerous)
             {
@@ -2227,16 +2243,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
 
-            //  if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-            //{
-            //    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentPM.Tenant);
-            //    ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentPM.Id, shipmentPM.Tenant);
-            //    if (shipmentComputedFields != null)
-            //    {
-            //        shipmentPM.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
-            //        shipmentPM.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
-            //    }
-            //}
+
+            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+            {
+                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
+                ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
+                if (entityComputedFields != null)
+                {
+                    shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+                    shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
+                    shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
+                    shipmentPM.ImporterDepositionRequestDetails = entityComputedFields.ImporterDepositionRequestDetails;
+                }
+            }
 
 
 
@@ -3056,7 +3075,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return returnShipment;
         }
 
-        public ShipmentPM MapShipmentToShipmentPMForAutomation(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData)
+        public ShipmentPM MapShipmentToShipmentPMForAutomation(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData , ShipmentComputedFields entityComputedFields)
         {
             if (masterData == null)
             {
@@ -3065,6 +3084,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     masterData = (from a in shipmentMasterDataList where a.Id == shipment.MasterShipmentDataId select a).FirstOrDefault();
                 }
             }
+
+            #region ShipmentComputedFields
+            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+            {
+                if (entityComputedFields == null)
+                {
+                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
+                    entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
+                }
+
+                if (entityComputedFields != null)
+                {
+                    shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+                    shipmentPM.ImporterDepositionRequestDetails = entityComputedFields.ImporterDepositionRequestDetails;
+                    shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
+                    shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
+                }
+            }
+            #endregion
 
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.Id = shipment.Id;
@@ -3139,6 +3177,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Field38 = new CustomFieldClass("Field38", "Shipment", shipment.Field38);
             shipmentPM.Field39 = new CustomFieldClass("Field39", "Shipment", shipment.Field39);
             shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
+
+
 
 
             return null;
@@ -3933,105 +3973,153 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public List<ShipmentPM> GetShipmentPMsByMasterIdAndTenantForAutomation(string masterId, int tenant)
         {
             #region shipmentpm temp code
-            IQueryable<ShipmentPM> shipmentPMList = from s in repository.context.Shipments
-                                                    join sm in repository.context.ShipmentMasterDatas
-                                                    on s.MasterShipmentDataId equals sm.Id into shipmentJoin
-                                                    from m in shipmentJoin.DefaultIfEmpty()
-                                                    where s.Tenant == tenant && s.MasterShipmentDataId == masterId && s.Id != masterId && ((s.ShipmentLevelCode == "H") || (s.ShipmentLevelCode == "D") || s.ShipmentLevelCode == "A")
-                                                    select new ShipmentPM()
-                                                    {
 
-                                                        Id = s.Id,
-                                                        Tenant = s.Tenant,
-                                                        CreatedByUserId = s.CreatedByUserId,
-                                                        UpdatedByUserId = s.UpdatedByUserId,
-                                                        DirectionId = s.DirectionId,
-                                                        ShipmentLevelCode = s.ShipmentLevelCode,
-                                                        CustomerId = s.CustomerId,
-                                                        AccountManagerUserId = s.AccountManagerUserId,
-                                                        BranchId = s.BranchId,
-                                                        DepartmentId = s.DepartmentId,
-                                                        AgentId = s.AgentId,
-                                                        AgentComputed=s.AgentComputed,
-                                                        IsAccountingClosed = s.IsAccountingClosed,
-                                                        IsOperationalClosed = s.IsOperationalClosed,
-                                                        OriginShipmentId = s.OriginShipmentId,
-                                                        SalesmanUserId = s.SalesmanUserId,
-                                                        StatusId = s.StatusId,
-                                                        TransportModeId = s.TransportModeId,
-                                                        MainCarriageTransportModeId = s.TransportModeId,
-                                                        IncotermId = s.IncotermId,
-                                                        CustomerContactId = s.CustomerContactId,
-                                                        AgentContactId = s.AgentContactId,
-                                                        MainCarriageETD = m.MainCarriageETD,
-                                                        MainCarriageATD = m.MainCarriageATD,
-                                                        MainCarriageETA = m.MainCarriageETA,
-                                                        MainCarriageATA = m.MainCarriageATA,
-                                                        MainCarriageCarrierId = m.MainCarriageCarrierId,
-                                                        FinalDistenationPortId = m.Transshipment3ToPortId != null ? m.Transshipment3ToPortId : m.Transshipment2ToPortId != null ? m.Transshipment2ToPortId : m.Transshipment1ToPortId != null ? m.Transshipment1ToPortId : m.MainCarriageToPortId,
+            List<Shipment> shipmentLists = (from s in repository.context.Shipments
+                                            where s.Tenant == tenant && s.MasterShipmentDataId == masterId && s.Id != masterId && ((s.ShipmentLevelCode == "H") || (s.ShipmentLevelCode == "D") || s.ShipmentLevelCode == "A")
+                                            select s).ToList();
 
-
-
-                                                    };
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();
-            foreach (ShipmentPM shipmentPM in shipmentPMList)
+            if (shipmentLists.Count() > 0)
             {
-                Shipment ship = (from s in repository.context.Shipments
-                                 where s.Id == shipmentPM.Id
-                                 select s).FirstOrDefault();
 
-                shipmentPM.Field1 = new CustomFieldClass("Field1", "Shipment", ship.Field1);
-                shipmentPM.Field2 = new CustomFieldClass("Field2", "Shipment", ship.Field2);
-                shipmentPM.Field3 = new CustomFieldClass("Field3", "Shipment", ship.Field3);
-                shipmentPM.Field4 = new CustomFieldClass("Field4", "Shipment", ship.Field4);
-                shipmentPM.Field5 = new CustomFieldClass("Field5", "Shipment", ship.Field5);
-                shipmentPM.Field6 = new CustomFieldClass("Field6", "Shipment", ship.Field6);
-                shipmentPM.Field7 = new CustomFieldClass("Field7", "Shipment", ship.Field7);
-                shipmentPM.Field8 = new CustomFieldClass("Field8", "Shipment", ship.Field8);
-                shipmentPM.Field9 = new CustomFieldClass("Field9", "Shipment", ship.Field9);
-                shipmentPM.Field10 = new CustomFieldClass("Field10", "Shipment", ship.Field10);
-                shipmentPM.Field11 = new CustomFieldClass("Field11", "Shipment", ship.Field11);
-                shipmentPM.Field12 = new CustomFieldClass("Field12", "Shipment", ship.Field12);
-                shipmentPM.Field13 = new CustomFieldClass("Field13", "Shipment", ship.Field13);
-                shipmentPM.Field14 = new CustomFieldClass("Field14", "Shipment", ship.Field14);
-                shipmentPM.Field15 = new CustomFieldClass("Field15", "Shipment", ship.Field15);
-                shipmentPM.Field16 = new CustomFieldClass("Field16", "Shipment", ship.Field16);
-                shipmentPM.Field17 = new CustomFieldClass("Field17", "Shipment", ship.Field17);
-                shipmentPM.Field18 = new CustomFieldClass("Field18", "Shipment", ship.Field18);
-                shipmentPM.Field19 = new CustomFieldClass("Field19", "Shipment", ship.Field19);
-                shipmentPM.Field20 = new CustomFieldClass("Field20", "Shipment", ship.Field20);
-                shipmentPM.Field21 = new CustomFieldClass("Field21", "Shipment", ship.Field21);
-                shipmentPM.Field22 = new CustomFieldClass("Field22", "Shipment", ship.Field22);
-                shipmentPM.Field23 = new CustomFieldClass("Field23", "Shipment", ship.Field23);
-                shipmentPM.Field24 = new CustomFieldClass("Field24", "Shipment", ship.Field24);
-                shipmentPM.Field25 = new CustomFieldClass("Field25", "Shipment", ship.Field25);
-                shipmentPM.Field26 = new CustomFieldClass("Field26", "Shipment", ship.Field26);
-                shipmentPM.Field27 = new CustomFieldClass("Field27", "Shipment", ship.Field27);
-                shipmentPM.Field28 = new CustomFieldClass("Field28", "Shipment", ship.Field28);
-                shipmentPM.Field29 = new CustomFieldClass("Field29", "Shipment", ship.Field29);
-                shipmentPM.Field30 = new CustomFieldClass("Field30", "Shipment", ship.Field30);
-                shipmentPM.Field31 = new CustomFieldClass("Field31", "Shipment", ship.Field31);
-                shipmentPM.Field32 = new CustomFieldClass("Field32", "Shipment", ship.Field32);
-                shipmentPM.Field33 = new CustomFieldClass("Field33", "Shipment", ship.Field33);
-                shipmentPM.Field34 = new CustomFieldClass("Field34", "Shipment", ship.Field34);
-                shipmentPM.Field35 = new CustomFieldClass("Field35", "Shipment", ship.Field35);
-                shipmentPM.Field36 = new CustomFieldClass("Field36", "Shipment", ship.Field36);
-                shipmentPM.Field37 = new CustomFieldClass("Field37", "Shipment", ship.Field37);
-                shipmentPM.Field38 = new CustomFieldClass("Field38", "Shipment", ship.Field38);
-                shipmentPM.Field39 = new CustomFieldClass("Field39", "Shipment", ship.Field39);
-                shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", ship.Field40);
+                List<ShipmentComputedFields> entityComputedFieldsLists = new List<ShipmentComputedFields>();
+                ShipmentMasterData m = (from a in repository.context.ShipmentMasterDatas
+                                        where a.Id == masterId
+                                        select a).FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                {
+                    List<string> shipmentIds = shipmentLists.GroupBy(d => d.Id).Select(d => d.First().Id).ToList();
+                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
+                    entityComputedFieldsLists = shipmentComputedFieldsRepository.GetShipmentComputedFieldsByIds(shipmentIds, tenant).ToList();
+                }
 
 
-                ShipmentPM securedPM = new ShipmentPM();
-                SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
+                foreach (Shipment shipment in shipmentLists)
+                {
+                    var shipmentPM = new ShipmentPM();
+                    shipmentPM.Id = shipment.Id;
+                    shipmentPM.Tenant = shipment.Tenant;
+                    shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
+                    shipmentPM.UpdatedByUserId = shipment.UpdatedByUserId;
+                    shipmentPM.DirectionId = shipment.DirectionId;
+                    shipmentPM.ShipmentLevelCode = shipment.ShipmentLevelCode;
+                    shipmentPM.CustomerId = shipment.CustomerId;
+                    shipmentPM.AccountManagerUserId = shipment.AccountManagerUserId;
+                    shipmentPM.BranchId = shipment.BranchId;
+                    shipmentPM.DepartmentId = shipment.DepartmentId;
+                    shipmentPM.AgentId = shipment.AgentId;
+                    shipmentPM.AgentComputed = shipment.AgentComputed;
+                    shipmentPM.IsAccountingClosed = shipment.IsAccountingClosed;
+                    shipmentPM.IsOperationalClosed = shipment.IsOperationalClosed;
+                    shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
+                    shipmentPM.SalesmanUserId = shipment.SalesmanUserId;
+                    shipmentPM.StatusId = shipment.StatusId;
+                    shipmentPM.TransportModeId = shipment.TransportModeId;
+                    shipmentPM.MainCarriageTransportModeId = shipment.TransportModeId;
+                    shipmentPM.IncotermId = shipment.IncotermId;
+                    shipmentPM.CustomerContactId = shipment.CustomerContactId;
+                    shipmentPM.AgentContactId = shipment.AgentContactId;
 
-                securedShipmentPMs.Add(securedPM);
+                    if (m != null)
+                    {
+                        shipmentPM.MainCarriageETD = m.MainCarriageETD;
+                        shipmentPM.MainCarriageATD = m.MainCarriageATD;
+                        shipmentPM.MainCarriageETA = m.MainCarriageETA;
+                        shipmentPM.MainCarriageATA = m.MainCarriageATA;
+                        shipmentPM.MainCarriageCarrierId = m.MainCarriageCarrierId;
+                        shipmentPM.FinalDistenationPortId = m.Transshipment3ToPortId != null ? m.Transshipment3ToPortId : m.Transshipment2ToPortId != null ? m.Transshipment2ToPortId : m.Transshipment1ToPortId != null ? m.Transshipment1ToPortId : m.MainCarriageToPortId;
+                    }
 
-                securedShipmentPMs = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentPM>(new QueryOperations(), securedShipmentPMs.AsQueryable<ShipmentPM>(), tenant).ToList();
-                securedShipmentPMs = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentPM>(new QueryOperations(), securedShipmentPMs.AsQueryable<ShipmentPM>(), tenant).ToList();
+
+                    shipmentPM.Field1 = new CustomFieldClass("Field1", "Shipment", shipment.Field1);
+                    shipmentPM.Field2 = new CustomFieldClass("Field2", "Shipment", shipment.Field2);
+                    shipmentPM.Field3 = new CustomFieldClass("Field3", "Shipment", shipment.Field3);
+                    shipmentPM.Field4 = new CustomFieldClass("Field4", "Shipment", shipment.Field4);
+                    shipmentPM.Field5 = new CustomFieldClass("Field5", "Shipment", shipment.Field5);
+                    shipmentPM.Field6 = new CustomFieldClass("Field6", "Shipment", shipment.Field6);
+                    shipmentPM.Field7 = new CustomFieldClass("Field7", "Shipment", shipment.Field7);
+                    shipmentPM.Field8 = new CustomFieldClass("Field8", "Shipment", shipment.Field8);
+                    shipmentPM.Field9 = new CustomFieldClass("Field9", "Shipment", shipment.Field9);
+                    shipmentPM.Field10 = new CustomFieldClass("Field10", "Shipment", shipment.Field10);
+                    shipmentPM.Field11 = new CustomFieldClass("Field11", "Shipment", shipment.Field11);
+                    shipmentPM.Field12 = new CustomFieldClass("Field12", "Shipment", shipment.Field12);
+                    shipmentPM.Field13 = new CustomFieldClass("Field13", "Shipment", shipment.Field13);
+                    shipmentPM.Field14 = new CustomFieldClass("Field14", "Shipment", shipment.Field14);
+                    shipmentPM.Field15 = new CustomFieldClass("Field15", "Shipment", shipment.Field15);
+                    shipmentPM.Field16 = new CustomFieldClass("Field16", "Shipment", shipment.Field16);
+                    shipmentPM.Field17 = new CustomFieldClass("Field17", "Shipment", shipment.Field17);
+                    shipmentPM.Field18 = new CustomFieldClass("Field18", "Shipment", shipment.Field18);
+                    shipmentPM.Field19 = new CustomFieldClass("Field19", "Shipment", shipment.Field19);
+                    shipmentPM.Field20 = new CustomFieldClass("Field20", "Shipment", shipment.Field20);
+                    shipmentPM.Field21 = new CustomFieldClass("Field21", "Shipment", shipment.Field21);
+                    shipmentPM.Field22 = new CustomFieldClass("Field22", "Shipment", shipment.Field22);
+                    shipmentPM.Field23 = new CustomFieldClass("Field23", "Shipment", shipment.Field23);
+                    shipmentPM.Field24 = new CustomFieldClass("Field24", "Shipment", shipment.Field24);
+                    shipmentPM.Field25 = new CustomFieldClass("Field25", "Shipment", shipment.Field25);
+                    shipmentPM.Field26 = new CustomFieldClass("Field26", "Shipment", shipment.Field26);
+                    shipmentPM.Field27 = new CustomFieldClass("Field27", "Shipment", shipment.Field27);
+                    shipmentPM.Field28 = new CustomFieldClass("Field28", "Shipment", shipment.Field28);
+                    shipmentPM.Field29 = new CustomFieldClass("Field29", "Shipment", shipment.Field29);
+                    shipmentPM.Field30 = new CustomFieldClass("Field30", "Shipment", shipment.Field30);
+                    shipmentPM.Field31 = new CustomFieldClass("Field31", "Shipment", shipment.Field31);
+                    shipmentPM.Field32 = new CustomFieldClass("Field32", "Shipment", shipment.Field32);
+                    shipmentPM.Field33 = new CustomFieldClass("Field33", "Shipment", shipment.Field33);
+                    shipmentPM.Field34 = new CustomFieldClass("Field34", "Shipment", shipment.Field34);
+                    shipmentPM.Field35 = new CustomFieldClass("Field35", "Shipment", shipment.Field35);
+                    shipmentPM.Field36 = new CustomFieldClass("Field36", "Shipment", shipment.Field36);
+                    shipmentPM.Field37 = new CustomFieldClass("Field37", "Shipment", shipment.Field37);
+                    shipmentPM.Field38 = new CustomFieldClass("Field38", "Shipment", shipment.Field38);
+                    shipmentPM.Field39 = new CustomFieldClass("Field39", "Shipment", shipment.Field39);
+                    shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
+
+
+                    if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                    {
+                        var entityComputedFields = entityComputedFieldsLists.Where(d => d.Id == shipment.Id).FirstOrDefault();
+                        if (entityComputedFields != null)
+                        {
+                            shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+                            shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
+                            shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
+                        }
+                    }
+                    
+
+                    ShipmentPM securedPM = new ShipmentPM();
+                    SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
+
+                    securedShipmentPMs.Add(securedPM);
+
+                    securedShipmentPMs = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentPM>(new QueryOperations(), securedShipmentPMs.AsQueryable<ShipmentPM>(), tenant).ToList();
+                    securedShipmentPMs = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentPM>(new QueryOperations(), securedShipmentPMs.AsQueryable<ShipmentPM>(), tenant).ToList();
+
+                }
+
+
+
 
             }
+
+
+
+
+
+
+
+
+
+           
+
+
+
+
+     
+
+
+
+
 
             return securedShipmentPMs;
             #endregion
@@ -4289,6 +4377,59 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return securedShipmentPMs;
             #endregion
+        }
+
+
+
+        public ShipmentPM GetSinglePMByForwarderShipmentNumber(string forwarderShipmentNumber, int tenant)
+        {
+            if (!string.IsNullOrEmpty(forwarderShipmentNumber))
+            {
+                Shipment shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ComputedEntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("ShipmentMasterData").Include("SpecialServicesType").Include("MoveType")
+                                     where  a.ForwarderShipmentNumber == forwarderShipmentNumber && a.Tenant == tenant && !a.IsCancelled
+                                     select a).FirstOrDefault();
+
+                if (shipment != null)
+                {
+                    ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
+                                                     where a.Id == shipment.MasterShipmentDataId
+                                                     select a).FirstOrDefault();
+
+                    ShipmentPM shipmentPM = new ShipmentPM();
+
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+                    //shipmentPM.ToCountryCode = !string.IsNullOrEmpty(shipmentPM.MainCarriageFinalDestinationPortCountryCode) ? shipmentPM.MainCarriageFinalDestinationPortCountryCode : shipmentPM.ToPortCountryCode,
+                    //shipmentPM.FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
+                    ShipmentPM securedPM = new ShipmentPM();
+                    securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
+
+                    ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+                    returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
+                    var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
+                                     where a.Id == shipment.Id
+                                     select a).FirstOrDefault();
+
+                    if (CLoudData != null)
+                    {
+                        returnShipment.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        returnShipment.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
+                        returnShipment.ApproveDateTime = CLoudData.ApproveDateTime;
+                        returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
+                        returnShipment.VersionApproved = CLoudData.VersionApproved;
+                        returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
+                        returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
+                    }
+
+                    return returnShipment;
+                }
+
+                else
+                {
+                    return null;
+                }
+            }
+            return null;
         }
 
 
@@ -10305,7 +10446,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IQueryable<ShipmentDataView> allAgentShipments = allShipments.Where(d => d.ForwarderShipmentNumber != null && d.ForwarderShipmentNumber != string.Empty);
             IQueryable<ShipmentDataView> allImporterShipments = allShipments.Where(d => d.ForwarderShipmentNumber == null || d.ForwarderShipmentNumber == string.Empty);
             IQueryable<ShipmentDataView> allReqDocsShipments = allShipments.Where(d => d.IsRequestedDocuments == true || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true);
-            IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.IsDigitalSignRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
+            IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
 
             myResult.AllShipmentsCount = allShipments.Take(1001).Count();
             if (allOpenShipments != null)
@@ -11082,7 +11223,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ForwarderPartnerId = f.ForwarderPartnerId,
                                From = f.From,
                                To = f.To,
-                               Origin = f.Origin
+                               Origin = f.Origin,
+                               ARInvoices = f.ARInvoices,
                            };
             return myResult;
         }
@@ -11417,7 +11559,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
                     From = f.From,
                     To = f.To,
-                    Origin = f.Origin
+                    Origin = f.Origin,
+                    ARInvoices = f.ARInvoices,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11667,7 +11810,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
                     From = f.From,
                     To = f.To,
-                    Origin = f.Origin
+                    Origin = f.Origin,
+                    DeclarationDate = f.DeclarationDate,
+                    DeclarationNumber = f.DeclarationNumber,
+                    ARInvoices = f.ARInvoices,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

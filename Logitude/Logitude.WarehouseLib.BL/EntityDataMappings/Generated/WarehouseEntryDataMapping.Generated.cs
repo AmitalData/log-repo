@@ -73,7 +73,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         Manufacturer, 
 	         FromPartnerId, 
 	         ToPartnerId, 
-	         ChargeableWeightUnitCode,
+	         ChargeableWeightUnitCode, 
+	         TotalVolumetricWeight,
 	      }
 
 
@@ -140,7 +141,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         Manufacturer, 
 	         FromPartnerId, 
 	         ToPartnerId, 
-	         ChargeableWeightUnitCode,
+	         ChargeableWeightUnitCode, 
+	         TotalVolumetricWeight,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -402,6 +404,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightUnitCode))
             {
 				entityPOCO.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+				entityPOCO.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -670,6 +677,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ChargeableWeightUnitCode = entityPOCO.ChargeableWeightUnitCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalVolumetricWeight))
+            {
+					entityPM.TotalVolumetricWeight = entityPOCO.TotalVolumetricWeight;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseEntryPM entityPM, WarehouseEntryPM oldEntityPM)
@@ -929,6 +941,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightUnitCode))
             {
                 oldEntityPM.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+                oldEntityPM.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
             }
 			
 		}

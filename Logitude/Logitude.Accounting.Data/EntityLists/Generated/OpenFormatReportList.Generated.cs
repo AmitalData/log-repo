@@ -44,6 +44,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string UserLocalName  { get; set; }
        [DataMember]
        public string StatusLocalName  { get; set; }
+       [DataMember]
+       public string PDFRerportXML  { get; set; }
    }
 
 }

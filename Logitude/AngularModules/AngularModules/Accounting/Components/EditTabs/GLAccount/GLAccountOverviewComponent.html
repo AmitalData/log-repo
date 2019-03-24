@@ -399,7 +399,7 @@
                                     <div class="content" style="padding: 5px 0;height: calc(100% - 120px);overflow: auto;">
                                         <ul *ngIf="!isNotesLoading && accountingNotesList.length > 0" class="accounting-notes-list">
 
-                                            <li *ngFor="let note of accountingNotesList">
+                                            <li *ngFor="let note of accountingNotesList" [attr.title]="GetNoteTitle(note)">
                                                 <!-- <span style="width:70px;color:gray; font-size: 9px;display: inline-block;">2018-02-15</span> -->
                                                 <span class="TextTrimming">{{note.Notes?note.Notes:'&nbsp;'}}</span>
                                                 <div class="btns" [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'">
@@ -457,7 +457,7 @@
                                                     {{ transaction.AccountingDate | DateTimePipe:'SD' }}
                                                 </div>
                                                 <div class="TextTrimming" style="width: 110px;    font-size: 12px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;"
-                                                    [class.red]='GetTransAmount(transaction)>0'>
+                                                    [class.red]='transaction.LocalAmountDebit==0'>
                                                     {{ GetTransAmount(transaction) | NumbersPipe:'N2' }}
                                                 </div>
 
@@ -480,7 +480,7 @@
                                     <div class="header">
                                         {{ GetAgingHeader() }}
                                     </div>
-                                    <div class="content">
+                                    <div class="content" style="padding: 7px 0;">
 
                                         <!-- Filters -->
                                         <div style="height: 22px; width: 100%;">

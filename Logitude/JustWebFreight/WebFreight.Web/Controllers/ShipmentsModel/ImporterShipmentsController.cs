@@ -566,7 +566,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             if (entityAM.CustomsClearanceDate != null)
             {
-                entityPM.IsDepositionCloseTask = true;
+                entityPM.IsDepositionRequired = false;
+                entityPM.IsShipmentComputedFieldChange = true;
             }
 
             entityPM.Tenant = entityAM.ImporterTenant;
@@ -885,9 +886,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.OnCarriageATD = entityAM.OnCarriageATD;
             entityPM.PreCarriageATA = entityAM.PreCarriageATA;
             entityPM.PreCarriageATD = entityAM.PreCarriageATD;
-            entityPM.ExceptionDate = entityAM.ExceptionDate;
-            entityPM.ExceptionDescription = entityAM.ExceptionDescription;
-            entityPM.HasException = entityAM.HasException;
+           
             entityPM.DimensionsUnitCode = entityAM.DimensionsUnitCode;
             entityPM.GrossWeightUnitCode = entityAM.GrossWeightUnitCode;
             entityPM.ChargeableWeightUnitCode = entityAM.ChargeableWeightUnitCode;
@@ -912,6 +911,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.IsOperationalClosed = true;
             }
+            if (entityPM.CustomsClearanceDate == null)
+            {
+                entityPM.ExceptionDate = entityAM.ExceptionDate;
+                entityPM.ExceptionDescription = entityAM.ExceptionDescription;
+                entityPM.HasException = entityAM.HasException;
+            }
             if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true)
             {
 
@@ -926,6 +931,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ApprovedBy = "System";
                 entityPM.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.VersionApproved = entityAM.VersionApproved;
+            }
+            if (entityAM.CustomsClearanceDate != null)
+            {
+                entityPM.IsDigitalSignRequired = false;
+                entityPM.IsRequestedDocuments = false;
+                entityPM.IsMissingDocument = false;
             }
             entityPM.CustomsClearanceDate = entityAM.CustomsClearanceDate;
             if (Partner != null)

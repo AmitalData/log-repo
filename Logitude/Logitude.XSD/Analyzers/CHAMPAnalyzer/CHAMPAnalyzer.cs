@@ -51,7 +51,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         private string myHouse;        
         private bool isTechnicalFNA;
         private string myTechnicalIdentifier;
-        private bool isUsingNewCode = false;
+        private bool isUsingNewCode = true;
         public CHAMPAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)

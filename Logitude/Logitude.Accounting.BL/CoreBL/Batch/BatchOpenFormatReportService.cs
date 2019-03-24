@@ -38,13 +38,13 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             try
             {
-                DocumentsFilingPM docFilingPM = OpenFormatReportService.CreateBKMVDATAFile(parameterArgs.ReportId, parameterArgs.Tenant);
+                DocumentsFilingPM docFilingPM = OpenFormatReportService.CreateBKMVDATAFile(parameterArgs.ReportId, parameterArgs.Tenant, parameterArgs.TestingMode);
 
                 DocumentsFilingPM INIdocFilingPM = OpenFormatReportService.CreateINIFile(parameterArgs.ReportId, parameterArgs.Tenant);
 
-                openFormatReportPM.StatusTypeCode = "3";
-                openFormatReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                openFormatReportUpdateService.Update(openFormatReportPM, true);
+                //openFormatReportPM.StatusTypeCode = "3";
+                //openFormatReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                //openFormatReportUpdateService.Update(openFormatReportPM, true);
 
 
             }

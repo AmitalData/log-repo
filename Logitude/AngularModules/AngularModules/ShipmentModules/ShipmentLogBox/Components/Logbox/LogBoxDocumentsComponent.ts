@@ -114,6 +114,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 this.SignRequiredCount = 0;
                 return;
             }
+             
             this.DisableAddDocumentButton = false;
             this.StartBusyIndicator("Loading ...");
             var div = document.getElementById("DocsTab");
@@ -645,6 +646,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 //    }
                 //});
                 //SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");//
+                ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
                 this.StartBusyIndicator("Loading ...");
                 if (EntityPm.IsSharedWithForwarder == true) {
                     EntityPm.IsSharedWithForwarder = false;
@@ -772,7 +774,10 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         if (ChangeTab == true) {
             if (this.IsRequestedSelected && this.SelectedShipment.IsRequestedDocuments == true) {
                 this.SelectedTabCode = 'REQ';
-            }
+            } 
+            else if (this.IsRequestedSelected && this.SelectedShipment.IsDigitalSignRequired == true) {
+                this.SelectedTabCode = 'SREQ';
+            } 
             else {
                 this.SelectedTabCode = 'CAT';
             }

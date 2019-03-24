@@ -110,7 +110,10 @@ namespace Logitude.Accounting.BL
             {
                 journalPM.CreatedByUserId = loggedContactId;
             }
-            journalPM.UpdatedByUserId = loggedContactId;
+            if (journalPM.UpdatedByUserId == null)
+            {
+                journalPM.UpdatedByUserId = loggedContactId;
+            }
             journalPM.UpdateDate = DateTime.Now;
 
             journalPM.AccountingDate = journalPM.AccountingDate.Date; //Eyal:Time No Meaning (create+update Have  Time have Meaning )

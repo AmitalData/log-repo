@@ -17,11 +17,11 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
     public partial class QuoteService
     {
         List<PackageType> AllPackageTypes = new List<PackageType>();
-        private void GenerateDefaultCharges()
+        private void GenerateDefaultCharges(bool Override=false)
         {
-            if (isNewEntity)
+            if (isNewEntity || Override)
             {
-                if (entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid)
+                if ((entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid) || (Override && !entityPM.IsHybrid))
                 {
                     ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(myCommonContext);
                     IQueryable<ChargesType> iQueryable_ChargeTypes = chargesTypeRepository.GetQuoteDefaultChargesTypes(tenant).Where(d => d.InActive == false);
@@ -43,6 +43,33 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                         case "I":
                             {
                                 iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsInland);
+                                break;
+                            }
+                    }
+
+                    switch (entityPM.DirectionId.ToUpper())
+                    {
+                        case "E":
+                            {
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsExport);
+                                break;
+                            }
+
+                        case "I":
+                            {
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsImport);
+                                break;
+                            }
+
+                        case "D":
+                            {
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsDomestic);
+                                break;
+                            }
+
+                        case "R":
+                            {
+                                iQueryable_ChargeTypes = iQueryable_ChargeTypes.Where(r => r.IsDrop);
                                 break;
                             }
                     }

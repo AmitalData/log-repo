@@ -13838,6 +13838,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "oLCL",
+                EnglishName =  "Converted From FCL to LCL",
+                LocalName =  "Converted From FCL to LCL",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = QuoteObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "oFCL",
+                EnglishName =  "Converted From LCL to FCL",
+                LocalName =  "Converted From LCL to FCL",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = QuoteObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -13858,13 +13894,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
       
     
-			   Feature QuoteFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUOTEQUOTATION", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Quotation", NameTextCodeDefaultText = "Quotation", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature QuoteFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUOTEQUOTATION", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Quotation", NameTextCodeDefaultText = "Quotation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 			   Feature QuoteFeature_MB40 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETASSENT", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.SetAsSent", NameTextCodeDefaultText = "Set As Sent to Customer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature QuoteFeature_MB41 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RETURNTODRAFT", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.ReturnToDraft", NameTextCodeDefaultText = "Return Quote To Draft", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature QuoteFeature_MB42 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPY", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Copy", NameTextCodeDefaultText = "Copy Quote", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature QuoteFeature_MB43 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCEL", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Cancel", NameTextCodeDefaultText = "Cancel Quote", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature QuoteFeature_MB44 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REACTIVATE", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Reactivate", NameTextCodeDefaultText = "Reactivate Quote", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature QuoteFeature_MB45 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertQuotetoLCL", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.ConverttoLCL", NameTextCodeDefaultText = "Convert to LCL", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature QuoteFeature_MB46 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertQuotetoFCL", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.ConverttoFCL", NameTextCodeDefaultText = "Convert to FCL", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -14061,6 +14099,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						FeatureId=  QuoteFeature_MB44.Id,
 						Style = null,
 						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton QuoteMenuButton46 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ConvertQuotetoLCL",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "Quote.B.ConverttoLCL",
+						LabelTextCodeDefaultText = "Convert to LCL",
+						Tenant = 0,
+						MenuButtonGroupId = QuoteMenuButtonGroup.Id,
+						ParentMenuButtonId = QuoteMenuButton4.Id,
+						ObjectTableId = QuoteObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  QuoteFeature_MB45.Id,
+						Style = null,
+						LocalDefaultText = "Convert to LCL",
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton QuoteMenuButton47 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ConvertQuotetoFCL",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "Quote.B.ConverttoFCL",
+						LabelTextCodeDefaultText = "Convert to FCL",
+						Tenant = 0,
+						MenuButtonGroupId = QuoteMenuButtonGroup.Id,
+						ParentMenuButtonId = QuoteMenuButton4.Id,
+						ObjectTableId = QuoteObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  QuoteFeature_MB46.Id,
+						Style = null,
+						LocalDefaultText = "Convert to FCL",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

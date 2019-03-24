@@ -195,7 +195,9 @@ namespace MeatadataGeneratorTool.Helpers
             }
 
             field.FieldName = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
-            if (fieldNode.Attributes["OldFieldName"] != null)
+			field.GeneratedComponentPath = GetAttributeStringValue(fieldNode.Attributes["GeneratedComponentPath"]);
+
+			if (fieldNode.Attributes["OldFieldName"] != null)
             {
                 field.OldFieldName = GetAttributeStringValue(fieldNode.Attributes["OldFieldName"]);
             }

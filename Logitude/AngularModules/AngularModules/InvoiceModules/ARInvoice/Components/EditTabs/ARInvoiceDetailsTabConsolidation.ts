@@ -192,23 +192,16 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         var isFieldEnabled = false;
 
         if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
-                if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                    isFieldEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != null) {
-                    isFieldEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != this.InvoiceCurrencyId) {
-                    isFieldEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
+                if (this.InvoiceCurrencyId) {
+                    if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                        isFieldEnabled = true;
+                    }
                 }
             } 
         }
         
-        //this.RateIsEnabled = isFieldEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
     SetUIProperties_PrintNotes() {

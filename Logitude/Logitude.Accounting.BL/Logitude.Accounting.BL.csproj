@@ -160,6 +160,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportLineTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VatReportStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AccountingEntityStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ARPaymentChequeStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\BankPageEntryTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ChartOfAccountsTypeStruct.Generated.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="CoreBL\Dashboard\ChartOfAccountBalanceM.cs" />
     <Compile Include="CoreBL\Dashboard\ChartOfAccountDashboard.cs" />
     <Compile Include="CoreBL\Reconcile\ICreateAutoReconcileWhileStreamingService.cs" />
+    <Compile Include="CoreBL\Reports\BalanceGroupByCollectorService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\DueLocalBalanceService.cs" />
     <Compile Include="CoreBL\IAccountingSettingResolver.cs" />
     <Compile Include="CoreBL\IYearTransferService.cs" />
@@ -237,6 +239,7 @@
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
     <Compile Include="DataContract\OpenFormatReportData.cs" />
+    <Compile Include="DataContract\PDFRerportXMLData.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
     <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />

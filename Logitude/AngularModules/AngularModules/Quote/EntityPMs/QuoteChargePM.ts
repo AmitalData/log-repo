@@ -175,6 +175,11 @@ export class QuoteChargePM {
     public set SaleMeasurementShortName(newValue: string) { if (this.saleMeasurementShortName != newValue) { this.saleMeasurementShortName = newValue; this.MarkAsDirty("SaleMeasurementShortName"); } }
        
 	 
+    private saleMeasurementLocalName: string;
+    public get SaleMeasurementLocalName() { return this.saleMeasurementLocalName; }
+    public set SaleMeasurementLocalName(newValue: string) { if (this.saleMeasurementLocalName != newValue) { this.saleMeasurementLocalName = newValue; this.MarkAsDirty("SaleMeasurementLocalName"); } }
+       
+	 
     private costCurrencyId: string;
     public get CostCurrencyId() { return this.costCurrencyId; }
     public set CostCurrencyId(newValue: string) { if (this.costCurrencyId != newValue) { this.costCurrencyId = newValue; this.MarkAsDirty("CostCurrencyId"); } }

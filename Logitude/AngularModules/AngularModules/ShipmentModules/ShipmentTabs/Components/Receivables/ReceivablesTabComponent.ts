@@ -1415,8 +1415,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             }
         }
         
-        //this.IsRateEnabled = isRateEnabled;
-        this.IsRateEnabled = true;
+        this.IsRateEnabled = isRateEnabled;
         this.IsQuantityEnabled = isQuantityEnabled;
         this.IsUnitPriceEnabled = isUnitPriceEnabled;
         this.IsTotalAmountEnabled = isTotalAmountEnabled;

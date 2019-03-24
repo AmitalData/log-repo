@@ -1583,6 +1583,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableRulesController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableViewsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\RatesTableViewsController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\SchedulerExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\SignUpController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\TenantSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\TextCodesController.cs" />
@@ -1856,6 +1857,7 @@
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportService.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportBase.cs" />
     <Compile Include="CustomWebServices\Testers\Tester.cs" />
+    <Compile Include="DataContracts\AutomationArgs.cs" />
     <Compile Include="DataContracts\BIReportXMLData.cs" />
     <Compile Include="DataContracts\DWQueryDataResult.cs" />
     <Compile Include="DataContracts\WebHookTesterData.cs" />
@@ -1870,6 +1872,7 @@
     <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
+    <Compile Include="DataProviders\LedgerTransactionDataProvider.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
     <Compile Include="DataContracts\EventTypeArgs.cs" />
     <Compile Include="DataContracts\ExportDocumentArgs.cs" />
@@ -2602,6 +2605,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\PrepaidCollectUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RatesTableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerLogsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TaskSchedulerHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TasksSchedulerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TransportModeUpdateClass.cs" />
@@ -4932,6 +4936,7 @@
     <Compile Include="ReportsWebServices\LogitudeReports\ShipmentProfitVSQuoteEstimateManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\StatisticsByCustomerManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\EmployeeTimeSheetManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysProjectManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VendorChargesAnalysisManager.cs" />
     <Compile Include="ReportsWebServices\OpportunitySummaryWebService.asmx.cs">
       <DependentUpon>OpportunitySummaryWebService.asmx</DependentUpon>

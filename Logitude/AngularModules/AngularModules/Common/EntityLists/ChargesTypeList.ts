@@ -56,5 +56,9 @@ export class ChargesTypeList {
 		IsCustoms: boolean;
 		SATExternalId: string;
 		IsExpense: boolean;
+		IsImport: boolean;
+		IsDomestic: boolean;
+		IsExport: boolean;
+		IsDrop: boolean;
 	
 }

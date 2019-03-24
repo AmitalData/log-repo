@@ -1541,7 +1541,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetAllTasksSchedulerPMs()
+        public HttpResponseMessage GetAllTasksSchedulerPMs(string schedulerType)
         {
             try
             {
@@ -1553,7 +1553,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 TasksSchedulerRepository tasksSchedulerRepository = new TasksSchedulerRepository(tenant);
                 TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tasksSchedulerRepository);
-                List<TasksSchedulerPM> myResult = tasksSchedulerQuery.GetTasksSchedulerPMs(tenant);
+                List<TasksSchedulerPM> myResult = tasksSchedulerQuery.GetTasksSchedulerPMsBByType(schedulerType, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1770,6 +1770,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             isUpdated = false;
                         }
+                    }
+
+                    else
+                    {
+                        var bITabularViewSettings = new BITabularViewSettings();
+                        bITabularViewSettings.Columns = new List<Column>();
+                        foreach (var item in Columns)
+                        {
+                            bITabularViewSettings.Columns.Add(new Column
+                            {
+                                Code = item.DisplayName.Replace("[", "").Replace("]", ""),
+                                Name = item.Name,
+                                IsChecked = true,
+                                Width = 150,
+                                DataTypeCode = item.DataTypeCode,
+                            });
+                        }
+                        QueryData.BITabularViewSettings = bITabularViewSettings;
                     }
                 }
                 else

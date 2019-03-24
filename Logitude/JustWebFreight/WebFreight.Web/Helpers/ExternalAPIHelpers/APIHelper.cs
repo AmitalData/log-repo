@@ -50,7 +50,7 @@ namespace WebFreight.Web.Helpers.ExternalAPIHelpers
                 if (!string.IsNullOrEmpty(tableName))
                 {
                     ObjectTable table = objectTableRepository.GetObjectTableByName(tableName, tenant, false);
-                    if (tableName != null)
+                    if (table != null)
                         objectTableId = table.Id;
 
                 }

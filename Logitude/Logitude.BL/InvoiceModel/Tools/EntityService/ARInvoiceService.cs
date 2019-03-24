@@ -221,7 +221,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPM;
-            isVoidingInvoice = this.entityPM.SetVoided;
+            this.isVoidingInvoice = this.entityPM.SetVoided;
             this.isApprovingInvoice = entityPM.SetApproved;
             this.invoice = new ARInvoice();
 
@@ -355,6 +355,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.isApprovingInvoice = entityPM.SetApproved;
 
             this.invoice = invoiceRepository.GetSingleInvoice(entityPM.Id);
+
+            if (invoice.StatusCode == "AR")
+            {
+                if (this.entityPM.StatusCode == "AD")
+                {
+                    throw new ApplicationException("this invoice is already auto credited");
+                }
+            }
 
             this.ValidateInvoiceConnected();
 
@@ -3378,6 +3386,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     UpdateShipmentProfitClass.UpdateReceivables(entityPM.MainEntityId, tenant, true);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.MainEntityId, entityPM.Tenant);
+
+                    if (this.isApprovingInvoice || this.isVoidingInvoice)
+                    {
+                        // allActiveShipmentIds
+
+                        UpdateShipmentProfitClass.UpdateARInvoices(entityPM.MainEntityId, entityPM.Tenant);
+                    }
                 }
             }
         }

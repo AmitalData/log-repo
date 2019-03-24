@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 import {APInvoicePaymentPM} from '../../../../Invoice/EntityPMs/APInvoicePaymentPM';
@@ -31,10 +31,33 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
     public ItemsSource2Hidden: boolean = false;
     public IsResourcesReady: boolean = false;
     public isRTL: boolean = false;
+    public IsEnabledDisconnect: boolean = false;
+    public IsEnabledConnect: boolean = false;
+    public ConnectFeatureTitle: string;
+    public DisConnectFeatureTitle: string;
+
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
 
         this.EntityPM = entityArgs.EntityPM;
+
+        if (FeatureLocator.HasFeaturePermession("APPayment", "APPaymentDissconectInvoices")) {
+            this.IsEnabledDisconnect = true;
+            this.DisConnectFeatureTitle = "";
+        }
+        else {
+            this.IsEnabledDisconnect = false;
+            this.DisConnectFeatureTitle = "You have no permission to disconnect invoices";
+        }
+
+        if (FeatureLocator.HasFeaturePermession("APPayment", "APPaymentConnectInvoices")) {
+            this.IsEnabledConnect = true;
+            this.ConnectFeatureTitle = "";
+        }
+        else {
+            this.IsEnabledConnect = false;
+            this.ConnectFeatureTitle = "You have no permission to connect invoices";
+        }
 
         entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe(response => {
             this.IsResourcesReady = true;
@@ -261,6 +284,7 @@ export class APInvoicePaymentItem {
         if (this.fatherComponent.EntityPM.AmountInInvoiceCurrency  < 0) {
             result = false;
         }
+        this.fatherComponent.IsEnabledDisconnect ? result = true : result = false;
         return result;
     }
 

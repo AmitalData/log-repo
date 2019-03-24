@@ -256,7 +256,7 @@ function ResetItemFunnel() {
             "rtl": true,
             "addClassNames": true,
             "categoryField": "category",
-            "autoMarginOffset": 10,
+             "autoMarginOffset": 10,
             "marginRight": 5,
             "marginTop": 5,
             "columnSpacing": 5,
@@ -332,11 +332,11 @@ function ResetItemFunnel() {
           "type": "serial",
           "addClassNames": true,
           "categoryField": "category",
-          "autoMarginOffset": 10,
+           "autoMarginOffset": 10,
           "marginRight": 5,
           "marginTop": 5,
-          "columnSpacing": 5,
-          "columnWidth": 0.7,
+           "columnSpacing": 5,
+           "columnWidth": 0.7,
           "balloonFunction": function (item, content) {
               var html = "";
               html += customNumberFormat(item.dataContext.data);

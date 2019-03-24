@@ -652,6 +652,45 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         break;
                     }
             }
+
+            //switch(shipmentPM.DirectionId)
+            //{
+            //    case "E":
+            //        {
+            //            if (!chargesType.IsExport)
+            //            {
+            //                throw new ApplicationException("Charge type " + chargesType.Code + " used in Export shipments should be marked as Export");
+            //            }
+            //            break;
+            //        }
+
+            //    case "I":
+            //        {
+            //            if (!chargesType.IsImport)
+            //            {
+            //                throw new ApplicationException("Charge type " + chargesType.Code + " used in Import shipments should be marked as Import");
+            //            }
+            //            break;
+            //        }
+
+            //    case "D":
+            //        {
+            //            if (!chargesType.IsDomestic)
+            //            {
+            //                throw new ApplicationException("Charge type " + chargesType.Code + " used in Domestic shipments should be marked as Domestic");
+            //            }
+            //            break;
+            //        }
+
+            //    case "R":
+            //        {
+            //            if (!chargesType.IsDrop)
+            //            {
+            //                throw new ApplicationException("Charge type " + chargesType.Code + " used in Drop shipments should be marked as Drop");
+            //            }
+            //            break;
+            //        }
+            //}
         }
 
         public void ComputeReceivablesPayablesTotals()

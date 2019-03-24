@@ -29,10 +29,13 @@ namespace WebFreight.Web.Security
     {
 		public static void AuthenticateAPICall(int tenant)
 		{
-			bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
-			if (!exist)
+			if (LogitudeSettings.WorkEnvironment != "logbox" && LogitudeSettings.WorkEnvironment != "cloud")
 			{
-				throw new AutenticationException("API is not activated. Please contact your system administrator");
+				bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
+				if (!exist)
+				{
+					throw new AutenticationException("API is not activated. Please contact your system administrator");
+				}
 			}
 		}
 
@@ -1021,7 +1024,7 @@ namespace WebFreight.Web.Security
             if (!string.IsNullOrEmpty(email))
             {
                 List<string> allowedPackages = new List<string>();
-                ContactInfo myContactInfo = GetContactInfo(email, tenant);
+                ContactInfo myContactInfo = GetContactInfo(email, tenant,true);
                 if (myContactInfo != null)
                 {
                     allowedPackages = myContactInfo.PackagesCodes;

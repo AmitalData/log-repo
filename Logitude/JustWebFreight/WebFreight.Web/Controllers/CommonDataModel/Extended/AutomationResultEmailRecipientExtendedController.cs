@@ -16,6 +16,7 @@ using System.Net.Http;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -47,7 +48,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
 
 
-        public HttpResponseMessage PutAutomationResultEmailRecipient(List<AutomationResultEmailRecipientPM> items)
+        public HttpResponseMessage PutAutomationResultEmailRecipient(List<AutomationArgs> items)
         {
             if (ModelState.IsValid)
             {
@@ -64,20 +65,21 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         AutomationResultEmailRecipientRepository entityRepository = new AutomationResultEmailRecipientRepository(MyContext);
                         AutomationResultEmailRecipientService service = new AutomationResultEmailRecipientService(MyContext, authToken.Tenant);
                         AutomationResultEmailRecipient Poco = null;
-                        foreach (AutomationResultEmailRecipientPM item in items)
+    
+                        foreach (AutomationArgs item in items)
                         {
                             Poco = new AutomationResultEmailRecipient();
                             if (string.IsNullOrEmpty(item.Id))
                             {
                                 item.Id = item.Id =  IdCounter.GetNumber("AutomationResultEmailRecipient", item.Tenant).ToString();
-                                AutomationResultEmailRecipientMapping.MapEntity(item, Poco, true);
+                                MapEntity(item, Poco, true);
                                 entityRepository.Add(Poco);
                                 TableLastUpdateClass.UpdateTableHistory(item.Tenant, "AutomationResultEmailRecipient");
                                
                             }
                             else
                             {
-                                AutomationResultEmailRecipientMapping.MapEntity(item, Poco, true);
+                                MapEntity(item, Poco, true);
                                 entityRepository.Remove(Poco);
 
                             }
@@ -101,6 +103,25 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
         }
 
+
+  
+            public static void MapEntity(AutomationArgs entityPM, AutomationResultEmailRecipient entityPOCO, bool isNewState)
+            {
+                if (isNewState)
+                {
+                    entityPOCO.Id = entityPM.Id;
+                    entityPOCO.Tenant = entityPM.Tenant;
+                }
+
+
+                entityPOCO.AutomationsId = entityPM.AutomationsId;
+                entityPOCO.RecipientType = entityPM.RecipientType;
+                entityPOCO.RecipientValue = entityPM.RecipientValue;
+
+
+
+            }
+        
 
         private static void Authentication()
         {

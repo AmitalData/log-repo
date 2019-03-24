@@ -250,8 +250,25 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     var cat4 = filters_list.Where(d => d.FieldName == "Category4Id").FirstOrDefault().FieldValue.ToString();
                     var cat5 = filters_list.Where(d => d.FieldName == "Category5Id").FirstOrDefault().FieldValue.ToString();
                     var gLAccountType = filters_list.Where(d => d.FieldName == "AccountTypeCode").FirstOrDefault().FieldValue.ToString();
-                    var from = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue;
-                    var to = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue2;
+                    var dateType = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
+                    object from = null;
+                    object to = null;
+                    switch (dateType)
+                    {
+                        case "1"://AccountingDate:
+                            from = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue;
+                            to = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue2;
+                            break;
+                        case "2"://DueDate:
+                            from = filters_list.Where(d => d.FieldName == "DueDate").FirstOrDefault().FieldValue;
+                            to = filters_list.Where(d => d.FieldName == "DueDate").FirstOrDefault().FieldValue2;
+                            break;
+                        case "3"://GLAccountTotalDateTypeValues.DueDate:
+                            from = filters_list.Where(d => d.FieldName == "DocumentDate").FirstOrDefault().FieldValue;
+                            to = filters_list.Where(d => d.FieldName == "DocumentDate").FirstOrDefault().FieldValue2;
+                            break;
+                    }
+          
                     var isReconciled = filters_list.Where(d => d.FieldName == "IsReconciled").FirstOrDefault().FieldValue;
                     var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
 
@@ -261,6 +278,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         var currencyId = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault().FieldValue.ToString();
                         LTCIFilter.CurrencyId = currencyId;
                     }
+
+
                     //search
                     var searchFieldsf = filters_list.Where(d => d.FieldName == "SearchFields").FirstOrDefault();
                     if (searchFieldsf != null)
@@ -427,16 +446,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
                 SecurityUtility.CheckContactFeature("ARPayment", "READ", authToken.Tenant);
 
+                if (arpaymentId == "undefined")
+                    arpaymentId = null;
 
                 var accountingContext = AccountingContext.GetContext(tenant);
-                //LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
                 LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
-                List<LedgerTransactionPM> openTransactions = query.GetARPaymentOpenTransactions(billToGLAccountId, tenant);
-                List<LedgerTransactionPM> reconciledTransactions = query.GetARPaymentReconciledTransactions(arpaymentId,billToGLAccountId, tenant);
 
+                // get opened transactions
+                //List<LedgerTransactionPM> openTransactions = query.GetARPaymentOpenTransactions(billToGLAccountId, tenant);
+
+                // get reconciled transactions
+                List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>();
+                if (arpaymentId != null) reconciledTransactions = query.GetARPaymentReconciledTransactions(arpaymentId,billToGLAccountId, tenant);
+
+                // get partailly reconciled transactions
+                List<LedgerTransactionPM> partiallyReconciledTransactions = new List<LedgerTransactionPM>();
+                if (arpaymentId != null) partiallyReconciledTransactions = query.GetARPaymentPartiallyReconciledTransactions(arpaymentId, billToGLAccountId, tenant);
+
+                // concat them to one list
                 IEnumerable<LedgerTransactionPM> finalTransactionsList 
-                    = openTransactions
-                    .Concat(reconciledTransactions)
+                    = 
+                    //openTransactions
+                    reconciledTransactions
+                    //.Concat(reconciledTransactions)
+                    .Concat(partiallyReconciledTransactions)
                     .OrderByDescending(d => d.IsReconciled).ToList();
 
 

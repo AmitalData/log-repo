@@ -14,7 +14,7 @@ import {AutomationPM} from '../../../../Common/EntityPMs/AutomationPMExtended';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-
+import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 @Component({
     moduleId: module.id,
@@ -310,19 +310,29 @@ export class AutomationsSettingsComponent implements OnInit {
     SaveButtonClicked() {
      
         var automations: AutomationItemViewModel[] = this.AutomationList.filter(d=> d.EntityPM.IsDirty);
-      var  automationsPMList: AutomationPM[] = [];
+        var automationArgsLists: AutomationArgs[] = [];
         if (automations && automations.length > 0) {
 
+            
+
             automations.forEach((item) => {
-                item.EntityPM.AutomatedDataBackup = null;
-                item.EntityPM.AutomationXML = "";
-                if (item.EntityPM) {
-                    automationsPMList.push(item.EntityPM);
-                }
+                var automationArgs: AutomationArgs = new AutomationArgs();
+                automationArgs.Id = item.Id;
+                automationArgs.Tenant = item.Tenant;
+                automationArgs.Order = item.Order;
+                automationArgsLists.push(automationArgs);
             });
 
+            //automations.forEach((item) => {
+            //    item.EntityPM.AutomatedDataBackup = null;
+            //    item.EntityPM.AutomationXML = "";
+            //    if (item.EntityPM) {
+            //        automationsPMList.push(item.EntityPM);
+            //    }
+            //});
+
             SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-            this._automationExtendedPMService.putAuomationList(automationsPMList).subscribe(res => {
+            this._automationExtendedPMService.putAuomationList(automationArgsLists).subscribe(res => {
                 SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
                 SessionLocator.CurrentSession.CloseCurrentWindow();
             });

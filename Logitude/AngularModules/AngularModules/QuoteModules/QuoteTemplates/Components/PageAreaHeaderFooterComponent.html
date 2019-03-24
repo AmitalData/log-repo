@@ -22,7 +22,7 @@
     }
 
 
-    
+
 
     .SettingDesignButton:hover:not(:disabled) {
         background: #fefcea; /* Old browsers */
@@ -52,17 +52,14 @@
 
 
     .SelectedSettingButton {
-
-        height:22px;
-        background: #fefcea; 
-        background: -moz-linear-gradient(top, #FDD59D 0%, #FDD59D 100%); 
-        background: -webkit-linear-gradient(top, #FDD59D 0%,#FDD59D 100%); 
-        background: linear-gradient(to bottom, #FDD59D 0%,#FDD59D 100%); 
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFA500', endColorstr='#FFA500',GradientType=0 );*/
+        height: 22px;
+        background: #fefcea;
+        background: -moz-linear-gradient(top, #FDD59D 0%, #FDD59D 100%);
+        background: -webkit-linear-gradient(top, #FDD59D 0%,#FDD59D 100%);
+        background: linear-gradient(to bottom, #FDD59D 0%,#FDD59D 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFA500', endColorstr='#FFA500',GradientType=0 );
+        */;
     }
- 
-
-
 </style>
 
 
@@ -170,7 +167,7 @@
                 <tr style="height:250px">
                     <td>
                         <div style="height:250px;width:300px;margin: auto;">
-                            <ImageComponent [QuotationMode]="true" [ImageResizeWidth]="ImageWidth" [ImageResizeHeight]="ImageHeight" [ImageId]="ImageId" (UploadCompleted)="ImageUploadedCompleted($event)"> </ImageComponent>
+                            <ImageComponent [EntityName]="'Quotation'" [ImageResizeWidth]="ImageWidth" [ImageResizeHeight]="ImageHeight" [ImageId]="ImageId" (UploadCompleted)="ImageUploadedCompleted($event)"> </ImageComponent>
                         </div>
 
                     </td>
@@ -184,11 +181,11 @@
 
         <td *ngIf="DesignAreaFreeTextPM">
             <table>
-        
+
                 <tr style="height:100%">
                     <td>
                         <div style="height:100%;width:100%;">
-                            <TextDesignComponent [QuoteTemplateTextDesignPM]="DesignAreaFreeTextPM" ></TextDesignComponent>
+                            <TextDesignComponent [QuoteTemplateTextDesignPM]="DesignAreaFreeTextPM"></TextDesignComponent>
                         </div>
                     </td>
                 </tr>
@@ -199,7 +196,7 @@
 
     </tr>
 
- 
+
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">

@@ -74,6 +74,7 @@ namespace CommunicationWorkerRole
                                 analyzeQueue.Status = "F";
                             }
                             analyzeQueueRepository.Update(analyzeQueue);
+                            analyzeQueueRepository.SubmitChanges();
                         }
 
                         else
@@ -81,7 +82,7 @@ namespace CommunicationWorkerRole
                             Thread.Sleep(500);
                         }
                     }
-                     
+
                     catch (Exception e)
                     {
                         ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "TranzilaPaymentMessageAnalyzeWR : Run() Method", null);
@@ -103,9 +104,12 @@ namespace CommunicationWorkerRole
             DocumentRepository documentrepository = new DocumentRepository(commonContext);
             var MsgBody = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
             List<QueueTask> tasks = new List<QueueTask>();
+            //&AnalyzeQueueDateTime=0103191133
+            var AnalyzeQueueCreateDate = analyzeQueue.CreateDate.ToString("ddMMyyhhmm");
+            MsgBody = MsgBody + "&AnalyzeQueueDateTime=" + AnalyzeQueueCreateDate;
             tasks.Add(new QueueTask()
             {
-                Action = analyzeQueue.From + "Payment",
+                Action = analyzeQueue.From,
                 Parameters = new List<Logitude.Server.Tools.Parameter>()
                                 {
                                       new Logitude.Server.Tools.Parameter { Name = "Response", Value = MsgBody}
@@ -160,6 +164,25 @@ namespace CommunicationWorkerRole
             };
 
             storageservice.Write(ByteData, fileInfo);
+            if (!string.IsNullOrEmpty(commLog.QueueName))
+            {
+                SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, commLog.Tenant);
+                //Communications.UpdateCommunicationLogStatus(commLog.Id, commLog.Tenant, null, "D", "after adding message to queue  TranzilaPayment " + DateTime.Now.ToString(), null);
+            }
+        }
+
+        private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
+        {
+            try
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(queueName, 0);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SendCommunicationLogMessageToQueue Forwarder Shipment", null, null);
+            }
         }
 
         public override bool OnStart()

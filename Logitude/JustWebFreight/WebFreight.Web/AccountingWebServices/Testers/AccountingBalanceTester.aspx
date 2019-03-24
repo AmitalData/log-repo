@@ -131,7 +131,7 @@
                 this.From =  lastMonth;
                 this.To = today;
                 this.IncludeChildAccounts = true;
-
+                this.DateTypeCode = "1";
                 this.PageSize =100;
                 this.CurrZeroPage =0;
 
@@ -874,6 +874,8 @@ div#two {
                 <li><asp:Button ID="_ButtonAging" runat="server" Text="Aging" OnClick="_ButtonAging_Click" />
                     <asp:Button ID="_ButtonCurrBalanceByType" runat="server" Text="GetGLAccountsLocalBalanceGByChartOfAccountsTypeCode" OnClick="_ButtonCurrBalanceByType_Click" />
                     <asp:Button ID="_ButtonTreeMapCOA" runat="server" Text="TreeMapGLAccountsLocalBalanceGByChartOfAccountsTypeCode" OnClick="_ButtonTreeMapCOA_Click" />
+                    
+                    <asp:Button ID="ButtoBalanceByCollector" runat="server" Text="BalanceByCollector" OnClick="_ButtonBalanceByCollector_Click" />
                     
                     
                 </li>

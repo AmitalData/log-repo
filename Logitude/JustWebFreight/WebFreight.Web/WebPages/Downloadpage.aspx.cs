@@ -75,16 +75,16 @@ namespace WebFreight.Web.WebPages
             try
             {
                 string documentOutCopyId = null;
-    
+
                 string documentExtension = null;
                 string filename = null;
-           
+
                 string securityKey = Request["securityId"] ?? "";
                 string token = Request["tempId"] ?? "";
                 string securityId = "";
                 string CustomName = "";
 
-                SecurityDocumentResult securityDocumentResult =  SecurityDocumentHelper.ValidationDocumentToken(token);
+                SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
                 bool isValid = securityDocumentResult.IsValid;
                 string email = securityDocumentResult.Email;
                 string exceptionMessage = securityDocumentResult.ExceptionResult;
@@ -120,10 +120,10 @@ namespace WebFreight.Web.WebPages
                         Uploader up = new Uploader();
 
                         var securityArray = securityKey.Split('~');
-                        if (securityArray!=null)
+                        if (securityArray != null)
                         {
                             if (securityArray.Length > 0) securityId = securityArray[0];
-                            if (securityArray.Length > 1) filename = documentOutCopyId= securityArray[1];
+                            if (securityArray.Length > 1) filename = documentOutCopyId = securityArray[1];
 
                             Document document = up.GetFileExtensionBySecurityIdAndCopyId(securityId, filename, (int)tenant);
                             if (document != null)
@@ -177,7 +177,7 @@ namespace WebFreight.Web.WebPages
                             return;
                         }
                         xml2html = true;
-                        list.Clear(); list.Add(mDocumentId); 
+                        list.Clear(); list.Add(mDocumentId);
                         filestrings = list.ToArray();
                     }
 
@@ -195,11 +195,11 @@ namespace WebFreight.Web.WebPages
                     }
 
                     if (filestrings.Length > 1) entityName = filestrings[1].ToString();
-                 
+
 
                     if (headerRequest.Contains("QuestionnaireAnswers"))
                     {
-                        if (filestrings.Length >3) entityName = filestrings[3].ToString();
+                        if (filestrings.Length > 3) entityName = filestrings[3].ToString();
 
                     }
                     string documentId = filename;
@@ -207,7 +207,7 @@ namespace WebFreight.Web.WebPages
                     {
                         documentId = documentId.Split('.')[0].ToString();
                     }
-                
+
 
                     if (entityName == "analyzeQueue")
                     {
@@ -223,7 +223,7 @@ namespace WebFreight.Web.WebPages
                         //Convert.ToInt32(filestrings[1])
                         CustomerWcfService customerWcf = new CustomerWcfService();
                         string html = customerWcf.GetActivationQuestionnaireAnswers(filestrings[0].ToString(), (int)tenant, filestrings[1].ToString(), filestrings[2].ToString(), filestrings[4].ToString());
-                       
+
                         _DatainByte = Encoding.UTF8.GetBytes(html);
                         documentExtension = "html";
                     }
@@ -256,7 +256,7 @@ namespace WebFreight.Web.WebPages
                             }
                             else
                             {
-                           
+
                                 if (!string.IsNullOrEmpty(documentExtension) && !string.IsNullOrEmpty(filename))
                                 {
                                     _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
@@ -289,7 +289,7 @@ namespace WebFreight.Web.WebPages
                         }
                         string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + "." + documentExtension;
 
-                        if(!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", "");
+                        if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", "");
 
                         // _DatainByte = sender as byte[];
                         HttpContext.Current.Response.Clear();
@@ -408,7 +408,7 @@ namespace WebFreight.Web.WebPages
                     else
                     {
                         Response.Output.Write("Document file is empty.");
-                       // throw new ApplicationException("Document file is empty.");
+                        // throw new ApplicationException("Document file is empty.");
                     }
                 }
                 else
@@ -416,7 +416,7 @@ namespace WebFreight.Web.WebPages
                     var message = exceptionMessage;
                     if (string.IsNullOrEmpty(exceptionMessage)) message = "Sorry you’re not authenticated to view this document.";
                     Response.Output.Write(message);
-                  //  throw new ApplicationException(message);
+                    //  throw new ApplicationException(message);
                 }
 
             }

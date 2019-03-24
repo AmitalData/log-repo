@@ -855,7 +855,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ByMonthList byMonthList = new ByMonthList()
                 {
                     Month = month,
-                    TotalVendors =  DBVendorsList.Where(d => d.RigesterDate.Value.Month == month).Count(),
+                    TotalVendors =  DBVendorsList.Where(d => d.RigesterDate.Value.Month == month).GroupBy(d=> d.VendorId).Count(),
                     TotalPaymentsWithoutDivided = Math.Round(DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.AmountInLocalCurrency).Value,0),
                     TotalDeductionsWithoutDivided = Math.Round( DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.TaxDeductionLocalAmount).Value,0),
                     TotalDivided = Math.Round(DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode == "18").Sum(d => d.AmountInLocalCurrency).Value,0),

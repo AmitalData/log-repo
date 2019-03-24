@@ -23,9 +23,9 @@ import { retry } from 'rxjs/operators';
 export class MainMenuComponent {
     public SelectedMenu: MainMenuItem;
     public MainMenuItems: Array<MainMenuItem>;
-    public MainMenuWidth: number = 142;
+    public MainMenuWidth: number = 145;
     private MainMenuWidthCollapsed: number = 45;
-    private MainMenuWidthOpened: number = 142;
+    private MainMenuWidthOpened: number = 145;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("MainMenuContainer", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
@@ -172,25 +172,47 @@ export class MainMenuComponent {
 
     private isChangingSelected: boolean = false;
     private ClickedMenuItem: MainMenuItem = null;
+    public BlockScreenLoad() {
+        if (!AppTool.IsNullOrEmpty(SessionLocator.BlockType)) {
+            SessionLocator.CurrentSession.DestroyMenuReferences();
+            SessionLocator.CurrentSession.DestroyListComponentReferences();
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/LoginComponent/BlockScreenComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                });
+
+        }
+    }
     SelectionChanged(item: MainMenuItem) {
         if (this.ClickedMenuItem != item) {
 
             this.ClickedMenuItem = item;
-            //
+            // Code
+            if (!AppTool.IsNullOrEmpty(SessionLocator.BlockType)) {
 
-                        // Code
-            this.SelectionChanging.emit(true);
-            var isSubscribed: boolean = false;
-            if (this.SelectionChanging) {
-                if (this.SelectionChanging.observers) {
-                    if (this.SelectionChanging.observers.length > 0) {
-                        isSubscribed = true;
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/LoginComponent/BlockScreenComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                    });
+
+            }
+            else {
+
+
+                this.SelectionChanging.emit(true);
+
+                var isSubscribed: boolean = false;
+                if (this.SelectionChanging) {
+                    if (this.SelectionChanging.observers) {
+                        if (this.SelectionChanging.observers.length > 0) {
+                            isSubscribed = true;
+                        }
                     }
                 }
-            }
 
-            if (isSubscribed == false) {
-                this.ChangeMenu();
+                if (isSubscribed == false) {
+                    this.ChangeMenu();
+                }
             }
         }
         else {
@@ -218,7 +240,7 @@ export class MainMenuComponent {
     public FollowUpsTableId: string = null;
     public OldObjectTable: string = null;
     public pointerEvents: string = 'all';
-   // count: number = 0;
+    // count: number = 0;
     ChangeScreen() {
         if (this.isLoaderReady) {
 

@@ -657,5 +657,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string From { get; set; }
         public string To { get; set; }
         public string Origin { get; set; }
+        public string DeclarationNumber { get; set; }
+        public DateTime? DeclarationDate { get; set; }
+        public string ARInvoices { get; set; }
+
     }
 }

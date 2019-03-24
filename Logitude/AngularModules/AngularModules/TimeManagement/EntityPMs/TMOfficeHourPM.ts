@@ -99,6 +99,16 @@ export class TMOfficeHourPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private minutes: number;
+    public get Minutes() { return this.minutes; }
+    public set Minutes(newValue: number) { if (this.minutes != newValue) { this.minutes = newValue; this.MarkAsDirty("Minutes"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
 
     public OldEntityPM: TMOfficeHourPM;
 		

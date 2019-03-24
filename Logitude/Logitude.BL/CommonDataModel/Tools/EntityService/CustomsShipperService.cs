@@ -68,73 +68,82 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void Create(CustomsShipperPM entityPM)
         {
-            this.entityPM = entityPM;
-            this.isNewEntity = true;
-            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
 
-            this.entityCard = new Card()
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                Id = entityPM.Id,
-                Tenant = tenant,
-                PartnerTypeId = "SG",
-            };
+                this.entityPM = entityPM;
+                this.isNewEntity = true;
+                this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
 
-            this.entityPOCO = new CustomsShipper()
-            {
-                Id = entityPM.Id,
-                Tenant = tenant,
-            };
+                this.entityCard = new Card()
+                {
+                    Id = entityPM.Id,
+                    Tenant = tenant,
+                    PartnerTypeId = "SG",
+                };
 
-            this.InitializeComponent();
-            
-            foreach (AddressPM itemPM in entityPM.Addresses)
-            {
-                this.CreateAddress(itemPM);
+                this.entityPOCO = new CustomsShipper()
+                {
+                    Id = entityPM.Id,
+                    Tenant = tenant,
+                };
+
+                this.InitializeComponent();
+
+                foreach (AddressPM itemPM in entityPM.Addresses)
+                {
+                    this.CreateAddress(itemPM);
+                }
+
+                CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+
+                cardRepository.Add(entityCard);
+                entityRepository.Add(entityPOCO);
+                entityRepository.SubmitChanges();
+
+                scope.Complete();
             }
-            
-            CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-
-            cardRepository.Add(entityCard);
-            entityRepository.Add(entityPOCO);
-            entityRepository.SubmitChanges();
-
    
         }
 
         public void Update(CustomsShipperPM entityPM, bool mapComposition = false)
         {
-            this.entityPM = entityPM;
-            this.isNewEntity = false;
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                this.entityPM = entityPM;
+                this.isNewEntity = false;
 
-            this.entityPOCO = entityRepository.GetSingleCustomsShipper(entityPM.Id, tenant);
-            this.entityCard = cardRepository.GetSingleCard(entityPM.Id, entityPM.Tenant);
+                this.entityPOCO = entityRepository.GetSingleCustomsShipper(entityPM.Id, tenant);
+                this.entityCard = cardRepository.GetSingleCard(entityPM.Id, entityPM.Tenant);
 
-            this.InitializeComponent();
-           
-            //if (CacheManager.CacheWrapper != null)
-            //{
-            //    string entityName = "Card" + entityPM.Id + entityPM.Tenant;
-            //    string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;
+                this.InitializeComponent();
 
-            //    if (CacheManager.CacheWrapper.Get(entityName) != null)
-            //    {
-            //        CacheManager.CacheWrapper.Invalidate(entityName);
-            //    }
+                //if (CacheManager.CacheWrapper != null)
+                //{
+                //    string entityName = "Card" + entityPM.Id + entityPM.Tenant;
+                //    string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;
 
-            //    if (CacheManager.CacheWrapper.Get(entityPmName) != null)
-            //    {
-            //        CacheManager.CacheWrapper.Invalidate(entityPmName);
-            //    }
-            //}
+                //    if (CacheManager.CacheWrapper.Get(entityName) != null)
+                //    {
+                //        CacheManager.CacheWrapper.Invalidate(entityName);
+                //    }
 
-            CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+                //    if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                //    {
+                //        CacheManager.CacheWrapper.Invalidate(entityPmName);
+                //    }
+                //}
 
-            cardRepository.Update(entityCard);
-            entityRepository.Update(entityPOCO);
-            entityRepository.SubmitChanges();
+                CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+                cardRepository.Update(entityCard);
+                entityRepository.Update(entityPOCO);
+                entityRepository.SubmitChanges();
+
+                TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
+                TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+                scope.Complete();
+            }
         }
 
         private void InitializeComponent()
@@ -143,8 +152,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityPM.UpdateDate = entityPM.CreateDate;
-                entityPM.CreatedByUserId = loggedContact.Id;
-                entityPM.UpdatedByUserId = loggedContact.Id;
+
+                if (loggedContact != null)
+                {
+                    entityPM.CreatedByUserId = loggedContact.Id;
+                    entityPM.UpdatedByUserId = loggedContact.Id;
+                }
+
                 entityPM.Code = CodeCounter.GetNumber("CustomsShipper", tenant).ToString();
                 
             }
@@ -152,7 +166,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             else
             {
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                entityPM.UpdatedByUserId = loggedContact.Id;
+                if (loggedContact != null)
+                {
+                    entityPM.UpdatedByUserId = loggedContact.Id;
+                }
             }
 
             this.InitializeCardFields();

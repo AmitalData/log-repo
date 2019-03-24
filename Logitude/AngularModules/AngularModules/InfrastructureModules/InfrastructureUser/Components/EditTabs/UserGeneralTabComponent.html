@@ -1,4 +1,4 @@
-﻿
+
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -173,8 +173,8 @@
                                 </tr>
 
                                 <!-- IsShowContactDetailsInTheMobileApp -->
-                                <tr  class="FormFieldRow" *ngIf="IsShowContactInMobileVisiable">
-                                    <td  title="Show Contact Details In The Mobile App">
+                                <tr class="FormFieldRow" *ngIf="IsShowContactInMobileVisiable">
+                                    <td title="Show Contact Details In The Mobile App">
                                         <LogLabel [ObjectFieldName]="'IsShowContactDetailsInTheMobileApp'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
@@ -184,7 +184,7 @@
 
 
                                 <!-- IsTwoFactorAuthenticationEnabled -->
-                                <tr  title="Is Two Factor Authentication Enabled" class="FormFieldRow" *ngIf="IsShowFactorAuthenticationEnabled">
+                                <tr title="Is Two Factor Authentication Enabled" class="FormFieldRow" *ngIf="IsShowFactorAuthenticationEnabled">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'IsTwoFactorAuthenticationEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -193,13 +193,23 @@
                                     </td>
                                 </tr>
 
-                                  <!-- ShowLocalNameInLOV  -->
-                                  <tr  class="FormFieldRow">
+                                <!-- ShowLocalNameInLOV  -->
+                                <tr class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'ShowLocalNameInLOV'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
                                         <LogCheckBox [ObjectFieldName]="'ShowLocalNameInLOV'" [Checked]="ShowLocalNameInLOV" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+
+                                <!-- ShowNewReleaseToolTip  -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ShowNewReleaseToolTip'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'ShowNewReleaseToolTip'" [Checked]="ShowNewReleaseToolTip" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                     </td>
                                 </tr>
 

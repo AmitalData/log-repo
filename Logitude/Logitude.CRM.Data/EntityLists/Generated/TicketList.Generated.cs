@@ -246,6 +246,8 @@ namespace Logitude.CRM.Data.EntityLists
        public string SLAId  { get; set; }
        [DataMember]
        public string EntityType  { get; set; }
+       [DataMember]
+       public string EntityNumber  { get; set; }
    }
 
 }

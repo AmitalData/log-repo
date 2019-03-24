@@ -92,12 +92,23 @@ export class BIFolderReportComponent {
         });
     }
 
+    NewReportButtonClicked(){
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "New BI Report";
+        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+        logWindow.WindowClosed.subscribe(d => {
+            if (d) {
+                //this.LoadData();
+            }
+        });
+    }
+
     DeleteFolderClicked(item: BIFolderClass) {
         if (item != null) {
             if (item.reportsList != null && item.reportsList.length > 0) {
                 var msg = new MessageWindow();
                 msg.Width = 450;
-                msg.Show("Can't delete this folder since it contains reports, please delete them first");
+                msg.Show("Can't delete this folder since it contains reports, please delete/move them first");
             }
             else {
                 var confirmWindow = new ConfirmWindow();

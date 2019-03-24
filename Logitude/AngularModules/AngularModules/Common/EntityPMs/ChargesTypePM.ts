@@ -303,6 +303,26 @@ export class ChargesTypePM {
     public set IsBackToBack(newValue: boolean) { if (this.isBackToBack != newValue) { this.isBackToBack = newValue; this.MarkAsDirty("IsBackToBack"); } }
        
 	 
+    private isImport: boolean;
+    public get IsImport() { return this.isImport; }
+    public set IsImport(newValue: boolean) { if (this.isImport != newValue) { this.isImport = newValue; this.MarkAsDirty("IsImport"); } }
+       
+	 
+    private isDomestic: boolean;
+    public get IsDomestic() { return this.isDomestic; }
+    public set IsDomestic(newValue: boolean) { if (this.isDomestic != newValue) { this.isDomestic = newValue; this.MarkAsDirty("IsDomestic"); } }
+       
+	 
+    private isExport: boolean;
+    public get IsExport() { return this.isExport; }
+    public set IsExport(newValue: boolean) { if (this.isExport != newValue) { this.isExport = newValue; this.MarkAsDirty("IsExport"); } }
+       
+	 
+    private isDrop: boolean;
+    public get IsDrop() { return this.isDrop; }
+    public set IsDrop(newValue: boolean) { if (this.isDrop != newValue) { this.isDrop = newValue; this.MarkAsDirty("IsDrop"); } }
+       
+	 
 
     public OldEntityPM: ChargesTypePM;
 		

@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
@@ -117,31 +118,43 @@ namespace WebFreight.Web.Helpers
                     string contactId = null;
                     string companyId = null;
 
-                    if (contact == null)
+                   
+                    if (contact == null )
                     {
-                        contactId = IdCounter.GetNumber("Contact", Tenant).ToString();
-                        string englishname = "";
-                        if (!string.IsNullOrEmpty(emailDetails.Sender))
+                        UserQuery userQuery = new UserQuery(Tenant);
+                        UserPM user = userQuery.GetSingleUserByEmailOrIdAndTenantOrTenantZero(null, emailDetails.Sender, Tenant);
+
+                        if (user == null || (user != null && !user.IsCustomerCare))
                         {
-                            englishname = emailDetails.Sender.Split('@')[0].ToString();
+                            contactId = IdCounter.GetNumber("Contact", Tenant).ToString();
+                            string englishname = "";
+                            if (!string.IsNullOrEmpty(emailDetails.Sender))
+                            {
+                                englishname = emailDetails.Sender.Split('@')[0].ToString();
+                            }
+                            // create new contact 
+                            contact = new Contact()
+                            {
+                                Id = contactId,
+                                Tenant = Tenant,
+                                Email = helper.GetCorrectEmailFormat(emailDetails.Sender),
+                                EnglishName = englishname,
+                                UserType = "R",
+                                ComputedKey = (!string.IsNullOrEmpty(emailDetails.Sender) ? emailDetails.Sender : contactId),
+                                SearchFields = englishname + "," + emailDetails.Sender,
+                            };
+                            contactRepository.Add(contact);
+                            contactRepository.SubmitChanges();
                         }
-
-                        // create new contact 
-                        contact = new Contact()
+                        else
                         {
-                            Id = contactId,
-                            Tenant = Tenant,
-                            Email = helper.GetCorrectEmailFormat(emailDetails.Sender),
-                            EnglishName = englishname,
-                            UserType = "R",
-                            ComputedKey = (!string.IsNullOrEmpty(emailDetails.Sender) ? emailDetails.Sender : contactId),
-                            SearchFields = englishname + "," + emailDetails.Sender,
-                        };
-
-                        contactRepository.Add(contact);
-                        contactRepository.SubmitChanges();
+                            contact = contactRepository.GetSingleContactByEmailSpecificTenant(emailDetails.Sender, 0);
+                            if (contact != null)
+                            {
+                                contactId = contact.Id;
+                            }
+                        }
                     }
-
                     else
                     {
                         contactId = contact.Id;

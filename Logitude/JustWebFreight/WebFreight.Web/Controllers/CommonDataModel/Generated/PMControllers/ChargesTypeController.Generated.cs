@@ -45,31 +45,27 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 
     
     public partial class ChargesTypesController : ApiController
-    {	         
+    {
+	  
+       
         public HttpResponseMessage GetSingle(string id)
         {
-
 		  try
             {
 			    string logKey = PerformanceLogger.LogCurrentTime();
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 SecurityUtility.CheckContactFeature("ChargesType", "READ", authToken.Tenant);
-
-                // Ayman:
-                // Please don't use the GetSinglePM
-                // we don't need to retrieve the chached object
-
                 ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(authToken.Tenant);
-                ChargesTypePM chargesTypePM = chargesTypeQuery.GetSingle(id, authToken.Tenant);
+                ChargesTypePM chargesTypePM = chargesTypeQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, chargesTypePM);			 
+                return Request.CreateResponse(HttpStatusCode.OK, chargesTypePM);
+			 
 			}
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
@@ -78,6 +74,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
         }
 
          
+		
+
         public HttpResponseMessage Post(ChargesTypePM entityPM)
         {
             if (ModelState.IsValid)
@@ -85,12 +83,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 try
                 {
                     string logKey = PerformanceLogger.LogCurrentTime();
-
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ChargesType", "NEW", authToken.Tenant);
                 
@@ -98,6 +94,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         ChargesTypeService service = new ChargesTypeService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ChargesType", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ChargesType");
+
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -110,12 +117,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
                 }
             }
-
             else
             { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
+
 
         public HttpResponseMessage Put(ChargesTypePM entityPM)
         {
@@ -124,18 +131,39 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 try
                 {
                     string logKey = PerformanceLogger.LogCurrentTime();
-
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ChargesType", "UPDATE", authToken.Tenant);
-               
+
+                        string entityName = "ChargesType" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "ChargesTypePM" + entityPM.Id + entityPM.Tenant;
+                        if (CacheManager.CacheWrapper.Get(entityName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityName);
+                        }
+                        if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityPmName);
+                        }
+                
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         ChargesTypeService service = new ChargesTypeService(MyContext, entityPM.Tenant);
                         service.Update(entityPM, true);
+
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ChargesType", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
+
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ChargesType");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -149,12 +177,29 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
                 }
             }
-
             else
             { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
-        }      
+        }
+
+        // DELETE api/<controller>/5
+        public void Delete(int id)
+        {
+        }
+	    
+
+
+		
+          
+			
+			 
+		  
+        
+
+		
+			 		
+      
     }
 }
 	 

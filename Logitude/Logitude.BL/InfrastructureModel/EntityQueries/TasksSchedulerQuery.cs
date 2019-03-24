@@ -24,6 +24,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository = new TasksSchedulerRepository(tenant);
         }
 
+        public string GetSchedulerDetailsXmalById(string schedulerId, int tenant)
+        {
+
+            string result = (from a in repository.context.TasksSchedulers
+                             where a.Tenant == tenant && a.Id == schedulerId
+                             select a.SchedulerDetailsXML).FirstOrDefault();
+
+            return result;
+
+        }
+
         public TasksSchedulerQuery(TasksSchedulerRepository TasksSchedulerRepository)
         {
             repository = TasksSchedulerRepository;
@@ -59,7 +70,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tuesday = a.Tuesday,
                         UpdateDateTime = a.UpdateDateTime,
                         UpdatedBy = a.UpdatedBy,
-                        Wednesday = a.Wednesday
+                        Wednesday = a.Wednesday,
+                        Type = a.Type,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
+                        NextRunTimeUTC = a.NextRunTimeUTC,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        LastRunTimeUTC = a.LastRunTimeUTC
+
                         
                     }).FirstOrDefault();
         }
@@ -93,7 +110,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tuesday = a.Tuesday,
                         UpdateDateTime = a.UpdateDateTime,
                         UpdatedBy = a.UpdatedBy,
-                        Wednesday = a.Wednesday
+                        Wednesday = a.Wednesday ,
+                        Type = a.Type,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
+                        NextRunTimeUTC = a.NextRunTimeUTC,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        LastRunTimeUTC = a.LastRunTimeUTC
                     }).FirstOrDefault();
         }
 
@@ -127,7 +149,50 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tuesday = a.Tuesday,
                         UpdateDateTime = a.UpdateDateTime,
                         UpdatedBy = a.UpdatedBy,
-                        Wednesday = a.Wednesday
+                        Wednesday = a.Wednesday,
+                        Type = a.Type,
+                        NextRunTimeUTC = a.NextRunTimeUTC,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        LastRunTimeUTC = a.LastRunTimeUTC
+
+                    }).ToList();
+        }
+
+        public List<TasksSchedulerPM> GetTasksSchedulerPMsBByType(string type,int Tenant)
+        {
+            return (from a in repository.context.TasksSchedulers
+                    where a.Tenant == Tenant && a.Type == type
+                    select new TasksSchedulerPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        CreateDateTime = a.CreateDateTime,
+                        CreatedBy = a.CreatedBy,
+                        Description = a.Description,
+                        Friday = a.Friday,
+                        InActive = a.InActive,
+                        IsLastRunError = a.IsLastRunError,
+                        LastRunResult = a.LastRunResult,
+                        LastRunTime = a.LastRunTime,
+                        Monday = a.Monday,
+                        Name = a.Name,
+                        NextRunTime = a.NextRunTime,
+                        RepeatInMinutes = a.RepeatInMinutes,
+                        Satarday = a.Satarday,
+                        ServiceClassName = a.ServiceClassName,
+                        StartDateTime = a.StartDateTime,
+                        Sunday = a.Sunday,
+                        Thursday = a.Thursday,
+                        TriggerType = a.TriggerType,
+                        Tuesday = a.Tuesday,
+                        UpdateDateTime = a.UpdateDateTime,
+                        UpdatedBy = a.UpdatedBy,
+                        Wednesday = a.Wednesday,
+                        Type = a.Type,
+                        NextRunTimeUTC = a.NextRunTimeUTC,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        LastRunTimeUTC = a.LastRunTimeUTC
+
                     }).ToList();
         }
 
@@ -160,7 +225,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                Tuesday = a.Tuesday,
                                                                UpdateDateTime = a.UpdateDateTime,
                                                                UpdatedBy = a.UpdatedBy,
-                                                               Wednesday = a.Wednesday
+                                                               Wednesday = a.Wednesday,
+                                                               Type = a.Type,
+                                                               NextRunTimeUTC = a.NextRunTimeUTC,
+                                                               StartDateTimeUTC = a.StartDateTimeUTC,
+                                                               LastRunTimeUTC = a.LastRunTimeUTC
                                                            };
             return result;
         }
@@ -194,7 +263,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tuesday = a.Tuesday,
                         UpdateDateTime = a.UpdateDateTime,
                         UpdatedBy = a.UpdatedBy,
-                        Wednesday = a.Wednesday
+                        Wednesday = a.Wednesday,
+                        Type = a.Type,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
+                        NextRunTimeUTC = a.NextRunTimeUTC,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        LastRunTimeUTC = a.LastRunTimeUTC
                     }).FirstOrDefault();
         }
     }

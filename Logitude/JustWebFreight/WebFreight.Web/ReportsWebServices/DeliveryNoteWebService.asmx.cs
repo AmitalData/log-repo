@@ -481,6 +481,7 @@ namespace WebFreight.Web.ReportsWebServices
                                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
                                             + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
                                         deliveryNotedataprovider.ToAddressDescription = address.Description != null ? address.Description : "";
+
                                     }
                                 }
                             }
@@ -1152,7 +1153,8 @@ namespace WebFreight.Web.ReportsWebServices
                                         deliveryNotedataprovider.PickupAddress = DataProviders.General.GetAddress(address)
                                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
                                             + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
-                                        deliveryNotedataprovider.FromAddressDescription  = address.Description != null ? address.Description : "";
+                                        deliveryNotedataprovider.FromAddressDescription = address.Description != null ? address.Description : "";
+
                                     }
                                 }
                             }
@@ -1423,7 +1425,7 @@ namespace WebFreight.Web.ReportsWebServices
                         packageline.PackageQuantity = package.Quantity != null ? package.Quantity.Value.ToString() : "";
                         packageline.PackageType = package.PackageType != null ? package.PackageType.EnglishName : "Package";
                         packageline.PackageVolume = package.Volume != null ? (package.Volume + " " + shipment.VolumeUnitCode) : "";// + "  CBM" : "";
-
+                        packageline.SealNumber = package.ShipperSeal;
                         packageline.Width = package.Width == null ? "" : package.Width.ToString();
                         packageline.Height = package.Height == null ? "" : package.Height.ToString();
                         packageline.Length = package.Length == null ? "" : package.Length.ToString();

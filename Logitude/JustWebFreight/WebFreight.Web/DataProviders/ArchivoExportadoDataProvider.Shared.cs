@@ -26,6 +26,7 @@ namespace WebFreight.Web.DataProviders
         public string LongMaster { get; set; }
         public string DirectionPartner { get; set; }
         public string DescriptionOfGoods { get; set; }
+        public string CustomerExternalID { get; set; }
 
         public string InvoiceNumber { get; set; }
         public DateTime? InvoiceDate { get; set; }
