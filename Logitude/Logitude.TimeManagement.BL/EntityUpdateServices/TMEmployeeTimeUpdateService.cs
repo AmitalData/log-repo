@@ -32,7 +32,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.FullDuration = entityPM.TimeInMinutes;
                 entityPM.NeedsProrating = true;
-                SendQueueMessage(entityPM);
+                SendQueueMessage(entityPM.Id, entityPM.WINumber, entityPM.TimeInMinutes, entityPM.Tenant);
             }
         }
 
@@ -91,8 +91,14 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                     }
 
                     entityPM.NeedsProrating = true;
-                    SendQueueMessage(entityPM);
+                    SendQueueMessage(entityPM.Id, entityPM.WINumber, entityPM.TimeInMinutes, entityPM.Tenant);
                 }
+            }
+
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+            {
+                entityPM.TimeInMinutes = 0;
+                SendQueueMessage(entityPM.Id, entityPM.WINumber,entityPM.TimeInMinutes, entityPM.Tenant);
             }
         }
 
@@ -102,26 +108,24 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
 
         }
 
-        private void SendQueueMessage(TMEmployeeTimePM entityPM)
+        public void SendQueueMessage(string Id, string wINumber, int timeInMinutes, int tenant)
         {
             string queueName = "timemanagementqueue";
-            int tenant = entityPM.Tenant;
-            string wINumber = entityPM.WINumber;
             double completedWork = 0;
 
             if (!string.IsNullOrEmpty(wINumber))
             {
-                ITimeManagementContext context = this.MainContext as TimeManagementContext;
-                var list = (from d in context.TMEmployeeTimes where d.Tenant == tenant && d.WINumber == wINumber && d.Id != entityPM.Id select d).ToList();
+                ITimeManagementContext context = TimeManagementContext.GetContext(tenant);
+                var list = (from d in context.TMEmployeeTimes where d.Tenant == tenant && d.WINumber == wINumber && d.Id != Id select d).ToList();
 
                 if (list != null)
                 {
                     var minutes = list.Sum(s => s.TimeInMinutes);
-                    completedWork = (minutes + entityPM.TimeInMinutes) / 60.00;
+                    completedWork = (minutes + timeInMinutes) / 60.00;
                 }
                 else
                 {
-                    completedWork = entityPM.TimeInMinutes/ 60.00;
+                    completedWork = timeInMinutes/ 60.00;
                 }
 
                 try
