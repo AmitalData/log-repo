@@ -132,8 +132,8 @@ namespace CommunicationWorkerRole.Tasks
                     }
                     else
                     {
-                        SchedulerLog.Log = Environment.NewLine + Message;
-                        SchedulerLogsService.Create(SchedulerLog);
+                        SchedulerLog.Log += Environment.NewLine + Message;
+                        SchedulerLogsService.Update(SchedulerLog);
                     }
                 }
                 scope.Complete();
@@ -166,8 +166,11 @@ namespace CommunicationWorkerRole.Tasks
                     }
                     else
                     {
-                        SchedulerLog.Log = Environment.NewLine + Message;
-                        SchedulerLogsService.Create(SchedulerLog);
+                        TaskSchedulerHistory.LogType = "Warning";
+                        TaskSchedulerHistory.LogFirstLine = Message;
+                        TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                        SchedulerLog.Log += Environment.NewLine + Message;
+                        SchedulerLogsService.Update(SchedulerLog);
                     }
                 }
                 scope.Complete();
@@ -201,8 +204,11 @@ namespace CommunicationWorkerRole.Tasks
                     }
                     else
                     {
-                        SchedulerLog.Log = Environment.NewLine + Message;
-                        SchedulerLogsService.Create(SchedulerLog);
+                        TaskSchedulerHistory.LogType = "Exception";
+                        TaskSchedulerHistory.LogFirstLine = Message;
+                        TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                        SchedulerLog.Log += Environment.NewLine + Message;
+                        SchedulerLogsService.Update(SchedulerLog);
                     }
                 }
                 scope.Complete();
