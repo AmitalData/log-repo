@@ -636,6 +636,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 entityComputedFields.IsDigitalSignRequired = false;
                 entityComputedFields.IsRequestedDocuments = false;
                 entityComputedFields.RequestedDocumentsCount = 0;
+                entityComputedFields.IsDepositionRequired = false;
                 shipmentComputedFieldsRepository.Update(entityComputedFields);
                 shipmentComputedFieldsRepository.SubmitChanges();
                 //ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
