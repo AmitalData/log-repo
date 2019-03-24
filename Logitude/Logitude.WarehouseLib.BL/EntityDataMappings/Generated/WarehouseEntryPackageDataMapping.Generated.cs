@@ -44,7 +44,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         Instock, 
 	         Location, 
 	         IsConnectedToShipment, 
-	         VolumetricWeight,
+	         VolumetricWeight, 
+	         CommodityNumber,
 	      }
 
 
@@ -90,7 +91,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromPortId, 
 	         ToPortId, 
 	         VolumetricWeight, 
-	         ChargeableWeightUnitCode,
+	         ChargeableWeightUnitCode, 
+	         CommodityNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -207,6 +209,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VolumetricWeight))
             {
 				entityPOCO.VolumetricWeight = entityPM.VolumetricWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommodityNumber))
+            {
+				entityPOCO.CommodityNumber = entityPM.CommodityNumber;
 			}
 			}
 
@@ -328,6 +335,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.VolumetricWeight = entityPOCO.VolumetricWeight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommodityNumber))
+            {
+					entityPM.CommodityNumber = entityPOCO.CommodityNumber;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseEntryPackagePM entityPM, WarehouseEntryPackagePM oldEntityPM)
@@ -442,6 +454,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VolumetricWeight))
             {
                 oldEntityPM.VolumetricWeight = entityPM.VolumetricWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommodityNumber))
+            {
+                oldEntityPM.CommodityNumber = entityPM.CommodityNumber;
             }
 			
 		}
