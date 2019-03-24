@@ -303,7 +303,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                     icurrentMonth++;
 
-                } while (icurrentMonth < accountingIntegrityInParam.ToMonthInclusive.Month);
+                } while (icurrentMonth <= accountingIntegrityInParam.ToMonthInclusive.Month);
             }
 
 
@@ -358,7 +358,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                     icurrentMonth++;
 
-                } while (icurrentMonth < accountingIntegrityInParam.ToMonthInclusive.Month);
+                } while (icurrentMonth <= accountingIntegrityInParam.ToMonthInclusive.Month);
             }
 
 
