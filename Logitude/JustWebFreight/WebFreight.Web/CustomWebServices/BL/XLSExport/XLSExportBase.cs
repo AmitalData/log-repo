@@ -267,6 +267,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     theValCell.Value = GetValue(rec, colMetadata.PropName);
                     break;
             }
+            //theValCell.IndentLevel = 1;
+            ExcelHAlign myHorizontalAlignment = ExcelHAlign.HAlignGeneral;
+            Enum.TryParse<ExcelHAlign>(colMetadata.ExcelHAlign.ToString(), out myHorizontalAlignment);
+            theValCell.HorizontalAlignment = myHorizontalAlignment;
 
         }
 
@@ -627,12 +631,21 @@ rgb(27, 144, 203)
         public string Header { get; internal set; }
         public int length { get; internal set; }
         public string PropName { get; internal set; }
+        public ExcelHAlignEnum ExcelHAlign { get; internal set; }
     }
     public enum GridColumnTypeEnum
     {
         Object = 0,
         Number,
         Text
+    }
+
+    public enum ExcelHAlignEnum
+    {
+        HAlignGeneral = 0,
+        HAlignLeft = 1,
+        HAlignCenter = 2,
+        HAlignRight = 3,
     }
 
     public class LabelEditBox : GridColumnMetaData

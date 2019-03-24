@@ -28,7 +28,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
         {
             get
             {
-                return 880;
+                return 450;
             }
         }
 
@@ -175,7 +175,184 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
         protected override IRange AdjustRequest(CD_NG_8347_Web01_CurrencyRateSearchRequestParams requestParams, CD_NG_8348_Web02_CurrencyRateDetailResponseData responseData)
         {
-            throw new NotImplementedException();
+
+            //ReportWidth = 650;
+            //row ==32 
+
+
+            //_MainWorksheet.Range.RowHeight = GetExcelSizeFromPixel(32);
+
+            IRange mainHeaderRange = SetSubHeader(_MainWorksheet[1, 1], "שאילתא לשערים");
+            mainHeaderRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
+            mainHeaderRange.CellStyle.Font.Bold = true;
+
+            replaceRequestParamsCurrencyTypeIdFromResLineCurrencyTypeName(requestParams, responseData);
+
+            var requestSection = GetRequestSection(requestParams, mainHeaderRange);
+
+            //var resposeHeaderRange = _MainWorksheet[requestSection.Row, 1];//, requestSection.Row, this.ReportWidth / 10];
+            var resultHeader = SetSubHeader(requestSection, "תוצאות שאילתא לשערים");
+            var responseSection = GetResponseSection(requestParams, responseData, resultHeader);
+
+
+
+
+            //_MainWorksheet[1, 10, 1, 25].Merge();//requestParams.InterfaceTypeCode//150
+            return _MainWorksheet.Range;
+        }
+
+        private static void replaceRequestParamsCurrencyTypeIdFromResLineCurrencyTypeName(CD_NG_8347_Web01_CurrencyRateSearchRequestParams requestParams, CD_NG_8348_Web02_CurrencyRateDetailResponseData responseData)
+        {
+            if (!string.IsNullOrWhiteSpace(requestParams.CurrencyTypeId))
+            {
+                var resLine = responseData.CurrencyRateList.FirstOrDefault(r => r.CurrencyTypeId == requestParams.CurrencyTypeId);
+                if (resLine != null)
+                {
+                    requestParams.CurrencyTypeId = resLine.CurrencyTypeName;
+                }
+            }
+        }
+
+        private IRange GetResponseSection(CD_NG_8347_Web01_CurrencyRateSearchRequestParams requestParams, CD_NG_8348_Web02_CurrencyRateDetailResponseData responseData, IRange resultHeader)
+        {
+            IRange firstLine =
+                _MainWorksheet[resultHeader.Row +1, 1 , resultHeader.Row + 1, this.ReportWidth / 10];
+             ;
+            
+
+            IRange GuaranteeLettersList =
+                BuildGenList("CurrencyRateList",
+                responseData.CurrencyRateList, GetCurrencyRateColumnList(), firstLine);
+
+            int identColumn = 2;
+            var last = GuaranteeLettersList;
+            var responseSection = _MainWorksheet[firstLine.Row , last.Column, last.LastRow + 1, this.ReportWidth / 10];
+
+            var destRange = _MainWorksheet[firstLine.Row , last.Column + identColumn, last.LastRow + 1, this.ReportWidth / 10];
+            responseSection.MoveTo(destRange);
+
+
+            MakeBorderSection(destRange);
+            return null;
+
+        }
+
+
+
+        private List<GridColumnMetaData> GetCurrencyRateColumnList()
+        {
+            var l = new List<GridColumnMetaData>() {
+
+            new GridColumnMetaData()
+            {
+                PropName = "CurrencyTypeId",
+                length = 100,
+                Header = "קוד מטבע " ,
+                  ExcelHAlign = ExcelHAlignEnum.HAlignRight,
+
+            }
+            ,//var CertificateID = 
+            new GridColumnMetaData()
+            { PropName = "CurrencyTypeName", length = 100,
+                Header = "שם מטבע "
+            }
+            ,//var GuaranteeExternalCertificateNumebr = 
+                new GridColumnMetaData()
+            {
+                PropName = "CustomsCurrencyRate",
+                length = 110,
+                Header = "שער "
+            }
+
+            ,//var GuaranatorName = 
+                new GridColumnMetaData()
+            {
+                PropName = "StartDate",
+                length = 90,
+                Header = "תאריך שער"
+            }
+            };
+            return l;
+        }
+
+        private IRange GetRequestSection(CD_NG_8347_Web01_CurrencyRateSearchRequestParams requestParams, IRange mainHeaderRange)
+        {
+            
+            
+
+
+            //100|150|10|100|150|10|100|150|10|100|150|10 == 851
+            var myline1 = base.CreateLabelEditboxLine(
+                requestParams,
+                _MainWorksheet[mainHeaderRange.LastRow + 1, 1, mainHeaderRange.LastRow + 1, ReportWidth / 10],
+                new List<LabelEditBox>()
+                {
+                    new LabelEditBox()
+                    {
+                         Header="מתאריך:",LabelSize=10,length=11,PropName="FromDate" ,
+                        //TheValue =GetGuaranteeName(requestParams.GuranteeType)
+                    }
+                }
+                );
+
+
+            var myline2 = base.CreateLabelEditboxLine(
+                requestParams,
+                myline1,
+                new List<LabelEditBox>()
+                {
+                    new LabelEditBox()
+                    {
+                         Header="עד תאריך:",LabelSize=10,length=11,PropName="ToDate"
+                         ,GridColumnType= GridColumnTypeEnum.Object
+
+                    }
+                }
+                );
+
+
+            var myline3 = base.CreateLabelEditboxLine(
+                requestParams,
+                myline2,
+                new List<LabelEditBox>()
+                {
+                     new LabelEditBox()
+                    {
+                         Header="קוד מטבע :",LabelSize=10,length=11,PropName="CurrencyTypeId"
+                         ,GridColumnType= GridColumnTypeEnum.Text
+
+                    }
+                }
+                );
+
+            
+            int identStartFromC = 3;//
+            Ident3Columns(myline1.LastRow /*+ 2*/, myline3.Row,  identStartFromC);
+
+            IRange requestSection = SetRequestSection1LineB4And1LineAfter(myline1.LastRow, myline3.Row);
+            MakeBorderSection(requestSection);
+
+
+
+            return requestSection;
+        }
+
+        private IRange SetRequestSection1LineB4And1LineAfter(int saveStartLine ,int lastLine)
+        {
+            var requestSection =
+                            _MainWorksheet[saveStartLine - 1, 3, lastLine + 1, this.ReportWidth / 10];
+
+            _IWorkbook.Names.Add("requestSection", requestSection);
+            return requestSection;
+        }
+
+        private void Ident3Columns(int sectionStartLine, int currentLine,  int identStartFromC)
+        {
+            var dest = _MainWorksheet[sectionStartLine, 1 + identStartFromC, currentLine, this.ReportWidth / 10 + identStartFromC];
+            var source =
+                _MainWorksheet[sectionStartLine, 1, currentLine, this.ReportWidth / 10];
+            ;
+            source.MoveTo(dest);
         }
     }
 }
