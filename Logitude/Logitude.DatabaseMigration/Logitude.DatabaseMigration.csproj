@@ -798,6 +798,10 @@
     <Compile Include="Migrations\201903201402516_FixingSchedulerLogsRelation_Rabaia.Designer.cs">
       <DependentUpon>201903201402516_FixingSchedulerLogsRelation_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.cs" />
+    <Compile Include="Migrations\201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.Designer.cs">
+      <DependentUpon>201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1332,14 +1336,17 @@
     <EmbeddedResource Include="Migrations\201903200858246_AddNewReleaseToolTipForUser_Samar.resx">
       <DependentUpon>201903200858246_AddNewReleaseToolTipForUser_Samar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903201312200_OpenFormatReportXMLFieldMigration.resx">
-      <DependentUpon>201903201312200_OpenFormatReportXMLFieldMigration.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.resx">
       <DependentUpon>201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201312200_OpenFormatReportXMLFieldMigration.resx">
+      <DependentUpon>201903201312200_OpenFormatReportXMLFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903201402516_FixingSchedulerLogsRelation_Rabaia.resx">
       <DependentUpon>201903201402516_FixingSchedulerLogsRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.resx">
+      <DependentUpon>201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

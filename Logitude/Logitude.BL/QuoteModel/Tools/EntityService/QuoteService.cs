@@ -475,6 +475,64 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             InitializeExpirationValues();
             InitializeAutomaticallyClose();
+
+            if (entityPM.ConvertToLCL || entityPM.ConvertToFCL)
+            {
+                foreach (QuoteChargePM pm in entityPM.QuoteCharges)
+                {
+                    this.DeleteQuoteChargeUp(pm);
+                }
+
+                if (this.isLCLQuote)
+                {
+                    foreach (QuotePackagePM pm in entityPM.QuotePackages)
+                    {
+                        this.DeleteQuotePackage(pm);
+                    }
+
+                    entityPM.TEU = null;
+                    entityPM.NumberOfPackages = null;
+                    entityPM.GrossWeight = null;
+                    entityPM.ChargeableWeight = null;
+                    entityPM.VolumetricWeight = null;
+                    entityPM.Volume = null;
+
+                }
+
+                else
+                {
+                    entityPM.NumberOfPackages = null;
+                    entityPM.PackageType1Id = null;
+                    entityPM.PackageType1Quantity = null;
+                    entityPM.PackageType2Id = null;
+                    entityPM.PackageType2Quantity = null;
+
+                    entityPM.PackageType3Id = null;
+                    entityPM.PackageType3Quantity = null;
+
+
+                    entityPM.PackageType4Id = null;
+                    entityPM.PackageType4Quantity = null;
+
+                    entityPM.PackageType5Id = null;
+                    entityPM.PackageType5Quantity = null;
+                }
+
+
+
+                if (entityPM.ConvertToLCL)
+                {
+                    entityPM.ShipmentTypeId = "LCLD";
+                }
+
+                else if (entityPM.ConvertToFCL)
+                {
+                    entityPM.ShipmentTypeId = "FCLD";
+                }
+
+                this.GenerateDefaultCharges(true);
+            }
+
         }
 
         private bool isEnableMultiPercentageVATTypes;

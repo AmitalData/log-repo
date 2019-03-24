@@ -963,6 +963,16 @@ export class QuotePM {
     public set ToCountryName(newValue: string) { if (this.toCountryName != newValue) { this.toCountryName = newValue; this.MarkAsDirty("ToCountryName"); } }
        
 	 
+    private convertToFCL: boolean;
+    public get ConvertToFCL() { return this.convertToFCL; }
+    public set ConvertToFCL(newValue: boolean) { if (this.convertToFCL != newValue) { this.convertToFCL = newValue; this.MarkAsDirty("ConvertToFCL"); } }
+       
+	 
+    private convertToLCL: boolean;
+    public get ConvertToLCL() { return this.convertToLCL; }
+    public set ConvertToLCL(newValue: boolean) { if (this.convertToLCL != newValue) { this.convertToLCL = newValue; this.MarkAsDirty("ConvertToLCL"); } }
+       
+	 
     private isQuoteDataExternal: boolean;
     public get IsQuoteDataExternal() { return this.isQuoteDataExternal; }
     public set IsQuoteDataExternal(newValue: boolean) { if (this.isQuoteDataExternal != newValue) { this.isQuoteDataExternal = newValue; this.MarkAsDirty("IsQuoteDataExternal"); } }
