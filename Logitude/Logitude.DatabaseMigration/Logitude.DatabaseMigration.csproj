@@ -802,6 +802,10 @@
     <Compile Include="Migrations\201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.Designer.cs">
       <DependentUpon>201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903241237510_AddCommodityNumberToWarehouseEntry_Samar.cs" />
+    <Compile Include="Migrations\201903241237510_AddCommodityNumberToWarehouseEntry_Samar.Designer.cs">
+      <DependentUpon>201903241237510_AddCommodityNumberToWarehouseEntry_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1347,6 +1351,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.resx">
       <DependentUpon>201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903241237510_AddCommodityNumberToWarehouseEntry_Samar.resx">
+      <DependentUpon>201903241237510_AddCommodityNumberToWarehouseEntry_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -163,14 +163,12 @@
                                     <td style="width: 90px; min-width: 90px;max-width: 90px;">{{VolumeLabel}}</td>
                                     <td *ngIf="IsEditMode" style="width: 135px;min-width: 135px;max-width: 135px;">{{VolumetricWeightLabel}}</td>
                                     <td style="width: 110px;min-width: 110px;max-width: 110px;">{{GrossWeightLabel}}</td>
+                                    <td style="width: 140px;min-width: 140px;max-width: 140px;">Commodity #</td>
                                     <td style="width: 90px;min-width: 90px;max-width: 90px;">Location</td>
-
                                     <td [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'">Description Of Goods</td>
-
                                     <td *ngIf="IsEditMode" style="width: 100px;min-width:100px;">In stock</td>
                                     <td style="width: 50px;min-width :50px;max-width: 50px;"></td>
                                     <td *ngIf="IsEditMode" style="width: 100%;min-width:100%;"></td>
-
                                 </tr>
                             </table>
                         </div>
@@ -225,40 +223,31 @@
 
 
                                                             <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px;text-align:right">
-
                                                                 {{item.Dimensions}}
-
                                                             </td>
 
                                                             <td class="GridViewCell" style="width: 65px; min-width: 65px; max-width: 65px;text-align:right">
-
                                                                 {{item.Quantity}}
-
                                                             </td>
 
-
-                                                         
                                                             <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;text-align:right">
                                                                 {{item.Volume | NumbersPipe:'N3'}}
                                                             </td>
-
-
 
                                                             <td *ngIf="IsEditMode" class="GridViewCell" style="width: 135px; min-width: 135px; max-width: 135px;text-align:right">
                                                                 {{item.VolumetricWeight | NumbersPipe:'N3'}}
                                                             </td>
 
-
                                                             <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;text-align:right">
                                                                 {{item.Weight | NumbersPipe:'N3'}}
+                                                            </td>
 
-
+                                                            <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
+                                                                {{item.CommodityNumber}}
                                                             </td>
 
                                                             <td [attr.title]="item.Location" class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
-
                                                                 {{item.Location}}
-
                                                             </td>
 
                                                             <td [attr.title]="item.Description" [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'" [style.max-width]="IsEditMode ? '170px':'100%'" class="GridViewCell" style="position: relative;">
@@ -301,7 +290,7 @@
 
 
                                                         </tr>
-                                                        <tr><td colspan="8"></td></tr>
+                                                        <tr><td colspan="9"></td></tr>
                                                     </table>
 
 

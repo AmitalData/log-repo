@@ -227,6 +227,11 @@ export class WarehouseEntryPackagePM {
     public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
        
 	 
+    private commodityNumber: string;
+    public get CommodityNumber() { return this.commodityNumber; }
+    public set CommodityNumber(newValue: string) { if (this.commodityNumber != newValue) { this.commodityNumber = newValue; this.MarkAsDirty("CommodityNumber"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPackagePM;
 	
