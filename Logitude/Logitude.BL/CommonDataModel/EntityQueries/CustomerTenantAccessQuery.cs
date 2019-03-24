@@ -338,11 +338,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
       
-        public IQueryable<CustomerTenantAccessList> GetCustomerTenantAccessesByImporterVat(string ImporterVat , int tenant)
+        public IQueryable<CustomerTenantAccessList> GetCustomerTenantAccessesByImporterVat(string ImporterVat)
         {
 
             IQueryable<CustomerTenantAccessList> results = (from a in repository.context.CustomerTenantAccesses
-                                                            where a.CompanyVat == ImporterVat && a.Tenant == tenant && a.Status!= "IA"
+                                                            where a.CompanyVat == ImporterVat  && a.Status!= "IA"
                                                             select new CustomerTenantAccessList()
                                                             {
                                                                 Id = a.Id,

@@ -40,12 +40,28 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.AWBCurrencyId = MyTenantPM.FreightCurrencyId;
                 temp.ProfitCurrencyId = MyTenantPM.ProfitCurrencyId;
                 temp.ValueOfGoodsCurrencyId = MyTenantPM.FreightCurrencyId;
-                temp.VolumeUnitCode = MyTenantPM.VolumeUnitCode;
-                temp.DimensionsUnitCode = MyTenantPM.DimensionsUnitCode;
-                temp.GrossWeightUnitCode = MyTenantPM.GrossWeightUnitCode;
-                temp.ChargeableWeightUnitCode = MyTenantPM.ChargeableWeightUnitCode;
                 temp.OnCarriageAdditionalTransportModeCode = "BYTR";
 
+                if (string.IsNullOrEmpty(temp.VolumeUnitCode))
+                {
+                    temp.VolumeUnitCode = MyTenantPM.VolumeUnitCode;
+                }
+
+                if (string.IsNullOrEmpty(temp.DimensionsUnitCode))
+                {
+                    temp.DimensionsUnitCode = MyTenantPM.DimensionsUnitCode;
+                }
+
+                if (string.IsNullOrEmpty(temp.GrossWeightUnitCode))
+                {
+                    temp.GrossWeightUnitCode = MyTenantPM.GrossWeightUnitCode;
+                }
+
+                if (string.IsNullOrEmpty(temp.ChargeableWeightUnitCode))
+                {
+                    temp.ChargeableWeightUnitCode = MyTenantPM.ChargeableWeightUnitCode;
+                }
+                
                 switch (temp.DirectionId)
                 {
                     case "E":

@@ -92,7 +92,7 @@ export class SettingsWorkspaceComponent {
     }
 
     ProjectsClicked() {
-        var displayTitle = "All Projects";
+        var displayTitle = "Active Projects";
         var code = "Active Projects";
         var listArgs = new ListComponentArgs();
         listArgs.QueryCode = code;
