@@ -177,6 +177,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
             }
+
+            this.MyRequestSheetParam = new RequestSheetParam();
+            this.MyRequestSheetParam.RequestDescription = this.MyResponseData.UserMessage;
+
         }
 
         private string GetReturnCode(int? gatepassReturnCode, int tenant)
