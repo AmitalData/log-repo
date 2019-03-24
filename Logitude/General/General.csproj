@@ -194,8 +194,7 @@
     <Content Include="2019.R1\03 - 2019\Day 07 [Samar] delete country Id field from tenant management.sql" />
     <Content Include="2019.R1\03 - 2019\Day 15 [Maheera] Add TMQueueMessageBuilderWorkerRole.sql" />
     <Content Include="2019.R1\03 - 2019\Day3[Abed] UpdateQuoteTemplateTextCodeFieldsChargeNots.sql" />
-    <Content Include="2019.R1\03 - 2019\Day 21 [Abed] DeleteOldAPILogsStoredProc.sql" />
-    <Content Include="2019.R1\03 - 2019\Day 21 [Abed] DeleteOldQueueMessageMoreDetails.sql" />
+    <Content Include="2019.R1\03 - 2019\Day 21 [Abed] DeleteOldQueueMessageMoreDetailsProcedure.sql" />
     <Content Include="2019.R1\03 - 2019\Day 20 [Abed] Deleting Old RecordsFromAPILogsAndQueueMessageMoreDetails.sql" />
     <Content Include="2019.R1\03 - 2019\Day 03 [Abed] UpdateQuoteTemplateTextCodeFieldsChargeNots.sql" />
     <Content Include="2019.R1\03 - 2019\Day 21 [Abed]CustomerTenantAccessesAddSomeFieldsToSearchField.sql" />

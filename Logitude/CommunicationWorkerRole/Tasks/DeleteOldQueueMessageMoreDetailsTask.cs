@@ -16,14 +16,21 @@ namespace CommunicationWorkerRole.Tasks
         public override void StartTask()
         {
             string strConnString = TenantServerConfigration.GetDbConnection(0);
-            using (SqlConnection cn = new SqlConnection(strConnString))
+
+            int numberOfExecuteRow = 1000;
+
+            while(numberOfExecuteRow == 1000)
             {
-                SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldQueueMessageMoreDetailsTask]", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cn.Open();
-                var output = cmd.ExecuteNonQuery();
-                cn.Close();
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldQueueMessageMoreDetailsTask]", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cn.Open();
+                    numberOfExecuteRow = cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
             }
+           
 
         }
     }

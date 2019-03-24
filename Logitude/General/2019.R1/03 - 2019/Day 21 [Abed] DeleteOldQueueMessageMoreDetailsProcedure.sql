@@ -4,9 +4,6 @@
 drop procedure [dbo].[DeleteOldQueueMessageMoreDetailsTask]
 GO
 
-
-
-
 GO
 SET ANSI_NULLS ON
 GO
@@ -17,6 +14,6 @@ as
 
 begin
 
-delete from [dbo].[QueueMessageMoreDetails] where [CreateDateTime] < GETDATE() - 90
+delete top(1000) from [dbo].[QueueMessageMoreDetails] where [CreateDateTime] < GETDATE() - 90
 
 end
