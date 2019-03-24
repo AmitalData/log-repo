@@ -58,6 +58,7 @@ namespace CommunicationWorkerRole.Tasks
                         TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
                         TaskSchedulerHistory.EndDateTimeUTC = DateTime.UtcNow;
                         TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                        LogInfo("Done Execution ..");
 
                     }
                     scope.Complete();

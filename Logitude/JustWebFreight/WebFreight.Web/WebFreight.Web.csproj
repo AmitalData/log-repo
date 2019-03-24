@@ -874,6 +874,7 @@
     <Compile Include="AccountingModel\Reports\Journal\JournalDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\Journal\JournalPrintService.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\ARPaymentChequeStatusDomainService.Generated.cs" />
+    <Compile Include="AccountingModel\Reports\OpenFormatReport\OpenFormatReportPrintService.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequeDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequePrintService.cs" />
     <Compile Include="AccountingModel\Reports\TaxDeductionReport\TaxDeductionReportPrintService.cs" />

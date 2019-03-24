@@ -11,7 +11,8 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { DocumentTypePMExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 
 export class OpenFormatReportMenuButtonsHandler {
     public EntityPM: OpenFormatReportPM;
@@ -117,6 +118,18 @@ export class OpenFormatReportMenuButtonsHandler {
                     
                     break;
                 }
+            case "PDFD":
+
+                {
+                    var myPrintHelper = new GeneralPrintHelper("OpenFormatReport", "OFDP", this.EntityPM.Id, null, this.EntityPM.ReportNumber, null);
+                    if (myPrintHelper.IsLoadPrintControl) {
+                        ServiceLocator.SendTotangoUserActivity("OpenFormatReport", "Print");
+                        myPrintHelper.ShowPrintControl();
+                    }
+                    break;
+
+
+            }
         }
 
 

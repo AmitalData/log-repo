@@ -50,6 +50,7 @@
     <MenuButton EventCode="&quot;OFMR&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;יותר&quot;">
       <MenuItem EventCode="&quot;OPDL&quot;" DefaultText="&quot;Download&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;הורדה&quot;" />
       <MenuItem EventCode="&quot;INIDL&quot;" DefaultText="&quot;Download INI file&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" />
+      <MenuItem EventCode="&quot;PDFD&quot;" DefaultText="&quot;Download PDF File&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;PDF הורד קובץ &quot;" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

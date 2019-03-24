@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.DataContract
 {
-   public class PDFRerportXMLData
+   public class OpenFormatReportDataProvider
     {
 
         //public decimal? ARinvoiceTotalAmount { get; set; }
@@ -22,8 +22,17 @@ namespace Logitude.Accounting.BL.DataContract
         //public decimal? APinvoiceTotalAmount { get; set; }
         //public decimal? APinvoiceTotalRecords { get; set; }
 
-       public List<OpenFormatTotalRecord> OpenFormatTotalRecords;
-       public List<OpenFormatTotalAmounts> OpenFormatTotalAmounts;
+        public string VatNumber { get; set; }
+        public string CompanyName { get; set; }
+        public string Path { get; set; }
+        public string SoftwareVersion { get; set; }
+       public DateTime CreateDate { get; set; }
+
+
+
+
+       public List<OpenFormatTotalRecord> OpenFormatTotalRecords { get; set; }
+        public List<OpenFormatTotalAmounts> OpenFormatTotalAmounts { get; set; }
     }
 
     public class OpenFormatTotalAmounts
