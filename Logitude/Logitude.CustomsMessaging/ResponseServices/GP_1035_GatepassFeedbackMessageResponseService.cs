@@ -63,7 +63,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CourierMasterPM courierMasterPM = myCourierMasterQueryService.GetSingle(_GatepassRequestPM.MasterCourierId, false, false);
                     if (courierMasterPM != null)
                     {
-                        this.MyResponseData.UserMessage = "משוב לבקשת העברה" + courierMasterPM.AirlinePrefix + "-" + courierMasterPM.MAWB;
+                        this.MyResponseData.UserMessage = " משוב לבקשת העברה" + courierMasterPM.AirlinePrefix + "-" + courierMasterPM.MAWB;
                     }
 
                     if (this._GatepassRequestPM.CustomsUpdateDateTime != null && this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date > gatepassFeedbackMessageItem.dateTime)
