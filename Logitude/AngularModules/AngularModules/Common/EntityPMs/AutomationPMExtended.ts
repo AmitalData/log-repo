@@ -128,6 +128,9 @@ export class AutomationPM {
     public set IsChangeAutomationXaml(newValue: boolean) { this.isChangeAutomationXaml = newValue; this.MarkAsDirty("IsChangeAutomationXaml"); }
 
 
+    private automationResultEmailRecipientLists: any;
+    public get AutomationResultEmailRecipientLists() { return this.automationResultEmailRecipientLists; }
+    public set AutomationResultEmailRecipientLists(newValue: any) { this.automationResultEmailRecipientLists = newValue; this.MarkAsDirty("AutomationResultEmailRecipientLists"); }
 
 
     public OldEntityPM: AutomationPM;
