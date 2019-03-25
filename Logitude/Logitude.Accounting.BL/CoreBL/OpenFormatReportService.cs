@@ -1440,28 +1440,18 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(a);
                 myStringBuilder.Append(' ', 7);
 
-
-
-                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
-                if (user != null)
+                if (item.CreatedbyUser != null)
                 {
-                    if (user.Code != null)
-                    {
-                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
-                    }
-                    else if (user.EnglishName != null)
-                    {
-                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
-                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
-                    }
-
-                    else
-                    {
-                        myStringBuilder.Append(' ', 9);
-                    }
-
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append(item.CreatedbyUser.PadLeft(9, ' '));
                 }
+                else
+                {
+                    myStringBuilder.Append(' ', 9);
+                }
+               
+
+                
 
 
 
@@ -2133,37 +2123,18 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 7);
 
 
-                //if (item.CreatedbyUser != null)
-                //{
-                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                //    myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
-                //}
-                //else
-                //{
-                //    myStringBuilder.Append(a);
-                //    myStringBuilder.Append(' ', 9);
-                //}
-
-                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
-                if (user != null)
+                if (item.CreatedbyUser != null)
                 {
-                    if (user.Code != null)
-                    {
-                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
-                    }
-                    else if (user.EnglishName != null)
-                    {
-                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
-                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
-                    }
-
-                    else
-                    {
-                        myStringBuilder.Append(' ', 9);
-                    }
-
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
                 }
+                else
+                {
+                    myStringBuilder.Append(a);
+                    myStringBuilder.Append(' ', 9);
+                }
+
+               
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
@@ -2754,28 +2725,17 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 myStringBuilder.Append(' ', 7);
-
-                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
-                if (user != null)
+                if (item.CreatedbyUser != null)
                 {
-                    if (user.Code != null)
-                    {
-                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
-                    }
-                    else if (user.EnglishName != null)
-                    {
-                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
-                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
-                    }
-
-                    else
-                    {
-                        myStringBuilder.Append(' ', 9);
-                    }
-
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append(item.CreatedbyUser.PadLeft(9, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append(' ', 9);
                 }
 
+                
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
                  myStringBuilder.AppendLine();
@@ -3159,38 +3119,19 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
-                if (user != null)
+               
+
+                
+                if (item.CreatedbyUser != null)
                 {
-                    if (user.Code != null)
-                    {
-                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
-                    }
-                    else if (user.EnglishName != null)
-                    {
-                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
-                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
-                    }
-
-                    else
-                    {
-                        myStringBuilder.Append(' ', 9);
-                    }
-
-
-
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
                 }
-                //if (item.CreatedbyUser != null)
-                //{
-                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                //    myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
-                //}
-                //else
-                //{
-                //    myStringBuilder.Append(a);
-                //    myStringBuilder.Append(' ', 9);
-                //}
+                else
+                {
+                    myStringBuilder.Append(a);
+                    myStringBuilder.Append(' ', 9);
+                }
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
@@ -3793,7 +3734,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         TotalDocumentsAmountAfterDiscount = a.SubTotalInLocalCurrency,
                                         DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
                                         DocuemntsReferenceDate = a.InvoiceDate,
-                                        CreatedbyUser= a.CreatedByUser.Contact.LocalName != null? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        CreatedbyUser= a.CreatedByUser.Code != null? a.CreatedByUser.Code : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.BillTo.GLAccountId,
                                         IsCancelled = a.IsCancelled,
                                         
@@ -3827,7 +3768,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         TotalDocumentsAmountAfterDiscount = a.SubTotalInLocalCurrency,
                                         DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
                                         DocuemntsReferenceDate = a.InvoiceDate,
-                                        CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        CreatedbyUser = a.CreatedByUser.Code != null ? a.CreatedByUser.Code  : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.VendorCard.GLAccountId,
                                         IsCancelled = a.StatusCode =="VD" ? true:false,
                                         VendorId =a.VendorId,
@@ -3863,7 +3804,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         TotalDocumentsAmountAfterDiscount = null,
                                         DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
                                         DocuemntsReferenceDate = a.RegisterDate,
-                                        CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        CreatedbyUser = a.CreatedByUser.Code != null ? a.CreatedByUser.Code : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.BillToCard.GLAccountId,
                                         IsCancelled = a.StatusCode == "VD" ? true : false,
                                         VendorId = a.BillToId,
@@ -3907,7 +3848,7 @@ namespace Logitude.Accounting.BL.CoreBL
                              TotalDocumentsAmountAfterDiscount = null,
                              DocumentAmountAndVATAmount = (double)a.LocalDepositAmount,
                              DocuemntsReferenceDate = a.AccountingDate,
-                             CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                             CreatedbyUser = a.CreatedByUser.Code != null ? a.CreatedByUser.Code : a.CreatedByUser.Contact.EnglishName,
                              GLAccountId = null,
                              IsCancelled = a.IsCanceled,
                              VendorId = null,
