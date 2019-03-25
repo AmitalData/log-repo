@@ -2688,6 +2688,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             this.DeleteShipmentPackage(pm);
                         }
 
+                        foreach (ShipmentOrderPackagePM pm in entityPM.ShipmentOrderPackages)
+                        {
+                            this.DeleteShipmentOrderPackage(pm);
+                        }
+
                         entityPM.TEU = null;
                         entityPM.NumberOfPackages = null;
                         entityPM.NumberOfContainers = null;
