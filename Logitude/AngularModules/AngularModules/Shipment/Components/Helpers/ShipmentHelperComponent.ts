@@ -34,17 +34,7 @@ export class ShipmentHelperComponent implements OnDestroy {
         this.EntityPM = this.entityArgs.EntityPM;
 
         if (this.EntityPM) {
-
-            if (FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructions")) {
-                if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "E") {
-                    if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C") {
-                        var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-                        if (isFCLEntity) {
-                            this.IsShippingInstructionsVisible = true;
-                        }
-                    }
-                }
-            }
+            this.ShowHideShippingInstructionsButton();
 
             if (this.EntityPM.DirectionId == "E" && this.EntityPM.TransportModeId == "A") {
                 if (FeatureLocator.IsPackage_DVMT()) {
@@ -83,16 +73,18 @@ export class ShipmentHelperComponent implements OnDestroy {
                         else if (this.isShippingInstructionsClicked) {
                             this.ShowINTTRAWizard();
                         }
+
                         else if (this.isShareManifestRequested) {
                             this.StartShareManifest();
                         }
+
                         else if (this.isUpdateSharedAgentRequested) {
                             this.StartShareManifest(true);
-                        } else if (this.isSharingDocumentRequested) {
+                        }
+
+                        else if (this.isSharingDocumentRequested) {
                             this.StartSharingDocument();
                         }
-                        
-
                     }
                     
                     this.isShareManifestRequested = false;
@@ -108,12 +100,29 @@ export class ShipmentHelperComponent implements OnDestroy {
             if (!this.LoadCompletedEvent) {
                 this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.entityArgs.EditComponent.EntityPM;                        
+                        this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                        this.ShowHideShippingInstructionsButton();
                     }
                 });
             }
         }
     }
+
+    private ShowHideShippingInstructionsButton() {
+        this.IsShippingInstructionsVisible = false;
+
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructions")) {
+            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "E") {
+                if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C") {
+                    var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    if (isFCLEntity) {
+                        this.IsShippingInstructionsVisible = true;
+                    }
+                }
+            }
+        }
+    }
+
     ImportAWBWizard() {
         var myAWBWizardArgs: AWBWizardArgs = new AWBWizardArgs();
         myAWBWizardArgs.EntityPM = this.EntityPM;
