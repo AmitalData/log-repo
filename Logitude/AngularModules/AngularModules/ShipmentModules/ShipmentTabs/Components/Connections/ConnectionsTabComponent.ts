@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy}  from '@angular/core';
+import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentDomainService, ShipmentConnectedEntity} from '../../../../Shipment/Services/ShipmentDomainService';
@@ -326,6 +326,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 this.myDomainService.DisconnectQuote(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse != null) {
                         if (!myResponse.HasError) {
+                            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                             this.entityArgs.EditComponent.ReloadEntityPM();
                             SessionLocator.CurrentSession.FireEvent("LoadConnectedShipments");
                             this.LoadData();

@@ -197,44 +197,76 @@ export class QuoteMenuButtonsHandler {
                             button.IsDisabled = true;
                         }
                     }
-                    if (button.EventCode == "ConvertQuotetoLCL" || button.EventCode == "ConvertQuotetoFCL") {
 
-                        var isLCLQuote: boolean = false;
-                        if (this.EntityPM.TransportModeId.toUpperCase() == "A") {
-                            button.IsDisabled = true;
-                            isLCLQuote = true;
-                        }
-
-                        else if (this.EntityPM.TransportModeId.toUpperCase() == "O" && this.EntityPM.ShipmentTypeId.toUpperCase() == "LCLD") {
-                            isLCLQuote = true;
-                        }
-
-                        else if (this.EntityPM.TransportModeId.toUpperCase() == "I" && this.EntityPM.ShipmentTypeId.toUpperCase() == "LTL") {
-                            isLCLQuote = true;
-                            button.IsDisabled = true;
-                        }
-
-                        if (button.EventCode == "ConvertQuotetoLCL") {
-                            if (isLCLQuote) {
-                                button.IsHidden = true;
+                    if (button.EventCode == "ConvertQuotetoLCL") {
+                        if (this.EntityPM.TransportModeId == "O") {
+                            if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                button.IsHidden = false;
                             }
                             else {
-                                button.IsHidden = false;
+                                button.IsHidden = true;
                             }
                         }
 
                         else {
-                            if (!isLCLQuote) {
-                                button.IsHidden = true;
-                            }
-                            else {
+                            button.IsHidden = true
+                        }
+                    }
+
+                    if (button.EventCode == "ConvertQuotetoFCL") {
+                        if (this.EntityPM.TransportModeId == "O") {
+                            if (this.EntityPM.ShipmentTypeId == "LCLD") {
                                 button.IsHidden = false;
                             }
-
+                            else {
+                                button.IsHidden = true;
+                            }
                         }
 
-
+                        else {
+                            button.IsHidden = true
+                        }
                     }
+
+
+                    //if (button.EventCode == "ConvertQuotetoLCL" || button.EventCode == "ConvertQuotetoFCL") {
+
+                    //    var isLCLQuote: boolean = false;
+                    //    if (this.EntityPM.TransportModeId.toUpperCase() == "A") {
+                    //        button.IsDisabled = true;
+                    //        isLCLQuote = true;
+                    //    }
+
+                    //    else if (this.EntityPM.TransportModeId.toUpperCase() == "O" && this.EntityPM.ShipmentTypeId.toUpperCase() == "LCLD") {
+                    //        isLCLQuote = true;
+                    //    }
+
+                    //    else if (this.EntityPM.TransportModeId.toUpperCase() == "I" && this.EntityPM.ShipmentTypeId.toUpperCase() == "LTL") {
+                    //        isLCLQuote = true;
+                    //        button.IsDisabled = true;
+                    //    }
+
+                    //    if (button.EventCode == "ConvertQuotetoLCL") {
+                    //        if (isLCLQuote) {
+                    //            button.IsHidden = true;
+                    //        }
+                    //        else {
+                    //            button.IsHidden = false;
+                    //        }
+                    //    }
+
+                    //    else {
+                    //        if (!isLCLQuote) {
+                    //            button.IsHidden = true;
+                    //        }
+                    //        else {
+                    //            button.IsHidden = false;
+                    //        }
+
+                    //    }
+
+
+                    //}
                     
                 }
 
@@ -362,11 +394,7 @@ export class QuoteMenuButtonsHandler {
                 }
             });
 
-        }
-
-
-
-        
+        }        
     }
     ShowConfirmConvert(type:string) {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
@@ -382,6 +410,8 @@ export class QuoteMenuButtonsHandler {
                     this.EntityPM.ConvertToFCL = true;
 
                 }
+
+                this.Reload = true;
                 this.entityArgs.EditComponent.SaveChanges();
 
             }
@@ -398,11 +428,13 @@ export class QuoteMenuButtonsHandler {
     
     isValid: boolean = false;
     isButtonClicked: boolean = false;
+    Reload: boolean = false;
     StopFlags() {
         this.isButtonClicked = false;
         this.isBuildingShipment = false;
         this.isCopyingQuote = false;
         this.IsRunQuotation = false;
+        this.Reload = false;
     }
     Validate() {
         var validator = new QuoteValidator();
@@ -433,6 +465,10 @@ export class QuoteMenuButtonsHandler {
 
                     if (this.IsRunQuotation) {
                         this.OpenQuotationWindow();
+                    }
+
+                    if (this.Reload) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
                     }
                 }
 

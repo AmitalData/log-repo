@@ -11,9 +11,9 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../Services/EntityResourceService';
 import {UserPM} from '../../../Common/EntityPMs/UserPM';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {LoginService, LoginParameters} from '../../Services/LoginService';
+import {LoginService} from '../../Services/LoginService';
 import {Headers} from '@angular/http';
-import {AmitalGatewayUtil, UnifreightMessageM} from '../../Utilities/AmitalGatewayUtil';
+import {AmitalGatewayUtil} from '../../Utilities/AmitalGatewayUtil';
 import {Observable}     from 'rxjs/Rx';
 import {NotificationExtendedListService} from '../../../Customs/Services/ExtendedLists/NotificationExtendedListService';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
@@ -23,8 +23,9 @@ import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { DetectUserInActivity } from '../../Helpers/DetectUserInActivity';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BluesnapContractPMService } from '../../Services/StandardPMs/BluesnapContractPMService';
-import { BluesnapContractPM } from '../../EntityPMs/BluesnapContractPM';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { UserPMService } from '../../../Common/Services/StandardPMs/UserPMService';
+
 @Component({
     moduleId: module.id,
     templateUrl: './HomeComponent.html',
@@ -1690,6 +1691,20 @@ export class HomeComponent implements OnDestroy{
     
     ViewReleaseNotes() {
         window.open(ObjectsLocator.GlobalSetting.ReleaseNotesURL);
+    }
+
+    HideReleaseMessageClicked() {        
+        SessionLocator.LoggedUserPM.ShowNewReleaseToolTip = false;
+
+        var service: UserPMService = new UserPMService();
+        service.update(SessionLocator.LoggedUserPM).subscribe((response: ServiceResponse) => {            
+            if (response) {
+                if (!response.HasError) {
+                    SessionLocator.LoggedUserPM = response.Result;
+                    this.ShowNewReleaseToolTip = false;
+                }
+            }
+        });
     }
 }
 
