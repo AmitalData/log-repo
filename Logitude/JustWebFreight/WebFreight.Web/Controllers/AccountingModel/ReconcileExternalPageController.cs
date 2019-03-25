@@ -287,6 +287,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
+
+        public HttpResponseMessage PutLoadBankPages(ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string documentId = "";
+                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
+                {
+                    byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
+                    string decodedString = Encoding.UTF8.GetString(data);
+
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, documentId);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 	 
