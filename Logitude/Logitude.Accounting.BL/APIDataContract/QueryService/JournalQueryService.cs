@@ -238,7 +238,24 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 throw ex;
             }
         }
+        public Journal GetSingleJournalByExternalNoAndExternalSystem(string externalNo, string externalSysem, int Tenant)
+        {
+            try
+            {
 
+
+                var temp = query.GetSingleJournalByExternalNoAndExternalSystem(externalNo, externalSysem, Tenant);
+                if (temp == null)
+                    throw new ApplicationException("Journal with external NO. " + externalNo + " and external system "+ externalSysem+" doesn't exist");
+
+                return JournalDataMapping(temp, Tenant);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public JournalPM GetJournalPMById(string id, int Tenant)
         {
            

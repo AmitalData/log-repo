@@ -323,6 +323,27 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return pm;
         }
+        public JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo,string externalSystem, int tenant)
+        {
+            Journal poco = null;
+            poco = repository.GetSingleJournalByExternalNoAndExternalSystem(externalNo, externalSystem, tenant);
+            JournalPM journal = this.GetEntityPM(poco);
+            if (journal != null)
+            {
+                if (journal.OriginalJournalId != null)
+                {
+
+                    JournalQueryService journalQueryService = new JournalQueryService(tenant);
+                    JournalPM parent = journalQueryService.GetSingle(journal.OriginalJournalId, false, false);
+                    journal.OriginalJournalName = parent.JournalNumber;
+
+                }
+                JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
+                List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(journal.Id, tenant);
+                journal.JournalLines = lines;
+            }
+            return journal;
+        }
 
         public List<JournalPM> GetJournalsByIds(List<string> ids, int tenant)
         {
