@@ -44,7 +44,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
                         StartDateTimeUTC = a.StartDateTimeUTC,
-                        EndDateTimeUTC = a.EndDateTimeUTC
+                        EndDateTimeUTC = a.EndDateTimeUTC,
+                        LogFirstLine = a.LogFirstLine,
+                        LogType = a.LogType
 
                     }).FirstOrDefault();
         }
@@ -63,7 +65,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
                         StartDateTimeUTC = a.StartDateTimeUTC,
-                        EndDateTimeUTC = a.EndDateTimeUTC
+                        EndDateTimeUTC = a.EndDateTimeUTC,
+                        LogFirstLine = a.LogFirstLine,
+                        LogType = a.LogType
                     }).FirstOrDefault();
         }
 
@@ -81,7 +85,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
                         StartDateTimeUTC = a.StartDateTimeUTC,
-                        EndDateTimeUTC = a.EndDateTimeUTC
+                        EndDateTimeUTC = a.EndDateTimeUTC,
+                        LogFirstLine = a.LogFirstLine,
+                        LogType = a.LogType
                     }).FirstOrDefault();
         }
 
@@ -100,7 +106,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTime = a.StartDateTime,
                         TaskId = a.TaskId,
                         StartDateTimeUTC = a.StartDateTimeUTC,
-                        EndDateTimeUTC = a.EndDateTimeUTC
+                        EndDateTimeUTC = a.EndDateTimeUTC,
+                        LogFirstLine = a.LogFirstLine,
+                        LogType = a.LogType
                     }).ToList();
         }
 
@@ -118,7 +126,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                               StartDateTime = a.StartDateTime,
                                                               TaskId = a.TaskId,
                                                               StartDateTimeUTC = a.StartDateTimeUTC,
-                                                              EndDateTimeUTC = a.EndDateTimeUTC
+                                                              EndDateTimeUTC = a.EndDateTimeUTC,
+                                                              LogFirstLine = a.LogFirstLine,
+                                                              LogType = a.LogType
                                                           };
             return result;
         }

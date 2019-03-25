@@ -18,6 +18,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Data.Entity.Core;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.ShipmentsModel;
 
 namespace Logitude.BL.QuoteModel.Tools.Validating
 {
@@ -57,6 +58,22 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
             ValidateAirlineRestriction(entityPM);
             ValidateMultiVatPercentages(entityPM, myCommonContext);
+            ValidateConvertQuote(entityPM);
+
+        }
+
+        private static void ValidateConvertQuote(QuotePM entityPM)
+        {
+            if (entityPM.ConvertToLCL || entityPM.ConvertToFCL)
+            {
+                IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
+                bool ExistConnectedShipments = MyContext.Shipments.Where(p => p.Tenant == entityPM.Tenant && p.QuoteId == entityPM.Id).FirstOrDefault() != null;
+                if (ExistConnectedShipments)
+                {
+                    throw new ApplicationException("Cannot change quote type when connected to shipments");
+                }
+
+            }
         }
 
         private static void ValidateAirlineRestriction(QuotePM entityPM)

@@ -527,7 +527,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button class="RedButton" (click)="OKButtonClicked()">Ok</button>
+                            <button [disabled]="!IsEnableSaveButton" class="RedButton" (click)="OKButtonClicked()">Ok</button>
                         </td>
                     </tr>
                 </table>

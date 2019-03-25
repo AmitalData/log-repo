@@ -43,6 +43,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return pms;
         }
+        public ReconciliationPM GetByNumber(string number, int tenant)
+        {
+            Reconciliation reco = (from a in context.Reconciliations
+                                              where a.Number == number && a.Tenant == tenant
+                                              select a).FirstOrDefault();
+
+            ReconciliationPM pm = GetEntityPM(reco);
+
+            return pm;
+        }
 
     }// class ReconciliationQueryService
 }

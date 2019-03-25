@@ -366,16 +366,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                 this.SplitShipmentApply();
                                 break;
                             }
+                        }
 
-                            case "ConvertShipmentToLCL": {
-                                this.DoConvertShipmentType("ToLCL");
-                                break;
-                            }
+                        if (this.IsConvertToLCLClicked) {
+                            this.DoConvertShipmentType("ToLCL");
+                        }
 
-                            case "ConvertShipmentToFCL": {
-                                this.DoConvertShipmentType("ToFCL");
-                                break;
-                            }
+                        if (this.IsConvertToFCLClicked) {
+                            this.DoConvertShipmentType("ToFCL");
                         }
 
                         if (this.Reload) {
@@ -391,6 +389,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                        SessionLocator.CurrentSession.SessionEvent.emit("ReloadHouses");
                     }
 
                     this.StopFlags();
@@ -411,6 +411,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.isButtonClicked = false;
         this.MenuButtonCode = null;
         this.Reload = false;
+        this.IsConvertToLCLClicked = false;
+        this.IsConvertToFCLClicked = false;
     }
     Validate() {
         var validator = new ShipmentValidator();
@@ -1005,11 +1007,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         });
     }
 
+    private IsConvertToLCLClicked: boolean = false;
+    private IsConvertToFCLClicked: boolean = false;
     private ConvertShipmentToLCLClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
 
         if (errors.length == 0) {
+            this.IsConvertToLCLClicked = true;
             this.OkButton();
         }
     }
@@ -1018,6 +1023,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
 
         if (errors.length == 0) {
+            this.IsConvertToFCLClicked = true;
             this.OkButton();
         }
     }
@@ -1093,7 +1099,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
     }
     private ShowConfirmConvertShipmentType(type: string) {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
-        confirmWindow.Title = "Cancel Shipment";
+        confirmWindow.Title = "Convert Shipment Type";
         confirmWindow.Width = 400;
         confirmWindow.Show("Changing the shipment type will result in deleting all the shipment packages , are you sure you want to change ?");
         confirmWindow.YesButtonText = "Yes";

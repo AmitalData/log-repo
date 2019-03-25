@@ -774,6 +774,42 @@
     <Compile Include="Migrations\201903180911133_AddWarehouseEntryVolumetricWeightField.Designer.cs">
       <DependentUpon>201903180911133_AddWarehouseEntryVolumetricWeightField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903181109480_AddingUTCDates_Rabaia.cs" />
+    <Compile Include="Migrations\201903181109480_AddingUTCDates_Rabaia.Designer.cs">
+      <DependentUpon>201903181109480_AddingUTCDates_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.cs" />
+    <Compile Include="Migrations\201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.Designer.cs">
+      <DependentUpon>201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903200858246_AddNewReleaseToolTipForUser_Samar.cs" />
+    <Compile Include="Migrations\201903200858246_AddNewReleaseToolTipForUser_Samar.Designer.cs">
+      <DependentUpon>201903200858246_AddNewReleaseToolTipForUser_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903201312200_OpenFormatReportXMLFieldMigration.cs" />
+    <Compile Include="Migrations\201903201312200_OpenFormatReportXMLFieldMigration.Designer.cs">
+      <DependentUpon>201903201312200_OpenFormatReportXMLFieldMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.cs" />
+    <Compile Include="Migrations\201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.Designer.cs">
+      <DependentUpon>201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903201402516_FixingSchedulerLogsRelation_Rabaia.cs" />
+    <Compile Include="Migrations\201903201402516_FixingSchedulerLogsRelation_Rabaia.Designer.cs">
+      <DependentUpon>201903201402516_FixingSchedulerLogsRelation_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.cs" />
+    <Compile Include="Migrations\201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.Designer.cs">
+      <DependentUpon>201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903241237510_AddCommodityNumberToWarehouseEntry_Samar.cs" />
+    <Compile Include="Migrations\201903241237510_AddCommodityNumberToWarehouseEntry_Samar.Designer.cs">
+      <DependentUpon>201903241237510_AddCommodityNumberToWarehouseEntry_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.cs" />
+    <Compile Include="Migrations\201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.Designer.cs">
+      <DependentUpon>201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1296,8 +1332,35 @@
     <EmbeddedResource Include="Migrations\201903180648027_AddInactiveFieldToTMBudget_Samar.resx">
       <DependentUpon>201903180648027_AddInactiveFieldToTMBudget_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.resx">
+      <DependentUpon>201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903180911133_AddWarehouseEntryVolumetricWeightField.resx">
       <DependentUpon>201903180911133_AddWarehouseEntryVolumetricWeightField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903181109480_AddingUTCDates_Rabaia.resx">
+      <DependentUpon>201903181109480_AddingUTCDates_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.resx">
+      <DependentUpon>201903190812370_AddingUTCTimesToTaskSchedular_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903200858246_AddNewReleaseToolTipForUser_Samar.resx">
+      <DependentUpon>201903200858246_AddNewReleaseToolTipForUser_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.resx">
+      <DependentUpon>201903201001537_AddingSchedulaerLogsAndNewFieldsOnShedulerHistory_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201312200_OpenFormatReportXMLFieldMigration.resx">
+      <DependentUpon>201903201312200_OpenFormatReportXMLFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201402516_FixingSchedulerLogsRelation_Rabaia.resx">
+      <DependentUpon>201903201402516_FixingSchedulerLogsRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.resx">
+      <DependentUpon>201903201612028_NewField_ReconciliationLine_ReconciledWithTransactionId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903241237510_AddCommodityNumberToWarehouseEntry_Samar.resx">
+      <DependentUpon>201903241237510_AddCommodityNumberToWarehouseEntry_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -398,6 +398,62 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         }
 
 
+        public IQueryable<LedgerTransaction> GetQueryOrderByDateTypeAndIdByRec(int tenant, List<string> listOfAccId, DateTime @from, DateTime to,
+       string currencyId,
+       string searchByFilter, bool? isReconciled, string dateType)
+        {
+            var q = (from rec in context.LedgerTransactions
+                     where rec.Tenant == tenant
+                     where listOfAccId.Contains(rec.AccountId) //less than 1000
+                     select rec
+                     );
+            //if (context.ToString().StartsWith("Fake"))
+            //{
+            //    q = (from rec in q
+            //         where rec.AccountingDate.Date >= @from
+            //         where rec.AccountingDate.Date <= to
+            //         select rec
+            //        );
+            //}
+            //else
+            //{
+            //    q = (from rec in q
+            //         where EntityFunctions.TruncateTime(rec.AccountingDate) >= @from
+            //         where EntityFunctions.TruncateTime(rec.AccountingDate) <= to
+            //         select rec
+            //         );
+            //}
+            q = QFilterByDateTruncateTimeInclusive(dateType, @from, to, q);
+
+            if (!string.IsNullOrWhiteSpace(currencyId))
+            {
+                q = q.Where(rec => rec.CurrencyId == currencyId);
+            }
+            if (isReconciled.HasValue && isReconciled.Value == true)
+            {
+                q = q.Where(rec => rec.IsReconciled == true);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchByFilter))
+            {
+                q = q.Where(rec => rec.SearchFields.Contains(searchByFilter));
+            }
+
+            q = (from rec in q
+                 orderby rec.AccountingDate, rec.Id
+                 select rec);
+
+
+            return q;
+
+
+
+        }
+
+
+
+
+
         public IQueryable<LedgerTransaction> GetNotReconciled(string gLAccountId, int tenant)
         {
             var q = (from record in context.LedgerTransactions

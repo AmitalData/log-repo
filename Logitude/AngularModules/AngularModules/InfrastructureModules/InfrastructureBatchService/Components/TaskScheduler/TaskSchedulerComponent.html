@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr style="height: 1px;">
         <td>
@@ -13,12 +13,20 @@
                     </td>
 
                     <td style="width: 85px;">
-                        <button class="Button" (click)="NewTaskClicked()">Add New {{SchedulerType}}</button>
+                        <button [disabled]="!IsEnableAddButton" class="Button" (click)="NewTaskClicked()">Add New {{SchedulerType}}</button>
+                    </td>
+
+                    <td style="width:5px;">
+                        <div></div>
+                    </td>
+
+                    <td *ngIf="HasUTCFeature == true" style="width: 85px;">
+                        <button class="Button" (click)="ShowUTCTimesClicked()">{{ShowUTCTimesLabel}}</button>
                     </td>
 
                     <td>
                         <div></div>
-                    </td>                   
+                    </td>
                 </tr>
             </table>
         </td>
@@ -37,12 +45,14 @@
                         <table>
                             <tr>
                                 <td style="width: 200px; min-width: 200px; max-width: 200px;">Task Name</td>
-                                <td style="width: 140px; min-width: 140px; max-width: 140px;">Create Date</td>
-                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Next Run Time</td>
-                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Last Run Time</td>
-                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Last Run Result</td>
-                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Start Date</td>
-                                <td style="width: 140px; min-width: 140px; max-width: 140px;">Service Class Name</td>
+                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Create Date</td>
+                                <td *ngIf="ShowUTCTimeEnabled == false" style="width: 160px; min-width: 160px; max-width: 160px;">Next Run Time</td>
+                                <td *ngIf="ShowUTCTimeEnabled == false" style="width: 160px; min-width: 160px; max-width: 160px;">Last Run Time</td>
+                                <td *ngIf="ShowUTCTimeEnabled == true" style="width: 160px; min-width: 160px; max-width: 160px;">Next Run Time UTC</td>
+                                <td *ngIf="ShowUTCTimeEnabled == true" style="width: 160px; min-width: 160px; max-width: 160px;">Last Run Time UTC</td>
+                                <td style="width: 110px; min-width: 110px; max-width: 110px;">Last Run Result</td>
+                                <td *ngIf="ShowUTCTimeEnabled == false" style="width: 160px; min-width: 160px; max-width: 160px;">Start Date</td>
+                                <td *ngIf="ShowUTCTimeEnabled == true" style="width: 160px; min-width: 160px; max-width: 160px;">Start Date UTC</td>
                                 <td style="width: 90px; min-width: 90px; max-width: 90px;">Is Active</td>
                                 <td style="width: 30px; min-width: 30px; max-width: 30px;">
                                     <div></div>
@@ -62,28 +72,36 @@
                                     {{item.Name}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
-                                    {{item.CreateDate}}
+                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                    {{item.CreateDate | DateTimePipe:'SD'}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 95px; min-width: 95px; max-width: 95px;">
-                                    {{item.NextRunTime}}
+                                <td *ngIf="ShowUTCTimeEnabled == false" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
+                                    {{item.NextRunTime | DateTimePipe:'DTL12'}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 95px; min-width: 95px; max-width: 95px;">
-                                    {{item.LastRunTime}}
+                                <td *ngIf="ShowUTCTimeEnabled == false" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
+                                    {{item.LastRunTime | DateTimePipe:'DTL12'}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 95px; min-width: 95px; max-width: 95px;">
+                                <td *ngIf="ShowUTCTimeEnabled == true" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
+                                    {{item.NextRunTimeUTC | DateTimePipe:'DTL12'}}
+                                </td>
+
+                                <td *ngIf="ShowUTCTimeEnabled == true" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
+                                    {{item.LastRunTimeUTC | DateTimePipe:'DTL12'}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;">
                                     {{item.LastRunResult}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 95px; min-width: 95px; max-width: 95px;">
-                                    {{item.StartDate}}
+                                <td *ngIf="ShowUTCTimeEnabled == false" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
+                                    {{item.StartDate | DateTimePipe:'DTL12'}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
-                                    {{item.ServiceClassName}}
+                                <td *ngIf="ShowUTCTimeEnabled == true" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
+                                    {{item.StartDateUTC | DateTimePipe:'DTL12'}}
                                 </td>
 
                                 <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
@@ -133,48 +151,54 @@
                 <tr>
                     <td>
                         <div class="MediaFill">
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeader">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 200px; min-width: 200px; max-width: 200px;">Start Date Time</td>
-                                            <td style="width: 200px; min-width: 200px; max-width: 200px;">End Date Time</td>
-                                            <td style="width: 90px; min-width: 90px; max-width: 90px;">Run Result</td>
-                                            <td class="LastChild">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <div class="SimpleGridViewBody">
-                                    <table>
-                                        <tr class="SimpleGridViewRow" *ngFor="let item of HistoryItemsSource">
-                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                {{item.StartDateTime}}
-                                            </td>
-
-                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                {{item.EndDateTime}}
-                                            </td>
-
-                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
-                                                {{item.RunResult}}
-                                            </td>
-                                            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="4">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+                            <div style="background-color:white;border-radius: 0 0 0 7px;">
+                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'TaskSchedulerHistory'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                               [columns]="columns" [autoLoad]="true" [CustomColumnsReady]="CustomColumnsReady" [IsCustomTemplate]="true">
+                                </logitude-grid>
+                                <!--(rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"-->
                             </div>
+                            <!--<div class="SimpleGridView">
+        <div class="SimpleGridViewHeader">
+            <table>
+                <tr>
+                    <td style="width: 200px; min-width: 200px; max-width: 200px;">Start Date Time</td>
+                    <td style="width: 200px; min-width: 200px; max-width: 200px;">End Date Time</td>
+                    <td style="width: 90px; min-width: 90px; max-width: 90px;">Run Result</td>
+                    <td class="LastChild">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="SimpleGridViewBody">
+            <table>
+                <tr class="SimpleGridViewRow" *ngFor="let item of HistoryItemsSource">
+                    <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                        {{item.StartDateTime}}
+                    </td>
+
+                    <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                        {{item.EndDateTime}}
+                    </td>
+
+                    <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                        {{item.RunResult}}
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>-->
                         </div>
                     </td>
                 </tr>

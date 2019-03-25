@@ -344,6 +344,39 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                     Notes = entityPM.EventNote,
                 });
             }
+
+            if (entityPM.ConvertToLCL)
+            {
+                entityPM.ConvertToLCL = false;
+                entityPM.ConvertToFCL = false;
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tenant,
+                    EventTypeCode = "oLCL",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Quote",
+                    Notes = entityPM.EventNote,
+                });
+
+            }
+
+            if (entityPM.ConvertToFCL)
+            {
+                entityPM.ConvertToLCL = false;
+                entityPM.ConvertToFCL = false;
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tenant,
+                    EventTypeCode = "oFCL",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Quote",
+                    Notes = entityPM.EventNote,
+                });
+            }
         }
 
         public static void DeleteQuoteTraceEvent(QuotePM quotePM, string traceEventId, int tenant, bool external)

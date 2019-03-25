@@ -83,7 +83,8 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                 
+
                     this.UpdateFiltersFields();
                     this.SetUIProperties();
 
@@ -98,6 +99,9 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
         this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "ReloadHouses") {
+                this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
                 this.UpdateFiltersFields();
                 this.LoadAllHouses();
             }

@@ -1645,7 +1645,21 @@ namespace WebFreight.Web.Helpers
 
                 case "WDTS":
                     {
-                        dataProvider = logitudeReportsWebService.LoadWorkPerDaysProjectData(filters, reportFliter.tenant);
+                        WorkPerDaysProjectManager myDataManager = new WorkPerDaysProjectManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+
+                        //var isUsingNewCode = false;
+                        //if (isUsingNewCode)
+                        //{
+                        //    WorkPerDaysProjectManager myDataManager = new WorkPerDaysProjectManager(filters, reportFliter.tenant);
+                        //    dataProvider = myDataManager.GetData();
+                        //}
+
+                        //else
+                        //{
+                        //    dataProvider = logitudeReportsWebService.LoadWorkPerDaysProjectData(filters, reportFliter.tenant);
+                        //}
+
                         break;
                     }
 

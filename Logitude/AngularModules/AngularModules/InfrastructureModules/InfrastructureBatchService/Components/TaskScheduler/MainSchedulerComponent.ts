@@ -7,6 +7,8 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 @Component({
     moduleId: module.id,
@@ -23,10 +25,31 @@ export class MainSchedulerComponent implements OnInit {
     private PageChild_STASK: any = null;
     private PageChild_SFTP: any = null;
 
-    
+
+    IsShowTaskScheduler: boolean = false;
+    IsShowTabFTBScheduler: boolean = false;
+
+    IsShowComponentWithTabs: boolean = false;
+    IsShowComponentWithOutTabs: boolean = false;
+    IsShowPackageNotIncludeMessage: boolean = false;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor() {
-        this.RunComponent();
+       
+        if (FeatureLocator.HasFeaturePermession("TasksScheduler", "TASK")) this.IsShowTaskScheduler = true;
+        if (FeatureLocator.HasFeaturePermession("TasksScheduler", "FTP")) this.IsShowTabFTBScheduler = true;
+        if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ")) this.IsShowPackageNotIncludeMessage = true;
+
+
+        if (this.IsShowTaskScheduler && this.IsShowTabFTBScheduler) this.IsShowComponentWithTabs = true;
+        else if (this.IsShowTaskScheduler || this.IsShowTabFTBScheduler) this.IsShowComponentWithOutTabs = true;
+        else this.IsShowPackageNotIncludeMessage = true; 
+
+
+
+        if ((this.IsShowTaskScheduler || this.IsShowTabFTBScheduler) && !this.IsShowPackageNotIncludeMessage ) {
+            this.RunComponent();
+        }
  
     }
 
@@ -38,8 +61,8 @@ export class MainSchedulerComponent implements OnInit {
     }
 
 
-    SetSelectedItem() {
-        this.SelectedTabCode = "STASK";
+    SetSelectedItem(tabCode:string) {
+        this.SelectedTabCode = tabCode;
 
     }
 
@@ -55,7 +78,9 @@ export class MainSchedulerComponent implements OnInit {
 
             else {
                 this.isLoaderReady = true;
-                this.SetSelectedItem();
+
+                var tabCode = this.IsShowComponentWithTabs || this.IsShowTaskScheduler ? "STASK" : "SFTP";
+                this.SetSelectedItem(tabCode);
             }
         }
 

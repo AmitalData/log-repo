@@ -16,5 +16,7 @@ export class TaskSchedulerHistoryList {
 		IsError: boolean;
 		StartDateTimeUTC: Date;
 		EndDateTimeUTC: Date;
+		LogType: string;
+		LogFirstLine: string;
 	
 }

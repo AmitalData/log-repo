@@ -1663,6 +1663,11 @@ namespace WebFreight.Web.WebServices
                         packageline.Width = package.Width.ToString();
                         packageline.Height = package.Height.ToString();
 
+                        packageline.Reference1 = package.Reference1;
+                        packageline.Reference2 = package.Reference2;
+                        packageline.Reference3 = package.Reference3;
+                        packageline.Reference4 = package.Reference4;
+
                         #region Harmonize
                         if (package.IsMultiHarmonize)
                         {

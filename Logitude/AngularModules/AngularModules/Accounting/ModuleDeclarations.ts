@@ -34,6 +34,7 @@ import {YearTransferComponent} from './Components/Maintenance/YearTransferCompon
 import { NewTaxReportComponent } from './Components/NewEntity/NewTaxReportComponent';
 import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenFormatReportComponent';
 import { AccountingLoadTestComponent } from './Components/Maintenance/AccountingLoadTestComponent';
+import { LoadRecoExPageComponent } from './Components/NewEntity/LoadRecoExPageComponent';
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -115,6 +116,7 @@ export const Components =
         NewConnectedGLAccountComponent,
         NewPaymentChequeComponent,
         NewOpenFormatReportComponent,
+        LoadRecoExPageComponent,
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
@@ -218,6 +220,8 @@ export class ModuleDeclarations {
             case "NewTaxReportComponent": { myResult = NewTaxReportComponent; break; }
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
+            case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
+                
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
             case "NewCategory2Component": { myResult = NewCategory2Component; break; }

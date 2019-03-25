@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
@@ -14,6 +15,7 @@ using Logitude.BL.Resolvers;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -48,6 +50,17 @@ namespace Logitude.Accounting.BL.CoreBL
         private static int D120Count;
         static bool isQuantity;
         private static string a;
+        public static int ARinvoiceTotalRecords;
+        public static decimal ARinvoiceTotalAmount;
+        public static int CreditARinvoiceTotalRecords;
+        public static decimal CreditARinvoiceTotalAmount;
+        public static int ARpaymentTotalRecords;
+        public static decimal ARpaymentTotalAmount;
+        public static int DepositTotalRecords;
+        public static decimal DepositTotalAmount;
+        public static int APinvoiceTotalRecords;
+        public static decimal APinvoiceTotalAmount;
+        public static TenantPM tenantPM;
 
         public static DocumentsFilingPM CreateBKMVDATAFile(string openFormatReportId, int tenant, bool TestingMode)
         { 
@@ -59,10 +72,22 @@ namespace Logitude.Accounting.BL.CoreBL
             rowsCount = 0;
             isQuantity = false;
             a = null;
-        OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
+            ARinvoiceTotalRecords = 0;
+            ARinvoiceTotalAmount = 0;
+            CreditARinvoiceTotalRecords = 0;
+            CreditARinvoiceTotalAmount = 0;
+            ARpaymentTotalRecords = 0;
+            ARpaymentTotalAmount = 0;
+            DepositTotalRecords = 0;
+            DepositTotalAmount = 0;
+            APinvoiceTotalRecords = 0;
+            APinvoiceTotalAmount = 0;
+            tenantPM = null;
+
+         OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
             OpenFormatReportPM openFormatReportPM = openFormatReportQueryService.GetSingle(openFormatReportId, false, false);
             TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+             tenantPM = tenantQuery.GetSinglePM(tenant);
             LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(tenant);
             List<B100Data> b100Data = ledgerTransactionQueryService.GetTransactionsByDate( openFormatReportPM.FromDate, openFormatReportPM.ToDate, tenant);
             List<string> userIds = b100Data.Select(d => d.CreatedByUser).ToList();
@@ -121,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL
             myStringBuilder.Append(a);
             myStringBuilder.Append("&OF1.31&");
             myStringBuilder.Append(' ', 50);
-            myStringBuilder.Append('\n');
+             myStringBuilder.AppendLine();
             //B100
             int counter = 1;
             foreach (B100Data item in b100Data)
@@ -424,8 +449,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
             }
+
+          
 
             //B110
 
@@ -516,7 +543,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (item.DisplayNumber != null)
                 {
-                    if (item.DisplayNumber.Length > 15) { item.DisplayNumber.Substring(0, 15); }
+                    if (item.DisplayNumber.Length > 15) { item.DisplayNumber= item.DisplayNumber.Substring(0, 15); }
                     myStringBuilder.Append(item.DisplayNumber.PadLeft(15, ' '));
                 }
                 else
@@ -526,7 +553,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (item.LocalName != null)
                 {
-                    if (item.LocalName.Length > 50) { item.LocalName.Substring(0, 50); }
+                    if (item.LocalName.Length > 50) { item.LocalName= item.LocalName.Substring(0, 50); }
                     myStringBuilder.Append(a + item.LocalName.PadLeft(50, ' '));
                 }
                 else
@@ -1008,7 +1035,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 myStringBuilder.Append(a);
                 myStringBuilder.Append(' ', 16);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
             }
 
             //C100
@@ -1052,6 +1079,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 counter++;
                 C100Count++;
+
                 myStringBuilder.Append("C100");
 
 
@@ -1451,7 +1479,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
                 //D110
                 List<ARInvoiceLinePM> lines = aRInvoiceLinePMs.Where(d => d.ARInvoiceId == item.ARInvoiceId).ToList();
                 foreach (ARInvoiceLinePM line in lines)
@@ -1631,7 +1659,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 21);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
             }
 
@@ -2139,7 +2167,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
 
                 //D110
                 List<APInvoiceLinePM> lines = aPInvoiceLinePMs.Where(d => d.APInvoiceId == item.APInvoiceId).ToList();
@@ -2344,7 +2372,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 21);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
             }
 
@@ -2750,7 +2778,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
 
                 //D120
                 List<ARPaymentChequePM> lines = cheques.Where(d => d.PaymentId == item.ARPaymentId).ToList();
@@ -2975,7 +3003,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
             }
 
@@ -3166,7 +3194,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
 
                 //D120
 
@@ -3284,7 +3312,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
 
                 else
@@ -3500,7 +3528,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a);
                         myStringBuilder.Append(' ', 60);
 
-                        myStringBuilder.Append('\n');
+                         myStringBuilder.AppendLine();
                     }
                 }
 
@@ -3552,7 +3580,22 @@ namespace Logitude.Accounting.BL.CoreBL
          
             myStringBuilder.Append(' ', 50);
 
-           
+
+            ARinvoiceTotalAmount = ARC100.Where(d=> d.TotalDocumentsAmountAfterDiscount >= 0).Sum(D =>(decimal) D.DocumentAmountAndVATAmount );
+            CreditARinvoiceTotalAmount = ARC100.Where(d => d.TotalDocumentsAmountAfterDiscount < 0).Sum(d => (decimal)d.DocumentAmountAndVATAmount);
+            ARpaymentTotalAmount = ARPAymentC100.Sum(d => (decimal)d.DocumentAmountAndVATAmount);
+            DepositTotalAmount = DepositC100.Sum(d => (decimal)d.DocumentAmountAndVATAmount);
+            APinvoiceTotalAmount = APC100.Sum(d => (decimal)d.DocumentAmountAndVATAmount);
+            ARinvoiceTotalRecords = ARC100.Where(d => d.TotalDocumentsAmountAfterDiscount >= 0).Count();
+            CreditARinvoiceTotalRecords = ARC100.Where(d => d.TotalDocumentsAmountAfterDiscount < 0).Count();
+            ARpaymentTotalRecords = ARPAymentC100.Count();
+            DepositTotalRecords = DepositC100.Count();
+            APinvoiceTotalRecords = APC100.Count();
+
+
+          
+
+
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
 
             return docOut;
@@ -3879,6 +3922,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return c100s;
         }
 
+
         public static DocumentsFilingPM CreateINIFile(string openFormatReportId, int tenant)
         {
             OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
@@ -4069,7 +4113,8 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append("0");
             stringBuilder.Append(' ',46);
 
-            stringBuilder.Append("\n");
+             stringBuilder.AppendLine();
+            
             stringBuilder.Append("B100");
             if (B100Count.ToString().Length >15)
             {
@@ -4080,7 +4125,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + B100Count.ToString().PadLeft(15, '0'));
             }
-            stringBuilder.Append("\n");
+            stringBuilder.AppendLine();
             stringBuilder.Append("B110");
             if (B110Count.ToString().Length > 15)
             {
@@ -4091,7 +4136,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + B110Count.ToString().PadLeft(15, '0'));
             }
-            stringBuilder.Append("\n");
+             stringBuilder.AppendLine();
             stringBuilder.Append("C100");
             if (C100Count.ToString().Length > 15)
             {
@@ -4102,7 +4147,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + C100Count.ToString().PadLeft(15, '0'));
             }
-            stringBuilder.Append("\n");
+            stringBuilder.AppendLine();
             stringBuilder.Append("D110");
             if (D110Count.ToString().Length > 15)
             {
@@ -4114,7 +4159,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 stringBuilder.Append(a + D110Count.ToString().PadLeft(15, '0'));
             }
 
-            stringBuilder.Append("\n");
+             stringBuilder.AppendLine();
             stringBuilder.Append("D120");
             if (D120Count.ToString().Length > 15)
             {
@@ -4125,7 +4170,12 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + D120Count.ToString().PadLeft(15, '0'));
             }
+
+
             DocumentsFilingPM docOut = CreateINIDocumnetFiling(stringBuilder, openFormatReportPM);
+
+            FillPDFReportXML(openFormatReportPM);
+          
 
             return docOut;
 
@@ -4221,7 +4271,198 @@ namespace Logitude.Accounting.BL.CoreBL
             return docFiling;
         }
 
+        public static void FillPDFReportXML(OpenFormatReportPM openFormatReportPM)
+        {
+            OpenFormatReportDataProvider pDFRerportXMLData = new OpenFormatReportDataProvider();
+            pDFRerportXMLData.OpenFormatTotalRecords = new List<OpenFormatTotalRecord>();
 
+            
+
+
+            pDFRerportXMLData.OpenFormatTotalRecords.Add( new OpenFormatTotalRecord()
+            {
+                RecordCode = "A100",
+                RecordDescreption = "רשומה פתיחה",
+                RecordTotal = 1,
+
+
+            });
+
+            if (B100Count > 0)
+            {
+
+                pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
+                {
+                    RecordCode = "B100",
+                    RecordDescreption = "תנועות בהנהלת חשבונות",
+                    RecordTotal = B100Count,
+
+
+                });
+            }
+
+
+
+
+
+            if (B110Count > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
+                {
+                    RecordCode = "B110",
+                    RecordDescreption = "רשומה פתיחה",
+                    RecordTotal = B110Count,
+
+
+                });
+            }
+
+
+
+            if (C100Count > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
+                {
+                    RecordCode = "C100",
+                    RecordDescreption = "כותרת מסמך",
+                    RecordTotal = C100Count,
+
+
+                });
+            }
+
+            if (D110Count > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
+                {
+                    RecordCode = "D110",
+                    RecordDescreption = "פרטי מסמך",
+                    RecordTotal = D110Count,
+
+
+                });
+            }
+
+
+
+
+            if (D120Count > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
+                {
+                    RecordCode = "D120",
+                    RecordDescreption = "פרטי קבלות",
+                    RecordTotal = D120Count,
+
+
+                });
+
+            }
+
+
+
+
+            pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
+            {
+                RecordCode = "Z900",
+                RecordDescreption = "רשומת סיום",
+                RecordTotal = 1,
+
+
+            });
+
+
+            pDFRerportXMLData.OpenFormatTotalAmounts = new List<OpenFormatTotalAmounts>();
+
+
+            if (ARinvoiceTotalAmount > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
+                {
+                    RecordCode = "305",
+                    RecordType = "חשבונית -מס",
+                    TotalRecords = ARinvoiceTotalRecords,
+                    TotalAmount = ARinvoiceTotalAmount,
+
+                });
+            }
+
+
+
+
+            if (CreditARinvoiceTotalAmount > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
+                {
+                    RecordCode = "330",
+                    RecordType = "חשבונית מס זיכוי",
+                    TotalRecords = CreditARinvoiceTotalRecords,
+                    TotalAmount = CreditARinvoiceTotalAmount,
+
+                });
+            }
+
+
+
+            if (ARpaymentTotalAmount > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
+                {
+                    RecordCode = "400",
+                    RecordType = "קבלה",
+                    TotalRecords = ARpaymentTotalRecords,
+                    TotalAmount = ARpaymentTotalAmount,
+
+                });
+            }
+
+
+            if (DepositTotalAmount > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
+                {
+                    RecordCode = "420",
+                    RecordType = "הפקדת בנק",
+                    TotalRecords = DepositTotalRecords,
+                    TotalAmount = DepositTotalAmount,
+
+                });
+            }
+
+
+
+            if (APinvoiceTotalAmount > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
+                {
+                    RecordCode = "700",
+                    RecordType = "חשבונית מס רכש",
+                    TotalRecords = APinvoiceTotalRecords,
+                    TotalAmount = APinvoiceTotalAmount,
+
+                });
+            }
+
+            pDFRerportXMLData.CompanyName = tenantPM.Company;
+            pDFRerportXMLData.VatNumber = tenantPM.VatNumber;
+            var date = DateTime.Now;
+            string dateFormat = String.Format("{0:MMddhhmm}", date);
+
+            pDFRerportXMLData.Path = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + date.Year.ToString().Substring(2, 2) + @"\" + dateFormat;
+
+       
+            openFormatReportPM.PDFRerportXML= LogitudeXmlSerializer.SerializeObjectToXmlString(pDFRerportXMLData);
+            
+            IAccountingContext accountingContext  = AccountingContext.GetContext(openFormatReportPM.Tenant);
+            OpenFormatReportUpdateService openFormatReportUpdateService = new OpenFormatReportUpdateService(accountingContext, new Dictionary<string, IContext>(), openFormatReportPM.Tenant);
+            openFormatReportPM.StatusTypeCode = "3";
+            openFormatReportPM.ChangeSetOp = ChangeSetOperation.Update;
+            openFormatReportUpdateService.Update(openFormatReportPM,true);
+
+
+        }
+
+        
         public static string Format(decimal value, bool quantity =false)
         {
 

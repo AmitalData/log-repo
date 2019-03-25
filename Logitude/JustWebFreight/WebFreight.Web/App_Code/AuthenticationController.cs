@@ -13,9 +13,9 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers; 
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries; 
-using WebFreight.Web.DataContracts;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;   
+using WebFreight.Web.DataContracts; 
+using WebFreight.Web.Helpers; 
+using WebFreight.Web.Security;    
 using WebFreight.Web.WebServices;
 using System.Text.RegularExpressions; 
 using System.Web.UI; 
@@ -30,7 +30,7 @@ using Simplog.Server.Infrastructure.Azure;
 using Microsoft.Practices.Unity;
 using System.IO;
 using Logitude.Server.Tools;
-using Logitude.SystemLogs;
+using Logitude.SystemLogs; 
 using System.ServiceModel;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Diagnostics;
@@ -381,7 +381,7 @@ namespace WebFreight.Web
                     fileInfo.Extension = "jpg";
                     datainByte = storageservice.Read(fileInfo);
                 }
-
+                 
                 if (datainByte == null)
                 {
                     fileInfo.FileName = "smalllogo" + companyId;

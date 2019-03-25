@@ -64,6 +64,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.QuoteIsFCL = !QuoteUtilities.IsLCLQuote(this.EntityPM);                                
                     this.SetUIProperties();
                     this.BuildItemsSource();
                 }
@@ -72,6 +73,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.QuoteIsFCL = !QuoteUtilities.IsLCLQuote(this.EntityPM);                                
                     this.SetUIProperties();
                     this.BuildItemsSource();
                 }

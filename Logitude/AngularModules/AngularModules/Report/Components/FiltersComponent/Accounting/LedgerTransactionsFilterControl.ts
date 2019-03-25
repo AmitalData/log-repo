@@ -36,13 +36,6 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         });
 
 
-        //#region Fill Date Default Values
-        var today = new Date();
-        this.ToDate = new Date();
-        var lastmonth = today.setMonth(today.getMonth() - 1);
-        this.FromDate = new Date(lastmonth);
-        //#endregion
-
 
 
 
@@ -51,12 +44,22 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     ngOnInit() {
         this.SetUIProperties();
 
+        //#region Fill Date Default Values
+        var today = new Date();
+        this.ToDate = new Date();
+        var lastmonth = today.setMonth(today.getMonth() - 1);
+        this.FromDate = new Date(lastmonth);
+        //#endregion
+
 
     }
 
     SetUIProperties() {
         // this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
-        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+         this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, true);
+            this.UIProperties.SetRequired("FromDate", this.ObjectTableName, true);
+            this.UIProperties.SetRequired("ToDate", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
 
     }
 
@@ -320,6 +323,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.fromDate != value) {
             this.fromDate = value;
             this.ValidateDate();
+            this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !value);
         }
     }
 
@@ -329,6 +333,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.toDate != value) {
             this.toDate = value;
             this.ValidateDate();
+            this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !value);
+
         }
     }
 
@@ -364,6 +370,9 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     set GLAccountId(value: string) {
         if (this._GLAccountId != value) {
             this._GLAccountId = value;
+
+            this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !value);
+
         }
     }
 

@@ -77,6 +77,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public bool IsConnectedToShipment { get; set; }
         [Column("VolumetricWeight")]
 	    public double? VolumetricWeight { get; set; }
+        [Column("CommodityNumber")]
+	    public string CommodityNumber { get; set; }
     }
 }
 	 

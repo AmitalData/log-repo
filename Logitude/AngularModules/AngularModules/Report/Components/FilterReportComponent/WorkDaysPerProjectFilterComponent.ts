@@ -32,7 +32,8 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
     queryFilterItem: QueryFilterItem;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "TMEmployeeTime";
-    private includeInnerProject: boolean;
+
+    private includeInnerProject: boolean = true;
     public get IncludeInnerProject() { return this.includeInnerProject; }
     public set IncludeInnerProject(value: boolean) {
         if (value != this.includeInnerProject) {
