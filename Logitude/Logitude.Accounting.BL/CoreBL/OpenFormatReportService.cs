@@ -146,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL
             myStringBuilder.Append(a);
             myStringBuilder.Append("&OF1.31&");
             myStringBuilder.Append(' ', 50);
-            myStringBuilder.Append('\n');
+             myStringBuilder.AppendLine();
             //B100
             int counter = 1;
             foreach (B100Data item in b100Data)
@@ -449,7 +449,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
             }
 
           
@@ -543,7 +543,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (item.DisplayNumber != null)
                 {
-                    if (item.DisplayNumber.Length > 15) { item.DisplayNumber.Substring(0, 15); }
+                    if (item.DisplayNumber.Length > 15) { item.DisplayNumber= item.DisplayNumber.Substring(0, 15); }
                     myStringBuilder.Append(item.DisplayNumber.PadLeft(15, ' '));
                 }
                 else
@@ -553,7 +553,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (item.LocalName != null)
                 {
-                    if (item.LocalName.Length > 50) { item.LocalName.Substring(0, 50); }
+                    if (item.LocalName.Length > 50) { item.LocalName= item.LocalName.Substring(0, 50); }
                     myStringBuilder.Append(a + item.LocalName.PadLeft(50, ' '));
                 }
                 else
@@ -1035,7 +1035,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 myStringBuilder.Append(a);
                 myStringBuilder.Append(' ', 16);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
             }
 
             //C100
@@ -1440,28 +1440,18 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(a);
                 myStringBuilder.Append(' ', 7);
 
-
-
-                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
-                if (user != null)
+                if (item.CreatedbyUser != null)
                 {
-                    if (user.Code != null)
-                    {
-                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
-                    }
-                    else if (user.EnglishName != null)
-                    {
-                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
-                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
-                    }
-
-                    else
-                    {
-                        myStringBuilder.Append(' ', 9);
-                    }
-
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append(item.CreatedbyUser.PadLeft(9, ' '));
                 }
+                else
+                {
+                    myStringBuilder.Append(' ', 9);
+                }
+               
+
+                
 
 
 
@@ -1479,7 +1469,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
                 //D110
                 List<ARInvoiceLinePM> lines = aRInvoiceLinePMs.Where(d => d.ARInvoiceId == item.ARInvoiceId).ToList();
                 foreach (ARInvoiceLinePM line in lines)
@@ -1659,7 +1649,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 21);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
             }
 
@@ -2133,41 +2123,22 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 7);
 
 
-                //if (item.CreatedbyUser != null)
-                //{
-                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                //    myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
-                //}
-                //else
-                //{
-                //    myStringBuilder.Append(a);
-                //    myStringBuilder.Append(' ', 9);
-                //}
-
-                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
-                if (user != null)
+                if (item.CreatedbyUser != null)
                 {
-                    if (user.Code != null)
-                    {
-                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
-                    }
-                    else if (user.EnglishName != null)
-                    {
-                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
-                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
-                    }
-
-                    else
-                    {
-                        myStringBuilder.Append(' ', 9);
-                    }
-
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
                 }
+                else
+                {
+                    myStringBuilder.Append(a);
+                    myStringBuilder.Append(' ', 9);
+                }
+
+               
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
 
                 //D110
                 List<APInvoiceLinePM> lines = aPInvoiceLinePMs.Where(d => d.APInvoiceId == item.APInvoiceId).ToList();
@@ -2372,7 +2343,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 21);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
             }
 
@@ -2754,31 +2725,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 myStringBuilder.Append(' ', 7);
-
-                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
-                if (user != null)
+                if (item.CreatedbyUser != null)
                 {
-                    if (user.Code != null)
-                    {
-                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
-                    }
-                    else if (user.EnglishName != null)
-                    {
-                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
-                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
-                    }
-
-                    else
-                    {
-                        myStringBuilder.Append(' ', 9);
-                    }
-
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append(item.CreatedbyUser.PadLeft(9, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append(' ', 9);
                 }
 
+                
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
 
                 //D120
                 List<ARPaymentChequePM> lines = cheques.Where(d => d.PaymentId == item.ARPaymentId).ToList();
@@ -3003,7 +2963,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
             }
 
@@ -3159,42 +3119,23 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                UserPM user = users.Where(d => d.Id == item.CreatedbyUser).FirstOrDefault();
-                if (user != null)
+               
+
+                
+                if (item.CreatedbyUser != null)
                 {
-                    if (user.Code != null)
-                    {
-                        if (user.Code.Length > 9) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append(user.Code.PadLeft(9, ' '));
-                    }
-                    else if (user.EnglishName != null)
-                    {
-                        if (user.EnglishName.Length > 9) { user.EnglishName = user.EnglishName.Substring(0, 9); }
-                        myStringBuilder.Append(user.EnglishName.PadLeft(9, ' '));
-                    }
-
-                    else
-                    {
-                        myStringBuilder.Append(' ', 9);
-                    }
-
-
-
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
                 }
-                //if (item.CreatedbyUser != null)
-                //{
-                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                //    myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
-                //}
-                //else
-                //{
-                //    myStringBuilder.Append(a);
-                //    myStringBuilder.Append(' ', 9);
-                //}
+                else
+                {
+                    myStringBuilder.Append(a);
+                    myStringBuilder.Append(' ', 9);
+                }
 
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
-                myStringBuilder.Append('\n');
+                 myStringBuilder.AppendLine();
 
                 //D120
 
@@ -3312,7 +3253,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
 
-                    myStringBuilder.Append('\n');
+                     myStringBuilder.AppendLine();
                 }
 
                 else
@@ -3528,7 +3469,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a);
                         myStringBuilder.Append(' ', 60);
 
-                        myStringBuilder.Append('\n');
+                         myStringBuilder.AppendLine();
                     }
                 }
 
@@ -3793,7 +3734,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         TotalDocumentsAmountAfterDiscount = a.SubTotalInLocalCurrency,
                                         DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
                                         DocuemntsReferenceDate = a.InvoiceDate,
-                                        CreatedbyUser= a.CreatedByUser.Contact.LocalName != null? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        CreatedbyUser= a.CreatedByUser.Code != null? a.CreatedByUser.Code : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.BillTo.GLAccountId,
                                         IsCancelled = a.IsCancelled,
                                         
@@ -3827,7 +3768,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         TotalDocumentsAmountAfterDiscount = a.SubTotalInLocalCurrency,
                                         DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
                                         DocuemntsReferenceDate = a.InvoiceDate,
-                                        CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        CreatedbyUser = a.CreatedByUser.Code != null ? a.CreatedByUser.Code  : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.VendorCard.GLAccountId,
                                         IsCancelled = a.StatusCode =="VD" ? true:false,
                                         VendorId =a.VendorId,
@@ -3863,7 +3804,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         TotalDocumentsAmountAfterDiscount = null,
                                         DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
                                         DocuemntsReferenceDate = a.RegisterDate,
-                                        CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        CreatedbyUser = a.CreatedByUser.Code != null ? a.CreatedByUser.Code : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.BillToCard.GLAccountId,
                                         IsCancelled = a.StatusCode == "VD" ? true : false,
                                         VendorId = a.BillToId,
@@ -3907,7 +3848,7 @@ namespace Logitude.Accounting.BL.CoreBL
                              TotalDocumentsAmountAfterDiscount = null,
                              DocumentAmountAndVATAmount = (double)a.LocalDepositAmount,
                              DocuemntsReferenceDate = a.AccountingDate,
-                             CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                             CreatedbyUser = a.CreatedByUser.Code != null ? a.CreatedByUser.Code : a.CreatedByUser.Contact.EnglishName,
                              GLAccountId = null,
                              IsCancelled = a.IsCanceled,
                              VendorId = null,
@@ -4113,7 +4054,8 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append("0");
             stringBuilder.Append(' ',46);
 
-            stringBuilder.Append("\n");
+             stringBuilder.AppendLine();
+            
             stringBuilder.Append("B100");
             if (B100Count.ToString().Length >15)
             {
@@ -4124,7 +4066,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + B100Count.ToString().PadLeft(15, '0'));
             }
-            stringBuilder.Append("\n");
+            stringBuilder.AppendLine();
             stringBuilder.Append("B110");
             if (B110Count.ToString().Length > 15)
             {
@@ -4135,7 +4077,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + B110Count.ToString().PadLeft(15, '0'));
             }
-            stringBuilder.Append("\n");
+             stringBuilder.AppendLine();
             stringBuilder.Append("C100");
             if (C100Count.ToString().Length > 15)
             {
@@ -4146,7 +4088,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 stringBuilder.Append(a + C100Count.ToString().PadLeft(15, '0'));
             }
-            stringBuilder.Append("\n");
+            stringBuilder.AppendLine();
             stringBuilder.Append("D110");
             if (D110Count.ToString().Length > 15)
             {
@@ -4158,7 +4100,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 stringBuilder.Append(a + D110Count.ToString().PadLeft(15, '0'));
             }
 
-            stringBuilder.Append("\n");
+             stringBuilder.AppendLine();
             stringBuilder.Append("D120");
             if (D120Count.ToString().Length > 15)
             {
