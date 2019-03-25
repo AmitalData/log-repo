@@ -1767,6 +1767,8 @@ export class TransactionLineModel extends BaseComponent {
         if (this.LedgerTransactionPM.AmountToReconcile != value) {
             this.LedgerTransactionPM.AmountToReconcile = value;
 
+            this.IsChecked = true;
+
             //set amount
             if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
                 this.OpenAmount = this.originalOpenAmount - this.AmountToReconcile;

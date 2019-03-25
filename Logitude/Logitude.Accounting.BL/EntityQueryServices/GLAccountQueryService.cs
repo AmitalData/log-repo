@@ -595,6 +595,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                };
             return Accounts;
         }
+
+        internal object GetSinglePM(string billToGLAccountId)
+        {
+            throw new NotImplementedException();
+        }
+
         public static TaxDeductionReportData taxDeduction;
         public TaxDeductionReportData GetTaxDeductionReportData(int? reportYear, int tenant)
         {

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL.DataContract;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -566,130 +567,65 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pms;
         }
 
-        public List<LedgerTransactionPM> GetARPaymentOpenTransactions(string billToGLAccountId, int tenant)
+        public List<LedgerTransactionPM> GetReconciledInvoicesTransactionsForARPayment(string arpaymentId, string billToGLAccountId, int tenant)
         {
-            IQueryable<LedgerTransactionPM> query = GetTransactionsJoinedWithJounrals();
-
-            query = query.Where(d =>
-                d.AccountId == billToGLAccountId
-            && d.Tenant == tenant
-            && d.IsReconciled == false
-            && d.SourceTypeCode == "2"
-            );
-
-            return query.ToList();
-        }
-
-        public List<LedgerTransactionPM> GetARPaymentReconciledTransactions(string arpaymentId, string billToGLAccountId, int tenant)
-        {
-            ReconciliationQueryService recoQuery = new ReconciliationQueryService(tenant);
+            LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
             ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
-            IQueryable<LedgerTransactionPM> query = GetTransactionsJoinedWithJounrals();
-            List<LedgerTransactionPM> trans4invoices = new List<LedgerTransactionPM>();
+
+            IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
 
             // get payment transaction
-            LedgerTransactionPM paymentTransaction = query.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
+            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
             string paymentTransactionId = paymentTransaction.Id;
-
-            //get reconciliation lines of payment invoices by paymentTransactionId
+            
+            // get reconcile lines for this payment
             List<ReconciliationLinePM> recoLines = recoLineQuery.GetLinesByReconciledWithTransactionId(paymentTransactionId, tenant);
 
-            // get payment transaction reconciliation id    
-            ReconciliationLine paymentReco = recoLineQuery.GetLineByTransactionId(paymentTransactionId, tenant);
-            if (paymentReco != null)
-            {
+            // get transactions connected to reco lines
+            List<string> recoLinesTransactionsId = recoLines.Select(d => d.TransactionId).ToList();
+            List<LedgerTransactionPM> reconciledTransactions = transactionsQuery.GetLedgerTransactionPMsByIdList(recoLinesTransactionsId, tenant);
 
-                string paymentRecoId = paymentReco.ReconciliationId;
+            // exclude partially reconcile transactions
+            reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true).ToList();
 
+            reconciledTransactions = FillTransactionsReconciliationNumbers(reconciledTransactions, tenant);
 
-                // filter query
-                query = query.Where(d =>
-                        d.AccountId == billToGLAccountId
-                    && d.Tenant == tenant
-                    && d.IsReconciled == true
-                    && d.SourceTypeCode == "2").OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
+            return reconciledTransactions;
 
-
-                // get reconiliations:
-                List<string> transactionsIds = query.Select(d => d.Id).ToList();
-
-                trans4invoices = query.ToList();
-                trans4invoices.ForEach(t =>
-                {
-                    List<ReconciliationLinePM> transactionReconciliationLines = recoLines.Where(d => d.TransactionId == t.Id).ToList();
-
-                    List<string> recosIds = transactionReconciliationLines.Select(d => d.ReconciliationId).ToList();
-                    List<ReconciliationPM> recos = recoQuery.GetReconciliationsByIds(recosIds, tenant);
-                    List<string> numbers = recos.Select(d => d.Number).ToList();
-                    string numbersString = string.Join(",", numbers.ToArray());
-
-                    t.RecoNumber = numbersString;
-                });
-
-                //filter by ARPayment
-                List<LedgerTransactionPM> filteredTransactions = trans4invoices.Where(t => t.ReconciliationId == paymentRecoId).ToList();
-
-            }
-
-            return trans4invoices;
         }
-        public List<LedgerTransactionPM> GetARPaymentPartiallyReconciledTransactions(string arpaymentId, string billToGLAccountId, int tenant)
+        public List<LedgerTransactionPM> GetOpenInvoicesTransactionsForAccount(string billToGLAccountId, int tenant)
         {
-            ReconciliationQueryService recoQuery = new ReconciliationQueryService(tenant);
-            ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
-            IQueryable<LedgerTransactionPM> query = GetTransactionsJoinedWithJounrals();
+            IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
+
+            // filter transactions by account and source type
+            transactions = transactions
+                    .Where(d =>
+                        d.AccountId == billToGLAccountId
+                        && d.Tenant == tenant
+                        && d.IsReconciled == false
+                        && d.SourceTypeCode == AccountingEntityValues.ARInvoice)
+                    .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
+
+            List<LedgerTransactionPM> openInvoicesTransactions = FillTransactionsReconciliationNumbers(transactions.ToList(), tenant);
+
+            return openInvoicesTransactions;
+        }
+
+        private List<LedgerTransactionPM> FillTransactionsReconciliationNumbers(List<LedgerTransactionPM> transactions, int tenant)
+        {
             List<LedgerTransactionPM> trans4invoices = new List<LedgerTransactionPM>();
 
-            // get payment transaction
-            LedgerTransactionPM paymentTransaction = query.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
-            string paymentTransactionId = paymentTransaction.Id;
-
-            //get reconciliation lines of payment invoices by paymentTransactionId
-            List<ReconciliationLinePM> recoLines = recoLineQuery.GetLinesByReconciledWithTransactionId(paymentTransactionId, tenant);
-            List<string> reconciliedWithTransactionsIdList = recoLines.Select(d => d.TransactionId).ToList();
-
-            // get payment transaction reconciliation id    
-            ReconciliationLine paymentReco = recoLineQuery.GetLineByTransactionId(paymentTransactionId, tenant);
-            if (paymentReco != null)
+            trans4invoices = transactions.ToList();
+            trans4invoices.ForEach(t =>
             {
+                t.RecoNumber = GetReconciliationsNumbersForTransaction(t.Id, tenant);
 
-                string paymentRecoId = paymentReco.ReconciliationId;
-
-
-                // filter query
-                query = query.Where(d =>
-                        d.AccountId == billToGLAccountId
-                    && d.Tenant == tenant
-                    //&& reconciliedWithTransactionsIdList.Contains(d.Id)
-                    && d.IsReconciled == false
-                    && d.SourceTypeCode == "2").OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
-
-
-                // get reconiliations:
-                List<string> transactionsIds = query.Select(d => d.Id).ToList();
-
-                trans4invoices = query.ToList();
-                trans4invoices.ForEach(t =>
-                {
-                    List<ReconciliationLinePM> transactionReconciliationLines = recoLines.Where(d => d.TransactionId == t.Id).ToList();
-
-                    List<string> recosIds = transactionReconciliationLines.Select(d => d.ReconciliationId).ToList();
-                    List<ReconciliationPM> recos = recoQuery.GetReconciliationsByIds(recosIds, tenant);
-                    List<string> numbers = recos.Select(d => d.Number).ToList();
-                    string numbersString = string.Join(",", numbers.ToArray());
-
-                    t.RecoNumber = numbersString;
-                });
-
-                //filter by ARPayment
-                List<LedgerTransactionPM> filteredTransactions = trans4invoices.Where(t => t.ReconciliationId == paymentRecoId).ToList();
-
-            }
+            });
 
             return trans4invoices;
         }
 
-        IQueryable<LedgerTransactionPM> GetTransactionsJoinedWithJounrals()
+        private IQueryable<LedgerTransactionPM> GetTransactionsJoinedWithJounrals()
         {
 
             IQueryable<LedgerTransactionPM> query =
@@ -759,14 +695,24 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return query;
         }
 
-        //public List<LedgerTransactionPM> GetARPaymentTransactions(string arpaymentId, int tenant)
-        //{
-        //    List<LedgerTransaction> ledgerTransactionPOCOs = null;
-        //    ledgerTransactionPOCOs = repository.GetLedgerTransactionsByIdList(idList, tenant);
-        //    List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
-        //    return pms;
-        //}
+        private string GetReconciliationsNumbersForTransaction(string transactionId, int tenant)
+        {
+            ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
+            ReconciliationQueryService recoQuery = new ReconciliationQueryService(tenant);
 
+            // get reconciliation lines for the transaction
+            List<ReconciliationLinePM> recoLines = recoLineQuery.GetLinesByTransactionId(transactionId, tenant).ToList();
+
+            // get reconciliaitons of reconciliation lines
+            List<string> recosIds = recoLines.Select(d => d.ReconciliationId).ToList();
+            List<ReconciliationPM> recos = recoQuery.GetReconciliationsByIds(recosIds, tenant);
+
+            // join reconciliations numbers
+            List<string> numbers = recos.Select(d => d.Number).ToList();
+            string numbersString = string.Join(",", numbers.ToArray());
+
+            return numbersString;
+        }
   
 
     }
