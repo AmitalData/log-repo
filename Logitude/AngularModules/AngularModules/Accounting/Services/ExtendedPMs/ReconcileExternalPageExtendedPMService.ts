@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -9,6 +9,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ReconcileExternalPagePM} from '../../EntityPMs/ReconcileExternalPagePM';
 import {ReconcileExternalPageLinePM} from '../../EntityPMs/ReconcileExternalPageLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 
 @Injectable()
 
@@ -20,7 +21,7 @@ export class ReconcileExternalPageExtendedPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPages';
     }
 
-    
+
     GetBankPageByPageNo(pageNumber: string, bankAccountId: string) {
 
         return Observable.defer(() => {
@@ -64,6 +65,30 @@ export class ReconcileExternalPageExtendedPMService {
 
 
     }
+    
+
+    LoadBankPages(fileUploadParamerter: ImageParameter) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutLoadBankPages', JSON.stringify(fileUploadParamerter), {
+                headers: authHeader,
+
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+
+                pmresponse.Result = result;
+                return pmresponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+
+    }
+
 
     GetDraftPage(bankAccountId: string) {
 
