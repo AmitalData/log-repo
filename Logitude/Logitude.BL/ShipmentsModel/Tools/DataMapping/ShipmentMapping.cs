@@ -323,7 +323,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.NumberOfInsidePackagesDetails = entityPM.NumberOfInsidePackagesDetails;
             entityPoco.ViaColoader = entityPM.ViaColoader;
             entityPoco.IssuingCarrierReference1 = entityPM.IssuingCarrierReference1;
-            entityPoco.OperationalCloseDate = entityPM.OperationalCloseDate;
+            if(entityPoco.OperationalCloseDate==null && entityPM.OperationalCloseDate != null)
+            {
+                entityPoco.OperationalClosedByUserId = entityPM.OperationalClosedByUserId;
+            }
+            else if (entityPoco.OperationalCloseDate != null && entityPM.OperationalCloseDate == null)
+            {
+                entityPoco.OperationalClosedByUserId = entityPM.OperationalClosedByUserId;
+            }
+
+            entityPoco.OperationalCloseDate = entityPM.OperationalCloseDate;            
             entityPoco.AccountingCloseDate = entityPM.AccountingCloseDate;
             entityPoco.ForwarderPartnerId = entityPM.ForwarderPartnerId;
             entityPoco.ForwardingPartnerId = entityPM.ForwardingPartnerId;

@@ -4521,7 +4521,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         if (this.entityPM.IsOperationalClosed)
                         {
                             this.entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
+                            this.entityPM.OperationalClosedByUserId = this.entityPM.UpdatedByUserId;
                             if (this.entityPM.FirstOperationalCloseDate == null)
                             {
                                 this.entityPM.FirstOperationalCloseDate = this.entityPM.OperationalCloseDate;
@@ -4531,6 +4531,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         else
                         {
                             this.entityPM.OperationalCloseDate = null;
+                            this.entityPM.OperationalClosedByUserId = null;
+
+
                         }
                     }
 
@@ -4673,6 +4676,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                         iHousePM.IsCancelled = this.entityPM.IsCancelled;
                                         iHousePM.CancelledDate = this.entityPM.CancelledDate;
                                         iHousePM.IsOperationalClosed = this.entityPM.IsOperationalClosed;
+                                        iHousePM.OperationalClosedByUserId = this.entityPM.OperationalClosedByUserId;
                                         iHousePM.OperationalCloseDate = this.entityPM.OperationalCloseDate;
                                         iHousePM.FirstOperationalCloseDate = this.entityPM.FirstOperationalCloseDate;
                                         iHousePM.IsAccountingClosed = this.entityPM.IsAccountingClosed;

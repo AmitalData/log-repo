@@ -2,34 +2,43 @@
 
 using CommunicationWorkerRole.Tasks;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using System.Transactions;
 
-public class DeleteOldQueueMessageMoreDetailsTask : TaskManagerBase
+namespace CommunicationWorkerRole.Tasks
 {
-    public DeleteOldQueueMessageMoreDetailsTask(string Id, int tenant)
-        : base(Id, tenant)
+    public class DeleteOldQueueMessageMoreDetailsTask : TaskManagerBase
     {
-
-    }
-    public override void StartTask()
-    {
-        string strConnString = TenantServerConfigration.GetDbConnection(0);
-
-        int numberOfExecuteRow = 1000;
-
-        while (numberOfExecuteRow == 1000)
+        public DeleteOldQueueMessageMoreDetailsTask(string Id, int tenant)
+            : base(Id, tenant)
         {
-            using (SqlConnection cn = new SqlConnection(strConnString))
-            {
-                SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldQueueMessageMoreDetailsTask]", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cn.Open();
-                numberOfExecuteRow = cmd.ExecuteNonQuery();
-                cn.Close();
-            }
+
         }
+        public override void StartTask()
+        {
+            string strConnString = TenantServerConfigration.GetDbConnection(0);
 
+            int numberOfExecuteRow = 1000;
 
+            while (numberOfExecuteRow == 1000)
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldQueueMessageMoreDetailsTask]", cn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = 1000000;
+                        cn.Open();
+                        numberOfExecuteRow = cmd.ExecuteNonQuery();
+                        cn.Close();
+                        scope.Complete();
+                    }
+                }
+            }
+
+        }
     }
 }

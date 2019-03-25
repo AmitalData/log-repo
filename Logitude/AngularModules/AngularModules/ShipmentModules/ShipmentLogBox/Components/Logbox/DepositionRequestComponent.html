@@ -42,8 +42,15 @@
                             <tr style="height:20px">
                                 <td style="width:140px;font-size:13px">מספר ספק</td>
                 
-                                <td><span style="font-size:13px" [attr.Id]="VendorCodeId">{{VendorCode}}</span>
-                                    <img title="copy" src="./_Resources/Images/Icons/All/copy.png" style="width:24px;height:24px;cursor:pointer" (click)="CopyTextButtonClicked()"  *ngIf="VendorCode"  />
+                                <td>
+                                    
+                                    <span style="font-size:13px" [attr.Id]="VendorCodeId">{{VendorCode}}
+                                    
+                                    </span>
+
+                                    <a   *ngIf="VendorCode" class="CustomLink"  style="font-size:13px;" (click)="CopyTextButtonClicked()">העתק</a>
+
+                                    <!--<img title="copy" src="./_Resources/Images/Icons/All/copy.png" style="width:24px;height:24px;cursor:pointer" (click)="CopyTextButtonClicked()"  *ngIf="VendorCode"  />-->
                                 </td>
 
                             </tr>

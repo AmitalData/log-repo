@@ -1434,20 +1434,20 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                 foreach (ObjectFieldPM objectField in objectfields)
                 {
-                    if (objectFieldModificationsDictionary.Count != 0)
-                    {
-                        if (objectFieldModificationsDictionary.Keys.Contains(objectField.Id))
-                        {
-                            ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.Id];
+					if (objectFieldModificationsDictionary.Count != 0 && tenant != 0)
+					{
+						if (objectFieldModificationsDictionary.Keys.Contains(objectField.Id))
+						{
+							ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.Id];
 
-                            if (mod != null)
-                            {
-                                objectField.IsRequiered = mod.IsRequired;
-                                objectField.MaxLength = mod.MaxLength;
-                                objectField.MinLength = mod.MinLength;
-                            }
-                        }
-                    }
+							if (mod != null)
+							{
+								objectField.IsRequiered = mod.IsRequired;
+								objectField.MaxLength = mod.MaxLength;
+								objectField.MinLength = mod.MinLength;
+							}
+						}
+					}
 
                     if (objectFieldValidationsDictionary.Count != 0)
                     {

@@ -358,9 +358,13 @@
     <Compile Include="FTPToAnalyzeQueueWorkerRole.cs" />
     <Compile Include="INTTRAAnalyzerWorkerRole.cs" />
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
-    <Compile Include="Tasks\TestLoggingTask.cs" />
+    <Compile Include="Tasks\TestLoggingWarningTask.cs" />
+    <Compile Include="Tasks\TestLoggingInfoTask.cs" />
+    <Compile Include="TMQueueMessageBuilderWorkerRole.cs" />
     <Compile Include="Tasks\DeleteOldAPILogsTask.cs" />
     <Compile Include="Tasks\DeleteOldQueueMessageMoreDetailsTask.cs" />
+    <Compile Include="TFSAggregatorWorkerRole.cs" />
+    <Compile Include="Tasks\TestLoggingTask.cs" />
     <Compile Include="TranzilaPaymentMessageAnalyzeWR.cs" />
     <Compile Include="MobileSMSWorkerRole.cs" />
     <Compile Include="PrivateLabelDenialWorkerRole.cs" />

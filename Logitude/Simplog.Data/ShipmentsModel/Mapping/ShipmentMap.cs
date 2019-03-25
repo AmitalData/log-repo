@@ -261,6 +261,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomsDeclarationNumber).HasMaxLength(35).IsUnicode(false);
             this.Property(t => t.ForwarderPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LastSentByUserId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OperationalClosedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ValueOfGoodsCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OriginShipmentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReleasingAgentId).HasMaxLength(15).IsUnicode(false);
@@ -611,7 +612,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomsDeclarationNumber).HasColumnName("CustomsDeclarationNumber");
             this.Property(t => t.CustomConnectToShipment).HasColumnName("CustomConnectToShipment");
             this.Property(t => t.ForeignPartnerCountryCode).HasColumnName("ForeignPartnerCountryCode");
-            this.Property(t => t.LastSentByUserId).HasColumnName("LastSentByUserId");            
+            this.Property(t => t.LastSentByUserId).HasColumnName("LastSentByUserId");
+            this.Property(t => t.OperationalClosedByUserId).HasColumnName("OperationalClosedByUserId");            
             this.Property(t => t.ForwarderPartnerId).HasColumnName("ForwarderPartnerId");
             this.Property(t => t.NumberOfFollowUps).HasColumnName("NumberOfFollowUps");
             this.Property(t => t.LastExceptionDescription).HasColumnName("LastExceptionDescription");
@@ -892,6 +894,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.WarehouseLegAddress).WithMany().HasForeignKey(d => d.WarehouseLegAddressId);
             this.HasOptional(t => t.LastSharedEvent).WithMany().HasForeignKey(d => d.LastSharedEventId);
             this.HasOptional(t => t.LocalCustomsSentByUser).WithMany().HasForeignKey(d => d.LocalCustomsSentByUserId);
+            this.HasOptional(t => t.OperationalClosedByUser).WithMany().HasForeignKey(d => d.OperationalClosedByUserId);
             this.HasOptional(t => t.INTTRASIStatus).WithMany().HasForeignKey(d => d.INTTRASIStatusCode);
             this.HasOptional(t => t.EmergencyContact).WithMany().HasForeignKey(d => d.EmergencyContactId);
             this.HasOptional(t => t.OnCarriageAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnCarriageAdditionalTransportModeCode);

@@ -1,10 +1,10 @@
 ﻿
 <style>
-       .Link:hover {
+    .Link:hover {
         cursor: pointer;
         color: #1C59FC;
     }
-    
+
     .Link {
         cursor: pointer;
         font-size: 13px;
@@ -13,9 +13,16 @@
         white-space: nowrap;
     }
 </style>
-<div  style="margin-left:5px;margin-top:5px">
-    <!--<a class="Link"  style="font-size:13px;" (click)="AddField(rowData)">Add</a>-->
-    <IconButton [IsSmall]="true"  [Name]="'Add'"  (click)="AddField(rowData)"></IconButton>
-               
+
+<div style="vertical-align:central;text-align:left">
+    <a class="Link" style="font-size:13px;" (click)="AddField(rowData)">Add</a>
 </div>
+
+
+
+<!--<div style="margin-left:5px;margin-top:5px">
+
+    <img class="CenterCenter" (click)="AddField(rowData)" style="cursor:pointer;height:24px;width:24px" src="./_Resources/Images/Icons/All/ArrowForward.png" />
+
+</div>-->
 

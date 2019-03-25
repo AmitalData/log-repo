@@ -662,6 +662,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
                 TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext);
                 TMEmployeeTimeRepository repository = new TMEmployeeTimeRepository(myContext);
+                TMEmployeeTimeQueryService tmQueryService = new TMEmployeeTimeQueryService(myContext);
 
                 if (Id == "null")
                 {
@@ -692,7 +693,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TimeManagementAPIHelper args = new TimeManagementAPIHelper();
                 if (deletedItem != null)
                 {
-
+                    deletedItem.TimeInMinutes = 0;
+                    service.SendQueueMessage(deletedItem.Id, deletedItem.WINumber, deletedItem.TimeInMinutes, deletedItem.Tenant);
                     repository.Remove(deletedItem);
                     repository.SubmitChanges();
 

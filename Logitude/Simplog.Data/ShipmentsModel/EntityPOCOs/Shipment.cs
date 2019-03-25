@@ -74,6 +74,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string IncotermId { get; set; }
         public string SalesmanUserId { get; set; }
         public string CreatedByUserId { get; set; }
+        public string OperationalClosedByUserId { get; set; }
+        
         public string DepartmentId { get; set; }
         public string Notes { get; set; }
         public string DescriptionOfGoods { get; set; }
@@ -451,6 +453,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         //[ForeignKey("CreatedByUserId")]
         public virtual User CreatedByUser { get; set; }
 
+        public virtual User OperationalClosedByUser { get; set; }
 
 
 
