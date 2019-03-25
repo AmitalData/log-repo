@@ -17,6 +17,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -148,6 +149,7 @@ namespace WebFreight.Web.Helpers
             TMProjectRepository tmProjectRepository = new TMProjectRepository(myContext);
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
             UserRepository userRepository = new UserRepository(Tenant);
+            TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext, new Dictionary<string, IContext>(), Tenant);
 
             User assignedToUser = null;
             User updatedByUser = null;
@@ -190,10 +192,9 @@ namespace WebFreight.Web.Helpers
                 if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed" || Details.TaskState == "Done"))
                 {
                     if (!CheckTMLineDuplication(this.Details.WorkItemId, Tenant)) {
-                        var newItem = new TMEmployeeTime();
-                        newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
+                        var newItem = new TMEmployeeTimePM();
+                        //newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
                         newItem.Tenant = Tenant;
-                        //newItem.TimeInMinutes = System.Convert.ToInt32(Details.RemainingWork.Value) * 60;
                         newItem.DateOfWork = this.Details.ChangedDate != null ? this.Details.ChangedDate.Date : this.Details.ChangedDate;
                         newItem.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                         newItem.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
@@ -210,8 +211,8 @@ namespace WebFreight.Web.Helpers
                         SprintRepository sprintRepository = new SprintRepository(Tenant);
                         var sprintPOCO = sprintRepository.GetSprintByName(sprint, Tenant);
                         newItem.SprintId = sprintPOCO != null ? sprintPOCO.Id : null;
-                        tmEmployeeTimeRepository.Add(newItem);
-                        tmEmployeeTimeRepository.SubmitChanges();
+                        newItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                        service.Update(newItem, true);
                     }
                 }
             }
@@ -226,8 +227,6 @@ namespace WebFreight.Web.Helpers
             var isDuplicate = false;
             var todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
             ITimeManagementContext myContext = TimeManagementContext.GetContext(Tenant);
-            TMEmployeeTimeQueryService queryService = new TMEmployeeTimeQueryService(myContext);
-
             IQueryable<TMEmployeeTime> iQueryable;
 
             iQueryable = (from d in myContext.TMEmployeeTimes

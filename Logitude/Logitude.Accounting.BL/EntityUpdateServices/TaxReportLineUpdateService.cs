@@ -118,8 +118,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0)
                 {
-                    string s = entityPM.VatableInvoiceAmount.ToString();
-                    if (s.Contains('.'))
+                  //  string s = entityPM.VatableInvoiceAmount.ToString();
+                    string[] amount = entityPM.VatableInvoiceAmount.ToString().Split('.');
+                    if (amount.Count() > 1 && amount[1] != "00" )
                     {
                         entityPM.StatusCode = "4";
                     }
@@ -189,8 +190,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if(entityPM.VatableInvoiceAmount != 0 && entityPM.VatableInvoiceAmount != null)
                 {
-                    string s = entityPM.VatableInvoiceAmount.ToString();
-                    if (s.Contains('.'))
+                    //string s = entityPM.VatableInvoiceAmount.ToString();
+                    string[] amount = entityPM.VatableInvoiceAmount.ToString().Split('.');
+                    if (amount.Count()>1 && amount[1] != "00" )
                     {
                         entityPM.StatusCode = "4";
                     }

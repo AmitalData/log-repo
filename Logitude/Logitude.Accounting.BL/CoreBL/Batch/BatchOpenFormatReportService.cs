@@ -42,9 +42,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                 DocumentsFilingPM INIdocFilingPM = OpenFormatReportService.CreateINIFile(parameterArgs.ReportId, parameterArgs.Tenant);
 
-                openFormatReportPM.StatusTypeCode = "3";
-                openFormatReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                openFormatReportUpdateService.Update(openFormatReportPM, true);
+                //openFormatReportPM.StatusTypeCode = "3";
+                //openFormatReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                //openFormatReportUpdateService.Update(openFormatReportPM, true);
 
 
             }

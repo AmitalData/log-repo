@@ -1,4 +1,4 @@
-﻿
+
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -63,7 +63,47 @@ export class PerformanceLogService {
         );
     }
 
-    
+
+    insertLogsList(logs: PerformanceLog[]) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var validator: ClassLevelValidator;
+
+            validator = new ClassLevelValidator();
+
+            var errorsArray = [];//validator.Validate("ErrorLog", entityPM);
+
+
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
+            if (errorsArray.length == 0) {
+
+
+                return this._http.post(this._apiUrl + '/PostLogsList', JSON.stringify(logs),
+                    { headers: authHeader }).map((res) => {
+                        var result = res.json();
+                        response.Result = result;
+                        return response;
+
+                    });
+            }
+            else {
+
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
+
+                return Observable.of(response);
+
+            }
+        }
+
+        );
+    }
 
 
 }

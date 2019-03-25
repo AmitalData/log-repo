@@ -12,10 +12,10 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers; 
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using WebFreight.Web.DataContracts;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security; 
+using Logitude.BL.CommonDataModel.EntityQueries; 
+using WebFreight.Web.DataContracts; 
+using WebFreight.Web.Helpers; 
+using WebFreight.Web.Security;    
 using WebFreight.Web.WebServices;
 using System.Text.RegularExpressions; 
 using System.Web.UI; 
@@ -30,7 +30,7 @@ using Simplog.Server.Infrastructure.Azure;
 using Microsoft.Practices.Unity;
 using System.IO;
 using Logitude.Server.Tools;
-using Logitude.SystemLogs;
+using Logitude.SystemLogs; 
 using System.ServiceModel;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Diagnostics;
@@ -76,7 +76,7 @@ namespace WebFreight.Web
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
             AuthenticationToken auttoken = authenticationTokenRepository.GetSingleToken(logintokenparam.Token);
             if (auttoken != null)
-            {
+            { 
                 LoginParameters loginParameters = new LoginParameters() { Email = auttoken.Email, GetToken = true, IsUser = true, Password = auttoken.Password + "@HashPassword" };
                 if (!string.IsNullOrEmpty(logintokenparam.CardId))
                 {
@@ -381,7 +381,7 @@ namespace WebFreight.Web
                     fileInfo.Extension = "jpg";
                     datainByte = storageservice.Read(fileInfo);
                 }
-
+                 
                 if (datainByte == null)
                 {
                     fileInfo.FileName = "smalllogo" + companyId;

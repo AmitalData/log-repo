@@ -129,7 +129,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     //#region Buttons
     OkButtonClicked() {
 
-        if(!this.TaxReportLinePM.TransmitStatusCode){
+        if (!this.TaxReportLinePM.TransmitStatusCode) {
             var fieldName: string = TextCodeTranslator.Translate('TaxReportLine.F.TransmitStatusCode');
             var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
             var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
@@ -147,15 +147,26 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
         // save(reprot)
         SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-        this._TaxReportPMService.update(this.TaxReportPM).subscribe(myResult => {
+        this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
-            if (!mm.HasError)
-            {
-                this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
+            if (!mm.HasError) {
+                // SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this._TaxReportPMService.update(this.TaxReportPM).subscribe(myResult => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
+                        // this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
+
+                        //     var mm: ServiceResponse = myResult;
+                        //     if (!mm.HasError) {
+                        //         SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        //     }
+                        //     else {
+                        //         this.ValidationErrorsList = mm.ErrorsArray;
+                        //         SessionLocator.CurrentSession.StopBusyIndicator();
+                        //     }
+                        // });
                         SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
                     else {
@@ -169,6 +180,8 @@ export class EditTaxReportLineComponent extends BaseComponent {
                 SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
+
+
 
     }
     CancelButtonClicked() {

@@ -41,18 +41,9 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.IsAdjustTransaction).HasColumnName("IsAdjustTransaction");
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.SearchFields).HasMaxLength(2000);
-			}
-            else
-            {
-              this.Property(t => t.SearchFields).HasMaxLength(4000);
-			}
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsUnicode(true);
+            this.Property(t => t.ReconciledWithTransactionId).HasColumnName("ReconciledWithTransactionId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

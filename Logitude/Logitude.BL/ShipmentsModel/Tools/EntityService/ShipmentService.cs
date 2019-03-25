@@ -461,10 +461,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
-
-
-              
-
+                    
                     this.ApplyUpdatingMasterHouses();
 
                     RunStoredProcedures();
@@ -2399,12 +2396,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CalculateStatus = false;
 
             this.ComputeShipmentStatus();
-            if (!entityPM.IsHybrid)
-            {
-                this.UpdateCustomerWorkingDates();
-            }
-
-
+            this.UpdateCustomerWorkingDates();            
 
             if (isNewEntity)
             {
@@ -2689,6 +2681,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.UpdateQuoteUsage();
                     }
 
+                    if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
+                    {
+                        foreach (ShipmentPackagePM pm in entityPM.ShipmentPackages)
+                        {
+                            this.DeleteShipmentPackage(pm);
+                        }
+
+                        foreach (ShipmentOrderPackagePM pm in entityPM.ShipmentOrderPackages)
+                        {
+                            this.DeleteShipmentOrderPackage(pm);
+                        }
+
+                        entityPM.TEU = null;
+                        entityPM.NumberOfPackages = null;
+                        entityPM.NumberOfContainers = null;
+                        entityPM.GrossWeight = null;
+                        entityPM.ChargeableWeight = null;
+                        entityPM.VolumetricWeight = null;
+                        entityPM.Volume = null;
+
+                        if (entityPM.ConvertShipmentToLCL)
+                        {
+                            entityPM.ShipmentTypeId = "LCLD";
+                        }
+
+                        else if(entityPM.ConvertShipmentToFCL)
+                        {
+                            entityPM.ShipmentTypeId = "FCLD";
+                        }
+                    }
+                    
                     if (entityPM.ConvertFromDirectToHouse)
                     {
                         #region
@@ -2810,6 +2833,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             entityComputedFields.IsMissingDocuments = true;
                         }
+                    }
+                    if (entityPM.CustomsClearanceDate != null)
+                    {
+                        entityComputedFields.IsMissingDocuments = false;
+                        entityComputedFields.IsRequestedDocuments = false;
+                        entityComputedFields.IsDigitalSignRequired = false;
                     }
 
                     shipmentComputedFieldsRepository.Update(entityComputedFields);
@@ -4492,7 +4521,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         if (this.entityPM.IsOperationalClosed)
                         {
                             this.entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
+                            this.entityPM.OperationalClosedByUserId = this.entityPM.UpdatedByUserId;
                             if (this.entityPM.FirstOperationalCloseDate == null)
                             {
                                 this.entityPM.FirstOperationalCloseDate = this.entityPM.OperationalCloseDate;
@@ -4502,6 +4531,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         else
                         {
                             this.entityPM.OperationalCloseDate = null;
+                            this.entityPM.OperationalClosedByUserId = null;
+
+
                         }
                     }
 
@@ -4644,6 +4676,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                         iHousePM.IsCancelled = this.entityPM.IsCancelled;
                                         iHousePM.CancelledDate = this.entityPM.CancelledDate;
                                         iHousePM.IsOperationalClosed = this.entityPM.IsOperationalClosed;
+                                        iHousePM.OperationalClosedByUserId = this.entityPM.OperationalClosedByUserId;
                                         iHousePM.OperationalCloseDate = this.entityPM.OperationalCloseDate;
                                         iHousePM.FirstOperationalCloseDate = this.entityPM.FirstOperationalCloseDate;
                                         iHousePM.IsAccountingClosed = this.entityPM.IsAccountingClosed;
@@ -6390,32 +6423,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             else
             {
-                if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
+                if (!entityPM.IsHybrid)
                 {
-                    CustomerRepository customerRepository = new CustomerRepository(tenant);
-
-                    if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
+                    if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
                     {
-                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
-                        if (customer != null)
-                        {
-                            customer.LastShipmentDate = this.entityPM.CreateDateTime;
-                            customerRepository.Update(customer);
-                            customerRepository.SubmitChanges();
-                        }
-                    }
+                        CustomerRepository customerRepository = new CustomerRepository(tenant);
 
-                    if (!string.IsNullOrEmpty(this.entityPoco.CustomerId))
-                    {
-                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
-                        if (customer != null)
+                        if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
                         {
-                            Shipment shipment = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
-                            if (shipment != null)
+                            Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
+                            if (customer != null)
                             {
-                                customer.LastShipmentDate = shipment.CreateDateTime;
+                                customer.LastShipmentDate = this.entityPM.CreateDateTime;
                                 customerRepository.Update(customer);
                                 customerRepository.SubmitChanges();
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(this.entityPoco.CustomerId))
+                        {
+                            Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
+                            if (customer != null)
+                            {
+                                Shipment shipment = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
+                                if (shipment != null)
+                                {
+                                    customer.LastShipmentDate = shipment.CreateDateTime;
+                                    customerRepository.Update(customer);
+                                    customerRepository.SubmitChanges();
+                                }
                             }
                         }
                     }
@@ -6661,8 +6697,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
             //Export
-            else if (entityPM.DirectionId == "E")
+            else if (entityPM.DirectionId == "E" )
             {
+                bool Assigned = false;
                 if (myLastDelivery != null)
                 {
                     switch (myLastDelivery.PickUpDeliveryToTypeCode)
@@ -6676,6 +6713,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                     if (toAddress != null)
                                     {
                                         entityPM.CountryForStatisticsId = toAddress.CountryId;
+                                        Assigned = true;
                                     }
                                 }
 
@@ -6688,6 +6726,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 if (!string.IsNullOrEmpty(myLastDelivery.ToAddressCountryId))
                                 {
                                     entityPM.CountryForStatisticsId = myLastDelivery.ToAddressCountryId;
+                                    Assigned = true;
                                 }
 
                                 break;
@@ -6701,6 +6740,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                     if (myPort != null)
                                     {
                                         entityPM.CountryForStatisticsId = myPort.CountryId;
+                                        Assigned = true;
                                     }
                                 }
 
@@ -6709,7 +6749,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                if (string.IsNullOrEmpty(entityPM.CountryForStatisticsId))
+                if (!Assigned)
                 {
                     if (!string.IsNullOrEmpty(entityPM.Transshipment3ToPortId))
                     {
@@ -6747,6 +6787,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                     }
                 }
+                
             }
 
             //Domestic

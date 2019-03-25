@@ -682,8 +682,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                         item.EntityPM.VatTypeId = vatType;
                         item.GetVatTypeData();
                     });
-
-                    //this.VatTypeId = null;
+                    
                     this.SetGridColumnsWidth();
                     this.ComputeTotals();
                 }

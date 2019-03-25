@@ -597,6 +597,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string reconciledWithTransactionId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReconciledWithTransactionId  
+	   {
+	    
+	     get
+		{
+		   return reconciledWithTransactionId;
+		 }
+		 set
+		 {
+		   if(reconciledWithTransactionId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReconciledWithTransactionId",OldValue=reconciledWithTransactionId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reconciledWithTransactionId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

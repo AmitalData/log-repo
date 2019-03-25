@@ -1,0 +1,110 @@
+﻿
+
+<table>
+
+    <tr *ngIf="IsShowComponentWithTabs && !IsShowPackageNotIncludeMessage">
+        <td>
+            <div class="MediaFill">
+                <div  class="TabControl">
+                    <div  class="TabControlHead">
+                        <ul style="margin-left: 2px;">
+                       
+
+                            <li [class.Selected]="SelectedTabCode == 'STASK'" (click)="SelectedTabCode = 'STASK'" >
+                                <div style="width:70px" class="InnerChild">
+                                    Task
+                                </div>
+                            </li>
+
+
+
+
+                            <li *ngIf="IsShowTabUpdate" [class.Selected]="SelectedTabCode == 'SFTP'" (click)="SelectedTabCode = 'SFTP'">
+                                <div style="width:70px" class="InnerChild">
+                                    FTP
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="TabControlBody">
+
+                        <!--   Tab 1-->
+                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'STASK'">
+                            <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
+                                <div LocationDirective Code="STASK"></div>
+                            </div>
+                        </div>
+
+                        <!--   Tab 2-->
+                        <div class="MediaFillRelative" *ngIf="IsShowTabUpdate" [hidden]="SelectedTabCode != 'SFTP'">
+
+                            <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
+                                <div LocationDirective Code="SFTP"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr *ngIf="IsShowComponentWithOutTabs && !IsShowPackageNotIncludeMessage">
+        <td>
+            
+            <div class="MediaFill">
+                <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
+                    <div *ngIf="IsShowTaskScheduler" LocationDirective Code="STASK"></div>
+                    <div *ngIf="IsShowTabFTBScheduler" LocationDirective Code="SFTP"></div>
+                </div>
+            </div>
+         </td>
+    </tr>
+
+
+    <tr *ngIf="IsShowPackageNotIncludeMessage">
+        <td>
+
+            <div class="MediaFill">
+                <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
+                    <div style="text-align:center;font-size:18px;color:gray;text-align:center;margin-top:10px;">
+                        Your package doesn't include this module..
+                    </div>
+                </div>
+            </div>
+
+
+
+    
+        </td>
+    </tr>
+
+
+
+<tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                       
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

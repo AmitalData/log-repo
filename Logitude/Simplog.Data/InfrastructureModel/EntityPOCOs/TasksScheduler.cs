@@ -34,12 +34,18 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool Thursday { get; set; }
         public bool Friday { get; set; }
         public int MonthlyDay { get; set; }
-
         public DateTime? StartDateTime { get; set; }
 
         public int RepeatInMinutes { get; set; }
 
-        public bool IsLastRunError { get; set; } 
+        public bool IsLastRunError { get; set; }
+
+        public string SchedulerDetailsXML { get; set; }
+        public string Type { get; set; }
+        public DateTime? NextRunTimeUTC { get; set; }
+        public DateTime? LastRunTimeUTC { get; set; }
+        public DateTime? StartDateTimeUTC { get; set; }
+
 
     }
 }

@@ -645,11 +645,11 @@ export class InfrastructureDomainService {
         return entityPM;
     }
 
-    GetAllTasksSchedulerPMs() {
+    GetAllTasksSchedulerPMs(schedulerType:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAllTasksSchedulerPMs';
+        var url = this._apiUrl + '/GetAllTasksSchedulerPMs?schedulerType=' + schedulerType;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {

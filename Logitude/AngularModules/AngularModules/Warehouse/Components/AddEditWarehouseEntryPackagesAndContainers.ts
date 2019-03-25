@@ -1,25 +1,17 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {AppTool, FormatTool} from '../../Infrastructure/Tools';
-
 import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
-
-import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-
 import {WarehouseEntryPackagePM} from '../../Warehouse/EntityPMs/WarehouseEntryPackagePM';
-import {NewWarehouseEntryComponent} from '../../Warehouse/Components/NewWarehouseEntryComponent';
 import {WarehouseEntryPackagePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseEntryPackagePMExtendedService';
 import {PackageTypeList} from '../../Common/EntityLists/PackageTypeList';
-import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
-
 import {BaseComponent} from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
 import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
-
-
-
+import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -29,23 +21,16 @@ import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
 })
 
 export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
-
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-
     public WarningErrorsList: string[] = [];
     public ValidationErrorsList: string[];
     warehouseEntryPM: any;
     warehouseEntryPackageItem: WarehouseEntryPackageItem;
     warehouseEntryPackagePM: WarehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
-
     ObjectTableName: string = "WarehouseEntryPackage";
     validator: ClassLevelValidator;
-
     public ContainerNumberWarning: string = null;
-
     IsNewEntity: boolean = false;
-
-  
     ObjectTableId: string;
     Type: string;
     ViewModelTrigger: any;
@@ -54,35 +39,28 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     constructor(private _warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         this.validator = new ClassLevelValidator();
 
-        var table = window.ObjectTables.filter(d=> d.Name == "WarehouseEntryPackage")[0];
-        if (table) this.ObjectTableId = table.Id;
+        var table = window.ObjectTables.filter(d => d.Name == "WarehouseEntryPackage")[0];
+
+        if (table) {
+            this.ObjectTableId = table.Id;
+        }
+    }
+
+    ngOnInit() {
 
 
     }
 
-    ngOnInit(
-
-    ) {
-
-
-    }
-
-    SetWindowArgs(args: any) { 
-    
+    SetWindowArgs(args: any) {
         this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe(response => {
-
             this.Start(args);
         });
-
     }
 
-    
     IsParentDirty: boolean = false;
     IsChildDirty: boolean = false;
-
     public savedItem: WarehouseEntryPackagePM;
     Start(args: any) {
-        
         this.warehouseEntryPM = args.WarehouseEntryPM;
         this.warehouseEntryPackagePM = args.WarehouseEntryPackagePM;
         this.AllPackageTypes = args.AllPackageTypes;
@@ -127,21 +105,13 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
                 }
             }
 
-    
             this.warehouseEntryPackageItem = new WarehouseEntryPackageItem(this.warehouseEntryPackagePM, this);
             this.IsLoadPage = true;
-           
         }
-
-
     }
 
-
     ResetPackageItem() {
-
-
         if (!this.IsNewEntity) {
-
             if (this.warehouseEntryPackagePM && this.savedItem) {
                 this.warehouseEntryPackagePM.PackageTypeId = this.savedItem.PackageTypeId;
                 this.warehouseEntryPackagePM.ContainerNumber = this.savedItem.ContainerNumber;
@@ -160,22 +130,23 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
                 this.warehouseEntryPackagePM.ContainerNumberWarning = this.savedItem.ContainerNumberWarning;
             }
 
-            if (this.warehouseEntryPM && !this.IsParentDirty && this.warehouseEntryPM.IsDirty) this.warehouseEntryPM.IsDirty = this.IsParentDirty;
-            if (this.warehouseEntryPackagePM && !this.IsChildDirty && this.warehouseEntryPackagePM.IsDirty) this.warehouseEntryPackagePM.IsDirty = this.IsChildDirty;
+            if (this.warehouseEntryPM && !this.IsParentDirty && this.warehouseEntryPM.IsDirty) {
+                this.warehouseEntryPM.IsDirty = this.IsParentDirty;
+            }
+
+            if (this.warehouseEntryPackagePM && !this.IsChildDirty && this.warehouseEntryPackagePM.IsDirty) {
+                this.warehouseEntryPackagePM.IsDirty = this.IsChildDirty;
+            }
         }
     }
-
 
     CanceluttonClicked() {
         this.ResetPackageItem();
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
-   
     SaveButtonClicked() {
-
         this.ValidationErrorsList = [];
-
 
         var errorsArray = this.validator.Validate("WarehouseEntryPackage", this.warehouseEntryPackagePM);
         if (errorsArray.length > 0) {
@@ -189,28 +160,16 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
                 this.ComplateSave();
             }
 
-         else   SessionLocator.CurrentSession.CloseCurrentWindow();
-
+            else {
+                SessionLocator.CurrentSession.CloseCurrentWindow();
+            }
         }
-
-
     }
 
     ComplateSave() {
-
         SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-        //if (!this.warehouseEntryPackagePM.IsContainer) {
-
-        //    var height: string = this.warehouseEntryPackagePM.Height != null ? this.warehouseEntryPackagePM.Height.toString() : "";
-        //    var width: string = this.warehouseEntryPackagePM.Width != null ? this.warehouseEntryPackagePM.Width.toString() : "";
-        //    var length: string = this.warehouseEntryPackagePM.Length != null ? this.warehouseEntryPackagePM.Length.toString() : "";
-
-        //    this.warehouseEntryPackagePM.Dimensions = length + "-" + width + "-" + height;
-        //}
-
-
-        this.warehouseEntryPackagePM.Dimensions = this.warehouseEntryPackageItem ? this.warehouseEntryPackageItem.Dimensions:"";
+        this.warehouseEntryPackagePM.Dimensions = this.warehouseEntryPackageItem ? this.warehouseEntryPackageItem.Dimensions : "";
         this.warehouseEntryPackagePM.PackageTypeName = "";
 
         this.warehouseEntryPackagePM.Instock = this.warehouseEntryPackagePM.Quantity;
@@ -227,16 +186,12 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
 
         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
         SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
-
     }
-   
-    IsEnable: boolean = false;
 
-    
+    IsEnable: boolean = false;
     ContainerNumberLostFocus(input: string) {
         this.ValidateContainerNumber(input);
     }
-
 
     ValidateContainerNumber(input: string) {
         var warnings: string[] = [];
@@ -249,27 +204,18 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
                 this.warehouseEntryPackagePM.ContainerNumberWarning = error;
             }
         }
+
         else {
             if (!AppTool.IsNullOrEmpty(this.warehouseEntryPackagePM.ContainerNumberWarning)) {
                 this.warehouseEntryPackagePM.ContainerNumberWarning = null;
             }
-           
         }
 
         this.WarningErrorsList = warnings;
-      
-    
     }
-
-
 }
 
-
-
-
 export class WarehouseEntryPackageItem extends BaseComponent {
-
-
     EntityPM: WarehouseEntryPackagePM;
     VolumeLabel: string;
     VolumetricWeightLabel: string;
@@ -288,35 +234,23 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         super();
         this.FatherComponent = fatherComponent;
         this.EntityPM = entity;
-        this.WarehouseEntryPM = this.FatherComponent.warehouseEntryPM;
-
-       
+        this.WarehouseEntryPM = this.FatherComponent.warehouseEntryPM;       
         this.VolumeUnitCode = this.WarehouseEntryPM.VolumeUnitCode;
         this.GrossWeightUnitCode = this.WarehouseEntryPM.GrossWeightUnitCode;
         this.ChargeableWeightUnitCode = this.WarehouseEntryPM.ChargeableWeightUnitCode;
         this.DimensionsUnitCode = this.WarehouseEntryPM.DimensionsUnitCode;
 
-
-
-        this.IsDependencyFilter2Value = this.IsContainer= this.EntityPM.IsContainer;
-   
+        this.IsDependencyFilter2Value = this.IsContainer= this.EntityPM.IsContainer;   
     
         this.SetLabel();
         this.SetUIProperties();
-
     }
-
-
-
-
-
+    
     SetLabel() {
-
         this.VolumeLabel = "Volume (" + this.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Weight (" + this.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dimensions(L-W-H) (" + this.DimensionsUnitCode + ")";
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.ChargeableWeightUnitCode + ")";
-
     }
 
     SetUIProperties() {
@@ -509,6 +443,19 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         }
     }
 
+    get CommodityNumber() { return this.EntityPM.CommodityNumber; }
+    set CommodityNumber(value: string) {
+        if (this.EntityPM.CommodityNumber != value) {
+            this.EntityPM.CommodityNumber = value;
+        }
+    }
 
-       
+    ChooseCommodityClicked() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 775;
+        logitudeWindow.Height = 570;
+        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, FieldName: 'CommodityNumber' };
+        logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("Commodity") + " Search";
+        logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBChooseCommodityComponent");        
+    } 
 }

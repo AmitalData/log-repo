@@ -51,7 +51,17 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.TriggerType)
                 .HasMaxLength(1)
                 .IsUnicode(false);
-             
+
+
+            this.Property(t => t.Type)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.SchedulerDetailsXML)
+                 .IsMaxLength()
+                 .IsUnicode(true);
+
+
             // Table & Column Mappings
             this.ToTable("TasksScheduler");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -82,10 +92,15 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.UpdatedBy).HasColumnName("UpdatedBy");
 
             this.Property(t => t.Wednesday).HasColumnName("Wednesday");
-            this.Property(t => t.MonthlyDay).HasColumnName("MonthlyDay"); 
+            this.Property(t => t.MonthlyDay).HasColumnName("MonthlyDay");
+
+            this.Property(t => t.SchedulerDetailsXML).HasColumnName("SchedulerDetailsXML");
+            this.Property(t => t.Type).HasColumnName("Type");
+            this.Property(t => t.NextRunTimeUTC).HasColumnName("NextRunTimeUTC");
+            this.Property(t => t.LastRunTimeUTC).HasColumnName("LastRunTimeUTC");
+            this.Property(t => t.StartDateTimeUTC).HasColumnName("StartDateTimeUTC");
 
 
-            //this.HasOptional(t => t.).WithRequiredPrincipal(d => d.APILogs);
         }
     }
 }

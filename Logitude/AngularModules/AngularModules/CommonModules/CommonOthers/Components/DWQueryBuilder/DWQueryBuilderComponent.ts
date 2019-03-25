@@ -58,7 +58,44 @@ export class DWQueryBuilderComponent extends BaseComponent {
     FolderId: string;
     public SelectedFiltersDataSourceChanged: any;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper;
+    /////////
+    //public TooltipId: string = null;
+    //public TooltipContentId: string = null;
+    public IconPath: string = "./Images/Help.png";
+    public IconBackground: string = null;
+    public Width: number = 256;
+    public Height: number = 125;
+    public IconSize: number = 17;
+    mouseover(MyItem) {
+        if (MyItem.HelpText) {
+            var item = document.getElementById(MyItem.TooltipId);
+            var itemRect = item.getBoundingClientRect();
 
+            var isToRight = true;
+            var ApplicationSession = document.getElementById("ApplicationSession");
+            if (ApplicationSession) {
+                var appWidth = ApplicationSession.clientWidth;
+                var appHeight = ApplicationSession.clientHeight;
+
+                if ((itemRect.left + this.Width) > appWidth) {
+                    isToRight = false;
+                }
+            }
+
+            document.getElementById(MyItem.TooltipContentId).style.position = "fixed";
+            document.getElementById(MyItem.TooltipContentId).style.top = (itemRect.top - this.Height + 5) + 'px';
+
+            if (isToRight) {
+                document.getElementById(MyItem.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/Tootip.png')";
+                document.getElementById(MyItem.TooltipContentId).style.left = (itemRect.left + 5) + 'px';
+            }
+
+            else {
+                document.getElementById(MyItem.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/TootipFlipped.png')";
+                document.getElementById(MyItem.TooltipContentId).style.left = (itemRect.left - this.Width) + 'px';
+            }
+        } 
+    }
     constructor(private CD: ChangeDetectorRef) {
         super();
         this._DWObjectTablePMService = new DWObjectTablePMService();
@@ -75,6 +112,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         else {
             this.SearchFieldsId = "DWQueryBuilderSearchFields_" + SessionLocator.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
         }
+     
 
         //this._DWQueryBuilderHelper.FillAllFactFields("Fact_Shipments");
         this._DWObjectTableListService.getAll().subscribe(myResult => {
@@ -438,6 +476,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 this.SelectedItem.DataTypeCode = "DateTime";
                 this.SelectedItem.HasTree = true;
             }
+            if (this.SelectedItem.Name == 'Full Date') {
+                this.SelectedItem.HasTree = false;
+            }
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
             this.SelectedFieldsDataSource = this.ResetIndexes(tempData);
@@ -487,9 +528,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (view.Code == '[Full Date]') {
                 view.ParentDataTypeCode = "DateTime";
                 view.DataTypeCode = "DateTime";
+                this.SelectedItem.HasTree = true;
             }
             else {
                 view.ParentDataTypeCode = "LookUp";
+            }
+            if (this.SelectedItem.Name == 'Full Date') {
+                this.SelectedItem.HasTree = false;
             }
             if (item.BaseDWObjectField.DataTypeCode == "LookUp" || item.BaseDWObjectField.DataTypeCode == "Dimension") {
                 view.ParentDimTabelName = item.BaseDWObjectField.DimensionTableCode;
@@ -1189,8 +1234,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
 export class DWObjectFieldsDetails extends BaseComponent {
     public MyParentClass: DWQueryBuilderComponent;
     public BaseDWObjectField: any;
+    public TooltipId: string = null;
+    public TooltipContentId: string = null;
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
         super();
+        var idIndex = SessionLocator.CurrentSession.GetNewId("Tooltip");
+        this.TooltipId = "Tooltip_" + idIndex;
+        this.TooltipContentId = "TooltipContent_" + idIndex;
         this.BaseDWObjectField = DWObjectField;
         if (ParentClass != null) {
             this.MyParentClass = ParentClass;
@@ -1243,6 +1293,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
 
     }
+
+   
 
     public ComputeDisplayName(DWObjectField: any) {
         //(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);

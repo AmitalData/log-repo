@@ -350,6 +350,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new TaskSchedulerHistoryMap());
             modelBuilder.Configurations.Add(new DWObjectTableMap());
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
+            
 
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWSubQueryMap());
@@ -359,6 +360,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
+            modelBuilder.Configurations.Add(new SchedulerLogsMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -810,6 +812,12 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<SharedUserQuery> SharedUserQueries
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<SchedulerLogs> SchedulerLogs
         {
             get;
             set;

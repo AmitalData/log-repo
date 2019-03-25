@@ -643,7 +643,7 @@
                                     <!-- AmountToReconcile -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                         [header]="'LedgerTransaction.F.AmountToReconcile' | TextCodeTranslationPipe"
-                                        [width]="'130'" [binding]="'AmountToReconcile'">
+                                        [width]="'135'" [binding]="'AmountToReconcile'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div class="TextTrimming"
                                                 style="text-align: right;padding-right: 5px;direction: ltr;"
@@ -663,6 +663,16 @@
                                                     <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
                                                 </div>
                                             </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- ReconciledAmount -->
+                                    <log-column [width]="'130'"
+                                        [header]="'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe"
+                                        [Alignment]="isRTL ? 'right' : 'left'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
+                                            [Alignment]="'right'">
+                                            {{item.ReconciledAmount | NumbersPipe:'N2'}}
                                         </log-cell-template>
                                     </log-column>
 
@@ -692,8 +702,9 @@
                                         [header]="'Accounting.O.ARP.ReconciliationNumber' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div class="TextTrimming" text-start>
-                                                <a href="javascript:;"
-                                                    (click)="OpenReco(item.ReconciliationId)">{{item.RecoNumber}}</a>
+
+                                                <a *ngFor="let recoNum of item.RecociliationNumbers; let i = index"
+                                                    (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=item.RecociliationNumbers.length-1?'':', ' }}</a>
                                             </div>
                                         </log-cell-template>
                                     </log-column>

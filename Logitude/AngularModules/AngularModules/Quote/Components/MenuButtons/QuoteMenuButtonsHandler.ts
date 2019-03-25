@@ -22,6 +22,7 @@ import {NewShipmentComponentArgs} from '../../../Shipment/Args';
 import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainService';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuoteDomainService} from '../../../Quote/Services/QuoteDomainService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
@@ -196,6 +197,77 @@ export class QuoteMenuButtonsHandler {
                             button.IsDisabled = true;
                         }
                     }
+
+                    if (button.EventCode == "ConvertQuotetoLCL") {
+                        if (this.EntityPM.TransportModeId == "O") {
+                            if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                button.IsHidden = false;
+                            }
+                            else {
+                                button.IsHidden = true;
+                            }
+                        }
+
+                        else {
+                            button.IsHidden = true
+                        }
+                    }
+
+                    if (button.EventCode == "ConvertQuotetoFCL") {
+                        if (this.EntityPM.TransportModeId == "O") {
+                            if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                button.IsHidden = false;
+                            }
+                            else {
+                                button.IsHidden = true;
+                            }
+                        }
+
+                        else {
+                            button.IsHidden = true
+                        }
+                    }
+
+
+                    //if (button.EventCode == "ConvertQuotetoLCL" || button.EventCode == "ConvertQuotetoFCL") {
+
+                    //    var isLCLQuote: boolean = false;
+                    //    if (this.EntityPM.TransportModeId.toUpperCase() == "A") {
+                    //        button.IsDisabled = true;
+                    //        isLCLQuote = true;
+                    //    }
+
+                    //    else if (this.EntityPM.TransportModeId.toUpperCase() == "O" && this.EntityPM.ShipmentTypeId.toUpperCase() == "LCLD") {
+                    //        isLCLQuote = true;
+                    //    }
+
+                    //    else if (this.EntityPM.TransportModeId.toUpperCase() == "I" && this.EntityPM.ShipmentTypeId.toUpperCase() == "LTL") {
+                    //        isLCLQuote = true;
+                    //        button.IsDisabled = true;
+                    //    }
+
+                    //    if (button.EventCode == "ConvertQuotetoLCL") {
+                    //        if (isLCLQuote) {
+                    //            button.IsHidden = true;
+                    //        }
+                    //        else {
+                    //            button.IsHidden = false;
+                    //        }
+                    //    }
+
+                    //    else {
+                    //        if (!isLCLQuote) {
+                    //            button.IsHidden = true;
+                    //        }
+                    //        else {
+                    //            button.IsHidden = false;
+                    //        }
+
+                    //    }
+
+
+                    //}
+                    
                 }
 
                 return menuButtons;
@@ -262,6 +334,19 @@ export class QuoteMenuButtonsHandler {
                         break;
                     }
 
+                case "ConvertQuotetoLCL":
+                    {
+                        this.DoConvertQuoteType("ToLCL");
+                        break;
+                    }
+
+
+                case "ConvertQuotetoFCL":
+                    {
+                        this.DoConvertQuoteType("ToFCL");
+                        break;
+                    }
+
                 default: {
                     this.isButtonClicked = false;
                     break;
@@ -270,6 +355,72 @@ export class QuoteMenuButtonsHandler {
         }
     }
 
+
+
+    private DoConvertQuoteType(type:string) {
+
+        var quoteDomainService: QuoteDomainService = new QuoteDomainService();
+
+        this.Validate();
+        if (this.isValid) {
+            quoteDomainService.GetIsQuoteConnectedToShipment(this.EntityPM.Id).subscribe(resp => {
+                if (!resp.HasError) {
+                    var errors: string[]=[];
+                    var result: boolean = resp.Result;
+                    if (result) {
+                        errors.push("Cannot change quote type when connected to shipments");
+                        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors
+                    }
+
+                    if (errors.length == 0) {
+                        if (this.EntityPM.IsClosed == true ) {
+
+                            var window = new MessageWindow();
+                            window.Width = 450;
+                            window.Height = 180;
+                            window.ShowWarningIcon = true;
+                            window.Show("Confirm changing an approved quote type ?");
+                            window.WindowClosed.subscribe(p => {
+                                this.ShowConfirmConvert(type);
+                            });
+                        }
+                        else {
+                            this.ShowConfirmConvert(type);
+                        }
+
+                    }
+
+                    this.isButtonClicked = false;
+                }
+            });
+
+        }        
+    }
+    ShowConfirmConvert(type:string) {
+        var confirmWindow: ConfirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Changing the quote type will result in deleting all the quote packages & charges");
+        confirmWindow.WindowClosed.subscribe(p => {
+            if (confirmWindow.Yes) {
+
+                if (type == "ToLCL") {
+                    this.EntityPM.ConvertToLCL = true;
+                    
+                }
+                else {
+                    this.EntityPM.ConvertToFCL = true;
+
+                }
+
+                this.Reload = true;
+                this.entityArgs.EditComponent.SaveChanges();
+
+            }
+            this.isButtonClicked = false;
+
+        });
+    }
+
+
     private myQuoteStageListService: QuoteStageListService;
     private myPartnersDomainService: PartnersDomainService;
     private entityResourceService: EntityResourceService;
@@ -277,11 +428,13 @@ export class QuoteMenuButtonsHandler {
     
     isValid: boolean = false;
     isButtonClicked: boolean = false;
+    Reload: boolean = false;
     StopFlags() {
         this.isButtonClicked = false;
         this.isBuildingShipment = false;
         this.isCopyingQuote = false;
         this.IsRunQuotation = false;
+        this.Reload = false;
     }
     Validate() {
         var validator = new QuoteValidator();
@@ -312,6 +465,10 @@ export class QuoteMenuButtonsHandler {
 
                     if (this.IsRunQuotation) {
                         this.OpenQuotationWindow();
+                    }
+
+                    if (this.Reload) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
                     }
                 }
 

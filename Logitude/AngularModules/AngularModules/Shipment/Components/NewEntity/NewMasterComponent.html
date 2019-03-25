@@ -246,8 +246,10 @@
                                                             <td>
                                                                 <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.Routings' | TextCodeTranslationPipe}}</div>
                                                                 <CheckBox [Top]="5" [IsChecked]="true" [Text]="'Shipment.S.NewShipment.MainCarriage' | TextCodeTranslationPipe" [IsEnabled]="false"></CheckBox>
-                                                                <CheckBox [Top]="5" [IsChecked]="IncludePickUp" (Checked)="IncludePickUp = $event" [Text]="'Shipment.S.NewShipment.IncludePickUp' | TextCodeTranslationPipe"></CheckBox>
-                                                                <CheckBox [Top]="5" [IsChecked]="IncludeDelivery" (Checked)="IncludeDelivery = $event" [Text]="'Shipment.S.NewShipment.IncludeDelivery' | TextCodeTranslationPipe"></CheckBox>
+
+                                                                <!-- Task 47943: Copy Pickup/Delivery in masters -->
+                                                                <!--<CheckBox [Top]="5" [IsChecked]="IncludePickUp" (Checked)="IncludePickUp = $event" [Text]="'Shipment.S.NewShipment.IncludePickUp' | TextCodeTranslationPipe"></CheckBox>-->
+                                                                <!--<CheckBox [Top]="5" [IsChecked]="IncludeDelivery" (Checked)="IncludeDelivery = $event" [Text]="'Shipment.S.NewShipment.IncludeDelivery' | TextCodeTranslationPipe"></CheckBox>-->
                                                                 <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyFlights" (Checked)="IsCopyFlights = $event" [Text]="'Include flights'"></CheckBox>
                                                             </td>
                                                         </tr>

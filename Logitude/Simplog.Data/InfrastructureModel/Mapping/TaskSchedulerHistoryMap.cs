@@ -31,7 +31,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-          
+            this.Property(t => t.LogFirstLine)
+               .HasMaxLength(1000)
+               .IsUnicode(false);
+
+            this.Property(t => t.LogType)
+               .HasMaxLength(200)
+               .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("TaskSchedulerHistory");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -42,6 +49,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.RunResult).HasColumnName("RunResult");
             this.Property(t => t.StartDateTime).HasColumnName("StartDateTime");
             this.Property(t => t.TaskId).HasColumnName("TaskId");
+            this.Property(t => t.StartDateTimeUTC).HasColumnName("StartDateTimeUTC");
+            this.Property(t => t.EndDateTimeUTC).HasColumnName("EndDateTimeUTC");
+            this.Property(t => t.LogType).HasColumnName("LogType");
+            this.Property(t => t.LogFirstLine).HasColumnName("LogFirstLine");
 
             this.HasRequired(t => t.TaskScheduler).WithMany()
                .HasForeignKey(d => d.TaskId)

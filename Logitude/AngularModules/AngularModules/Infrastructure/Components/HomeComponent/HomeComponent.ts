@@ -11,9 +11,9 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../Services/EntityResourceService';
 import {UserPM} from '../../../Common/EntityPMs/UserPM';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {LoginService, LoginParameters} from '../../Services/LoginService';
+import {LoginService} from '../../Services/LoginService';
 import {Headers} from '@angular/http';
-import {AmitalGatewayUtil, UnifreightMessageM} from '../../Utilities/AmitalGatewayUtil';
+import {AmitalGatewayUtil} from '../../Utilities/AmitalGatewayUtil';
 import {Observable}     from 'rxjs/Rx';
 import {NotificationExtendedListService} from '../../../Customs/Services/ExtendedLists/NotificationExtendedListService';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
@@ -23,8 +23,9 @@ import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { DetectUserInActivity } from '../../Helpers/DetectUserInActivity';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BluesnapContractPMService } from '../../Services/StandardPMs/BluesnapContractPMService';
-import { BluesnapContractPM } from '../../EntityPMs/BluesnapContractPM';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { UserPMService } from '../../../Common/Services/StandardPMs/UserPMService';
+
 @Component({
     moduleId: module.id,
     templateUrl: './HomeComponent.html',
@@ -43,7 +44,8 @@ export class HomeComponent implements OnDestroy{
     IsShowLastSuccessfulLoginComponent: boolean = true;
     public IfBlueSnapContracts: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-private BluesnapContractService: BluesnapContractPMService= new BluesnapContractPMService();
+    private BluesnapContractService: BluesnapContractPMService = new BluesnapContractPMService();
+    public ShowNewReleaseToolTip: boolean = false;
     constructor() {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
@@ -59,9 +61,8 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         if (!this.IsNewSignupTenant) {
             this.InitializeAppHeader();
             this.CheckAmitalBrowserInUse();
-        }   
-
-
+        }  
+        
         if (!SessionInfo.KeepUserLoggedIn) {
             // sessionTimeout
             var sessionTimeout: DetectUserInActivity = new DetectUserInActivity();
@@ -70,10 +71,11 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
             // tokenExpiration
             var tokenExpiration: DetectUserInActivity = new DetectUserInActivity(true);
             tokenExpiration.Start(SessionInfo.WebTokenLifeTimeInMinutes, SessionInfo.WebTokenExpirationWarningInMinutes , "M");//(3, 1, "M")
-
-
         }
 
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ReleaseNotesURL) && SessionLocator.LoggedUserPM.ShowNewReleaseToolTip) {
+            this.ShowNewReleaseToolTip = true;
+        }
     }
 
     OnSessionMouseUp($event) {
@@ -138,7 +140,6 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
     public IsCurrenciesRatesVisible: boolean = false;
     public IsBluesnapAccount: boolean = false;
     public IsCountryIsrael: boolean = false;
-    
     
     InitializeAppHeader() {
         this.EnvironmentUrl = Environment.GetEnvironmentUrl();
@@ -1537,9 +1538,7 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
        // this.SignoutCompleted.emit('Block');
 
     }
-
-
-
+    
     Clos555e(tabItem: SessionTabItem) {
 
         var itemIndex = this.Tabs.indexOf(tabItem);
@@ -1689,11 +1688,24 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         let cpath: string = path ? `; path=${path}` : '';
         document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
+    
+    ViewReleaseNotes() {
+        window.open(ObjectsLocator.GlobalSetting.ReleaseNotesURL);
+    }
 
+    HideReleaseMessageClicked() {        
+        SessionLocator.LoggedUserPM.ShowNewReleaseToolTip = false;
 
-
-
-
+        var service: UserPMService = new UserPMService();
+        service.update(SessionLocator.LoggedUserPM).subscribe((response: ServiceResponse) => {            
+            if (response) {
+                if (!response.HasError) {
+                    SessionLocator.LoggedUserPM = response.Result;
+                    this.ShowNewReleaseToolTip = false;
+                }
+            }
+        });
+    }
 }
 
 export class SessionTabItem {

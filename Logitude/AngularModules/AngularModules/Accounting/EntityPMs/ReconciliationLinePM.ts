@@ -152,6 +152,11 @@ export class ReconciliationLinePM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private reconciledWithTransactionId: string;
+    public get ReconciledWithTransactionId() { return this.reconciledWithTransactionId; }
+    public set ReconciledWithTransactionId(newValue: string) { if (this.reconciledWithTransactionId != newValue) { this.reconciledWithTransactionId = newValue; this.MarkAsDirty("ReconciledWithTransactionId"); } }
+       
+	 
 
     public OldEntityPM: ReconciliationLinePM;
 	

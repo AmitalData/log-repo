@@ -940,6 +940,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string commodityNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CommodityNumber  
+	   {
+	    
+	     get
+		{
+		   return commodityNumber;
+		 }
+		 set
+		 {
+		   if(commodityNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommodityNumber",OldValue=commodityNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   commodityNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

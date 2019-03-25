@@ -221,7 +221,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPM;
-            isVoidingInvoice = this.entityPM.SetVoided;
+            this.isVoidingInvoice = this.entityPM.SetVoided;
             this.isApprovingInvoice = entityPM.SetApproved;
             this.invoice = new ARInvoice();
 
@@ -3386,6 +3386,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     UpdateShipmentProfitClass.UpdateReceivables(entityPM.MainEntityId, tenant, true);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.MainEntityId, entityPM.Tenant);
+
+                    if (this.isApprovingInvoice || this.isVoidingInvoice)
+                    {
+                        // allActiveShipmentIds
+
+                        UpdateShipmentProfitClass.UpdateARInvoices(entityPM.MainEntityId, entityPM.Tenant);
+                    }
+
+                    else if(isNewEntity && this.entityPM.IsAutoCredit)
+                    {
+                        UpdateShipmentProfitClass.UpdateARInvoices(entityPM.MainEntityId, entityPM.Tenant);
+                    }
                 }
             }
         }

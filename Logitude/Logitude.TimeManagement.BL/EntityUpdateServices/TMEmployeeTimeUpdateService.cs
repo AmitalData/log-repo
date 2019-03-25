@@ -1,8 +1,15 @@
 ﻿using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.SystemLogs;
 using Logitude.TimeManagement.BL.EntityPMs;
+using Logitude.TimeManagement.BL.EntityQueryServices;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
@@ -10,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Logitude.TimeManagement.BL.EntityUpdateServices
 {
@@ -22,13 +30,48 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 entityPM.Id = IdCounter.GetNumber("TMEmployeeTime", entityPM.Tenant);
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPM.FullDuration = entityPM.TimeInMinutes;
                 entityPM.NeedsProrating = true;
+                SendQueueMessage(entityPM.Id, entityPM.WINumber, entityPM.TimeInMinutes, entityPM.Tenant);
             }
         }
 
         protected override void OnUpdating(TMEmployeeTimePM entityPM)
         {
-            entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
+            ContactRepository contactRep = new ContactRepository(commonContext);
+            string email = "";
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+
+            else
+            {
+                email = "system@tenant" + entityPM.Tenant + ".com";
+            }
+            string myLoggedUserId = null;
+            Contact contact = contactRep.GetSingleContactByEmail(email, entityPM.Tenant);
+            if (contact != null)
+            {
+                myLoggedUserId = contact.Id;
+            }
+
+            entityPM.UpdateDate = myDate;
+            if (entityPM.CreatedByUserId == null)
+            {
+                entityPM.UpdatedByUserId = myLoggedUserId;
+            }
+
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPM.CreateDate = myDate;
+                if (entityPM.CreatedByUserId == null)
+                {
+                    entityPM.CreatedByUserId = myLoggedUserId;
+                }
+            }
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
@@ -40,18 +83,80 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
-                if(entityPM.TimeInMinutes != entityPOCO.TimeInMinutes)
+                if (entityPM.TimeInMinutes != entityPOCO.TimeInMinutes)
                 {
+                    if (entityPM.ProratedDuration == 0)
+                    {
+                        entityPM.FullDuration = entityPM.TimeInMinutes;
+                    }
+
                     entityPM.NeedsProrating = true;
+                    SendQueueMessage(entityPM.Id, entityPM.WINumber, entityPM.TimeInMinutes, entityPM.Tenant);
                 }
+            }
+
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+            {
+                entityPM.TimeInMinutes = 0;
+                SendQueueMessage(entityPM.Id, entityPM.WINumber,entityPM.TimeInMinutes, entityPM.Tenant);
             }
         }
 
         protected override void AfterUpdating(TMEmployeeTimePM entityPM, Server.Tools.EntityPM entityParentPM)
         {
             base.AfterUpdating(entityPM, entityParentPM);
-            
+
         }
 
+        public void SendQueueMessage(string Id, string wINumber, int timeInMinutes, int tenant)
+        {
+            string queueName = "timemanagementqueue";
+            double completedWork = 0;
+
+            if (!string.IsNullOrEmpty(wINumber))
+            {
+                ITimeManagementContext context = TimeManagementContext.GetContext(tenant);
+                var list = (from d in context.TMEmployeeTimes where d.Tenant == tenant && d.WINumber == wINumber && d.Id != Id select d).ToList();
+
+                if (list != null)
+                {
+                    var minutes = list.Sum(s => s.TimeInMinutes);
+                    completedWork = (minutes + timeInMinutes) / 60.00;
+                }
+                else
+                {
+                    completedWork = timeInMinutes/ 60.00;
+                }
+
+                try
+                {
+                    DbQueueService queueservice = new DbQueueService(queueName, tenant);
+                    Dictionary<string, string> message = new Dictionary<string, string>()
+                    {
+                        { "Tenant", tenant.ToString() },
+                        { "WorkItemNumber",  wINumber },
+                        { "CompletedWork", completedWork.ToString("0.##")},
+                    };
+
+                    queueservice.Send(message);
+                }
+                catch (Exception ex)
+                {
+                    string ip = "";
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    {
+                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                        if (string.IsNullOrEmpty(currentIP))
+                        {
+                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                        }
+                        ip = currentIP;
+                    }
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "TMEmployeeTimeUpdateService SendQueueMessage() Method", null, ip);
+                    throw;
+                }
+
+            }
+        }
     }
 }

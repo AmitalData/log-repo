@@ -74,6 +74,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string IncotermId { get; set; }
         public string SalesmanUserId { get; set; }
         public string CreatedByUserId { get; set; }
+        public string OperationalClosedByUserId { get; set; }
+        
         public string DepartmentId { get; set; }
         public string Notes { get; set; }
         public string DescriptionOfGoods { get; set; }
@@ -451,6 +453,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         //[ForeignKey("CreatedByUserId")]
         public virtual User CreatedByUser { get; set; }
 
+        public virtual User OperationalClosedByUser { get; set; }
 
 
 
@@ -730,7 +733,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string OnCarriageAdditionalTransportModeCode { get; set; }
         public virtual PickUpDeliveryTransportMode OnCarriageAdditionalTransportMode { get; set; }
-                
+
         public DateTime? FirstPickupETD { get; set; }
         public DateTime? FirstPickupETA { get; set; }
         public bool SplitOnCarriage { get; set; }
@@ -763,5 +766,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Address FreightPayerAddress { get; set; }
 
         public bool HasContainerException { get; set; }
+        public string ARInvoices { get; set; }
     }
 }

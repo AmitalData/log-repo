@@ -6,10 +6,9 @@ using System.Linq;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
-
-
-
-
+using System.Reflection;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -417,7 +416,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransaction> iQueryable = (from a in context.LedgerTransactions
                                                         where a.Tenant == tenant
                                                         select a);
-
+            
             iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable, tenant);
             iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
 
@@ -431,10 +430,82 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<LedgerTransactionList>(listQueryOperation, query2);
+            ApplyOrderBy(queryOperations, query2, tenant);
             return query2;
         }
 
+        private void ApplyOrderBy(QueryOperations queryOperations, IQueryable<LedgerTransactionList> query2, int tenant)
+        {
+            GenericSort sortClass = new GenericSort();
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(LedgerTransactionList).GetProperty(queryOperations.SortByColumnName);
 
+                List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant).ToList();
+
+                ObjectField objectField = (from a in LedgerTransactionObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+                    if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<LedgerTransactionList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "ntext":
+                            case "text":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LedgerTransactionList, string>(queryOperations, query2);
+                                    break;
+                                }
+                            case "sigdouble":
+                            case "double":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LedgerTransactionList, double>(queryOperations, query2);
+                                    break;
+                                }
+                            case "date":
+                            case "datetime":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LedgerTransactionList, DateTime>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsinteger":
+                            case "integer":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LedgerTransactionList, int>(queryOperations, query2);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LedgerTransactionList, bool>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsdecimal":
+                            case "decimal":
+                                {
+                                    query2 = sortClass.GetSorterQuery<LedgerTransactionList, decimal>(queryOperations, query2);
+                                    break;
+                                }
+                            default:
+                                {
+                                    query2 = query2.OrderBy(d => d.JournalId);
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                query2 = query2.OrderBy(d => d.JournalId);
+            }
+        }
 
         public int GetRecoCount(string glAccountId, int tenant)
         {
@@ -683,6 +754,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string Category4Id { get; set; }
         public string Category5Id { get; set; }
         public string AccountTypeCode { get; set; }
+        public string DateTypeCode { get; set; }
 
         public string SearchFields { get; set; }
 

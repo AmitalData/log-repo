@@ -29,6 +29,7 @@ export class TMProjectList {
 	CategoryId: string;
 	IsProrated: boolean;
 	ExternalProjectNumber: string;
+	CategoryName: string;
 	
 }
  
