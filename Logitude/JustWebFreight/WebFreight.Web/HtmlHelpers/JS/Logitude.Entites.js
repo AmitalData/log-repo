@@ -1286,7 +1286,7 @@ function BuildPackagesTabPageViewModel(shipment) {
                     itemVehicleDetailsVolume += $.trim(item.Color) == "" ? "" : item.Color + "/ ";
                     itemVehicleDetailsVolume += $.trim(item.ChassisNumber) == "" ? "" : item.ChassisNumber + "/ ";
                     itemVehicleDetailsVolume += $.trim(item.RegistrationNumber) == "" ? "" : item.RegistrationNumber + "/ ";
-                    itemVehicleDetailsVolume += $.trim(item.CountryName) == "" ? "\n" : item.CountryName + "\n";
+                    itemVehicleDetailsVolume += $.trim(item.CountryCode) == "" ? "\n" : item.CountryCode + "\n";
 
                     PackagesGridDataSource.push({
                         Type: itemType,

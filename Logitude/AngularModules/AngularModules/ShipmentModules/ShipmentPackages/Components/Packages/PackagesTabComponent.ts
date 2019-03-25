@@ -23,6 +23,8 @@ import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliver
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
 import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
+
 
 @Component({
     moduleId: module.id,
@@ -2872,6 +2874,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
     public ObjectTableName: string = "InsideShipmentPackage";
     public IsNewEntity: boolean = false;
     public IsVehicleDetails: boolean = false;
+    public CountryListService: CountryListService;
 
     constructor(entity: InsideShipmentPackagePM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
@@ -2879,6 +2882,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.ShipmentPM = fatherComponent.ShipmentPM;
         this.ShipmentPackagePM = fatherComponent.EntityPM;
         this.IsNewEntity = isNew;
+        this.CountryListService = new CountryListService();
         this.SetUIProperties();
         if (this.IsNewEntity) {
             this.SetUIPropertiesOfCars(false);
@@ -3232,6 +3236,13 @@ export class InsideShipmentPackageItem extends BaseComponent {
     set CountryId(newValue: string) {
         if (this.EntityPM.CountryId != newValue) {
             this.EntityPM.CountryId = newValue;
+            this.CountryListService.getSingle(this.EntityPM.CountryId).subscribe(result => {
+                var country = result.Result;
+                if (country != null) {
+                    this.EntityPM.CountryCode = country.Code;
+                    this.EntityPM.CountryName = country.EnglishName;
+                }
+            });
         }
     }
 

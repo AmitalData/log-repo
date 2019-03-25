@@ -67,6 +67,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                           RegistrationNumber = a.RegistrationNumber,
                                                           CountryId = a.CountryId,
                                                           CountryName = a.Country != null ? a.Country.EnglishName : "",
+                                                          CountryCode = a.Country != null ? a.Country.Code : "",
                                                       }).ToList();
 
             return myResult;

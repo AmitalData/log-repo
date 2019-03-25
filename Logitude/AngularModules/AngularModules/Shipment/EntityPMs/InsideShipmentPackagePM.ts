@@ -237,7 +237,10 @@ export class InsideShipmentPackagePM {
     public get CountryName() { return this.countryName; }
     public set CountryName(newValue: string) { if (this.countryName != newValue) { this.countryName = newValue; this.MarkAsDirty("CountryName"); } }
        
-	 
+    private countryCode: string;
+    public get CountryCode() { return this.countryCode; }
+    public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
+
 
     public OldEntityPM: InsideShipmentPackagePM;
 	    

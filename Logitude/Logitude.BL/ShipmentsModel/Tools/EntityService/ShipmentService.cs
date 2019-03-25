@@ -4453,7 +4453,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         itemVehicleDetails += string.IsNullOrEmpty(item.Color) ? "" : "/ " + item.Color ;
                         itemVehicleDetails += string.IsNullOrEmpty(item.ChassisNumber)  ? "" : "/ " + item.ChassisNumber ;
                         itemVehicleDetails += string.IsNullOrEmpty(item.RegistrationNumber) ? "" : "/ " + item.RegistrationNumber ;
-                        itemVehicleDetails += string.IsNullOrEmpty(item.CountryName) ? "" : "/ " + item.CountryName;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.CountryCode) ? "" : "/ " + item.CountryCode;
                         myNumberOfInsidePackagesDetails = string.IsNullOrEmpty(myNumberOfInsidePackagesDetails) ? itemVehicleDetails : myNumberOfInsidePackagesDetails + "\n " + itemVehicleDetails;
                     }
                 }
