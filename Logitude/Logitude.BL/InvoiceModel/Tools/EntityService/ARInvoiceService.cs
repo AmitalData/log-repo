@@ -3393,6 +3393,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         UpdateShipmentProfitClass.UpdateARInvoices(entityPM.MainEntityId, entityPM.Tenant);
                     }
+
+                    else if(isNewEntity && this.entityPM.IsAutoCredit)
+                    {
+                        UpdateShipmentProfitClass.UpdateARInvoices(entityPM.MainEntityId, entityPM.Tenant);
+                    }
                 }
             }
         }
