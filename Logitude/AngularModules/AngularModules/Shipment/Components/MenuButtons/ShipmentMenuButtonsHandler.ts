@@ -389,6 +389,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                        SessionLocator.CurrentSession.SessionEvent.emit("ReloadHouses");
                     }
 
                     this.StopFlags();

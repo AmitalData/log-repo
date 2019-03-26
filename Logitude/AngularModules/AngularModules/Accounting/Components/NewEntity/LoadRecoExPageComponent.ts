@@ -56,6 +56,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
 
     _entityResourceService: EntityResourceService = new EntityResourceService();
     _ReconcileExternalPagePMService: ReconcileExternalPagePMService = new ReconcileExternalPagePMService();
+    
     _ReconcileExternalPageExtendedPMService: ReconcileExternalPageExtendedPMService = new ReconcileExternalPageExtendedPMService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
@@ -67,7 +68,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
     FileSize: string;
     FileExtension: string;
     File: any;
-    filterImageParameter: ImageParameter;
+    fileUploadParamerter: ImageParameter;
     FileData: number;
     ProgressBarPercentText: string;
     IsShowProgressBar: boolean = false;
@@ -77,7 +78,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
 
     ResponseMessage: any;
     UploadButtonIsEnabled: boolean = true;
-
+    _DecodedLoadedString: string;
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -124,6 +125,23 @@ export class LoadRecoExPageComponent extends BaseComponent {
 
     //#endregion
 
+    SendBankFile(): any {
+        //throw new Error("Method not implemented.");
+        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        if (this.fileUploadParamerter != null && this.fileUploadParamerter.Base64String != null) {
+            this._ReconcileExternalPageExtendedPMService.LoadBankPages(this.fileUploadParamerter)
+                .subscribe((myServiceResponse: ServiceResponse) => {
+                    console.log("[Send] Response/LoadBankPages: ", myServiceResponse.Result);
+                var response = myServiceResponse.Result;
+
+                
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                if (!AppTool.IsNullOrEmpty(response)) {
+                }
+            });
+        }
+
+    }
 
 
     //#region upload
@@ -143,8 +161,8 @@ export class LoadRecoExPageComponent extends BaseComponent {
             this.FileExtension = temp[temp.length - 1];
             this.FileName = file.name.replace("." + this.FileExtension, "");
 
-            if (this.FileExtension != "csv") {
-                this.ShowMessage("חובה קובץ CSV");
+            if (this.FileExtension != "txt") {
+                this.ShowMessage("חובה קובץ TXT");
                 return;
             }
 
@@ -157,32 +175,35 @@ export class LoadRecoExPageComponent extends BaseComponent {
                 this.IsShowProgressBar = true;
                 this.UploadButtonIsEnabled = false;
 
-                this.filterImageParameter = new ImageParameter();
-                this.filterImageParameter.Key = Guid.newGuid();
-                this.filterImageParameter.IsFirstTry = true;
-                this.filterImageParameter.Extension = this.FileExtension;
-                this.filterImageParameter.UploadMode = "Block";
-                this.filterImageParameter.FileSize = file.size;
-                this.filterImageParameter.Tenant = SessionLocator.Tenant;
+                this.fileUploadParamerter = new ImageParameter();
+                this.fileUploadParamerter.Key = Guid.newGuid();
+                this.fileUploadParamerter.IsFirstTry = true;
+                this.fileUploadParamerter.Extension = this.FileExtension;
+                this.fileUploadParamerter.UploadMode = "Block";
+                this.fileUploadParamerter.FileSize = file.size;
+                this.fileUploadParamerter.Tenant = SessionLocator.Tenant;
 
                 this.ArrayBufferToBase64(file, this);
             }
         }
     }
 
-
-    ArrayBufferToBase64(file: any, viewmodel: any) {
+    
+    ArrayBufferToBase64(file: any, viewmodel: LoadRecoExPageComponent) {
         var reader: FileReader = new FileReader();
         var reader = new FileReader();
         reader.onload = function (e) {
-            var binary = '';
+            var decodedString = '';
             var bytes = new Uint8Array(ResultAsArray(e));
             var len = bytes.byteLength;
             for (var i = 0; i < len; i++) {
-                binary += String.fromCharCode(bytes[i]);
+                decodedString += String.fromCharCode(bytes[i]);
             }
-            viewmodel.filterImageParameter.Base64String = window.btoa(binary);
+            viewmodel._DecodedLoadedString = decodedString;
+            viewmodel.fileUploadParamerter.Base64String = window.btoa(decodedString);
+
             viewmodel.IncreaseProgressBar(100);
+            viewmodel.TryParseLocally();
         };
 
         reader.onerror = function (e) {
@@ -190,6 +211,42 @@ export class LoadRecoExPageComponent extends BaseComponent {
         };
         reader.readAsArrayBuffer(file);
     }
+    TryParseLocally(): any {
+        //throw new Error("Method not implemented.");
+        if (AppTool.IsNullOrEmpty(this._DecodedLoadedString)) {
+            this.ShowMessage("File Is Empty");
+            return;
+        }
+        let headers = [];
+        let aryLine = this._DecodedLoadedString.split("\n");
+        aryLine.forEach(currLine => {
+            if (currLine.startsWith("031")) {
+                headers.push({ 'L31': currLine, 'L32': "" });
+            } else if (currLine.startsWith("032")) {
+                var rec = headers[headers.length - 1];
+                rec.L32 = currLine;
+            }
+        });
+        if (headers.length < 0) {
+            this.ShowMessage("Incorrect file format");
+            return;
+        }
+        this.SendBankFile()
+    }
+    IncreaseProgressBar(ProgressBarValue: number) {
+        var elem = document.getElementById("myBar");
+        if (ProgressBarValue == 100) {
+            elem.style.width = (ProgressBarValue - 0.1) + '%';
+            this.ProgressBarPercentText = ProgressBarValue.toString() + ' %';
+            
+        }
+        else {
+            elem.style.width = ProgressBarValue + '%';
+            this.ProgressBarPercentText = ProgressBarValue.toFixed(2).toString() + ' %';
+        }
+
+    }
+    
 
     //#endregion upload
 

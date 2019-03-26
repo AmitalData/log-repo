@@ -452,25 +452,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var accountingContext = AccountingContext.GetContext(tenant);
                 LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
 
-                // get opened transactions
-                //List<LedgerTransactionPM> openTransactions = query.GetARPaymentOpenTransactions(billToGLAccountId, tenant);
-
                 // get reconciled transactions
                 List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>();
-                if (arpaymentId != null) reconciledTransactions = query.GetARPaymentReconciledTransactions(arpaymentId,billToGLAccountId, tenant);
+                if (arpaymentId != null) reconciledTransactions = query.GetReconciledInvoicesTransactionsForARPayment(arpaymentId,billToGLAccountId, tenant);
 
-                // get partailly reconciled transactions
-                List<LedgerTransactionPM> partiallyReconciledTransactions = new List<LedgerTransactionPM>();
-                if (arpaymentId != null) partiallyReconciledTransactions = query.GetARPaymentPartiallyReconciledTransactions(arpaymentId, billToGLAccountId, tenant);
+                // get full opened & partailly reconciled transactions
+                List<LedgerTransactionPM> openedTransactions 
+                    = query.GetOpenInvoicesTransactionsForAccount(billToGLAccountId, tenant);
 
-                // concat them to one list
-                IEnumerable<LedgerTransactionPM> finalTransactionsList 
-                    = 
-                    //openTransactions
-                    reconciledTransactions
-                    //.Concat(reconciledTransactions)
-                    .Concat(partiallyReconciledTransactions)
-                    .OrderByDescending(d => d.IsReconciled).ToList();
+                // concat two list
+                IEnumerable<LedgerTransactionPM> finalTransactionsList
+                    = openedTransactions
+                        .Concat(reconciledTransactions)
+                        .OrderByDescending(d => d.IsReconciled).ToList();
 
 
                 ServiceResponse response = new ServiceResponse();
