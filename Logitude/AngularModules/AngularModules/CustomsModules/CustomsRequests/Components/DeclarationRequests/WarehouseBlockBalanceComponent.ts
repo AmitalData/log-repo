@@ -421,6 +421,8 @@ export class WarehouseBlockBalanceComponent
         currRequestParams.StorageSiteRadio = this.IsByStorageSite;
         currRequestParams.DeclarationNumber = this.DeclarationNumber;
         currRequestParams.CustomFileNo = this.CustomFileNo;
+        currRequestParams.StorageSiteNumber = this.StorageSiteNumber;
+        currRequestParams.WarehouseBlockNumber = this.WarehouseBlockNumber;
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
