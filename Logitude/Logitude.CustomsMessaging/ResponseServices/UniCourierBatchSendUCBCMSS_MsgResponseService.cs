@@ -30,7 +30,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var mess = new StringBuilder();
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
-            myDeclarationQueryService.LoadSupplierInvoicesWithItems = false;
+            myDeclarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
@@ -73,8 +73,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         if (isUpdateDeclaration)
                         {
-                            if (declarationPM.Consignments != null)
+                            if (declarationPM.Consignments != null && declarationPM.Consignments.Count > 0)
                             {
+                                LogMessagingUtil.Instance.AppendLine("DeclarationUpdateService.Update for declaration: " + declarationPM.CustomFileNo + " declarationPM.ImporterName: " + declarationPM.ImporterName + "\n");
                                 declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                                 declarationPM.Consignments.FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
                                 declarationPM.Consignments.FirstOrDefault().UnloadPortCode = customResponse.StorageSiteCode;
