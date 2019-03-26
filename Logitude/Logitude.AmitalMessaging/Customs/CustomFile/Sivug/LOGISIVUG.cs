@@ -149,6 +149,8 @@
 
         private INVOICEITEMS[] iNVOICEITEMSField;
 
+        private EXPENSES[] eXPENSESField;
+
         /// <remarks/>
         public string INVOICELINENO
         {
@@ -290,6 +292,20 @@
             set
             {
                 this.iNVOICEITEMSField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("EXPENSES")]
+        public EXPENSES[] EXPENSES
+        {
+            get
+            {
+                return this.eXPENSESField;
+            }
+            set
+            {
+                this.eXPENSESField = value;
             }
         }
     }
@@ -654,6 +670,62 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGISIVUG")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGISIVUG", IsNullable = false)]
+    public partial class EXPENSES
+    {
+
+        private string typeCodeField;
+
+        private string amountField;
+
+        private string currencyTypeCodeField;
+
+        /// <remarks/>
+        public string TypeCode
+        {
+            get
+            {
+                return this.typeCodeField;
+            }
+            set
+            {
+                this.typeCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Amount
+        {
+            get
+            {
+                return this.amountField;
+            }
+            set
+            {
+                this.amountField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CurrencyTypeCode
+        {
+            get
+            {
+                return this.currencyTypeCodeField;
+            }
+            set
+            {
+                this.currencyTypeCodeField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGISIVUG")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGISIVUG", IsNullable = false)]
     public partial class CustomsDocuments
     {
 
@@ -747,4 +819,5 @@
             }
         }
     }
+
 }
