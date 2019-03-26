@@ -3,7 +3,7 @@
 
     <table style="height:100%">
 
-        <tr   class="TabTitleRow" style="height: 1px;">
+        <tr class="TabTitleRow" style="height: 1px;">
             <td>
                 <table>
                     <tr>
@@ -26,10 +26,10 @@
                             <span style="width:5px"></span>
                         </td>
 
-                        <td  *ngIf="!IsLCLEntity && ShowAddPackageButton" style="width: 1px;">
+                        <td *ngIf="!IsLCLEntity && ShowAddPackageButton" style="width: 1px;">
                             <button class="Button" (click)="AddPackage(true)">Add Container</button>
                         </td>
-                     
+
                         <td *ngIf="ShowAddPackageButton && IsEditMode" style="width: 5px;">
                             <span style="width:5px"></span>
                         </td>
@@ -40,7 +40,7 @@
                         </td>
 
 
-                        <td  *ngIf="IsEditMode" style="width:5px;">
+                        <td *ngIf="IsEditMode" style="width:5px;">
                             <div></div>
                         </td>
 
@@ -49,7 +49,7 @@
             </td>
         </tr>
 
-        <tr  style="height: 5px;">
+        <tr style="height: 5px;">
             <td></td>
         </tr>
 
@@ -164,11 +164,13 @@
                                     <td *ngIf="IsEditMode" style="width: 135px;min-width: 135px;max-width: 135px;">{{VolumetricWeightLabel}}</td>
                                     <td style="width: 110px;min-width: 110px;max-width: 110px;">{{GrossWeightLabel}}</td>
                                     <td style="width: 140px;min-width: 140px;max-width: 140px;">Commodity #</td>
-                                    <td [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'">Description Of Goods</td>
+                                    <!--<td [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'">Description Of Goods</td>-->
+                                    <td style="width: 170px;min-width: 170px;max-width: 170px;">Description Of Goods</td>
                                     <td style="width: 90px;min-width: 90px;max-width: 90px;">Location</td>
                                     <td *ngIf="IsEditMode" style="width: 100px;min-width:100px;">In stock</td>
-                                    <td style="width: 50px;min-width :50px;max-width: 50px;"></td>
-                                    <td *ngIf="IsEditMode" style="width: 100%;min-width:100%;"></td>
+                                    <td style="width: 50px;min-width:50px; max-width:50px;" class="LastChild">
+                                        <div></div>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -182,27 +184,16 @@
                                                 <td>
                                                     <table>
                                                         <tr style="height:25px;" (click)="SelectedWarehouseEntryPackage = item" [class.RowSelected]="item === SelectedWarehouseEntryPackage">
-
-
-
                                                             <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;vertical-align:central">
-
                                                                 <img *ngIf="!item.IsContainer" src="./Images/CellIcons/Package.png" class="CenterCenter" />
                                                                 <img *ngIf="item.IsContainer" src="./Images/CellIcons/Container.png" class="CenterCenter" />
-
-
-
                                                             </td>
 
-
                                                             <td [attr.title]="item.PackageTypeName" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
-
                                                                 {{item.PackageTypeName}}
-
                                                             </td>
 
                                                             <td class="GridViewCell" *ngIf="!IsLCLEntity" style="width: 110px; min-width: 110px; max-width: 110px;">
-
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width: 15px;" *ngIf="item.ContainerNumberWarning">
@@ -214,10 +205,8 @@
                                                                         </td>
 
                                                                         <td>{{item.ContainerNumber}}</td>
-
                                                                     </tr>
                                                                 </table>
-
                                                             </td>
 
                                                             <td class="GridViewCell" style="width: 65px; min-width: 65px; max-width: 65px;text-align:right">
@@ -244,11 +233,15 @@
                                                                 {{item.CommodityNumber}}
                                                             </td>
 
-                                                            <td [attr.title]="item.Description" [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'" [style.max-width]="IsEditMode ? '170px':'100%'" class="GridViewCell" style="position: relative;">
+                                                            <td class="GridViewCell TextTrimming" style="width: 170px; min-width: 170px; max-width: 170px;">
+                                                                {{item.Description}}
+                                                            </td>
+
+                                                            <!--<td [attr.title]="item.Description"  [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'" [style.max-width]="IsEditMode ? '170px':'100%'" class="GridViewCell" style="position: relative;">
                                                                 <div *ngIf="!IsLCLEntity&&!IsEditMode" style="width:150px;max-width:150px">{{item.Description}}</div>
                                                                 <div *ngIf="IsLCLEntity&&!IsEditMode" style="width:240px;max-width:240px">{{item.Description}}</div>
                                                                 <div *ngIf="IsEditMode" style="width:170px;max-width:170px">{{item.Description}}</div>
-                                                            </td>
+                                                            </td>-->
 
                                                             <td [attr.title]="item.Location" class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
                                                                 {{item.Location}}
@@ -258,7 +251,7 @@
                                                                 {{item.Instock}}
                                                             </td>
 
-                                                            <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;vertical-align:central">
+                                                            <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width: 23px; padding-left: 5px;">
@@ -275,16 +268,10 @@
                                                                     </tr>
                                                                 </table>
                                                             </td>
-
-                                                            <td *ngIf="IsEditMode" class="GridViewCell" style="width:100%; min-width: 100%; max-width: 100%; position: relative;">
-                                                                <div>
-
-                                                                </div>
-                                                            </td>
-
-
                                                         </tr>
-                                                        <tr><td colspan="9"></td></tr>
+                                                        <tr>
+                                                            <td colspan="10"></td>
+                                                        </tr>
                                                     </table>
 
 

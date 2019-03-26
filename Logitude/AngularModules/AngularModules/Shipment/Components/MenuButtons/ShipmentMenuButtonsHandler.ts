@@ -389,6 +389,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                        SessionLocator.CurrentSession.SessionEvent.emit("ReloadHouses");
                     }
 
                     this.StopFlags();
@@ -1097,7 +1099,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
     }
     private ShowConfirmConvertShipmentType(type: string) {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
-        confirmWindow.Title = "Cancel Shipment";
+        confirmWindow.Title = "Convert Shipment Type";
         confirmWindow.Width = 400;
         confirmWindow.Show("Changing the shipment type will result in deleting all the shipment packages , are you sure you want to change ?");
         confirmWindow.YesButtonText = "Yes";

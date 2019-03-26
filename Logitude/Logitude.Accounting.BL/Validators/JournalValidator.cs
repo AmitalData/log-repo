@@ -158,21 +158,23 @@ namespace Logitude.Accounting.BL.Validators
 
                 if (clientExists == true)
                 {
-                    string basic_text_ExternalExist = TranslateMyTextCode(M_ExternalNoAlreadyExists_1, myJournalPM.Tenant)
-                            + myJournalPM.ExternalNo
-                            + TranslateMyTextCode(M_ExternalNoAlreadyExists_2, myJournalPM.Tenant)
-                            + myJournalPM.ExternalSystem
-                            + TranslateMyTextCode(M_ExternalNoAlreadyExists_3, myJournalPM.Tenant);
+                    string basic_text_ExternalExist = "Journal "+ journalNumber + " with the same ExternalNo And ExternalSystem";
+                    errorsList.Add(basic_text_ExternalExist);
+                    //TranslateMyTextCode(M_ExternalNoAlreadyExists_1, myJournalPM.Tenant)
+                    //    + myJournalPM.ExternalNo
+                    //    + TranslateMyTextCode(M_ExternalNoAlreadyExists_2, myJournalPM.Tenant)
+                    //    + myJournalPM.ExternalSystem
+                    //    + TranslateMyTextCode(M_ExternalNoAlreadyExists_3, myJournalPM.Tenant);
 
-                    if (String.IsNullOrWhiteSpace(myJournalPM.JournalNumber))
-                    {
-                        errorsList.Add(basic_text_ExternalExist);
-                    }
-                    else
-                    {
-                        errorsList.Add(basic_text_ExternalExist + journalNumber
-                            + TranslateMyTextCode(M_ExternalNoAlreadyExists_4, myJournalPM.Tenant));
-                    }
+                    //if (String.IsNullOrWhiteSpace(myJournalPM.JournalNumber))
+                    //{
+                    //    errorsList.Add(basic_text_ExternalExist);
+                    //}
+                    //else
+                    //{
+                    //    //errorsList.Add(basic_text_ExternalExist + journalNumber
+                    //    //    + TranslateMyTextCode(M_ExternalNoAlreadyExists_4, myJournalPM.Tenant));
+                    //}
                 }
             }
 

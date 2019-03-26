@@ -112,7 +112,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 JournalId = a.Id,
                                 OutputOrInput = "O",
                                 VatAmount = invoice.TotalVAT,
-                                VatableInvoiceAmount = invoice.TotaVatableAmountForTaxReport,
+                                VatableInvoiceAmount = invoice.TotalAmountForTaxReport,
                                 IsManuallyChanged = false,
                                 TransmitStatusCode = "1",
                                 TaxReportId = taxReport.Id,
