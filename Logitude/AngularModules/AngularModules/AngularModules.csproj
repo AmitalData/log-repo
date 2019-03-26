@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -71,7 +71,6 @@
     <Content Include="Accounting\Components\Maintenance\YearTransferComponent.html" />
     <Content Include="Accounting\Components\Maintenance\NewTaxWithholdingAssessingOfficeComponent.html" />
     <Content Include="Accounting\Components\NewEntity\AddEditRecoExPageComponent.html" />
-    <Content Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankDepositComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewCashBookComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankCodeComponent.html" />
@@ -263,6 +262,8 @@
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
@@ -350,7 +351,6 @@
     <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
-    <TypeScriptCompile Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
@@ -661,6 +661,8 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\ListTemplates\SchedulerDurationListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\ListTemplates\SchedulerDateListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.ts" />

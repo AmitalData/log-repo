@@ -2843,9 +2843,9 @@ namespace Logitude.BL.Helpers
                         if (ViewFixedPrice)
                         {
                             string AA = " ";
-                            if (chargePM.SaleUnitPrice != null)
+                            if (chargePM.SaleAmountInSaleCurrency != null)
                             {
-                                double value = (double)chargePM.SaleUnitPrice;
+                                double value = (double)chargePM.SaleAmountInSaleCurrency;
                                 AA = value.ToString("N"); // 1,234.512
                             }
                             HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));

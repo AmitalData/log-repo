@@ -28,8 +28,7 @@ namespace CommunicationWorkerRole.Tasks
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldQueueMessageMoreDetailsTask]", cn);
-                        cmd.CommandType = CommandType.StoredProcedure;
+                        SqlCommand cmd = new SqlCommand("delete top(1000) from [dbo].[QueueMessageMoreDetails] where [CreateDateTime] < GETDATE() - 90", cn);
                         cmd.CommandTimeout = 1000000;
                         cn.Open();
                         numberOfExecuteRow = cmd.ExecuteNonQuery();
