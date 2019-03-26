@@ -40,6 +40,7 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.EntityKeys;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Def.Messaging.Customs;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -1398,6 +1399,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (myUser != null)
                 {
                     _CCUFILEMPM.OPENBYUSER = myUser.Code;
+                    if(!String.IsNullOrWhiteSpace(myUser.BranchId))
+                    {
+                        BranchRepository branchRepository = new BranchRepository(_DirtyDeclarationPM.Tenant);
+                        Branch myBranch = branchRepository.GetSingleBranch(myUser.BranchId, _DirtyDeclarationPM.Tenant);
+                        if(myBranch != null && myBranch.Code != null)
+                        {
+                            _CCUFILEMPM.BRANCHID = myBranch.Code;
+                        }
+                    }
                 }
             }
             _CCUFILEMPM.CHANGE = (_DirtyDeclarationPM.IsChanged) ? "T" : "F";
