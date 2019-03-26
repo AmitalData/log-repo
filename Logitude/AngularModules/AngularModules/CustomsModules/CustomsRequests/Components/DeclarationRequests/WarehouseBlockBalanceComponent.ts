@@ -423,6 +423,7 @@ export class WarehouseBlockBalanceComponent
         currRequestParams.CustomFileNo = this.CustomFileNo;
         currRequestParams.StorageSiteNumber = this.StorageSiteNumber;
         currRequestParams.WarehouseBlockNumber = this.WarehouseBlockNumber;
+        currRequestParams.DisplayGoodsItemByInvoice = this.DisplayGoodsItemByInvoice;
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
