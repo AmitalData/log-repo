@@ -157,6 +157,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
+                    CustomsDocumentsTicketPM myCustomsDocumentsTicketPM = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(customsDocumentsTicketPM.DocumentsFilingId, _MyDeclarationPM.Tenant).FirstOrDefault();
+                    myCustomsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
+                    myCustomsDocumentsTicketUpdateService.Update(myCustomsDocumentsTicketPM, true);
+
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
                     CustomsDocumentPM customsDocumentPM;
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
