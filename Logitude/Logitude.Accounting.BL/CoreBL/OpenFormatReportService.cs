@@ -4388,7 +4388,7 @@ namespace Logitude.Accounting.BL.CoreBL
             pDFRerportXMLData.VatNumber = tenantPM.VatNumber;
          
             string dateFormat = String.Format("{0:MMddHHmm}", openFormatReportPM.CreateDate);
-
+            string vatNumber = tenantPM.VatNumber != null ? tenantPM.VatNumber : "000000000";
             pDFRerportXMLData.Path = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + openFormatReportPM.CreateDate.Year.ToString().Substring(2, 2) + @"\" + dateFormat;
 
        
