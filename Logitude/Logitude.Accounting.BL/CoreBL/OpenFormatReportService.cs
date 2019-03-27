@@ -513,7 +513,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 counter++;
                 B110Count++;
-                if(item.DisplayNumber == "70099")
+                if(item.DisplayNumber == "70012")
                 {
 
                 }
@@ -1105,14 +1105,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 myStringBuilder.Append(item.DocumentType);
 
-                if(item.DocumentReference == "1010")
+                if(item.DocumentReference == "1-254")
                 {
 
                 }
-                if (item.DocumentReference == "1011")
-                {
-
-                }
+              
 
                 if (item.DocumentReference != null)
                 {
@@ -1572,8 +1569,22 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (line.UnitPrice != null)
                     {
                         string UnitPrice = Format((decimal)line.UnitPrice); // line.UnitPrice.ToString();
-                        if (UnitPrice.Length > 15) { UnitPrice = UnitPrice.Substring(0, 15); }
-                        myStringBuilder.Append(a + UnitPrice.PadLeft(15, '0'));
+
+                        if (line.UnitPrice < 0)
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append("-");
+                            if (UnitPrice.Length > 14) { UnitPrice = UnitPrice.Substring(0, 14); }
+                            myStringBuilder.Append( UnitPrice.PadLeft(14, '0'));
+                        }
+                        else if (line.UnitPrice > 0)
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append("+");
+                            if (UnitPrice.Length > 14) { UnitPrice = UnitPrice.Substring(0, 14); }
+                            myStringBuilder.Append( UnitPrice.PadLeft(14, '0'));
+                        }
+                       
                     }
                     else
                     {
