@@ -61,9 +61,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 #region Trans filters
 
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
-
+              
                 QueryOperations queryOperationsTrans = new QueryOperations()
                 {
                     ObjectTableName = "LedgerTransaction",
@@ -137,8 +135,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 #region Bank lines filters
 
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                
 
                 QueryOperations queryOperationsBankLine = new QueryOperations()
                 {

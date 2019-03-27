@@ -65,7 +65,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 int tenant = authToken.Tenant;
                 if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                    tenant = tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -200,7 +200,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 int tenant = authToken.Tenant;
                 if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                    tenant = tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
