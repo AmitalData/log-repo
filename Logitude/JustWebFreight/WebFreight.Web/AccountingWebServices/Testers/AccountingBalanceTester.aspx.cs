@@ -39,6 +39,7 @@ using static Logitude.Accounting.Data.EntityListQueryServices.ARPaymentChequeLis
 using System.Configuration;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -75,7 +76,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonReverseGLBalanceFIX_Click,
             _AccountingIntegrityService_Click,
             _ButtonBalanceByCollector_Click,
-
+            _ButtonLoadBankPages_Click,
         }
 
         //DateTime _MyDate;
@@ -1887,6 +1888,56 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             finally
             {
                 _MyLastAction.Value = MyLastAction._ButtonBuildTenant_Click.ToString();
+                if (param == null)
+                {
+                    param = paramDefault;
+                }
+                var SerializeObjectByteParam = JsonConvert.SerializeObject(param);
+                _TextBoxParam.Text = SerializeObjectByteParam;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
+
+
+        protected void _ButtonLoadBankPages_Click(object sender, EventArgs e)
+        {
+
+
+            dynamic param = null;
+            var myBankAccountPagesExample = new BankAccountPagesExample();
+            var paramDefault = myBankAccountPagesExample.example1();
+            
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonLoadBankPages_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
+                //int YYYY = param.YYYY;
+                //bool CheckControlAccountMode = param.CheckControlAccountMode;
+                int tenant = param.Tenant;
+                string FileBankPages = param.FileBankPages;
+                SetHttpAuth(tenant);
+                var myBankAccountPageAnalyzer = new BankAccountPageAnalyzer();
+                myBankAccountPageAnalyzer.Analyze(tenant, FileBankPages);
+
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonLoadBankPages_Click.ToString();
                 if (param == null)
                 {
                     param = paramDefault;

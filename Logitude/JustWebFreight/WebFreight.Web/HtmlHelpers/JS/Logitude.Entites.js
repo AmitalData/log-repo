@@ -570,17 +570,27 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
         PartnerVisibility: "collapse",
 
         FromCountySRC: ko.observable(""),
-        ToCountySRC: ko.observable(""),
-
-        FromPortName: ko.observable(shipment.MainCarriageFromPortName),
-        ToPortName: ko.observable(shipment.MainCarriageFinalDestinationPortName),
+        ToCountySRC: ko.observable(""),        
 
         DeliveryDate: ko.observable(""),
     };
-    
-    viewModel.FromCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
-    viewModel.ToCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFinalDestinationPortCountryCode + ".png";
 
+    if (shipment.DirectionId == "D" && shipment.TransportModeId == "I") {
+        viewModel.FromPortName = shipment.FromPartnerCity;
+        viewModel.ToPortName = shipment.ToPartnerCity;
+
+        viewModel.FromCountySRC = PathPrefix + "images/Flags/" + shipment.FromPartnerCountryCode + ".png";
+        viewModel.ToCountySRC = PathPrefix + "images/Flags/" + shipment.ToPartnerCountryCode + ".png";
+    }
+
+    else {
+        viewModel.FromPortName = shipment.MainCarriageFromPortName;
+        viewModel.ToPortName = shipment.MainCarriageFinalDestinationPortName;
+
+        viewModel.FromCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
+        viewModel.ToCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFinalDestinationPortCountryCode + ".png";
+    }
+    
     if ($.trim(shipment.StatusName) != "") {
 
         if ($.trim(shipment.StatusLocation) != "") {
@@ -879,15 +889,29 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
     /* Main Carriage */
     var leg = new LogitudeRoutingClass();
     leg.LegHeader = "Main Carriage Leg 1";
-    leg.FromFlagSRC = "../images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
-    leg.FromPortCode = $.trim(shipment.MainCarriageFromPortCode);
-    leg.FromPortName = $.trim(shipment.MainCarriageFromPortName);
+
+    if (shipment.DirectionId == "D" && shipment.TransportModeId == "I") {
+        leg.FromFlagSRC = "../images/Flags/" + shipment.FromPartnerCountryCode + ".png";        
+        leg.FromPortName = $.trim(shipment.FromPartnerCity);
+
+        leg.ToFlagSRC = "../images/Flags/" + shipment.ToPartnerCountryCode + ".png";        
+        leg.ToPortName = $.trim(shipment.ToPartnerCity);
+    }
+
+    else {
+        leg.FromFlagSRC = "../images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
+        leg.FromPortCode = $.trim(shipment.MainCarriageFromPortCode);
+        leg.FromPortName = $.trim(shipment.MainCarriageFromPortName);
+
+        leg.ToFlagSRC = "../images/Flags/" + shipment.MainCarriageToPortCountryCode + ".png";
+        leg.ToPortCode = $.trim(shipment.MainCarriageToPortCode);
+        leg.ToPortName = $.trim(shipment.MainCarriageToPortName);
+    }
+    
     leg.FromDate = $.trim(shipment.MainCarriageATD) != "" ? $.Convert.ToShortDate(shipment.MainCarriageATD, TenantDateTimeFormat) : $.Convert.ToShortDate(shipment.MainCarriageETD, TenantDateTimeFormat);
     leg.FromTime = $.trim(shipment.MainCarriageATD) != "" ? $.Convert.ToShortTime(shipment.MainCarriageATD) : $.Convert.ToShortTime(shipment.MainCarriageETD);
     leg.FromDateTimeIsActual = $.trim(shipment.MainCarriageATD) != "";
-    leg.ToFlagSRC = "../images/Flags/" + shipment.MainCarriageToPortCountryCode + ".png";
-    leg.ToPortCode = $.trim(shipment.MainCarriageToPortCode);
-    leg.ToPortName = $.trim(shipment.MainCarriageToPortName);
+    
     leg.ToDate = $.trim(shipment.MainCarriageATA) != "" ? $.Convert.ToShortDate(shipment.MainCarriageATA, TenantDateTimeFormat) : $.Convert.ToShortDate(shipment.MainCarriageETA, TenantDateTimeFormat);
     leg.ToTime = $.trim(shipment.MainCarriageATA) != "" ? $.Convert.ToShortTime(shipment.MainCarriageATA) : $.Convert.ToShortTime(shipment.MainCarriageETA);
     leg.ToDateTimeIsActual = $.trim(shipment.MainCarriageATA) != "";
