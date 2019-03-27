@@ -876,6 +876,7 @@ div#two {
                     <asp:Button ID="_ButtonTreeMapCOA" runat="server" Text="TreeMapGLAccountsLocalBalanceGByChartOfAccountsTypeCode" OnClick="_ButtonTreeMapCOA_Click" />
                     
                     <asp:Button ID="ButtoBalanceByCollector" runat="server" Text="BalanceByCollector" OnClick="_ButtonBalanceByCollector_Click" />
+                    <asp:Button ID="ButtonLoadBankPages" runat="server" Text="LoadBankPages" OnClick="_ButtonLoadBankPages_Click" />
                     
                     
                 </li>
