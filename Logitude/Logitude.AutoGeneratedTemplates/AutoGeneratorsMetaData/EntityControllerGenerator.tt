@@ -836,8 +836,15 @@ if(!isClosed && enableSecurity)
 #>
                 
 				int tenant = authToken.Tenant;
-				if(filters.Tenant != null)
-					tenant = filters.Tenant.Value;
+<#+
+if(tableName == "Port" || tableName == "Carrier")
+{
+	#>
+            if(filters.Tenant != null)
+	                tenant = filters.Tenant.Value;
+	<#+
+}
+#>
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
