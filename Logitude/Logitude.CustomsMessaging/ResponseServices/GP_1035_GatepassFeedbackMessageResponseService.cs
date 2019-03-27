@@ -205,7 +205,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 foreach (var item in exception)
                 {
-                    exceptionDescription += string.Concat(exceptionDescription, item.ExceptionLevel, ": ", item.ExeptionDescription, "\n");
+                    string itemExceptionLevel = "";
+                    switch (item.ExceptionLevel)
+                    {
+                        case 1:
+                            itemExceptionLevel = "שגיאה ";
+                            break;
+                        case 2:
+                            itemExceptionLevel = "התראה ";
+                            break;
+                        case 3:
+                            itemExceptionLevel = "אזהרה ";
+                            break;
+                    }
+                    exceptionDescription += string.Concat(exceptionDescription, itemExceptionLevel, ": ", item.ExeptionDescription, "\n");
                 }
             }
             return exceptionDescription;

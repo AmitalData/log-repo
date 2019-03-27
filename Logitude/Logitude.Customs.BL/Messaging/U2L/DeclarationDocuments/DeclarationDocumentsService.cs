@@ -157,6 +157,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
+                    CustomsDocumentsTicketPM myCustomsDocumentsTicketPM = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(customsDocumentsTicketPM.DocumentsFilingId, _MyDeclarationPM.Tenant).FirstOrDefault();
+                    myCustomsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
+                    myCustomsDocumentsTicketUpdateService.Update(myCustomsDocumentsTicketPM, true);
+
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
                     CustomsDocumentPM customsDocumentPM;
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
@@ -202,6 +206,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
                     customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
                     customsDocumentPM.IsSendToQueue = true;
+                    myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
 
