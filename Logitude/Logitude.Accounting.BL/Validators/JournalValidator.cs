@@ -158,7 +158,7 @@ namespace Logitude.Accounting.BL.Validators
 
                 if (clientExists == true)
                 {
-                    string basic_text_ExternalExist = "Journal "+ journalNumber + " with the same ExternalNo And ExternalSystem";
+                    string basic_text_ExternalExist = "There is a Journal ("+ journalNumber + ") with the same ExternalNo And ExternalSystem";
                     errorsList.Add(basic_text_ExternalExist);
                     //TranslateMyTextCode(M_ExternalNoAlreadyExists_1, myJournalPM.Tenant)
                     //    + myJournalPM.ExternalNo

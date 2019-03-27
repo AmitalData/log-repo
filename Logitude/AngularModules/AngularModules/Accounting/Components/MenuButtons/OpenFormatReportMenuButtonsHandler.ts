@@ -72,6 +72,18 @@ export class OpenFormatReportMenuButtonsHandler {
 
                                 break;
                             }
+
+                        case "PDFD":
+                            {
+                                if (this.EntityPM.StatusTypeCode != "3") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
+                                break;
+                            }
                     }
                 }
             }
