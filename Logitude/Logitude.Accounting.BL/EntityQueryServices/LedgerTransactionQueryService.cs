@@ -592,6 +592,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true).ToList();
 
                 reconciledTransactions = FillTransactionsReconciliationNumbers(reconciledTransactions, tenant);
+                reconciledTransactions = FillReconciledPaymentTransactionAmount(reconciledTransactions.ToList(), paymentTransaction != null ? paymentTransaction.Id : null, tenant);
+
             }
             return reconciledTransactions;
 

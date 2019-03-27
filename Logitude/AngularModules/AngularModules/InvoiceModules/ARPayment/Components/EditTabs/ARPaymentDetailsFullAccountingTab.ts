@@ -158,7 +158,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     _loading: boolean = false;
 
-    ReloadGLAccount(){
+    ReloadGLAccount() {
         //1- get glaccount
         this.fetchBillToCard().then(res => {
             var card = res;
@@ -183,28 +183,34 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.EntityPM.InvoicesTransactions = [];
 
             this._loading = true;
-            this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId).subscribe(myResult => {
-                this._loading = false;
 
-                var mm: ServiceResponse = myResult;
-                if (!mm.HasError) {
+            setTimeout(() => {
 
-                    var transactions = mm.Result.Result;
-                    var tempItemSource: any[] = [];
-                    if (transactions != null) {
-                        for (var i = 0; i < transactions.length; i++) {
-                            var line = new TransactionLineModel(transactions[i], this);
-                            // var line = transactions;
-                            tempItemSource.push(line);
+
+                this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId).subscribe(myResult => {
+                    this._loading = false;
+
+                    var mm: ServiceResponse = myResult;
+                    if (!mm.HasError) {
+
+                        var transactions = mm.Result.Result;
+                        var tempItemSource: any[] = [];
+                        if (transactions != null) {
+                            for (var i = 0; i < transactions.length; i++) {
+                                var line = new TransactionLineModel(transactions[i], this);
+                                // var line = transactions;
+                                tempItemSource.push(line);
+                            }
+                            this.TransactionsList.InsertCollection(tempItemSource);
                         }
-                        this.TransactionsList.InsertCollection(tempItemSource);
                     }
-                }
-                else {
-                }
+                    else {
+                    }
 
-                this.CalculateTotals();
-            });
+                    this.CalculateTotals();
+                });
+            }, 3000);
+
         } else {
             console.error("No GLAccount for this payment ", this.EntityPM);
 
@@ -271,7 +277,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         // Open Amount
         var _openAmount = this.paymentAmountTotal - _linesAmount2reco;
-        if(this.EntityPM.OpenAmount != _openAmount){
+        if (this.EntityPM.OpenAmount != _openAmount) {
             this.EntityPM.OpenAmount = _openAmount < 0 ? 0 : _openAmount;
         }
 
@@ -312,18 +318,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
 
-                        var reco:any = mm.Result;
+                        var reco: any = mm.Result;
                         var recoId = reco.Id;
 
-                         // this.showAlert = false;
+                        // this.showAlert = false;
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
-                            cmpRef.instance.BackCompleted.subscribe(bk => {
-                                // SessionLocator.CurrentSession.CloseCurrentWindow();
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
+                                cmpRef.instance.BackCompleted.subscribe(bk => {
+                                    // SessionLocator.CurrentSession.CloseCurrentWindow();
+                                });
                             });
-                        });
                     }
                     else {
 
@@ -339,7 +345,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (trans != null) {
             var index = this.EntityPM.InvoicesTransactions.indexOf(trans);
             if (index == -1) {
-                this.EntityPM.IsDirty = true;
+                // this.EntityPM.IsDirty = true;
                 this.EntityPM.InvoicesTransactions.push(trans);
             }
         }
@@ -348,7 +354,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (trans != null) {
             var index = this.EntityPM.InvoicesTransactions.indexOf(trans);
             if (index > -1) {
-                this.EntityPM.IsDirty = true;
+                // this.EntityPM.IsDirty = true;
                 this.EntityPM.InvoicesTransactions.splice(index, 1);
             }
         }
@@ -373,9 +379,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
+
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
-                    // this.LoadData();
                     this.GetData();
                 }
 
@@ -386,9 +392,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
+
+
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
-                    // this.LoadData();
                     this.GetData();
                 }
             });
@@ -834,7 +841,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
                 this.LoadData();
 
-                if(value)
+                if (value)
                     this.ReloadGLAccount();
 
 
@@ -1769,7 +1776,7 @@ export class TransactionLineModel extends BaseComponent {
         if (this.LedgerTransactionPM.AmountToReconcile != value) {
             this.LedgerTransactionPM.AmountToReconcile = value;
 
-            this.IsChecked = true;
+                this.IsChecked = !!value;
 
             //set amount
             if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
@@ -1813,15 +1820,15 @@ export class TransactionLineModel extends BaseComponent {
     }
 
 
-    public get ReconciledAmount() : number {
+    public get ReconciledAmount(): number {
         return this.OriginalAmount - this.originalOpenAmount;
     }
 
-    public get NewReconciliationAmount() : number {
+    public get NewReconciliationAmount(): number {
         return this.AmountToReconcile + this.ReconciledAmount;
     }
 
-    public get PaymentReconciledAmount() : number {
+    public get PaymentReconciledAmount(): number {
         return this.LedgerTransactionPM.PaymentReconciledAmount;
     }
 
@@ -1930,10 +1937,10 @@ export class TransactionLineModel extends BaseComponent {
     }
 
     RecociliationNumbers: string[] = [];
-    getRecoLinkList(){
+    getRecoLinkList() {
         var res: string[] = [];
 
-        if(this.RecoNumber){
+        if (this.RecoNumber) {
             res = this.RecoNumber.split(',');
         }
         return res;
