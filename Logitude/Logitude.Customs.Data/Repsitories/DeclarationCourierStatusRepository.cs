@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using System.Data.Entity;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -34,6 +35,16 @@ namespace Logitude.Customs.Data.Repsitories
 
             return declarations;
 
+        }
+
+        public int Lock_forUpdateNOWAIT(string declarationIds)
+        {
+
+            var succ = (context as DbContext).FirstOrDefaultFUNOWAITWhere<DeclarationCourierStatus>(rec => rec.DeclarationId == declarationIds);
+            //var oracleTransaction =Transaction.Current as OracleTransaction;
+            //context.Database.
+
+            return succ;
         }
 
     }
