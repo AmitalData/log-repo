@@ -306,7 +306,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(entityPM.Tenant);
                 CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(entityPM.AirlineId, false, true);
-                    if (customsAirline != null)
+                if (customsAirline != null)
                 {
                     entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
                     entityPM.AirlineName = customsAirline.LocalName;
@@ -329,7 +329,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 string setDeclarationsList = "";
 
                 CustomsRequiredFieldErrors errorsForCourierDeclaration = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(entityPM.Id, entityPM.Tenant);
-                if (errorsForCourierDeclaration == null || (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields == null))
+                if (errorsForCourierDeclaration == null || (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields == null) ||
+                    (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count == 0))
                 {
                     CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
                     List<string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
