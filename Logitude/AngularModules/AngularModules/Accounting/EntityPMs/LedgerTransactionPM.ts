@@ -274,6 +274,11 @@ export class LedgerTransactionPM {
     public set ReconciliationId(newValue: string) { if (this.reconciliationId != newValue) { this.reconciliationId = newValue; this.MarkAsDirty("ReconciliationId"); } }
        
 	 
+    private paymentReconciledAmount: number;
+    public get PaymentReconciledAmount() { return this.paymentReconciledAmount; }
+    public set PaymentReconciledAmount(newValue: number) { if (this.paymentReconciledAmount != newValue) { this.paymentReconciledAmount = newValue; this.MarkAsDirty("PaymentReconciledAmount"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

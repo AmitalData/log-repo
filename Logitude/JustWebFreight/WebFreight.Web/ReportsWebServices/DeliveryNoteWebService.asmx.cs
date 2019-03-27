@@ -117,9 +117,9 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     deliveryNotedataprovider.UserName = loggedContact.EnglishName;
                 }
+
+                deliveryNotedataprovider.ITNumber = shipment.ITNumber;
                 deliveryNotedataprovider.ProjectNumber = shipment.ProjectNumber != null ? shipment.ProjectNumber : "";
-
-
                 deliveryNotedataprovider.HAWB = shipment.House != null ? shipment.House : "";
                 deliveryNotedataprovider.OurReferenceNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
                 deliveryNotedataprovider.DateSent = String.Format("{0:dd/MMM/yyyy}", DateTime.Now.Date);
@@ -889,6 +889,7 @@ namespace WebFreight.Web.ReportsWebServices
                     deliveryNotedataprovider.UserName = loggedContact.EnglishName;
                 }
 
+                deliveryNotedataprovider.ITNumber = shipment.ITNumber;
                 deliveryNotedataprovider.ProjectNumber = shipment.ProjectNumber != null ? shipment.ProjectNumber : "";
                 deliveryNotedataprovider.HAWB = shipment.House != null ? shipment.House : "";
                 deliveryNotedataprovider.OurReferenceNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";

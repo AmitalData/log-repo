@@ -41,28 +41,28 @@ namespace Logitude.Accounting.BL.CoreBL
 {
    public class OpenFormatReportService
     {
-        private static  int rowsCount;
-        private static string random;
-        private static int B100Count;
-        private static int B110Count;
-        private static int C100Count;
-        private static int D110Count;
-        private static int D120Count;
-        static bool isQuantity;
-        private static string a;
-        public static int ARinvoiceTotalRecords;
-        public static decimal ARinvoiceTotalAmount;
-        public static int CreditARinvoiceTotalRecords;
-        public static decimal CreditARinvoiceTotalAmount;
-        public static int ARpaymentTotalRecords;
-        public static decimal ARpaymentTotalAmount;
-        public static int DepositTotalRecords;
-        public static decimal DepositTotalAmount;
-        public static int APinvoiceTotalRecords;
-        public static decimal APinvoiceTotalAmount;
-        public static TenantPM tenantPM;
-
-        public static DocumentsFilingPM CreateBKMVDATAFile(string openFormatReportId, int tenant, bool TestingMode)
+        private    int rowsCount;
+        private   string random;
+        private   int B100Count;
+        private   int B110Count;
+        private   int C100Count;
+        private   int D110Count;
+        private   int D120Count;
+        bool isQuantity;
+        private   string a;
+        public   int ARinvoiceTotalRecords;
+        public   decimal ARinvoiceTotalAmount;
+        public   int CreditARinvoiceTotalRecords;
+        public   decimal CreditARinvoiceTotalAmount;
+        public   int ARpaymentTotalRecords;
+        public   decimal ARpaymentTotalAmount;
+        public   int DepositTotalRecords;
+        public   decimal DepositTotalAmount;
+        public   int APinvoiceTotalRecords;
+        public   decimal APinvoiceTotalAmount;
+        public   TenantPM tenantPM;
+      
+        public  DocumentsFilingPM CreateBKMVDATAFile(string openFormatReportId, int tenant, bool TestingMode)
         { 
              B100Count = 0;
              B110Count = 0;
@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL
             APinvoiceTotalRecords = 0;
             APinvoiceTotalAmount = 0;
             tenantPM = null;
-
+          
          OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
             OpenFormatReportPM openFormatReportPM = openFormatReportQueryService.GetSingle(openFormatReportId, false, false);
             TenantQuery tenantQuery = new TenantQuery(tenant);
@@ -513,7 +513,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 counter++;
                 B110Count++;
-                if(item.DisplayNumber == "70099")
+                if(item.DisplayNumber == "70012")
                 {
 
                 }
@@ -1105,6 +1105,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 myStringBuilder.Append(item.DocumentType);
 
+                if(item.DocumentReference == "1-254")
+                {
+
+                }
+              
+
                 if (item.DocumentReference != null)
                 {
                     if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
@@ -1563,8 +1569,22 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (line.UnitPrice != null)
                     {
                         string UnitPrice = Format((decimal)line.UnitPrice); // line.UnitPrice.ToString();
-                        if (UnitPrice.Length > 15) { UnitPrice = UnitPrice.Substring(0, 15); }
-                        myStringBuilder.Append(a + UnitPrice.PadLeft(15, '0'));
+
+                        if (line.UnitPrice < 0)
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append("-");
+                            if (UnitPrice.Length > 14) { UnitPrice = UnitPrice.Substring(0, 14); }
+                            myStringBuilder.Append( UnitPrice.PadLeft(14, '0'));
+                        }
+                        else if (line.UnitPrice > 0)
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append("+");
+                            if (UnitPrice.Length > 14) { UnitPrice = UnitPrice.Substring(0, 14); }
+                            myStringBuilder.Append( UnitPrice.PadLeft(14, '0'));
+                        }
+                       
                     }
                     else
                     {
@@ -3547,7 +3567,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        public static BatchTaskExecutionPM CreateBKMVDATAFileInBatch(string taxReportId, int tenant)
+        public   BatchTaskExecutionPM CreateBKMVDATAFileInBatch(string taxReportId, int tenant)
         {
             BatchTaskExecutionPM taskExe;
             using (TransactionScope scope = TransactionFactory.GetTransaction())
@@ -3592,7 +3612,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private static DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines, OpenFormatReportPM openFormatReport, bool isFromWR = false)
+        private   DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines, OpenFormatReportPM openFormatReport, bool isFromWR = false)
         {
             // prepare file string
             string file = string.Join(Environment.NewLine, lines);
@@ -3668,7 +3688,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return docFiling;
         }
 
-        private static ContactPM GetLoggedContact(int tenant)
+        private   ContactPM GetLoggedContact(int tenant)
         {
             //ContactQuery contactQuery = new ContactQuery(tenant);
             //ContactPM loggedContact;
@@ -3691,7 +3711,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return loggedcontact;
         }
 
-        private static User GetLoggedUser(int tenant)
+        private   User GetLoggedUser(int tenant)
         {
             UserRepository userRepository = new UserRepository(tenant);
             User loggedContact;
@@ -3710,7 +3730,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        public static List<C100Data> GetARInvoiceC100Data(OpenFormatReportPM openFormatReportPM,int tenant)
+        public   List<C100Data> GetARInvoiceC100Data(OpenFormatReportPM openFormatReportPM,int tenant)
         {
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             List<C100Data> c100s = (from a in invoiceContext.ARInvoices
@@ -3744,7 +3764,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return c100s;
         }
 
-        public static List<C100Data> GetAPInvoiceC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
+        public   List<C100Data> GetAPInvoiceC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
         {
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             List<C100Data> c100s = (from a in invoiceContext.APInvoices
@@ -3780,7 +3800,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return c100s;
         }
 
-        public static List<C100Data> GetARPaymentC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
+        public   List<C100Data> GetARPaymentC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
         {
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             List<C100Data> c100s = (from a in invoiceContext.ARPayments
@@ -3816,7 +3836,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return c100s;
         }
 
-        public static List<C100Data> GetDepositC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
+        public   List<C100Data> GetDepositC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             List<C100Data> c100s;
@@ -3864,7 +3884,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        public static DocumentsFilingPM CreateINIFile(string openFormatReportId, int tenant)
+        public   DocumentsFilingPM CreateINIFile(string openFormatReportId, int tenant)
         {
             OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
             OpenFormatReportPM openFormatReportPM = openFormatReportQueryService.GetSingle(openFormatReportId, false, false);
@@ -4135,7 +4155,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
-        private static DocumentsFilingPM CreateINIDocumnetFiling(StringBuilder lines, OpenFormatReportPM openFormatReport, bool isFromWR = false)
+        private   DocumentsFilingPM CreateINIDocumnetFiling(StringBuilder lines, OpenFormatReportPM openFormatReport, bool isFromWR = false)
         {
             // prepare file string
             string file = string.Join(Environment.NewLine, lines);
@@ -4212,7 +4232,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return docFiling;
         }
 
-        public static void FillPDFReportXML(OpenFormatReportPM openFormatReportPM)
+        public   void FillPDFReportXML(OpenFormatReportPM openFormatReportPM)
         {
             OpenFormatReportDataProvider pDFRerportXMLData = new OpenFormatReportDataProvider();
             pDFRerportXMLData.OpenFormatTotalRecords = new List<OpenFormatTotalRecord>();
@@ -4316,7 +4336,7 @@ namespace Logitude.Accounting.BL.CoreBL
             pDFRerportXMLData.OpenFormatTotalAmounts = new List<OpenFormatTotalAmounts>();
 
 
-            if (ARinvoiceTotalAmount > 0)
+            if (ARinvoiceTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
@@ -4331,7 +4351,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            if (CreditARinvoiceTotalAmount > 0)
+            if (CreditARinvoiceTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
@@ -4345,7 +4365,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            if (ARpaymentTotalAmount > 0)
+            if (ARpaymentTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
@@ -4358,7 +4378,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            if (DepositTotalAmount > 0)
+            if (DepositTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
@@ -4372,7 +4392,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            if (APinvoiceTotalAmount > 0)
+            if (APinvoiceTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
@@ -4386,10 +4406,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
             pDFRerportXMLData.CompanyName = tenantPM.Company;
             pDFRerportXMLData.VatNumber = tenantPM.VatNumber;
-            var date = DateTime.Now;
-            string dateFormat = String.Format("{0:MMddhhmm}", date);
-
-            pDFRerportXMLData.Path = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + date.Year.ToString().Substring(2, 2) + @"\" + dateFormat;
+         
+            string dateFormat = String.Format("{0:MMddHHmm}", openFormatReportPM.CreateDate);
+            string vatNumber = tenantPM.VatNumber != null ? tenantPM.VatNumber : "000000000";
+            pDFRerportXMLData.Path = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + openFormatReportPM.CreateDate.Year.ToString().Substring(2, 2) + @"\" + dateFormat;
 
        
             openFormatReportPM.PDFRerportXML= LogitudeXmlSerializer.SerializeObjectToXmlString(pDFRerportXMLData);
@@ -4404,7 +4424,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
         
-        public static string Format(decimal value, bool quantity =false)
+        public   string Format(decimal value, bool quantity =false)
         {
 
             string formated = Math.Abs(value).ToString().Replace(".", string.Empty);

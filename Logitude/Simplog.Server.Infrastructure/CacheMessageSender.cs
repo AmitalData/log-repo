@@ -14,7 +14,7 @@ namespace Simplog.Server.Infrastructure
 
         public static void SendMessageToTopic(string Key)
         {
-            if (LogitudeSettings.IsCostomsDeploy) return;
+            if (LogitudeSettings.IsCostomsDeploy || LogitudeSettings.DeploymentStage == "amitalstorage") return;
             BrokeredMessage message = new BrokeredMessage();
             message.Label = "InvalidateCache";
             message.Properties["Key"] = Key;

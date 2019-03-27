@@ -478,59 +478,51 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             if (entityPM.ConvertToLCL || entityPM.ConvertToFCL)
             {
+                entityPM.NumberOfPackages = null;
+                entityPM.PackageType1Id = null;
+                entityPM.PackageType1Quantity = null;
+                entityPM.PackageType2Id = null;
+                entityPM.PackageType2Quantity = null;
+                entityPM.PackageType3Id = null;
+                entityPM.PackageType3Quantity = null;
+                entityPM.PackageType4Id = null;
+                entityPM.PackageType4Quantity = null;
+                entityPM.PackageType5Id = null;
+                entityPM.PackageType5Quantity = null;
+                entityPM.TEU = null;
+                entityPM.NumberOfPackages = null;
+                entityPM.GrossWeight = null;
+                entityPM.ChargeableWeight = null;
+                entityPM.VolumetricWeight = null;
+                entityPM.Volume = null;
+
+                foreach (QuotePackagePM pm in entityPM.QuotePackages)
+                {
+                    this.DeleteQuotePackage(pm);
+                }
+
                 foreach (QuoteChargePM pm in entityPM.QuoteCharges)
                 {
                     this.DeleteQuoteChargeUp(pm);
                 }
 
-                if (this.isLCLQuote)
+                entityPM.QuotePackages.Clear();
+                entityPM.QuoteCharges.Clear();
+
+
+                if (entityPM.ConvertToFCL)
                 {
-                    foreach (QuotePackagePM pm in entityPM.QuotePackages)
-                    {
-                        this.DeleteQuotePackage(pm);
-                    }
-
-                    entityPM.TEU = null;
-                    entityPM.NumberOfPackages = null;
-                    entityPM.GrossWeight = null;
-                    entityPM.ChargeableWeight = null;
-                    entityPM.VolumetricWeight = null;
-                    entityPM.Volume = null;
-
+                    this.isLCLQuote = false;
+                    entityPM.ShipmentTypeId = "FCLD";
                 }
 
                 else
                 {
-                    entityPM.NumberOfPackages = null;
-                    entityPM.PackageType1Id = null;
-                    entityPM.PackageType1Quantity = null;
-                    entityPM.PackageType2Id = null;
-                    entityPM.PackageType2Quantity = null;
-
-                    entityPM.PackageType3Id = null;
-                    entityPM.PackageType3Quantity = null;
-
-
-                    entityPM.PackageType4Id = null;
-                    entityPM.PackageType4Quantity = null;
-
-                    entityPM.PackageType5Id = null;
-                    entityPM.PackageType5Quantity = null;
-                }
-
-
-
-                if (entityPM.ConvertToLCL)
-                {
+                    this.isLCLQuote = true;
                     entityPM.ShipmentTypeId = "LCLD";
                 }
 
-                else if (entityPM.ConvertToFCL)
-                {
-                    entityPM.ShipmentTypeId = "FCLD";
-                }
-
-                this.GenerateDefaultCharges(true);
+                this.GenerateDefaultCharges();
             }
 
         }
@@ -1309,8 +1301,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         }
         private void DeleteQuotePackage(QuotePackagePM itemPM)
         {
-            QuotePackage itemPoco = quotePackageRepository.GetSingleQuotePackage(itemPM.Id, tenant);
-            quotePackageRepository.Remove(itemPoco);
+            if (itemPM.Id != null)
+            {
+                QuotePackage itemPoco = quotePackageRepository.GetSingleQuotePackage(itemPM.Id, tenant);
+                if (itemPoco != null)
+                {
+                    quotePackageRepository.Remove(itemPoco);
+                }
+            }
         }
 
         public void CreateQuoteDocumentVersion(QuoteDocumentVersionPM itemPM)

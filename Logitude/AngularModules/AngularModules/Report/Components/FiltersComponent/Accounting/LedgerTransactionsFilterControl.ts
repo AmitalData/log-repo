@@ -56,10 +56,11 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     SetUIProperties() {
         // this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
-         this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, true);
-            this.UIProperties.SetRequired("FromDate", this.ObjectTableName, true);
-            this.UIProperties.SetRequired("ToDate", this.ObjectTableName, true);
-            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+
+        this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !this.GLAccountId);
+        this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !this.FromDate);
+        this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !this.ToDate);
+        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
 
     }
 

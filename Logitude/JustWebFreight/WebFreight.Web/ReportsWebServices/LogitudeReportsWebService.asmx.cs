@@ -10637,7 +10637,7 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             DateTime fromDate = new DateTime(fromDate_filter.Year, fromDate_filter.Month, fromDate_filter.Day, 0, 0, 0);
-            DateTime toDate = new DateTime(toDate_filter.Year, toDate_filter.Month, DateTime.DaysInMonth(toDate_filter.Year, toDate_filter.Month), 23, 59, 59);
+            DateTime toDate = new DateTime(toDate_filter.Year, toDate_filter.Month, toDate_filter.Day, 23, 59, 59);
 
             #endregion
 

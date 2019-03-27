@@ -17,11 +17,11 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
     public partial class QuoteService
     {
         List<PackageType> AllPackageTypes = new List<PackageType>();
-        private void GenerateDefaultCharges(bool Override=false)
+        private void GenerateDefaultCharges()
         {
-            if (isNewEntity || Override)
+            if (isNewEntity || entityPM.ConvertToFCL || entityPM.ConvertToLCL)
             {
-                if ((entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid) || (Override && !entityPM.IsHybrid))
+                if ((entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid))
                 {
                     ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(myCommonContext);
                     IQueryable<ChargesType> iQueryable_ChargeTypes = chargesTypeRepository.GetQuoteDefaultChargesTypes(tenant).Where(d => d.InActive == false);

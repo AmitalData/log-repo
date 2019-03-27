@@ -1,5 +1,5 @@
 ﻿
-import {Component} from '@angular/core';
+
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
@@ -12,6 +12,9 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {SchedulerDetails, FTPSchedulerDetails} from '../../../../Infrastructure/DataContracts/SchedulerDetails';
 import {SchedulerExtendedPMService} from '../../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChild, ViewContainerRef}  from '@angular/core';
+import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
+
 @Component({
     moduleId: module.id,
     templateUrl: './AddEditTaskSchedulerComponent.html',
@@ -26,6 +29,11 @@ export class AddEditTaskSchedulerComponent  {
     public GeneralAreaHeight: string = "200px";
     schedulerExtendedPMService: SchedulerExtendedPMService;
     IsEnableSaveButton: boolean = false;
+
+    @ViewChild('GeneralSectionLocation', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+
+
+    private GeneralTemplateComponent: any = null;
     constructor() {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
         if (FeatureLocator.HasFeaturePermession("TasksScheduler", "UPDATE")) this.IsEnableSaveButton = true;
@@ -40,7 +48,47 @@ export class AddEditTaskSchedulerComponent  {
         this.Clone();
         this.SetTigger(this.DataContext.TriggerType);
 
+        this.RunComponent();
     }
+
+
+
+
+    private isLoaderReady: boolean = false;
+
+    private RunComponent() {
+        if (this.viewContainerRef) {
+            var componentName: string = this.DataContext.Type == "FTP" ? "FTBSchedulerTemplateComponent" :"TaskSchedulerTemplateComponent";
+            SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerTemplates/" + componentName, this.viewContainerRef)
+                    .then(cmpRef => {
+                        this.GeneralTemplateComponent = cmpRef.instance;
+                        this.GeneralTemplateComponent.LoadComponent(this.DataContext);
+                        this.isLoaderReady = true;
+       
+                    });
+            }
+
+            else {
+                this.RunComponentTimer();
+            }
+        
+    }
+
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
 
 
 
@@ -179,6 +227,21 @@ export class AddEditTaskSchedulerComponent  {
         }
     }
 
+
+
+    private ValidateHost() {
+        var isValid = false;
+
+        if (!AppTool.IsNullOrEmpty(this.DataContext.Host)) {
+            var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            if (this.DataContext.Host.match(ipformat)) {
+                isValid = true;
+            }
+        }
+
+        return isValid
+    }
+
     OKButtonClicked() {
 
 
@@ -189,8 +252,16 @@ export class AddEditTaskSchedulerComponent  {
         if (this.DataContext.Type == "FTP") {
             this.DataContext.ServiceClassName = "ServiceClassName";
 
-            if (AppTool.IsNullOrEmpty(this.DataContext.From)) {
-                errors.push(msg.replace("%FieldName", "From"));
+
+            if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
+            if (AppTool.IsNullOrEmpty(this.DataContext.Password)) errors.push(msg.replace("%FieldName", "Password"));
+            if (AppTool.IsNullOrEmpty(this.DataContext.Subject)) errors.push(msg.replace("%FieldName", "Subject"));
+            if (AppTool.IsNullOrEmpty(this.DataContext.From)) errors.push(msg.replace("%FieldName", "From"));
+
+            if (AppTool.IsNullOrEmpty(this.DataContext.Host)) errors.push(msg.replace("%FieldName", "Host"));
+            else {
+                var isValid = this.ValidateHost();
+                if (!isValid) errors.push("Invalid Host");
             }
 
         }

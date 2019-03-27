@@ -241,6 +241,7 @@
 
         var _DefaultJornalPM = '<% =GetDefaultJornalPM()%>';
         var _DefaultGLaccountPM = '{"AutomaticReconcile": null,"Category1": null,"Category2": null,"Category3": null,"Category4": null,"Category5": null,"ChartOfAccount": null,"ChartOfAccountsType": null,"ControlAccount": null,"Currency": null,"GLAccountType": 1,"PreviousChartOfAccount": null,"ReconcileMethod": null,"RevenueExpense": null,"Id": "","Tenant": 989,"InternalNumber": "1000","AccountTypeCode": "1","DisplayNumber": "Customers","LocalName": "יהי טוב","EnglishName": "Customer xx","SearchFields": "לקוחות","IsMultiCurrency": true,"CurrencyId": null,"RevenueExpenseType": "1","IsControlAccount": false,"ChartOfAccountsId": "1-105","Inactive": false,"ChartOfAccountsTypeCode": "3","ReconcileMethodCode": "0","ControlAccountId": null,"AutomaticReconcileId": null,"PreviousEnglishName": null,"PreviousEnglishNameChangeDate": "2016-11-23T07:00:35.407","PreviousLocalName": null,"PreviousLocalNameChangeDate": "2016-11-23T07:00:35.407","PreviousNumber": null,"PreviousNumberChangeDate": "2016-11-23T07:00:35.407","PreviousChartOfAccountsId": null,"PreviousChartOfAccountsChangeDate": "2016-11-23T07:00:35.407","CustomerGLAccountId": null,"BalanceInLocalCurrency": null,"RevaluationEnabled": null,"ParentAccountId": null,"Category1Id": null,"Category2Id": null,"Category3Id": null,"Category4Id": null,"Category5Id": null,"IsVATExempt": null}';
+        var _DefaultChartOfAccountsPM = '{"Id": null,  "Tenant": 1064,  "Code": "2521",  "EncodeBase64NVARCHARFieldsBy": "windows-1255",  "LocalName": "5OX24OX6IOvs7Onl+g==",  "EnglishName": null,  "ParentId": null,  "TypeCode": "2",  "Inactive": null,  "TypeName": null,  "ParentName": null,  "SearchFields": null}';
         
 
         var urlBase = '<% =GetHost() %>';
@@ -261,6 +262,7 @@
         var authUrl = urlBase + '/api/authentication?&tenant='; //api/authentication?&tenant=1';
         var journalUrl = urlBase + '/api/Journals';
         var _GLAccountsUrl = urlBase + '/api/GLAccounts';
+        var _ChartOfAccountsUrl = urlBase + '/api/ChartOfAccounts';
         var JournalOpUrl = urlBase + '/api/JournalOp';
         
         var _ReconciliationUrl = urlBase + '/api/ReconciliationOp';
@@ -667,6 +669,43 @@
             });
             return false;
         }
+
+        
+        function SendChartOfAccounts() {
+            if (!_ResponseToken) {
+                getToken();
+            }
+            var chartJson = $(".classTextBoxParam").val();
+
+            $(".class_LabelLog").val("ChartOfAccounts ..." + _ResponseToken);
+            $.ajax({
+                ///url: 'http://localhost:9999/api/authentication?&tenant=1', //this is the path to web api controller method
+                url: _ChartOfAccountsUrl,// url + '/api/ChartOfAccounts', //this is the path to web api controller method
+                type: 'POST',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8', // This is the money shot
+                data: chartJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+            return false;
+        }
+
+
         function SendJornal() {
             if (!_ResponseToken) {
                 getToken();
@@ -868,8 +907,10 @@ div#two {
                     <%--<asp:Button ID="_ButtonCreateNewJournal1" runat="server" Text="example Journal" OnClick="_ButtonCreateNewJournal_Click" />--%>
                     <button id="Button1" onclick="javascript: $('.classTextBoxParam').val(_DefaultGLaccountPM);  return false;" >DefaultGLaccountPM</button>
                     <button id="Button2" onclick="javascript:return SendGLaccount();" >btnSendGLaccountPM</button>
-                    
-
+                </li>
+                <li>
+                    <button id="Button3" onclick="javascript: $('.classTextBoxParam').val(_DefaultChartOfAccountsPM);  return false;" >DefaultChartOfAccountsPM</button>
+                    <button id="Button4" onclick="javascript:return SendChartOfAccounts();" >btnSendChartOfAccountsPM</button>
                 </li>
                 <li><asp:Button ID="_ButtonAging" runat="server" Text="Aging" OnClick="_ButtonAging_Click" />
                     <asp:Button ID="_ButtonCurrBalanceByType" runat="server" Text="GetGLAccountsLocalBalanceGByChartOfAccountsTypeCode" OnClick="_ButtonCurrBalanceByType_Click" />

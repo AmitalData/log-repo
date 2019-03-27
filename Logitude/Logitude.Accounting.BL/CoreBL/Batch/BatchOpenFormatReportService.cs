@@ -24,6 +24,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
         public override void RunCode()
         {
+           
             // Deserilaize parameters
             string xmlParameters = BatchTaskExecution.PrametersXml;
             System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
@@ -35,24 +36,22 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             // Call the service
             OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(parameterArgs.Tenant);
             OpenFormatReportPM openFormatReportPM = openFormatReportQueryService.GetSingle(parameterArgs.ReportId, false, false);
-
+            OpenFormatReportService openFormatReportService = new OpenFormatReportService();
             try
             {
-                DocumentsFilingPM docFilingPM = OpenFormatReportService.CreateBKMVDATAFile(parameterArgs.ReportId, parameterArgs.Tenant, parameterArgs.TestingMode);
+                
+                DocumentsFilingPM docFilingPM = openFormatReportService.CreateBKMVDATAFile(parameterArgs.ReportId, parameterArgs.Tenant, parameterArgs.TestingMode);
 
-                DocumentsFilingPM INIdocFilingPM = OpenFormatReportService.CreateINIFile(parameterArgs.ReportId, parameterArgs.Tenant);
+                DocumentsFilingPM INIdocFilingPM = openFormatReportService.CreateINIFile(parameterArgs.ReportId, parameterArgs.Tenant);
 
-                //openFormatReportPM.StatusTypeCode = "3";
-                //openFormatReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                //openFormatReportUpdateService.Update(openFormatReportPM, true);
-
+                 
 
             }
 
             catch (Exception ex)
             {
 
-
+              
                 openFormatReportPM.StatusTypeCode = "4";
                 openFormatReportPM.ErrorMessage = ex.Message;
                 openFormatReportPM.ChangeSetOp = ChangeSetOperation.Update;
