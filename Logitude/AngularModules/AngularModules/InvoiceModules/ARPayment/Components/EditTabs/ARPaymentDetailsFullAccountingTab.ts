@@ -202,6 +202,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 }
                 else {
                 }
+
+                this.CalculateTotals();
             });
         } else {
             console.error("No GLAccount for this payment ", this.EntityPM);
@@ -258,21 +260,20 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     CalculateTotals() {
 
-        // payment open amount
+        // Reconciliation amount
         var _linesAmount2reco = 0;
         this.TransactionsList.Collection.forEach((line: TransactionLineModel) => {
             if (line && line.AmountToReconcile >= 0) {
-                _linesAmount2reco += line.AmountToReconcile;
+                _linesAmount2reco += line.PaymentReconciledAmount + line.AmountToReconcile;
             }
         });
         this.amount2reconcileTotal = _linesAmount2reco;
 
-        if (_linesAmount2reco <= this.originalPaymentOpenAmount)
-            this.EntityPM.OpenAmount = this.originalPaymentOpenAmount - _linesAmount2reco;
-        else
-            this.EntityPM.OpenAmount = 0;
-
-        //
+        // Open Amount
+        var _openAmount = this.paymentAmountTotal - _linesAmount2reco;
+        if(this.EntityPM.OpenAmount != _openAmount){
+            this.EntityPM.OpenAmount = _openAmount < 0 ? 0 : _openAmount;
+        }
 
     }
     OpenSource(id: string, sourceTypeCode: string) {
@@ -338,7 +339,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (trans != null) {
             var index = this.EntityPM.InvoicesTransactions.indexOf(trans);
             if (index == -1) {
-
+                this.EntityPM.IsDirty = true;
                 this.EntityPM.InvoicesTransactions.push(trans);
             }
         }
@@ -347,6 +348,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (trans != null) {
             var index = this.EntityPM.InvoicesTransactions.indexOf(trans);
             if (index > -1) {
+                this.EntityPM.IsDirty = true;
                 this.EntityPM.InvoicesTransactions.splice(index, 1);
             }
         }
@@ -1813,6 +1815,14 @@ export class TransactionLineModel extends BaseComponent {
 
     public get ReconciledAmount() : number {
         return this.OriginalAmount - this.originalOpenAmount;
+    }
+
+    public get NewReconciliationAmount() : number {
+        return this.AmountToReconcile + this.ReconciledAmount;
+    }
+
+    public get PaymentReconciledAmount() : number {
+        return this.LedgerTransactionPM.PaymentReconciledAmount;
     }
 
 

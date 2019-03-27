@@ -676,6 +676,16 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- PaymentReconciledAmount -->
+                                    <log-column [width]="'130'"
+                                        [header]="'PaymentReconciledAmount'"
+                                        [Alignment]="isRTL ? 'right' : 'left'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
+                                            [Alignment]="'right'">
+                                            {{item.PaymentReconciledAmount | NumbersPipe:'N2'}}
+                                        </log-cell-template>
+                                    </log-column>
+
                                     <!-- DueDate -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'"
                                         [header]="'Accounting.O.ARP.Duedate' | TextCodeTranslationPipe">
@@ -708,7 +718,6 @@
                                             </div>
                                         </log-cell-template>
                                     </log-column>
-
 
                                     <!--  -->
                                     <log-column [header]="''" [width]="'40'" [binding]="'button'">

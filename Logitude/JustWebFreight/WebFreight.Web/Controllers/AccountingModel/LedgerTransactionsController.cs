@@ -458,7 +458,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 // get full opened & partailly reconciled transactions
                 List<LedgerTransactionPM> openedTransactions 
-                    = query.GetOpenInvoicesTransactionsForAccount(billToGLAccountId, tenant);
+                    = query.GetOpenInvoicesTransactionsForAccount(billToGLAccountId, arpaymentId, tenant);
 
                 // concat two list
                 IEnumerable<LedgerTransactionPM> finalTransactionsList

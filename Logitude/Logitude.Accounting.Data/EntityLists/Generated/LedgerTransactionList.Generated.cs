@@ -114,6 +114,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string RecoNumber  { get; set; }
        [DataMember]
        public string ReconciliationId  { get; set; }
+       [DataMember]
+       public decimal? PaymentReconciledAmount  { get; set; }
    }
 
 }
