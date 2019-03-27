@@ -92,10 +92,13 @@ export class DailyTimeSheetComponent extends BaseComponent {
         this.LoadDailyTimeSheetList();
     }
     LoadDailyTimeSheetList() {
+
         var itemSource: ItemSourceItem[] = [];
+
         if (this.myDomainService == null) {
             this.myDomainService = new TimeManagementDomainService();
         }
+
         this.myDomainService.GetPeriodTimeSheetList(this.EmployeeUserId, this.LocationCodeFilter, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
             // this.ItemSource = [];
             this.ItemSource.Clear();
@@ -131,13 +134,10 @@ export class DailyTimeSheetComponent extends BaseComponent {
     }
 
     private employeeUserId: string = null;
-    get EmployeeUserId() {
-        return this.employeeUserId;
-    }
+    get EmployeeUserId() { return this.employeeUserId; }
     set EmployeeUserId(value: string) {
         if (this.employeeUserId != value) {
-            this.employeeUserId = value;
-            this.SaveChanges();
+            this.employeeUserId = value;            
         }
     }
 

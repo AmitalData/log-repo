@@ -23,6 +23,7 @@ declare @ClockTimeTime as varchar(10)
 declare @PerProjectTime as varchar(10)
 declare @PerProjectTime_NoProject as varchar(10)
 
+
 declare @TotalsTable table
 (
   DataEntryMinutes int,
@@ -38,25 +39,26 @@ declare @TotalsTable table
 set @UserId = (select top 1 Id from Contacts where Email = @Email)
 set @EndOfMonth = (SELECT DATEADD(month, ((@Year - 1900) * 12) + @Month, -1))
 set @StartOfMonth = (SELECT DATEADD(month, DATEDIFF(month, 0, @EndOfMonth), 0))
+set @EndOfMonth = (SELECT DATEADD(HOUR, 23, @EndOfMonth))
+set @EndOfMonth = (SELECT DATEADD(MINUTE, 59, @EndOfMonth))
+set @EndOfMonth = (SELECT DATEADD(SECOND, 59, @EndOfMonth))
 
-set @EndOfMonth = '2019-03-31 11:59:59.000'
 
 set @DataEntryTotalMinutes = (select sum(TimeInMinutes)
 								from TMEmployeeTimes 
 								where LocationCode = 'O'
 								and EmployeeUserId = @UserId
 								and DateOfWork >= @StartOfMonth
-								and DateOfWork <= @EndOfMonth)
+								and DateOfWork <= @EndOfMonth
+								)
 set @ClockTimeTotalMinutes = (select sum(datediff(minute, EntryTime, ExitTime))
 								from TMOfficeHours
 								where Inactive = 0
 								and UserId = @UserId
 								and EntryTime is not null
 								and ExitTime is not null
-								and RecordedEntryTime >= @StartOfMonth
-								and RecordedEntryTime <= @EndOfMonth
-								and RecordedExitTime >= @StartOfMonth
-								and RecordedExitTime <= @EndOfMonth
+								and WorkDate >= @StartOfMonth
+								and WorkDate <= @EndOfMonth
 								)
 set @PerProjectMinutes = (select sum(TMEmployeeTimes.FullDuration)
 								from TMEmployeeTimes join TMProjects on TMEmployeeTimes.ProjectId = TMProjects.Id
@@ -91,6 +93,7 @@ values
 @PerProjectMinutes_NoProject,
 @PerProjectTime_NoProject
 )
+
 
 select DataEntryTime, ClockTimeTime, PerProjectTime, PerProjectTime_NoProject  from @TotalsTable
 
@@ -147,7 +150,20 @@ select DataEntryTime, ClockTimeTime, PerProjectTime, PerProjectTime_NoProject  f
 --group by WorkDate
 --order by WorkDate
 
-
+--select WorkDate,
+--datediff(minute, EntryTime, ExitTime) as TotalMinutes,
+--((convert(varchar,datediff(minute, EntryTime, ExitTime) / 60)) + ':' + right('00'+(convert(varchar,datediff(minute, EntryTime, ExitTime) % 60)),2)) as Duration
+--from TMOfficeHours
+--where Inactive = 0
+--and UserId = @UserId
+--and EntryTime is not null
+--and ExitTime is not null
+--and RecordedEntryTime >= @StartOfMonth
+--and RecordedEntryTime <= @EndOfMonth
+--and RecordedExitTime >= @StartOfMonth
+--and RecordedExitTime <= @EndOfMonth
+----group by WorkDate
+--order by WorkDate
 
 								
 
@@ -219,3 +235,34 @@ END
 
 --select * from TMProjectCategories where Tenant = 1489
 
+
+
+
+	--DECLARE TMOfficeHoursCursor CURSOR READ_ONLY
+	--FOR
+	--SELECT CAST(WorkDate AS DATE), EntryTime, ExitTime, RecordedEntryTime, RecordedExitTime
+	--FROM TMOfficeHours
+	--WHERE
+	--Inactive = 0 
+	--AND UserId = @UserId
+	--AND WorkDate >= @StartOfMonth
+	--AND WorkDate <= @EndOfMonth
+	--AND EntryTime is not null
+	--AND ExitTime is not null
+	--OPEN TMOfficeHoursCursor FETCH NEXT FROM TMOfficeHoursCursor INTO @WorkDate, @EntryTime, @ExitTime, @RecordedEntryTime, @RecordedExitTime
+	--WHILE @@FETCH_STATUS = 0
+	--BEGIN
+		
+	--	set @Date1 = CAST(@EntryTime AS DATE)
+	--	insert into @TMEmployeeTimes(DateOfWork)
+	--	values
+	--	(
+	--	@WorkDate
+	--	)
+
+
+
+	--FETCH NEXT FROM TMOfficeHoursCursor INTO @WorkDate
+	--END
+	--CLOSE TMOfficeHoursCursor
+	--DEALLOCATE TMOfficeHoursCursor
