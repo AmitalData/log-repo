@@ -275,10 +275,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         });
         this.amount2reconcileTotal = _linesAmount2reco;
 
-        // Open Amount
-        var _openAmount = this.paymentAmountTotal - _linesAmount2reco;
-        if (this.EntityPM.OpenAmount != _openAmount) {
-            this.EntityPM.OpenAmount = _openAmount < 0 ? 0 : _openAmount;
+        if(this.EntityPM.InvoicesTransactions.length == 0){
+            this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
+            this.EntityPM.IsDirty = false;
+        }else{
+            // Open Amount
+            var _openAmount = this.paymentAmountTotal - _linesAmount2reco;
+            if (this.EntityPM.OpenAmount != _openAmount) {
+                this.EntityPM.OpenAmount = _openAmount < 0 ? 0 : _openAmount;
+            }
         }
 
     }
@@ -357,6 +362,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 // this.EntityPM.IsDirty = true;
                 this.EntityPM.InvoicesTransactions.splice(index, 1);
             }
+
         }
     }
     //#endregion
@@ -1756,7 +1762,12 @@ export class TransactionLineModel extends BaseComponent {
         if (v) {
             this.parent.PushTransaction(this.ledgerTransaction);
         } else {
+
+
             this.parent.PopTransaction(this.ledgerTransaction);
+                if(this.EntityPM.InvoicesTransactions.length == 0){
+                    this.EntityPM.IsDirty = false;
+                }
         }
 
     }
@@ -1777,6 +1788,8 @@ export class TransactionLineModel extends BaseComponent {
             this.LedgerTransactionPM.AmountToReconcile = value;
 
                 this.IsChecked = !!value;
+
+
 
             //set amount
             if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
