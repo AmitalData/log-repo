@@ -1105,6 +1105,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 myStringBuilder.Append(item.DocumentType);
 
+                if(item.DocumentReference == "1010")
+                {
+
+                }
+                if (item.DocumentReference == "1011")
+                {
+
+                }
+
                 if (item.DocumentReference != null)
                 {
                     if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
@@ -4316,7 +4325,7 @@ namespace Logitude.Accounting.BL.CoreBL
             pDFRerportXMLData.OpenFormatTotalAmounts = new List<OpenFormatTotalAmounts>();
 
 
-            if (ARinvoiceTotalAmount > 0)
+            if (ARinvoiceTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
@@ -4331,7 +4340,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            if (CreditARinvoiceTotalAmount > 0)
+            if (CreditARinvoiceTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
@@ -4345,7 +4354,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            if (ARpaymentTotalAmount > 0)
+            if (ARpaymentTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
@@ -4358,7 +4367,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            if (DepositTotalAmount > 0)
+            if (DepositTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
@@ -4372,7 +4381,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            if (APinvoiceTotalAmount > 0)
+            if (APinvoiceTotalRecords > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalAmounts.Add(new OpenFormatTotalAmounts()
                 {
