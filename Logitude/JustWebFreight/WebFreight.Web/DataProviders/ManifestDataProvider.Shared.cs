@@ -116,6 +116,9 @@ namespace WebFreight.Web.DataProviders
         public string ConsolidatorAddress { get; set; }
         public string ReleasingAgentName { get; set; }
         public string ReleasingAgentAddress { get; set; }
+
+        public string AgentPhoneNumber { get; set; }
+        public string AgentContactName { get; set; }
         #endregion
 
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
@@ -213,6 +216,10 @@ namespace WebFreight.Web.DataProviders
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public string AWBHandlingInformation { get; set; }
+
+        public string ShipperContactName { get; set; } // (main contact English name for the shipper) 
+        public string ConsigneeContactName { get; set; }// (main contact English name for the consignee ) 
+        public string ITNumber { get; set; } //(from the house\customs tab ) 
 
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
     }
