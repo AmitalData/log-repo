@@ -34,7 +34,6 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Security;
 using System.Net.Http;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.Accounting.BL.EntityUpdateServiceExt;
 using Logitude.BL.Interfaces;
 using WebFreight.Web.Validators;
 using Logitude.BL.Helpers;
