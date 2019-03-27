@@ -10,8 +10,8 @@ import {TransportModeListHeaderTemplate} from './Components/ListHeaderTemplates/
 import {DirectionListHeaderTemplate} from './Components/ListHeaderTemplates/DirectionListHeaderTemplate';
 import {ReactivateShipmentComponent} from './Components/Reactivate/ReactivateShipmentComponent';
 import {ReferenceNumberCellDisplayListTemplate} from './Components/ListTemplates/ReferenceNumberCellDisplayListTemplate';
-import {StatusCellDisplayListTemplate } from './Components/ListTemplates/StatusCellDisplayListTemplate';
-import {TaskCellDisplayListTemplate } from './Components/ListTemplates/TaskCellDisplayListTemplate';
+import { StatusCellDisplayListTemplate } from './Components/ListTemplates/StatusCellDisplayListTemplate';
+import { TaskCellDisplayListTemplate } from './Components/ListTemplates/TaskCellDisplayListTemplate';
 import {DateCellDisplayListTemplate} from './Components/ListTemplates/DateCellDisplayListTemplate';
 import {ApprovePaymentButtonListTemplate} from './Components/ListTemplates/ApprovePaymentButtonListTemplate';
 import {NewShipmentComponent} from './Components/NewEntity/NewShipmentComponent';
@@ -123,7 +123,8 @@ export class ModuleDeclarations {
             case "SplitShipmentComponent": { myResult = SplitShipmentComponent; break; }
             case "SplitPartialPackageComponent": { myResult = SplitPartialPackageComponent; break; }
             case "RemoveTasksButtonListTemplate": { myResult = RemoveTasksButtonListTemplate; break; }
-            case "AnalyzeChampXMLComponent": { myResult = AnalyzeChampXMLComponent; break; }                
+            case "AnalyzeChampXMLComponent": { myResult = AnalyzeChampXMLComponent; break; }
+                
         }
 
         return myResult;

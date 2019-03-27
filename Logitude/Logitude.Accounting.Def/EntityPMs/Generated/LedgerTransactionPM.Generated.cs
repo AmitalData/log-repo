@@ -1170,6 +1170,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? paymentReconciledAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? PaymentReconciledAmount  
+	   {
+	    
+	     get
+		{
+		   return paymentReconciledAmount;
+		 }
+		 set
+		 {
+		   if(paymentReconciledAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentReconciledAmount",OldValue=paymentReconciledAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   paymentReconciledAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

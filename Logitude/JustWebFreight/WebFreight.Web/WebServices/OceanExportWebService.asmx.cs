@@ -206,6 +206,7 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.ShipperCode = myPartnerCard.Code;
                         myDataProvider.ShipperAddress = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
                         myDataProvider.ShipperAddress_NoTel = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
+                        myDataProvider.ShipperAddress_NoTelFax = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
                         myDataProvider.ShipperVAT = myPartnerCard.VatNumber;
 
                         if (!string.IsNullOrEmpty(myShipperAddressId))
@@ -218,11 +219,13 @@ namespace WebFreight.Web.WebServices
                                 {
                                     myDataProvider.ShipperAddress = myPartnerCard.LocalName + Environment.NewLine;
                                     myDataProvider.ShipperAddress_NoTel = myPartnerCard.LocalName + Environment.NewLine;
+                                    myDataProvider.ShipperAddress_NoTelFax = myPartnerCard.LocalName + Environment.NewLine;
                                 }
 
                                 myDataProvider.ShipperAddress_WithName = DataProviders.General.GetAddressWithName(myPartnerAddress);
                                 myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + DataProviders.General.GetAddress(myPartnerAddress);
                                 myDataProvider.ShipperAddress_NoTel = myDataProvider.ShipperAddress_NoTel + DataProviders.General.GetAddress(myPartnerAddress);
+                                myDataProvider.ShipperAddress_NoTelFax = myDataProvider.ShipperAddress_NoTelFax + DataProviders.General.GetAddress(myPartnerAddress);
                                 myDataProvider.ShipperATTN = myPartnerAddress.ATTN;
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
@@ -334,6 +337,8 @@ namespace WebFreight.Web.WebServices
                     Card myPartnerCard = CardRepository.GetSingleCard(shipment.ConsigneeId, tenant, true);
                     if (myPartnerCard != null)
                     {
+                        myDataProvider.ConsigneeAddress_NoTelFax = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
+
                         myDataProvider.ConsigneeAlways = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
                         myDataProvider.ConsigneeVAT = myPartnerCard.VatNumber;
 
@@ -348,9 +353,11 @@ namespace WebFreight.Web.WebServices
                                 if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
                                 {
                                     myDataProvider.ConsigneeAlways = myPartnerCard.LocalName + Environment.NewLine;
+                                    myDataProvider.ConsigneeAddress_NoTelFax = myPartnerCard.LocalName + Environment.NewLine;
                                 }
 
                                 myDataProvider.ConsigneeAlways = myDataProvider.ConsigneeAlways + DataProviders.General.GetAddress(myPartnerAddress);
+                                myDataProvider.ConsigneeAddress_NoTelFax = myDataProvider.ConsigneeAddress_NoTelFax + DataProviders.General.GetAddress(myPartnerAddress);
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
