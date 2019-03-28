@@ -1691,6 +1691,7 @@
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleTransfer.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\AccountingPaymentMethodList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APPaymentTransferStatusList.ts" />
+    <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceStocksStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMCustomCode\APInvoicePMCustomCode.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMCustomCode\ARPaymentPMCustomCode.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\ARPaymentPMInitService.ts" />
@@ -1699,6 +1700,7 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\AccountingPaymentMethodListService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentTransferStatusListService.ts" />
+    <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStocksStatusListService.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditFCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditLCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditPriceStepComponent.ts" />
