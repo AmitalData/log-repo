@@ -1691,16 +1691,20 @@
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleTransfer.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\AccountingPaymentMethodList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APPaymentTransferStatusList.ts" />
+    <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceStockList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceStocksStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMCustomCode\APInvoicePMCustomCode.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMCustomCode\ARPaymentPMCustomCode.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\ARPaymentPMInitService.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\BankAccountLitePMInitService.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\AccountingPaymentMethodPM.ts" />
+    <TypeScriptCompile Include="Invoice\EntityPMs\ARInvoiceStockPM.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\AccountingPaymentMethodListService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentTransferStatusListService.ts" />
+    <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStockListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStocksStatusListService.ts" />
+    <TypeScriptCompile Include="Invoice\Services\StandardPMs\ARInvoiceStockPMService.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditFCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditLCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditPriceStepComponent.ts" />
@@ -7028,6 +7032,9 @@
     <Folder Include="Warehouse\Utilities\" />
     <Folder Include="_Resources\Stimulsoft\css\" />
     <Folder Include="_Resources\Stimulsoft\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Invoice\EntityPMInitServices\ARInvoiceStockPMInitService.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

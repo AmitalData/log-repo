@@ -1658,6 +1658,8 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APPaymentStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APPaymentViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStocksStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStockViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceTransferStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceViewsController.Generated.cs" />
@@ -1679,6 +1681,7 @@
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\APPaymentController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\APPaymentMethodController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARInvoiceController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARInvoiceStockController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARPaymentController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\BankAccountLiteController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\CreditCardTypeController.Generated.cs" />
@@ -2640,6 +2643,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoicePaymentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStocksStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStockUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceTotalVATUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceTransferStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceTypeUpdateClass.cs" />

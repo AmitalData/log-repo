@@ -421,8 +421,13 @@
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\CreditCardTypeQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\ARInvoiceStocksStatusDetails.Generated.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ARInvoiceStockList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoiceStocksStatusList.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ARInvoiceStockPM.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ARInvoiceStockQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARInvoiceStocksStatusQuery.cs" />
+    <Compile Include="InvoiceModel\Tools\DataMapping\ARInvoiceStockMapping.cs" />
+    <Compile Include="InvoiceModel\Tools\EntityService\ARInvoiceStockService.cs" />
     <Compile Include="Resolvers\LoggedContactResolver.cs" />
     <Compile Include="Mocks\MockLoggedContactUtil.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\ObjectTable.cs" />
