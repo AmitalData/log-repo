@@ -592,8 +592,8 @@
                                     <!-- Is Reconciled -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
                                         <log-cell-template template="let item" [IgnoreMods]="true">
-                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"
-                                                [IsEnabled]="!item.IsReconciled"></CheckBox>
+                                            <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount > 0" (Checked)="item.IsChecked = $event"
+                                                [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0)"></CheckBox>
                                         </log-cell-template>
                                     </log-column>
 
@@ -793,7 +793,7 @@
 
 
                                         <div float-start class="amount-div">
-                                            <div class="amount">{{OpenAmount | NumbersPipe:'N2'}}</div>
+                                            <div class="amount">{{paymentAmountTotal - amount2reconcileTotal | NumbersPipe:'N2'}}</div>
                                             <div class="label">{{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}
                                                 {{PaymentCurrencyCode}}
                                             </div>

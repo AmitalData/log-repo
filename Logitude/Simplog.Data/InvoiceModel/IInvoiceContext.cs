@@ -51,7 +51,7 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<SATInterface> SATInterfaces { get; }
         IDbSet<SATInterfaceSetting> SATInterfaceSettings { get; }
         IDbSet<BankAccountLite> BankAccountLites { get; }
-
+        IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus { get; }
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

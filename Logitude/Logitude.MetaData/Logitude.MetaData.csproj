@@ -511,6 +511,7 @@
     </None>
     <None Include="EntityFiles\InvoiceModel\ARInvoicePayment.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoiceStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARInvoiceStocksStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoiceTotalVAT.lxml">
       <SubType>Designer</SubType>
     </None>
