@@ -313,7 +313,20 @@ namespace WebFreight.Web.ReportsWebServices
                                 manifestDataProvider.AgentName = agent.LocalName;
                             }
 
-                            manifestDataProvider.AgentAddress = DataProviders.General.GetAddress(agentAddress);
+                            if (agentAddress != null)
+                            {
+                                manifestDataProvider.AgentAddress = DataProviders.General.GetAddress(agentAddress);
+                                manifestDataProvider.AgentPhoneNumber = agentAddress.PhoneNumber;
+                            }
+                        }
+
+                        if(!string.IsNullOrEmpty(agent.PrimaryContactId))
+                        {
+                            Contact contact = ContactRepository.GetSingleContact(agent.PrimaryContactId, tenant, true);
+                            if(contact != null)
+                            {
+                                manifestDataProvider.AgentContactName = contact.EnglishName;
+                            }
                         }
                     }
                 }
@@ -334,7 +347,20 @@ namespace WebFreight.Web.ReportsWebServices
                                     manifestDataProvider.AgentName = agent.LocalName;
                                 }
 
-                                manifestDataProvider.AgentAddress = DataProviders.General.GetAddress(agentAddress);
+                                if (agentAddress != null)
+                                {
+                                    manifestDataProvider.AgentAddress = DataProviders.General.GetAddress(agentAddress);
+                                    manifestDataProvider.AgentPhoneNumber = agentAddress.PhoneNumber;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(agent.PrimaryContactId))
+                            {
+                                Contact contact = ContactRepository.GetSingleContact(agent.PrimaryContactId, tenant, true);
+                                if (contact != null)
+                                {
+                                    manifestDataProvider.AgentContactName = contact.EnglishName;
+                                }
                             }
                         }
                     }
@@ -352,7 +378,20 @@ namespace WebFreight.Web.ReportsWebServices
                                     manifestDataProvider.AgentName = agent.LocalName;
                                 }
 
-                                manifestDataProvider.AgentAddress = DataProviders.General.GetAddress(agentAddress);
+                                if (agentAddress != null)
+                                {
+                                    manifestDataProvider.AgentAddress = DataProviders.General.GetAddress(agentAddress);
+                                    manifestDataProvider.AgentPhoneNumber = agentAddress.PhoneNumber;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(agent.PrimaryContactId))
+                            {
+                                Contact contact = ContactRepository.GetSingleContact(agent.PrimaryContactId, tenant, true);
+                                if (contact != null)
+                                {
+                                    manifestDataProvider.AgentContactName = contact.EnglishName;
+                                }
                             }
                         }
                     }
@@ -404,6 +443,7 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 List<ShipmentDataView> connectedShipments = shipmentRepository.GetShipmentViewsByTenantAndMasterId(masterId, tenant).ToList();
+                
                 #region manifest details region
 
                 List<FormCustomField> customfieldsList = formCustomFieldRepository.GetFormCustomFields(tenant).ToList();
@@ -428,6 +468,7 @@ namespace WebFreight.Web.ReportsWebServices
                     detail.ENSDate = newDetail.ENSDate = shipmentView.ENSDate;
                     detail.DocumentsClosingDate = newDetail.DocumentsClosingDate = shipmentView.DocumentsClosingDate;
                     detail.AWBHandlingInformation = newDetail.AWBHandlingInformation = shipmentView.AWBHandlingInformation;
+                    detail.ITNumber = shipmentView.ITNumber;
 
                     if (!string.IsNullOrEmpty(shipmentView.OBLTypeCode))
                     {
@@ -493,6 +534,15 @@ namespace WebFreight.Web.ReportsWebServices
                             detail.ShipperName = newDetail.ShipperName = "";
                             detail.ShipperAddress = newDetail.ShipperAddress = "";
                         }
+
+                        if (!string.IsNullOrEmpty(shipper.PrimaryContactId))
+                        {
+                            Contact contact = ContactRepository.GetSingleContact(shipper.PrimaryContactId, tenant, true);
+                            if (contact != null)
+                            {
+                                detail.ShipperContactName = contact.EnglishName;
+                            }
+                        }
                     }
                     else
                     {
@@ -518,6 +568,7 @@ namespace WebFreight.Web.ReportsWebServices
                             detail.ConsigneeVAT = newDetail.ConsigneeVAT = consignee.VatNumber;
                             detail.ConsigneeName = newDetail.ConsigneeName = consignee.EnglishName;
                             Address consigneeAdderss = addressRepository.GetSingleAddress(shipmentView.ConsigneeAddressId, tenant);
+
                             if (consigneeAdderss != null)
                             {
                                 if (consigneeAdderss.IsLocalLanguage && !string.IsNullOrEmpty(consignee.LocalName))
@@ -544,6 +595,14 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                             }
 
+                            if (!string.IsNullOrEmpty(consignee.PrimaryContactId))
+                            {
+                                Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, true);
+                                if (contact != null)
+                                {
+                                    detail.ConsigneeContactName = contact.EnglishName;
+                                }
+                            }
                         }
                         else
                         {
