@@ -43,6 +43,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LogMessagingUtil.Instance.AppendLine("GatepassFeedbackMessage is empty");
                 this.MyResponseData.HasException = true;
                 this.MyResponseData.UserMessage = "לא התקבלו נתונים מהמכס";
+                if (customResponse.ResponseContentHeader.Exception != null)
+                {
+                    this.MyResponseData.UserMessage = GetException(customResponse.ResponseContentHeader.Exception);
+                }
                 return;
             }
 
@@ -218,7 +222,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             itemExceptionLevel = "אזהרה ";
                             break;
                     }
-                    exceptionDescription += string.Concat(exceptionDescription, itemExceptionLevel, ": ", item.ExeptionDescription, "\n");
+                    exceptionDescription += string.Concat(itemExceptionLevel, ": ", item.ExeptionDescription, "\n");
                 }
             }
             return exceptionDescription;
