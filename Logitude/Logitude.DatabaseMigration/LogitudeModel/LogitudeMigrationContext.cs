@@ -1818,6 +1818,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; set; }
         public IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus { get; set; }
         public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
+        public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
         #endregion
 
         #region Quotes Context
@@ -4409,6 +4410,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new ARInvoiceStockMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStockLineMap());
 
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());

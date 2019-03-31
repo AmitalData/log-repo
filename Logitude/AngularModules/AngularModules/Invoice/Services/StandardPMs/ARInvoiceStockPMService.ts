@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {ARInvoiceStockPM} from '../../EntityPMs/ARInvoiceStockPM';
 
+import {ARInvoiceStockLinePM} from '../../EntityPMs/ARInvoiceStockLinePM';
 import {ARInvoiceStockPMInitService} from '../../EntityPMInitServices/ARInvoiceStockPMInitService';
 
 @Injectable()
@@ -212,12 +213,22 @@ export class ARInvoiceStockPMService {
                  
             }
 			
+               this.MapARInvoiceStockLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.ARInvoiceStockLines = [];
+            for (var item in entityPM.ARInvoiceStockLines) {
+            var myARInvoiceStockLinePM = entityPM.ARInvoiceStockLines[item];
+            var newARInvoiceStockLinePM: ARInvoiceStockLinePM = this.clone(myARInvoiceStockLinePM);
+						
+							 
+            entityPM.OldEntityPM.ARInvoiceStockLines.push(newARInvoiceStockLinePM);
+            }
+			   
 		}
         else {
 
@@ -227,6 +238,96 @@ export class ARInvoiceStockPMService {
         return entityPM;
     }
 
+    MapARInvoiceStockLines(entityPM: ARInvoiceStockPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldARInvoiceStockLines: ARInvoiceStockLinePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldARInvoiceStockLines = entityPM.OldEntityPM.ARInvoiceStockLines;
+        }
+
+        entityPM.ARInvoiceStockLines = new Array<ARInvoiceStockLinePM>();
+        for (var item in jsonPM.ARInvoiceStockLines) {
+            var jItem = jsonPM.ARInvoiceStockLines[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newARInvoiceStockLinePM: ARInvoiceStockLinePM;
+	  
+            if (mapParent) {
+                newARInvoiceStockLinePM = new ARInvoiceStockLinePM(entityPM);
+            }
+            else
+            {
+                newARInvoiceStockLinePM = new ARInvoiceStockLinePM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newARInvoiceStockLinePM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newARInvoiceStockLinePM.UniqueKey = Guid.newGuid();
+                newARInvoiceStockLinePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newARInvoiceStockLinePM.OldEntityPM = this.clone(newARInvoiceStockLinePM);
+
+				
+            }
+            else {
+                if (newARInvoiceStockLinePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newARInvoiceStockLinePM.ChangeSetOp = "Update";
+                }
+                else {
+                        newARInvoiceStockLinePM.ChangeSetOp = "Insert";
+                }
+ 
+                newARInvoiceStockLinePM.OldEntityPM = null;
+                newARInvoiceStockLinePM.EntityParentPM = null;
+            }
+			
+			 newARInvoiceStockLinePM.IsDirty = false;
+            entityPM.ARInvoiceStockLines.push(newARInvoiceStockLinePM);
+        }
+        if (oldARInvoiceStockLines) {
+            
+            for (var itemKey in oldARInvoiceStockLines) {
+                if (entityPM.ARInvoiceStockLines.filter(p=> p.UniqueKey === oldARInvoiceStockLines[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldARInvoiceStockLines[itemKey]) {
+                        //oldARInvoiceStockLines[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ARInvoiceStockLines.push(oldARInvoiceStockLines[itemKey]);
+						var oldItemJson = oldARInvoiceStockLines[itemKey];
+                        var deletedPM: ARInvoiceStockLinePM = new ARInvoiceStockLinePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ARInvoiceStockLines.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

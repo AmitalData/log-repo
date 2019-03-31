@@ -7,6 +7,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+
+import {ARInvoiceStockLinePM} from './ARInvoiceStockLinePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -95,7 +97,43 @@ export class ARInvoiceStockPM {
     public set Remaining(newValue: number) { if (this.remaining != newValue) { this.remaining = newValue; this.MarkAsDirty("Remaining"); } }
        
 	 
+     
+	private aRInvoiceStockLines: ARInvoiceStockLinePM[];
+    get  ARInvoiceStockLines() {
+        if (this.aRInvoiceStockLines == null) {
+            this.aRInvoiceStockLines = [];
+        }
 
+        return this.aRInvoiceStockLines;
+    }
+    set  ARInvoiceStockLines(newValue: ARInvoiceStockLinePM[]) {
+        if (this.aRInvoiceStockLines != newValue) {
+            this.aRInvoiceStockLines = newValue;
+        }
+    }
+    public AddARInvoiceStockLinePM(item: ARInvoiceStockLinePM) {
+        if (item != null) {
+            var index = this.ARInvoiceStockLines.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. ARInvoiceStockLines.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveARInvoiceStockLinePM(item: ARInvoiceStockLinePM) {
+        if (item != null) {
+            var index = this.ARInvoiceStockLines.indexOf(item);
+            if (index > -1) {
+                this. ARInvoiceStockLines.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public ARInvoiceStockLines: Array<ARInvoiceStockLinePMPM>= [];
+ 
     public OldEntityPM: ARInvoiceStockPM;
 		
     public IsDirty: boolean;

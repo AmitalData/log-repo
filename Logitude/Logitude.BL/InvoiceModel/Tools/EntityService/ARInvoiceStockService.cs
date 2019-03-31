@@ -19,7 +19,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
         }
 
-        public void Update(ARInvoiceStockPM entityPM)
+        public void Update(ARInvoiceStockPM entityPM, bool mapComposition)
         {
         }
     }

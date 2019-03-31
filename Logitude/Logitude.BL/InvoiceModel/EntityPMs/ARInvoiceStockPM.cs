@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.ServiceModel.DomainServices.Server;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,5 +25,31 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? EndDate { get; set; }
         public int? Amount { get; set; }
         public int? Remaining { get; set; }
+
+        //ARInvoiceStockLines
+
+        private List<ARInvoiceStockLinePM> aRInvoiceStockLines;
+        [Include]
+        [Composition]
+        [Association("ARInvoiceStockARInvoiceStockLines", "Id", "ARInvoiceStockId")]
+        public virtual List<ARInvoiceStockLinePM> ARInvoiceStockLines
+        {
+            get
+            {
+                if (aRInvoiceStockLines == null)
+                {
+                    aRInvoiceStockLines = new List<ARInvoiceStockLinePM>();
+                }
+
+                return this.aRInvoiceStockLines;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    aRInvoiceStockLines = value;
+                }
+            }
+        }
     }
 }

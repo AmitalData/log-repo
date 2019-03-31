@@ -1698,6 +1698,7 @@
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\ARPaymentPMInitService.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\BankAccountLitePMInitService.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\AccountingPaymentMethodPM.ts" />
+    <TypeScriptCompile Include="Invoice\EntityPMs\ARInvoiceStockLinePM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\ARInvoiceStockPM.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\AccountingPaymentMethodListService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.ts" />

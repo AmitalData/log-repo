@@ -150,8 +150,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         ARInvoiceStockService service = new ARInvoiceStockService(MyContext, entityPM.Tenant);
- 
-                        service.Update(entityPM);
+                        service.Update(entityPM, true);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ARInvoiceStock", 0, true);
