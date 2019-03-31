@@ -118,6 +118,7 @@ export class ImporterDeclarationComponent
 
     SetIsByExpireDate(newValue: boolean) {
         this.IsByExpireDate = newValue;
+        this.IsByType = !newValue;
     }
 
     get IsByExpireDate() { return this.RequestParams.IsByExpireDate; }
@@ -132,6 +133,7 @@ export class ImporterDeclarationComponent
 
     SetIsByType(newValue: boolean) {
         this.IsByType = newValue;
+        this.IsByExpireDate = !newValue;
     }
 
     get IsByType() { return this.RequestParams.IsByType; }
