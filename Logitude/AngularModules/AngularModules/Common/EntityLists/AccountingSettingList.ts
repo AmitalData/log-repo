@@ -47,5 +47,6 @@ export class AccountingSettingList {
 		IsAPPaymentsTransferEnabled: boolean;
 		EnableNegativeOffsetARPayments: boolean;
 		EnableNegativeOffsetAPPayments: boolean;
+		EnableInvoiceStocksManagement: boolean;
 	
 }

@@ -367,6 +367,13 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
+    get EnableInvoiceStocksManagement() { return this.EntityPM.EnableInvoiceStocksManagement; }
+    set EnableInvoiceStocksManagement(value: boolean) {
+        if (this.EntityPM.EnableInvoiceStocksManagement != value) {
+            this.EntityPM.EnableInvoiceStocksManagement = value;
+        }
+    }
+
     //Commands 
     CancelButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
@@ -431,5 +438,10 @@ export class AccountingSettingsComponent extends BaseComponent {
         logWindow.Title = windowTitle;
         logWindow.DataContext = this;
         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedSettingsComponent');
+    }
+
+    ManageStocksClicked() {
+
+
     }
 }

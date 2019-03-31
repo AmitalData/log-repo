@@ -54,6 +54,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.EnableNegativeOffsetARPayments = entityPM.EnableNegativeOffsetARPayments;
             poco.EnableNegativeOffsetAPPayments = entityPM.EnableNegativeOffsetAPPayments;
             poco.EnableMultiCurrencyAPPayments = entityPM.EnableMultiCurrencyAPPayments;
+            poco.EnableInvoiceStocksManagement = entityPM.EnableInvoiceStocksManagement;
         }
     }
 }
