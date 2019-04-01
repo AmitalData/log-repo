@@ -327,7 +327,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
-                CreateReconciliationForARPayment(theEntityPm);
+                if(theEntityPm.StatusCode != "VD")
+                    CreateReconciliationForARPayment(theEntityPm);
             }
 
             paymentRepository.Update(payment);
