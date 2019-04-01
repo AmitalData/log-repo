@@ -25,6 +25,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? EndDate { get; set; }
         public int? Amount { get; set; }
         public int? Remaining { get; set; }
+        public string Notes { get; set; }
 
         public virtual User CreatedByUser { get; set; }
         public virtual User UpdatedByUser { get; set; }

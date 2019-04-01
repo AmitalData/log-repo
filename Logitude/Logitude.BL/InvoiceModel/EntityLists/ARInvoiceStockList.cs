@@ -24,6 +24,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? EndDate { get; set; }
         public int? Amount { get; set; }
         public int? Remaining { get; set; }
+        public string Notes { get; set; }
 
         public string CreatedByUserName { get; set; }
         public string UpdatedByUserName { get; set; }

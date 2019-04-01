@@ -246,6 +246,7 @@ export class DynamicLoader {
             case "InvoiceModules/ARInvoice": { myResult = "InvoiceModules/ARInvoice/ModuleARInvoice#ModuleARInvoice"; break; }
             case "InvoiceModules/ARPayment": { myResult = "InvoiceModules/ARPayment/ModuleARPayment#ModuleARPayment"; break; }
             case "InvoiceModules/Transfer": { myResult = "InvoiceModules/Transfer/ModuleTransfer#ModuleTransfer"; break; }
+            case "InvoiceModules/InvoiceStocks": { myResult = "InvoiceModules/InvoiceStocks/ModuleInvoiceStocks#ModuleInvoiceStocks"; break; }
 
                 //Quote
             case "Quote": { myResult = "Quote/Module_QUOT#QuoteModule"; break; }

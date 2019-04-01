@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,26 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             poco.EndDate = entityPM.EndDate;
             poco.Remaining = entityPM.Remaining;
             poco.Amount = entityPM.Amount;
+            poco.Notes = entityPM.Notes;
+        }
+
+        internal static void MapARInvoiceStockLine(ARInvoiceStockLinePM itemPM, ARInvoiceStockLine itemPoco, bool isNewEntity, string loggedContactId)
+        {
+            if (isNewEntity)
+            {
+                itemPoco.Id = itemPM.Id;
+                itemPoco.Tenant = itemPM.Tenant;
+                itemPoco.ARInvoiceStockId = itemPM.ARInvoiceStockId;
+                itemPoco.CreateDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
+                itemPoco.CreatedByUserId = loggedContactId;
+
+            }
+
+            itemPoco.Number = itemPM.Number;
+            itemPoco.UpdateDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
+            itemPoco.UpdatedByUserId = loggedContactId;
+            itemPoco.IsUsed = itemPM.IsUsed;
+            itemPoco.ARInvoiceId = itemPM.ARInvoiceId;
         }
     }
 }

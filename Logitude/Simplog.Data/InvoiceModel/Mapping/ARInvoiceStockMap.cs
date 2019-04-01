@@ -19,6 +19,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusCode).IsRequired().HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(false);
 
             this.ToTable("ARInvoiceStocks");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -35,7 +36,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.EndDate).HasColumnName("EndDate");
             this.Property(t => t.Amount).HasColumnName("Amount");
             this.Property(t => t.Remaining).HasColumnName("Remaining");
-            
+            this.Property(t => t.Notes).HasColumnName("Notes");
+
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);

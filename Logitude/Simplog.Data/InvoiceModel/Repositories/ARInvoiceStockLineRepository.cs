@@ -45,10 +45,10 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return invoiceLines;
         }
                
-        public ARInvoiceStockLine GetSingleARInvoiceStockLine(string id)
+        public ARInvoiceStockLine GetSingleARInvoiceStockLine(string id, int tenant)
         {
             return (from a in invoiceContext.ARInvoiceStockLines
-                    where a.Id == id
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
         

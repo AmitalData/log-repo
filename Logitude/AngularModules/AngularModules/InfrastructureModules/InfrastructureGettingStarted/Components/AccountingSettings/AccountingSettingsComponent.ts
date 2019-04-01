@@ -441,7 +441,11 @@ export class AccountingSettingsComponent extends BaseComponent {
     }
 
     ManageStocksClicked() {
-
-
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1200;
+        logWindow.Height = 600;
+        logWindow.IsShowCloseButton = true;
+        logWindow.Title = "Invoice Stocks";
+        logWindow.Show('./InvoiceModules/InvoiceStocks/Components/ManageStocksComponent');
     }
 }

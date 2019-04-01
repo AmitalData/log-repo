@@ -25,9 +25,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? EndDate { get; set; }
         public int? Amount { get; set; }
         public int? Remaining { get; set; }
-
-        //ARInvoiceStockLines
-
+        public string Notes { get; set; }
+        
         private List<ARInvoiceStockLinePM> aRInvoiceStockLines;
         [Include]
         [Composition]

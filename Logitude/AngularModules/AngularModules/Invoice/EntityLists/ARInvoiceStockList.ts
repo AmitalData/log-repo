@@ -21,6 +21,7 @@ export class ARInvoiceStockList {
 		EndDate: Date;
 		Amount: number;
 		Remaining: number;
+		Notes: string;
 		CreatedByUserName: string;
 		UpdatedByUserName: string;
 		StatusName: string;

@@ -49,12 +49,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        EndDate = a.EndDate,
                        Remaining = a.Remaining,
                        Amount = a.Amount,
+                       Notes = a.Notes,
                    };
         }
 
         public ARInvoiceStockPM GetSinglePM(string id, int tenant)
         {
-            return (from a in repository.context.ARInvoiceStocks.Include("CreatedByUser").Include("UpdatedByUser").Include("Status")
+            ARInvoiceStockLineRepository aRInvoiceStockLineRepository = new ARInvoiceStockLineRepository(repository.context);
+            ARInvoiceStockLineQuery aRInvoiceStockLineQuery = new ARInvoiceStockLineQuery(aRInvoiceStockLineRepository);
+            
+            ARInvoiceStockPM entityPM = (from a in repository.context.ARInvoiceStocks.Include("CreatedByUser").Include("UpdatedByUser").Include("Status")
                     where a.Id == id && a.Tenant == tenant
                     select new ARInvoiceStockPM()
                     {
@@ -72,7 +76,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         EndDate = a.EndDate,
                         Remaining = a.Remaining,
                         Amount = a.Amount,
+                        Notes = a.Notes,
                     }).FirstOrDefault();
+
+            if (entityPM != null)
+            {
+                entityPM.ARInvoiceStockLines = aRInvoiceStockLineQuery.GetARInvoiceStockLinePMsByStockId(entityPM.Id, tenant).ToList();
+            }
+            
+            return entityPM;
         }
 
         public IQueryable<ARInvoiceStockList> GetIQueryableEntityList(IQueryable<ARInvoiceStock> iQueryable)
@@ -97,6 +109,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                         EndDate = a.EndDate,
                                                         Remaining = a.Remaining,
                                                         Amount = a.Amount,
+                                                        Notes = a.Notes,
                                                     };
             return result;
         }
