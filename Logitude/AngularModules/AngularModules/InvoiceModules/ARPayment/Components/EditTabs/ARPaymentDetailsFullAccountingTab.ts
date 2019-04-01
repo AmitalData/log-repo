@@ -217,7 +217,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
                     this.CalculateTotals();
                 });
-            }, 3000);
+            }, 6000);
 
         } else {
             console.error("No GLAccount for this payment ", this.EntityPM);
