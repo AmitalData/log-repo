@@ -17,11 +17,26 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
     {
         private List<BankPageDTO> _BankPagesDTO;
         List<TenantPagesOfAccountDTO> _TenantBankPagesDTO= new List<TenantPagesOfAccountDTO>();
+        static string ConvertFromDosHeberwToWinHeberw(string FileContent862)
+        {
+            var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
+            //var txt = File.ReadAllText(@"C: \Users\itzik\Desktop\zevel\Pages\pages.txt", dosEnc);
+            
+            byte[] dosBytes = dosEnc.GetBytes(FileContent862);
+            var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+            
+            var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dosBytes);
+            string winHebrewString = winHebrewEncoding.GetString(hebBytes);
+            return winHebrewString;
+            //File.WriteAllBytes(@"C: \Users\itzik\Desktop\zevel\Pages\pages_win1255.txt", hebBytes);
+            //File.WriteAllText(@"C: \Users\itzik\Desktop\zevel\Pages\pages_win1255.txt", hebrewString);
 
+        }
         public void Analyze(int tenant , string FileContent)
         {
             try
             {
+                FileContent=ConvertFromDosHeberwToWinHeberw(FileContent);
                 int? tenantFromPage4Tester = null;
                 _BankPagesDTO = CreateBankPagesDTOFromFile(FileContent,out tenantFromPage4Tester);
                 if (tenantFromPage4Tester.HasValue)
