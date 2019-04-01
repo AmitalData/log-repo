@@ -1760,9 +1760,13 @@ export class TransactionLineModel extends BaseComponent {
         this._isChecked = v;
 
         if (v) {
+
+            if(this.AmountToReconcile == null || this.AmountToReconcile == 0)
+                this.AmountToReconcile = this.OpenAmount;
+
             this.parent.PushTransaction(this.ledgerTransaction);
         } else {
-
+            this.AmountToReconcile = 0;
 
             this.parent.PopTransaction(this.ledgerTransaction);
                 if(this.EntityPM.InvoicesTransactions.length == 0){
@@ -1787,7 +1791,12 @@ export class TransactionLineModel extends BaseComponent {
         if (this.LedgerTransactionPM.AmountToReconcile != value) {
             this.LedgerTransactionPM.AmountToReconcile = value;
 
-                this.IsChecked = !!value;
+            if(value == 0 || !value)
+                this.IsChecked = false;
+            else
+                this.IsChecked = true;
+
+            // this.IsChecked = !!value;
 
 
 
