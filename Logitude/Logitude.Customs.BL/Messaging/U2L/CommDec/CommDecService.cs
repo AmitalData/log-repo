@@ -82,7 +82,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             DeclarationUpsertService myDeclarationUpsertService = new DeclarationUpsertService();
             try
             {
-                myDeclarationUpsertService.ProccessGenericRequest(xmlLOGICUSTFILE, ref MoreParams, out MessageOut);
+                var upsertParam = "CommDecService"; 
+                myDeclarationUpsertService.ProccessGenericRequest(xmlLOGICUSTFILE, ref upsertParam, out MessageOut);
             }
             catch (DbEntityValidationException ex)
             {
@@ -203,6 +204,38 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
             }
 
+            if (!string.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(dbContext);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(this._MyDeclarationPM.Id, false, false);
+                if (currentDeclarationCourierStatusPM != null)
+                {
+
+                    if (this._MyDeclarationPM.ImporterId.Substring(0, 1) == "5")
+                    {
+                        if (currentDeclarationCourierStatusPM.HighLowValue == "L")
+                        {
+                            _MyDeclarationPM.ProcedureCurrentCode = "4000007";
+                        }
+                        else if (currentDeclarationCourierStatusPM.HighLowValue == "H")
+                        {
+                            _MyDeclarationPM.ProcedureCurrentCode = "4000001";
+                        }
+                    }
+                    else
+                    {
+                        if (currentDeclarationCourierStatusPM.HighLowValue == "L")
+                        {
+                            _MyDeclarationPM.ProcedureCurrentCode = "4000507";
+                        }
+                        else if (currentDeclarationCourierStatusPM.HighLowValue == "H")
+                        {
+                            _MyDeclarationPM.ProcedureCurrentCode = "4000501";
+                        }
+                    }
+                }
+            }
+
             if (this._MyDeclarationPM.Consignments.Count == 1) // moran 11.1.17 - AMI-59265 - moved before creating invoices
             {
                 if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
@@ -220,7 +253,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 {
                     loadingPortCode = TranslateloadPort(_LogitudeCommDecFile.LoadingPortCode);
                 }
-                this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                if (!String.IsNullOrWhiteSpace(loadingPortCode)) this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
 
                 if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryCode))
                 {
@@ -237,12 +270,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
                 else
                 {
-                    this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
+                    //                    this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
                 }
 
-                this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription)) this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
                 //this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ManifestDate, "LogitudeCommDecFile.ManifestDate");
-                this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime)) this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
 
                 if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryId))
                 {
@@ -257,7 +290,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     }
                     if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
                 }
-                this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeCommDecFile.WarehouseId);
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.WarehouseId)) this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeCommDecFile.WarehouseId);
 
 
                 if (this._LogitudeCommDecFile.PACKAGES != null && this._LogitudeCommDecFile.PACKAGES.Count() > 0)
@@ -277,7 +310,39 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 if (this._LogitudeCommDecFile.INVOICE.Count() > 0)
                 {
-                    this._MyDeclarationPM.SupplierInvoices = new List<SupplierInvoicePM>();
+                    
+
+                    if (this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() == 0)
+                    {
+                        this._MyDeclarationPM.SupplierInvoices = new List<SupplierInvoicePM>();
+                    }
+                    else if (this._MyDeclarationPM.SupplierInvoices.Count() > 1)
+                    {
+                        AppendLogLine("Declaration has More than one Invoice, Invoice will not be Updated..");
+                        return;
+                    }
+                    else
+                    {
+                        if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().SupplierInvoiceItems != null && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().SupplierInvoiceItems.Count() > 1)
+                        {
+                            AppendLogLine("Declaration has More than one Invoice item, Invoice will not be Updated..");
+                            return;
+                        }
+                        if (this._LogitudeCommDecFile.INVOICE != null)
+                        {
+                            if(this._LogitudeCommDecFile.INVOICE.Count() > 1)
+                            {
+                                AppendLogLine("More than one Invoice received in the message, Invoice will not be Updated..");
+                                return;
+                            }
+                            if (this._LogitudeCommDecFile.INVOICE.FirstOrDefault().INVOICEITEMS != null && this._LogitudeCommDecFile.INVOICE.FirstOrDefault().INVOICEITEMS.Count() > 1)
+                            {
+                                AppendLogLine("More than one Invoice item received in the message, Invoice will not be Updated..");
+                                return;
+                            }
+                        }
+                    }
+
                     foreach (var itemINVOICE in this._LogitudeCommDecFile.INVOICE)
                     {
                         this._INVOICE = itemINVOICE;
@@ -715,19 +780,30 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         {
             //CheckExist();
 
+            if (this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() == 0)
+            {
+                AppendLogLine("Insert Invoice..");
+                this._MySupplierInvoicePM = new SupplierInvoicePM();
+                this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
+            }
+            else if (this._MyDeclarationPM.SupplierInvoices.Count() == 1)
+            {
+                AppendLogLine("Update Invoice..");
+                this._MySupplierInvoicePM = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault();
+                this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+            }
+            else
+            {
+                AppendLogLine("More than one Invoice, Invoice will not be Updated..");
+                return;
+            }
+
             var myQueryService = new CustomsVendorQueryService(this._context);
 
             int int1 = 0;
             decimal decimal1 = 0;
 
-            AppendLogLine("Insert Invoice..");
-
             MyGenericResponseObj.Stage = "GetContext";
-
-            this._MySupplierInvoicePM = new SupplierInvoicePM();
-            this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
-
-            MyGenericResponseObj.Stage = "Mapping";
 
             if (this._MySupplierInvoicePM.SupplierInvoiceItems == null)
             {
@@ -737,6 +813,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 this._MySupplierInvoicePM.SupplierInvoiceItems.Add(new SupplierInvoiceItemPM() { ChangeSetOp = ChangeSetOperation.Insert });
             }
+            else if (this._MySupplierInvoicePM.SupplierInvoiceItems.Count == 1)
+            {
+                this._MySupplierInvoicePM.SupplierInvoiceItems.FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+            }
+
+            MyGenericResponseObj.Stage = "Mapping";
 
             this._MySupplierInvoicePM.DeclarationId = this._MyDeclarationPM.Id;
             if (!string.IsNullOrWhiteSpace(this._INVOICE.INVOICELINENO) && this._INVOICE.INVOICELINENO != "0")
@@ -758,8 +840,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 this._MySupplierInvoicePM.AccountTypeCode = "380";
             }
-                
-            this._MySupplierInvoicePM.InvoiceNumber = this._INVOICE.INVOICENUMBER;
+
+            if (!string.IsNullOrWhiteSpace(this._INVOICE.INVOICENUMBER)) this._MySupplierInvoicePM.InvoiceNumber = this._INVOICE.INVOICENUMBER;
             if (!string.IsNullOrWhiteSpace(this._INVOICE.VENDORNUMBER))
             {
                 this._MySupplierInvoicePM.VendorId = myQueryService.GetIdByVendorNumber(this._INVOICE.VENDORNUMBER, ResolvedTenant());
@@ -770,10 +852,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     {
                         throw new BusinessErrorException("customsVendorPM '" + this._MySupplierInvoicePM.VendorId + "' is not found");
                     }
-                    this._MySupplierInvoicePM.IssueCountryCode = customsVendorPM.CountryCode;
+                    if (!string.IsNullOrWhiteSpace(customsVendorPM.CountryCode)) this._MySupplierInvoicePM.IssueCountryCode = customsVendorPM.CountryCode;
                 }
             }
-            this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = this._INVOICE.CURRENCYCODE;
+            //this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = this._INVOICE.CURRENCYCODE;
             if (!String.IsNullOrWhiteSpace(this._INVOICE.CURRENCYCODE))
             {
                 var freightCurrency = new CurrencyTypeRepository(ResolvedTenant());
@@ -1113,12 +1195,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         private List<SupplierInvoiceItemPM> GetSupplierInvoiceItemPM(Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile.INVOICE invoice)
         {
             var SupplierInvoiceItemPMList = new List<SupplierInvoiceItemPM>();
+            
             foreach (var invoiceItem in invoice.INVOICEITEMS)
             {
                 int int1 = 0;
                 decimal decimal1 = 0;
                 var SupplierInvoiceItemPM = new SupplierInvoiceItemPM();
-
+                if(this._MySupplierInvoicePM.SupplierInvoiceItems != null && this._MySupplierInvoicePM.SupplierInvoiceItems.Count() == 1 && invoice.INVOICEITEMS.Count() == 1)
+                {
+                    SupplierInvoiceItemPM = this._MySupplierInvoicePM.SupplierInvoiceItems.FirstOrDefault();
+                }
                 SupplierInvoiceItemPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
                 SupplierInvoiceItemPM.CounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
                 if (!string.IsNullOrWhiteSpace(invoiceItem.ITEMLINENO) && invoiceItem.ITEMLINENO != "0")
@@ -1133,7 +1219,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                         throw new BusinessErrorException("Error in parsing ITEMLINENO (" + invoiceItem.ITEMLINENO + ") into integer");
                     }
                 }
-                SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
+                if (String.IsNullOrWhiteSpace(SupplierInvoiceItemPM.ClassificationCode)) SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
                 if (!String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE))
                 {
                     var tradeAgreement = new TradeAgreementRepository(ResolvedTenant());
@@ -1201,9 +1287,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 {
                     SupplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehiclesPM(invoiceItem, SupplierInvoiceItemPM);
                 }
-                SupplierInvoiceItemPM.ItemCode = invoiceItem.ITEMCODE;
+                if (!string.IsNullOrWhiteSpace(invoiceItem.ITEMCODE)) SupplierInvoiceItemPM.ItemCode = invoiceItem.ITEMCODE;
                 SupplierInvoiceItemPM.Tenant = ResolvedTenant();
-                SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
+                if(SupplierInvoiceItemPM.ChangeSetOp != ChangeSetOperation.Update) SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
                 if (this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode == "VN") // moran 11.4.16 - AMI-56512 - if vehicle
                 {
                     SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType = new SupplierInvoiceItemProcesTypePM()
