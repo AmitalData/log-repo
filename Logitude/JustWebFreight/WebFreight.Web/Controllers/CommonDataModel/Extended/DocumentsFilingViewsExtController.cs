@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
                 if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                    tenant = tenant;
 
                 SecurityUtility.CheckContactFeature("DocumentsFiling", "READ", authToken.Tenant);
 

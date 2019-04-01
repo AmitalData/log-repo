@@ -195,7 +195,15 @@ namespace WebFreight.Web.Helpers
                             else
                             {
                                 var operation = !isHaveMultiSelect ? OperationSimpol.Replace("@@", filter.TextValue.ToString()) : OperationSimpol;
-                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                                //SelectStmt.Append(field.AggregationTypeCode + "(" + field.DWObjectTableCode + "." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                                //if (filter.IsMeasurement)
+                                //{
+                                //    WhereStmt += filter.AggregationTypeCode + "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + ")" + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                                //}
+                                //else
+                                //{
+                                    WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                                //}
                             }
                         }
                         else

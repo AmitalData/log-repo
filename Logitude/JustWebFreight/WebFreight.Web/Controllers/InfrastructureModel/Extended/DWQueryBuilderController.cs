@@ -485,7 +485,41 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
-        
+        [ActionName("PostGetDateFilterSample")]
+        public HttpResponseMessage PostGetDateFilterSample(DWObjectFieldsDetails filter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                //SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
+                string DateSample = "";
+
+                DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
+                if (filter != null)
+                {
+                    DateSample = dataWarehouseHelper.ResolveWarehoueDateField("", filter.OperationCode, filter.TextValue.ToString(), authToken.Tenant,true);
+                }
+                //DateSample = DateSample.Replace("'","");
+                //DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);
+                //string MySqlString = QBHelper.GetQuerySQL(DWQueryParam);
+                //DataTable MyData = QBHelper.GetDWQueryData(MySqlString);
+                //DWQueryDataResult myResult = new DWQueryDataResult();
+                //myResult.SQLDataResult = MyData;
+                //myResult.SQLString = MySqlString;
+                return Request.CreateResponse(HttpStatusCode.OK, DateSample);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
 
     }
 

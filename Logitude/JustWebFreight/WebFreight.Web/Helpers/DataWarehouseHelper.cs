@@ -11,21 +11,21 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public string ResolveWarehoueDateField(string fieldName, string operationCode, string fieldValue, int tenant)
+        public string ResolveWarehoueDateField(string fieldName, string operationCode, string fieldValue, int tenant,bool isSample = false)
         {
             string result = string.Empty;
 
 
-            if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant);
+            if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
             else
             {
                 if (ValidateFieldValue(operationCode, fieldValue))
                 {
                     DateTime currentDate =  TenantServerConfigration.GetCurrentDateTime(tenant);
                     var valuesArray = fieldValue.Split('^');
-                    if (operationCode == "Previous" && valuesArray.Length == 3) result = ResolvePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate);
-                    else if (operationCode == "Next" && valuesArray.Length == 3) result = ResolveNextDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate);
-                    else if (operationCode == "Current" && valuesArray.Length == 2) result = ResolveCurrentDateValue(fieldName, valuesArray[1], currentDate);
+                    if (operationCode == "Previous" && valuesArray.Length == 3) result = ResolvePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate, isSample);
+                    else if (operationCode == "Next" && valuesArray.Length == 3) result = ResolveNextDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate, isSample);
+                    else if (operationCode == "Current" && valuesArray.Length == 2) result = ResolveCurrentDateValue(fieldName, valuesArray[1], currentDate, isSample);
 
                 }
 
@@ -72,18 +72,22 @@ namespace WebFreight.Web.Helpers
 
 
 
-        private string ResolveBeforeAfterDateValue(string fieldName, string operationCode, string fieldValue, int tenant)
+        private string ResolveBeforeAfterDateValue(string fieldName, string operationCode, string fieldValue, int tenant,bool isSample = false)
         {
             DateTime date = DateTime.Parse(fieldValue);
 
             if (operationCode == "After" && !string.IsNullOrEmpty(fieldValue)) fieldValue = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(fieldValue).AddDays(1));
             string operationSimpol = operationCode == "After" ? " >'" : "<'";
             string result = fieldName + operationSimpol + fieldValue + "'";
+            if (isSample)
+            {
+                result = "( " + operationSimpol.Replace("'","") + " " + fieldValue.Replace("-", "/") + " )";
+            }
 
             return result;
         }
 
-        private string ResolveCurrentDateValue(string fieldName, string range, DateTime currentDate)
+        private string ResolveCurrentDateValue(string fieldName, string range, DateTime currentDate, bool isSample = false)
         {
             DateTime? fromDate = null;
             DateTime? toDate = null;
@@ -125,13 +129,13 @@ namespace WebFreight.Web.Helpers
                     break;
             }
 
-            string result = BuildDateSql(fromDate, toDate, fieldName, "Current", range);
+            string result = BuildDateSql(fromDate, toDate, fieldName, "Current", range, isSample);
 
             return result;
 
         }
 
-        private string ResolvePreviousDateValue(string fieldName, string interval, string range, DateTime currentDate)
+        private string ResolvePreviousDateValue(string fieldName, string interval, string range, DateTime currentDate, bool isSample = false)
         {
 
             DateTime? fromDate = null;
@@ -190,13 +194,13 @@ namespace WebFreight.Web.Helpers
                     break;
             }
 
-            string result = BuildDateSql(fromDate, toDate, fieldName);
+            string result = BuildDateSql(fromDate, toDate, fieldName,null,null,isSample);
 
             return result;
 
         }
 
-        private string ResolveNextDateValue(string fieldName, string interval, string range, DateTime currentDate)
+        private string ResolveNextDateValue(string fieldName, string interval, string range, DateTime currentDate, bool isSample = false)
         {
 
             DateTime? fromDate = null;
@@ -253,7 +257,7 @@ namespace WebFreight.Web.Helpers
                     break;
             }
 
-            string result = BuildDateSql(fromDate, toDate, fieldName);
+            string result = BuildDateSql(fromDate, toDate, fieldName,null,null,isSample);
 
             return result;
 
@@ -273,18 +277,28 @@ namespace WebFreight.Web.Helpers
             return dt.AddDays(-1 * diff).Date;
         }
 
-        private string BuildDateSql(DateTime? fromDate, DateTime? toDate, string fieldName, string operatorCode = null, string range = null)
+        private string BuildDateSql(DateTime? fromDate, DateTime? toDate, string fieldName, string operatorCode = null, string range = null, bool isSample = false)
         {
             string result = string.Empty;
             string fromDateString = fromDate != null ? string.Format("{0:yyyy-MM-dd}", fromDate) : "";
             string toDateString = toDate != null ? (string.Format("{0:yyyy-MM-dd}", toDate)) : "";
 
 
-            if (range == "Day" && operatorCode == "Current") result = (fieldName + "= '" + fromDateString + "'");
-
+            if (range == "Day" && operatorCode == "Current")
+            {
+                result = (fieldName + "= '" + fromDateString + "'");
+                if (isSample)
+                {
+                    result = "( = " + fromDateString.Replace("-", "/") + " )";
+                }
+            }
             else
             {
                 result = (fieldName + " >= '" + fromDateString + "' and " + fieldName + " < '" + toDateString + "'");
+                if (isSample)
+                {
+                    result = "( " + fromDateString.Replace("-","/") + " - " + toDateString.Replace("-", "/") + " )";
+                }
             }
 
 

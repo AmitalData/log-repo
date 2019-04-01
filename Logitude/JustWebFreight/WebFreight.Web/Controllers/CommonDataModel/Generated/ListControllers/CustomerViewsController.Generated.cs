@@ -99,7 +99,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
                 if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                    tenant = tenant;
 
                 SecurityUtility.CheckContactFeature("Customer", "READ", authToken.Tenant);
 

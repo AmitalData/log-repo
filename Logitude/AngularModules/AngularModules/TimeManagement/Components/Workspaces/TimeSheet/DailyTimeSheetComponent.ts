@@ -3,10 +3,9 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TMProjectListService} from '../../../Services/StandardLists/TMProjectListService';
-import {TimeManagementDomainService, TimeManagementAPIHelper, TimeSheetItem, TimeSheetItemDay} from '../../../Services/TimeManagementDomainService';
+import { TimeManagementDomainService, TimeManagementAPIHelper } from '../../../Services/TimeManagementDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
-import {GroupByPipe} from '../../../../Infrastructure/Pipes/GroupByPipe';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
@@ -412,6 +411,15 @@ export class DailyTimeSheetComponent extends BaseComponent {
     }
     RefreshButtonClicked(){
         this.RefreshTab();
+    }
+    ProrateButtonClicked() {
+
+        var iService = new TimeManagementDomainService();
+        iService.Prorate(this.EmployeeUserId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+
+            }
+        });
     }
 }
 
