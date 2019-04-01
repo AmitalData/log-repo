@@ -73,7 +73,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
     IsLoadDocumentsFilingListsComplete: boolean = false;
     IsLoadDocumentTypeListsComplete: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeListService: DocumentTypeListService , public _imageLibraryService: ImageLibraryService,public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -84,7 +84,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
         }
         this.Listen();
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
     }
 
     DownloadAllClick() {
@@ -163,7 +163,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     private Listen() {
 
         if (!this.RefreshDocInEvent) {
-            this.RefreshDocInEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.RefreshDocInEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "RefreshDocIn") {
                     this.RefreshButtonClicked();
                 } 
@@ -212,7 +212,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     }
 
     RefreshButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.LoadData();
     }
     //LoadDocumentTypeLists() {
@@ -383,7 +383,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                 additionalView.UploadButtonClicked();
             }
         }
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
         this.BuildItemsSource();
     }
@@ -641,7 +641,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                     if (document) {
                         if (!this.IsDeleteAttachment) {
                             this.IsDeleteAttachment = true;
-                            SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+                            this.CurrentSession.StartBusyIndicator("Saving...");
                             this._imageLibraryService.RemoveFile(document.Id, document.Tenant).subscribe(result => {
                                 this.externalDocs = this.externalDocs.filter(d => d.Id != this.SelectedExternalViewModel.ExternalDocumentId); 
 
@@ -650,7 +650,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                                 this.UndoReceivedButtonEnable = true;
                                 this.IsDeleteAttachment = false;
                                 this.CheckHasDocuments();
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
 
                             });
                         }
@@ -709,7 +709,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 

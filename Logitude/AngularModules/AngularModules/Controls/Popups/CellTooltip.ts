@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -25,8 +25,9 @@ export class CellTooltip implements OnInit, AfterViewInit {
     public Body: string = null;
     public IsMouseOver: boolean = false;
     @Output() Opened: EventEmitter<boolean> = new EventEmitter<boolean>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("Tooltip");
+        var idIndex = this.CurrentSession.GetNewId("Tooltip");
         this.TooltipId = "Tooltip_" + idIndex;
         this.TooltipButtonId = "TooltipButton_" + idIndex;
         this.TooltipContentId = "TooltipContent_" + idIndex; 

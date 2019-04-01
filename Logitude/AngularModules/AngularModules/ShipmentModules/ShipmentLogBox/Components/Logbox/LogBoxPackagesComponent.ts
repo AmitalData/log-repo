@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
@@ -41,7 +41,7 @@ export class LogBoxPackagesComponent implements OnInit, AfterViewInit {
     ShipmentPM: any;
     Title: string = "";
 
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
 
@@ -59,7 +59,7 @@ export class LogBoxPackagesComponent implements OnInit, AfterViewInit {
     } 
    
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     } 
     
 }

@@ -29,7 +29,7 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
     public IsNewEntityCall: boolean = true;
     public RequestPage: string;
     public IsVisible: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.entityResourceService.getEntityResourceByTableName("ShippingLine", 0).subscribe((response: any) => {
@@ -162,7 +162,7 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
 
     //Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -179,21 +179,21 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
 
     SubmitCreatingShippingLine() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var myService: ShippingLinePMService = new ShippingLinePMService();
 
         myService.insert(this.ShippingLinePM).subscribe(myResult => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 if (this.RequestPage == "SharedManifest") {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
+                    this.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
                 }
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
             }
 

@@ -1,4 +1,4 @@
-﻿
+
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { IdGeneratorPipe } from '../pipes/idgeneratorpipe';
@@ -94,9 +94,9 @@ export class CheckBox{
     public ZIndex: number = 0;
     @Output() Checked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.ControlId = "CheckBox_" + SessionLocator.CurrentSession.GetNewId("CheckBox");
+        this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
         this.ControlId2 = this.ControlId + "_LBL";
     }
 

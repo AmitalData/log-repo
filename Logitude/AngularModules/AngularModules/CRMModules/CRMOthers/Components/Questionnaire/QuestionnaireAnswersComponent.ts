@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { QuestionnairePM } from '../../../../CRM/EntityPMs/QuestionnairePM';
 import { QuestionnaireQuestionPM } from '../../../../CRM/EntityPMs/QuestionnaireQuestionPM';
@@ -47,6 +47,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
     public IsResourcesReady: boolean = false;
     private customPickListListService: CustomPickListListService;
     public SessionIndex: number;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _QuestionnairePMService: QuestionnairePMService, private _QuestionnaireAnswerPMService: QuestionnaireAnswerPMService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -58,7 +59,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
 
     private simplogWindow: LogitudeWindow;
     SetWindowArgs(args: any) {
-        this.simplogWindow = SessionLocator.CurrentSession.CurrentWindow;
+        this.simplogWindow = this.CurrentSession.CurrentWindow;
         if (args != null) {
             this.EntityId = args.EntityId;
             this.ObjectTableId = args.ObjectTableId;
@@ -283,7 +284,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
 
             this._QuestionnaireAnswerPMService.insert(questionnaireAnswerPM).subscribe(response => {
                 if (response.HasError === false) {
-                    SessionLocator.CurrentSession.CurrentWindow.Close("ok");
+                    this.CurrentSession.CurrentWindow.Close("ok");
                 }
                 else {
                     this.ValidationErrorsList = response.ErrorsArray;
@@ -295,7 +296,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.Close("cancelled");
+        this.CurrentSession.CurrentWindow.Close("cancelled");
     }
 
 

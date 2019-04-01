@@ -49,7 +49,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public IsEditExchangeRateVisible: boolean = false;
     public IsCreatedFromInvoiceSide: boolean = false;
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
-    public isRTL: boolean = false;  
+    public isRTL: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
 
@@ -763,7 +764,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -941,8 +942,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
     RunEditWindow() {
 
-        SessionLocator.CurrentSession.CurrentWindow.WindowClosed.subscribe(s => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        this.CurrentSession.CurrentWindow.WindowClosed.subscribe(s => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.newARPaymentPM.Id, EntityPM: this.newARPaymentPM, ObjectTableName: 'ARPayment' });
@@ -951,7 +952,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                         if (isEditComponentSaved) {
-                            SessionLocator.CurrentSession.FireEvent("NewARPaymentInvoiceTabCreated");
+                            this.CurrentSession.FireEvent("NewARPaymentInvoiceTabCreated");
                         }
                     });
 
@@ -969,7 +970,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 });
         });
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

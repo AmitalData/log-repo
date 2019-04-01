@@ -37,6 +37,7 @@ import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager
 
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.EntityResourceService = new EntityResourceService();
     }
@@ -92,14 +93,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
     Listen() {
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
             //this._SubMenuButtonsStateChanged =
-            SessionLocator.CurrentSession.SubscriptionAdd(
+            this.CurrentSession.SubscriptionAdd(
                 this.MenuButtonsStateChangedEvent = MenuButtonsEvents.MenuButtonsStateChanged.subscribe((args: MenuButtonsStateChangedEventArgs) => {
                     if (!this.IsDisplayOnly) {
-                        if (!AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController)) {
-                            this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+                        if (!AppTool.IsNullOrEmpty(this.CurrentSession.CurrentEditComponent.EditComponentController)) {
+                            this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
                         }
                         this.ApplyCheckMenuButtonsState(this.MenuButtons);
                     }
@@ -107,10 +108,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 })
             );
             //this._SubSaveCompleted =
-            SessionLocator.CurrentSession.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                         switch (this.MenuButtonCode) {
 
@@ -119,16 +120,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 })
             );
             //this._SubLoadCompleted =
-            SessionLocator.CurrentSession.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
             //this._SubDisplayModeChanged =
-            SessionLocator.CurrentSession.SubscriptionAdd(
+            this.CurrentSession.SubscriptionAdd(
                 DeclarationEventManager.DisplayModeChanged.subscribe((IsDisplayOnly: any) => {
                     this.CheckButtonState(this.MenuButtons);
 
@@ -136,8 +137,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             );
 
         }
-        //if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-        //    SessionLocator.CurrentSession.CurrentEditComponent.MenuButtonsHandlerREF = this;
+        //if (this.CurrentSession.CurrentEditComponent != null) {
+        //    this.CurrentSession.CurrentEditComponent.MenuButtonsHandlerREF = this;
         //}
     }
 
@@ -148,7 +149,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
-            if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.CurrentSession.CurrentEditComponent != null) {
 
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
 
@@ -337,12 +338,12 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             this.MenuButtonCode = menuButton.EventCode;
 
 
-            if (SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
+            if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
                 // save changes
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.declarationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.StopBusyIndicator();
                     this.MenuButtonClickDo();
                 });
 
@@ -410,12 +411,12 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             let toDo = false;
                             if (toDo)
                             {
-                                SessionLocator.CurrentSession.StartBusyIndicator("");
+                                this.CurrentSession.StartBusyIndicator("");
                                 var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
                                 myIIGGeneralMessagesService.GetResetDeclarationNumber(this.EntityPM.Id, this.EntityPM.Tenant)
                                     .subscribe((myServiceResponse: ServiceResponse) => {
                                         let messageWindow = new MessageWindow();
-                                        SessionLocator.CurrentSession.StopBusyIndicator();
+                                        this.CurrentSession.StopBusyIndicator();
                                         if (myServiceResponse.HasError) {
 
                                             messageWindow.Show(myServiceResponse.ErrorsArray[0]);
@@ -424,7 +425,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                             if (myServiceResponse.Result != null) {
                                                 messageWindow.Show(myServiceResponse.Result);
                                             }
-                                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
 
                                         }
@@ -489,12 +490,12 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     DisplayDeclarationVehicleModificationsMethod() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         let myVehicleReductionTypeListService = new VehicleReductionTypeListService();
         myVehicleReductionTypeListService.getAllFromCache().
             subscribe(res => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe(response => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
 
                     var logWindow = new LogitudeWindow();
@@ -525,7 +526,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
 
-                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                     if (this.EntityPM.SupplierInvoices.length == 0) {
                         this.CopyMethod();
                     }
@@ -575,7 +576,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     ReloadEntity(message: string) {
         if (message != "cancel") {
         
-         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
         }
     }
@@ -631,17 +632,17 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 } else {
                                     this.EntityPM.ExternalDeclarationNumber = this.EntityPM.ExternalDeclarationNumber + "-1";
                                 }
-                                let token = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
+                                let token = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
                                     (isSave) => {
                                         token.unsubscribe()
-                                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                         if (isSave) {  
                                             this._DeclarationNumberandVersionId = null;
                                             let window = new MessageWindow();
                                             window.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationReset"));
                                         } 
                                     });
-                                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                                this.CurrentSession.CurrentEditComponent.SaveChanges();
                             }
                         }
                     });
@@ -691,13 +692,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         declarationMessagesService.PostSendTransferRequest(searchParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 myCustomMessageProgressHelper.MessageArrived = true;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 var responseData: CustomFileCreditResponseData = myServiceResponse.Result;
                 if (!AppTool.IsNullOrEmpty(CustomMessageProgressComponent.CurrCustomMessageProgressHelper)) {
                     CustomMessageProgressComponent.CurrCustomMessageProgressHelper.MessageArrived = true;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 //this.AnalyzeActualSendToTransfer(result);
                 if (responseData.CreditStatus == "1") // moran 16.8.16 - AMI-57900
                 {
@@ -714,9 +715,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     return;
                 }
                 if (!responseData.HasException && responseData.Succeeded) {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    if (SessionLocator.CurrentSession.CurrentWindow != null) {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    if (this.CurrentSession.CurrentWindow != null) {
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                 } else {
                     if (!responseData.Succeeded && !AppTool.IsNullOrEmpty(responseData.UserMessage)) {
@@ -753,14 +754,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         declarationMessagesService.PostSendTransferRequest(searchParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 myCustomMessageProgressHelper.MessageArrived = true;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 var responseData: CustomFileCreditResponseData = myServiceResponse.Result;
                 //this.AnalyzeResponseMessageForsendToReTransfer(responseData);
                 if (!responseData.HasException && responseData.Succeeded) {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    if (SessionLocator.CurrentSession.CurrentWindow != null) {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    if (this.CurrentSession.CurrentWindow != null) {
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                     else {
                         //message = "Send ReTransfer Request Failed";
@@ -797,7 +798,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             "DeclarationId": this.EntityPM.Id,
         };
         customsRequestMenuService.WindowClosed.subscribe(
-            (myarg) => { SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM() }
+            (myarg) => { this.CurrentSession.CurrentEditComponent.ReloadEntityPM() }
         );
         customsRequestMenuService.ShowModalAsEditMenuAction("8250", my);
 
@@ -811,7 +812,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             "DeclarationId": this.EntityPM.Id,
         };
         customsRequestMenuService.WindowClosed.subscribe(
-            (myarg) => { SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM() }
+            (myarg) => { this.CurrentSession.CurrentEditComponent.ReloadEntityPM() }
         );
         customsRequestMenuService.ShowModalAsEditMenuAction("40", my);
 
@@ -867,7 +868,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                     "DeclarationId": this.EntityPM.Id,
                                 };
                                 customsRequestMenuService.WindowClosed.subscribe(
-                                    (myarg) => { SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM() }
+                                    (myarg) => { this.CurrentSession.CurrentEditComponent.ReloadEntityPM() }
                                 );
                                 customsRequestMenuService.ShowModalAsEditMenuAction('8373', my);
                             }
@@ -963,7 +964,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             "שליחת שאילתא להדפסת הצהרה", true)
             .then((res) => {
                 let sub =
-                    SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted
+                    this.CurrentSession.CurrentEditComponent.LoadCompleted
                         .subscribe(succ => {
                             sub.unsubscribe();
 
@@ -978,7 +979,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                     }
                                 });
                         });
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
             }
             ).catch((err) => {
@@ -1074,7 +1075,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
           logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
 
             logWindow.WindowClosed.subscribe(($event: any) => {
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
             this.ActivateUnifreightInstruction();
         } else {
@@ -1095,7 +1096,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         return;
                     }
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
 
 
@@ -1106,8 +1107,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     DisplayOnlyCheck() {
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-            this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.CurrentSession.CurrentEditComponent) {
+            this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         }
         if (this.IsDisplayOnly) {
 
@@ -1146,9 +1147,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     CourierPendingReasonDeleteMethod() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.declarationCourierStatusPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var declarationCourierStatusPM: DeclarationCourierStatusPM = response.Result;
             if (declarationCourierStatusPM != null && (!AppTool.IsNullOrEmpty(declarationCourierStatusPM.CourierPendingReasonCode) || !AppTool.IsNullOrEmpty(declarationCourierStatusPM.PendingRemarks))) {
                 var confirm = new ConfirmWindow();
@@ -1160,11 +1161,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 confirm.Show("האם למחוק Pending?");
                 confirm.WindowClosed.subscribe((event: any) => {
                     if (confirm.Yes) {
-                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                        this.CurrentSession.StartBusyIndicatorSaving();
                         declarationCourierStatusPM.CourierPendingReasonCode = null;
                         declarationCourierStatusPM.PendingRemarks = null;
                         this.declarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         });
                     }
                     confirm.Close();
@@ -1188,7 +1189,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     .subscribe((response: ServiceResponse) => {
                         console.log("[response] DeclarationClosureMethod: ", response);
                         if (!response.HasError) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             let messageWindow = new MessageWindow();
                             messageWindow.Width = 300;
                             messageWindow.Height = 180;
@@ -1210,7 +1211,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     .subscribe((response: ServiceResponse) => {
                         console.log("[response] CancelDeclarationClosureMethod: ", response);
                         if (!response.HasError) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             let messageWindow = new MessageWindow();
                             messageWindow.Width = 300;
                             messageWindow.Height = 180;

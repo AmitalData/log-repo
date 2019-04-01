@@ -56,7 +56,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public DataContext: CustomerOverviewTabComponent = this;
     public TenantPM: TenantPM;
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -65,7 +65,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
         this.EntityName = "Customer";
         this.StartWorkingDate = this.EntityPM.StartWorkingDate;
         this.TenantPM = SessionLocator.TenantPM;
-        this.ActivityStatusOverViewDashboardId = this.ActivityStatusOverViewDashboardId + SessionLocator.CurrentSession.GetChartId();
+        this.ActivityStatusOverViewDashboardId = this.ActivityStatusOverViewDashboardId + this.CurrentSession.GetChartId();
 
         this.rankListService = new RankListService();
         this.rankListService.getAllFromCache().subscribe(result => {
@@ -696,7 +696,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
 
     MoreDetails() {
         this.CustomerOverViewTabHide = true;
-        SessionLocator.DynamicLoader.Load('./CommonModules/CommonCustomer/Components/EditTabs/CustomerOverviewTabDetailsComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./CommonModules/CommonCustomer/Components/EditTabs/CustomerOverviewTabDetailsComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Customer = this.EntityPM;
@@ -817,7 +817,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             
             listArgs.BackButtonTitle = "Customer";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, this.EntityPM.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
@@ -841,7 +841,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
@@ -867,7 +867,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
@@ -894,7 +894,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
@@ -922,7 +922,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);

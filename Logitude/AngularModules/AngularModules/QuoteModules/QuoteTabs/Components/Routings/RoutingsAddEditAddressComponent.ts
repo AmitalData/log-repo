@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -31,6 +31,7 @@ export class RoutingsAddEditAddressComponent extends BaseComponent {
     private myCardListService: CardListService;
     private myEntityPMService: AddressPMService;
     private IsCustomer: boolean;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new AddressPM();
@@ -46,7 +47,7 @@ export class RoutingsAddEditAddressComponent extends BaseComponent {
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.IsResourcesReady = true;
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this.myCardListService.getSingle(myCardId).subscribe((myResponse1: ServiceResponse) => {
                 var list: CardList = myResponse1.Result;
@@ -59,7 +60,7 @@ export class RoutingsAddEditAddressComponent extends BaseComponent {
                     this.IsNewEntity = true;
                     this.EntityPM = entityPM;
                     this.SetUIProperties();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -73,7 +74,7 @@ export class RoutingsAddEditAddressComponent extends BaseComponent {
                         }
 
                         this.SetUIProperties();
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
                 }
             });
@@ -380,7 +381,7 @@ export class RoutingsAddEditAddressComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -421,32 +422,32 @@ export class RoutingsAddEditAddressComponent extends BaseComponent {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.IsNewEntity) {
                 this.myEntityPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }                    
                 });
             }
 
             else {
                 this.myEntityPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }                    
                 });
             }

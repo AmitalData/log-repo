@@ -16,6 +16,7 @@ export class AddEditInsidePackageComponent {
     public DataContext: InsideShipmentPackageItem;
     public ObjectTableName: string = "InsideShipmentPackage";
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -42,7 +43,7 @@ export class AddEditInsidePackageComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -75,7 +76,7 @@ export class AddEditInsidePackageComponent {
 
             this.DataContext.IsNewEntity = false;
             this.DataContext.fatherComponent.ComputeFromInsidePackages();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

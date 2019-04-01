@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
@@ -26,6 +26,7 @@ export class CompetitorComponent extends BaseComponent {
     public DataContext = this;
     public ObjectTableName: string = "Competitor";
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService,private entityArgs:EntityArgs) {
         super();
         if (entityArgs.EntityPM != null)
@@ -262,7 +263,7 @@ export class CompetitorComponent extends BaseComponent {
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     Validate() {
         if (AppTool.IsNullOrEmpty(this.Name))
@@ -281,14 +282,14 @@ export class CompetitorComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         this.Validate();
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+            this.CurrentSession.StartBusyIndicatorCreating();
             var myService = new CompetitorPMService();
             myService.insert(this.EntityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.StopBusyIndicator();
 
                 }
 

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {CountryCityList} from '../../../../Common/EntityLists/CountryCityList';
@@ -21,6 +21,7 @@ export class CitySelectionComponent {
     private myService: CountryCityListService;
     private ObjectTableName: string = "CountryCity";
     public IsResourcesReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.myService = new CountryCityListService();
         this.ItemsSource = new Array<CountryCityList>();
@@ -101,6 +102,6 @@ export class CitySelectionComponent {
     }
 
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

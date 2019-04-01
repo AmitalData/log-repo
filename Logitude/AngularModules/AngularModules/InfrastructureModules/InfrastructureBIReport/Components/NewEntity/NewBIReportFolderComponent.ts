@@ -18,7 +18,7 @@ export class NewBIReportFolderComponent extends BaseComponent {
     public DataContext: NewBIReportFolderComponent = this;
     public ObjectTableName: string = "BIReportFolder";
     public IsNewQuery = true;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.EntityPM = new BIReportFolderPM();
@@ -62,21 +62,21 @@ export class NewBIReportFolderComponent extends BaseComponent {
     }
     
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                 }
             });
         }

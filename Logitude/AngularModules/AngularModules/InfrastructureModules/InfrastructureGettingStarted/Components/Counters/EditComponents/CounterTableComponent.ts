@@ -25,6 +25,7 @@ export class CounterTableComponent extends BaseComponent {
     public IsCounterUsed: boolean = false;
     public IsResourcesReady: boolean = false;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -33,7 +34,7 @@ export class CounterTableComponent extends BaseComponent {
         this.CounterId = args["CounterId"];
 
         if (this.CounterId) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var myService = new CountersDomainService();
             myService.GetCounterAPIHelper(this.CounterId).subscribe((myResponse: ServiceResponse) => {
@@ -56,7 +57,7 @@ export class CounterTableComponent extends BaseComponent {
                 }
 
                 this.IsResourcesReady = true;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -118,7 +119,7 @@ export class CounterTableComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         let counterLength: number = 15;
@@ -167,23 +168,23 @@ export class CounterTableComponent extends BaseComponent {
                 }
 
                 if (!isDirty) {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
 
                 else {
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.CurrentSession.StartBusyIndicatorSaving();
 
                     var myService = new CountersDomainService();
                     myService.Post(this.APIHelper).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                         }
 
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                            this.CurrentSession.CloseCurrentWindowEmit("Ok");
                         }
                     });
                 }

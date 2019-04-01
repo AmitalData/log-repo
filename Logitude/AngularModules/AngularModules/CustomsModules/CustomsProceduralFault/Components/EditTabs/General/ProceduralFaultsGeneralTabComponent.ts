@@ -1,4 +1,4 @@
-﻿import { Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { LocationDirective } from '../../../../../Infrastructure/Utilities/LocationDirective';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
@@ -31,7 +31,7 @@ export class ProceduralFaultsGeneralTabComponent extends BaseComponent {
 
     public entityResourceService: EntityResourceService = new EntityResourceService();
     private proceduralFaultPMService: ProceduralFaultPMService = new ProceduralFaultPMService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
     }
@@ -130,12 +130,12 @@ export class ProceduralFaultsGeneralTabComponent extends BaseComponent {
     OkButtonClicked() {
         this.proceduralFaultPMService.update(this.EntityPM).subscribe(response => {
             var result = response.Result;
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
 
         });
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 }

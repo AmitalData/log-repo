@@ -1,4 +1,4 @@
-﻿/// <reference path="../../common/datacontracts/shipmentsharedocumentsdata.ts" />
+/// <reference path="../../common/datacontracts/shipmentsharedocumentsdata.ts" />
 
 declare var System: any;
 declare var window: any;
@@ -47,6 +47,7 @@ export class SharedDocumentHelper {
     ShipmentShareDocumentsData: ShipmentShareDocumentsData;
     IsBuildDocumentRunning: boolean = false;
     IsUploadDocumentRunning: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
         this.documentTypePMExtendedService = new DocumentTypePMExtendedService();
@@ -66,7 +67,7 @@ export class SharedDocumentHelper {
     BuildDocument(shareDocument: ShareDocument) {
         if (!this.IsBuildDocumentRunning) {
             this.IsBuildDocumentRunning = true;
-            SessionLocator.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
+            this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
             this.ShareDocument = shareDocument;
 
@@ -214,7 +215,7 @@ export class SharedDocumentHelper {
     BuildCurrentCopies(copies: Array<DocumentCopiesViewModel>) {
 
 
-        SessionLocator.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
+        this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
         this.AddedDocumentTypeCopyViewModels = new Array<DocumentCopiesViewModel>();
         this.RemovedDocumentTypeCopyViewModels = new Array<DocumentCopiesViewModel>();
@@ -356,7 +357,7 @@ export class SharedDocumentHelper {
 
                             ServiceLocator.SendTotangoUserActivity("Shipment", this.ShareDocument.DocumentTypeName + " Built");
 
-                            SessionLocator.CurrentSession.FireEvent("RefreshDocumentOutPrint");
+                            this.CurrentSession.FireEvent("RefreshDocumentOutPrint");
                             if (!this.ShareDocument.IsReady) {
                                 this.ShareDocument.IsReady = true;
                                 this.documentOutPMService.GetCalculatedFileNameForDocumentOutCopy(this.ShareDocument.DocumentOutPM.Id, this.ShareDocument.DocumentTypeCopyId).subscribe(res => {
@@ -402,7 +403,7 @@ export class SharedDocumentHelper {
         var shipmentId = this.ShareDocument.EntityId;
 
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.htmlEditorService.getEditorHtmlData(this.ShareDocument.DocumentOutPM.Id, shipmentId, this.ObjectTableId, "", "", SessionLocator.Tenant, SessionLocator.LoggedUserId, false, this.ShareDocument.DocumentOutPM.DocumentTemplateId, "", "Edit").subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -413,7 +414,7 @@ export class SharedDocumentHelper {
                     this.FooterHeight = myResult.FooterHeight;
                 }
                 this.StopBusyIndicator();
-                SessionLocator.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
+                this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
                 this.SaveReportData(documentTypeCopyId);
 
             } else this.StopBusyIndicator();
@@ -444,7 +445,7 @@ export class SharedDocumentHelper {
         var idArray: any[];
         this.htmlEditorService.saveEditedReportToServer(filter).subscribe(res => {
 
-            SessionLocator.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
+            this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -531,7 +532,7 @@ export class SharedDocumentHelper {
     
 
     StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
         this.IsBuildDocumentRunning = false;
     }
 
@@ -669,7 +670,7 @@ export class SharedDocumentHelper {
                     }
 
                 }
-                SessionLocator.CurrentSession.FireEvent("RefreshDocIn");
+                this.CurrentSession.FireEvent("RefreshDocIn");
             }
         }
 

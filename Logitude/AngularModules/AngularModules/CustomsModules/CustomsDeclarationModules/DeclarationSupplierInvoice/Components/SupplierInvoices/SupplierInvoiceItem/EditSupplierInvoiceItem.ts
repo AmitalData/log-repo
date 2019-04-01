@@ -48,7 +48,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     LayoutDirection: string = 'ltr';
     public IsDisplayOnly: boolean = false;
     CustomItemErrorMessage: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
         super();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -392,7 +392,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
             this.OriginalItemPM.AddSupplierInvoiceItemsMod(item);
             this.ModificationsList.Insert(new ModificationItemModel(item)); 
-            //SessionLocator.CurrentSession.ResetRowIndex();
+            //this.CurrentSession.ResetRowIndex();
         }
     }
     RemoveModification(item: ModificationItemModel) {
@@ -551,7 +551,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
         this.OriginalItemPM.AddSupplierInvoiceItemsSerialNum(item);
         this.SerialNumbersList.Insert(new SerialNoItemModel(item));
-        //SessionLocator.CurrentSession.ResetRowIndex();
+        //this.CurrentSession.ResetRowIndex();
     }
     RemoveSerialNumber(item: SerialNoItemModel) {
         this.SerialNumbersList.Remove(item);
@@ -576,7 +576,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
         this.OriginalItemPM.AddSupplierInvoiceItemsDescript(item);
         this.DescriptionsList.Insert(new DescribtionItemModel(item));
-        //SessionLocator.CurrentSession.ResetRowIndex();
+        //this.CurrentSession.ResetRowIndex();
     }
     RemoveDescription(item: DescribtionItemModel) {
         this.DescriptionsList.Remove(item);
@@ -600,7 +600,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
         this.OriginalItemPM.AddSupplierInvoiceItemsProdIdent(item);
         this.IdentificationsList.Insert(new ProdIdentItemModel(item));
-        //SessionLocator.CurrentSession.ResetRowIndex();
+        //this.CurrentSession.ResetRowIndex();
     }
     RemoveIdentification(item: ProdIdentItemModel) {
         this.IdentificationsList.Remove(item);
@@ -629,7 +629,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
         this.OriginalItemPM.AddSupplierInvoiceItemsLevy(item);
         this.LevyList.Insert(new LevyItemModel(item));
-        //SessionLocator.CurrentSession.ResetRowIndex();
+        //this.CurrentSession.ResetRowIndex();
     }
     Removelevy(item: LevyItemModel) {
         this.LevyList.Remove(item);
@@ -673,12 +673,12 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
         } else {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     digit: string = null;

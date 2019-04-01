@@ -1,4 +1,4 @@
-﻿
+
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import {Http, Headers, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
@@ -13,7 +13,8 @@ import {LoginService} from '../Services/LoginService';
 declare var window: any;
 
 export class ServiceHelper {
-    public static Http: Http;    
+    public static Http: Http;
+    private static CurrentSession = SessionLocator.SelectedSession;
     public static _LogitudeErrorHandler: LogitudeErrorHandler = new LogitudeErrorHandler();
 
     public static HandleServiceError(error: any) {
@@ -175,16 +176,16 @@ export class ServiceHelper {
     private static LogServiceError(exception: string, stackTrace: string, logException = true) {
         try {
             if (exception) {
-                if (SessionLocator.CurrentSession) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                if (this.CurrentSession) {
+                    this.CurrentSession.StopBusyIndicator();
 
-                    if (!SessionLocator.CurrentSession.IsShowErrorWindow) {
-                        SessionLocator.CurrentSession.IsShowErrorWindow = true;
+                    if (!this.CurrentSession.IsShowErrorWindow) {
+                        this.CurrentSession.IsShowErrorWindow = true;
                         var mywindow = new MessageWindow();
                         mywindow.Show(exception);
 
                         mywindow.WindowClosed.subscribe(($event: any) => {
-                            SessionLocator.CurrentSession.IsShowErrorWindow = false;
+                            this.CurrentSession.IsShowErrorWindow = false;
                             if (exception) {
                                 if (exception.indexOf("Internet Connection Problem") > -1) {
                                     var loginService: LoginService = new LoginService();

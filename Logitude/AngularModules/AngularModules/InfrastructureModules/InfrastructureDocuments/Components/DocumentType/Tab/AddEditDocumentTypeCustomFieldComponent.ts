@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Component, OnInit}  from '@angular/core';
@@ -32,7 +32,7 @@ export class AddEditDocumentTypeCustomFieldComponent extends BaseComponent imple
     public FieldDataTypeLists: FieldDataTypePM[];
     public ValidationErrorsList: string[];
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs , public _documentTypeCustomFieldService: DocumentTypeCustomFieldService) {
         super();
         this.validator = new ClassLevelValidator();
@@ -130,7 +130,7 @@ export class AddEditDocumentTypeCustomFieldComponent extends BaseComponent imple
 
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             if (this.Mode == "Add") {
                 this._documentTypeCustomFieldService.Insert(this.EntityPM).subscribe(res => {
 
@@ -186,8 +186,8 @@ export class AddEditDocumentTypeCustomFieldComponent extends BaseComponent imple
 
 
     Close() {
-        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

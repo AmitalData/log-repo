@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BookingPM} from '../../EntityPMs/BookingPM';
@@ -18,12 +18,13 @@ export class BookingWizardLoadComponent implements AfterViewInit {
     public EntityPM: BookingPM;
     @ViewChild('WizardView', { read: ViewContainerRef }) target: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         
     }
 
     SetWindowArgs(entityId: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.EntityId = entityId;
         this.Load();
     }
@@ -51,7 +52,7 @@ export class BookingWizardLoadComponent implements AfterViewInit {
                     }
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -63,7 +64,7 @@ export class BookingWizardLoadComponent implements AfterViewInit {
             SessionLocator.DynamicLoader.Load('./Booking/Components/BookingWizard/BookingWizardComponent', this.target)
                 .then(cmpRef => {
                     cmpRef.instance.SetWindowArgs(myBookingWizardArgs);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
         });
     }

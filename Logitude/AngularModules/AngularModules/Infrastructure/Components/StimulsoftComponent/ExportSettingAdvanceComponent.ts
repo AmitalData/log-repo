@@ -1,4 +1,4 @@
-﻿/// <reference path="stimulsoftviewercomponent.ts" />
+/// <reference path="stimulsoftviewercomponent.ts" />
 
 import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -18,6 +18,7 @@ export class ExportSettingAdvanceComponent implements OnInit {
 
    
     StimulsoftViewerComponent: StimulsoftViewerComponent;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -82,7 +83,7 @@ export class ExportSettingAdvanceComponent implements OnInit {
 
     CloseButtonClicked() {
         
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
@@ -90,7 +91,7 @@ export class ExportSettingAdvanceComponent implements OnInit {
         if (this.StimulsoftViewerComponent != null) {
             this.StimulsoftViewerComponent.SaveToExcelFileAdvanced(this.ExportDataOnly, this.ExportObjectFormatting, this.UseOnePageHeaderandFooter);
         }
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 

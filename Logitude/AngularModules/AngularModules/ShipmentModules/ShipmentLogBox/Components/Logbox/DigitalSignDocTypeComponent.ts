@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
@@ -45,7 +45,7 @@ export class DigitalSignDocTypeComponent extends BaseComponent implements OnInit
     UpdateDocTypes: any[] = [];
     _DocumentTypeListService: DocumentTypePMExtendedService;
     _DocumentTypePMService: DocumentTypePMService
-   
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this._DocumentTypeListService = new DocumentTypePMExtendedService();
@@ -75,19 +75,19 @@ export class DigitalSignDocTypeComponent extends BaseComponent implements OnInit
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OKButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
         //var itemsProcessed = 0;
         //this.UpdateDocTypes.forEach((Type) => {
 
             this._DocumentTypeListService.update(this.UpdateDocTypes).subscribe(myResult => {
                 //itemsProcessed++;
                 //if (itemsProcessed === this.UpdateDocTypes.length) {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindow();
                    
                 //}
             });

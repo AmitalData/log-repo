@@ -33,7 +33,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public LocalCurrencyCode: string;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -657,8 +657,8 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
                 logWindow.WindowClosed.subscribe(s => {
                     if (s) {
-                        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        if (this.CurrentSession.CurrentEditComponent) {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         }
                     }
                 });
@@ -686,15 +686,15 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         });
     }
     ViewShipmentClicked(item: MultipleShipmentLine) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: item.ShipmentId, ObjectTableName: 'Shipment', BackButtonLabel: "A/P Invoice: " + this.EntityPM.InvoiceNumber });
             });
     }
     SaveChanges() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        if (this.CurrentSession.CurrentEditComponent) {
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
 }

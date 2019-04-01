@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -15,6 +15,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 export class SocialContactNameLink implements OnInit {
     UserName: string = "";
     rowData: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
 
     }
@@ -48,7 +49,7 @@ export class SocialContactNameLink implements OnInit {
         data.push("SocialContactLinkEvent");
         data.push(item);
         this.Destroyed();
-        SessionLocator.CurrentSession.SessionEvent.emit(data);
+        this.CurrentSession.SessionEvent.emit(data);
       
     }
  

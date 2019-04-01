@@ -48,7 +48,7 @@ export class NotificationReplyTabComponent extends BaseComponent {
     public NotificationsGroupsList: NotificationGroupHeaderViewModel[] = [];
 
     public notificationWebService: NotificationWebService = new NotificationWebService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -66,28 +66,28 @@ export class NotificationReplyTabComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
 
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCNT") {
                             this.LoadNotificationReplies();
                         }
@@ -159,7 +159,7 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
     public withAnswerGridVisibility: boolean = false;
 
     notificationPMService: NotificationPMService = new NotificationPMService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(notificationPM: NotificationPM, trigger: NotificationReplyTabComponent) {
         super();
 
@@ -228,16 +228,16 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
         let entityPMService = new EntityPMService();
         entityPMService.update("Customs.Notification", this.entityPM).then((res: any) => {
             res.subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
                 else {
                     this.SendNotificationReplay(customSendOptionsArgs);
                     this.NotificationReply = null;
                 }
             }, error => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         });
     }
@@ -281,7 +281,7 @@ export class NotificationGroupHeaderViewModel extends BaseComponent {
     public DataContext = this;
     public entityPM: NotificationPM;
     public NotificationsList: DeclarationNotificationItemViewModel[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(notificationPM: NotificationPM, notificationList: DeclarationNotificationItemViewModel[]) {
         super();
 

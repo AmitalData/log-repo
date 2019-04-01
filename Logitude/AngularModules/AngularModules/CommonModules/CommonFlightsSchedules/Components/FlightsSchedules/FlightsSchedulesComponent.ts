@@ -46,6 +46,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public IsResourcesReady: boolean = false;
     public IsSimulateVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = [];
@@ -363,30 +364,30 @@ export class FlightsSchedulesComponent extends BaseComponent {
     // Commands
     FindFlightsClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Sending Request...");
+        this.CurrentSession.StartBusyIndicator("Sending Request...");
 
         var isValid: boolean = this.Validate();
         if (!isValid) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
 
         else {
             if (AppTool.IsNullOrEmpty(this.myTenantZeroAirlineTTY)) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var validationErrorMessage = "This Airline doesn't support transmitting messages";
                 var messageWindow = new MessageWindow();
                 messageWindow.Show(validationErrorMessage);
             }
 
             else if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TTY)) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var validationErrorMessage = "Tenant communication parameter (TTY) is missing";
                 var messageWindow = new MessageWindow();
                 messageWindow.Show(validationErrorMessage);
             }
 
             else if (this.IsAirlinepNeedsRegistration && !this.IsAirlineRegistered) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var validationErrorMessage = "Can’t send this message, the airline needs Champ registration. Please contact your account manager";
                 var messageWindow = new MessageWindow();
                 messageWindow.Show(validationErrorMessage);
@@ -422,7 +423,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
                     }
 
                     else {                        
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
@@ -460,21 +461,21 @@ export class FlightsSchedulesComponent extends BaseComponent {
         var isValid: boolean = this.Validate();
         if (isValid) {
             if (AppTool.IsNullOrEmpty(this.myTenantZeroAirlineTTY)) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var validationErrorMessage = "This Airline doesn't support transmitting messages";
                 var messageWindow = new MessageWindow();
                 messageWindow.Show(validationErrorMessage);
             }
 
             else if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TTY)) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var validationErrorMessage = "Tenant communication parameter (TTY) is missing";
                 var messageWindow = new MessageWindow();
                 messageWindow.Show(validationErrorMessage);
             }
 
             else if (this.IsAirlinepNeedsRegistration && !this.IsAirlineRegistered) {
-                SessionLocator.CurrentSession.StopBusyIndicator();               
+                this.CurrentSession.StopBusyIndicator();               
                 var validationErrorMessage = "Can’t send this message, the airline needs Champ registration. Please contact your account manager";
                 var messageWindow = new MessageWindow();
                 messageWindow.Show(validationErrorMessage);
@@ -587,7 +588,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
 
         this.myFVRWebService.SendFVR(this.AirlineId, this.FromPortId, this.ToPortId, this.ETD, this.ETA, this.Volume, this.GrossWeight, this.VolumeUnitCode, this.GrossWeightUnitCode, this.EntityPM.ShipmentId, this.EntityPM.BookingId, this.myTenantZeroAirlineTTY).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator(); 
+            this.CurrentSession.StopBusyIndicator(); 
 
             if (myResponse != null) {
 
@@ -755,7 +756,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
 
     private Close() {
         this.StopTimer();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 
@@ -768,6 +769,7 @@ export class FlightsSchedulesResponeViewModel {
     public LegHeader: string;
     public LegDescription: string;
     public ItemsSource: FlightItemViewModel[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(args: ResponseItemArgs, private fatherComponent: FlightsSchedulesComponent) {
         this.ItemsSource = [];
         this.myBookingPM = args.Booking;
@@ -824,7 +826,7 @@ export class FlightsSchedulesResponeViewModel {
     // CopyMissingPorts
     private selectedCommandCode: string;
     private CopyMissingPorts() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Copy missing ports..");
+        this.CurrentSession.StartBusyIndicator("Copy missing ports..");
 
         var myResponsesIds: string = null;
 
@@ -839,7 +841,7 @@ export class FlightsSchedulesResponeViewModel {
         });
 
         if (myResponsesIds.length == 0) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (this.selectedCommandCode == "B") {
                 this.Book;
@@ -852,7 +854,7 @@ export class FlightsSchedulesResponeViewModel {
 
         else {
             this.fatherComponent.myFVRWebService.GetCopyFlightsSchedulesPorts(myResponsesIds).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse != null) {
 

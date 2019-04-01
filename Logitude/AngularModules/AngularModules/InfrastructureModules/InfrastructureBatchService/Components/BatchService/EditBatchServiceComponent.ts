@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -17,6 +17,7 @@ export class EditBatchServiceComponent extends BaseComponent {
     public ObjectTableName: string = "BatchServicesDefinition";
     public DataContext: BatchServiceItemClass;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -30,7 +31,7 @@ export class EditBatchServiceComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -45,7 +46,7 @@ export class EditBatchServiceComponent extends BaseComponent {
             service.update(this.EntityPM).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
 
                 else {

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {GeneralDomainService, TextCodeType, FieldsTranslations, FieldsUpdateHelper} from '../../../../Infrastructure/Services/GeneralDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -16,6 +16,7 @@ export class TranslationComponent extends BaseComponent  {
     public DataContext: TranslationComponent = this;
     private myService: GeneralDomainService;
     public DirtyItems: FieldsTranslations[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -86,7 +87,7 @@ export class TranslationComponent extends BaseComponent  {
 
         if (!this.isLoading) {
             this.isLoading = true;
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this.myService.LoadAllFieldsTranslations(SessionLocator.TenantPM.Language, this.ObjectTableId, code).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
@@ -126,7 +127,7 @@ export class TranslationComponent extends BaseComponent  {
         this.ItemsSource.InsertCollection(list);
         this.Count = this.ItemsSource.Length;
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     public SelectedRow: FieldsTranslations = null;
@@ -135,12 +136,12 @@ export class TranslationComponent extends BaseComponent  {
     }
 
     CancelClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
     SaveClicked() {
         if (this.DirtyItems.length > 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var myServiceHelper = new FieldsUpdateHelper();
             myServiceHelper.Tenant = SessionLocator.Tenant;
@@ -149,13 +150,13 @@ export class TranslationComponent extends BaseComponent  {
             var generalService: GeneralDomainService = new GeneralDomainService();
             generalService.UpdateFieldsTranslations(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {                    
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
                     CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                     });
                 }
             });

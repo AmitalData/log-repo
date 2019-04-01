@@ -49,7 +49,7 @@ export class ConstraintDetailWithCollateralComponent extends BaseComponent {
     //Services
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private customsCollateralListService: CustomsCollateralListService = new CustomsCollateralListService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
        
@@ -125,7 +125,7 @@ export class ConstraintDetailWithCollateralComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     ColleteralButtonClicked() {

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
@@ -21,6 +21,7 @@ export class NewChargesTypeComponent extends BaseComponent {
     public DataContext: NewChargesTypeComponent = this;
     public ObjectTableName: string = "ChargesType";
     public EntityPM: ChargesTypePM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -283,17 +284,17 @@ export class NewChargesTypeComponent extends BaseComponent {
             this.EntityPM.IsReceivable = true;
             this.EntityPM.IsPayable = true;
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             
             var myService: ChargesTypePMService = new ChargesTypePMService();
             myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     CachedDataManager.RefreshTableData(this.ObjectTableName, true);
 
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                 }
 
                 else {
@@ -304,6 +305,6 @@ export class NewChargesTypeComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

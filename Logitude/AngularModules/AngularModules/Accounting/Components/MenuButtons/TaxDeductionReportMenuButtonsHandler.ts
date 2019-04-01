@@ -32,7 +32,9 @@ export class TaxDeductionReportMenuButtonsHandler {
     EntityResourceService: EntityResourceService = new EntityResourceService();
    // _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
-     docFilingPM: any;
+    docFilingPM: any;
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -130,11 +132,11 @@ export class TaxDeductionReportMenuButtonsHandler {
     }
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
 }

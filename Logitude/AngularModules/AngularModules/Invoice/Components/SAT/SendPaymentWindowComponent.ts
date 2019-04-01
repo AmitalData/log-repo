@@ -29,7 +29,7 @@ export class SendPaymentWindowComponent {
     public IsPaymentError: boolean = false;
     public PaymentWarningText: string = null;
     public PaymentErrorText: string = null;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ValidationErrorsList = [];
         this.ValidationWarningsList = [];
@@ -89,9 +89,9 @@ export class SendPaymentWindowComponent {
 
 
     LoadARInvoiceSATStatus() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.invoiceDomainService.GetARInvoiceSATStatus(this.entityPM.Id).subscribe((response: ServiceResponse) => {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (response != null) {
                 if (!response.HasError) {
                     var myResult = response.Result;
@@ -133,16 +133,16 @@ export class SendPaymentWindowComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SendClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         this.invoiceDomainService.SendARPaymentSATXML(this.entityPM.Id).subscribe((response: ServiceResponse) => {
             if (response != null) {
                 if (!response.HasError) {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    SessionLocator.CurrentSession.CurrentWindow.Close("");
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CurrentWindow.Close("");
                 }
                 else {
                     var messageWindow = new MessageWindow();

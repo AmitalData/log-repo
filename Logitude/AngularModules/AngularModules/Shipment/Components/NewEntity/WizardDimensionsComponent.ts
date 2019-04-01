@@ -26,6 +26,7 @@ export class WizardDimensionsComponent {
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     public IsPackageTypeVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         
     }
@@ -245,10 +246,10 @@ export class WizardDimensionsComponent {
         this.EntityPM.OrderVolumetricWeight = this.savedVolumetricWeight;
         this.EntityPM.BookingNumberOfPackages = this.savedNumberOfPackages;
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 }
 export class WizardDimensionItem extends BaseComponent {
@@ -258,6 +259,7 @@ export class WizardDimensionItem extends BaseComponent {
     public ObjectTableName: string = "ShipmentOrderPackage";
     public IsWindowMode: boolean = false;
     public IsPackageTypeVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: ShipmentOrderPackagePM, public fatherComponent: WizardDimensionsComponent) {
         super();
         this.EntityPM = item;

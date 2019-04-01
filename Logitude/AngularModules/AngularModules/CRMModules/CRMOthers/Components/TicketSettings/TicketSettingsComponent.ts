@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -21,7 +21,7 @@ export class TicketSettingsComponent extends BaseComponent {
     public TenantPm: TenantPM = new TenantPM();
     public IsVisibile: boolean = false;
     public Filters: ApiQueryFilters;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.Filters = new ApiQueryFilters();
@@ -61,16 +61,16 @@ export class TicketSettingsComponent extends BaseComponent {
 
     // Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
         var myService: TenantPMService = new TenantPMService();
         myService.update(this.TenantPm).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     InfraSettings.TenantPM = this.TenantPm;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
             }
         });

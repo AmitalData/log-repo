@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 
@@ -22,8 +22,9 @@ export class HelpIcon implements OnInit {
     public IconBackground: string = null;
 
     LayoutDirection: string = 'ltr';
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("Tooltip");
+        var idIndex = this.CurrentSession.GetNewId("Tooltip");
         this.TooltipId = "Tooltip_" + idIndex;
         this.TooltipContentId = "TooltipContent_" + idIndex;
 

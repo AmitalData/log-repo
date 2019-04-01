@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -38,12 +38,13 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
     public viewModel: AddEditCustomerTenantAccessCardViewModel;
     public ValidationErrorsList: Array<string> = [];
     public DataLoaded: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -89,7 +90,7 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
     CompleteConfirmation(checkIfCustomerSelected: CardListDataViewModel) {
 
         if (this.viewModel.isNew) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             this.viewModel.isNew = false;
             var service: CustomerPMService = new CustomerPMService();
             service.get(this.viewModel.CustomerId).subscribe(res => {
@@ -138,12 +139,12 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
 
                         var service: CustomerTenantAccessPMService = new CustomerTenantAccessPMService();
                         service.update(this.viewModel.Parent.EntityPM).subscribe(p => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             this.viewModel.Parent.IsShowTipArea = false;
                             if (this.viewModel.Parent.SelectedItem == null && this.viewModel.Parent.ObsList.length > 0) {
                                 this.viewModel.Parent.SelectedItem = this.viewModel.Parent.ObsList[0];
                             }
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                         });
                     }
 

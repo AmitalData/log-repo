@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -20,6 +20,7 @@ export class ContainersFUsComponent implements OnInit {
     @Output() ReloadUserQueries = new EventEmitter();
     public IsResourcesReady: boolean = false;
     public BackButtonTitle: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         this.myDomainService = new ContainersFUDomainService();
         this.BackButtonTitle = TextCodeTranslator.Translate("General.MH.ContainersFU");
@@ -114,7 +115,7 @@ export class ContainersFUsComponent implements OnInit {
             listArgs.BackButtonTitle = this.BackButtonTitle;
             //listArgs.MethodName = MethodName;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
 
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => {
@@ -123,7 +124,7 @@ export class ContainersFUsComponent implements OnInit {
 
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
     }
