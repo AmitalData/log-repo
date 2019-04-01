@@ -135,6 +135,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.CompleteShipmentType = shipment.TransportModeName + " " + shipment.DirectionName;
                 myDataProvider.ChargeableWeight = shipment.ChargeableWeight;
                 myDataProvider.ProjectNumber = shipment.ProjectNumber;
+                myDataProvider.IsDangerous = shipment.IsDangerous;
 
                 if (shipment.DocumentsClosingDate != null)
                 {
