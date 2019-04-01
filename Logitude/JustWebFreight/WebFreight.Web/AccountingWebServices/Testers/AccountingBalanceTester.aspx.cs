@@ -1919,14 +1919,15 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     return;
                 }
 
-                param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
+                //param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
                 //int YYYY = param.YYYY;
                 //bool CheckControlAccountMode = param.CheckControlAccountMode;
-                int tenant = param.Tenant;
-                string FileBankPages = param.FileBankPages;
-                SetHttpAuth(tenant);
+                //int tenant = param.Tenant;
+                string FileBankPages = _TextBoxParam.Text;// param.FileBankPages;
+                //SetHttpAuth(tenant);
+                
                 var myBankAccountPageAnalyzer = new BankAccountPageAnalyzer();
-                myBankAccountPageAnalyzer.Analyze(tenant, FileBankPages);
+                myBankAccountPageAnalyzer.Analyze(null, FileBankPages);
 
 
             }

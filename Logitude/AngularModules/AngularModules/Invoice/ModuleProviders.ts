@@ -1,12 +1,10 @@
 import {AccountingSystemsSettingListService} from './Services/StandardLists/AccountingSystemsSettingListService';
 import {AccountingSystemsSyncStatusListService} from './Services/StandardLists/AccountingSystemsSyncStatusListService';
 import {AccountingTransferHeaderListService} from './Services/StandardLists/AccountingTransferHeaderListService';
-//import {AccountingTransferTypeListService} from './Services/StandardLists/AccountingTransferTypeListService';
 import {AccountListService} from './Services/StandardLists/AccountListService';
 import {AccountTypeListService} from './Services/StandardLists/AccountTypeListService';
 import {APInvoiceListService} from './Services/StandardLists/APInvoiceListService';
 import {APInvoiceStatusListService} from './Services/StandardLists/APInvoiceStatusListService';
-//import {APInvoiceTotalVatListService} from './Services/StandardLists/APInvoiceTotalVatListService';
 import {APInvoiceTransferStatusListService} from './Services/StandardLists/APInvoiceTransferStatusListService';
 import {APInvoiceTypeListService} from './Services/StandardLists/APInvoiceTypeListService';
 import {APPaymentListService} from './Services/StandardLists/APPaymentListService';
@@ -28,34 +26,24 @@ import {SATTransferStatusListService} from './Services/StandardLists/SATTransfer
 import {SATInvoiceStatusListService} from './Services/StandardLists/SATInvoiceStatusListService';
 import {AccountingPaymentMethodPMService} from './Services/StandardPMs/AccountingPaymentMethodPMService';
 import {AccountingPaymentMethodListService} from './Services/StandardLists/AccountingPaymentMethodListService';
-
-
-
-//import {AccountingSystemsSettingPMService} from './Services/StandardPMs/AccountingSystemsSettingPMService';
-//import {AccountingSystemsSyncStatusPMService} from './Services/StandardPMs/AccountingSystemsSyncStatusPMService';
+import { ARInvoiceStockPMService } from './Services/StandardPMs/ARInvoiceStockPMService';
 import {AccountingTransferHeaderPMService} from './Services/StandardPMs/AccountingTransferHeaderPMService';
-//import {AccountPMService} from './Services/StandardPMs/AccountPMService';
 import {APInvoicePMService} from './Services/StandardPMs/APInvoicePMService';
-//import {APInvoiceTotalVatPMService} from './Services/StandardPMs/APInvoiceTotalVatPMService';
 import {APPaymentPMService} from './Services/StandardPMs/APPaymentPMService';
 import {ARInvoicePMService} from './Services/StandardPMs/ARInvoicePMService';
 import {ARPaymentPMService} from './Services/StandardPMs/ARPaymentPMService';
 import {CreditCardTypePMService} from './Services/StandardPMs/CreditCardTypePMService';
 import {SATInterfaceSettingPMService} from './Services/StandardPMs/SATInterfaceSettingPMService';
-
 import {BankAccountLitePMService} from './Services/StandardPMs/BankAccountLitePMService';
 import {BankAccountLiteListService} from './Services/StandardLists/BankAccountLiteListService';
-
 import {APPaymentMethodPMService} from './Services/StandardPMs/APPaymentMethodPMService';
 import {ARPaymentMethodPMService} from './Services/StandardPMs/ARPaymentMethodPMService';
-
-
-//import {ExternalSystemsTablesCodePMService} from './Services/StandardPMs/ExternalSystemsTablesCodePMService';
 
 import {APInvoiceMenuButtonsHandler} from './Components/MenuButtons/APInvoiceMenuButtonsHandler';
 import {APPaymentMenuButtonsHandler} from './Components/MenuButtons/APPaymentMenuButtonsHandler';
 import {ARInvoiceMenuButtonsHandler} from './Components/MenuButtons/ARInvoiceMenuButtonsHandler';
-import {ARPaymentMenuButtonsHandler} from './Components/MenuButtons/ARPaymentMenuButtonsHandler';
+import { ARPaymentMenuButtonsHandler } from './Components/MenuButtons/ARPaymentMenuButtonsHandler';
+import { ARInvoiceStockMenuButtonsHandler } from './Components/MenuButtons/ARInvoiceStockMenuButtonsHandler';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -66,12 +54,10 @@ export class ModuleProviders {
             case "AccountingSystemsSettingListService": { myResult = new AccountingSystemsSettingListService(); break; }
             case "AccountingSystemsSyncStatusListService": { myResult = new AccountingSystemsSyncStatusListService(); break; }
             case "AccountingTransferHeaderListService": { myResult = new AccountingTransferHeaderListService(); break; }
-            //case "AccountingTransferTypeListService": { myResult = new AccountingTransferTypeListService(); break; }
             case "AccountListService": { myResult = new AccountListService(); break; }
             case "AccountTypeListService": { myResult = new AccountTypeListService(); break; }
             case "APInvoiceListService": { myResult = new APInvoiceListService(); break; }
             case "APInvoiceStatusListService": { myResult = new APInvoiceStatusListService(); break; }
-            //case "APInvoiceTotalVatListService": { myResult = new APInvoiceTotalVatListService(); break; }
             case "APInvoiceTransferStatusListService": { myResult = new APInvoiceTransferStatusListService(); break; }
             case "ARPaymentTransferStatusListService": { myResult = new ARPaymentTransferStatusListService(); break; }               
             case "APInvoiceTypeListService": { myResult = new APInvoiceTypeListService(); break; }
@@ -85,14 +71,9 @@ export class ModuleProviders {
             case "ARPaymentListService": { myResult = new ARPaymentListService(); break; }
             case "ARPaymentStatusListService": { myResult = new ARPaymentStatusListService(); break; }
             case "CreditCardTypeListService": { myResult = new CreditCardTypeListService(); break; }
-            case "ExternalSystemsTablesCodeListService": { myResult = new ExternalSystemsTablesCodeListService(); break; }
-           
-            //case "AccountingSystemsSettingPMService": { myResult = new AccountingSystemsSettingPMService(); break; }
-            //case "AccountingSystemsSyncStatusPMService": { myResult = new AccountingSystemsSyncStatusPMService(); break; }
+            case "ExternalSystemsTablesCodeListService": { myResult = new ExternalSystemsTablesCodeListService(); break; }           
             case "AccountingTransferHeaderPMService": { myResult = new AccountingTransferHeaderPMService(); break; }
-            //case "AccountPMService": { myResult = new AccountPMService(); break; }
             case "APInvoicePMService": { myResult = new APInvoicePMService(); break; }
-            //case "APInvoiceTotalVatPMService": { myResult = new APInvoiceTotalVatPMService(); break; }
             case "APPaymentPMService": { myResult = new APPaymentPMService(); break; }
             case "ARInvoicePMService": { myResult = new ARInvoicePMService(); break; }
             case "ARPaymentPMService": { myResult = new ARPaymentPMService(); break; }
@@ -106,19 +87,16 @@ export class ModuleProviders {
             case "SATInvoiceStatusListService": { myResult = new SATInvoiceStatusListService(); break; }
             case "APPaymentMethodPMService": { myResult = new APPaymentMethodPMService(); break; }
             case "ARPaymentMethodPMService": { myResult = new ARPaymentMethodPMService(); break; }
-
-            //case "ExternalSystemsTablesCodePMService": { myResult = new ExternalSystemsTablesCodePMService(); break; }
+            case "AccountingPaymentMethodPMService": { myResult = new AccountingPaymentMethodPMService(); break; }
+            case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
+            case "APPaymentTransferStatusListService": { myResult = new APPaymentTransferStatusListService(); break; }
+            case "ARInvoiceStockPMService": { myResult = new ARInvoiceStockPMService(); break; }
 
             case "APInvoiceMenuButtonsHandler": { myResult = new APInvoiceMenuButtonsHandler(); break; }
             case "APPaymentMenuButtonsHandler": { myResult = new APPaymentMenuButtonsHandler(); break; }
             case "ARInvoiceMenuButtonsHandler": { myResult = new ARInvoiceMenuButtonsHandler(); break; }
             case "ARPaymentMenuButtonsHandler": { myResult = new ARPaymentMenuButtonsHandler(); break; }
-            case "AccountingPaymentMethodPMService": { myResult = new AccountingPaymentMethodPMService(); break; }
-            case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
-            case "APPaymentTransferStatusListService": { myResult = new APPaymentTransferStatusListService(); break; }
-
-                
-                
+            case "ARInvoiceStockMenuButtonsHandler": { myResult = new ARInvoiceStockMenuButtonsHandler(); break; }
         }
 
         return myResult;

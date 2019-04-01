@@ -135,9 +135,18 @@ export class LoadRecoExPageComponent extends BaseComponent {
                 var response = myServiceResponse.Result;
 
                 
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                if (!AppTool.IsNullOrEmpty(response)) {
-                }
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    if (myServiceResponse.HasError) {
+                        this.ValidationErrorsList = myServiceResponse.ErrorsArray;
+                        this.ShowMessage(response);
+                    } else {
+
+                        if (!AppTool.IsNullOrEmpty(response)) {
+                            this.ShowMessage(JSON.stringify(response.Result));
+                            this.CancelButtonClicked();
+                        }
+
+                    }
             });
         }
 
@@ -161,7 +170,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
             this.FileExtension = temp[temp.length - 1];
             this.FileName = file.name.replace("." + this.FileExtension, "");
 
-            if (this.FileExtension != "txt") {
+            if (this.FileExtension.toLowerCase() != "txt") {
                 this.ShowMessage("חובה קובץ TXT");
                 return;
             }

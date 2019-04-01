@@ -1,10 +1,14 @@
 import { ManageStocksComponent } from './Components/ManageStocksComponent';
-import { NewARInvoiceStockComponent } from './Components/NewARInvoiceStockComponent';
+import { NewARInvoiceStockComponent } from './Components/NewEntity/NewARInvoiceStockComponent';
+import { ARInvoiceStockInputTemplate } from './Components/ARInvoiceStockInputTemplate';
+import { ARInvoiceStockGeneralTabComponent } from './Components/EditTabs/ARInvoiceStockGeneralTabComponent';
 
 export const Components =
     [
         ManageStocksComponent,
         NewARInvoiceStockComponent,
+        ARInvoiceStockInputTemplate,
+        ARInvoiceStockGeneralTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -15,6 +19,8 @@ export class ModuleDeclarations {
         switch (name) {
             case "ManageStocksComponent": { myResult = ManageStocksComponent; break; }
             case "NewARInvoiceStockComponent": { myResult = NewARInvoiceStockComponent; break; }
+            case "ARInvoiceStockInputTemplate": { myResult = ARInvoiceStockInputTemplate; break; }
+            case "ARInvoiceStockGeneralTabComponent": { myResult = ARInvoiceStockGeneralTabComponent; break; }
         }
 
         return myResult;

@@ -112,7 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/R Invoice Stock",
-			      				    Code =  "ebab",
+			      				    Code =  "efc5",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -1071,6 +1071,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Notes",
+					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "ARInvoiceStock",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1090,6 +1091,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Notes",
 					  						ListPropertyPath =  "Notes",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1153,7 +1155,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ARInvoiceStockObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARInvoiceStock" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ARInvoiceStockGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoiceStock.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ARInvoiceStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ARInvoiceStockGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoiceStock.Tab.General", ObjectTableId = ARInvoiceStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceStockFeatures.SOGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode ARInvoiceStockEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoiceStock.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ARInvoiceStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ARInvoiceStockEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoiceStock.Tab.Events", ObjectTableId = ARInvoiceStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceStockFeatures.SOEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SOGN",HtmlComponentName = "ARInvoiceStockGeneralTabComponent",HtmlComponentUrl = "./InvoiceModules/InvoiceStocks/Components/EditTabs/ARInvoiceStockGeneralTabComponent", FeatureId = ARInvoiceStockGeneralFeature_TH0.Id, ControlPath = "./InvoiceModules/InvoiceStocks/Components/EditTabs/ARInvoiceStockGeneralTabComponent", ObjectTableId = ARInvoiceStockObjectTable.Id, TabNameTextCodeId = ARInvoiceStockGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SOEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ARInvoiceStockEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ARInvoiceStockObjectTable.Id, TabNameTextCodeId = ARInvoiceStockEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
@@ -1206,10 +1226,166 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CANC",
+                EnglishName =  "Cancelled ",
+                LocalName =  "Cancelled ",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ARInvoiceStockObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "REAC",
+                EnglishName =  "Re-activated",
+                LocalName =  "Re-activated",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ARInvoiceStockObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "INND",
+                EnglishName =  "Invoice Numbers Added",
+                LocalName =  "Invoice Numbers Added",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ARInvoiceStockObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "INNR",
+                EnglishName =  "Invoice Number Removed",
+                LocalName =  "Invoice Number Removed",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ARInvoiceStockObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "INSR",
+                EnglishName =  "Invoice Numbers Series Removed",
+                LocalName =  "Invoice Numbers Series Removed",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ARInvoiceStockObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
+		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable ARInvoiceStockObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARInvoiceStock" && d.Tenant == 0).FirstOrDefault(); 			   Feature ARInvoiceStockFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel", ObjectTableId = ARInvoiceStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceStock.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ARInvoiceStockFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReActivate", ObjectTableId = ARInvoiceStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceStock.Features.Re-Activate", NameTextCodeDefaultText = "Re-Activate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+              
+
+		   TextCodeRepository.SubmitChanges();
+		   FeaturesRepository.SubmitChanges();
+		   MenuButtonGroup ARInvoiceStockMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+				{
+					MenuButtonGroupType = "ARInvoiceStockEdit",
+					Name = "ARInvoiceStockEditButtonsGroup",
+					ObjectTableId = ARInvoiceStockObjectTable.Id,
+					Tenant = 0
+				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+   
+			   MenuButton ARInvoiceStockMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Actions",
+						Index = 100, 
+						IsActive = false,
+						LabelTextCodeCode = "ARInvoiceStock.B.More",
+						LabelTextCodeDefaultText = "More",
+						Tenant = 0,
+						MenuButtonGroupId = ARInvoiceStockMenuButtonGroup.Id,
+						ObjectTableId = ARInvoiceStockObjectTable.Id,
+						MenuButtonType = "dropdownbutton",
+						FeatureId = null,
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+			   MenuButton ARInvoiceStockMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Cancel",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "ARInvoiceStock.B.Cancel",
+						LabelTextCodeDefaultText = "Cancel",
+						Tenant = 0,
+						MenuButtonGroupId = ARInvoiceStockMenuButtonGroup.Id,
+						ParentMenuButtonId = ARInvoiceStockMenuButton0.Id,
+						ObjectTableId = ARInvoiceStockObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ARInvoiceStockFeature_MB00.Id,
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ARInvoiceStockMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ReActivate",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "ARInvoiceStock.B.Re-Activate",
+						LabelTextCodeDefaultText = "Re-Activate",
+						Tenant = 0,
+						MenuButtonGroupId = ARInvoiceStockMenuButtonGroup.Id,
+						ParentMenuButtonId = ARInvoiceStockMenuButton0.Id,
+						ObjectTableId = ARInvoiceStockObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ARInvoiceStockFeature_MB01.Id,
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
