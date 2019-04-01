@@ -40,7 +40,7 @@ export class RequiredFieldsComponent extends BaseComponent {
 
     FieldsList: CustomsRequiredFieldList[] = [];
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.GetCustomsObjectTables();
@@ -138,7 +138,7 @@ export class RequiredFieldsComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

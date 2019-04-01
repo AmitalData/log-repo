@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { AgentPM } from '../../../../Common/EntityPMs/AgentPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -17,6 +17,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 
 export class AcceptAgentInvitaionComponent extends BaseComponent {
     agentSharedLogisticsKey: AgentSharedLogisticsKey;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _agentSharedLogisticsKeyPMService: AgentSharedLogisticsKeyPMService) {
         super();
 
@@ -34,11 +35,11 @@ export class AcceptAgentInvitaionComponent extends BaseComponent {
     OnAcceptInvitaion() {
         this.ValidationErrorsList = [];
         if (!AppTool.IsNullOrEmpty(this.SharedKey)) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
+            this.CurrentSession.StartBusyIndicator("Sending...");
 
             this._agentSharedLogisticsKeyPMService.GetSingle(this.SharedKey).subscribe(response => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (!response.HasError) {
                     if (response.Result) {
 
@@ -49,18 +50,18 @@ export class AcceptAgentInvitaionComponent extends BaseComponent {
                             return;
                         }
                         //this.EntityPM.AgentSharedLogisticsKey = this.agentSharedLogisticsKey.SharedKey;
-                        //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                        //this.CurrentSession.CurrentEditComponent.SaveChanges();
                         this.agentSharedLogisticsKey.Agent2Tenant = SessionLocator.Tenant;
                         this.agentSharedLogisticsKey.ApproveDate = DateTool.GetCurrentDateTimeAsUtc();
                         this.agentSharedLogisticsKey.ApprovedByUserEmail = SessionLocator.LoggedUserPM.Email;
                         this.agentSharedLogisticsKey.StatusCode = "A";
 
-                        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+                        this.CurrentSession.StartBusyIndicator("Saving...");
                         this._agentSharedLogisticsKeyPMService.update(this.agentSharedLogisticsKey,this.EntityPM.Id,true).subscribe(res => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             if (!res.HasError) {
                                 this.agentSharedLogisticsKey = res.Result;
-                                SessionLocator.CurrentSession.CurrentWindow.Close("true");
+                                this.CurrentSession.CurrentWindow.Close("true");
                             }
                             else {
                                 this.ValidationErrorsList = res.ErrorsArray;
@@ -89,6 +90,6 @@ export class AcceptAgentInvitaionComponent extends BaseComponent {
     }
 
     OnCancel() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

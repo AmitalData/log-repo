@@ -1,4 +1,4 @@
-﻿import {Component, OnInit,Output,EventEmitter}  from '@angular/core';
+import {Component, OnInit,Output,EventEmitter}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -59,7 +59,7 @@ export class RelatedCustomerComponent extends BaseComponent{
 
     ViewLog(itemComponent) {
         if (itemComponent.Id != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: itemComponent.Id, ObjectTableName: 'APILogs', BackButtonLabel: "Back" });
@@ -90,7 +90,7 @@ export class RelatedCustomerComponent extends BaseComponent{
     public EditRelatedCustomer(item: AddEditCustomerTenantAccessCardViewModel) {
         this.TenantAccessCard = item.EntityPM;
         var service: CommonDomainService = new CommonDomainService();
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         service.GetSingleCustomerTenantAccess(this.EntityPM.Id).subscribe(res => {
             if (!res.HasError) {
                 this.RealCustomerTenantAccessPM = res.Result;
@@ -101,7 +101,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                     logitudeWindow.Title = "Edit Card" + " - " + this.TenantAccessCard.CustomerCode + " - " + this.TenantAccessCard.CustomerName;
                     logitudeWindow.Show('./SharedLogistics/Components/EditRelatedCustomerComponent');
                     logitudeWindow.ComponentLoaded.subscribe(p => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
                     logitudeWindow.WindowClosed.subscribe(p => {
                         if (p == "OK") {
@@ -180,10 +180,10 @@ export class RelatedCustomerComponent extends BaseComponent{
 
 
     }
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs,private _entityResourceService: EntityResourceService) {
         super();
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe(response => {
             this.EntityPM = entityArgs.EntityPM;
             this.ObjectTableName = "CustomerTenantAccess";
@@ -326,7 +326,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                     this.TipVisibility = false;
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
     }

@@ -44,7 +44,7 @@ export class ChangePasswordComponent implements OnInit {
     PasswordContainsCharactersImg: string;
     PasswordContainsNumberImg: string;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _passwordChangeService: PasswordChangeService) {
     
         this.PasswordLenghtImg = "./_Resources/Images/Icons/ChangePassword/verified.png"
@@ -75,7 +75,7 @@ export class ChangePasswordComponent implements OnInit {
     CancelButtonClicked() {
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
     public ValidationErrorsList: string[];
@@ -142,7 +142,7 @@ export class ChangePasswordComponent implements OnInit {
 
         if (this.ValidationErrorsList.length == 0) {
 
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
                 var changePasswordParameter: ChangePasswordParameter = new ChangePasswordParameter();
                 changePasswordParameter.ContactId = SessionInfo.LoggedUserPM.Id;
@@ -157,7 +157,7 @@ export class ChangePasswordComponent implements OnInit {
                         if (myResult) {
 
                             if (this.CurrentPassword == this.NewPassword) {
-                                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.NewPasswordCantBeSameAsCurrentOne"));
                             } else this.ChangePassword();
 
@@ -167,7 +167,7 @@ export class ChangePasswordComponent implements OnInit {
 
                             this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.CurrentPasswordDoesntMatchYourInput"));
 
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         }
 
                     }
@@ -259,7 +259,7 @@ export class ChangePasswordComponent implements OnInit {
 
         this._passwordChangeService.ChangeUserPassword(changePasswordParameter).subscribe(res => {
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

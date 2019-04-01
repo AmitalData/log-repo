@@ -36,7 +36,7 @@ export class NewGLAccountComponent extends BaseComponent {
 
 
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -314,7 +314,7 @@ export class NewGLAccountComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     SubmitChanges() {
@@ -329,12 +329,12 @@ export class NewGLAccountComponent extends BaseComponent {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
+                this.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

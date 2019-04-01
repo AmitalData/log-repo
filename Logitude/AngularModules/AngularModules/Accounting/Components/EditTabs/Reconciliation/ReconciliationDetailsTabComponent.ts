@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReconciliationPM} from '../../../EntityPMs/ReconciliationPM';
 import {ReconciliationLinePM} from '../../../EntityPMs/ReconciliationLinePM';
@@ -48,6 +48,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
     ItemSource: ReconciliationLineModel[];
     public CurrencyCode;
     public AmountText: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -90,7 +91,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
     OpenJournal(id) {
         // open Journal screen
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
@@ -145,8 +146,8 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
     //#endregion
 
     RefreshButtonClicked() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         this.LoadData();
     }
 

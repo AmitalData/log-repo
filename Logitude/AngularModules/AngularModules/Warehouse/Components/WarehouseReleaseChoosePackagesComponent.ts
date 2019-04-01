@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -41,6 +41,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     GrossWeightLabel: string;
     DimensionsLabel: string;
     PackageType: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -146,7 +147,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             item.EntityPM.IsSelected = item.OldIsSelected;
             
         });
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     IsDisableFilter: boolean = false;
@@ -249,7 +250,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
                 }
              
             });
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
        

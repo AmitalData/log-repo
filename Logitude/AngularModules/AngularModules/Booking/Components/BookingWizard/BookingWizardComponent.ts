@@ -54,6 +54,7 @@ export class BookingWizardComponent implements AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private myFFRWebService: FFRWebService;
     private myPartnersDomainService: PartnersDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.TenantPM = InfraSettings.TenantPM;
         this.myPartnersDomainService = new PartnersDomainService();
@@ -182,8 +183,8 @@ export class BookingWizardComponent implements AfterViewInit {
             this.SendFFRContent = "Update Booking";
         }
 
-        if (SessionLocator.CurrentSession.CurrentWindow != null) {
-            SessionLocator.CurrentSession.CurrentWindow.ShowCancelControl(this.EntityPM.IsCancelled);
+        if (this.CurrentSession.CurrentWindow != null) {
+            this.CurrentSession.CurrentWindow.ShowCancelControl(this.EntityPM.IsCancelled);
         }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
@@ -1243,7 +1244,7 @@ export class BookingWizardComponent implements AfterViewInit {
         }
     }
     private CloseWizardWindow() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private isSaveButtonClicked: boolean = false;
@@ -1816,10 +1817,10 @@ export class BookingWizardComponent implements AfterViewInit {
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }   
         
     private ReloadBookingAfterSending() {

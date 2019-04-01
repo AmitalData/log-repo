@@ -17,6 +17,7 @@ export class TasksWorkspaceComponent {
     private businessProcessDomainService: BusinessProcessDomainService;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {         
         this.businessProcessDomainService = new BusinessProcessDomainService();
         this._entityResourceService = new EntityResourceService();
@@ -114,7 +115,7 @@ export class TasksWorkspaceComponent {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(this.listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
     }    

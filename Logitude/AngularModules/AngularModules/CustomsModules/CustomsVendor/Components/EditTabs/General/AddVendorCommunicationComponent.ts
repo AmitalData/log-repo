@@ -37,7 +37,7 @@ export class AddVendorCommunicationComponent extends BaseComponent {
     ValidationErrorsList: any[];
     vendorMessagesService: VendorMessagesService = new VendorMessagesService();
     customsVendorPMService: CustomsVendorPMService = new CustomsVendorPMService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -65,7 +65,7 @@ export class AddVendorCommunicationComponent extends BaseComponent {
 
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SendRequest() {
@@ -157,7 +157,7 @@ export class AddVendorCommunicationComponent extends BaseComponent {
             
             this.OnSendCompleted(response);
 
-            //SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+            //this.CurrentSession.CloseCurrentWindowEmit("Ok");
 
         });
     }
@@ -165,7 +165,7 @@ export class AddVendorCommunicationComponent extends BaseComponent {
     OnSendCompleted(response: any) {
 
         if (!response.HasException && response.Succeeded) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
         else {
             //CustomsMessageViewModel viewmodel = new CustomsMessageViewModel();

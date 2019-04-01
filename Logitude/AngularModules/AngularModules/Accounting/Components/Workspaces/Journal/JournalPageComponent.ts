@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
@@ -24,7 +24,7 @@ export class JournalPageComponent implements AfterViewInit {
     public RecentJournalsCount: number = 0;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private myJournalService: JournalExtendedListService = new JournalExtendedListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LoadAllScreenData();
 
@@ -64,7 +64,7 @@ export class JournalPageComponent implements AfterViewInit {
 
     EditJournal(entity: any) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Journal' });
@@ -78,7 +78,7 @@ export class JournalPageComponent implements AfterViewInit {
     RunNewJournalWizard() {
         var windowTitle = "New Journal";
         var entityPM: JournalPM = new JournalPM();
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityPM: entityPM, ObjectTableName: 'Journal', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.FullAccounting") });
@@ -150,12 +150,12 @@ export class JournalPageComponent implements AfterViewInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = "Full Accounting";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }

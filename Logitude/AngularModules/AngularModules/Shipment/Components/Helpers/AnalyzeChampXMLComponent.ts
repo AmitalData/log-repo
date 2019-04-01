@@ -13,6 +13,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 export class AnalyzeChampXMLComponent {
     public ValidationErrorsList: string[] = [];
     private myService: MessageSimulatingService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myService = new MessageSimulatingService();
     }
@@ -40,7 +41,7 @@ export class AnalyzeChampXMLComponent {
         this.Close();
     }
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     SimulateClicked() {
         var errors: string[] = [];
@@ -60,7 +61,7 @@ export class AnalyzeChampXMLComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Simulating...");
+            this.CurrentSession.StartBusyIndicator("Simulating...");
 
             var simulator = new SimulatorArgs();
             simulator.Tenant = SessionLocator.Tenant;
@@ -74,7 +75,7 @@ export class AnalyzeChampXMLComponent {
 
             this.myService.Simulate(simulator).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;

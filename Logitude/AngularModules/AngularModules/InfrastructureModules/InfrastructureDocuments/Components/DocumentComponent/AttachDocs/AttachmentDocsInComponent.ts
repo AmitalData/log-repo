@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, EventEmitter}  from '@angular/core';
+import {Component, OnInit, EventEmitter}  from '@angular/core';
 import {DocumentsFilingPM} from '../../../../../Common/EntityPMs/DocumentsFilingPM';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {DocumentOutCopyViewModel} from '../DocsOut/ViewModel/DocumentOutCopyViewModel';
@@ -19,6 +19,7 @@ export class AttachmentDocsInComponent implements OnInit {
     public SelectDocumentsFilingViewModel: DocumentsFilingPM;
     OnCloseAttachmentDocsInEvent = new EventEmitter();
     public AttachmentsLists: AttachmentsList[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
 
@@ -50,7 +51,7 @@ export class AttachmentDocsInComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.CurrentWindow.Close("");
 
     }
 

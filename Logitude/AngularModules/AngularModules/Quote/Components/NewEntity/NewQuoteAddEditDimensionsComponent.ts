@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -16,6 +16,7 @@ export class NewQuoteAddEditDimensionsComponent {
     public DataContext: DimensionsPackageItem;
     public ObjectTableName: string = "QuotePackage";
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -37,7 +38,7 @@ export class NewQuoteAddEditDimensionsComponent {
 
     CancelButtonClicked() {
         this.DataContext.IsWindowMode = false;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -53,7 +54,7 @@ export class NewQuoteAddEditDimensionsComponent {
             }
 
             this.DataContext.IsWindowMode = false;
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
@@ -29,6 +29,7 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
     SelectedAutomationCondationOrList: AutomationConditionViewModel;
     DataContext: DelayAutomationconditionsComponent = this;
     addEditAutomationsComponent: AddEditAutomationsComponent;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -71,7 +72,7 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
@@ -99,7 +100,7 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
 
       this.addEditAutomationsComponent.AutomatedBackupClass.DelayAautomationConditionLists = automationConditionList;
  
-       SessionLocator.CurrentSession.CloseCurrentWindow();
+       this.CurrentSession.CloseCurrentWindow();
     }
 
     AddAutomationConditionMethod(conditionType: string) {

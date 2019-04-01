@@ -31,7 +31,7 @@ export class TaxReportListTemplate {
 
     private _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     private _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -54,7 +54,7 @@ export class TaxReportListTemplate {
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
@@ -67,7 +67,7 @@ export class TaxReportListTemplate {
     EditLine() {
         var lineEntity: TaxReportLineList = this.rowData;
         if (lineEntity) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var windowTitle = TextCodeTranslator.Translate("Accounting.O.EditLine") + " " + lineEntity.Line;
 
@@ -84,7 +84,7 @@ export class TaxReportListTemplate {
 
                         var mm: ServiceResponse = myResult;
                         if (!mm.HasError) {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
 
                             var linePM = mm.Result;
 
@@ -99,14 +99,14 @@ export class TaxReportListTemplate {
                             logWindow.WindowArgs = windowArgs;
                             logWindow.WindowClosed.subscribe((event: any) => {
                                 if (event == "ok")
-                                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             });
                             logWindow.Show('./Accounting/Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent');
 
 
                         }
                         else {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
                     });
 
@@ -119,7 +119,7 @@ export class TaxReportListTemplate {
 
                 }
                 else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
 

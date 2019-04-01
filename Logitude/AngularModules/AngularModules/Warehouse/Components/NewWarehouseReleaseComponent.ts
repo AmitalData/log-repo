@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
@@ -69,7 +69,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     ChargeableWeightLabel: string;
 
     DataContext: any = this;
- 
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService, public _traceEventExtendedPMService: TraceEventExtendedPMService, private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
         this.EventTypeCodeList = [];
@@ -210,10 +210,10 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     LoadAllWarehouseEntryPackagesLists() {
 
         if (this.ShipmentPM) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.ShipmentPM.Id, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.ShipmentPM.Tenant).subscribe((res: any) => {
                 var pmResponse: ServiceResponse = res;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!pmResponse.HasError) {
                     this.AllWarehouseEntryPackagesLists = pmResponse.Result;
  
@@ -266,7 +266,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -330,7 +330,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
         if (this.ValidationErrorsList.length == 0) {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
       
                 if (this.WarehouseReleasePackagesLists.length > 0) {
@@ -352,12 +352,12 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                 this._warehouseReleasePMExtendedService.Insert(this.warehouseReleasePM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                   
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                     if (!pmResponse.HasError) {
                         ServiceLocator.SendTotangoUserActivity("Cross Docs", "Create Release");
                         this.warehouseReleasePM = pmResponse.Result;
-                        SessionLocator.CurrentSession.FireEvent("CrossDockReleases");
+                        this.CurrentSession.FireEvent("CrossDockReleases");
                         var myResult = pmResponse.Result;
                         if (myResult) {
 
@@ -566,13 +566,13 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
             this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
 
-                SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+                this.CurrentSession.CurrentWindow.Close("Refresh");
 
             });
 
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+            this.CurrentSession.CurrentWindow.Close("Refresh");
         }
 
     }

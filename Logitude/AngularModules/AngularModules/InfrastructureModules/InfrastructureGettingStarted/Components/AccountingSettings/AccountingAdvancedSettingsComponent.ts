@@ -17,6 +17,7 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
     public DataContext: any;
     public IsEnableMultiCurrencyARPaymentsVisible: boolean = false;
     public IsEnableInvoiceStocksManagementVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -38,11 +39,11 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
     //Commands 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private myCloner: Cloner;

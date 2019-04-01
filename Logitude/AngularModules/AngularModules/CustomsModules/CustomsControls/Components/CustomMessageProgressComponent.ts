@@ -1,4 +1,4 @@
-﻿import { Component, EventEmitter, Output, Input, OnInit, OnDestroy, ViewChild, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, OnDestroy, ViewChild, AfterViewInit, AfterContentInit } from '@angular/core';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ResponseDataBase, CustomsStepEnum } from '../../../Customs/DataContract/ResponseData/ResponseDataBase';
@@ -19,6 +19,8 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 })
 
 export class CustomMessageProgressComponent {
+    private CurrentSession = SessionLocator.SelectedSession;
+    private static StaticCurrentSession = SessionLocator.SelectedSession;
 
     public _Message: string;
     public static CurrCustomMessageProgressHelper: CustomMessageProgressHelper = null;
@@ -33,7 +35,7 @@ export class CustomMessageProgressComponent {
 
         return new Promise<any>((resolve, reject) => {
 
-            SessionLocator.CurrentSession.StartBusyIndicator("");
+            this.StaticCurrentSession.StartBusyIndicator("");
             var currCustomMessageProgressHelper = new CustomMessageProgressHelper();
             CustomMessageProgressComponent.CurrCustomMessageProgressHelper = currCustomMessageProgressHelper;
             currCustomMessageProgressHelper.StartProgress(PBId, 3, OnSuccessCloseWin);
@@ -44,7 +46,7 @@ export class CustomMessageProgressComponent {
                     alreadyDone = true;
 
                     try {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.StaticCurrentSession.StopBusyIndicator();
                         var response = currCustomMessageProgressHelper.ResponseData;
                         resolve(response);
 
@@ -61,12 +63,12 @@ export class CustomMessageProgressComponent {
                         }
                         if (OnSuccessCloseWin) {
                             if (!continueProcessInBackground && success) {
-                                //SessionLocator.CurrentSession.StopBusyIndicator();
+                                //this.CurrentSession.StopBusyIndicator();
                                 //currCustomMessageProgressComponent.ngOnDestroy();
                                 return;
                             }
                         }
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.StaticCurrentSession.StopBusyIndicator();
 
                         if (myShowProgressBarParams) {
                             if (myShowProgressBarParams.OnSuccessAnalyzeCloseWinMethod) {
@@ -95,7 +97,7 @@ export class CustomMessageProgressComponent {
 
 
                     } finally {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.StaticCurrentSession.StopBusyIndicator();
 
                         currCustomMessageProgressHelper.ngOnDestroy();
 
@@ -133,7 +135,7 @@ export class CustomMessageProgressComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 
@@ -155,7 +157,7 @@ export class CustomMessageProgressHelper
     private _PBId: string;
 
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
 
     _LastUpdateCurrentStageLine: Date = DateTool.GetCurrentDateTimeAsUtc();
     _CurrentStageLine: string;
@@ -250,7 +252,7 @@ export class CustomMessageProgressHelper
         //if (DateTime.Now.Subtract(_LastUpdateCurrentStageLine) > TimeSpan.FromMinutes(TimeOutInMinutes))
         if (DateTool.AddMinute(this._LastUpdateCurrentStageLine, this._TimeOutInMinutes) < DateTool.GetCurrentDateTimeAsUtc()) {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Show("הבקשה נתקלה בחוסר מענה , האם להמשיך להמתין לתשובה ?");
@@ -373,7 +375,7 @@ export class CustomMessageProgressHelper
 
     StopAndShowMessage(mess: string) {
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
         this.StopTimer();// _DispatcherTimer.Tick -= _DispatcherTimer_Tick;
         this._Message = mess;
         this.CurrentStageLine = null;
@@ -386,7 +388,7 @@ export class CustomMessageProgressHelper
         if (this._CurrentStageLine == value) return;
 
         this._CurrentStageLine = value;
-        SessionLocator.CurrentSession.StartBusyIndicator(this._CurrentStageLine);
+        this.CurrentSession.StartBusyIndicator(this._CurrentStageLine);
 
         this._LastUpdateCurrentStageLine = DateTool.GetCurrentDateTimeAsUtc();
         

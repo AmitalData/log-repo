@@ -27,6 +27,7 @@ export class AccountingSettingsComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     public IsEnableMultiRateAPInvoicesVisible: boolean = false;
     public IsEnableMultiCurrencyAPPaymentsVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService){
         super();
 
@@ -50,12 +51,12 @@ export class AccountingSettingsComponent extends BaseComponent {
     }
 
     private LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.entityResourceService.getEntityResourceByTableName("AccountingSetting").subscribe(res2 => {
             this.myAccountingSettingPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     this.EntityPM = myResponse.Result;
@@ -376,12 +377,12 @@ export class AccountingSettingsComponent extends BaseComponent {
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         if (this.EntityPM.IsDirty) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var isLoadingVatGroups = false;
             if (this.EnableMultiPercentageVATTypes != this.enableMultiPercentageVATTypes_Old) {
@@ -393,7 +394,7 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.myAccountingSettingPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -413,13 +414,13 @@ export class AccountingSettingsComponent extends BaseComponent {
                                     SessionLocator.AllVatTypesGroups = myResponse.Result;
                                 }
 
-                                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                                this.CurrentSession.CloseCurrentWindowEmit("OK");
                             });
                         }
 
                         else {
                             SessionLocator.AllVatTypesGroups = [];
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
                     });                   
                 }
@@ -427,7 +428,7 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
 
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
     ViewAdvancedSettings() {

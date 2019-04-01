@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
@@ -17,6 +17,7 @@ export class AddEditAddOnComponent {
     public ObjectTableName: string = "TenantAddOn";
     public ValidationErrorsList: string[] = [];
     public IsNewEntity: boolean;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -32,7 +33,7 @@ export class AddEditAddOnComponent {
     CancelButtonClicked() {
         this.DataContext.ResetOldData();
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -59,7 +60,7 @@ export class AddEditAddOnComponent {
                 }
             }
             
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

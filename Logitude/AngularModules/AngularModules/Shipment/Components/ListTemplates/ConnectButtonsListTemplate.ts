@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
@@ -38,11 +38,12 @@ export class ConnectButtonsListTemplate {
     SourceEntity: any;
     Subscribed: any = false;
     HasSharedDocs: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
         this._documentsFilingPMService = new DocumentsFilingPMService();
-        //SessionLocator.CurrentSession.SessionEvent.subscribe(($event: any) => { 
+        //this.CurrentSession.SessionEvent.subscribe(($event: any) => { 
         //    if ($event.Name == "SourceEntity" && $event.EntityId == this.rowData["Id"]) { 
         //        this.SourceEntity = $event.Entity;
         //        this.CompleteChoosingEntity();
@@ -57,13 +58,13 @@ export class ConnectButtonsListTemplate {
 
     ChooseButtonClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ..");
+        this.CurrentSession.StartBusyIndicator("Loading ..");
         this._ShipmentPMService.get(this.SourceId).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.SourceEntity = myResult.Result;
                 this._ShipmentPMService.get(this.rowData['Id']).subscribe(myResult1 => {
                     this.CurrentPM = myResult1.Result;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (this.CurrentPM.ForwarderPartnerId != this.SourceEntity.ForwarderPartnerId) {
                         var msg = new MessageWindow();
                         msg.Show("You can't connect to shipment with different partner.");
@@ -87,7 +88,7 @@ export class ConnectButtonsListTemplate {
         confirmWindow.Show("Importer Shipment " + this.SourceEntity.ShipmentNumber + " (Order " + this.SourceEntity.CustomerReference1 + " )" + " will be connected to forwarder shipment " + this.rowData['ForwarderShipmentNumber']);
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Loading ..")
+                this.CurrentSession.StartBusyIndicator("Loading ..")
                 var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
                 this._documentsFilingExtendedPMService.GetLogBoxConnectedDocs(this.SourceEntity.Id, this.rowData['Id'],ObjectTable.Id,SessionLocator.Tenant).subscribe(res => {
                     if (AppTool.IsNullOrEmpty(this.CurrentPM.ShipperName)) {
@@ -108,9 +109,9 @@ export class ConnectButtonsListTemplate {
                             if (!myResult.HasError) {
                                 myResult.Result.IsCancelled = true;
                                 this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
-                                    SessionLocator.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
-                                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                                    this.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                                    this.CurrentSession.CloseCurrentWindow();
                                 });
                             }
                         });
@@ -139,9 +140,9 @@ export class ConnectButtonsListTemplate {
                     //                    if (!myResult.HasError) {
                     //                        myResult.Result.IsCancelled = true;
                     //                        this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
-                    //                            SessionLocator.CurrentSession.StopBusyIndicator();
-                    //                            SessionLocator.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
-                    //                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                    //                            this.CurrentSession.StopBusyIndicator();
+                    //                            this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                    //                            this.CurrentSession.CloseCurrentWindow();
                     //                        });
                     //                    }
                     //                });
@@ -165,9 +166,9 @@ export class ConnectButtonsListTemplate {
                     //            if (!myResult.HasError) {
                     //                myResult.Result.IsCancelled = true;
                     //                this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
-                    //                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    //                    SessionLocator.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
-                    //                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    //                    this.CurrentSession.StopBusyIndicator();
+                    //                    this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                    //                    this.CurrentSession.CloseCurrentWindow();
                     //                });
                     //            }
                     //        });
@@ -176,7 +177,7 @@ export class ConnectButtonsListTemplate {
 
                 }, error => {
                     //var dd: Response = error;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 

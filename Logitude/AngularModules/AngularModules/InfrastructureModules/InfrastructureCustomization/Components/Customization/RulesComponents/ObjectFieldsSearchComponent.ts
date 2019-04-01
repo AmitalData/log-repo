@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, ViewContainerRef, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {LogitudeListBoxComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
@@ -31,15 +31,16 @@ export class ObjectFieldsSearchComponent {
     ObjectTable: any;
     SearchFieldsId: string;
     public serviceArgs: ServiceArgs;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;;
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.SearchFieldsId = "ObjectFieldSearchFields_-1_-1";
         }
 
         else {
-            this.SearchFieldsId = "ObjectFieldSearchFields_" + SessionLocator.CurrentSession.GetNewId("ObjectFieldSearchFields");
+            this.SearchFieldsId = "ObjectFieldSearchFields_" + this.CurrentSession.GetNewId("ObjectFieldSearchFields");
         }
         //this.Run();
     }
@@ -127,11 +128,11 @@ export class ObjectFieldsSearchComponent {
 
 
     SaveChanges() {
-        SessionLocator.CurrentSession.CurrentWindow.Close(this.FieldSelectedItem.Id);
+        this.CurrentSession.CurrentWindow.Close(this.FieldSelectedItem.Id);
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

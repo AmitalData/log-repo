@@ -441,16 +441,17 @@ export class ListComponent implements OnInit, AfterViewInit {
     MethodName: string = null;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
-        this.ComponentIndex = SessionLocator.CurrentSession.GetNewListComponentIndex();
+        this.ComponentIndex = this.CurrentSession.GetNewListComponentIndex();
 
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = _http;
         this.pubSubAdvanceQueryFiltersServiceRecived = temp;
         this.AdvanceQFiltersService = pubSubAdvanceQueryFiltersService;
         this.TenantPM = InfraSettings.TenantPM;
-        SessionLocator.CurrentSession.SubscriptionAdd(
-            SessionLocator.CurrentSession.SessionEvent.subscribe((res) => {
+        this.CurrentSession.SubscriptionAdd(
+            this.CurrentSession.SessionEvent.subscribe((res) => {
                 if (res == "TenantImport") {
                     this.RefreshBtnClick();
                 }
@@ -590,7 +591,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         this.Filterchangeevent = new LogEvents.EventManager();
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
-        //SessionLocator.CurrentSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
+        //this.CurrentSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
         //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
         if (this.ObjectTableName.startsWith("Customs.")) {
             this.IsNavigateButtonVisible = true;
@@ -601,7 +602,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     private ReloadAllListEvent: any = null;
     Listen() {
         if (!this.ReloadAllListEvent) {
-            this.ReloadAllListEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.ReloadAllListEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "ReloadAllList") {
                     this.RefreshBtnClick();
                 }
@@ -807,8 +808,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
     Run(args: ListComponentArgs) {
-        SessionLocator.CurrentSession.AddMenuReference(this.ComponentRef);
-        SessionLocator.CurrentSession.AddListComponent(this);
+        this.CurrentSession.AddMenuReference(this.ComponentRef);
+        this.CurrentSession.AddListComponent(this);
 
         this.listArgs = args;
         if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
@@ -1396,7 +1397,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     filterAgrs.AdditionalFilters.push(filter);
                 });
             }
-            SessionLocator.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: query.Id, Filters: filterAgrs });
+            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: query.Id, Filters: filterAgrs });
         }
     }
     onMenuHeaderchanged(event) {
@@ -1465,7 +1466,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log("SuppressOnRowSelected");
             return;
         }
-        //SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        //this.CurrentSession.StartBusyIndicator("Loading ...");
         //var BackGridEvent = $event.BackFromEdit;
         if ($event != null) {
             if (!this.isEditControlOpened) {
@@ -1987,7 +1988,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
 
                     else if (this.ObjectTableName == "BIReport") {
-                        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run({
@@ -2006,7 +2007,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                     else {
 
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
                                 cmpRef.instance.ComponentRef = cmpRef;
@@ -2027,7 +2028,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                 }
             }
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
         }
     }
 
@@ -2047,7 +2048,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //this.IsAdvancedSearchOpened = false;
             res.subscribe((aa: any) => {
                 $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
-                //SessionLocator.CurrentSession.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
+                //this.CurrentSession.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
 
                 this.MyScrollTop = $event.scrollTop;//($event.rowIndex * $event.rowHeight) - $event.rowHeight;
                 this.SelectedItem = aa.Result;
@@ -2085,7 +2086,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     DestroyListControl() {
         if (this.ComponentRef != null) {
-            SessionLocator.CurrentSession.RemoveListComponent(this);
+            this.CurrentSession.RemoveListComponent(this);
             this.ComponentRef.destroy();
             this.ComponentRef = null;
         }
@@ -2546,7 +2547,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //    logWindow.ComponentLoaded.subscribe(s => {
             //        logWindow.WindowClosed.subscribe(d => {
             //            if (s != null && d != "cancel") {
-            //                SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            //                SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
             //                    .then(cmpRef => {
             //                        cmpRef.instance.ComponentRef = cmpRef;
             //                        cmpRef.instance.Run({
@@ -2870,7 +2871,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     RunNewJournalWizard() {
         var windowTitle = "New Journal";
         var entityPM: JournalPM = new JournalPM();
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -2927,7 +2928,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
         logWindow.Show('./Accounting/Components/NewEntity/NewIntegrityCheckComponent');
 
-        // SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        // SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
         // .then(cmpRef => {
         //     cmpRef.instance.ComponentRef = cmpRef;
         //     cmpRef.instance.Run({ EntityPM: __entity, ObjectTableName: 'AccountingIntegrityCheck' });
@@ -2953,7 +2954,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: newApPaymentPM.Id, EntityPM: newApPaymentPM, BackButtonLabel: 'A/P Payments', ObjectTableName: 'APPayment' });
@@ -3003,7 +3004,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
                 var selectedEntityId = ids[0];
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
                         cmpRef.instance.ComponentRef = cmpRef;

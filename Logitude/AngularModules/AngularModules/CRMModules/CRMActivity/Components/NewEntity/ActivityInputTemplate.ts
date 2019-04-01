@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityInputArgs, InviteeArgs} from '../../../../CRM/Args'
@@ -1165,7 +1165,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         }
         return IsOk;
     }
-
+    private CurrentSession = SessionLocator.SelectedSession;
     // Commands 
     AddContactClicked() {
         var logWindow = new LogitudeWindow();
@@ -1289,7 +1289,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         }
     }
     ViewEntity(tableName: string, entityId: string) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: tableName, });

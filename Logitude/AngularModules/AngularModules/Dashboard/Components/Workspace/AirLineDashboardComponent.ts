@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ElementRef, ComponentFactoryResolver, ComponentRef, OnDestroy,ViewEncapsulation} from '@angular/core'
+import {Component, OnInit, ElementRef, ComponentFactoryResolver, ComponentRef, OnDestroy,ViewEncapsulation} from '@angular/core'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
@@ -433,11 +433,11 @@ export class AirLineDashboardComponent implements OnInit {
         listArgs.ObjectTableName = myTableName;
         listArgs.DisplayTitle = displayName;
         listArgs.BackButtonTitle = "Dashboard"
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadData());
             });
     }
@@ -495,12 +495,12 @@ var displayTitle="";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Dashboard";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadData());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
     }
@@ -583,12 +583,12 @@ var displayTitle="";
         listArgs.DisplayTitle = displayName;
         listArgs.BackButtonTitle = "Dashboard";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.fillScreen());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
     }
@@ -785,12 +785,12 @@ var displayTitle="";
         listArgs.DisplayTitle = "Bookings";
         listArgs.BackButtonTitle = "Ticket";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadData());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
 
@@ -861,16 +861,16 @@ var displayTitle="";
 
 
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         this.TenantPM = InfraSettings.TenantPM;
         this.dailySpotLightClass = new DailySpotlightClass();
         this.dashboarddomainservice = new DashboardDomainService();
-        this.ActivityStatusDashboardId = this.ActivityStatusDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.TopParticipantsDashboard = this.TopParticipantsDashboard + SessionLocator.CurrentSession.GetChartId();
-        this.BookingInProgressDashboardId = this.BookingInProgressDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.BookingInProgressDashboardLegendId = "BookingInProgressDashboardLegendId_" + SessionLocator.CurrentSession.GetNewId("BookingInProgressDashboardLegendId");
-        this.ActivitiesStatusDashboardId = this.ActivitiesStatusDashboardId + SessionLocator.CurrentSession.GetChartId();
+        this.ActivityStatusDashboardId = this.ActivityStatusDashboardId + this.CurrentSession.GetChartId();
+        this.TopParticipantsDashboard = this.TopParticipantsDashboard + this.CurrentSession.GetChartId();
+        this.BookingInProgressDashboardId = this.BookingInProgressDashboardId + this.CurrentSession.GetChartId();
+        this.BookingInProgressDashboardLegendId = "BookingInProgressDashboardLegendId_" + this.CurrentSession.GetNewId("BookingInProgressDashboardLegendId");
+        this.ActivitiesStatusDashboardId = this.ActivitiesStatusDashboardId + this.CurrentSession.GetChartId();
 
     }
 

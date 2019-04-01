@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, EventEmitter, Output}  from '@angular/core';
+import {Component, OnInit, EventEmitter, Output}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -15,6 +15,7 @@ export class SharedLogisticsWizardComponent implements OnInit {
     @Output() OnCloseWindowEvent = new EventEmitter();
     SelectedTabCode: string;
     TenantPM: TenantPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -39,7 +40,7 @@ export class SharedLogisticsWizardComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

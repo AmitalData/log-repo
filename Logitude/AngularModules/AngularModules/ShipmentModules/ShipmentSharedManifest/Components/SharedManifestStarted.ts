@@ -1,4 +1,4 @@
-﻿
+
 
 import { Component, OnInit } from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -36,6 +36,7 @@ import {AddressPM} from '../../../Common/EntityPMs/AddressPM';
 })
 export class SharedManifestStarted {
     //private myCardListService: CardListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, public _agentSharedLogisticsKeyPMService: AgentSharedLogisticsKeyPMService) {
         this.Listen();
     }
@@ -82,10 +83,10 @@ export class SharedManifestStarted {
         if (this.ValidationErrorsList.length == 0) {
 
             if (!this.FromSharedManifestEditAgentComponent) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+                this.CurrentSession.StartBusyIndicator("Loading...");
                 this._agentSharedLogisticsKeyPMService.GetSingleByAgentId(this.EntityPM.AgentId).subscribe((myResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!myResponse.HasError) {
 
                         var agentSharedKey: AgentSharedLogisticsKey = myResponse.Result;
@@ -94,9 +95,9 @@ export class SharedManifestStarted {
                                 case "A":
 
                                     if (this.EntityPM.ShipmentLevelCode == "C") {
-                                        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+                                        this.CurrentSession.StartBusyIndicator("Loading...");
                                         this._sharedAgentManifestService.GetCheckIfMasterShipmentHaveHouseWithOtherAgent(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
-                                            SessionLocator.CurrentSession.StopBusyIndicator();
+                                            this.CurrentSession.StopBusyIndicator();
                                             if (!myResponse.HasError) {
                                                 if (myResponse.Result == true) {
                                                     this.ValidationErrorsList.push("One of the houses has agent different from the master shipment");
@@ -154,7 +155,7 @@ export class SharedManifestStarted {
 
         if (this.EntityPM.IsDirty) {
             this.isSharingManifesRequested = true;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
         else {
             this.StartSharingManifest();
@@ -166,10 +167,10 @@ export class SharedManifestStarted {
 
 
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     if (this.isSharingManifesRequested) {
                         this.StartSharingManifest();
                     }
@@ -204,7 +205,7 @@ export class SharedManifestStarted {
         }
         else {
             this.IsShowUpdateAgentArea = true;
-            SessionLocator.CurrentSession.CurrentWindow.Title = "Share Manifest with Updated Agent";
+            this.CurrentSession.CurrentWindow.Title = "Share Manifest with Updated Agent";
         }
 
     }
@@ -227,9 +228,9 @@ export class SharedManifestStarted {
     StartSharingManifest(isUpdateAgent: boolean = false) {
 
     
-            SessionLocator.CurrentSession.StartBusyIndicator("Sharing Manifest...");
+            this.CurrentSession.StartBusyIndicator("Sharing Manifest...");
             this._sharedAgentManifestService.ShareAgentManifest(this.EntityPM.Id, isUpdateAgent).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.IsEnableButtonSharedManifest = false;
                 if (!myResponse.HasError) {
                     this.IsSuccessfullySharedManifest = true;
@@ -258,7 +259,7 @@ export class SharedManifestStarted {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 

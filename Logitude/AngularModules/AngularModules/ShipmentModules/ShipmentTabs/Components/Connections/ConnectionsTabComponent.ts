@@ -40,7 +40,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public IsNewWarehouseReleaseVisible: boolean = false;
     public IsAssembliesVisivle: boolean = false;
     public IsDisconnectQuoteVisible: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -127,7 +127,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     }
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetShipmentConnectedEntities(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -136,7 +136,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     this.FillItemSources(list);
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -204,7 +204,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     ViewEntity(item: ShipmentConnectedEntityItem) {
         var myBackButtonLabel = "Shipment: " + this.EntityPM.ShipmentNumber;
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: item.EntityId, ObjectTableName: item.ObjectTableName, BackButtonLabel: myBackButtonLabel, EntityParentPM: this.EntityPM });
@@ -219,7 +219,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
             if (this.EntityPM && this.EntityPM.IsDirty) {
                 this.IsNewWarehouseEntryRequested = true;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
             else {
                 this.ShowWarehouseScreen("Entry");
@@ -235,7 +235,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
             if (this.EntityPM && this.EntityPM.IsDirty) {
                 this.IsNewWarehouseReleaseRequested = true;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
             else {
                 this.ShowWarehouseScreen("Release");
@@ -328,7 +328,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                         if (!myResponse.HasError) {
                             SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                             this.entityArgs.EditComponent.ReloadEntityPM();
-                            SessionLocator.CurrentSession.FireEvent("LoadConnectedShipments");
+                            this.CurrentSession.FireEvent("LoadConnectedShipments");
                             this.LoadData();
                         }
                     }
@@ -340,6 +340,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
 class ShipmentConnectedEntityItem {
     private myEntity: ShipmentConnectedEntity = new ShipmentConnectedEntity();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: ShipmentConnectedEntity, public fatherComponent: ConnectionsTabComponent) {
         this.myEntity = entity;
 

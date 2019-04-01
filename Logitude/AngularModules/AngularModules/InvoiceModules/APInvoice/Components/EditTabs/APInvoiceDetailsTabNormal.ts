@@ -50,7 +50,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public todayDate: Date;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -255,7 +255,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -279,17 +279,17 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
                     this.BuildInvoiceLines();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
     UpdateData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -316,12 +316,12 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                         item.SetVatPercentage(this.GetVatTypePercentage(item.VatTypeId));
                     });
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -461,7 +461,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
     }
     LoadEntityOpenPayables() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myService = new ShipmentDomainService();
         myService.GetInvoiceOpenAmountPayables(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
@@ -535,7 +535,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     });
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -1150,6 +1150,7 @@ export class APInvoiceLineItem extends BaseComponent {
     public IsScreenEnabled: boolean;
     public CorrectionByUserName = "";
     public LocalCurrencyId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(line: APInvoiceLinePM, public fatherComponent: APInvoiceDetailsTabNormal, public AddNewLineMode) {
         super();
         this.invoiceLinePM = line;

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../../../../Infrastructure/Utilities/Guid';
 import {DocumentTypeTemplateListExtendedService} from '../../../../../Common/Services/ExtendedLists/DocumentTypeTemplateListExtendedService';
@@ -38,6 +38,7 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
 
     public DocumentTypeTemplateViewModelSelected: DocumentTypeTemplateViewModel;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _dcumentTypePMExtendedService: DocumentTypePMExtendedService, public _documentTypeListExtendedService: DocumentTypeListExtendedService) {
 
     }
@@ -94,7 +95,7 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
 
 
     Load() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         var isfilter = FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPE") ?false:true;
         this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibrary(this.ObjectTableId, SessionInfo.LoggedUserTenant, isfilter, this.TransportModeId, this.ShipmentlevelCode).subscribe(res => {
             var pmResponse: ServiceResponse = res;
@@ -114,7 +115,7 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
                     this.IsShowMessageNoDocument = true;
                 } else this.IsShowMessageNoDocument = false;
             }
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             });
     }
 
@@ -127,13 +128,13 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
 
     CloseButtonClicked() {
     
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
      AddFromLibraryButtonClicked(item: DocumentTypeTemplateViewModel) {
         this.DocumentTypeTemplateViewModelSelected = item;
         this.DocumentTypeTemplateViewModelSelected.IsEnabledAddDocumentTemplate = false;
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("saving");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("saving");
         this.CopyDocumentTypeAndTemplate();
 
     }
@@ -168,12 +169,12 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
                   
                        // this.DocumentTypeTemplatePMLists.push(myResult);
                         this.DocumentTypeTemplateViewModelSelected.IsEnabledAddDocumentTemplate = true;
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CloseButtonClicked()
 
                     }
                     else {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.DocumentTypeTemplateViewModelSelected.IsEnabledAddDocumentTemplate = true;
                         this.CloseButtonClicked();
                     }
@@ -181,7 +182,7 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
 
             }
             else {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.DocumentTypeTemplateViewModelSelected.IsEnabledAddDocumentTemplate = true;
             }
         });

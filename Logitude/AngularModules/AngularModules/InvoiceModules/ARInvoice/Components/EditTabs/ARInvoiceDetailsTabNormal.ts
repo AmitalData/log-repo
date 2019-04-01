@@ -58,7 +58,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();      
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -761,7 +761,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -774,7 +774,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.AccountingCurrencyId, loadingDate).subscribe((myResponse1: ServiceResponse) => {
             if (myResponse1.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
@@ -782,14 +782,14 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
                 this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
                     if (myResponse2.HasError) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
 
                     else {
                         this.VatTypePercentagesList = myResponse2.Result;
                         this.BuildInvoiceLines();
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         this.CheckNotifyPastDateOnInvoiceEdit();
                     }
                 });
@@ -797,7 +797,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         });
     }
     UpdateData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -825,12 +825,12 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                         item.SetVatPercentage(this.GetVatTypePercentage(item.VatTypeId));
                     });
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -1028,7 +1028,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
     LoadEntityOpenReceivables() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myService = new ShipmentDomainService();
         myService.GetInvoiceOpenAmountReceivables(this.EntityPM.ARInvoiceTypeCode, this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
@@ -1163,7 +1163,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             }
 
             this.SetGridColumnsWidth();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -1476,7 +1476,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     //}
 
     EditJournal() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.JournalId,ObjectTableName: 'Journal' });
@@ -1488,6 +1488,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     public ObjectTableName = "ARInvoiceLine";
     public DataContext = this;
     public LocalCurrencyId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityPM: ARInvoiceLinePM, public fatherComponent: ARInvoiceDetailsTabNormal) {
         super();
         this.EntityPM = entityPM;

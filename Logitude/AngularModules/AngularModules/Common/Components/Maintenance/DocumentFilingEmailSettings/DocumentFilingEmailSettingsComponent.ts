@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {InfrastructureDomainService} from '../../../../Infrastructure/Services/InfrastructureDomainService';
@@ -14,7 +14,7 @@ export class DocumentFilingEmailSettingsComponent extends BaseComponent  {
 
     public DataContext = this;
     public ValidationErrorsList = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -31,7 +31,7 @@ export class DocumentFilingEmailSettingsComponent extends BaseComponent  {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -41,7 +41,7 @@ export class DocumentFilingEmailSettingsComponent extends BaseComponent  {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
         });
     }

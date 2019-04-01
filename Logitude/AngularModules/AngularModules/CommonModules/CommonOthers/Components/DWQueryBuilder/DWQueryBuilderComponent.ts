@@ -96,6 +96,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             }
         } 
     }
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         super();
         this._DWObjectTablePMService = new DWObjectTablePMService();
@@ -105,12 +106,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._DWObjectTableListService = new DWObjectTableListService();
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.SearchFieldsId = "SearchFields_-1_-1";
         }
 
         else {
-            this.SearchFieldsId = "DWQueryBuilderSearchFields_" + SessionLocator.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
+            this.SearchFieldsId = "DWQueryBuilderSearchFields_" + this.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
         }
      
 
@@ -929,7 +930,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
     SampleData: any[] = [];
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
     IsPreview: boolean = true;
     IsDataReturened: boolean = true;
@@ -1033,7 +1034,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.messageWindow.Show(this.messageWindow.Message);
             return;
         }
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
         this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
             if (!myResult.HasError) {
                 var MySubQuery = new DWSubQueryPM();
@@ -1054,9 +1055,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.QID = myResult.Result.DWQueryId
                         this.EditButtonClicked();
 
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace) {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
                         }
                     });
                 }
@@ -1072,9 +1073,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     }
                     this._DWSubQueryPMService.UpdateDWQueryData(this.QueryData).subscribe(myResult => {
 
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace || this.IsBIReportEditScreen) {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
                         }
                     });
                 }
@@ -1086,7 +1087,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     EditButtonClicked() {
         this.SelectedFieldsDataSource = [];
         this.SelectedFiltersDataSource = [];
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ..");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ..");
         if (!AppTool.IsNullOrEmpty(this.ID)) {
             var QueryData = new DWQueryData();
             this._DWSubQueryPMService.get(this.ID).subscribe(myResult => {
@@ -1139,8 +1140,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     else {
                         this.SelectedFiltersDataSource = [];
                     }
-                    if (SessionLocator.CurrentSession.CurrentWindow) {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    if (this.CurrentSession.CurrentWindow) {
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
                     this.PreviewData(true, []);
                     //////////////////////////////////////////
@@ -1236,9 +1237,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public BaseDWObjectField: any;
     public TooltipId: string = null;
     public TooltipContentId: string = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
         super();
-        var idIndex = SessionLocator.CurrentSession.GetNewId("Tooltip");
+        var idIndex = this.CurrentSession.GetNewId("Tooltip");
         this.TooltipId = "Tooltip_" + idIndex;
         this.TooltipContentId = "TooltipContent_" + idIndex;
         this.BaseDWObjectField = DWObjectField;

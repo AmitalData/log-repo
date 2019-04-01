@@ -1,4 +1,4 @@
-﻿import {Component ,Output,EventEmitter} from '@angular/core';
+import {Component ,Output,EventEmitter} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -27,6 +27,7 @@ export class EditTranslationComputingPartners extends BaseComponent {
     public EntityPM: ComputingPartnerTranslationPM;
     public TranslatedEntity: TranslationItem;
     public DataContext: EditTranslationComputingPartners = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         var service: EntityResourceService = new EntityResourceService();
@@ -75,27 +76,27 @@ export class EditTranslationComputingPartners extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         var service: ComputingPartnerTranslationPMService = new ComputingPartnerTranslationPMService();
         if (this.EntityPM.Id != null) {
             if (this.EntityPM.PartnerCode == null)
                 this.EntityPM.PartnerCode = "";
             service.update(this.EntityPM).subscribe(p => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.BackCompleted.emit("event");
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             });
 
         }
         else {
             service.insert(this.EntityPM).subscribe(p => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.BackCompleted.emit("event");
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             });
 
         }

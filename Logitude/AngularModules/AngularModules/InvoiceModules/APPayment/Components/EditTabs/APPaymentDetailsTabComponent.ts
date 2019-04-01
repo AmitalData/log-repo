@@ -51,7 +51,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     public IsMultiCurrency: boolean = false;
     public LocalCurrencyCode = "";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
 
@@ -128,7 +128,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     }
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                 }
             });
         }
@@ -1247,7 +1247,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private RequestedCommandParam: string = null;
     ApplyRequestedCommand() {
         if (this.RequestedCommandCode == "ViewInvoice") {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'APInvoice' });
@@ -1288,6 +1288,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
     public SortingValue: number = 0;
     public LocalCurrencyId: string = null;
     public IsMultiCurrency: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: APInvoiceList, private trigger: APPaymentDetailsTabComponent) {
         super();
 

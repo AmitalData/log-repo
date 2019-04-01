@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -34,6 +34,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
     signUpService: SignUpService;
 
     public IsStardLoadPage: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -76,7 +77,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -88,7 +89,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
 
     Buildtenant() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var SignUpInfo: SignUpInfoClass = new SignUpInfoClass();
         SignUpInfo.Email = this.Email;
@@ -105,10 +106,10 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
         this.signUpService.SendMessageToQueue(SignUpInfo).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
               
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
                 this.CancelButtonClicked();
            }
-           else SessionLocator.CurrentSession.StopBusyIndicator();
+           else this.CurrentSession.StopBusyIndicator();
        });
 
    }

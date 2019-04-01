@@ -1,4 +1,4 @@
-﻿import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {DocumentTypeList} from '../../../../Common/EntityLists/DocumentTypeList';
@@ -30,6 +30,7 @@ export class SelectDocumentTypesComponent extends BaseComponent implements OnIni
     SelectedDocumentTypeLists: FollowUpDocumentTypeList[] = [];
 
     Area: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     
@@ -83,13 +84,13 @@ export class SelectDocumentTypesComponent extends BaseComponent implements OnIni
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
         this.AddEditAutomationsComponent.AutomationFollowUp.DocumentTypeLists = this.SelectedDocumentTypeLists;
 
-        SessionLocator.CurrentSession.CurrentWindow.Close("Save");
+        this.CurrentSession.CurrentWindow.Close("Save");
      
     }
 

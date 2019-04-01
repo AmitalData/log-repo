@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -8,6 +8,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 
 export class FeaturesEventChangesComponent {
     public Notes: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         
     }
@@ -17,6 +18,6 @@ export class FeaturesEventChangesComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

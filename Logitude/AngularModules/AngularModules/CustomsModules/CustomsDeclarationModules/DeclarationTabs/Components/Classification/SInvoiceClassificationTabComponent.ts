@@ -86,6 +86,7 @@ export class SInvoiceClassificationTabComponent
     public declarationPMService: DeclarationPMService = new DeclarationPMService();
     ClasificationQtyTypes: { [code: string]: any; } = {};
     quantityTypeMessageService: QuantityTypeMessageService = new QuantityTypeMessageService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         //this.ConsimentPackages = new ObservableCollection([]);
@@ -137,23 +138,23 @@ export class SInvoiceClassificationTabComponent
     public set IsChecked(newValue: boolean) { this.isChecked = newValue; }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     public DisplayOnlyMessage: string = "";
     DisplayOnlyCheck() {
         
-        this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
         }
     
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(SessionLocator.CurrentSession.CurrentEditComponent.EntityPM).subscribe((response: any) => {
+        declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.CurrentSession.CurrentEditComponent.EntityPM).subscribe((response: any) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
             if (this.IsDisplayOnly) {
@@ -204,11 +205,11 @@ export class SInvoiceClassificationTabComponent
             }
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+        this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
         this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
             .subscribe((customsSettingList: ServiceResponse) => {
                 if (customsSettingList) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (this.AddEditSupplierInvoiceDUMMYManager.IsNewEntity) {
                         let autoFillAccountType = customsSettingList.Result ? customsSettingList.Result.AutoFillAccountType : false;
                         if (autoFillAccountType) {
@@ -233,7 +234,7 @@ export class SInvoiceClassificationTabComponent
 
 
         this.ItemsSource.InsertCollection(TempItemSource);
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
         console.log("Tabs Args: ", args);
     }
@@ -272,11 +273,11 @@ export class SInvoiceClassificationTabComponent
         });
     }
     private GetCountryPURForItems() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+        this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_CTRY", "NON", "NON", this.declarationPM.Tenant)
             .subscribe(response => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
                     this.IsCountryPURForItems = true;
                 }
@@ -291,7 +292,7 @@ export class SInvoiceClassificationTabComponent
     public ItemsSource: ObservableCollection;
 
     BuildItemsList() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+        this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
         this.ItemsSource.Clear();
         //this.ParentItems = [];
         //this.ChildrenItems = [];
@@ -305,7 +306,7 @@ export class SInvoiceClassificationTabComponent
 
 
         //this.ItemsSource.InsertCollection(TempItemSource);
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
         //  this.originalItemSource.InsertCollection(TempItemSource);
 
@@ -395,7 +396,7 @@ export class SInvoiceClassificationTabComponent
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, "Customs.Declaration", errors);
 
-        for (let item of SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.Consignments) {
+        for (let item of this.CurrentSession.CurrentEditComponent.EntityPM.Consignments) {
             for (let line of item.ConsignmentPackages) {
                 if (line.MarksNumbers == null && line.PackageMeasureQualifierCode == null && line.PackageQuantity == null && line.PackageTypeCode == null && line.GrossMassMeasure == null) {
                     var errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.EmptyConsignmentPackage");
@@ -410,18 +411,18 @@ export class SInvoiceClassificationTabComponent
 
 
         if (errors.length > 0) {
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         }
 
 
         else {
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            if (SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
-                SessionLocator.CurrentSession.StartBusyIndicator("");
-                this.declarationPMService.update(SessionLocator.CurrentSession.CurrentEditComponent.EntityPM).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
+                this.CurrentSession.StartBusyIndicator("");
+                this.declarationPMService.update(this.CurrentSession.CurrentEditComponent.EntityPM).subscribe((response: ServiceResponse) => {
                     var declaration = response.Result;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!AppTool.IsNullOrEmpty(declaration)) {
                         if (!AppTool.IsNullOrEmpty(item)) {
                             this.EditInvoice(item);
@@ -442,10 +443,10 @@ export class SInvoiceClassificationTabComponent
 
     }
     EditInvoice(mySInvoiceItemClassificationLine: SInvoiceItemClassificationLine) {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         
         var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
-        var decPM: DeclarationPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;// this component 
+        var decPM: DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;// this component 
         supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(decPM/*this.EntityPM*/.Id, this.EntityPM.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe(response => {
 
             var windowArgs: any = {};
@@ -483,7 +484,7 @@ export class SInvoiceClassificationTabComponent
                 if (event != 'cancel') {
 
                     this.RefreshEntity();
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
                 else {
                     this.ReloadMyScreen();
@@ -494,12 +495,12 @@ export class SInvoiceClassificationTabComponent
             logWindow.IsHideHeader = true;
           logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
           
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
     }
     ReloadMyScreen() { ///DSV - After Sending to Customs - Enter SUpplierInvoice and Getting Optimistic Concurancy error"
-        ///this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+        ///this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         //this.getSupplierInvoices();
         //this.DisplayOnlyCheck();
     }
@@ -529,7 +530,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
 
     public closedManullay: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(EntityPM: SupplierInvoiceItemPM, parent: SInvoiceClassificationTabComponent) {
         super();
         this.entityPM = EntityPM;
@@ -656,8 +657,8 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
     digit: string = null;
     checkDigit: number = 0;
     public SetDirty() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent == null) return;
-        var declarationPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM as DeclarationPM;
+        if (this.CurrentSession.CurrentEditComponent == null) return;
+        var declarationPM = this.CurrentSession.CurrentEditComponent.EntityPM as DeclarationPM;
         declarationPM.IsDirty = true;
         this.entityPM.ChangeSetOp = "Update";
         let si: SupplierInvoicePM = declarationPM.SupplierInvoices.filter(si =>
@@ -883,7 +884,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
             //var element = document.getElementById(logCellTemplate.OuterDivId);
             // element.focus();
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
+            this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
 
         }
         if (this.Parent.IsChecked) { //private isChecked: boolean = true;/// יש לשים לב ללוגיקות שקיימות במסך העבודה הרגיל. למשל:     בשינוי פרט מכס יש להקפיץ יחידת מידה (במסך הרגיל זה תלוי בסימון V, פה זה ההתנהגות הרגילה).
@@ -937,7 +938,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
                             if (!(keys.indexOf(this.ClassificationCode) > -1)) {
                                 this.Parent.ClasificationQtyTypes[this.ClassificationCode] = myServiceResponse.Result;
                             }
-                            SessionLocator.CurrentSession.QuantityTypeCodeLoadedEvent.emit({ ClassificationCode: this.ClassificationCode, QuantityTypeCode: this.QunatityTypeCode });
+                            this.CurrentSession.QuantityTypeCodeLoadedEvent.emit({ ClassificationCode: this.ClassificationCode, QuantityTypeCode: this.QunatityTypeCode });
                             //QuantityTypeCodeLoadedEvent quantityLoadedEvent = currentAssemlyLocator.EventAggregator.GetEvent<QuantityTypeCodeLoadedEvent>();
                             //quantityLoadedEvent.Publish(new QuantityTypeCodeLoadedEventArgs() { ClassificationCode = ClassificationCode, QuantityTypeCode = this.QunatityTypeCode });
                         }

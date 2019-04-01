@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -16,6 +16,7 @@ export class INTTRACommunicationSettingsComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     public ValidationErrorsList: string[] = [];
     private myService: INTTRADomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -73,7 +74,7 @@ export class INTTRACommunicationSettingsComponent extends BaseComponent {
         this.UIProperties.SetValidity("INTTRATestFTPHost", this.ObjectTableName, isTestFieldValid, TestFieldValidMessage);
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -95,18 +96,18 @@ export class INTTRACommunicationSettingsComponent extends BaseComponent {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             this.myService.UpdateINTTRACommunicationSettings(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
 
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             });
         }

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
@@ -21,7 +21,7 @@ export class CurrencyRatesComponent extends BaseComponent{
     public ObjectTableName: string = "Tenant";
     public TenantPM: TenantPM;
     public ItemsSource: CurrencyRatesModelData[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -80,7 +80,7 @@ export class CurrencyRatesComponent extends BaseComponent{
 
     //Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -115,7 +115,7 @@ export class CurrencyRatesComponent extends BaseComponent{
     }
 
     SubmitChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
         var myService: CurrencyRatesService = new CurrencyRatesService();
 
         var ratesTables: LastRate[] = [];
@@ -133,12 +133,12 @@ export class CurrencyRatesComponent extends BaseComponent{
         myService.InsertListOfRatesTable(ratesTables).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
@@ -147,12 +147,12 @@ export class CurrencyRatesComponent extends BaseComponent{
         //    myService.insert(item).subscribe((myResponse: ServiceResponse) => {
         //        if (myResponse != null) {
         //            if (!myResponse.HasError) {
-        //                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        //                this.CurrentSession.CloseCurrentWindowEmit("ok");
         //            }
 
         //            else {
         //                this.ValidationErrorsList = myResponse.ErrorsArray;
-        //                SessionLocator.CurrentSession.StopBusyIndicator();
+        //                this.CurrentSession.StopBusyIndicator();
         //            }
         //        }
         //    });

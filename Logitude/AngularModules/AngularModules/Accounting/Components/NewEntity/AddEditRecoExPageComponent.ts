@@ -53,7 +53,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -257,7 +257,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         this.SaveEntity();
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     //* grid handlers in seperate region
@@ -330,13 +330,13 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     }
 
     SubmitChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         if (this.isNewEntity) {
             this._ReconcileExternalPagePMService.insert(this.ReconcileExternalPagePM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
@@ -346,7 +346,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                         this.ReconcileExternalPagePM.StatusCode = '1' // 1- Draft
                     }
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         } else {
@@ -355,7 +355,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
@@ -366,7 +366,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                     }
 
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
 

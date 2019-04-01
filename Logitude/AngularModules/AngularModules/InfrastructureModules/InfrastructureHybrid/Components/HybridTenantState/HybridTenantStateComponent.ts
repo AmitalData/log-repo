@@ -1,4 +1,4 @@
-﻿import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -17,10 +17,11 @@ export class HybridTenantStateComponent extends BaseComponent implements OnInit 
     hybridTenantStateListExtendedService: HybridTenantStateListExtendedService;
     SelectedHybridTenantStateList: HybridTenantStateList;
     HybridTenantStateLists: HybridTenantStateList[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.hybridTenantStateListExtendedService = new HybridTenantStateListExtendedService();
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
     }
 
     ngOnInit() {
@@ -37,7 +38,7 @@ export class HybridTenantStateComponent extends BaseComponent implements OnInit 
             if (!myResponse.HasError) {
                 this.HybridTenantStateLists = myResponse.Result;
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
    
@@ -46,7 +47,7 @@ export class HybridTenantStateComponent extends BaseComponent implements OnInit 
 
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -54,7 +55,7 @@ export class HybridTenantStateComponent extends BaseComponent implements OnInit 
 
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

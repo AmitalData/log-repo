@@ -46,18 +46,18 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();;
     fullAccountingSettingListService: FullAccountingSettingListService;
     tenantPMService: TenantPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
         });
         this.fullAccountingSettingPMService.get(SessionLocator.Tenant.toString()).subscribe((myResult: any) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             this.EntityPM = myResult.Result;
             if (this.EntityPM == null || this.EntityPM == undefined) {
@@ -363,7 +363,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     //Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -380,7 +380,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             this.SubmitChanges();
         }
 
@@ -393,15 +393,15 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) { // Success
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         }, error => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var dd: Response = error;
             console.log(dd.text);
             this.ValidationErrorsList = [];

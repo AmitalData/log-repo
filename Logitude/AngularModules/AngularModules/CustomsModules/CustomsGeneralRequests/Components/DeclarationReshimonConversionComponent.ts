@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
 import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
@@ -34,6 +34,7 @@ export class DeclarationReshimonConversionComponent
 
     _DeclarationTypeList: any;
     _LastFetchDeclarationList: DeclarationList;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this._DeclarationTypeList =
@@ -228,7 +229,7 @@ export class DeclarationReshimonConversionComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

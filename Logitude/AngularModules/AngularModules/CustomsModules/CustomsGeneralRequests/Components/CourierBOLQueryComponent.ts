@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
@@ -35,7 +35,7 @@ export class CourierBOLQueryComponent
     public CourierBOLDetailsObservableList: ObservableCollection;
 
     private _DeclarationId: string = "";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.CourierBOLDetailsObservableList = new ObservableCollection([]);
@@ -85,7 +85,7 @@ export class CourierBOLQueryComponent
     }
 
     EditButtonClicked(item) {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(item.cargoIdentifierKey3);
+        this.CurrentSession.CloseCurrentWindowEmit(item.cargoIdentifierKey3);
     }
 
     //#region Properties
@@ -137,10 +137,10 @@ export class CourierBOLQueryComponent
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse, true);
             });
     }
@@ -176,7 +176,7 @@ export class CourierBOLQueryComponent
 
     //#region Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     

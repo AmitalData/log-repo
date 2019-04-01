@@ -1,4 +1,4 @@
-﻿
+
 import {UserPM} from '../../EntityPMs/UserPM'
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow'
@@ -34,7 +34,7 @@ export class UserMenuButtonsHandler {
 
         return menuButtons;
     }
-  
+    private CurrentSession = SessionLocator.SelectedSession;
 
     private isAnonymizeUser: boolean;
     private StopFlags() {
@@ -138,7 +138,7 @@ export class UserMenuButtonsHandler {
                 service.Anonymization(this.EntityPM.Id).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 });
 

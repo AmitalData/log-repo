@@ -38,6 +38,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
     @Output() SearchFieldchangeevent = new EventEmitter();
     public IsNewEntityButtonVisible: boolean = false;
     public NewEntityButtonLabel: string = "New";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -307,7 +308,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
 
     //Commands 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow(); 
+        this.CurrentSession.CloseCurrentWindow(); 
     }
 
     TextChanged(searchtext) {

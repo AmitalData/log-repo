@@ -158,18 +158,18 @@ export class ByCreateDateComponent extends BaseComponent {
 
     }
     private InitializeIds() {
-        this.NewCustomersDashboardId = "NewCustomersDashboardId_" + SessionLocator.CurrentSession.GetNewId("NewCustomerDashboard");
-        this.NewOpportunitiesDashboardId = "NewOpportunitiesDashboardId_" + SessionLocator.CurrentSession.GetNewId("NewOpportunitiesDashboard");
-        this.NewQuotesDashboardId = "NewQuotesDashboardId_" + SessionLocator.CurrentSession.GetNewId("NewQuotesDashboard");        
-        this.NewActivitiesDashboardId = "NewActivitiesDashboardId_" + SessionLocator.CurrentSession.GetNewId("NewActivitiesDashboard");    
-        this.NewOpportunityBySalesmanLegendId = "NewOpportunityBySalesmanLegendId_" + SessionLocator.CurrentSession.GetNewId("NewOpportunityBySalesmanLegendId");
-        this.NewActivitiesTDId = "NewActivitiesTDId_" + SessionLocator.CurrentSession.GetNewId("NewActivitiesTDId");        
-        this.NewQuotesBySalesmanLegendId = "NewQuotesBySalesmanLegendId_" + SessionLocator.CurrentSession.GetNewId("NewQuotesBySalesmanLegendId");
+        this.NewCustomersDashboardId = "NewCustomersDashboardId_" + this.CurrentSession.GetNewId("NewCustomerDashboard");
+        this.NewOpportunitiesDashboardId = "NewOpportunitiesDashboardId_" + this.CurrentSession.GetNewId("NewOpportunitiesDashboard");
+        this.NewQuotesDashboardId = "NewQuotesDashboardId_" + this.CurrentSession.GetNewId("NewQuotesDashboard");        
+        this.NewActivitiesDashboardId = "NewActivitiesDashboardId_" + this.CurrentSession.GetNewId("NewActivitiesDashboard");    
+        this.NewOpportunityBySalesmanLegendId = "NewOpportunityBySalesmanLegendId_" + this.CurrentSession.GetNewId("NewOpportunityBySalesmanLegendId");
+        this.NewActivitiesTDId = "NewActivitiesTDId_" + this.CurrentSession.GetNewId("NewActivitiesTDId");        
+        this.NewQuotesBySalesmanLegendId = "NewQuotesBySalesmanLegendId_" + this.CurrentSession.GetNewId("NewQuotesBySalesmanLegendId");
 
 
     }
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.InitializeIds();
@@ -529,12 +529,12 @@ export class ByCreateDateComponent extends BaseComponent {
         listArgs.DisplayTitle = "Opportunities";
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
 
@@ -561,12 +561,12 @@ export class ByCreateDateComponent extends BaseComponent {
         listArgs.DisplayTitle = "Quotes";
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
     }
@@ -600,12 +600,12 @@ export class ByCreateDateComponent extends BaseComponent {
         listArgs.DisplayTitle = "Customers";
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
 
@@ -648,12 +648,12 @@ export class ByCreateDateComponent extends BaseComponent {
         listArgs.DisplayTitle = typeName;
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
     }

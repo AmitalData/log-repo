@@ -18,13 +18,14 @@ export class AddEditAirPackageComponent {
     public ObjectTableName: string = "ShipmentPackage";
     public OkBtnId: string;
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.OkBtnId = "OkBtn_-1_-1"; 
         }
 
         else {
-            this.OkBtnId = "OkBtn_" + SessionLocator.CurrentSession.GetNewId("OkBtn"); 
+            this.OkBtnId = "OkBtn_" + this.CurrentSession.GetNewId("OkBtn"); 
         }
     }
 
@@ -50,7 +51,7 @@ export class AddEditAirPackageComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -94,7 +95,7 @@ export class AddEditAirPackageComponent {
             this.DataContext.fatherComponent.SetGenerateData();
             this.DataContext.fatherComponent.ResetTotalEditedValues();
             this.DataContext.fatherComponent.ComputeTotals();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

@@ -67,12 +67,13 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     showTemplate: boolean = false;
     CertificateTicketsList: CertificateTicketListItem[] = [];
     preventSelect: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
         this.SelectedItemsCount = 0;
-        SessionLocator.CurrentSession.SubscriptionAdd(
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        this.CurrentSession.SubscriptionAdd(
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
                     if (res == "certificate") {
                         this.preventSelect = true;
                     }
@@ -98,7 +99,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
         //  this.GetCertificates(null);
 
-        //SessionLocator.CurrentSession.SelectItemEvent.subscribe((res) => {
+        //this.CurrentSession.SelectItemEvent.subscribe((res) => {
         //    if (res.selected) {
         //        //  this.showTemplate = true;
 
@@ -141,9 +142,9 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     ThereIsNoInvoices: boolean = false;
     NoInvoicesMessage: string;
     CheckDeclarationInvoices() {
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         this.multiCertificatesService.DeclarationHasInvoices(this.DeclarationPM.Id).subscribe((response: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!response.Result) {
 
                 if (!this.IsDisplayOnly) {
@@ -170,29 +171,29 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.DeclarationPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
                 })
             );;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.DeclarationPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //   this.GetCertificates(null);
                         this.DisplayOnlyCheck();
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DECR") {
                             this.activeItem = null;
                             this.selecteCertificate = null;
@@ -216,7 +217,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     ConfirmationTypesFilterItems: ApiQueryFilters;
     GetCertificates(message: any) {
         if (message == "ok" || message == null) {
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
             this.connectedItems.Collection = [];
             this.ExcludedItems.Collection = [];
             this.ThereIsNoInvoices = false;
@@ -301,7 +302,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                         }
                     }
                      this.LoadConnectedItems(null);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
         }
     }
@@ -405,9 +406,9 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
     RefreshEntity() {
         //if (this.IsDisplayOnly) {
-            if (SessionLocator.CurrentSession.CurrentEditComponent) {
-                SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            if (this.CurrentSession.CurrentEditComponent) {
+                this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
         //}
         if (!this.ThereIsNoInvoices) {
@@ -419,10 +420,10 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     }
     timerToken: any;
     DisplayOnlyCheck() {
-        this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
 
         if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             //this.SetScreenFieldsEditability();
             this.timerToken = setTimeout(() => {
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -577,7 +578,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             }
         }
 
-        //    //SessionLocator.CurrentSession.ConnectedItemSelectedEvent.emit({ Count: "All" });
+        //    //this.CurrentSession.ConnectedItemSelectedEvent.emit({ Count: "All" });
         //    this.SelectedItemsCount = this.dataCount;
         //    this.selecteCertificate.IsAllSelected = true;
         //    this.SelectedItemsCountText = "נבחרו " + this.dataCount.toString() + " פריטים מתוך " + this.dataCount.toString();
@@ -585,7 +586,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         //}
         //else {
         //    if (this.dataCount == this.SelectedItemsCount) {
-        //       // SessionLocator.CurrentSession.ConnectedItemSelectedEvent.emit({ Count: "None" });
+        //       // this.CurrentSession.ConnectedItemSelectedEvent.emit({ Count: "None" });
         //        this.SelectedItemsCount = 0;
         //        this.SelectedItemsCountText = null;
         //        if (this.selecteCertificate) {
@@ -653,7 +654,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         if (this.preventSelect == false) {
             //if (!this.showTemplate) {
             this.SelectedRow = CurrentRow.rowData;
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
 
@@ -668,7 +669,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
                         if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
 
-                            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                            this.CurrentSession.StartBusyIndicatorLoading();
                             var windowArgs: any = {};
                      
                         
@@ -711,7 +712,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                             });
                             this.CD.detach();
                           logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
 
                         }
                         else {
@@ -719,7 +720,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                             window.Show("There is no invoice with such key in this declaration!!");
                             this.preventSelect = false;
                         }
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
 
 

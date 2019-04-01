@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BusinessHourHolidayArgs} from './NewBusinessHourAndHolidaysComponent';
@@ -17,7 +17,7 @@ export class AddEditBusinessHourHolidayComponent extends BaseComponent {
     public DataContext: BusinessHourHolidayArgs;
     public ValidationErrorsList: string[] = [];
     public EntityPM: BusinessHoursHolidayPM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -31,7 +31,7 @@ export class AddEditBusinessHourHolidayComponent extends BaseComponent {
     // Commands
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -60,7 +60,7 @@ export class AddEditBusinessHourHolidayComponent extends BaseComponent {
                 }
             }
             this.DataContext.trigger.fillHolidays();
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 
