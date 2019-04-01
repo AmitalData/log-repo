@@ -387,13 +387,13 @@
                                                                 <!--MNF-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='MNF' ">
                                                                     <tr>
-                                                                        <td style="width:250px;">
+                                                                        <td style="width:300px;">
                                                                             <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
-                                                                                <li (click)="MNFFilterClicked('W')" style="width: 120px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'W'">
+                                                                                <li (click)="MNFFilterClicked('W')" style="width: 140px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'W'">
                                                                                     {{'Customs.CourierMaster.MNF.HandleWrong' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._MNF_W_Total + ')' }} </span>
                                                                                 </li>
-                                                                                <li (click)="MNFFilterClicked('C')" style="width: 120px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'C'">
+                                                                                <li (click)="MNFFilterClicked('C')" style="width: 140px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'C'">
                                                                                     {{'Customs.CourierMaster.MNF.CompleteMissing' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._MNF_C_Total + ')' }} </span>
                                                                                 </li>

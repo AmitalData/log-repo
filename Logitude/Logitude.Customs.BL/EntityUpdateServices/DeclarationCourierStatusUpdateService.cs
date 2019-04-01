@@ -36,6 +36,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO)
         {
+            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
+            declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
+
+
             UpdateUnifreight(entityPM);
 
             base.OnUpdating(entityPM, entityPOCO);

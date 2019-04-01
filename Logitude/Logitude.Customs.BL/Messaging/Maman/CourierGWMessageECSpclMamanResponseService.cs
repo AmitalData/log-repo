@@ -122,7 +122,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 toCancel = true;
                 unifreightEventMode = UnifreightEventMode.del;
             }
-            using (var scope = TransactionFactory.GetNewTransaction())
+            ///using (var scope = TransactionFactory.GetNewTransaction())
             {
 #if waitTillMiritWillCreateDBAndScreen
 
@@ -167,7 +167,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 }
                 myDeclarationMamanSpecialAction.Update(pmDeclarationMamanSpecialAction, true);
 
-                scope.Complete();
+                //scope.Complete();
             }
         }
 
