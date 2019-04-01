@@ -416,6 +416,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             itemRecord.CategoryName = iCategory.Name;
                         }
                     }
+
+                    else
+                    {
+                        if (string.IsNullOrEmpty(item.ProjectId))
+                        {
+                            itemRecord.CategoryName = "Not Connected to Projects";
+                        }
+                    }
                 }
 
                 iList.Add(itemRecord);

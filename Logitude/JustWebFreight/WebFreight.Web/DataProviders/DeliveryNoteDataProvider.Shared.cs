@@ -167,5 +167,7 @@ namespace WebFreight.Web.DataProviders
         public string DriverName { get; set; }
 
         public string ProjectNumber { get; set; }
+
+        public string ITNumber { get; set; }
     }
 }

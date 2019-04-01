@@ -57,10 +57,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
+		void AuthenticateTennatIfLogBoxOnly(int tenant)
+		{
+			if (LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev")
+			{
+				SecurityUtility.AuthenticationOnTenant(tenant);
+			}
+		}
         public UserPM GetAuthenticatedUserDetails(string userid, int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
-            string email = SecurityUtility.GetAuthenticatedUser();
+
+			AuthenticateTennatIfLogBoxOnly(tenant);
+			string email = SecurityUtility.GetAuthenticatedUser();
             Contact contact = null;
             if (!string.IsNullOrEmpty(email))
             {
@@ -76,7 +84,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public TenantPM GetAuthenticatedTenantDetails(int tenantid)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenantid);
+
+			AuthenticateTennatIfLogBoxOnly(tenantid);
             string email = SecurityUtility.GetAuthenticatedUser();
             Contact contact = null;
             if (!string.IsNullOrEmpty(email))
@@ -94,7 +103,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public List<ScreenFieldPM> GetAllScreenFieldsByTenant(int tenant, string screenfields)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+           //SecurityUtility.AuthenticationOnTenant(tenant);
 
             ScreenFieldsRepository repository = new ScreenFieldsRepository(tenant);
             ScreenFieldsQuery query = new ScreenFieldsQuery(repository);
@@ -220,7 +229,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getallcards/{tenant}/{inActive}/{dumb}")]
         public List<CardPM> GetAllCardsByTenant(int tenant, bool inActive, string dumb)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             CardRepository cardRepository = new CardRepository(tenant);
             List<CardPM> cards = (from a in cardRepository.context.Cards
                                   where a.InActive == inActive
@@ -246,7 +255,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getallports/{tenant}/{inActive}/{inland}/{air}/{ocean}")]
         public List<PortPM> GetAllPortsByTenant(int tenant, bool inActive, bool inland, bool air, bool ocean)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             PortRepository portsRepository = new PortRepository(tenant);
             PortQuery query = new PortQuery(portsRepository);
             var ports = query.GetPortPMsByTenant(tenant).ToList();
@@ -270,7 +279,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getallstatuses/{tenant}/{inActive}/{dumb2}")]
         public HttpResponseMessage GetAllStatusesByTenant(int tenant, bool inActive, string dumb2)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             //EntityStatusRepository statusRepository = new EntityStatusRepository(tenant);
             //List<EntityStatusPM> statuses = (from a in statusRepository.context.EntityStatus
             //                                 where a.Tenant == tenant
@@ -318,7 +327,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getalltransportmodes/{tenant}/{dummy}")]
         public List<TransportModePM> GetAllTransportModes(int tenant, string dummy)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             TransportModeRepository transportRepository = new TransportModeRepository(0);
             List<TransportModePM> transportModes = (from a in transportRepository.context.TransportModes
                                                         //where a.Id == "I"
@@ -334,7 +343,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getalldirections/{tenant}/{dummy2}")]
         public List<DirectionPM> GetAllDirections(int tenant, string dummy2)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             DirectionRepository directionRepository = new DirectionRepository(0);
             List<DirectionPM> directions = (from a in directionRepository.context.Directions
                                                 //where a.Id == "E"
@@ -418,8 +427,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getdirectionssearchresults/{tenant}/{searchfields}")]
         public List<DirectionPM> GetDirectionsSearchResults(int tenant, string searchfields)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
-            DirectionRepository repo = new DirectionRepository(0);
+			AuthenticateTennatIfLogBoxOnly(tenant);
+			//SecurityUtility.AuthenticationOnTenant(tenant);
+			DirectionRepository repo = new DirectionRepository(0);
             List<DirectionPM> directionsList = (from a in repo.context.Directions
                                                 where a.SearchFields.Contains(searchfields)
                                                 select new DirectionPM()
@@ -434,8 +444,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "gettransportmodessearchresults/{tenant}/{searchfields}")]
         public List<TransportModePM> GetTransportModesSearchResults(int tenant, string searchfields)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
-            TransportModeRepository repo = new TransportModeRepository(0);
+			AuthenticateTennatIfLogBoxOnly(tenant);
+			//SecurityUtility.AuthenticationOnTenant(tenant);
+			TransportModeRepository repo = new TransportModeRepository(0);
             List<TransportModePM> transportModesList = (from a in repo.context.TransportModes
                                                         where a.SearchFields.Contains(searchfields)
                                                         select new TransportModePM()
@@ -450,7 +461,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getcardssearchresults/{tenant}/{searchfields}/{inActive}")]
         public List<CardPM> GetCardsSearchResults(int tenant, string searchfields, bool inActive)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             CardRepository repo = new CardRepository(tenant);
             List<CardPM> cards = (from a in repo.context.Cards
                                   where a.Tenant == tenant
@@ -478,7 +489,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getallbranchesbytenant/{tenant}/{inActive}/{orenodummydesu}")]
         public List<BranchPM> GetAllBranchesByTenant(int tenant, bool inActive, bool orenodummydesu)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             BranchRepository branchRepository = new BranchRepository(tenant);
             BranchQuery query = new BranchQuery(branchRepository);
             var branches = query.GetBranchPMsByTenant(tenant).ToList();
@@ -489,7 +500,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getalldepartmentsbytenant/{tenant}/{inActive}/{orenodummydesu}")]
         public List<DepartmentPM> GetAllDepartmentsByTenant(int tenant, bool inActive, bool orenodummy)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             DepartmentRepository departmentRepository = new DepartmentRepository(tenant);
             DepartmentQuery query = new DepartmentQuery(departmentRepository);
             var departments = query.GetDepartmentPMsByTenant(tenant).ToList();
@@ -500,7 +511,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getallincotermsbytenant/{tenant}/{inActive}/{incotermsy}")]
         public List<IncotermPM> GetAllIncotermsByTenant(int tenant, bool inActive, bool incotermsy)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             IncotermRepository incotermRepository = new IncotermRepository(tenant);
             IncotermQuery query = new IncotermQuery(incotermRepository);
             var incoterms = query.GetIncotermPMsByTenant(tenant).ToList();
@@ -511,7 +522,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getallusersbytenant/{tenant}/{inActive}/{usersy}")]
         public List<UserPM> GetAllUsersByTenant(int tenant, bool inActive, bool usersy)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             UserRepository userRepository = new UserRepository(tenant);
             UserQuery query = new UserQuery(userRepository);
             var users = query.GetUserPMsByTenant(tenant).ToList();
@@ -522,7 +533,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getallprepaidcollectsbytenant/{tenant}/{inActive}/{prepaidcollect}")]
         public List<PrepaidCollectPM> GetAllPrepaidCollectsByTenant(int tenant, bool inActive, bool prepaidcollect)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             PrepaidCollectRepository prepaidcollectRepository = new PrepaidCollectRepository(tenant);
             PrepaidCollectQuery query = new PrepaidCollectQuery(prepaidcollectRepository);
             var prepaidcollects = query.GetPrepaidCollectPMs().ToList();
@@ -533,7 +544,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getallmovetypesbytenant/{tenant}/{inActive}/{movetypesy}")]
         public List<MoveTypePM> GetAllMoveTypesByTenant(int tenant, bool inActive, bool movetypesy)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             MoveTypeRepository movetypeRepository = new MoveTypeRepository(tenant);
             MoveTypeQuery query = new MoveTypeQuery(movetypeRepository);
             var movetypes = query.GetMoveTypePMs(tenant).ToList();
@@ -587,7 +598,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getloggeduserpm/{tenant}/{useremail}/{getloggeduser}")]
         public UserPM GetLoggedUserPM(int tenant, string useremail, bool getloggeduser)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             // GetGlobalContactByEmailAndTenant2
             var objectContext = GlobalContext.GetContext();
             GlobalContactRepository globalContactsRepository = new GlobalContactRepository(objectContext);
@@ -608,7 +619,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getloggedtenantpm/{tenant}/{getloggedtenant}")]
         public TenantPM GetLoggedTenantPM(int tenant, bool getloggedtenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			AuthenticateTennatIfLogBoxOnly(tenant);
             TenantRepository tenantRepository = new TenantRepository(tenant);
             TenantQuery query = new TenantQuery(tenantRepository);
             var loggedtenant = query.GetSinglePM(tenant);
@@ -833,7 +844,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "accountingsettingpm/{id}")]
         public AccountingSettingPM GetAccountingSettingPM(int id)
         {
-            AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(id);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			if (authToken != null)
+				AuthenticateTennatIfLogBoxOnly(authToken.Tenant);
+
+			AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(id);
             AccountingSettingQuery accountingSettingQuery = new AccountingSettingQuery(accountingSettingRepository);
             var accountingSettingPM = accountingSettingQuery.GetSinglePM(id);
             return accountingSettingPM;
@@ -843,7 +859,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "customsinterfacesettingpm/{InterfaceId}")]
         public CustomsInterfaceSettingPM GetCustomsInterfaceSettingPM(int InterfaceId)
         {
-            CustomsInterfaceSettingRepository repository = new CustomsInterfaceSettingRepository(InterfaceId);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			if (authToken != null)
+				AuthenticateTennatIfLogBoxOnly(authToken.Tenant);
+
+			CustomsInterfaceSettingRepository repository = new CustomsInterfaceSettingRepository(InterfaceId);
             CustomsInterfaceSettingQuery query = new CustomsInterfaceSettingQuery(repository);
             var setting = query.GetSinglePM(InterfaceId, 0);
             return setting;
@@ -853,7 +874,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "shaerdlogisticssettingpm/{settingId}")]
         public SharedLogisticsSettingPM GetSharedLogisticsSettingM(int settingId)
         {
-            SharedLogisticsSettingQueryService query = new SharedLogisticsSettingQueryService(settingId);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			if (authToken != null)
+				AuthenticateTennatIfLogBoxOnly(authToken.Tenant);
+
+			SharedLogisticsSettingQueryService query = new SharedLogisticsSettingQueryService(settingId);
             SharedLogisticsSettingPM setting = query.GetSingle(settingId.ToString(), false, false);
             return setting;
         }

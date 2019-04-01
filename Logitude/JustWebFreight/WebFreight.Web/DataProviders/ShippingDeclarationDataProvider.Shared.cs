@@ -391,6 +391,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? WarehouseLegEntryDate { get; set; }
         public DateTime? WarehouseLegReleaseDate { get; set; }
         public string DeliveryNotes { get; set; }
+        public bool IsDangerous { get; set; }
 
         public string TenantName { get; set; }
         public string TenantPhone { get; set; }
