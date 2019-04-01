@@ -38,8 +38,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                
 
                 LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter() ;
 
@@ -138,8 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                
 
                 LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
 
@@ -229,8 +227,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+               
 
                 LedgerTransactionCardIndexFilter LTCIFilter = new LedgerTransactionCardIndexFilter();
 

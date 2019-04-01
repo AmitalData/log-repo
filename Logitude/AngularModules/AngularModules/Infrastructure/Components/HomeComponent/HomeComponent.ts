@@ -861,6 +861,7 @@ export class HomeComponent implements OnDestroy{
                 this.SelectionChanged(tabItem);
 
                 var confirmWindow = new ConfirmWindow();
+                confirmWindow.IsOverAll = true;
                 confirmWindow.Width = 450;
                 confirmWindow.Height = 190;
                 confirmWindow.ShowCancelButton = true;

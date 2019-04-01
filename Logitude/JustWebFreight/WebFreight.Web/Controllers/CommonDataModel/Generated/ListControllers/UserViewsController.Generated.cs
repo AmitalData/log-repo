@@ -133,7 +133,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
                 if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                    tenant = tenant;
 
                 SecurityUtility.CheckContactFeature("User", "READ", authToken.Tenant);
 
