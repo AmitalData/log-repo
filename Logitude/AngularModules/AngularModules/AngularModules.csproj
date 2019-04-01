@@ -71,6 +71,7 @@
     <Content Include="Accounting\Components\Maintenance\YearTransferComponent.html" />
     <Content Include="Accounting\Components\Maintenance\NewTaxWithholdingAssessingOfficeComponent.html" />
     <Content Include="Accounting\Components\NewEntity\AddEditRecoExPageComponent.html" />
+    <Content Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankDepositComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewCashBookComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankCodeComponent.html" />
@@ -351,6 +352,7 @@
     <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />

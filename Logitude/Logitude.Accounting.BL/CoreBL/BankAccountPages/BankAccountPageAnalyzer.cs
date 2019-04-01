@@ -17,6 +17,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
     {
         private List<BankPageDTO> _BankPagesDTO;
         List<TenantPagesOfAccountDTO> _TenantBankPagesDTO= new List<TenantPagesOfAccountDTO>();
+
+
         static string ConvertFromDosHeberwToWinHeberw(string FileContent862)
         {
             var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
@@ -32,8 +34,9 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             //File.WriteAllText(@"C: \Users\itzik\Desktop\zevel\Pages\pages_win1255.txt", hebrewString);
 
         }
-        public void Analyze(int tenant , string FileContent)
+        public void Analyze(int? ptenant , string FileContent)
         {
+            
             try
             {
                 FileContent=ConvertFromDosHeberwToWinHeberw(FileContent);
@@ -41,15 +44,20 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                 _BankPagesDTO = CreateBankPagesDTOFromFile(FileContent,out tenantFromPage4Tester);
                 if (tenantFromPage4Tester.HasValue)
                 {
-                    tenant = tenantFromPage4Tester.Value;
+                    ptenant = tenantFromPage4Tester.Value;
                 }
+                if (!ptenant.HasValue)
+                {
+                    throw new Exception("unable to find tenantFromPage4Tester ");
+                }
+
             }
             catch (Exception e)
             {
 
                 throw new Exception("LoadBankPageFromFile(FileContent) failed while CreateBankPagesDTOFromFile ", e);
             }
-            
+            int tenant= ptenant.Value;
             TenantBankPagesFilter(tenant,_BankPagesDTO);
 
             foreach (var validBankAccountDTO in _TenantBankPagesDTO)
@@ -65,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             }
             
         }
-        List<string> ValidateBankPageAgaintDBErrors = new List<string>();
+        
         private ReconcileExternalPageQueryService _ReconcileExternalPageQueryService;
         
 
@@ -89,13 +97,13 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                 var bankcodePM = _BankCodeQueryService.GetSingle(BankCode, false, true);
                 if (bankcodePM == null)
                 {
-                    ValidateBankPageAgaintDBErrors.Add($"BankCode {BankCode} not exist in Tenant {pagesOfAccount.First().RawLine}");
+                    MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {BankCode} not exist in Tenant {pagesOfAccount.First().RawLine}");
                     continue;
                 }
                 var dbBankaccountPM = _BankAccountQueryService.GetBankAccountByBankIdAccNumber(bankcodePM.Id, AccountNumber, tenant);
                 if (dbBankaccountPM == null)
                 {
-                    ValidateBankPageAgaintDBErrors.Add($"BankCode {BankCode}  ,AccountNumber {AccountNumber} not exist in Tenant  {pagesOfAccount.First().RawLine}");
+                    MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {BankCode}  ,AccountNumber {AccountNumber} not exist in Tenant  {pagesOfAccount.First().RawLine}");
                     continue;
                 }
                 _TenantBankPagesDTO.Add(new TenantPagesOfAccountDTO() { DBBankaccountPM = dbBankaccountPM, PagesOfAccount = pagesOfAccount });
@@ -111,7 +119,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             string errorPageValidation = PageValidationClientSide(newPageOfBankAccount);
             if (!string.IsNullOrWhiteSpace(errorPageValidation))
             {
-                ValidateBankPageAgaintDBErrors.Add($"PageValidationClientSide():BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  {errorPageValidation}  ");
+                MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"PageValidationClientSide():BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  {errorPageValidation}  ");
                 return;
             }
             //if (dbBankaccountPM.LastPageCloseBalance != newPageOfBankAccount.MyBankAccountM.OpenBalance)
@@ -130,13 +138,13 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
 
                 if (prevReconcileExternalPagePM.CloseBalance != newPageOfBankAccount.MyBankAccountM.OpenBalance)
                 {
-                    ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.CloseBalance {prevReconcileExternalPagePM.CloseBalance} != OpenBalance  {newPageOfBankAccount.MyBankAccountM.OpenBalance}");
+                    MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.CloseBalance {prevReconcileExternalPagePM.CloseBalance} != OpenBalance  {newPageOfBankAccount.MyBankAccountM.OpenBalance}");
                     return;
                 }
 
                 if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
                 {
-                    ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.ToDate {prevReconcileExternalPagePM.ToDate } >= newBankPageLines.First().ReferenceDate{newBankPageLines.First().ReferenceDate}");
+                    MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.ToDate {prevReconcileExternalPagePM.ToDate } >= newBankPageLines.First().ReferenceDate{newBankPageLines.First().ReferenceDate}");
                     return;
                 }
 
@@ -225,20 +233,18 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             });
             return entityPM;
         }
-        public List<string> SuccessPageList = new List<string>();
-        public List<string> ExceptionPageList = new List<string>();
         private BankCodeQueryService _BankCodeQueryService;
         private BankAccountQueryService _BankAccountQueryService;
-
+        public ResultLoadBankPage MyResultLoadBankPage = new ResultLoadBankPage();
         private void AddExceptionInsertBankPage(ReconcileExternalPagePM entityPM, BankPageDTO newPageOfBankAccount, Exception ex)
         {
-            this.SuccessPageList.Add($"Exception insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} >{ex.ToString()} ");
+            this.MyResultLoadBankPage.SuccessPageList.Add($"Exception insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} >{ex.ToString()} ");
 
         }
         
         private void AddSuccessInsertBankPage(ReconcileExternalPagePM entityPM, BankPageDTO newPageOfBankAccount)
         {
-            this.SuccessPageList.Add($"Success insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} =new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  ");
+            this.MyResultLoadBankPage.SuccessPageList.Add($"Success insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} =new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  ");
         }
 
         private string PageValidationClientSide(BankPageDTO pageOfAccount)
@@ -331,6 +337,13 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             return date;
         }
     }
+    public class ResultLoadBankPage
+    {
+        public List<string> SuccessPageList = new List<string>();
+        public List<string> ExceptionPageList = new List<string>();
+        public List<string> ValidateBankPageAgaintDBErrors = new List<string>();
+
+    }
     class BankPageDTO
     {
         public const string RowType = "031";
@@ -404,8 +417,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             decimal totAmountIncludeCurrPage = totAmount + myBankPageLineM.Amount;
             if (totAmountIncludeCurrPage!= myBankPageLineM.BalanceAfter)
             {
-                throw new
-                    Exception($"{rawLine} AddBankPageLineM (totAmountIncludeCurrPage!= myBankPageLineM.BalanceAfter)");
+                ///throw new Exception($"{rawLine} AddBankPageLineM (totAmountIncludeCurrPage!= myBankPageLineM.BalanceAfter)");
             }
             MyBankPageLines.Add(myBankPageLineM);
         }
