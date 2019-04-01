@@ -18,12 +18,13 @@ import { HybridTenantThresholdPMService } from '../../../../Common/Services/Stan
 
 export class HybridTenantThresholdComponent extends BaseComponent {
     public DataContext: HybridTenantThresholdComponent = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() { super(); this.LoadHybridTenantThreshold(); }
     public EntityPM: HybridTenantThresholdPM;
     public Isupdate: boolean = false;
     public DataLoaded: boolean = false;
     LoadHybridTenantThreshold() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         var service: CommonDomainService = new CommonDomainService();
         service.GetHybridTenantThresholdByIdTenant().subscribe(res => {
             if (!res.HasError) {
@@ -41,7 +42,7 @@ export class HybridTenantThresholdComponent extends BaseComponent {
 
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.DataLoaded = true;
 
         });
@@ -77,17 +78,17 @@ export class HybridTenantThresholdComponent extends BaseComponent {
         }
     }
 
-    CloseButtonClicked() { SessionLocator.CurrentSession.CloseCurrentWindow(); }
+    CloseButtonClicked() { this.CurrentSession.CloseCurrentWindow(); }
     SaveButtonClicked() {
         var service: HybridTenantThresholdPMService = new HybridTenantThresholdPMService();
         if (!this.Isupdate) {
             service.insert(this.EntityPM).subscribe(res => {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             });
         }
         else {
             service.update(this.EntityPM).subscribe(res => {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             });
         }
     }

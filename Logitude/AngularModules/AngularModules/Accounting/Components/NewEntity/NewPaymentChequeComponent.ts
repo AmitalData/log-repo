@@ -44,6 +44,7 @@ export class NewPaymentChequeComponent extends BaseComponent
     CurrencyRatesService: CurrencyRatesService = new CurrencyRatesService();
     LastRatesList: LastRate[] = [];
     LocalAmountFieldLabel: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService)
     {
         super();
@@ -64,7 +65,7 @@ export class NewPaymentChequeComponent extends BaseComponent
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
 
@@ -113,7 +114,7 @@ export class NewPaymentChequeComponent extends BaseComponent
             //        }
 
             //        //else {
-            //        //    SessionLocator.CurrentSession.StopBusyIndicator();
+            //        //    this.CurrentSession.StopBusyIndicator();
             //        //}
             //    });
 
@@ -282,7 +283,7 @@ export class NewPaymentChequeComponent extends BaseComponent
     }
     SubmitChanges() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
 
         this.entityPM.BankAccountGLAccountId = this.BankAccount.DeferredGLAccountId;
         this.entityPM.PaymentChequeStatusCode = "1";
@@ -291,10 +292,10 @@ export class NewPaymentChequeComponent extends BaseComponent
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");// SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.CloseCurrentWindowEmit("ok");// this.CurrentSession.CloseCurrentWindowEmit("ok");
 
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                    SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
@@ -302,13 +303,13 @@ export class NewPaymentChequeComponent extends BaseComponent
                             this.CancelButtonClicked();
                         });
                     });
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -340,7 +341,7 @@ export class NewPaymentChequeComponent extends BaseComponent
 
     CancelButtonClicked()
     {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 }

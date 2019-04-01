@@ -37,12 +37,13 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
     queryFilterItem: QueryFilterItem;
     public ObjectTableName: string = "Report";
     public DataContext: CustomerAdditionalServicesFilterComponent = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.IsAllId = "_IsAllId" + SessionLocator.CurrentSession.GetNewId("_IsAllId");
-        this.IsPotentialId = "_IsPotentialId" + SessionLocator.CurrentSession.GetNewId("_IsPotentialId");
-        this.IsInUseId = "_IsInUseId" + SessionLocator.CurrentSession.GetNewId("_IsInUseId");
-        this.TypeRadio = "_TypeRadio" + SessionLocator.CurrentSession.GetNewId("_TypeRadio");
+        this.IsAllId = "_IsAllId" + this.CurrentSession.GetNewId("_IsAllId");
+        this.IsPotentialId = "_IsPotentialId" + this.CurrentSession.GetNewId("_IsPotentialId");
+        this.IsInUseId = "_IsInUseId" + this.CurrentSession.GetNewId("_IsInUseId");
+        this.TypeRadio = "_TypeRadio" + this.CurrentSession.GetNewId("_TypeRadio");
     }
 
     public CustomerStatusList: CodeNameClass[];

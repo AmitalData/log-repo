@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
@@ -40,6 +40,7 @@ export class GeneralDocumentFollowUpHelper {
     EntityPM: any;
     EventTypeCode: string = "";
     followUpPMExtendedService: FollowUpPMExtendedService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(objecttablename: string, entityId: string, childEntityId: string, childEntityReference: string, tabName: string ,parentViewModel:any,entityPM:any) {
 
 
@@ -84,7 +85,7 @@ export class GeneralDocumentFollowUpHelper {
             ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.MessageTotango);
              //Add FollowUp
             if (!this.ParentViewModel.HasFollowUp) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Please Wait...");
+                this.CurrentSession.StartBusyIndicator("Please Wait...");
                 this.GetEventTypeByCodeQuery();
             }
 
@@ -94,7 +95,7 @@ export class GeneralDocumentFollowUpHelper {
                 var followup = null;
               
                 if (this.EntityPM.FollowUps) {
-                    SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+                    this.CurrentSession.StartBusyIndicator("Saving...");
                     followup = this.EntityPM.FollowUps.filter(d => d.DocumentTypeId == this.ParentViewModel.DocumentTypeId && d.Done == false)[0];
                     
                     if (followup) {
@@ -120,8 +121,8 @@ export class GeneralDocumentFollowUpHelper {
                         this.ParentViewModel.HasFollowUp = false;
                     }
 
-                    SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.FireEvent("FollowupsChanged");
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
 
@@ -150,11 +151,11 @@ export class GeneralDocumentFollowUpHelper {
 
                     this.followUpPMExtendedService.RemoveFollowUpById(followup.Id).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         if (!pmResponse.HasError) {
                             this.ParentViewModel.HasFollowUp = false;
                             this.EntityPM.FollowUps = this.EntityPM.FollowUps.filter(d => d.Id != followup.Id);
-                            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+                            this.CurrentSession.FireEvent("FollowupsChanged");
                       
                         }
          
@@ -173,10 +174,10 @@ export class GeneralDocumentFollowUpHelper {
     GetEventTypeByCodeQuery() {
 
         if (!AppTool.IsNullOrEmpty(this.EventTypeCode)) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Please Wait...");
+            this.CurrentSession.StartBusyIndicator("Please Wait...");
             this._eventTypeExtendedPMService.GetEventTypeByCode(this.EventTypeCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (!pmResponse.HasError) {
                     this.EventType = pmResponse.Result;
                     if (this.EventType) {
@@ -186,7 +187,7 @@ export class GeneralDocumentFollowUpHelper {
                 }
             });
         }
-        else SessionLocator.CurrentSession.StopBusyIndicator();
+        else this.CurrentSession.StopBusyIndicator();
 
     }
 

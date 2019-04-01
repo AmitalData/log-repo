@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -38,6 +38,7 @@ export class BlockListInWarehouseComponent
     public BlockListInWarehouseResultList: ObservableCollection;
     
     ShowResetBlocksList;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ShowResetBlocksList =
@@ -144,7 +145,7 @@ export class BlockListInWarehouseComponent
     
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {

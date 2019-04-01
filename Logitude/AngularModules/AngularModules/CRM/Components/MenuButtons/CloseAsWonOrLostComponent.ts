@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {OpportunityPM} from '../../EntityPMs/OpportunityPM';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -18,7 +18,7 @@ export class CloseAsWonOrLostComponent extends BaseComponent {
     public entityPM: OpportunityPM;
     public ObjectTableName: string="Opportunity";
     public DataContext: CloseAsWonOrLostComponent = this;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -73,7 +73,7 @@ export class CloseAsWonOrLostComponent extends BaseComponent {
     public ValidationErrorsList :Array<string>=[];
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancle");
+        this.CurrentSession.CloseCurrentWindowEmit("cancle");
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -95,10 +95,10 @@ export class CloseAsWonOrLostComponent extends BaseComponent {
                 this.ComputeValue();
             }
             this.SetStageId();
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges("Closing Opportunity...");
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(event => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CurrentEditComponent.SaveChanges("Closing Opportunity...");
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(event => {
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindow();
 
             });          
         }

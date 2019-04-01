@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
 import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -56,19 +56,19 @@ export class DocumentTypeCustomsDataComponent
 
     ValidationErrorsList: string[] = [];
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
     Loaded: boolean = false;
     EntityResource: boolean = false;
     ngOnInit() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
         
             this.EntityResource = true;
             if (this.EntityResource && this.Loaded) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
             //this.RefreshBtnClick()
         });
@@ -93,10 +93,10 @@ export class DocumentTypeCustomsDataComponent
 
                     
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.Loaded = true;
                 if (this.EntityResource && this.Loaded) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
     }
@@ -128,7 +128,7 @@ export class DocumentTypeCustomsDataComponent
             });
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
         IsNew: boolean = false;//itzik : there is a row that come with defualt DB !!!
     OkButtonClicked() {

@@ -1,6 +1,6 @@
 import {Component, ViewChildren, QueryList, OnDestroy} from '@angular/core';
 import {RoutingHelper} from '../../../../Shipment/Tools';
-import {AppTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ShipmentValidator} from '../../../../Shipment/Validators/ShipmentValidator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -38,6 +38,7 @@ export class AddEditPickupComponent implements OnDestroy {
     public IsShowNewWarehouseEntryButton: boolean = false;
     private myCardListService: CardListService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();         
     }
@@ -238,7 +239,7 @@ export class AddEditPickupComponent implements OnDestroy {
     }
     CloseWindow() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.Save(false);
@@ -405,10 +406,10 @@ export class AddEditPickupComponent implements OnDestroy {
                 this.isEntityAdded = true;
             }
 
-            if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.CurrentSession.CurrentEditComponent != null) {
                 if (!this.SaveCompletedEvent) {
 
-                    this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                         if (isSaveSuccess) {
 
                             if (this.IsNewEntity) {
@@ -421,11 +422,11 @@ export class AddEditPickupComponent implements OnDestroy {
                             }
 
                             if (isClosingWindow) {
-                                SessionLocator.CurrentSession.CloseCurrentWindow();
+                                this.CurrentSession.CloseCurrentWindow();
                             }
 
                             else {
-                                this.ShipmentPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                                this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                                 if (SavedEntityId) {
                                     this.EntityPM = this.ShipmentPM.ShipmentPickUps.filter(f => f.Id == SavedEntityId)[0];
@@ -456,14 +457,14 @@ export class AddEditPickupComponent implements OnDestroy {
                         }
 
                         else {
-                            this.ValidationErrorsList = SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                            this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
                         }
 
                         AppTool.KillEventEmitter(this.SaveCompletedEvent);
                         this.SaveCompletedEvent = null;
                     });
 
-                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                 }
             }
         }
@@ -481,16 +482,16 @@ export class AddEditPickupComponent implements OnDestroy {
 
             if (errors.length == 0) {
 
-                if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+                if (this.CurrentSession.CurrentEditComponent != null) {
                     if (!this.SaveCompletedEvent) {
-                        this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                             if (isSaveSuccess) {
-                                this.ShipmentPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                                this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                                 this.Clone();
                                 this.InitializeWareHousEntryWindow();
 
                             } else {
-                                this.ValidationErrorsList = SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                                this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
                             }
 
                             AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -498,7 +499,7 @@ export class AddEditPickupComponent implements OnDestroy {
                         });
                     }
 
-                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                 } else this.InitializeWareHousEntryWindow();
 
 
@@ -664,7 +665,7 @@ export class AddEditPickupComponent implements OnDestroy {
                     this.ShipmentPM.AddShipmentFollowUp(item);
                 });
 
-                SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+                this.CurrentSession.FireEvent("FollowupsChanged");
             }
 
             if (this.isEntityAdded) {

@@ -40,6 +40,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public SelectedTabCode: string = "0";
     public LocalAddressDataContext: AddressItem; 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();      
     }
@@ -452,7 +453,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     } 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -469,7 +470,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             if (AppTool.IsNullOrEmpty(this.TenantAddress.Id)) {
                 this.SubmitCreatingAgent();
             }
@@ -491,7 +492,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
                 else {
                     this.ValidationErrorsList = myRespone.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
@@ -507,7 +508,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
                 else {
                     this.ValidationErrorsList = myRespone.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
@@ -532,7 +533,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
                     else {
                         this.ValidationErrorsList = myRespone.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
             });
@@ -562,7 +563,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
                     else {
                         this.ValidationErrorsList = myRespone.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
             });
@@ -591,12 +592,12 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
             if (myRespone != null) {
                 if (!myRespone.HasError) {
                     InfraSettings.TenantPM = this.TenantPm;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
                     this.ValidationErrorsList = myRespone.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
@@ -608,6 +609,7 @@ export class AddressItem extends BaseComponent {
     public Address: AddressPM;
     public Tenant: TenantPM;
     public DemoMessageVisibility: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(address: AddressPM, tenant: TenantPM, public father: CompanyAddressSettingsComponent) {
         super();
 

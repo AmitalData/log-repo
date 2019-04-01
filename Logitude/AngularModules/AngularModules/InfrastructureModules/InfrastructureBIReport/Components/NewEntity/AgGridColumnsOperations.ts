@@ -15,7 +15,7 @@ export class AgGridColumnsOperations extends BaseComponent {
     private father: BIReportPreviewComponent;
     public IsAll = false;
     itemSource_Unsaved: Array<Column> = []; 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -39,7 +39,7 @@ export class AgGridColumnsOperations extends BaseComponent {
 
     CancelButtonClicked() {
         this.father.BIReportXMLData.BITabularViewSettings.Columns = this.itemSource_Unsaved;
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+        this.CurrentSession.CloseCurrentWindowEmit('cancel');
     }
 
     OkButtonClicked() {
@@ -51,7 +51,7 @@ export class AgGridColumnsOperations extends BaseComponent {
         _InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.father.BIReportXMLData = myResult.Result;
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+                this.CurrentSession.CloseCurrentWindowEmit('ok');
             }
         });
     }

@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ReconciliationPM} from '../../EntityPMs/ReconciliationPM';
@@ -58,7 +58,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 export class OutOfDepositMessage extends BaseComponent {
     public DataContext: OutOfDepositMessage = this;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -79,12 +79,12 @@ export class OutOfDepositMessage extends BaseComponent {
         this._OODMSG = value;
     }
     CustomerButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Customer;" + this._OODMSG);
+        this.CurrentSession.CloseCurrentWindowEmit("Customer;" + this._OODMSG);
     }
     CashbookButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cashbook;" + this._OODMSG);
+        this.CurrentSession.CloseCurrentWindowEmit("Cashbook;" + this._OODMSG);
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 }

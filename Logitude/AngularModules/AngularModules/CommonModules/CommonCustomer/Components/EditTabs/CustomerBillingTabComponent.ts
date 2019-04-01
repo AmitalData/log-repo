@@ -27,6 +27,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
     @ViewChild('BillingChild', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -168,7 +169,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "EntityActivated") {
                     this.SetUIProperties_GeneratedComponent();
                 }

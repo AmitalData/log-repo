@@ -23,6 +23,7 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
     public demoMessageVisibility: boolean = false;
     public IsVisible = false;
     private oldLanguageCode: string = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TimeZonesList = DateTimeZone.GetTimeZonesList();
@@ -226,7 +227,7 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
     // Commands 
     CancelButtonClicked() {
         this.TenantPm = null;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
  
     public ValidationErrorsList: string[];
@@ -264,14 +265,14 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
     }
 
     SubmitChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
 
         var myService: TenantPMService = new TenantPMService();
         myService.update(this.TenantPm).subscribe((myResponse: ServiceResponse) => {
             if (myResponse) {
                 if (!myResponse.HasError) {
                     InfraSettings.TenantPM = this.TenantPm;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                     ////Complete work 
                     //var datetimeformat: string = "dd\\/MM\\/yyyy";
                     //if (!LogitudeUtilitie3s.IsNullOrEmpty(this.TenantPm.DateTimeFormat)) {
@@ -285,7 +286,7 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
 
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

@@ -24,6 +24,7 @@ export class ARInvoiceDetailsTabComponent implements OnInit, OnDestroy {
     public EntityPM: ARInvoicePM = null;
     public ObjectTableName = "ARInvoice";
     @ViewChild("Child", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
@@ -35,7 +36,7 @@ export class ARInvoiceDetailsTabComponent implements OnInit, OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "ResetARInvoiceBaseDeailsTab") {
                     this.InitBaseTabComponent();
                 }

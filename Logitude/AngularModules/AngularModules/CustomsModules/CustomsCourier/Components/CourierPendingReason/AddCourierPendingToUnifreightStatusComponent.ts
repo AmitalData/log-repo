@@ -32,17 +32,17 @@ export class AddCourierPendingToUnifreightStatusComponent
     _entityResourceService: EntityResourceService = new EntityResourceService();
 
     public CourierPendingReasonList: ObservableCollection = new ObservableCollection([]);
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
 
     Loaded: boolean = false;
     ngOnInit() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.Loaded = true;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
     }
@@ -52,9 +52,9 @@ export class AddCourierPendingToUnifreightStatusComponent
 
             if (args.FromUnifreight && !AppTool.IsNullOrEmpty(args.UnifreightStatusCode)) {
                 this.UnifreightStatusCode = args.UnifreightStatusCode;
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
                 this._CourierPendingReasonExtendedListService.GetCourierPendingReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe(response => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var courierPendingReasonResult: CourierPendingReasonPM[] = response.Result;
                     this.BuildCourierPendingReasonList(courierPendingReasonResult);
                 });
@@ -92,7 +92,7 @@ export class AddCourierPendingToUnifreightStatusComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -118,7 +118,7 @@ export class AddCourierPendingToUnifreightStatusComponent
 export class CourierPendingReasonLineComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.CourierPendingReason";
     public DataContext = this;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityPM: CourierPendingReasonPM, public isNew: boolean, private parent: AddCourierPendingToUnifreightStatusComponent) {
         super();
         if (!isNew) {
@@ -129,10 +129,10 @@ export class CourierPendingReasonLineComponent extends BaseComponent {
     //private _PendingCode: string;
     public get PendingCode() { return this.entityPM.Code; }
     public set PendingCode(newValue: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         if (newValue) {
             this.parent._CourierPendingReasonPMService.get(newValue).subscribe(response => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (!response.HasError && response.Result != null) {
                     if (!AppTool.IsNullOrEmpty(response.Result.UnifreightStatusCode) && response.Result.UnifreightStatusCode != this.parent.UnifreightStatusCode) {
                             var confirm = new ConfirmWindow();
@@ -162,9 +162,9 @@ export class CourierPendingReasonLineComponent extends BaseComponent {
 
     DeleteCommand() {
         if (!this.isNew) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.parent._CourierPendingReasonExtendedListService.DeleteCourierPendingReasonUnifreightStatus(this.PendingCode).subscribe(response => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (response.HasError) {
                     this.parent.ValidationErrorsList = [];
                     this.parent.ValidationErrorsList.push(response.ErrorsArray[0]);

@@ -1,4 +1,4 @@
-﻿
+
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
@@ -49,6 +49,7 @@ export class AutomationsSettingsComponent implements OnInit {
     IsAddAtomationEnable: boolean = false;
     OnUpdateTabVisibility: boolean = false;
     ScheduleTabVisibility: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _automationExtendedPMService: AutomationExtendedPMService, public _automationPMService: AutomationPMService) {
 
 
@@ -115,7 +116,7 @@ export class AutomationsSettingsComponent implements OnInit {
 
     LoadAutomationsList() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.AutomationList = [];
         this._automationExtendedPMService.getAutomationesByObjectTableId(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
 
@@ -131,7 +132,7 @@ export class AutomationsSettingsComponent implements OnInit {
 
                 this.RefreshAutomationList("OnCreate");
                 this.RefreshAutomationList("OnUpdate");
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -304,7 +305,7 @@ export class AutomationsSettingsComponent implements OnInit {
      }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
@@ -331,13 +332,13 @@ export class AutomationsSettingsComponent implements OnInit {
             //    }
             //});
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             this._automationExtendedPMService.putAuomationList(automationArgsLists).subscribe(res => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindow();
             });
         }
-        else SessionLocator.CurrentSession.CloseCurrentWindow();
+        else this.CurrentSession.CloseCurrentWindow();
 
         
     }

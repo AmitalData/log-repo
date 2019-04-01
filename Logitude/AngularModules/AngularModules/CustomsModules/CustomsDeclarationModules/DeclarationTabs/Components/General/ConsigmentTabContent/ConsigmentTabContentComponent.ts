@@ -62,7 +62,7 @@ export class ConsigmentTabContentComponent
     private _DeclarationPMService: DeclarationPMService = new DeclarationPMService();
 
     public WeightValueFilterItems: ApiQueryFilters;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this.ConsimentPackages = new ObservableCollection([]);
@@ -448,7 +448,7 @@ export class ConsigmentTabContentComponent
         this.EntityPM.AddConsignmentPackage(line);
         var item = new ConsigmentPackageModel(line);
         this.ConsimentPackages.Insert(item);
-        //SessionLocator.CurrentSession.ResetRowIndex();
+        //this.CurrentSession.ResetRowIndex();
     }
     RemovePackageButton(item) {
 
@@ -584,7 +584,7 @@ export class ConsigmentTabContentComponent
             return;
         }
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
+        if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
             //Save changes
             this.SaveChangesAndSendRequest();
         } else {
@@ -603,31 +603,31 @@ export class ConsigmentTabContentComponent
         };
         customsRequestMenuService.WindowClosed.subscribe((arg: any) => {
             if (!AppTool.IsNullOrEmpty(arg) && arg == "ReloadEntity") {
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
         });
         customsRequestMenuService.ShowModalAsEditMenuAction("8240", my);
     }
 
     private SaveChangesAndSendRequest() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         var sub=
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(myResult => {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(myResult => {
                 sub.unsubscribe();
             var res: ServiceResponse = myResult;
             if (!res.HasError) {
                 var entity = res.Result;
                 console.log("..Saved Successfully ", entity);
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 this.SendCargoQueryRequestMethod();
             }
             else {
                 //this.ValidationErrorsList = res.ErrorsArray;
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
 
     public SelectedRow: any = null;
@@ -738,7 +738,7 @@ export class ConsigmentTabContentComponent
 
 export class ConsigmentPackageModel extends BaseComponent {
     public EntityPM: ConsignmentPackagePM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(line: ConsignmentPackagePM) {
         super();
         this.EntityPM = line;
@@ -781,7 +781,7 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
     public EntityPM: ConsignmentInternalTransitionPM;
     private Parent: ConsigmentTabContentComponent;
     ObjectTableName: string = "Customs.ConsignmentInternalTransition";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: ConsignmentInternalTransitionPM, parent: ConsigmentTabContentComponent) {
         super();
         this.EntityPM = item;

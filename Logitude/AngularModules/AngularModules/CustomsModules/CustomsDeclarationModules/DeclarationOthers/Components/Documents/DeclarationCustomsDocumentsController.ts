@@ -46,6 +46,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     private IsDisplayOnly: boolean;
     private http: Http;
     private apiUrl: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private declarationPM: DeclarationPM, private childEntity1Id: string, private ChildEntity1Code: string) {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
         this.http = ServiceHelper.Http;
@@ -500,8 +501,8 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                 var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
                 var isDisplayOnly: boolean = displayOnlyCheckResult.IsDisplayOnly;
                 var displayOnlyMessage = null;
-                if (SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode) {
-                    let displayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+                if (this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode) {
+                    let displayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
                     var rresponse: ServiceResponse = new ServiceResponse();
                     rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: displayOnlyMessage };
                     return rresponse;

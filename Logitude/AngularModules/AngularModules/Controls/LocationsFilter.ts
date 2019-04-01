@@ -31,8 +31,9 @@ export class LocationsFilter {
     public FilterId_O: string;
     public FilterId_I: string;
     @Output() SelectedValueChanged = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.FilterId_A = "LocationFilter_A_-1_-1";
             this.FilterId_O = "LocationFilter_O_-1_-1";
             this.FilterId_H = "LocationFilter_H_-1_-1";
@@ -40,7 +41,7 @@ export class LocationsFilter {
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("LocationsFilter");
+            var idIndex = this.CurrentSession.GetNewId("LocationsFilter");
             this.FilterId_A = "LocationFilter_A_" + idIndex;
             this.FilterId_O = "LocationFilter_O_" + idIndex;
             this.FilterId_H = "LocationFilter_H_" + idIndex;

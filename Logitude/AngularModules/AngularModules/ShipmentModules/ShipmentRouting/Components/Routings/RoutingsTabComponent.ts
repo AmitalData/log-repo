@@ -35,6 +35,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public IsInlandDomestic: boolean = false;
     public CardLOVDependencyProperty1: string = null;
     public ItemsSource: RoutingItem[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -52,7 +53,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "AWBWizardClosed") {
                     this.UpdateScreen();
                 }
@@ -532,7 +533,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                                     this.EntityPM.RemoveShipmentFollowUp(item);
                                 });
 
-                                SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+                                this.CurrentSession.FireEvent("FollowupsChanged");
                             }
 
                             this.EntityPM.RemovePickUp(myRoutingItem.Pickup);
@@ -560,7 +561,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                                     this.EntityPM.RemoveShipmentFollowUp(item);
                                 });
 
-                                SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+                                this.CurrentSession.FireEvent("FollowupsChanged");
                             }
 
                             this.EntityPM.RemoveDelivery(myRoutingItem.Delivery);
@@ -592,7 +593,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                                     this.EntityPM.RemoveShipmentFollowUp(item);
                                 });
 
-                                SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+                                this.CurrentSession.FireEvent("FollowupsChanged");
                             }
 
                             break;

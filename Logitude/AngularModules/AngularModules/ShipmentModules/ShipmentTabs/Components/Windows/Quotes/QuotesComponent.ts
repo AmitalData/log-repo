@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -26,6 +26,7 @@ export class QuotesComponent {
     public ItemsSource: QuoteItem[] = [];
     public IsNoData: boolean = false;
     private myService: QuoteListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myService = new QuoteListService();        
     }
@@ -53,7 +54,7 @@ export class QuotesComponent {
     }
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.ItemsSource = [];        
         this.BaseQuote = null;
@@ -100,7 +101,7 @@ export class QuotesComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -128,7 +129,7 @@ export class QuotesComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     GenerateButtonClicked() {
@@ -148,12 +149,12 @@ export class QuotesComponent {
     LoadQuotePM(QuoteId: string) {
         if (!AppTool.IsNullOrEmpty(QuoteId)) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var myService = new QuotePMService();
             myService.get(QuoteId).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -164,7 +165,7 @@ export class QuotesComponent {
                     }
 
                     else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
             });
@@ -184,7 +185,7 @@ export class QuotesComponent {
                 Generator.GeneratePayablesFromQuote(this.BaseQuote);                
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 }

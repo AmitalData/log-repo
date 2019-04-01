@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, ArrayTool} from '../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator'; 
@@ -12,6 +12,7 @@ import {PhysicalCheckPMService} from '../../Services/StandardPMs/PhysicalCheckPM
 
 export class CustomsSpotlightComponent {
     public EntityId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -21,7 +22,7 @@ export class CustomsSpotlightComponent {
     set ShowBusyIndicator(value: boolean) {
         if (this.showBusyIndicator != value) {
             this.showBusyIndicator = value;
-            SessionLocator.CurrentSession.FireEvent("SpotLightDetectChanges");
+            this.CurrentSession.FireEvent("SpotLightDetectChanges");
         }
     }
     MyEntityArg: EntityArgs;

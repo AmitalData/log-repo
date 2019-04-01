@@ -52,7 +52,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -526,7 +526,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
         }
@@ -547,12 +547,12 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
                         this.VatTypePercentagesList = myResponse2.Result;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -651,7 +651,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     private isOkClicked = false;
     private errors: string[] = [];
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.isOkClicked = true;
@@ -756,7 +756,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         return valid;
     }
     OnEntityValid() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.InitializeComponent();
     }
     InitializeComponent() {
@@ -771,6 +771,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.EntityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
         this.EntityPM.StatusCode = "DR";
         this.EntityPM.StatusName = "Draft";
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 }

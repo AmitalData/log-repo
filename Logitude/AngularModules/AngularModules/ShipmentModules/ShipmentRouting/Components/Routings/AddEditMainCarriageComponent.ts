@@ -40,6 +40,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public FatherComponent: RoutingsTabComponent;
     public LabelWidth: number = 100;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.InitServices();
@@ -1425,11 +1426,11 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         }
     }
     GetStockClicked() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+        if (this.CurrentSession.CurrentEditComponent) {
             var myShipmentValidator = new ShipmentValidator();
             var myShipmentErrors = myShipmentValidator.Validate(this.EntityPM);
 
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myShipmentErrors;
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myShipmentErrors;
 
             if (myShipmentErrors.length == 0) {
                 this.SetMAWBAirline();
@@ -1459,10 +1460,10 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                             this.isGetFromStock = true;
 
                             if (!this.SaveCompletedEvent) {
-                                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                                     if (isSaveSuccess) {
                                         this.EntityPM = null;
-                                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                                         this.SetUIProperties_MainCarriage();
                                         this.myCloner.AddField('Master');
                                         this.myCloner.AddField('MAWBOBLDate');
@@ -1473,14 +1474,14 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                                     }
 
                                     else {
-                                        this.ValidationErrorsList = SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                                        this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
                                     }
 
                                     AppTool.KillEventEmitter(this.SaveCompletedEvent);
                                     this.SaveCompletedEvent = null;
                                 });
 
-                                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                                this.CurrentSession.CurrentEditComponent.SaveChanges();
                             }
                         }
                     }
@@ -1489,12 +1490,12 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         }
     }
     ReturnStockClicked() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+        if (this.CurrentSession.CurrentEditComponent) {
             if (this.MainCarriageIsFromStack || this.MAWBTakenFromStack) {
                 var myShipmentValidator = new ShipmentValidator();
                 var myShipmentErrors = myShipmentValidator.Validate(this.EntityPM);
 
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myShipmentErrors;
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myShipmentErrors;
 
                 if (myShipmentErrors.length == 0) {
                     this.SetMAWBAirline();
@@ -1503,9 +1504,9 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                     this.isGetFromStock = false;
 
                     if (!this.SaveCompletedEvent) {
-                        this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                             if (isSaveSuccess) {
-                                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                                 this.SetUIProperties_MainCarriage();
                                 this.myCloner.AddField('Master');
                                 this.myCloner.AddField('MAWBOBLDate');
@@ -1516,14 +1517,14 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                             }
 
                             else {
-                                this.ValidationErrorsList = SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                                this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
                             }
 
                             AppTool.KillEventEmitter(this.SaveCompletedEvent);
                             this.SaveCompletedEvent = null;
                         });
 
-                        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                        this.CurrentSession.CurrentEditComponent.SaveChanges();
                     }
                 }
             }
@@ -1632,9 +1633,9 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                                                         this.isGetFromStock = true;
 
                                                         if (!this.SaveCompletedEvent) {
-                                                            this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                                                            this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                                                                 if (isSaveSuccess) {
-                                                                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                                                                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                                                                     this.SetUIProperties_MainCarriage();
                                                                     this.myCloner.AddField('Master');
                                                                     this.myCloner.AddField('MAWBOBLDate');
@@ -1645,14 +1646,14 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                                                                 }
 
                                                                 else {
-                                                                    this.ValidationErrorsList = SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                                                                    this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
                                                                 }
 
                                                                 AppTool.KillEventEmitter(this.SaveCompletedEvent);
                                                                 this.SaveCompletedEvent = null;
                                                             });
 
-                                                            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                                                            this.CurrentSession.CurrentEditComponent.SaveChanges();
                                                         }
                                                     }
 
@@ -1679,7 +1680,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -1793,24 +1794,24 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                     if (confirmWindow.Yes) {
                        
                         if (!this.SaveCompletedEvent) {
-                            this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                            this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
 
                                 AppTool.KillEventEmitter(this.SaveCompletedEvent);
                                 this.SaveCompletedEvent = null;
 
                                 if (isSaveSuccess) {
 
-                                    SessionLocator.CurrentSession.SessionEvent.emit("ReloadHouses");
+                                    this.CurrentSession.SessionEvent.emit("ReloadHouses");
 
                                     this.CloseOk();
                                 }
 
                                 else {
-                                    this.ValidationErrorsList = SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                                    this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
                                 }
                             });
 
-                            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                            this.CurrentSession.CurrentEditComponent.SaveChanges();
                         }
                     }
                 });
@@ -1824,7 +1825,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
     private CloseOk() {
         this.FatherComponent.BuildItemsCollection();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     private myCloner: Cloner;
@@ -1983,7 +1984,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                 this.EntityPM.AddShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
 
         if (this.entityCloner) {

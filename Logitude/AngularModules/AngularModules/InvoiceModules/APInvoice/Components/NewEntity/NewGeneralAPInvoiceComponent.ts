@@ -46,7 +46,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     public IsAccountingActivated = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -151,7 +151,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myCurrencyRatesService = new CurrencyRatesService();
         var myCommonDomainService = new CommonDomainService();
@@ -171,12 +171,12 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                         this.VatTypePercentagesList = myResponse2.Result;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -576,7 +576,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -655,9 +655,9 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     CompleteSubmission(errors) {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
             this.InitializeProfitCurrency();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+            this.CurrentSession.CloseCurrentWindowEmit("Ok");
         }
     }
 

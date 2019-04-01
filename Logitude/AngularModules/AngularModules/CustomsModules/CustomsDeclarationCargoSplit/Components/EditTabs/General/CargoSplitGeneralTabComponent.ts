@@ -105,6 +105,7 @@ public CargoIdentifiersList: ObservableCollection;
     //    this.Init();
     //}
     _EntityResourceFinished: boolean = false
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
       this.EntityPM = new DeclarationCargoSplitPM();
@@ -147,10 +148,10 @@ public CargoIdentifiersList: ObservableCollection;
 
     GetFileData() {
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) return;
-        SessionLocator.CurrentSession.StartBusyIndicator("")
+        this.CurrentSession.StartBusyIndicator("")
         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
             .subscribe((myDeclarationResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (myDeclarationResponse.Result == null || (myDeclarationResponse.Result != null && AppTool.IsNullOrEmpty(myDeclarationResponse.Result.Id))) {
                     this.CustomFileNo = "";
                     this.EntityPM.DeclarationId = null;
@@ -159,10 +160,10 @@ public CargoIdentifiersList: ObservableCollection;
                 if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                     this.NoConnectedConsignmentEnableField();
                 } else {
-                    SessionLocator.CurrentSession.StartBusyIndicator("")
+                    this.CurrentSession.StartBusyIndicator("")
                     this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                         .subscribe((myResponse: ServiceResponse) => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             this.FetchConsignment(myResponse, false);
                         });
                 }
@@ -285,30 +286,30 @@ public CargoIdentifiersList: ObservableCollection;
     //}
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.currentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+            this.currentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //this.RefreshEntity();
                         
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildTabs();
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.currentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.currentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
                             //this.RefreshEntity();
                             this.DisplayOnlyCheck();
@@ -320,9 +321,9 @@ public CargoIdentifiersList: ObservableCollection;
     }
 
     DisplayOnlyCheck() {
-        this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetDisplayFields(this.ResponseStatusCode);
             return;
         }
@@ -591,16 +592,16 @@ public CargoIdentifiersList: ObservableCollection;
         }
         else {
             this.IsCustomsFileRetrieved = true;
-            SessionLocator.CurrentSession.StartBusyIndicator("")
+            this.CurrentSession.StartBusyIndicator("")
             this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
                 .subscribe((myDeclarationResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (myDeclarationResponse.Result == null || (myDeclarationResponse.Result != null && AppTool.IsNullOrEmpty(myDeclarationResponse.Result.Id))) {
                         this.CustomFileNo = "";
                         this.EntityPM.DeclarationId = null;
                         errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
-                        //SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
+                        //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
                         this.MessageCustomsFileWindow(errorMessage);
                         
                         //return;
@@ -610,10 +611,10 @@ public CargoIdentifiersList: ObservableCollection;
                     if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                         this.NoConnectedConsignmentEnableField();
                     } else {
-                        SessionLocator.CurrentSession.StartBusyIndicator("")
+                        this.CurrentSession.StartBusyIndicator("")
                         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                             .subscribe((myResponse: ServiceResponse) => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 if (searchtext == "ImporterOnly") {
                                     this._LastFetchConsignmentPMList = myResponse.Result
                                     if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
@@ -764,7 +765,7 @@ public CargoIdentifiersList: ObservableCollection;
       if (errors.length == 0) {
         //           this.declarationCargoSplitPMService.update(this.EntityPM).subscribe(response => {
         //this.entityPMService.update(this.ObjectTableName, this.EntityPM).subscribe(response => {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this.OnMassageDisplayMethod();
         var LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0].Id;
         this.requestParams = new CargoSplitRequestParams();
@@ -843,7 +844,7 @@ public CargoIdentifiersList: ObservableCollection;
     ApplyDeleteDeclarationCargoSplit() {
         this.IsDelete = false;
 
-        SessionLocator.CurrentSession.CloseCurrentWindow(); //currentAssemlyLocator.CurrentSimplogWindow.Close();
+        this.CurrentSession.CloseCurrentWindow(); //currentAssemlyLocator.CurrentSimplogWindow.Close();
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
@@ -862,7 +863,7 @@ public CargoIdentifiersList: ObservableCollection;
     }
 
     OkButtonClicked() {
-        //SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        //this.CurrentSession.CloseCurrentWindowEmit("Ok");
         this.SaveEntityChanges(null);
         return;
         //if (!this.IsDisplayOnly) {
@@ -873,7 +874,7 @@ public CargoIdentifiersList: ObservableCollection;
         //                this.ValidationErrorsList = [];
         //                this.ValidationErrorsList = response.ErrorsArray;
         //            } else {
-        //                SessionLocator.CurrentSession.CloseCurrentWindow();
+        //                this.CurrentSession.CloseCurrentWindow();
         //            }
         //        });
         //        this.RefreshEntity();
@@ -885,7 +886,7 @@ public CargoIdentifiersList: ObservableCollection;
         //                this.ValidationErrorsList = [];
         //                this.ValidationErrorsList = response.ErrorsArray;
         //            } else {
-        //                SessionLocator.CurrentSession.CloseCurrentWindow();
+        //                this.CurrentSession.CloseCurrentWindow();
         //            }
         //        });
         //    }
@@ -893,15 +894,15 @@ public CargoIdentifiersList: ObservableCollection;
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
     RefreshEntity() {
         //if ()this.EntityPM
-        //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-            SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        if (this.CurrentSession.CurrentEditComponent) {
+            this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         }
         this.declarationCargoSplitController.CheckRequestsInProgress(this.EntityPM.DeclarationId).subscribe((response: ServiceResponse) => {
             if (response.Result.IsDisplayOnly) {
@@ -998,12 +999,12 @@ public CargoIdentifiersList: ObservableCollection;
             return;
         }
         
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             //this.declarationCargoSplitPMService.update(this.EntityPM).then((res: any) => {
             //    res.subscribe((myResponse: ServiceResponse) => {
             this.declarationCargoSplitPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -1047,7 +1048,7 @@ public CargoIdentifiersList: ObservableCollection;
                     }
                     /*
                 }, error => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var myErrors: string[] = [];
                     myErrors.push(error.message);
                     this.ValidationErrorsList = myErrors;
@@ -1063,7 +1064,7 @@ public CargoIdentifiersList: ObservableCollection;
                 //res.subscribe((myResponse: ServiceResponse) => {
             this.declarationCargoSplitPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -1110,7 +1111,7 @@ public CargoIdentifiersList: ObservableCollection;
                 }
                 /*
             }, error => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var myErrors: string[] = [];
                     myErrors.push(error.message);
                     this.ValidationErrorsList = myErrors;

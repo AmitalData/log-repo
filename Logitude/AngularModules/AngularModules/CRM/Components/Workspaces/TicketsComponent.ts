@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, AfterViewInit, Output, EventEmitter} from '@angular/core';
 import {TicketPMService} from '../../Services/StandardPMs/TicketPMService';
 import {TicketListService} from '../../Services/StandardLists/TicketListService';
@@ -47,14 +47,14 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
     public OpenTicketsDueTimeExistance: boolean = false;
     public OpenTicketsDueTimeId: string;
     public NewOpenTicketsDueTime: any;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.InitializeIds();
 
     }
     InitializeIds() {
-        this.OpenTicketsDueTimeId = "OpenTicketsDueTimeId_" + SessionLocator.CurrentSession.GetNewId("OpenTicketsDueTimeId");
+        this.OpenTicketsDueTimeId = "OpenTicketsDueTimeId_" + this.CurrentSession.GetNewId("OpenTicketsDueTimeId");
     }
     OnOpenTicketsClick(e) {        
         var flag = false;
@@ -112,12 +112,12 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Tickets";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });        
     }
     public OpenTicketsClick() {
@@ -360,12 +360,12 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
     }
@@ -392,7 +392,7 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
 
     //Edit Ticket 
     EditTicket(entity: any) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Ticket', BackButtonLabel: 'Tickets' });
@@ -756,12 +756,12 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
             listArgs.BackButtonTitle = "Tickets";
             this._entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
                 this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe(response => {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run(listArgs);
                             cmpRef.instance.BackCompleted.subscribe(($event: any) => this.QueryBackClicked());
-                            SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                            this.CurrentSession.AddMenuReference(cmpRef);
                             SessionLocator.ClearExternalParams();
                         });
                 });

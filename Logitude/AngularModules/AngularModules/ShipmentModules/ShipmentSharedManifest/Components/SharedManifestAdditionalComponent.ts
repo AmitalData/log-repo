@@ -1,4 +1,4 @@
-﻿
+
 
 declare var window: any;
 import { Component, OnInit, ViewChildren, QueryList} from '@angular/core';
@@ -231,7 +231,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, public _agentSharedManifestPMService: AgentSharedManifestPMService, public entityPMService:EntityPMService) {
         super();
         this.myPackageTypeService = new PackageTypeListService();
@@ -1403,7 +1403,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
         if (this.ManifestSL && this.CurrentEntity) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
             this.RunComponent();
             this.FullShipmentProperites();
@@ -2831,7 +2831,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
     CreateButtonClicked() {
         this.OnCreate();
-        // SessionLocator.CurrentSession.CloseCurrentWindow();
+        // this.CurrentSession.CloseCurrentWindow();
     }
 
     //-------------------------------------------------------------------------------
@@ -3225,7 +3225,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
     OnCreate() {
 
         this.SetDataOnFinish();
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicator("Creating...");
         var validator = new ShipmentValidator();
         this.ValidationErrorsList = validator.Validate(this.EntityPM);
 
@@ -3340,7 +3340,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
         if (this.ValidationErrorsList.length != 0) {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             return;
         }
 
@@ -3523,7 +3523,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
          
 
                 this._agentSharedManifestPMService.update(this.CurrentEntity).subscribe(response => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                   
                     if (!response.HasError) {
                         
@@ -3533,7 +3533,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                             ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", "Accept Manifests");
                         }
 
-                        SessionLocator.CurrentSession.CurrentWindow.Close(shipResponse.Result.Id);
+                        this.CurrentSession.CurrentWindow.Close(shipResponse.Result.Id);
                         if (!this.HouseEntity) {
                             var messageWindow: MessageWindow = new MessageWindow();
                             messageWindow.Title = "Shipment Creation";
@@ -3543,12 +3543,12 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                     }
                     else {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (shipResponse.ErrorsArray && shipResponse.ErrorsArray.length > 0) {
                     shipResponse.ErrorsArray.forEach((item) => {
                         this.ValidationErrorsList.push(item);
@@ -4102,7 +4102,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
         if (this.IsLoadedCarrierTranslation && this.IsLoadedIncotermTranslation && this.IsLoadedShipperTranslation && this.IsLoadedConsigneeTranslation && this.IsLoadedShiperDefaultValues && this.IsLoadedConsigneeDefaultValues && this.IsLoadedTransshipment1CarrierTranslation && this.IsLoadedTransshipment2CarrierTranslation && this.IsLoadedTransshipment3CarrierTranslation && this.IsLoadedMainCarriageVesselTranslation && this.IsLoadedTransshipment1VesselTranslation && this.IsLoadedTransshipment2VesselTranslation && this.IsLoadedTransshipment3VesselTranslation && this.IsLoadedMainCarriageInterlineTranslation && this.IsLoadedNotify1IdTranslation && this.IsLoadedNotify1DefaultValuesTranslation && this.IsLoadedPortsTranslation && this.IsLoadedPackageTranslation && this.IsLoadedMoveTypeTranslation && this.IsLoadedValueOfGoodsCurrencyTranslation && this.IsLoadedFromPickUpTranslation && this.IsLoadedToPickUpTranslation && this.IsLoadedFromDeliveryTranslation && this.IsLoadedToDeliveryTranslation) {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             if ((!AppTool.IsNullOrEmpty(this.IncotermId) || this.IsHideIncoterm) && (!AppTool.IsNullOrEmpty(this.MoveTypeId) || this.IsHideMoveType) && (!AppTool.IsNullOrEmpty(this.ValueOfGoodsCurrencyId) || this.IsHideValueOfGoodsCurrency)) {
                 this.HideGeneralDetailsArea = true;

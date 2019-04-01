@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -7,12 +7,13 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 })
 
 export class PurchaseStockComponent   {
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     PurchaseNewStock() {
