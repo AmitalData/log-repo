@@ -775,7 +775,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 this.SelectedTabCode = 'REQ';
             }
             else if (this.IsRequestedSelected && this.SelectedShipment.IsDigitalSignRequired == true) {
-                this.SelectedTabCode = 'SREQ';
+                this.SelectedTabCode = 'SREQ'; 
             } 
             else {
                 this.SelectedTabCode = 'CAT';

@@ -528,13 +528,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (view.Code == '[Full Date]') {
                 view.ParentDataTypeCode = "DateTime";
                 view.DataTypeCode = "DateTime";
-                this.SelectedItem.HasTree = true;
+                view.HasTree = true;
             }
             else {
                 view.ParentDataTypeCode = "LookUp";
             }
-            if (this.SelectedItem.Name == 'Full Date') {
-                this.SelectedItem.HasTree = false;
+            if (view.Name == 'Full Date') {
+                view.HasTree = false;
             }
             if (item.BaseDWObjectField.DataTypeCode == "LookUp" || item.BaseDWObjectField.DataTypeCode == "Dimension") {
                 view.ParentDimTabelName = item.BaseDWObjectField.DimensionTableCode;
@@ -1717,10 +1717,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
         });
     }
+    @Output() ShowSampleDateCommand = new EventEmitter();
 
     onTextChange(value) {
         this.TextValue = value;
-
+        this.ShowSampleDateCommand.emit(this);
     }
 
     AndOrOpsChanged(value) {
