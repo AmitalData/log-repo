@@ -9,43 +9,49 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { InvoiceStockInputArgs } from '../../../Invoice/Args';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './NewARInvoiceStockComponent.html',
+    templateUrl: './ARInvoiceStockInputTemplate.html',
 })
 
-export class NewARInvoiceStockComponent extends BaseComponent {
-    public DataContext: NewARInvoiceStockComponent = this;
+export class ARInvoiceStockInputTemplate extends BaseComponent {
+    public DataContext: ARInvoiceStockInputTemplate = this;
     public ObjectTableName: string = "ARInvoiceStock";
     public ValidationErrorsList: string[] = [];
     public EntityPM: ARInvoiceStockPM;
     private stockPMService: ARInvoiceStockPMService;
     public ItemsSource: ARInvoiceStockLinePM[] = [];
+    public ItemsCount: number;
+    public IsEditMode: boolean = false;
     constructor() {
         super();
-        
+
         this.stockPMService = new ARInvoiceStockPMService();
     }
 
-    public IsNew: boolean;
-    SetWindowArgs(args: any) {
+    public InitTemplate(args: InvoiceStockInputArgs) {
         if (args != null) {
-            this.IsNew = args['IsNew'];
-            this.EntityPM = args['EntityPM'];
-
-            if (this.IsNew) {
-                this.EntityPM = this.stockPMService.GetNewEntityPM();
-            }
-
-            this.SetUIProperties();
+            this.EntityPM = args.Stock;            
+            this.IsEditMode = args.IsEditMode;
         }
 
-        this.Clone();
+        this.InitializeData();
     }
 
-    private SetUIProperties() {
-        
+    public IsNew: boolean;
+    SetWindowArgs(args: InvoiceStockInputArgs) {
+        if (args != null) {
+            this.EntityPM = args.Stock;
+            this.IsEditMode = args.IsEditMode;
+        }
+
+        this.InitializeData();
+    }
+
+    InitializeData() {
+       
     }
 
     get Name() { return this.EntityPM.Name; }
@@ -82,7 +88,7 @@ export class NewARInvoiceStockComponent extends BaseComponent {
             this.EntityPM.Notes = newValue;
         }
     }
-        
+
     public SelectedItem: ARInvoiceStockLinePM = null;
 
     get IsRemoveEnabled() {
@@ -102,7 +108,7 @@ export class NewARInvoiceStockComponent extends BaseComponent {
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewArInvoiceStockLinesComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
-                
+
             }
         });
     }
@@ -144,7 +150,7 @@ export class NewARInvoiceStockComponent extends BaseComponent {
 
             if (this.IsNew) {
                 SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-                
+
                 this.stockPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
                     SessionLocator.CurrentSession.StopBusyIndicator();

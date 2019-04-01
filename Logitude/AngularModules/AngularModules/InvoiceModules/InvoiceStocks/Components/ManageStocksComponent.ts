@@ -57,7 +57,7 @@ export class ManageStocksComponent {
                 logWindow.Title = "Edit Invoice Stock";
                 logWindow.Height = 600;
                 logWindow.WindowArgs = { IsNew: false, EntityPM: myResponse.Result };
-                logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewARInvoiceStockComponent');
+                logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewEntity/NewARInvoiceStockComponent');
                 logWindow.WindowClosed.subscribe(s => {
                     if (s == "OK") {
                         this.LoadData();
@@ -74,7 +74,7 @@ export class ManageStocksComponent {
         logWindow.Title = "New Invoice Stock";
         logWindow.Height = 600;
         logWindow.WindowArgs = { IsNew: true, EntityPM: null };
-        logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewARInvoiceStockComponent');
+        logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewEntity/NewARInvoiceStockComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
                 this.LoadData();
