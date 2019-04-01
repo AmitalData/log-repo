@@ -5,7 +5,6 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ARInvoiceStockListService } from '../../../Invoice/Services/StandardLists/ARInvoiceStockListService';
-import { ARInvoiceStockPMService } from '../../../Invoice/Services/StandardPMs/ARInvoiceStockPMService';
 
 @Component({
     moduleId: module.id,
@@ -48,24 +47,15 @@ export class ManageStocksComponent {
     }
 
     EditStock(item: ARInvoiceStockList) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Edit ";
+        logWindow.IsFillScreen = true;
+        logWindow.ShowEditComponent(item.Id, "ARInvoiceStock");
 
-        var stockPMService: ARInvoiceStockPMService = new ARInvoiceStockPMService();
-        stockPMService.get(item.Id).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var logWindow = new LogitudeWindow();
-                logWindow.Title = "Edit Invoice Stock";
-                logWindow.Height = 600;
-                logWindow.WindowArgs = { IsNew: false, EntityPM: myResponse.Result };
-                logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewEntity/NewARInvoiceStockComponent');
-                logWindow.WindowClosed.subscribe(s => {
-                    if (s == "OK") {
-                        this.LoadData();
-                    }
-                });
-            }
-
-            SessionLocator.CurrentSession.StopBusyIndicator();
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                this.LoadData();
+            });
         });       
     }
 

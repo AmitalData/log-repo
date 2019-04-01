@@ -3,7 +3,7 @@
         <td>
             <table>
                 <tr>
-                    <td style="width: 350px;">
+                    <td style="width: 370px;">
                         <table>
                             <tr class="FormFieldRow">
                                 <td style="width: 100px;">
@@ -55,33 +55,40 @@
                         <div></div>
                     </td>
 
-                    <td>
+                    <td style="width: 350px;">
                         <table>
-                            <tr class="FormFieldRow" style="height: 85px;">
+                            <tr style="height: 85px;">
                                 <td style="width: 90px; vertical-align: top; padding-top: 5px;">
                                     <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td style="height: 85px; vertical-align: top;">
+                                <td style="vertical-align: top;">
                                     <div style="height: 100%;">
                                         <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                     </div>
                                 </td>
                             </tr>
 
-                            <tr class="FormFieldRow" style="height: 85px;">
+                            <tr style="height:5px;">
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr style="height: 85px;">
                                 <td style="width: 90px; vertical-align: top; padding-top: 5px;">
                                     <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td style="height: 85px; vertical-align: top;">
+                                <td style="vertical-align: top;">
                                     <div style="height: 100%;">
                                         <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                     </div>
                                 </td>
                             </tr>
-
                         </table>
+                    </td>
+
+                    <td>
+                        <div></div>
                     </td>
                 </tr>
             </table>
@@ -94,7 +101,7 @@
         </td>
     </tr>
 
-    <tr style="height:1px;">
+    <tr style="height:32px;">
         <td>
             <table>
                 <tr>

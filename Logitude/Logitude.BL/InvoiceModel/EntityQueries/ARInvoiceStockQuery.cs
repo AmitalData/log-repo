@@ -77,6 +77,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         Remaining = a.Remaining,
                         Amount = a.Amount,
                         Notes = a.Notes,
+                        StatusName = a.Status == null ? null : a.Status.Name,
                     }).FirstOrDefault();
 
             if (entityPM != null)
