@@ -1,0 +1,135 @@
+
+<div class="TabHolder">
+    <table *ngIf="IsVisibile">
+        
+        <tr style="height:1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="NewStockClicked()">New Stock</button>
+                        </td>
+                       
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoiceStock.F.Name' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'ARInvoiceStock.F.Description' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 50px; min-width: 50px; max-width: 50px;">{{'ARInvoiceStock.F.StatusName' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 50px; min-width: 50px; max-width: 50px;">{{'ARInvoiceStock.F.Amount' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 70px; min-width: 70px; max-width: 70px;">{{'ARInvoiceStock.F.Remaining' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'ARInvoiceStock.F.StartDate' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'ARInvoiceStock.F.EndDate' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'ARInvoiceStock.F.Notes' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoiceStock.F.CreatedByUserName' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'ARInvoiceStock.F.CreateDate' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoiceStock.F.UpdatedByUserName' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'ARInvoiceStock.F.UpdateDate' | TextCodeTranslationPipe}}</td>
+                                <td class="LastChild"></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+
+                                <td class="GridViewCell TextTrimming" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    {{item.Name}}
+                                </td>
+
+                                <td class="GridViewCell TextTrimming" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                    {{item.Description}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                    {{item.StatusName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                    {{item.Amount}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                    {{item.Remaining}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                    {{item.StartDate | DateTimePipe:'D'}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                    {{item.EndDate | DateTimePipe:'D'}}
+                                </td>
+
+                                <td class="GridViewCell TextTrimming" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                    {{item.Notes}}
+                                </td>
+
+                                <td class="GridViewCell TextTrimming" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    {{item.CreatedByUserName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                    {{item.CreateDate | DateTimePipe:'D'}}
+                                </td>
+
+                                <td class="GridViewCell TextTrimming" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    {{item.UpdatedByUserName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                    {{item.UpdateDate | DateTimePipe:'D'}}
+                                </td>
+
+                                <td class="CellTools">
+                                    <span class="CellSeparator"></span>
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditStock(item)"></IconButton>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="13">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CloseClicked()">Close</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

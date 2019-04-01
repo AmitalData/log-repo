@@ -107,7 +107,8 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new ARInvoiceLineActionMap());
             modelBuilder.Configurations.Add(new ARPaymentTransferStatusMap());
             modelBuilder.Configurations.Add(new APPaymentTransferStatusMap());
-
+            modelBuilder.Configurations.Add(new ARInvoiceStockMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStockLineMap());
 
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
@@ -482,6 +483,9 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; set; }
 
         public IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus { get; set; }
+
+        public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
+        public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
 
         public void DetectChanges()
         {

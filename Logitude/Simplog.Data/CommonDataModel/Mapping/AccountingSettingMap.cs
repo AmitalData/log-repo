@@ -65,7 +65,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsAPPaymentsTransferEnabled).HasColumnName("IsAPPaymentsTransferEnabled");
             this.Property(t => t.EnableNegativeOffsetARPayments).HasColumnName("EnableNegativeOffsetARPayments");
             this.Property(t => t.EnableNegativeOffsetAPPayments).HasColumnName("EnableNegativeOffsetAPPayments");
-
+            this.Property(t => t.EnableInvoiceStocksManagement).HasColumnName("EnableInvoiceStocksManagement");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

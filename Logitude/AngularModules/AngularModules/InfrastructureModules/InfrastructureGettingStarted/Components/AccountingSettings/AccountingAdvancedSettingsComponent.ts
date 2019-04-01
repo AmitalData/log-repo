@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -16,11 +16,16 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
     public ObjectTableName: string = "AccountingSetting";
     public DataContext: any;
     public IsEnableMultiCurrencyARPaymentsVisible: boolean = false;
+    public IsEnableInvoiceStocksManagementVisible: boolean = false;
     constructor() {
         super();
 
         if (FeatureLocator.HasFeaturePermession("ARPayment", "EnableMultiCurrency")) {
             this.IsEnableMultiCurrencyARPaymentsVisible = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "ManageStocks")) {
+            this.IsEnableInvoiceStocksManagementVisible = true;
         }
     }
 
@@ -56,4 +61,3 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
     }
 }
 
-   

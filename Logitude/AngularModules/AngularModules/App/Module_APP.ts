@@ -66,7 +66,8 @@ import { AppComponent } from './AppComponent';
             { loadChildren: 'InvoiceModules/ARInvoice/ModuleARInvoice#ModuleARInvoice' },
             { loadChildren: 'InvoiceModules/ARPayment/ModuleARPayment#ModuleARPayment' },
             { loadChildren: 'InvoiceModules/Transfer/ModuleTransfer#ModuleTransfer' },
-            
+            { loadChildren: 'InvoiceModules/InvoiceStocks/ModuleInvoiceStocks#ModuleInvoiceStocks' },
+
             //Quote Modules
             { loadChildren: 'Quote/Module_QUOT#QuoteModule' },
             { loadChildren: 'QuoteModules/QuoteCharges/ModuleQuoteCharges#ModuleQuoteCharges' },

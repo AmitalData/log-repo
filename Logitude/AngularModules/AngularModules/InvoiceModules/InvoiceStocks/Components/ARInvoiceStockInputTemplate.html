@@ -1,0 +1,197 @@
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 350px;">
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [Text]="Name" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'StartDate'"
+                                                   [SelectedDateValue]="StartDate"
+                                                   [ObjectTableName]="ObjectTableName"
+                                                   [DataContext]="DataContext">
+                                    </LogDatePicker>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'EndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'EndDate'"
+                                                   [SelectedDateValue]="EndDate"
+                                                   [ObjectTableName]="ObjectTableName"
+                                                   [DataContext]="DataContext">
+                                    </LogDatePicker>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow" style="height: 85px;">
+                                <td style="width: 90px; vertical-align: top; padding-top: 5px;">
+                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="height: 85px; vertical-align: top;">
+                                    <div style="height: 100%;">
+                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" style="height: 85px;">
+                                <td style="width: 90px; vertical-align: top; padding-top: 5px;">
+                                    <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="height: 85px; vertical-align: top;">
+                                    <div style="height: 100%;">
+                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height:1px;">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <span class="Label">Available Amount:</span>
+                        <span class="Value" style="margin-left: 5px;">{{ItemsCount}}</span>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="AddStockLineClicked()">Add</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px;">
+                        <button class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveStockLineClicked()">Remove</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px;">
+                        <button class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveSeriesClicked()">Remove Series</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="SimpleGridView">
+                <div class="SimpleGridViewHeader">
+                    <table>
+                        <tr>
+                            <td style="width: 100px; min-width: 100px; max-width: 100px;">Invoice Number</td>
+                            <td style="width: 90px; min-width: 90px; max-width: 90px;">CreateDate</td>
+                            <td style="width: 100px; min-width: 100px; max-width: 100px;">Created by</td>
+                            <td style="width: 90px; min-width: 90px; max-width: 90px;">Last Action Date</td>
+                            <td style="width: 100px; min-width: 100px; max-width: 100px;">Last Action by</td>
+                            <td style="width: 100px; min-width: 100px; max-width: 100px;">Shipment Number</td>
+                            <td style="width: 70px; min-width: 70px; max-width: 70px;">Used</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="SimpleGridViewBody">
+                    <table>
+                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+
+                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                {{item.Number}}
+                            </td>
+
+                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                {{item.CreateDate | DateTimePipe:'D'}}
+                            </td>
+
+                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                {{item.CreatedByUserName}}
+                            </td>
+
+                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                {{item.UpdateDate | DateTimePipe:'D'}}
+                            </td>
+
+                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                {{item.UpdatedByUserName}}
+                            </td>
+
+                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                {{item.ShipmentNumber}}
+                            </td>
+
+                            <td class="GridViewCell" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                <div></div>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

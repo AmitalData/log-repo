@@ -764,5 +764,9 @@ namespace Simplog.Data.InvoiceModel.Mocks
         }
 
         public IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus => throw new NotImplementedException();
+
+        public IDbSet<ARInvoiceStock> ARInvoiceStocks => throw new NotImplementedException();
+
+        public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines => throw new NotImplementedException();
     }
 }

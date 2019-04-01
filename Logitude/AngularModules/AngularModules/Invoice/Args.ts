@@ -1,4 +1,4 @@
-﻿
+
 
 
 export class InvoiceTotalsClass {
@@ -17,4 +17,9 @@ export class InvoiceTotalsClass {
 export class SummaryItem {
     public Label: string = null;
     public Value: any = null;
+}
+
+export class InvoiceStockInputArgs {
+    public Stock: any;
+    public IsEditMode: boolean; 
 }
