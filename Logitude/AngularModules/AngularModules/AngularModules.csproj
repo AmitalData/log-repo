@@ -6170,6 +6170,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\TaxScreenComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelShipmentComponent.ts" />
+    <TypeScriptCompile Include="Shipment\Components\ListTemplates\TaskCellDisplayListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\MasterActionConfirmationComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitPartialPackageComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitShipmentComponent.ts" />
