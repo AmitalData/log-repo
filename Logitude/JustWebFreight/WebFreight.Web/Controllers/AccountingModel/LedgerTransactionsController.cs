@@ -463,8 +463,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 // concat two list
                 IEnumerable<LedgerTransactionPM> finalTransactionsList
                     = openedTransactions
-                        .Concat(reconciledTransactions)
-                        .OrderByDescending(d => d.IsReconciled).ThenByDescending(d=>d.PaymentReconciledAmount).ToList();
+                        .Concat(reconciledTransactions);
+
+
+                finalTransactionsList
+                    = finalTransactionsList
+                        .OrderByDescending(d => d.IsReconciled).ThenByDescending(d => d.PaymentReconciledAmount).ToList();
 
 
                 ServiceResponse response = new ServiceResponse();

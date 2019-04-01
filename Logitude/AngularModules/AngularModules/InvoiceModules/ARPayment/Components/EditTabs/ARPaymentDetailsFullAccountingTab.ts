@@ -201,6 +201,14 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                 // var line = transactions;
                                 tempItemSource.push(line);
                             }
+
+                            tempItemSource = tempItemSource.sort((a: TransactionLineModel, b: TransactionLineModel) =>
+                            {
+                                if(a.IsReconciled == true)
+                                    return -1;
+                                return (a.ReconciledAmount === b.ReconciledAmount) ? 0 : (a.ReconciledAmount > b.ReconciledAmount) ? -1 : 1
+                            });
+
                             this.TransactionsList.InsertCollection(tempItemSource);
                         }
                     }
