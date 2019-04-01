@@ -1696,7 +1696,7 @@ export class TextStore {
     static partiallyOpened: string = TextCodeTranslator.Translate('Accounting.O.ARP.partiallyOpened');
 
     static ErrorsInSelectedLines: string = TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines');
-    static AmountMustBSmaller2OpenAmount: string = TextCodeTranslator.Translate('Reconciliations.O.AmountMustBSmaller2OpenAmount');
+    static invoiceAmount2reconcileMSG: string = TextCodeTranslator.Translate('Accounting.O.ARP.invoiceAmount2reconcileMSG');
 
 
 }
@@ -1817,7 +1817,7 @@ export class TransactionLineModel extends BaseComponent {
 
             //validate line
             if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
-                this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, TextStore.AmountMustBSmaller2OpenAmount);
+                this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, TextStore.invoiceAmount2reconcileMSG);
                 this.isLineValid = true;
                 this.parent.SetEntityValidity();
 
