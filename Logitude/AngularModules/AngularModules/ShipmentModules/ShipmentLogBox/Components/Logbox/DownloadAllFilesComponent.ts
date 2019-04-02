@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {Http} from '@angular/http';
 import {WebFreightDomainService} from '../../../../Infrastructure/Services/WebFreightDomainService';
@@ -21,6 +21,7 @@ export class DownloadAllFilesComponent {
     btnSaveToFileVisibile = false;
     Filters: ApiQueryFilters;
     url: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private http: Http) {
         ServiceHelper.Http = http;
         //serviceArgs.http = http;
@@ -54,7 +55,7 @@ export class DownloadAllFilesComponent {
         var token = ServiceHelper.GetLDocumentDownloadToken();
         var url = ServiceHelper.GetLogitudeURL() + "WebPages/DownloadFileName.aspx?id=" + fileName + "&tempId=" + token;
         window.open(url);
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveBtnCLicked() {
@@ -88,7 +89,7 @@ export class DownloadAllFilesComponent {
         //    exportExcelService.Abort();
         //    exportExcelService.ExportQueryToExcelCompleted -= new EventHandler<ExportQueryToExcelCompletedEventArgs>(exportExcelService_ExportQueryToExcelCompleted);
         //}
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
 }

@@ -18,7 +18,8 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Injectable()
 export class GITITEMCacheService {
-  private static _instance: GITITEMCacheService;
+    private static _instance: GITITEMCacheService;
+    private CurrentSession = SessionLocator.SelectedSession;
   private constructor() {
     this._ItemCode_LocalCache = [];
       this.GetCountryPURForItems();
@@ -92,11 +93,11 @@ export class GITITEMCacheService {
     }
 
   private GetCountryPURForItems() {
-    //SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+    //this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
     var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_CTRY", "NON", "NON", SessionLocator.Tenant)
       .subscribe(response => {
-        //SessionLocator.CurrentSession.StopBusyIndicator();
+        //this.CurrentSession.StopBusyIndicator();
         if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
           this.IsCountryPURForItems = true;
         }

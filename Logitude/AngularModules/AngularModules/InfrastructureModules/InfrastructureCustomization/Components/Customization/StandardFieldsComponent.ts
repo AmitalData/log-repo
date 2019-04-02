@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {GeneralDomainService, FieldsTranslations} from '../../../../Infrastructure/Services/GeneralDomainService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -22,7 +22,7 @@ declare var window: any;
 export class StandardFieldsComponent {
     private myService: GeneralDomainService;
     private ObjecttableId: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         this.myService = new GeneralDomainService();
     }
@@ -93,7 +93,7 @@ export class StandardFieldsComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 
@@ -104,7 +104,7 @@ export class TabItem {
     public FieldsItemsSource: StandardFieldItem[];
     private myService: GeneralDomainService;
     public EntityTranslations: FieldsTranslations[];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(objectTablePM: ObjectTablePM, public fatherComponent: StandardFieldsComponent) {
         this.ObjectTablePM = objectTablePM;
         this.ObjectTableId = objectTablePM.Id;
@@ -119,7 +119,7 @@ export class TabItem {
 
     private loadedFields: ObjectFieldPM[];
     public LoadStandardFields() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.myService.GetStandardFieldsByTableId(this.ObjectTableId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
@@ -159,7 +159,7 @@ export class TabItem {
             });
         }
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     public EditField(editedItem: StandardFieldItem) {
@@ -178,7 +178,7 @@ export class StandardFieldItem {
     public shortLabelObject: FieldsTranslations = new FieldsTranslations();
     public listLabelObject: FieldsTranslations = new FieldsTranslations();
     public helpLabelObject: FieldsTranslations = new FieldsTranslations();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(field: ObjectFieldPM, public loadedFields: ObjectFieldPM[], public fieldsTranslations: FieldsTranslations[]) {
         this.ObjectField = field;
         this.ObjectFieldId = field.Id;

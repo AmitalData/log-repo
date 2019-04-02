@@ -26,11 +26,11 @@ export class FilterField extends BaseComponent {
     public LOVFiltersEnabled: boolean = false;
     public DateFiltersEnabled: boolean = false;
     public PickFiltersEnabled: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(objectField: any, queryId: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
-        this.SessionIdx = SessionLocator.CurrentSession.SessionIndex;
-        this.ControlId = "CheckBox_" + SessionLocator.CurrentSession.GetNewId("CheckBox");
+        this.SessionIdx = this.CurrentSession.SessionIndex;
+        this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
         this.QueryId = queryId;
         this.Filterchangeevent = filterchangeevent;
         this.ParentClass = parentClass;

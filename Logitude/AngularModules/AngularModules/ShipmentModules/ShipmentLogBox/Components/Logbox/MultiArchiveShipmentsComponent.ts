@@ -1,4 +1,4 @@
-﻿import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
+import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -43,6 +43,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     SelectedRecordsCount: number = 0;
     AllRecordsCount: number = 0;
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
 
@@ -144,7 +145,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             }
 
         }
-        //SessionLocator.CurrentSession.SessionEvent.subscribe(($event: any) => {
+        //this.CurrentSession.SessionEvent.subscribe(($event: any) => {
         //    if ($event.Name == "GetSourceEntity") {
         //        this.GetSourceEntity($event.EntityId);
         //    }
@@ -372,11 +373,11 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     GetSourceEntity(Id) {
-        SessionLocator.CurrentSession.FireEvent({ Name: 'SourceEntity', Entity: this.SourceEntity, EntityId: Id });
+        this.CurrentSession.FireEvent({ Name: 'SourceEntity', Entity: this.SourceEntity, EntityId: Id });
     }
 
     private isAllRecordSelected: boolean;
@@ -384,7 +385,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     public set IsAllRecordSelected(value: boolean) {
         this.isAllRecordSelected = value;
         if (value == true) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("loading ..");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("loading ..");
             this._ShipmentPMService.GetTop100ShipmentIds(this.filterAgrs).subscribe(myResult => {
                 if (!myResult.HasError) {
                     this.SelectedRecordsCount = myResult.Result.length;
@@ -396,7 +397,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
                 else {
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             });
            
         }
@@ -454,9 +455,9 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             //if (this.IsAllRecordSelected == true) {
             //    this._ShipmentPMService.ArchiveAllShipments(this.filterAgrs).subscribe(myResult => {
             //        if (!myResult.HasError) {
-            //            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-            //            SessionLocator.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
-            //            SessionLocator.CurrentSession.CurrentWindow.Close("");
+            //            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            //            this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
+            //            this.CurrentSession.CurrentWindow.Close("");
             //        }
             //        else {
             //            this.ValidationErrorsList = myResult.ErrorsArray;
@@ -468,8 +469,8 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
                     if (!myResult.HasError) {
                         this.StopBusyIndicator();
                         this.LoadImporterShipments();
-                        SessionLocator.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
-                        //SessionLocator.CurrentSession.CloseCurrentWindow();//.CurrentWindow.Close("");
+                        this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
+                        //this.CurrentSession.CloseCurrentWindow();//.CurrentWindow.Close("");
                     }
                     else {
                         this.ValidationErrorsList = myResult.ErrorsArray;

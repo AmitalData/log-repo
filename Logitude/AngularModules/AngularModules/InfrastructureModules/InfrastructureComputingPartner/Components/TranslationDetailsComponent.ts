@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -22,7 +22,7 @@ import {TranslationItem} from '../../../Common/Services/CommonDomainService';
 export class TranslationDetailsComponent   {
 
     private EntityPM: TranslationItem;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -74,7 +74,7 @@ export class TranslationDetailsComponent   {
     }
     
     CloseButtonClick() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

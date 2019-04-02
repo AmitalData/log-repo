@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -18,6 +18,7 @@ export class AssignToShipperComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public DataContext: AssignToShipperComponent = this;
     private StackDomainService: AWBStackDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.StackDomainService = new AWBStackDomainService();
@@ -87,12 +88,12 @@ export class AssignToShipperComponent extends BaseComponent {
     }
 
     CancelClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.Validate();
 
@@ -108,20 +109,20 @@ export class AssignToShipperComponent extends BaseComponent {
         }
 
         if (this.ValidationErrorsList.length > 0) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
 
         else {
 
             this.StackDomainService.AssignStockSeriesToCustomer(+this.From, +this.To, this.Entity.AirlineId, this.ShipperId).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
 
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
             });
         }

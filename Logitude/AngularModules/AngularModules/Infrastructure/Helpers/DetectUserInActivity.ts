@@ -17,6 +17,7 @@ export class DetectUserInActivity {
     timeoutId: any;
     IsSignout: boolean = false;
     IsTokenExpiration: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(isTokenExpiration: boolean = false) {
         this.IsTokenExpiration = isTokenExpiration;
     }
@@ -88,7 +89,7 @@ export class DetectUserInActivity {
                 });
             }
         }
-        else if (SessionLocator.CurrentSession != null && SessionLocator.CurrentSession.SessionLocation != null) {
+        else if (this.CurrentSession != null && this.CurrentSession.SessionLocation != null) {
             viewModeil.ShowMessage(viewModeil);
             window.clearTimeout(viewModeil.timeoutId)
             viewModeil.StartTimer(viewModeil, viewModeil.WarningTimeInMiliseconds);

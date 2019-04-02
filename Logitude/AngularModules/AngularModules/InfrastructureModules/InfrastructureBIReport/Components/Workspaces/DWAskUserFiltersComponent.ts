@@ -37,7 +37,7 @@ export class DWAskUserFiltersComponent implements OnInit {
     IsDateFilter: boolean = false;
     IsFirstTime: boolean = false;
     public ComputeFiltersCommand: EventEmitter<any>;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
@@ -89,7 +89,7 @@ export class DWAskUserFiltersComponent implements OnInit {
             if (this.count >= 10000) {
                 msg = "Loading 10,000 Records";
             } 
-            SessionLocator.CurrentSession.StartBusyIndicator(msg);
+            this.CurrentSession.StartBusyIndicator(msg);
             this.GetRowDataRecursive();
         }
         else {
@@ -114,7 +114,7 @@ export class DWAskUserFiltersComponent implements OnInit {
             this.GetRowData(QueryData);
         }
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.RunReportComplete.emit({ rowData: this.rowData, Count: this.count});
         }
     }
@@ -125,7 +125,7 @@ export class DWAskUserFiltersComponent implements OnInit {
                 this.PageIndex = this.PageIndex + 10000;
                 var dataSize = myResult.Result.SQLDataResult.length;
                 if (dataSize == 0) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.RunReportComplete.emit({ rowData: this.rowData , Count: this.count});
                 }
                 else {
@@ -134,11 +134,11 @@ export class DWAskUserFiltersComponent implements OnInit {
                         this.PageIndex = this.PageIndex + 1;
                         this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
                             if (!myResult.HasError) {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count});// more than 50000
                             }
                             else {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                             }
                         });
                     }
@@ -148,7 +148,7 @@ export class DWAskUserFiltersComponent implements OnInit {
                 }
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

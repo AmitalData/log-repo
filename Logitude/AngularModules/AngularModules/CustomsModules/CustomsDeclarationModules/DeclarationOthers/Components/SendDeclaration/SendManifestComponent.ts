@@ -83,7 +83,7 @@ export class SendManifestService {
 
     SaveCompletedEvent: any;
     LoadCompletedEvent: any;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration").subscribe(response => {
             this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
@@ -108,19 +108,19 @@ export class SendManifestService {
     }
 
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+        if (this.CurrentSession.CurrentEditComponent) {
             if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             if (!this.LoadCompletedEvent) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
@@ -130,13 +130,13 @@ export class SendManifestService {
     reloadEvent: any;
 
     OnCustomSendOptionsButtonClick(event) {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this.RequestVIA = event.RequestVIA;
         this.Option = event.Option;
         this.ForcePersonalSign = event.ForcePersonalSign;
         Validator.TryValidateObject(this.EntityPM, "Customs.Declaration", this.ValidationErrors);
         if (this.ValidationErrors.length == 0) {
-            // SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges("");
+            // this.CurrentSession.CurrentEditComponent.SaveChanges("");
 
             var firstInvoice: SupplierInvoicePM = this.EntityPM.SupplierInvoices.filter(d => d.SequenceNumeric == 1)[0];
 
@@ -164,16 +164,16 @@ export class SendManifestService {
 
                 else {
                     this.EntityPM = myResponse.Result;
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    this.reloadEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                         this.reloadEvent.unsubscribe();
                         if (isLoadSuccess) {
-                            this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                            this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                             let asREUSEService = true;
                             if (asREUSEService) {
                                 this.PostSendDeclarationChecksAndPrecalculationsThenCheckRequiredFields();
                             } else {
-                                SessionLocator.CurrentSession.StartBusyIndicator("");
+                                this.CurrentSession.StartBusyIndicator("");
                                 this.DeclarationService.PostSendDeclarationChecksAndPrecalculations(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
                                     if (!response.Result.HasError) {
                                         this.CheckRequiredFields();
@@ -201,7 +201,7 @@ export class SendManifestService {
         }
     }
     PostSendDeclarationChecksAndPrecalculationsThenCheckRequiredFields() {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this.DeclarationService.PostSendDeclarationChecksAndPrecalculations(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             if (!response.Result.HasError) {
                 this.CheckRequiredFields();
@@ -270,7 +270,7 @@ export class SendManifestService {
         //let myShowProgressBarParams = new ShowProgressBarParams();
         //myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
         //    (response: any) => {
-        //        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        //        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
         //            .then(cmpRef => {
         //                cmpRef.instance.ComponentRef = cmpRef;
         //                cmpRef.instance.Run({
@@ -314,18 +314,18 @@ export class SendManifestService {
                 if (this.CourierWorksheetmode) {
                 } else {
                     if (this.responseData && this.responseData.ContinueProcessInBackground) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
                     }
                     else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
-                        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
                     }
-                    var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+                    var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
                     myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
-                    SessionLocator.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
-                    SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTab();
-                    var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
+                    this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                    var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
                     myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 }
             }
             ).catch((err) => {
@@ -335,12 +335,12 @@ export class SendManifestService {
             });
 
         this.DeclarationService.PostSendManifest(sendParams).subscribe((response: ServiceResponse) => {
-            //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             this.StopMyBusyIndicator();
 
         });
 
-        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
         //    .then(cmpRef => {
         //        cmpRef.instance.ComponentRef = cmpRef;
         //        cmpRef.instance.Run({
@@ -418,17 +418,17 @@ export class SendManifestService {
 
     StopMyBusyIndicator() {
         if (this.CourierWorksheetmode) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         } else {
-            SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+            this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
         }
     }
     StartMyBusyIndicator(mess) {
         ///this.StartMyBusyIndicator("");
         if (this.CourierWorksheetmode) {
-            SessionLocator.CurrentSession.StartBusyIndicator(mess);
+            this.CurrentSession.StartBusyIndicator(mess);
         } else {
-            SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator(mess);
+            this.CurrentSession.CurrentEditComponent.StartBusyIndicator(mess);
         }
     }
 

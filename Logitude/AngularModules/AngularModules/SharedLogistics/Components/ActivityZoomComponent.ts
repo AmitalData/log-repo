@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -32,8 +32,9 @@ export class ActivityZoomComponent implements OnInit {
     PartnerTypeId: string;
     DateParameter: string;
     DataContext: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedLogisticsService: SharedLogisticsService) {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
     }
 
     ngOnInit(
@@ -68,7 +69,7 @@ export class ActivityZoomComponent implements OnInit {
         {
             this.ComboListSelectedItem = item;
             this.DateParameter = this.ComboListSelectedItem.Code; 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
             this.ActivityZoomSelectedItemViewModel = null;
             this.GetZoomDetails();
 
@@ -88,7 +89,7 @@ export class ActivityZoomComponent implements OnInit {
                     myResult.forEach((item) => {
                         this.ActivityList.push(new ActivityZoomItemViewModel(item));
         });
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (this.ActivityList && this.ActivityList.length > 0) {
 
                         this.GetActivityDetailsList(this.ActivityList[0]);
@@ -98,7 +99,7 @@ export class ActivityZoomComponent implements OnInit {
                 }
 
             }
-            else SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            else this.CurrentSession.CurrentWindow.StopBusyIndicator();
         });
 
     }
@@ -114,7 +115,7 @@ export class ActivityZoomComponent implements OnInit {
        
             if (this.ActivityZoomSelectedItemViewModel) {
                 this.ActivityDetailsList = [];
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
                 this._sharedLogisticsService.getCardLogActivityDetailsList(item.LogDetails.CardId, item.LogDetails.ContactId, this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
 
@@ -128,7 +129,7 @@ export class ActivityZoomComponent implements OnInit {
                         }
 
                     }
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 });
             }
@@ -138,7 +139,7 @@ export class ActivityZoomComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

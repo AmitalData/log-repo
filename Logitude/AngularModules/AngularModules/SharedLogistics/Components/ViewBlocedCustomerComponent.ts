@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -35,8 +35,9 @@ export class ViewBlocedCustomerComponent implements OnInit {
     LastInteractionDate: Date;
     NoProductsVisibility: boolean;
     StatusCodeColor: string = "#E483FB";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _customerProductExtendedService: CustomerProductExtendedService) {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
     }
 
     ngOnInit(
@@ -90,7 +91,7 @@ export class ViewBlocedCustomerComponent implements OnInit {
     
         this._customerProductExtendedService.GetCustomerProducts(this.entityPM.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
@@ -112,7 +113,7 @@ export class ViewBlocedCustomerComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

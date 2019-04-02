@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -17,6 +17,7 @@ export class TaskSchedulerComponent  {
     public HistoryItemsSource: TaskSchedulerHistoryList[] = []; 
     private loadedDataList: TasksSchedulerPM[] = [];
     private infraDomainService: InfrastructureDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.infraDomainService = new InfrastructureDomainService();
 
@@ -24,7 +25,7 @@ export class TaskSchedulerComponent  {
     }
     
     public GetTasksSchedular() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.IsHistoryGridVsisible = false;
 
@@ -51,7 +52,7 @@ export class TaskSchedulerComponent  {
             this.ItemsSource.push(new TaskSchedulerItemClass(item, this));
         });
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     public IsHistoryGridVsisible = false;
@@ -69,7 +70,7 @@ export class TaskSchedulerComponent  {
     }
     
     private LoadHistoryList() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.infraDomainService.GetTaskSchedulerHistory(this.SelectedRow.Id).subscribe(myResult => {
             if (myResult == null) {
@@ -81,7 +82,7 @@ export class TaskSchedulerComponent  {
                 if (!myResponse.HasError) {
                     this.HistoryItemsSource = myResponse.Result;
                     this.IsHistoryGridVsisible = true;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
@@ -121,7 +122,7 @@ export class TaskSchedulerComponent  {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

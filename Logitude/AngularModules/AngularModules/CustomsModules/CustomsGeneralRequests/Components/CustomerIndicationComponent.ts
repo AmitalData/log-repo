@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -21,7 +21,7 @@ export class CustomerIndicationComponent extends BaseComponent {
 
     public CustomerIndicationList: ObservableCollection;
     private isControlEnabled: boolean = true;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
 
@@ -36,7 +36,7 @@ export class CustomerIndicationComponent extends BaseComponent {
     public set IsControlEnabled(newValue: boolean) { this.isControlEnabled = newValue; }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     //#endregion

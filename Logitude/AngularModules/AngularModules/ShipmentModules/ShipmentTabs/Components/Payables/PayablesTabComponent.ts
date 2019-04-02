@@ -54,6 +54,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public IsResourcesReady: boolean = false;  
     public myDomainService: ShipmentDomainService;
     public myUserListService: UserListService = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.OriginShipment = entityArgs.OriginEntity;
@@ -78,7 +79,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "PayablesGenerated") {
                     this.BuildItemsSource();
                     this.ComputeShipmentFields();
@@ -644,7 +645,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                             if (!myResponse.HasError) {
                                 this.OriginShipment = myResponse.Result;
                                 this.entityArgs.OriginEntity = myResponse.Result;
-                                SessionLocator.CurrentSession.FireEvent("OriginShipmentLoaded");
+                                this.CurrentSession.FireEvent("OriginShipmentLoaded");
 
                                 var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
                                 Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
@@ -812,7 +813,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         if (this.SavingRequestParam) {
             var entityId = this.SavingRequestParam;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
@@ -842,7 +843,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         if (this.SavingRequestParam) {
             var entityId = this.SavingRequestParam;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'Quote', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
@@ -869,7 +870,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityPM: comp.EntityPM, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TicketPM} from '../../EntityPMs/TicketPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -18,7 +18,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 export class TicketShortTitleComponent {
     public EntityPM: TicketPM;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.Listen();
@@ -30,21 +30,21 @@ export class TicketShortTitleComponent {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
             if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildComponent();
                     }
                 });
             }
 
             if (!this.LoadCompletedEvent) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
@@ -129,7 +129,7 @@ export class TicketShortTitleComponent {
             }
 
             //this._entityResourceService.getEntityResourceByTableName(objectTable, 0).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.EntityPM.CompanyId, ObjectTableName: objectTable, BackButtonLabel: "Ticket" });

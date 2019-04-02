@@ -3,10 +3,9 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TMProjectListService} from '../../../Services/StandardLists/TMProjectListService';
-import {TimeManagementDomainService, TimeManagementAPIHelper, TimeSheetItem, TimeSheetItemDay} from '../../../Services/TimeManagementDomainService';
+import { TimeManagementDomainService, TimeManagementAPIHelper } from '../../../Services/TimeManagementDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
-import {GroupByPipe} from '../../../../Infrastructure/Pipes/GroupByPipe';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
@@ -30,6 +29,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
     public HasChanges: boolean = false;
     public TotalFromClock = "";
     private myDomainService: TimeManagementDomainService = new TimeManagementDomainService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -92,10 +92,13 @@ export class DailyTimeSheetComponent extends BaseComponent {
         this.LoadDailyTimeSheetList();
     }
     LoadDailyTimeSheetList() {
+
         var itemSource: ItemSourceItem[] = [];
+
         if (this.myDomainService == null) {
             this.myDomainService = new TimeManagementDomainService();
         }
+
         this.myDomainService.GetPeriodTimeSheetList(this.EmployeeUserId, this.LocationCodeFilter, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
             // this.ItemSource = [];
             this.ItemSource.Clear();
@@ -131,13 +134,10 @@ export class DailyTimeSheetComponent extends BaseComponent {
     }
 
     private employeeUserId: string = null;
-    get EmployeeUserId() {
-        return this.employeeUserId;
-    }
+    get EmployeeUserId() { return this.employeeUserId; }
     set EmployeeUserId(value: string) {
         if (this.employeeUserId != value) {
-            this.employeeUserId = value;
-            this.SaveChanges();
+            this.employeeUserId = value;            
         }
     }
 
@@ -290,7 +290,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
             //    this.ShowMessage("Time and Description fields are required for each line");
             //}
             if (this.IsValid) {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
                 var myServiceHelper = new TimeManagementAPIHelper();
                 myServiceHelper.Id = SessionLocator.Tenant;
@@ -307,7 +307,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
                 }
 
                 this.myDomainService.UpdateTimeSheetList(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!myResponse.HasError) {
                         this.OnDataLoaded(myResponse.Result);
                     }
@@ -325,7 +325,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
             //    this.ShowMessage("Time and Description fields are required for each line");
             //}
             if (this.IsValid) {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
                 var myServiceHelper = new TimeManagementAPIHelper();
                 myServiceHelper.Id = SessionLocator.Tenant;
@@ -342,7 +342,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
                 }
 
                 this.myDomainService.UpdateTimeSheetList(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!myResponse.HasError) {
                         this.LoadDailyTimeSheetList();
                     }
@@ -382,13 +382,13 @@ export class DailyTimeSheetComponent extends BaseComponent {
                     //    this.ShowMessage("Project and Description fields are required for each line");
                     //}
                     // if (isValid) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.CurrentSession.StartBusyIndicatorSaving();
                     this.HasChanges = false;
                     if (this.myDomainService == null) {
                         this.myDomainService = new TimeManagementDomainService();
                     }
                     this.myDomainService.DeleteTimeSheetItem(item.Id, item.EmployeeUserId, item.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         if (!myResponse.HasError) {
                             this.OnDataLoaded(myResponse.Result);
                         }
@@ -412,6 +412,15 @@ export class DailyTimeSheetComponent extends BaseComponent {
     }
     RefreshButtonClicked(){
         this.RefreshTab();
+    }
+    ProrateButtonClicked() {
+
+        var iService = new TimeManagementDomainService();
+        iService.Prorate(this.EmployeeUserId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+
+            }
+        });
     }
 }
 

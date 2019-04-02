@@ -38,6 +38,7 @@ export class EditShipmentButtonListTemplate {
     public HasSharedDocs: boolean = true;
     public _ShipmentPMService: ShipmentPMService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         if (SessionLocator.PrivateLableSettings) {
@@ -73,11 +74,11 @@ export class EditShipmentButtonListTemplate {
     } 
 
     EditButtonClicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();
                 newWindow.Width = 600;
                 newWindow.Height = 150;
@@ -94,9 +95,9 @@ export class EditShipmentButtonListTemplate {
                 newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/EditLogBoxShipmentComponent');
                 //}
                 newWindow.WindowClosed.subscribe(($event: any) => {
-                    SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                    this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                     if ($event == "MyShipmentAdded") {
-                        SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+                        this.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
                     }
                 });
             }

@@ -41,7 +41,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     isReady: boolean = false;
     ShowErrorMsg: boolean = false;
     errorsCount: number = 0;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
 
@@ -69,20 +69,20 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.ReloadScreen();
                         console.log("Entity Reloaded");
                     }
@@ -379,8 +379,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public columns: any[] = null;
 
     ReloadData() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
@@ -565,7 +565,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     //#endregion
 
     RefreshButtonClicked() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         //this.ListFilters = new ApiQueryFilters();
         //this.FilterSelectedValue = 'All';
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });

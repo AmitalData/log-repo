@@ -33,6 +33,7 @@ export class DeliveryPackagesTabComponent {
     public ItemsSource: DeliveryPackageItem[] = [];
     public DataContext = this;
     public TypeCode: string = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -189,7 +190,7 @@ export class DeliveryPackagesTabComponent {
     ConnectPackagesButtonClicked() {
 
         if (this.FatherComponent.IsNewEntity) {
-            if (SessionLocator.CurrentSession.CurrentEditComponent) {
+            if (this.CurrentSession.CurrentEditComponent) {
                 var isValid = this.FatherComponent.Validate();
                 if (isValid) {
 
@@ -202,7 +203,7 @@ export class DeliveryPackagesTabComponent {
                     }
 
                     if (!this.SaveCompletedEvent) {
-                        this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                             this.FatherComponent.OnSaveCompleted(isSaveSuccess, false, SavedEntityId, SavedEntityNumber);
                             
                             AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -211,7 +212,7 @@ export class DeliveryPackagesTabComponent {
                             this.ShowConnectWindow();
                         });
 
-                        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                        this.CurrentSession.CurrentEditComponent.SaveChanges();
                     }
                 }
             }
@@ -236,6 +237,7 @@ export class DeliveryPackageItem extends BaseComponent {
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
     public IsAirShipment: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: ShipmentPickUpDeliveryPackagePM, public fatherComponent: DeliveryPackagesTabComponent, isNewEntity: boolean = false) {
         super();
         this.EntityPM = item;

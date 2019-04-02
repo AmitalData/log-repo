@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -16,13 +16,14 @@ export class SLAMainWindowComponent extends BaseComponent {
     public DataContext = this;
     public SLAList: SLAItem[] = []; 
     private SLAHeaderListService: SLAHeaderListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.SLAHeaderListService = new SLAHeaderListService();
         this.LoadSLAList(false);
     }
     LoadSLAList(arg: boolean) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.SLAList = [];
         var service = new CRMDomainService();
         service.GetActiveSLAbyTenant().subscribe((myResponse: ServiceResponse) => {
@@ -38,7 +39,7 @@ export class SLAMainWindowComponent extends BaseComponent {
                     order = order + 1;
                     this.SLAList.push(slsItem);
                 });
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -84,7 +85,7 @@ export class SLAMainWindowComponent extends BaseComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 export class SLAItem {

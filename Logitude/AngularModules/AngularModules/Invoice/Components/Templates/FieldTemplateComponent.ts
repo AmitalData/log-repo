@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -27,7 +27,7 @@ export class FieldTemplateComponent extends BaseComponent {
     public DataContext: FieldTemplateComponent = this;
     public DisplaySATFields: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -129,7 +129,7 @@ export class FieldTemplateComponent extends BaseComponent {
                 entityId = this.arPaymentId;
             }
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: tableName, });
@@ -137,7 +137,7 @@ export class FieldTemplateComponent extends BaseComponent {
                     let isEditComponentSaved = false;
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                         if (isEditComponentSaved) {
-                            //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         }
                     });
 
@@ -208,7 +208,7 @@ export class FieldTemplateComponent extends BaseComponent {
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)){
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });

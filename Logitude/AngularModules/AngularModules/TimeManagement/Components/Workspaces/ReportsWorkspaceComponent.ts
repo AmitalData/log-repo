@@ -25,7 +25,7 @@ export class ReportsWorkspaceComponent {
     IsLoadReportsTemplateListRuning: boolean = false;
     IsLoadSettingWorkerRoleRuning: boolean = false;
     IsViewReport: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
     }
@@ -75,7 +75,7 @@ export class ReportsWorkspaceComponent {
 
     ViewReport(GroupList: ReportGroupList, ReportList: ReportList) {
         if (!this.IsLoadSettingWorkerRoleRuning && !this.IsLoadReportsTemplateListRuning) {
-            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.ReportsPreview(GroupList, ReportList, this.ReportTemplates);

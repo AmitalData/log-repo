@@ -22,6 +22,7 @@ export class ClockTimeComponent extends BaseComponent {
     public ValidationErrorsList: Array<string> = [];
     public ObjectTableName: string = "TMOfficeHour";
     private myDomainService: TimeOfficeHourDomainService
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.ItemSourceCollection = new ObservableCollection([]);
@@ -88,11 +89,11 @@ export class ClockTimeComponent extends BaseComponent {
 
     //    confirmWindow.WindowClosed.subscribe((event: any) => {
     //        if (confirmWindow.Yes) {
-    //            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+    //            this.CurrentSession.StartBusyIndicatorSaving();
     //            if (this.myDomainService == null) {
     //                this.myDomainService = new TimeManagementDomainService();
     //            }
-    //            SessionLocator.CurrentSession.StopBusyIndicator();
+    //            this.CurrentSession.StopBusyIndicator();
 
     //        }
     //    });
@@ -124,11 +125,11 @@ export class ClockTimeComponent extends BaseComponent {
                 this.myDomainService = new TimeOfficeHourDomainService();
             }
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this.myDomainService.GetTimeOfficeClock(this.EmployeeUserId, this.FromDate, this.ToDate).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 this.ItemSource = [];
                 this.ItemSourceCollection.Clear();
@@ -162,10 +163,10 @@ export class ClockTimeComponent extends BaseComponent {
         }
 
         if (items.length != 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             this.myDomainService.UpdateOfficeHourList(items).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -188,10 +189,10 @@ export class ClockTimeComponent extends BaseComponent {
         });
 
         if (items.length != 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             
             this.myDomainService.UpdateOfficeHourList(items).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -251,11 +252,12 @@ export class ItemSourceItem extends BaseComponent {
     public Index: number;   
     public DivId: string;
     public IsCopy: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entity: TMOfficeHourPM, private father: ClockTimeComponent, index: number) {
         super();
         this.EntityPM = entity;
         this.Index = index;        
-        var idIndex = SessionLocator.CurrentSession.GetNewId("DIV");
+        var idIndex = this.CurrentSession.GetNewId("DIV");
         this.DivId = "DIV_" + idIndex;
     }  
 

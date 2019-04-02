@@ -9,7 +9,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
     public MustRefresh: boolean = null;
     public MustRefreshMessage: string = null;
     public IsInBatchRequest: boolean = null;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     private _CurrentEntity: DeclarationPM
 
     private _ControllerOn: boolean = false;
@@ -27,7 +27,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
             //alert(SessionLocator.AllSessions.length);
             //let myEditTab: SessionTabItem = this.Tabs[1];
             if (SessionLocator.AllSessions.length == 2 &&
-                SessionLocator.AllSessions[0] != SessionLocator.CurrentSession) {
+                SessionLocator.AllSessions[0] != this.CurrentSession) {
                 //myEditTab no need to Check !!!
                 this._ControllerOn = false;
                 resolve(this._ControllerOn);
@@ -67,7 +67,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
                     if (ResponseInstructionCancel) {
                         this.ToCancell = true;
                         resolve(this._ControllerOn);
-                        //SessionLocator.CurrentSession.RealCloseCurrentEditComponent();
+                        //this.CurrentSession.RealCloseCurrentEditComponent();
                         return;
                     }
                     this._InDisplayModeCFIFILMLockMMessage = "";
@@ -87,12 +87,12 @@ export class DeclarationEditComponentController implements IEditComponentControl
                         args.MenuButtonsStates["SendDeclaration"] = true;
                         MenuButtonsEvents.MenuButtonsStateChanged.emit(args);
 
-                        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                        if (this.CurrentSession.CurrentEditComponent) {
+                            this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
                         }
                         //**************************************************************************//
 
-                        //SessionLocator.CurrentSession.RealCloseCurrentEditComponent();
+                        //this.CurrentSession.RealCloseCurrentEditComponent();
                         return;
                     }
                   

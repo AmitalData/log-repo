@@ -54,7 +54,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     LayoutDirection: string = 'ltr';
     NumberOfLoadedItems: number = 500;
     @Output() MenuHeaderchangeevent = new EventEmitter();
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
        // this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
@@ -123,20 +123,20 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     
     public CurrentEditComponentId: string;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.ReloadMyScreen();
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
 
 
                     if (isLoadSuccess) {
@@ -148,9 +148,9 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEIN") {
 
                             this.ReloadMyScreen();
@@ -161,7 +161,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         }
     }
     ReloadMyScreen() { ///DSV - After Sending to Customs - Enter SUpplierInvoice and Getting Optimistic Concurancy error"
-        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         this.getSupplierInvoices();
         this.DisplayOnlyCheck();
     }
@@ -401,18 +401,18 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
 
       
         if (errors.length > 0) {
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         }
 
 
         else {
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             if (this.EntityPM.IsDirty) {
-                SessionLocator.CurrentSession.StartBusyIndicator("");
+                this.CurrentSession.StartBusyIndicator("");
                 this.declarationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
                     var declaration = response.Result;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!AppTool.IsNullOrEmpty(declaration)) {
                         if (!AppTool.IsNullOrEmpty(item)) {
                             this.EditInvoice(item);
@@ -434,7 +434,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     }
 
     EditInvoice(item: SupplierInvoicePM) {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
 
         this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, item.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe(response => {
@@ -473,7 +473,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                     if (event != 'cancel') {
 
                         this.RefreshEntity();
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                     else {
                         this.ReloadMyScreen();
@@ -483,7 +483,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                 });
                 logWindow.IsHideHeader = true;
           logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         
         }
@@ -543,10 +543,10 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
    
     lastDeletedItem: SupplierInvoicePM;
     DeleteSelected(item: SupplierInvoicePM) {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this.lastDeletedItem = item;
 
-        var SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        var SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
             SaveCompletedEvent.unsubscribe();
             this.supplierInvoiceExtendedPMService.delete(item.DeclarationId, item.InvoiceCounterKey).subscribe((myResponse: ServiceResponse) => {
 
@@ -557,8 +557,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                     //}
 
                     //   this.getSupplierInvoices();
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.StopBusyIndicator();
 
                 }
 
@@ -566,7 +566,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             });
         });
 
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
      
        
 
@@ -579,12 +579,12 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
 
 
         Validator.TryValidateObject(this.EntityPM, "Customs.Declaration", errors);
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length > 0) {
-            //SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            //SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         }
         else {
 
@@ -656,7 +656,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             this.CD.reattach();
             
             this.RefreshEntity();
-            this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+            this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
             this.getSupplierInvoices();
         });
         this.CD.detach();
@@ -668,15 +668,15 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
       
     }
 
     DisplayOnlyCheck() {
-        this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             //this.SetScreenFieldsEditability();
             //DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             if (this.EntityPM.SupplierInvoices != null) {

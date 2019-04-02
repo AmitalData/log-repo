@@ -34,7 +34,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
     _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -134,7 +134,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
         this.TaxReportPM.NeedsRebulid = true;
 
         // save(reprot)
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this._TaxReportPMService.update(this.TaxReportPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
@@ -144,17 +144,17 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
 
@@ -167,7 +167,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
         this.ReferecneGroup = this.OldReferecneGroup;
         this.ReferenceDate = this.OldReferenceDate;
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     //#endregion
 

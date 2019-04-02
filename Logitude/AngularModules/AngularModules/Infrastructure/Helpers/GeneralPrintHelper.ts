@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
@@ -36,6 +36,7 @@ export class GeneralPrintHelper {
     documentOutPMService: DocumentOutPMService;
     public IsLoadPrintControl: boolean = false;
     public IsStartPrint: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference:string ,childObjectTableId:string ) {
         this.ObjectTableName = objecttablename;
         if (!AppTool.IsNullOrEmpty(documentTypeCode)) {
@@ -95,7 +96,7 @@ export class GeneralPrintHelper {
 
         if (this.IsLoadPrintControl && !this.IsStartPrint) {
             this.IsStartPrint = true;
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityId, SessionInfo.LoggedUserTenant, this.ChildEntityId, this.documentTypeList.Id).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -115,7 +116,7 @@ export class GeneralPrintHelper {
 
                             }
                             else {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 this.IsStartPrint = false;
                             }
 
@@ -130,7 +131,7 @@ export class GeneralPrintHelper {
                 }
                 else {
                     this.IsStartPrint = false;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
             });
@@ -155,7 +156,7 @@ export class GeneralPrintHelper {
 
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.IsStartPrint = false;
             }
 
@@ -169,7 +170,7 @@ export class GeneralPrintHelper {
         
            this.IsStartPrint = false;
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
            var documentOutPmLists = new Array<DocumentOutPM>();
             //this.documentOutPM.NeedsRebuild = true;
            documentOutPmLists.push(this.documentOutPM);

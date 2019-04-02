@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {OpportunityPM} from '../../EntityPMs/OpportunityPM';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -21,6 +21,8 @@ export class ReOpen_StageComponent extends BaseComponent {
     public get IsSelectable() { return this.isSelectable; }
     public set IsSelectable(value: boolean) { this.isSelectable = value; }
     public get StageId() { return this.entityPM.StageId; }
+    private CurrentSession = SessionLocator.SelectedSession;
+
     SetWindowArgs(args: OpportunityPM) {
         this.entityPM = args;
     }
@@ -37,7 +39,7 @@ export class ReOpen_StageComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancle");
+        this.CurrentSession.CloseCurrentWindowEmit("cancle");
     }
 
     OkButtonClicked()
@@ -59,8 +61,8 @@ export class ReOpen_StageComponent extends BaseComponent {
                     this.entityPM.StageName = stage.Name;
                 }
 
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges("ReOpening Opportunity...");
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.CurrentEditComponent.SaveChanges("ReOpening Opportunity...");
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
             });
 
           }

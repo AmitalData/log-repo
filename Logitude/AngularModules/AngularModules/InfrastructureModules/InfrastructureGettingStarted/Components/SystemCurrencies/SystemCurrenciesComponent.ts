@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -27,6 +27,7 @@ export class SystemCurrenciesComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[];
     private ShipmentsQuotesCount: number = 0;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.GetDemoMessageVisibility();
@@ -142,7 +143,7 @@ export class SystemCurrenciesComponent extends BaseComponent implements OnInit {
         }
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -162,19 +163,19 @@ export class SystemCurrenciesComponent extends BaseComponent implements OnInit {
         }
     }
     SubmitTenantChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var myService: TenantPMService = new TenantPMService();
         myService.update(this.TenantPM).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     InfraSettings.TenantPM = this.TenantPM;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

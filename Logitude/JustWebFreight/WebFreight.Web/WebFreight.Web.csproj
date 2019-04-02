@@ -2219,6 +2219,7 @@
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
+    <Compile Include="Helpers\FirstChanceExceptionEventArgsLogger.cs" />
     <Compile Include="Helpers\FlatFileHelper.cs" />
     <Compile Include="Helpers\IISManager.cs" />
     <Compile Include="Helpers\ImporterDepositionHelper.cs" />

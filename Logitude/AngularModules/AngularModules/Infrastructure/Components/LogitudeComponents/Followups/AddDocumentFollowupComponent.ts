@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {ShipmentFollowUpPM} from '../../../../Shipment/EntityPMs/ShipmentFollowUpPM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
@@ -29,7 +29,7 @@ export class AddDocumentFollowupComponent extends BaseComponent {
     OwnerUserId: string;
     Note: string;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -52,7 +52,7 @@ export class AddDocumentFollowupComponent extends BaseComponent {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -121,8 +121,8 @@ export class AddDocumentFollowupComponent extends BaseComponent {
                     this.EntityPM.AddShipmentFollowUp(myShipmentFollowUpPM);
 
                 }
-                SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
-                SessionLocator.CurrentSession.CurrentWindow.Close("AddFollowUpSucceeded");
+                this.CurrentSession.FireEvent("FollowupsChanged");
+                this.CurrentSession.CurrentWindow.Close("AddFollowUpSucceeded");
 
 
             }

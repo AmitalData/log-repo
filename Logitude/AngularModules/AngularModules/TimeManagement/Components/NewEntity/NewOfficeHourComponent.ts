@@ -21,7 +21,7 @@ export class NewOfficeHourComponent extends BaseComponent {
     public LocationCode: any;
     public TMOfficeHourPMService: TMOfficeHourPMService;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TMOfficeHourPMService = new TMOfficeHourPMService();
@@ -112,7 +112,7 @@ export class NewOfficeHourComponent extends BaseComponent {
     // Commands
     public ValidationErrorsList: string[];
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -138,8 +138,8 @@ export class NewOfficeHourComponent extends BaseComponent {
         }
     }
     InsertTMOfficeHour() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var myServiceHelper = new TimeManagementAPIHelper();
         myServiceHelper.Id = SessionLocator.Tenant;
@@ -149,9 +149,9 @@ export class NewOfficeHourComponent extends BaseComponent {
         }
 
         this.TMOfficeHourPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

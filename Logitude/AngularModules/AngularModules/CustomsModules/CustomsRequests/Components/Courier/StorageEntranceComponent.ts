@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -38,6 +38,7 @@ export class StorageEntranceComponent
     _DeclarationConsAcceptancePMService: DeclarationConsAcceptancePMService = new DeclarationConsAcceptancePMService();
     _DeclarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
     public ResponseMessage: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.StorageEntranceObservableList = new ObservableCollection([]);
@@ -68,7 +69,7 @@ export class StorageEntranceComponent
     }
 
     EditButtonClicked(item) {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(item.cargoIdentifierKey3);
+        this.CurrentSession.CloseCurrentWindowEmit(item.cargoIdentifierKey3);
     }
 
 
@@ -91,10 +92,10 @@ export class StorageEntranceComponent
     }
 
     SaveAndSendStorageEntranceOcc(item: DeclarationConsignmentAcceptanceComponent, customSendOptionsArgs: CustomSendOptionsArgs) {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this._DeclarationConsAcceptancePMService.insert(item.entityPM).subscribe((response: ServiceResponse) => {
             var result = response.Result;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             console.log("[Response] DeclarationConsAcceptancePMService.insert ", result);
             if (!response.HasError) {
                 this.SendStorageEntrance(item, customSendOptionsArgs);
@@ -108,7 +109,7 @@ export class StorageEntranceComponent
 
     SubmitCompleted(response: ServiceResponse) {
         if (!response.HasError) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
         else {
             // To Check????
@@ -168,7 +169,7 @@ export class StorageEntranceComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors(storageEntranceItem: DeclarationConsignmentAcceptanceComponent) {
@@ -264,7 +265,7 @@ export class DeclarationConsignmentAcceptanceComponent extends BaseComponent {
     private packageTypeName: string;
 
     public _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.SetScreenFieldsEditability(false);
@@ -356,10 +357,10 @@ export class DeclarationConsignmentAcceptanceComponent extends BaseComponent {
 
         //this.DueChangeClearChildField(false);
 
-        SessionLocator.CurrentSession.StartBusyIndicator("")
+        this.CurrentSession.StartBusyIndicator("")
         this._DeclarationExtendedListService.GetSingleDeclarationByNumber(this.DeclarationNumber, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse);
             });
     }
@@ -377,10 +378,10 @@ export class DeclarationConsignmentAcceptanceComponent extends BaseComponent {
                 messageWindow.Show("ההצהרה לא מסוג בלדר");
                 return;
             }
-            SessionLocator.CurrentSession.StartBusyIndicator("")
+            this.CurrentSession.StartBusyIndicator("")
             this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(lastFetchDeclarationList.CustomFileNo)
                 .subscribe((myResponse: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.FetchConsignment(myResponse, false);
                 });
 

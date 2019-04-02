@@ -1,4 +1,4 @@
-﻿
+
 
 declare var System: any;
 declare var window: any;
@@ -27,6 +27,7 @@ export class ResetUserPasswordComponent extends BaseComponent implements OnInit 
     public myForm: FormGroup;
     UserId: string;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, public _passwordChangeService: PasswordChangeService) {
         super();
         this.myForm = fb.group({});
@@ -95,7 +96,7 @@ export class ResetUserPasswordComponent extends BaseComponent implements OnInit 
             }
 
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
 
 
@@ -104,7 +105,7 @@ export class ResetUserPasswordComponent extends BaseComponent implements OnInit 
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

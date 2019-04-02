@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -38,6 +38,7 @@ export class AddEditTariffChargeComponent extends BaseComponent {
     public MinPrice: any;
     public MaxPrice: any;
     private chargesTypeListService: ChargesTypeListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.chargesTypeListService = new ChargesTypeListService();
@@ -144,7 +145,7 @@ export class AddEditTariffChargeComponent extends BaseComponent {
     CancelButtonClicked() {
         // this.EntityPM.RejectChanges();
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -184,7 +185,7 @@ export class AddEditTariffChargeComponent extends BaseComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
             //this.SubmitChanges();
         }
     }

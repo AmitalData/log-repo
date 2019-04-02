@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {BookingDomainService, BookingsDataCounts} from '../../Services/BookingDomainService';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -34,17 +34,18 @@ export class BookingsComponent {
     public ChartID: string = null;
     public InProgressBookingDashboard: Array<ChartingDataClass>;
     public IsFlightsSchedulesVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myBookingDomainService = new BookingDomainService();
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.ChartID = "ChartID_-1_-1";
         }
 
         else {
-            this.ChartID = "ChartID_" + SessionLocator.CurrentSession.GetChartId();
+            this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
         }
 
-        this.InProgressBookingId = this.InProgressBookingId + SessionLocator.CurrentSession.GetChartId();
+        this.InProgressBookingId = this.InProgressBookingId + this.CurrentSession.GetChartId();
 
         if (FeatureLocator.HasFeaturePermession("General", "FlightsSchedules")) {
             this.IsFlightsSchedulesVisible = true;
@@ -210,12 +211,12 @@ export class BookingsComponent {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = "Operations";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                         //if (this.ComponentRef != null)
                         //   this.ComponentRef.destroy();
                     });
@@ -397,12 +398,12 @@ export class BookingsComponent {
             listArgs.DisplayTitle = displayName;
             listArgs.BackButtonTitle = "Operations";
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
     }

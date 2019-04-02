@@ -30,9 +30,10 @@ export class CustomerActivationSettingsComponent extends BaseComponent {
     public QuestionnaireList: QuestionnaireList []= [];
     public IsVisibile = false;
     IsShowAreaDefaultQuestionnaire: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this.QuestionnaireList = [];
         this.tenantPM = new TenantPM();
         this.LoadTenantPMMethod();
@@ -46,7 +47,7 @@ export class CustomerActivationSettingsComponent extends BaseComponent {
     private LoadTenantPMMethod() {
         var myService: TenantPMService = new TenantPMService();
         myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!response.HasError) {
                 this.tenantPM = response.Result;
                 if (AppTool.IsNullOrEmpty(this.VatFormatTypeCode)) {
@@ -424,7 +425,7 @@ export class CustomerActivationSettingsComponent extends BaseComponent {
 
     // Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -457,18 +458,18 @@ export class CustomerActivationSettingsComponent extends BaseComponent {
 
     }
     SubmitTenantChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
 
         var myService: TenantPMService = new TenantPMService();
         myService.update(this.tenantPM).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     InfraSettings.TenantPM = this.tenantPM;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

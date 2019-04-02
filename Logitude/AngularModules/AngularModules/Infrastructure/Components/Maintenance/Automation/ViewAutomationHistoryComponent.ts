@@ -1,4 +1,4 @@
-﻿
+
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
@@ -28,6 +28,7 @@ export class ViewAutomationHistoryComponent extends BaseComponent implements OnI
     SelectedAutomationCondationAndList: AutomationConditionViewModel;
     SelectedAutomationCondationOrList: AutomationConditionViewModel;
     DataViewModel: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService) {
         super();
 
@@ -60,10 +61,10 @@ export class ViewAutomationHistoryComponent extends BaseComponent implements OnI
 
     LoadAutomatedDataBackup() {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this._automationHistoryExtendedPMService.getAutomationBackupDataByAutomationId(this.CurrentEntityPM.AutomationsId, this.CurrentEntityPM.Version, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 this.CurrentEntityPM.AutomatedDataBackup = myResult;
@@ -101,7 +102,7 @@ export class ViewAutomationHistoryComponent extends BaseComponent implements OnI
 
      
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

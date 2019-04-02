@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {QuotePM} from '../../EntityPMs/QuotePM';
 import {QuoteEventNotesArgs} from '../../Args';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -16,6 +16,7 @@ export class QuoteEventNotesComponent extends BaseComponent {
     public ObjectTableName: string = "Quote";
     public NotesHeader: string = "Notes";
     public ShowClosingReason: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -45,11 +46,11 @@ export class QuoteEventNotesComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     private myCloner: Cloner;

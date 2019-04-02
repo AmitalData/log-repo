@@ -63,9 +63,9 @@ export class ReceivablePageComponent {
 
 
     chartId: string = "";
-
+    private CurrentSession = SessionLocator.SelectedSession;
   constructor() {
-    this.chartId = "Receivable_" + SessionLocator.CurrentSession.GetChartId();
+    this.chartId = "Receivable_" + this.CurrentSession.GetChartId();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { });
@@ -158,12 +158,12 @@ export class ReceivablePageComponent {
             listArgs.Perspective = "GLAccountRecievable";
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -186,7 +186,7 @@ export class ReceivablePageComponent {
         logWindow.Height = 570;
         logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
-        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
         //    .then(cmpRef => {
         //        cmpRef.instance.ComponentRef = cmpRef;
         //        cmpRef.instance.Run({ EntityId: "", EntityPM: new ARPaymentPM(), ObjectTableName: 'ARPayment' });
@@ -229,11 +229,11 @@ export class ReceivablePageComponent {
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Receivables");
             //listArgs.DisplayTitle = displayTitle;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -253,7 +253,7 @@ export class ReceivablePageComponent {
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityPM: comp.EntityPM, ObjectTableName: 'ARInvoice' });
@@ -332,7 +332,7 @@ export class ReceivablePageComponent {
 
     EditGLAccount(entity: any) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Receivables") });

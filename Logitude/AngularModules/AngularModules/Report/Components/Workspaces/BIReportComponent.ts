@@ -19,7 +19,7 @@ export class BIReportComponent {
     public ItemsSource: BIReportList[] = [];
     private BIReportListService: BIReportListService;
     private InfrastructureDomainService: InfrastructureDomainService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.InfrastructureDomainService = new InfrastructureDomainService();
         this.LoadData();
@@ -27,7 +27,7 @@ export class BIReportComponent {
     }
 
     private Listen() {
-        SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "BIRefresh") {
                 this.LoadData();
             }
@@ -70,7 +70,7 @@ export class BIReportComponent {
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (s != null && d != "cancel") {
-                    SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ DWQueryId: s.QID, ObjectTableName: 'BIReport', EntityId: null });
@@ -88,7 +88,7 @@ export class BIReportComponent {
     EditBIReportClicked(report: BIReportList) {
         this.entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe(response => {
             if (!AppTool.IsNullOrEmpty(report.Id)) {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: report.Id, ObjectTableName: 'BIReport'});
@@ -100,7 +100,7 @@ export class BIReportComponent {
     }
 
     ViewBIReportClicked(report: BIReportList) {
-        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ DWQueryId: report.DWQueryId, ObjectTableName: 'BIReport', EntityList: report, EntityId: report.Id });

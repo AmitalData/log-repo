@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AccountingTransferHeaderPM} from '../../../EntityPMs/AccountingTransferHeaderPM';
 import {AccountingTransferLinePM} from '../../../EntityPMs/AccountingTransferLinePM';
@@ -21,6 +21,7 @@ export class TransferHeaderDetailsTabComponent extends BaseComponent {
     public ItemsSource: AccountingTransferLinePM[] = [];
     public SelectedItem: AccountingTransferLinePM = null;
     private invoiceDomainService: InvoiceDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -75,10 +76,10 @@ export class TransferHeaderDetailsTabComponent extends BaseComponent {
     }
 
     RebuildClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Rebuilding ...");
+        this.CurrentSession.StartBusyIndicator("Rebuilding ...");
 
         this.invoiceDomainService.RebuildTransferFile(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 

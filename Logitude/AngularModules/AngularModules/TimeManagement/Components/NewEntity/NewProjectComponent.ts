@@ -17,7 +17,7 @@ export class NewProjectComponent extends BaseComponent {
     public ObjectTableName = "TMProject";
     public EntityPM: TMProjectPM;
     public SelectedLocationFilter: any;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
@@ -125,17 +125,17 @@ export class NewProjectComponent extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicator("Creating...");
         var myService: TMProjectPMService = new TMProjectPMService();
         myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

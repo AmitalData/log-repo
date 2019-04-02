@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {CashBookPM} from '../../../EntityPMs/CashBookPM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -25,7 +25,7 @@ export class CashBookManageDepoTabComponent extends BaseComponent {
     ItemsSource: BankDepositList[] = [];
     TotalSum: number = 0;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -107,7 +107,7 @@ export class CashBookManageDepoTabComponent extends BaseComponent {
     RowClicked(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({

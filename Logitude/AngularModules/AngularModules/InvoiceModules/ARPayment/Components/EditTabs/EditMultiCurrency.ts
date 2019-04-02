@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -27,6 +27,7 @@ export class EditMultiCurrency extends BaseComponent {
     public InvoiceCurrencyCode: string = null;
     public InvoiceExchangeRate: number = null;
     private lineComponent: ARPaymentInvoiceArgs;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
@@ -198,7 +199,7 @@ export class EditMultiCurrency extends BaseComponent {
     }
 
     CancelButtonClicked() {        
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -220,7 +221,7 @@ export class EditMultiCurrency extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+            this.CurrentSession.CloseCurrentWindowEmit("Ok");
         }
     }
 }

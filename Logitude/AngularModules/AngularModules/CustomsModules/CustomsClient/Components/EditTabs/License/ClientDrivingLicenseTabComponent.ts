@@ -36,7 +36,7 @@ export class ClientDrivingLicenseTabComponent extends BaseComponent {
 
     public ClientDrivingLicenseList: ObservableCollection = new ObservableCollection([]);;
     public ClientDrivingLicenseTypeList: ObservableCollection = new ObservableCollection([]);;
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _EntityArgs: EntityArgs) {
         super();
 
@@ -82,7 +82,7 @@ export class ClientDrivingLicenseTabComponent extends BaseComponent {
         }
     }
     ReloadEntityPM() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     AddClientDrivingLicense() {

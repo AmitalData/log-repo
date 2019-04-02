@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UserPM} from '../../../../Common/EntityPMs/UserPM';
 import {RolePM} from '../../../../Common/EntityPMs/RolePM';
@@ -27,6 +27,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
     public ObjectTableName: string = "User";
     public DataContext = this;
     public ObsList: UserRolesItemClass[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -46,11 +47,11 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.SetUIProperties();
 
                         if (this.isEditingRoleRequested) {
@@ -65,9 +66,9 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.SetUIProperties();
                     }
 
@@ -119,10 +120,10 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
     public ImportFeaturesFileHtmlId: string = Guid.NewRandomString();
     ExportFeaturesToFileButtonClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Initializing...");
+        this.CurrentSession.StartBusyIndicator("Initializing...");
 
         this.excelExportService.ExportRoleFeaturesToCSVFile().subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
                 var myResult = myResponse.Result;
                 if (myResult) {
@@ -173,7 +174,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
         file.Base64String = data;
 
         service.ImportRoleFeatures(file).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             var wind = new MessageWindow();
             wind.Show("Import completed successfully");
@@ -199,7 +200,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
             };
 
             reader.onerror = function (e) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
                 var wind = new MessageWindow();
                 wind.Show("Error Importing file");
@@ -212,12 +213,12 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
     LoadUserRoles(StartBusyIndicator: boolean = true) {
 
         if (StartBusyIndicator) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
         }
 
         this.roleExtendedPMService.GetRolesForUser(this.EntityPM.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
             this.ObsList = [];
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!myResponse.HasError) {
                 var allRoles: RolePM[] = myResponse.Result;
@@ -305,7 +306,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
     EditRoleButtonClicked(item: UserRolesItemClass) {
         this.editedRole = item.EntityPM;
         this.isEditingRoleRequested = true;
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
     EditRole(myRole: RolePM) {
         var logWindow = new LogitudeWindow();

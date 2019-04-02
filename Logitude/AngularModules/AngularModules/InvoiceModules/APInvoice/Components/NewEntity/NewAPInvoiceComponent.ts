@@ -48,7 +48,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     public IsFullAccounting: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
@@ -190,7 +190,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myCurrencyRatesService = new CurrencyRatesService();
         var myCommonDomainService = new CommonDomainService();
@@ -210,12 +210,12 @@ export class NewAPInvoiceComponent extends BaseComponent {
                         this.VatTypePercentagesList = myResponse2.Result;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -578,7 +578,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -651,13 +651,13 @@ export class NewAPInvoiceComponent extends BaseComponent {
     CompleteSubmission(errors) {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
 
             this.InitializeProfitCurrency();
 
             if (this.EntityPM.IsMultipleEntities) {
                 this.ComputeTotals();
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                this.CurrentSession.CloseCurrentWindowEmit("Ok");
             }
 
             else {
@@ -750,7 +750,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         }
 
         this.ComputeTotals();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
     SetInvoiceLineVatType(list: ChargesTypeList, payable: ShipmentPayablePM, invoiceLine: APInvoiceLinePM) {

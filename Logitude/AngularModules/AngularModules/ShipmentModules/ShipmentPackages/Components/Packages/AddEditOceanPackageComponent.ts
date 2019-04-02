@@ -24,6 +24,7 @@ export class AddEditOceanPackageComponent {
     public SelectedTabCode: string = "0";
     public IsFCLEntity: boolean = false;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -52,7 +53,7 @@ export class AddEditOceanPackageComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var isValid: boolean = this.Validate();
@@ -82,7 +83,7 @@ export class AddEditOceanPackageComponent {
 
             this.UpdateDeliveryPackage();
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

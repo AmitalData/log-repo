@@ -91,7 +91,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     SecondListValueItems: MultiSelectedValue[] = [];
     MultiSelectedValueLists: MultiSelectedValue[] = [];
     private ViewModel: any;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this._entityListService = new EntityListService;
@@ -101,14 +101,14 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
 
 
-        this.PseventRowSelectEventSub=  SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        this.PseventRowSelectEventSub=  this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
                 if (res == this.ObjectTableName) {
                     this.preventSelect = true;
                 }
         })
 
 
-        SessionLocator.CurrentSession.SessionEvent.subscribe((res) => {
+        this.CurrentSession.SessionEvent.subscribe((res) => {
 
             if (res && res.ComponentName == "DWLogSearchAddFieldsComponent" && res.IsFirstRequest && res.Item) {
                 var item = res.Item;
@@ -118,9 +118,9 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                 var key = "";
                 var i = 0;
 
-                if (!AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.Sessionkey)) {
+                if (!AppTool.IsNullOrEmpty(this.CurrentSession.Sessionkey)) {
                     if (ComponentArgs && ComponentArgs.ComponentLists) {
-                        var sessionkey: string = SessionLocator.CurrentSession.Sessionkey + "DWLogSearchWindow";
+                        var sessionkey: string = this.CurrentSession.Sessionkey + "DWLogSearchWindow";
                         var Component = ComponentArgs.ComponentLists.filter(d => d.key == sessionkey)[0];
                         if (Component) {
                             var myComponent = Component.Component;
@@ -158,16 +158,16 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     ngOnDestroy() {
         this.PseventRowSelectEventSub.unsubscribe();
-        //SessionLocator.CurrentSession.PseventRowSelectEvent.unsubscribe(); // this line commented, it cause object unsubscribed error
+        //this.CurrentSession.PseventRowSelectEvent.unsubscribe(); // this line commented, it cause object unsubscribed error
     } 
 
     SetWindowArgs(args: CustomEntityArgs) {
-        if (AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.Sessionkey)) {
-            SessionLocator.CurrentSession.Sessionkey = Guid.newGuid();
+        if (AppTool.IsNullOrEmpty(this.CurrentSession.Sessionkey)) {
+            this.CurrentSession.Sessionkey = Guid.newGuid();
         }
 
 
-        ComponentArgs.AddComponent(new ParameterComponentArgs(SessionLocator.CurrentSession.Sessionkey + "DWLogSearchWindow", this));
+        ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "DWLogSearchWindow", this));
 
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectFieldName = args.DisplayFieldsFromList;
@@ -342,7 +342,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                 var entityList = $event.rowData;
                 var selectedEntity = $event.rowData["Field"];
                 
-               // SessionLocator.CurrentSession.CloseCurrentWindowEmit(selectedEntity);
+               // this.CurrentSession.CloseCurrentWindowEmit(selectedEntity);
             }
         }
         else {
@@ -351,7 +351,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
     OkButtonClicked() {
@@ -361,7 +361,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (this.ViewModel) {
             this.ViewModel.MultiSelectedValueLists = this.SecondListValueItems;
         }
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(textValue);
+        this.CurrentSession.CloseCurrentWindowEmit(textValue);
 
     }
 

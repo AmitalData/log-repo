@@ -45,6 +45,7 @@ export class ApprovePaymentButtonListTemplate {
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public ShowRenewButtons: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
@@ -79,13 +80,13 @@ export class ApprovePaymentButtonListTemplate {
         //}
     } 
     ApproveButtonClicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        //SessionLocator.CurrentSession.SessionEvent.emit("DisableBusyIndicator");
-        //SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        //this.CurrentSession.SessionEvent.emit("DisableBusyIndicator");
+        //this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
                 this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe(AdditionalResult => {
-                    //SessionLocator.CurrentSession.StopBusyIndicator();
+                    //this.CurrentSession.StopBusyIndicator();
                     var newWindow = new LogitudeWindow();
                     newWindow.Width = 665;
                     newWindow.Height = 700;
@@ -100,9 +101,9 @@ export class ApprovePaymentButtonListTemplate {
                     //newWindow.Add(control); 
                     newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
                     newWindow.WindowClosed.subscribe(($event: any) => {
-                        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                        this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                         //if ($event == "MyShipmentAdded") {
-                        //    SessionLocator.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                        //    this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
                         //}
                     });
                 });
@@ -112,18 +113,18 @@ export class ApprovePaymentButtonListTemplate {
     }
 
     RemoveTasksButtonClicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Title = "Confirm Deletion";
         confirmWindow.Show("Are you sure you want to cancel tasks for this shipment ?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Loading ..")
+                this.CurrentSession.StartBusyIndicator("Loading ..")
                 this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe(myResult => {
                     if (!myResult.HasError) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
-                        SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                        this.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
 
                     }
                 });
@@ -159,20 +160,20 @@ export class ApprovePaymentButtonListTemplate {
         newWindow.RTL = true;
         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DepositionRequestComponent');
         newWindow.WindowClosed.subscribe(($event: any) => {
-            SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+            this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
             if ($event == "DepositionRequest") {
-                SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+                this.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
             }
         });
 
     }
 
     EditButtonClicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();
                 newWindow.Width = 600;
                 newWindow.Height = 150;
@@ -189,9 +190,9 @@ export class ApprovePaymentButtonListTemplate {
                 newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/EditLogBoxShipmentComponent');
                 //}
                 newWindow.WindowClosed.subscribe(($event: any) => {
-                    SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                    this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                     if ($event == "MyShipmentAdded") {
-                        SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+                        this.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
                     }
                 });
             }
