@@ -6,7 +6,8 @@ import {ListComponentArgs} from '../../../Infrastructure/Args';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ExcelExportService} from '../../../Common/Services/Others/ExcelExportService'
-import {ImageParameter} from '../../../Infrastructure/DataContracts/ImageParameter';
+import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 declare var UploadLogoFile, ArrayBufferToBase64;
 
 @Component({
@@ -143,5 +144,11 @@ export class SettingsWorkspaceComponent {
                     SessionLocator.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
+    }
+
+    GetProjectsClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Get Projects";
+        logWindow.Show('./TimeManagement/Components/NewEntity/NewGetProjectComponent');
     }
 }

@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ListComponentArgs} from '../../../../Infrastructure/Args';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -11,6 +11,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ExcelExportService} from '../../../../Common/Services/Others/ExcelExportService'
 import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImageParameter';
+
 
 declare var UploadLogoFile, ArrayBufferToBase64;
 

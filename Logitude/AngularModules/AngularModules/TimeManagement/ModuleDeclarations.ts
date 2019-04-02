@@ -26,6 +26,7 @@ import {NewProjectComponent} from  './Components/NewEntity/NewProjectComponent';
 import {NewOfficeHourComponent} from  './Components/NewEntity/NewOfficeHourComponent';
 import {NewSprintComponent} from  './Components/NewEntity/NewSprintComponent';
 import { NewProjectCategoryComponent } from './Components/NewEntity/NewProjectCategoryComponent';
+import { NewGetProjectComponent } from './Components/NewEntity/NewGetProjectComponent';
 
 export const Components =
     [
@@ -55,6 +56,7 @@ export const Components =
         NewOfficeHourComponent,
         NewSprintComponent,
         NewProjectCategoryComponent,
+        NewGetProjectComponent,
     ];
 
 export class ModuleDeclarations {
@@ -92,6 +94,7 @@ export class ModuleDeclarations {
             case "NewOfficeHourComponent": { myResult = NewOfficeHourComponent; break; }
             case "NewSprintComponent": { myResult = NewSprintComponent; break; }
             case "NewProjectCategoryComponent": { myResult = NewProjectCategoryComponent; break; }
+            case "NewGetProjectComponent": { myResult = NewGetProjectComponent; break; }
                 
         }
 
