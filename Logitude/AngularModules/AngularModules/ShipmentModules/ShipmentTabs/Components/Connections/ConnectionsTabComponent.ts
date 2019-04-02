@@ -326,7 +326,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 this.myDomainService.DisconnectQuote(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse != null) {
                         if (!myResponse.HasError) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                             this.entityArgs.EditComponent.ReloadEntityPM();
                             this.CurrentSession.FireEvent("LoadConnectedShipments");
                             this.LoadData();

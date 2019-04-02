@@ -851,6 +851,8 @@
     <Content Include="InvoiceModules\ARInvoice\Components\NewEntity\NewARInvoiceComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\NewEntity\NewConsolidationComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\NewEntity\NewGeneralARInvoiceComponent.html" />
+    <Content Include="InvoiceModules\ARPayment\Components\EditTabs\ARPaymentDetailsFullAccountingTab.css" />
+    <Content Include="InvoiceModules\ARPayment\Components\EditTabs\ARPaymentDetailsFullAccountingTab.html" />
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\ARPaymentDetailsTabComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\ARPaymentDocsInTabComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\ARPaymentDocsOutTabComponent.html" />
@@ -859,6 +861,10 @@
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.html" />
+    <Content Include="InvoiceModules\InvoiceStocks\Components\ARInvoiceStockInputTemplate.html" />
+    <Content Include="InvoiceModules\InvoiceStocks\Components\EditTabs\ARInvoiceStockGeneralTabComponent.html" />
+    <Content Include="InvoiceModules\InvoiceStocks\Components\ManageStocksComponent.html" />
+    <Content Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockComponent.html" />
     <Content Include="Invoice\Components\AccountingTab\AccountingTab_AccountingPaymentMethod.html" />
     <Content Include="Report\Components\FilterReportComponent\VDKFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
@@ -1724,6 +1730,7 @@
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\NewEntity\NewGeneralARInvoiceComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\ModuleARInvoice.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\ARPaymentDetailsFullAccountingTab.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\ARPaymentDetailsTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\ARPaymentDocsInTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\ARPaymentDocsOutTabComponent.ts" />
@@ -1734,6 +1741,12 @@
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleARPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\ARInvoiceStockInputTemplate.ts" />
+    <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\EditTabs\ARInvoiceStockGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\ManageStocksComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\ModuleInvoiceStocks.ts" />
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleTransfer.ts" />
     <TypeScriptCompile Include="Invoice\Components\AccountingTab\AccountingTab_AccountingPaymentMethod.ts" />

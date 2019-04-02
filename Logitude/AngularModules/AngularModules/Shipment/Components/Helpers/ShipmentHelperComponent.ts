@@ -136,7 +136,7 @@ export class ShipmentHelperComponent implements OnDestroy {
         logWindow.WindowArgs = myAWBWizardArgs;
         logWindow.Show('./ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardComponent');
         logWindow.WindowClosed.subscribe(s => {
-            SessionLocator.CurrentSession.FireEvent("AWBWizardClosed");
+            this.CurrentSession.FireEvent("AWBWizardClosed");
         });
     }
     ngOnDestroy() {

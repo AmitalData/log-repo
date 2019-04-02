@@ -1003,7 +1003,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         return new Promise((resolve, reject) => {
 
             var _glaId = this.billtoCard.GLAccountId;
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this._glaService.getSingle(_glaId)
                 .subscribe(response => {
 
@@ -1012,13 +1012,13 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                         var glaccount = res.Result;
 
                         resolve(glaccount);
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                     else {
                         reject();
 
                         this.ValidationErrorsList = res.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
 

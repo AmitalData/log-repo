@@ -111,7 +111,7 @@ export class AddEditTaskSchedulerComponent  {
   
     LoadSchedulerDetailsData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
 
         this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
@@ -124,7 +124,7 @@ export class AddEditTaskSchedulerComponent  {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 

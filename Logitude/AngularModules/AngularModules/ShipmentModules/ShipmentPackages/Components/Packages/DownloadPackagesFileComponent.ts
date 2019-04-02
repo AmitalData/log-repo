@@ -16,6 +16,7 @@ export class DownloadPackagesFileComponent {
     public IsDownloadInProgress: boolean = true;
     public IsDownloadingSuccess: boolean = false;
     public IsDownloadingError: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -61,10 +62,10 @@ export class DownloadPackagesFileComponent {
             window.open(url);
         }
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

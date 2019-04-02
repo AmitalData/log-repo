@@ -147,7 +147,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
     public ViewOpportunityClicked(entity: QuoteConnectedEntityItem) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entity.EntityId, ObjectTableName: "Opportunity", BackButtonLabel: " Quotes" });

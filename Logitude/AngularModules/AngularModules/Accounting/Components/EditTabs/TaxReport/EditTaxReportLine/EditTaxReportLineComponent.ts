@@ -151,7 +151,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                // SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                // this.CurrentSession.CloseCurrentWindowEmit("ok");
                 this._TaxReportPMService.update(this.TaxReportPM).subscribe(myResult => {
 
                     var mm: ServiceResponse = myResult;
@@ -160,11 +160,11 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
                         //     var mm: ServiceResponse = myResult;
                         //     if (!mm.HasError) {
-                        //         SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        //         this.CurrentSession.CloseCurrentWindowEmit("ok");
                         //     }
                         //     else {
                         //         this.ValidationErrorsList = mm.ErrorsArray;
-                        //         SessionLocator.CurrentSession.StopBusyIndicator();
+                        //         this.CurrentSession.StopBusyIndicator();
                         //     }
                         // });
                         this.CurrentSession.CloseCurrentWindowEmit("ok");

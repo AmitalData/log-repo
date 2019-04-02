@@ -73,7 +73,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
     private _glaService: GLAccountListService = new GLAccountListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
         console.log("[FULL ACCOUNING ARPayment]");
@@ -152,7 +152,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return _valid;
     }
     SetEntityValidity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = this.IsEntityValid;
+        this.CurrentSession.CurrentEditComponent.IsEditValid = this.IsEntityValid;
     }
 
 
@@ -229,7 +229,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return new Promise((resolve, reject) => {
 
             var _glaId = this.billtoCard.GLAccountId;
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this._glaService.getSingle(_glaId)
                 .subscribe(response => {
 
@@ -238,13 +238,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         var glaccount = res.Result;
 
                         resolve(glaccount);
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                     else {
                         reject();
 
                         console.error(res.ErrorsArray);
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
 
@@ -298,7 +298,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     OpenSource(id: string, sourceTypeCode: string) {
 
         var tableName = AccountingEntityHelper.getEntityObjectTableName(sourceTypeCode);;
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -310,7 +310,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal', BackButtonLabel: 'Back' });
@@ -322,11 +322,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     OpenReco(recoNumber) {
         if (!AppTool.IsNullOrEmpty(recoNumber)) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this._ReconciliationExtendedPMService.getByNumber(recoNumber)
                 .subscribe(myResult => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
@@ -335,12 +335,12 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         var recoId = reco.Id;
 
                         // this.showAlert = false;
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
                                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                                    // SessionLocator.CurrentSession.CloseCurrentWindow();
+                                    // this.CurrentSession.CloseCurrentWindow();
                                 });
                             });
                     }
@@ -1514,7 +1514,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     EditGLAccount(arg: string) {
         if (arg == "BA") {
             if (!AppTool.IsNullOrEmpty(this.bankAccount.GLAccountId)) {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: this.bankAccount.GLAccountId, ObjectTableName: 'GLAccount' });
@@ -1523,7 +1523,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
         else {
             if (!AppTool.IsNullOrEmpty(this.BranchGLAccountId)) {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: this.BranchGLAccountId, ObjectTableName: 'GLAccount' });
@@ -1654,7 +1654,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     private RequestedCommandParam: string = null;
     ApplyRequestedCommand() {
         if (this.RequestedCommandCode == "ViewInvoice") {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'ARInvoice' });

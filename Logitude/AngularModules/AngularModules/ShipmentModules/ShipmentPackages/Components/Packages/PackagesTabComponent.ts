@@ -1357,7 +1357,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     private dowonload: boolean = false;
     DownloadPackagesClicked() {
         this.dowonload = true;
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
     private DownloadPackages() {
         var logWindow = new LogitudeWindow();

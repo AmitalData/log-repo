@@ -48,7 +48,7 @@ export class BlockedCustomerComponent extends BaseComponent {
         this.ProductsObslist = [];
         var service = new CustomerProductExtendedService();
         service.GetCustomerProducts(this.entityList.Id, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-            //SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            //this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!response.HasError) {
                 var myResult = response.Result;
                 if (myResult) {

@@ -15,6 +15,7 @@ export class ARInvoiceStockGeneralTabComponent {
     public ObjectTableName: string = "ARInvoiceStock";
 
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {        
         this.EntityPM = entityArgs.EntityPM;
         
@@ -23,18 +24,18 @@ export class ARInvoiceStockGeneralTabComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.StockInputTemplate.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.StockInputTemplate.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.StockInputTemplate.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.StockInputTemplate.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
         }

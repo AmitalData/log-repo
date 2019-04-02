@@ -25,6 +25,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
     public ItemsSource: ARInvoiceStockLinePM[] = [];
     public ItemsCount: number;
     public IsEditMode: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -123,7 +124,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
 
     CancelClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private myCloner: Cloner;
@@ -149,14 +150,14 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
 
             if (this.IsNew) {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
                 this.stockPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (!myResponse.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
 
                     else {

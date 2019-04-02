@@ -26,6 +26,8 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
     public entityArgs: EntityArgs
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -390,7 +392,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     if (isLoadSuccess) {
                         this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
-                        SessionLocator.CurrentSession.SessionEvent.emit("ReloadHouses");
+                        this.CurrentSession.SessionEvent.emit("ReloadHouses");
                     }
 
                     this.StopFlags();
@@ -1029,7 +1031,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
     }
     private DoConvertShipmentType(type: string) {
         var errors: string[] = this.VaidateConvertShipmentType();
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
             var args = new MenuButtonsTemplateArgs();

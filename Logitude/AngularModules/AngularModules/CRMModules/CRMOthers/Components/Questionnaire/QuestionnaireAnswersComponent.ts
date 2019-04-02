@@ -71,10 +71,10 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
     }
 
     //LoadData() {
-    //    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+    //    this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
     //    this._QuestionnairePMService.get(SessionLocator.TenantPM.DefaultQuestionnaireId).subscribe(response => {
 
-    //        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+    //        this.CurrentSession.CurrentWindow.StopBusyIndicator();
     //        this.EntityPM = response.Result;
     //        if (this.EntityPM) {
     //            this.simplogWindow.Title = this.EntityPM.Name;

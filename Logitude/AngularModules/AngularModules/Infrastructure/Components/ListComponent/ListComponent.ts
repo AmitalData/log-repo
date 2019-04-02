@@ -458,7 +458,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             })
         );
 
-        this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "NewAirlineShippingLineClosed") {
                 this.RefreshBtnClick();
             }

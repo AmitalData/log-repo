@@ -139,7 +139,7 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                         this.EntityPM = response.Result;
-                        //SessionLocator.CurrentSession.CurrentWindow.Title = this.EntityPM.Name;
+                        //this.CurrentSession.CurrentWindow.Title = this.EntityPM.Name;
                         this.CurrentVersionNumber = this.EntityPM.VersionNumber;
                         this.ItemsSource = new ObservableCollection([]);
                         this.BuildItemsSource();

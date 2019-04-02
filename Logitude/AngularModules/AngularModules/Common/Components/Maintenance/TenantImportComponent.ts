@@ -330,7 +330,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
 
     AddNewEntityClicked() {
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-            SessionLocator.CurrentSession.CloseCurrentWindow(); 
+            this.CurrentSession.CloseCurrentWindow(); 
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
@@ -338,7 +338,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
             logWindow.Title = this.NewEntityButtonLabel;
 
             logWindow.WindowClosed.subscribe((event: any) => {
-                SessionLocator.CurrentSession.FireEvent("NewAirlineShippingLineClosed");
+                this.CurrentSession.FireEvent("NewAirlineShippingLineClosed");
                 CachedDataManager.RefreshTableData(this.ObjectTableName, true);
             });
 
