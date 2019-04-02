@@ -1740,7 +1740,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
             decimal payAmount = Convert.ToDecimal(_payment.GLAccountRecoMethodCode == "0" ? _payment.AmountInLocalCurrency : _payment.AmountInPaymentCurrency);
             if (amount2reconcile > payAmount)
-                throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.selectedinvoicesishigherthanpayamount", _payment.Tenant, showLocal));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
 
 
 
