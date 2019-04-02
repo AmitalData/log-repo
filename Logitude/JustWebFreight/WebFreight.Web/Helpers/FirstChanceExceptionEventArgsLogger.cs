@@ -13,19 +13,22 @@ namespace WebFreight.Web.Helpers
 	{
 		public static void LogException(FirstChanceExceptionEventArgs args)
 		{
-			//if (args.Exception != null)
-			//{
-			//	string WorkingDir = Path.GetDirectoryName(Application.ExecutablePath);
-			//	using (StreamWriter w = File.AppendAllText(WorkingDir + "exceptionslog.txt"))
-			//	{
+			try
+			{
+				if (args.Exception != null)
+				{
+					string WorkingDir = Path.GetDirectoryName(Application.ExecutablePath);
+					using (StreamWriter w = File.AppendText(WorkingDir + @"\exceptionslog.txt"))
+					{
 
-			//		string message = args.Exception.Source + " " + args.Exception.Message + " " + args.Exception.StackTrace;
-			//		Log(message, w);
+						string message = args.Exception.Source + " " + args.Exception.Message + " " + args.Exception.StackTrace;
+						Log(message, w);
 
-			//		w.Close();
-			//	}
-			//}
-		
+						w.Close();
+					}
+				}
+			}
+			catch { }
 
 		}
 
