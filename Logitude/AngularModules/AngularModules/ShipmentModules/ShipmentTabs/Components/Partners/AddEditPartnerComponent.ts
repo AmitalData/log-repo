@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {PartnerItem} from './PartnersTabComponent';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -18,6 +18,7 @@ export class AddEditPartnerComponent implements OnInit {
     private isMyCustomer: boolean = false;
     private oldCustomerPartnerId: string = null;
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -36,7 +37,7 @@ export class AddEditPartnerComponent implements OnInit {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 
@@ -123,8 +124,8 @@ export class AddEditPartnerComponent implements OnInit {
                 }
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
-            SessionLocator.CurrentSession.FireEvent("ShipmentPartnersChanged");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.FireEvent("ShipmentPartnersChanged");
         }
     }
 

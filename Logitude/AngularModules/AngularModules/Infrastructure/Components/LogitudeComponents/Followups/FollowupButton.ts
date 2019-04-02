@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {AppTool, DateTool} from '../../../Tools';
 import {SessionLocator} from '../../../Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Utilities/FeatureLocator';
@@ -39,6 +39,7 @@ export class FollowupButton implements OnInit, OnDestroy {
     public ActDate: Date = null;
     public ExpDateName: string = null;
     public ActDateName: string = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.entityResourceService.getEntityResourceByTableName("FollowUp").subscribe((res: any) => {
             this.Listen();
@@ -49,7 +50,7 @@ export class FollowupButton implements OnInit, OnDestroy {
     private FollowupsChangedEvent: any = null;
     Listen() {
         if (!this.FollowupsChangedEvent) {
-            this.FollowupsChangedEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.FollowupsChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "FollowupDeleted") {
                     this.SetComponent();
                 }
@@ -136,7 +137,7 @@ export class FollowupButton implements OnInit, OnDestroy {
         var myFollowup: ShipmentFollowUpPM = this.ShipmentPM.FollowUps.filter(f => f.LegType == this.FollowupLegType)[0];
         if (myFollowup) {
             this.ShipmentPM.RemoveShipmentFollowUp(myFollowup);
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 
@@ -411,7 +412,7 @@ export class FollowupButton implements OnInit, OnDestroy {
 
                 if (myFollowup) {
                     this.ShipmentPM.RemoveShipmentFollowUp(myFollowup);
-                    SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+                    this.CurrentSession.FireEvent("FollowupsChanged");
                     this.SetComponent();
                 }
 
@@ -549,7 +550,7 @@ export class FollowupButton implements OnInit, OnDestroy {
                                     newFollowUp.ShipmentId = this.ShipmentPM.Id;
                                     newFollowUp.OwnerUserId = SessionLocator.LoggedUserId;
                                     this.ShipmentPM.AddShipmentFollowUp(newFollowUp);
-                                    SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+                                    this.CurrentSession.FireEvent("FollowupsChanged");
                                     this.SetComponent();
                                 }
                             }

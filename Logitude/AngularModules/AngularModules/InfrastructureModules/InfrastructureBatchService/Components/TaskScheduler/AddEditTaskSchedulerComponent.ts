@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
@@ -20,6 +20,7 @@ export class AddEditTaskSchedulerComponent {
     public ObjectTableName: string = "TasksScheduler";
     public OkBtnId: string;
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -228,14 +229,14 @@ export class AddEditTaskSchedulerComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             var service: TasksSchedulerPMService = new TasksSchedulerPMService();            
 
             if (this.DataContext.IsNew) {
                 service.insert(this.EntityPM).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                         this.DataContext.fatherComponent.GetTasksSchedular();
                     }
 
@@ -243,7 +244,7 @@ export class AddEditTaskSchedulerComponent {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }); 
             }
 
@@ -254,7 +255,7 @@ export class AddEditTaskSchedulerComponent {
                     service.update(this.EntityPM).subscribe(myResult => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                             this.DataContext.fatherComponent.GetTasksSchedular();
                         }
 
@@ -262,20 +263,20 @@ export class AddEditTaskSchedulerComponent {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                         }
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
                 }
 
                 else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             }            
         }
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private myCloner: Cloner;

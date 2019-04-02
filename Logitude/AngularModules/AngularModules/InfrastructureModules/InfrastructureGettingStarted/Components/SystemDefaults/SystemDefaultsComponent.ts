@@ -28,6 +28,7 @@ export class SystemDefaultsComponent extends BaseComponent{
     public ObjectTableName: string = "Tenant";
     public TenantPm: TenantPM = new TenantPM();
     public IsVisibile: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
@@ -571,7 +572,7 @@ export class SystemDefaultsComponent extends BaseComponent{
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -602,19 +603,19 @@ export class SystemDefaultsComponent extends BaseComponent{
     }
 
     SubmitTenantChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
 
         var myService: TenantPMService = new TenantPMService();
         myService.update(this.TenantPm).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     InfraSettings.TenantPM = this.TenantPm;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

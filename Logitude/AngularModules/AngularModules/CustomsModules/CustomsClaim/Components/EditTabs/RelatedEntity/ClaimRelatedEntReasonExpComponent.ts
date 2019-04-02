@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -23,7 +23,6 @@ export class ClaimRelatedEntReasonExpComponent extends BaseComponent {
     public DataContext: ClaimRelatedEntReasonExpComponent = this;
     public EntityPM: ClaimsRelatedEntitiesReasonPM;
     public ObjectTableName: string = "Customs.ClaimsRelatedEntsReasonsExp";
-
     public ClaimsRelatedEntsReasonsExpslist: ObservableCollection;
     FooterMethods: any;
 
@@ -31,13 +30,13 @@ export class ClaimRelatedEntReasonExpComponent extends BaseComponent {
     private isControlEnabled: boolean = true;
 
     ValidationErrors: string[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
 
         this.ValidationErrors = [];
         this.ClaimsRelatedEntsReasonsExpslist = new ObservableCollection([]);
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
     }
 
     SetWindowArgs(args: any) {
@@ -52,7 +51,7 @@ export class ClaimRelatedEntReasonExpComponent extends BaseComponent {
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     selectedTab: LogTab;
@@ -102,11 +101,11 @@ export class ClaimRelatedEntReasonExpComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.EntityPM.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
     //#endregion
@@ -118,7 +117,7 @@ export class ClaimRelatedEntReasonExpLineComponent extends BaseComponent {
     public ClaimsRelatedEntsReasonsExpslist: ObservableCollection;
 
     public myClaimExplanationCodeListService: ClaimExplanationCodeListService = new ClaimExplanationCodeListService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityPM: ClaimsRelatedEntsReasonsExpPM, public claimsRelatedEntitiesReasonPM: ClaimsRelatedEntitiesReasonPM) {
         super();
 

@@ -1,4 +1,4 @@
-﻿import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
@@ -21,7 +21,7 @@ export class AddDocumentFilingBackupBatchComponent extends BaseComponent impleme
 
     DataContext: any = this;
     IsNewDocumentFilingBackupSetting: boolean = false;
-  
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.documentFilingBackupBatchPMExtendedService = new DocumentFilingBackupBatchPMExtendedService();
@@ -85,7 +85,7 @@ export class AddDocumentFilingBackupBatchComponent extends BaseComponent impleme
 
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     ValidationErrorsList: string[];
@@ -121,7 +121,7 @@ export class AddDocumentFilingBackupBatchComponent extends BaseComponent impleme
 
 
     InsertDocumentFilingBackupBatchPMService() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var service: DocumentFilingBackupBatchPMService = new DocumentFilingBackupBatchPMService();
         var documentFilingBackupBatchPM: DocumentFilingBackupBatchPM = new DocumentFilingBackupBatchPM();
@@ -135,9 +135,9 @@ export class AddDocumentFilingBackupBatchComponent extends BaseComponent impleme
         documentFilingBackupBatchPM.TotalDocuments = 0;
         documentFilingBackupBatchPM.TotalSucceeded = 0;
         service.insert(documentFilingBackupBatchPM).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!res.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
             else {
                 if (res.ErrorsArray && res.ErrorsArray.length > 0) {

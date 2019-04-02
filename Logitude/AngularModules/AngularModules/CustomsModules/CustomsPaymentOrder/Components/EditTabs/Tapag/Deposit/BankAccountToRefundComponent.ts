@@ -48,7 +48,7 @@ export class BankAccountToRefundComponent
         this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
         this.subscribeWrapperComponent()
     }
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.ValidationErrorsList = [];
@@ -295,7 +295,7 @@ export class BankAccountToRefundComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
     FillErrors() {
@@ -357,7 +357,7 @@ export class BankAccountToRefundComponent
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
 
         var currRequestParams = new BankAccountToRefundRequestParams();
         currRequestParams.LoggingEnabled = true;

@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -21,6 +21,7 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
     DataContext: IntegrationSystemsSetting = this;
     ExportQuotationsToIntegratedSystem: boolean = false;
     myTenantPM: TenantPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         
@@ -44,10 +45,10 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
     }
 
     LoadCurrentTenant() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
@@ -62,7 +63,7 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
   
@@ -72,9 +73,9 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
         if (this.myTenantPM) {
             if (this.ExportQuotationsToIntegratedSystem != this.myTenantPM.ExportQuotationsToIntegratedSystem) {
                 this.myTenantPM.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.tenantPMService.update(this.myTenantPM).subscribe(res => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         SessionLocator.TenantPM.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;

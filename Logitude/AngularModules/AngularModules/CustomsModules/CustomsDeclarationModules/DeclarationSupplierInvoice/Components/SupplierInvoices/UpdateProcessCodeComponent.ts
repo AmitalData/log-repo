@@ -20,6 +20,7 @@ export class UpdateProcessCodeComponent extends BaseComponent {
     SupplierInvoicePM: SupplierInvoicePM;
     public ValidationErrorsList: string[] = [];
     IsDisplayOnly: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -100,7 +101,7 @@ export class UpdateProcessCodeComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.ItemsSource = null;
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     IsAddMessageVisible: boolean = false;
@@ -179,7 +180,7 @@ export class UpdateProcessCodeComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
     }
 

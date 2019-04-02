@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Observable}     from 'rxjs/Rx';
 import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
 import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -55,6 +55,7 @@ export class SignStationsComponent
     _PinCodeNum: number = 0;
     _BadCardSelectedNum: number = 0;
     _OKNum: number = 0;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this._entityListService = new EntityListService();
@@ -97,7 +98,7 @@ export class SignStationsComponent
     SignStationGroupList: Array<SignStationGroup> = [];
     RefreshBtnClick() {
         this.IsSearchButtonEnabled = false;
-        //SessionLocator.CurrentSession.StartBusyIndicator("");
+        //this.CurrentSession.StartBusyIndicator("");
 
         setTimeout(() => {
             this._SignStationExtendedListService
@@ -338,7 +339,7 @@ export class SignStationsComponent
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {

@@ -28,6 +28,7 @@ export class HAWBTabComponent implements OnDestroy {
     public ItemsSource1Hidden: boolean = false;
     public ItemsSource2Hidden: boolean = false;
     public IsEditingEnabled: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
                
     }
@@ -64,7 +65,7 @@ export class HAWBTabComponent implements OnDestroy {
     private myService: ShipmentListService;
     private LoadAllHouses() {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             if (this.myService == null) {
                 this.myService = new ShipmentListService();
@@ -205,7 +206,7 @@ export class HAWBTabComponent implements OnDestroy {
                 }
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -244,7 +245,7 @@ export class HAWBTabComponent implements OnDestroy {
     }
 
     RunNewShipment() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
         var windowTitle = "House AWB Wizard";
 

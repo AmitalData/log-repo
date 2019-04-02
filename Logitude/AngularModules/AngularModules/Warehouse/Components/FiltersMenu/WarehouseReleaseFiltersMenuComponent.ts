@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit, Output, EventEmitter} from '@angular/core';
+import {Component, AfterViewInit, Output, EventEmitter} from '@angular/core';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -21,8 +21,9 @@ export class WarehouseReleaseFiltersMenuComponent implements AfterViewInit {
     DirectionFilter_D: string;
     DirectionFilter_I: string;
     DirectionFilter_C: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.TransportFilter_A = "TransportFilter_A_-1_-1";
             this.TransportFilter_O = "TransportFilter_O_-1_-1";
             this.TransportFilter_I = "TransportFilter_I_-1_-1";
@@ -34,8 +35,8 @@ export class WarehouseReleaseFiltersMenuComponent implements AfterViewInit {
         }
 
         else {
-            var index_T = SessionLocator.CurrentSession.GetNewId("WarehouseReleaseTransportFilterMenu");
-            var index_D = SessionLocator.CurrentSession.GetNewId("WarehouseReleaseDirectionFilterMenu");
+            var index_T = this.CurrentSession.GetNewId("WarehouseReleaseTransportFilterMenu");
+            var index_D = this.CurrentSession.GetNewId("WarehouseReleaseDirectionFilterMenu");
             this.TransportFilter_A = "TransportFilter_A" + index_T;
             this.TransportFilter_O = "TransportFilter_O" + index_T;
             this.TransportFilter_I = "TransportFilter_I" + index_T;
@@ -143,7 +144,7 @@ export class WarehouseReleaseFiltersMenuComponent implements AfterViewInit {
 
         if (img_A) {
 
-            SessionLocator.CurrentSession.ChangeSessionHeader({ TransportId: itemValue });
+            this.CurrentSession.ChangeSessionHeader({ TransportId: itemValue });
 
             img_A.setAttribute("src", "./Images/TransportModes/A_g.png");
             img_O.setAttribute("src", "./Images/TransportModes/O_g.png");
@@ -280,7 +281,7 @@ export class WarehouseReleaseFiltersMenuComponent implements AfterViewInit {
 
         if (img_E) {
 
-            SessionLocator.CurrentSession.ChangeSessionHeader({ DirectionId: itemValue });
+            this.CurrentSession.ChangeSessionHeader({ DirectionId: itemValue });
 
             //var img_C = document.getElementById("DirectionFilter_C");
             img_E.setAttribute("src", "./Images/Directions/E_g.png");

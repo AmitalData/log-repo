@@ -98,6 +98,7 @@ implements OnDestroy
     @Output() CustomBackFromEditevent = new EventEmitter();
 
     //constructor(public entityArgs: EntityArgs) {
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService,public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -111,9 +112,9 @@ implements OnDestroy
         this._TabFilterList.push(new TabFilter("HOLD", "Pending", null, null));
         this._TabFilterList.push(new TabFilter("ACC", "מסוף", null, null));
         this._SelectedTabFilter = this._TabFilterList[0];
-        //SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+        //this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
         //this.PseventRowSelectEventSubscribe =
-        //    SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe(
+        //    this.CurrentSession.PseventRowSelectEvent.subscribe(
         //        (res) => {
         //            if (res == "CourierWorksheetListTemplate.SendSplitButton") {
         //                this.preventSelect = true;
@@ -210,7 +211,7 @@ implements OnDestroy
     }
 
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SearchFilter: string; 
@@ -248,7 +249,7 @@ implements OnDestroy
         }
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -258,7 +259,7 @@ implements OnDestroy
 
     }
     SendALLCorrectManifest_OLD(courierDeclarationStatusCode: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         if (courierDeclarationStatusCode == "M") {
             if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
                 var currRequestParams = new SendALLCorrectRequestParams();
@@ -270,7 +271,7 @@ implements OnDestroy
                 currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                 this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
                     .subscribe(res => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
                         myMessageWindow.Show(res.Result);
                         myMessageWindow.WindowClosed.subscribe(s => {
@@ -282,7 +283,7 @@ implements OnDestroy
         else {
             this._CourierMasterService.GetSendALLCorrectManifest(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
                 .subscribe(res => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var myMessageWindow = new MessageWindow();
                     myMessageWindow.Show(res.Result);
                     myMessageWindow.WindowClosed.subscribe(s => {
@@ -304,13 +305,13 @@ implements OnDestroy
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-        SessionLocator.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe(response => {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
             logitudeWindow.Title = "בנק לתשלום";
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             logitudeWindow.ComponentLoaded.subscribe(cmpRef => {
             //    cmpRef.IsClosedLost = true;
             });
@@ -318,7 +319,7 @@ implements OnDestroy
                 let InternalBankId: string = resultWindowClosed;
 
                 if (!AppTool.IsNullOrEmpty(InternalBankId)) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+                    this.CurrentSession.StartBusyIndicatorCreating();
                     if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
                         var currRequestParams = new SendPayReadyLowRequestParams();
                         currRequestParams.LoggingEnabled = true;
@@ -330,7 +331,7 @@ implements OnDestroy
                         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                         this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
                             .subscribe(res => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
                                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -341,7 +342,7 @@ implements OnDestroy
                     else {
                         this._CourierMasterService.GetSendPayReadyLow2755(this.entityPM.Id, this.entityPM.HAWB, InternalBankId)
                             .subscribe(res => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
                                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -398,7 +399,7 @@ implements OnDestroy
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -409,7 +410,7 @@ implements OnDestroy
     }
 
     SendALLCorrectDec_OLD(courierDeclarationStatusCode: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         if (courierDeclarationStatusCode == "M") {
             if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
                 var currRequestParams = new SendALLCorrectRequestParams();
@@ -427,7 +428,7 @@ implements OnDestroy
 
                 this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
                     .subscribe(res => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
                         myMessageWindow.Show(res.Result);
                         myMessageWindow.WindowClosed.subscribe(s => {
@@ -439,7 +440,7 @@ implements OnDestroy
         else {
             this._CourierMasterService.GetSendALLCorrectDec(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
                 .subscribe(res => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var myMessageWindow = new MessageWindow();
                     myMessageWindow.Show(res.Result);
                     myMessageWindow.WindowClosed.subscribe(s => {
@@ -493,8 +494,8 @@ implements OnDestroy
 
                 var selectedEntityId = ids[0];
 
-                SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = true;
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                this.CurrentSession.CurrentWindow.SuppressBusyIndicator = true;
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         var label = "מסך עבודה";//TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -506,8 +507,8 @@ implements OnDestroy
                             ObjectTableName: "Customs.Declaration",
                         });
                         cmpRef.instance.BackCompleted.subscribe(bk => {
-                            if (SessionLocator.CurrentSession != null && SessionLocator.CurrentSession.CurrentWindow != null) {
-                                SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = false;
+                            if (this.CurrentSession != null && this.CurrentSession.CurrentWindow != null) {
+                                this.CurrentSession.CurrentWindow.SuppressBusyIndicator = false;
                             }
                             this.OnBackFromEdit(selectedEntityId, event);
                         });                        //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
@@ -565,10 +566,10 @@ implements OnDestroy
     _CorrectDECToBatchSend = 0;
 
     RefreshStatistic() {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetStatistic(this.entityPM.Id)
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
                 
                 list = res.Result;
@@ -1349,8 +1350,8 @@ implements OnDestroy
                 if (!AppTool.IsNullOrEmpty(currentScreenCode)) {
 
                     if (objectTableName == "Customs.Declaration") {
-                        SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = true;
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        this.CurrentSession.CurrentWindow.SuppressBusyIndicator = true;
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run({
@@ -1359,8 +1360,8 @@ implements OnDestroy
                                     ObjectTableName: objectTableName,
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                                    if (SessionLocator.CurrentSession != null && SessionLocator.CurrentSession.CurrentWindow != null) {
-                                        SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = false;
+                                    if (this.CurrentSession != null && this.CurrentSession.CurrentWindow != null) {
+                                        this.CurrentSession.CurrentWindow.SuppressBusyIndicator = false;
                                     }
                                     this.OnBackFromEdit(selected.DeclarationId, event);
                                 });
@@ -1411,8 +1412,8 @@ implements OnDestroy
                     break;
                 }
         }
-        SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = true;
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        this.CurrentSession.CurrentWindow.SuppressBusyIndicator = true;
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -1421,7 +1422,7 @@ implements OnDestroy
                     ObjectTableName: this.ObjectTableName,
                 })
                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                    SessionLocator.CurrentSession.CurrentWindow.SuppressBusyIndicator = false;
+                    this.CurrentSession.CurrentWindow.SuppressBusyIndicator = false;
                     this._EntityListService.getSingle(this.entityPM.Id, this.ObjectTableName).then((res: any) => {
                         res.subscribe((aa: any) => {
                             this.entityPM = aa.Result;
@@ -1436,10 +1437,10 @@ implements OnDestroy
 
     DeclarationsStatusRequestMethod() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id)
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 //this.RefreshButtonClicked();
@@ -1448,10 +1449,10 @@ implements OnDestroy
 
     SendFTPMamanRequestMethod() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendFTPMamanRequest(this.entityPM.Id)
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
             });

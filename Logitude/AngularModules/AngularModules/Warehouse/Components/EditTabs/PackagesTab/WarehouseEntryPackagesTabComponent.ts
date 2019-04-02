@@ -1,4 +1,4 @@
-﻿
+
 
 declare var System: any;
 declare var window: any;
@@ -23,7 +23,7 @@ export class WarehouseEntryPackagesTabComponent implements OnInit {
 
 
     public warehouseEntryPM: any;
-  
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs)
      {
 
@@ -44,12 +44,12 @@ export class WarehouseEntryPackagesTabComponent implements OnInit {
     SaveCompletedEvent: any;
     Listen() {
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.warehouseEntryPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.warehouseEntryPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                         if (this.WarehouseEntryPackagesDetailsComponent) {
                             var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, IsFromShipment: true, IsEditMode: true };
@@ -61,9 +61,9 @@ export class WarehouseEntryPackagesTabComponent implements OnInit {
             }   
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.warehouseEntryPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.warehouseEntryPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }

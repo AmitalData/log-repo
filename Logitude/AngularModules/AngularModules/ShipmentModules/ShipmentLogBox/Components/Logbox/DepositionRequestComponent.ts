@@ -1,4 +1,4 @@
-﻿declare var CopyText: any;
+declare var CopyText: any;
 
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
@@ -29,6 +29,7 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
    shipmentComputedFieldExtendedService: ShipmentComputedFieldExtendedService;
     ShipmentId: string;
     VendorCodeId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
   
@@ -77,13 +78,13 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
 
     MarkAsComplete() {
         if (!AppTool.IsNullOrEmpty(this.ShipmentId)) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
             this.shipmentComputedFieldExtendedService.GetMarkCompleteDepositionRequest(this.ShipmentId, this.DirectionId , this.ForwardershipmentNumber , this.ForwarderPartnerId).subscribe(myResult => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var pmResponse: ServiceResponse = myResult;
                 if (!pmResponse.HasError) {
-                    SessionLocator.CurrentSession.CurrentWindow.Close("DepositionRequest");
+                    this.CurrentSession.CurrentWindow.Close("DepositionRequest");
                 } else {
                   
                     if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
@@ -100,7 +101,7 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

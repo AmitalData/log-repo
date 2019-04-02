@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivityNoteItem} from './ActivityGeneralTabComponent';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -20,7 +20,7 @@ export class AddEditActivityNotesComponent {
     public DataContext: ActivityNoteItem;
     public ObjectTableName: string = "ActivityNote";
     public ValidationErrorsList: string[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -35,7 +35,7 @@ export class AddEditActivityNotesComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -77,7 +77,7 @@ export class AddEditActivityNotesComponent {
             }
             this.DataContext.father.BuildNotes();
         }
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     private myCloner: Cloner;

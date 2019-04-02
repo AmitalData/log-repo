@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy, Output, EventEmitter, AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, OnDestroy, Output, EventEmitter, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../Infrastructure/Tools'
 import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
@@ -52,19 +52,20 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
     @Output() ComboBoxDropDownClicked: EventEmitter<any> = new EventEmitter();
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd:ChangeDetectorRef) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
         this.ItemsSource = [];
 
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.ControlId = "ComboBox_-1_-1";
             this.DropdownId = "Dropdown_-1_-1";
             this.ListControlId = "List_-1_-1";
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("ComboBox");
+            var idIndex = this.CurrentSession.GetNewId("ComboBox");
             this.ControlId = "ComboBox_" + idIndex;
             this.DropdownId = "Dropdown_" + idIndex;
             this.ListControlId = "List_" + idIndex;
@@ -81,9 +82,9 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             this.SetSelectedItemFromValue();
         }
 
-        if (SessionLocator.CurrentSession) {
-            if (SessionLocator.CurrentSession.MouseDownEvent) {
-                this.MouseDownEvent = SessionLocator.CurrentSession.MouseDownEvent.subscribe(s => {
+        if (this.CurrentSession) {
+            if (this.CurrentSession.MouseDownEvent) {
+                this.MouseDownEvent = this.CurrentSession.MouseDownEvent.subscribe(s => {
                     if (s) {
                         if (this.IsOpened) {
                             if (this.IsMouseOverControl == false) {
@@ -101,7 +102,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             var element = document.getElementById(this.ControlId);
             element.focus();
 
-            SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id });
+            this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id });
             //this.timerToken = setTimeout(() => {
             //    SelectingElement(element);
             //}, 1);

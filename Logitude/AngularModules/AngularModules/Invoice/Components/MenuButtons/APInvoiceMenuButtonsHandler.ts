@@ -15,6 +15,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 export class APInvoiceMenuButtonsHandler {
+    private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: APInvoicePM;
     public entityArgs: EntityArgs
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -439,12 +440,12 @@ export class APInvoiceMenuButtonsHandler {
 
             if (this.isValid) {
                 if (this.EntityPM.MainEntityId) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
 
                     var myService = new InvoiceDomainService();
                     myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
                             var IsAccountingClosed = myResponse.Result;
@@ -522,12 +523,12 @@ export class APInvoiceMenuButtonsHandler {
             if (this.isValid) {
 
                 if (this.EntityPM.MainEntityId) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
 
                     var myService = new InvoiceDomainService();
                     myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
                             var IsAccountingClosed = myResponse.Result;

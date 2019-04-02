@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {QueryPM} from '../../../../../Infrastructure/EntityPMs/QueryPM';
 import {LogEvents} from '../../../../../Infrastructure/Utilities/LogEvents';
 import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -22,9 +22,10 @@ export class ConditionFilterField extends BaseComponent {
     iswidnowMode: boolean = false;
     RuleId: string;
     public ControlId: string = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(objectField: ObjectFieldPM, ruleId: string, iswidnowMode: boolean, ruleConditionFieldPMs: RuleConditionFieldPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
-        this.ControlId = "CheckBox_" + SessionLocator.CurrentSession.GetNewId("CheckBox");
+        this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
         this.RuleId = ruleId;
         this.Filterchangeevent = filterchangeevent;
         this.ParentClass = parentClass;

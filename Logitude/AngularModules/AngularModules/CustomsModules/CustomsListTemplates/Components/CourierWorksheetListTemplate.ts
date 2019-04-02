@@ -78,16 +78,16 @@ export class CourierWorksheetListTemplate {
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
 
     FirePreventSelect() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
+        this.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
     }
     FireUnSelect() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("FireUnSelect");
+        this.CurrentSession.PseventRowSelectEvent.emit("FireUnSelect");
     }
 
     //  @ViewChild( SplitButtonComponent)  public MySplitButtonComponent: SplitButtonComponent = new SplitButtonComponent(null,null);
     //@ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
     //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {
 
     }
@@ -253,7 +253,7 @@ export class CourierWorksheetListTemplate {
                 _SendManifestService.Run({ EntityPM: entitypm, ObjectTable: objectTable, CourierWorksheetmode: true });
                 _SendManifestService.OnSuccessSendMethod =
                     (res1) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
                         this.RefreshData();
                     };
@@ -286,7 +286,7 @@ export class CourierWorksheetListTemplate {
                 _SendDeclarationService.Run({ EntityPM: entitypm, ObjectTable: objectTable, CourierWorksheetmode: true });
                 _SendDeclarationService.OnSuccessSendMethod =
                     (res1) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
                         this.RefreshData()
                     };
@@ -315,10 +315,10 @@ export class CourierWorksheetListTemplate {
 
     GetSendECTHRDataMaman(event) {
         this.ButtonClick(event);
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 let mess = "";
                 if (res.HasError) {
@@ -335,7 +335,7 @@ export class CourierWorksheetListTemplate {
 
 
         let BackButtonLabel = "תיק עמילות"
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 //this.SelectionChanged(myDeclarationEditTab);
                 cmpRef.instance.ComponentRef = cmpRef;
@@ -481,11 +481,11 @@ export class CourierWorksheetListTemplate {
   }
 
     DeletePending(declarationCourierStatusPM: DeclarationCourierStatusPM) {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         declarationCourierStatusPM.CourierPendingReasonCode = null;
         declarationCourierStatusPM.PendingRemarks = null;
         this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
           this.RefreshData();
         });
     }
@@ -579,7 +579,7 @@ export class CourierWorksheetListTemplate {
         confirm.WindowClosed.subscribe((event: any) => {
             if (confirm.Yes) {
                 this._IsDropdownMenuFilterReady = false;
-                SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+                this.CurrentSession.StartBusyIndicatorCreating();
                 if (actionCode == "U") {
                     var declarationMamanSpecialActionPM: DeclarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
                     declarationMamanSpecialActionPM.Tenant = SessionLocator.Tenant;
@@ -589,7 +589,7 @@ export class CourierWorksheetListTemplate {
                     this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe(res => {
                         this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
                             .subscribe((myResponse: ServiceResponse) => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(myResponse.Result);
                             });
@@ -598,7 +598,7 @@ export class CourierWorksheetListTemplate {
                 else {
                     this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "C", mamanSpecialActionCode)
                         .subscribe((myResponse: ServiceResponse) => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             var myMessageWindow = new MessageWindow();
                             myMessageWindow.Show(myResponse.Result);
                         });

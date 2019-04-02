@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplateSectionPM} from '../../../Quote/EntityPMs/QuoteTemplateSectionPM';
@@ -51,7 +51,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
     IsSaveQuoteTemplateTextDesignRuning: boolean = false;
     IsSaveQuoteTemplateTableDesignRuning: boolean = false;
     IsSaveQuoteTemplateTextCodeRuning: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -138,7 +138,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     LoadData() {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.QuoteTemplateTextDesignPMLists = [];
         this.LoadTableDesign();
     }
@@ -170,7 +170,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
         this.quoteTemplateTextDesignExtendedPMService.GetQuoteTemplateTextDesignPMListByIds(ids, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.QuoteTemplateTextDesignPMLists = pmResponse.Result;
 
@@ -223,7 +223,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
         if (this.IsSaveQuoteTemplateTextDesignRuning || this.IsSaveQuoteTemplateTableDesignRuning || this.IsSaveQuoteTemplateTextCodeRuning) {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
@@ -240,8 +240,8 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
                 this.SaveQuoteTemplateSetting();
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
 
@@ -285,7 +285,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
     }
 
     SaveQuoteTemplateSetting() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
             this.QuoteTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();
@@ -317,16 +317,16 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     SaveCompleted() {
         if (!this.IsSaveQuoteTemplateTextDesignRuning && !this.IsSaveQuoteTemplateTableDesignRuning && !this.IsSaveQuoteTemplateTextCodeRuning) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.Close("Refresh");
 
         }
 
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.Close("");
     }
 }
 

@@ -23,6 +23,8 @@ export class OpenFormatReportMenuButtonsHandler {
     DocumentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     documentType: any;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -144,11 +146,11 @@ export class OpenFormatReportMenuButtonsHandler {
     
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 }
 

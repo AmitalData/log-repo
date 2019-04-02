@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -204,7 +204,7 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         listArgs.BackButtonTitle = "Back";
         listArgs.ShowViews = false;
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
@@ -214,6 +214,7 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
     private RejectChanges() {
         this.myCloner.RejectChanges();
     }
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -293,9 +294,9 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
     }
 
     UpdateActualData() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Updating ..");
+        this.CurrentSession.StartBusyIndicator("Updating ..");
         this.commonDomainService.GetUpdateCustomerActualData(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!response.HasError) {
                 this.LoadCutomerProducts();
             }

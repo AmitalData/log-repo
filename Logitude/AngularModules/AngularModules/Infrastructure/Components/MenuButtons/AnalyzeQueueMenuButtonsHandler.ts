@@ -17,6 +17,7 @@ export class AnalyzeQueueMenuButtonsHandler {
         //this.Listen();
     }
 
+    private CurrentSession = SessionLocator.SelectedSession;
     isButtonClicked: boolean = false;
     StopFlags() {
         this.isButtonClicked = false;
@@ -61,13 +62,13 @@ export class AnalyzeQueueMenuButtonsHandler {
 
     ResendButtonClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Resending...");
+        this.CurrentSession.StartBusyIndicator("Resending...");
 
         this.iService.ResendAnalyzeQueue(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
 
             this.StopFlags();
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 }

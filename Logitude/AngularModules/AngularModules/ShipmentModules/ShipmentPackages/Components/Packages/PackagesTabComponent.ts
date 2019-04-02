@@ -45,7 +45,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsShippingInstructionsVisible: boolean = false;
     @Output() ReloadDetails = new EventEmitter();
     warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -65,7 +65,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "AWBWizardClosed") {
                     this.SetUIProperties();
                     this.SetGenerateData();
@@ -98,7 +98,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             });
 
 
-            this.CrossDockReleasesEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.CrossDockReleasesEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "CrossDockReleases") {
                     this.SetGenerateData();
                 }
@@ -178,7 +178,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.SetGenerateData();
         this.BuildItemsSource();
 
-        SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "UpdatePackagesTab") {
                 this.SetGenerateData();
             }
@@ -923,12 +923,12 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
     BuildButtonClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myDomainService = new ShipmentDomainService();
 
         myDomainService.GetShipmentConsolidationPackages(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse != null) {
                 if (!myResponse.HasError) {
@@ -1363,6 +1363,7 @@ export class ShipmentPackageItem extends BaseComponent {
     public Row: any;
     public IsCommodityNameVisible: boolean = false;
     public IsCommodityNumberVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: ShipmentPackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -2281,7 +2282,7 @@ export class ShipmentPackageItem extends BaseComponent {
         item.PackageId = this.EntityPM.Id;
         item.LineNumber = this.maxPackageItemsLineNumber;
         this.PackageItemsList.Insert(new PackageItem(item, this, true));
-        //SessionLocator.CurrentSession.LogitudeGridHelper.ResetRowIndex();
+        //this.CurrentSession.LogitudeGridHelper.ResetRowIndex();
     }
     OnRowEnded($event) { 
         var errors = [];
@@ -2290,7 +2291,7 @@ export class ShipmentPackageItem extends BaseComponent {
         //if (errors != null && errors.length == 0) {
             if (($event) == this.PackageItemsList.Length) {
                 this.AddPackageItemMethod();
-                //SessionLocator.CurrentSession.ResetRowIndex();
+                //this.CurrentSession.ResetRowIndex();
             }
         //}
     }
@@ -2520,7 +2521,7 @@ export class ShipmentPackageItem extends BaseComponent {
                 this.SaveCompletedEvent = null;
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
     ShowActionsWindow(typeCode: string) {

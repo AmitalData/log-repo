@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
+import {Component, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
@@ -23,6 +23,7 @@ export class FSRWizardComponent implements AfterViewInit {
     public ValidationWarningsList: string[];
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.ValidationErrorsList = [];
         this.ValidationWarningsList = [];
@@ -78,13 +79,13 @@ export class FSRWizardComponent implements AfterViewInit {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private myService: ShipmentPMService = null;
     public ReloadEntity() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myService == null) {
             this.myService = new ShipmentPMService();
@@ -95,13 +96,13 @@ export class FSRWizardComponent implements AfterViewInit {
                 if (!myResponse.HasError) {
                     this.EntityPM = myResponse.Result;
                     this.LoadCompleted.emit(true);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                     this.LoadCompleted.emit(false);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

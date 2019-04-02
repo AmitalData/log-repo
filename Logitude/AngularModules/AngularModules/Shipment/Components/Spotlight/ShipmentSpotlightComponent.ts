@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ShipmentTool} from '../../Tools';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
@@ -19,6 +19,7 @@ export class ShipmentSpotlightComponent {
     public EntityPM: ShipmentPM;
     public ItemsCollection: LegItem[];
     public IsInlandDomestic: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -33,7 +34,7 @@ export class ShipmentSpotlightComponent {
     set ShowBusyIndicator(value: boolean) {
         if (this.showBusyIndicator != value) {
             this.showBusyIndicator = value;
-            SessionLocator.CurrentSession.FireEvent("SpotLightDetectChanges");
+            this.CurrentSession.FireEvent("SpotLightDetectChanges");
         }
     }
 
@@ -224,7 +225,7 @@ export class ShipmentSpotlightComponent {
     }
 
     ViewEntityClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.EntityId, ObjectTableName: 'Shipment' });
@@ -233,7 +234,7 @@ export class ShipmentSpotlightComponent {
                 //cmpRef.instance.BackCompleted.subscribe(bk => {
                 //    if (isEditComponentSaved) {
                 //        this.isLoadHousesRequested = true;
-                //        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                //        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 //    }
                 //});
 

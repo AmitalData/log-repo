@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfrastructureDomainService} from '../../../../Infrastructure/Services/InfrastructureDomainService';
@@ -12,6 +12,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 export class RoleFeaturesEventsComponent {
     public ItemsSource: any[] = [];
     private myDomainService: InfrastructureDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myDomainService = new InfrastructureDomainService();
     }
@@ -36,6 +37,6 @@ export class RoleFeaturesEventsComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

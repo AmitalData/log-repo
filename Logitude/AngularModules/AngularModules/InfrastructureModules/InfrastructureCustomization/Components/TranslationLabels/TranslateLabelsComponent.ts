@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -24,10 +24,11 @@ export class TranslateLabelsComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public ComponentId: string;
     TranslateLablesService: TranslateLablesService;
-    public HasChanges: boolean = false;  
+    public HasChanges: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.ComponentId = "TranslateLabels_" + SessionLocator.CurrentSession.GetNewId("TranslateLabels");
+        this.ComponentId = "TranslateLabels_" + this.CurrentSession.GetNewId("TranslateLabels");
 
         this.TranslateLablesService = new TranslateLablesService();
         this.ItemsSource = new ObservableCollection([]);
@@ -44,7 +45,7 @@ export class TranslateLabelsComponent extends BaseComponent {
     }
 
     LoadAllTranslationMethod() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myServiceHelper = new TranslateLabelsAPIHelper();
         myServiceHelper.Language = this.selectedLanguageCode;
@@ -60,7 +61,7 @@ export class TranslateLabelsComponent extends BaseComponent {
         this.TranslateLablesService.Post(myServiceHelper).subscribe((myResult: ServiceResponse) => {
             if (myResult.HasError) {
                 this.ValidationErrorsList = myResult.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
@@ -93,7 +94,7 @@ export class TranslateLabelsComponent extends BaseComponent {
     private itemsCollection: TranslateLabelsItem[];
     private filterdranslationsList: FieldsTranslations[];
     BuildData() { 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.ItemsSource = new ObservableCollection([]);
         this.itemsCollection = [];
@@ -129,7 +130,7 @@ export class TranslateLabelsComponent extends BaseComponent {
 
         this.CountText = resultStart + " of " + this.TextCodesCount;
         
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
         this.HasChanges = false;
     }
     
@@ -313,14 +314,14 @@ export class TranslateLabelsComponent extends BaseComponent {
         }
     }
     CloseWindow() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveChanges(isClosing: boolean = false) {
         var list: FieldsTranslations[] = this.GetDirtyFieldsTranslations();
 
         if (list.length > 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var myServiceHelper = new FieldsUpdateHelper();
             myServiceHelper.Tenant = SessionLocator.Tenant;
@@ -329,13 +330,13 @@ export class TranslateLabelsComponent extends BaseComponent {
             var generalService: GeneralDomainService = new GeneralDomainService();
             generalService.UpdateFieldsTranslations(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
                     CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                     });
                 }
             });

@@ -26,6 +26,7 @@ export class QuoteDimensionsComponent {
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     public IsPackageTypeVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {  
              
     }
@@ -230,11 +231,11 @@ export class QuoteDimensionsComponent {
         this.EntityPM.VolumetricWeight = this.savedVolumetricWeight;
         this.EntityPM.NumberOfPackages = this.savedNumberOfPackages;
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 }
 export class DimensionsPackageItem extends BaseComponent {
@@ -244,6 +245,7 @@ export class DimensionsPackageItem extends BaseComponent {
     public ObjectTableName: string = "QuotePackage";
     public IsWindowMode: boolean = false;
     public IsPackageTypeVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityPM: QuotePackagePM, public fatherComponent: QuoteDimensionsComponent) {
         super();
         this.EntityPM = entityPM;

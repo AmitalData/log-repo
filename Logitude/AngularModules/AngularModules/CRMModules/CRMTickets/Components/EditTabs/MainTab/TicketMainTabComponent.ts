@@ -55,7 +55,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     public TicketCommunicationLogs: CommunicationLogPM[] = [];
     private ContactListService: ContactListService; 
     EntityId: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public  _entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -95,7 +95,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.ReloadhData();
                 }
             });
@@ -117,7 +117,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
         myService.get(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
-                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM = this.EntityPM;
+                this.CurrentSession.CurrentEditComponent.EntityPM = this.EntityPM;
                 this.entityArgs.EditComponent.ReloadEntityPM();
                 if (this.PageChild_DS != null) {
                     this.PageChild_DS.RefreshTab(this);
@@ -522,7 +522,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
         var validator: TicketValidator = new TicketValidator();
         var errors = validator.ValidateCurrenctEntity(this.EntityPM);
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = null;
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = null;
             if (this.code != null) {
                 var isInternal = false;
                 var windowTitle;
@@ -548,8 +548,8 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
             }
         }
         else {
-            if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            if (this.CurrentSession.CurrentEditComponent != null) {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             }
         }
     }
@@ -721,12 +721,12 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     private IsReload = false; 
     RefreshData() {
         this.IsReload = true;
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
     
     RefreshButtonClicked() {
         this.IsRefreshButton = true;
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
     ReLoadTicket() {
         this.LoadCommunicationLogsList();
@@ -739,7 +739,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
     public trigger: TicketMainTabComponent;
     public DataContext: CorrespondenceViewModelData = this;
     public ImageSrc: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: CorrespondencePM, trigger: TicketMainTabComponent) {
         super();
         this.entityPM = item;
@@ -751,7 +751,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
         this.RunComponentTimer();
         this.GetFlowDirection();
         this.RefreshTextAlgimentVariables();
-        var idIndex = SessionLocator.CurrentSession.GetNewId("TextArea");
+        var idIndex = this.CurrentSession.GetNewId("TextArea");
         this._TextAreaId = "TextArea_" + idIndex;
         this._TextAreaId2 = "TextArea_2" + idIndex;
         this.timerToken = setTimeout(() => this.GetRecipients(), 1);
@@ -1160,7 +1160,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
 
     EditActivity() {
         this.trigger._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.entityPM.ActivityId, ObjectTableName: "Activity", BackButtonLabel: "Tickets" });
@@ -1197,7 +1197,7 @@ export class TicketDocumentDataArgs {
 export class ActivityItemClass extends BaseComponent {
     public entity: ActivityList;
     public EntityId: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: ActivityList, public father: TicketMainTabComponent) {
         super();
         this.entity = item;
@@ -1474,7 +1474,7 @@ export class ActivityItemClass extends BaseComponent {
     ViewEntity(entity) {
         if (!AppTool.IsNullOrEmpty(entity)) {
             this.father._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: "Activity", BackButtonLabel: "Tickets" });

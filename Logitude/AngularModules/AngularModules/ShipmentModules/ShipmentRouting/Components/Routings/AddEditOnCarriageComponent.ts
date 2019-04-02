@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool, FontTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool, RoutingHelper} from '../../../../Shipment/Tools';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -37,6 +37,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     public ItemsSource: OnCarriagePackageItem[] = [];
     public DepartureHeader: string = "Departure";
     public ArrivalHeader: string = "Arrival";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.InitServices();
@@ -406,7 +407,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -464,7 +465,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             }
 
             this.FatherComponent.BuildItemsCollection();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
@@ -594,7 +595,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
                 this.EntityPM.AddShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
 
         this.ItemsSource.forEach(item => {

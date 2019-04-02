@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../infrastructure/Utilities/featurelocator.ts" />
+/// <reference path="../../../infrastructure/Utilities/featurelocator.ts" />
 import {Component, Output, EventEmitter} from '@angular/core';
 import {CRMDomainService, CRMSummary} from '../../Services/CRMDomainService';
 import {OpportunityList} from '../../EntityLists/OpportunityList';
@@ -32,9 +32,10 @@ export class OpportunityWorkspaceComponent extends BaseComponent {
     public DataContext = this;
     public QuickSearchItems: OpportunityList[] = [];
     @Output() ReloadUserQueries = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.SalesFunnelId = "SalesFunnel_" + SessionLocator.CurrentSession.GetNewId("SalesFunnel");
+        this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
         this.InitializeServices();
         this.SetQueriesVisibility();
         this.LoadNonFilteredQueries();
@@ -787,18 +788,18 @@ export class OpportunityWorkspaceComponent extends BaseComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
     }
 
     EditOpportunity(entity: any) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Opportunity', BackButtonLabel: "Opportunity" });
@@ -900,12 +901,12 @@ export class OpportunityWorkspaceComponent extends BaseComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });;
         }
     }

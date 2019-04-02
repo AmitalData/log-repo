@@ -195,7 +195,7 @@ export class InterfaceManagementComponent implements OnInit {
             .getByFilters("Customs.InterfaceManagement", filters);
         myout.then(res => {
             this._stratSearch = false;
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
         });
 
         return myout;
@@ -231,7 +231,7 @@ export class InterfaceManagementComponent implements OnInit {
     }
     RefreshBtnClick() {
         this._stratSearch = true;
-        //SessionLocator.CurrentSession.StartBusyIndicator("");
+        //this.CurrentSession.StartBusyIndicator("");
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);

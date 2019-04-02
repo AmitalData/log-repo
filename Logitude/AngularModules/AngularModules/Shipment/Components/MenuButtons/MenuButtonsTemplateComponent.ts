@@ -1,4 +1,4 @@
-﻿import {Component, EventEmitter, Output, ComponentRef} from '@angular/core';
+import {Component, EventEmitter, Output, ComponentRef} from '@angular/core';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -26,7 +26,7 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
     @Output() ReopenDone: EventEmitter<string> = new EventEmitter<string>();
     @Output() SaveClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityPMService: EntityPMService) {
         super();
     }
@@ -47,7 +47,7 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
     }
     public EnabledOkButton: boolean = true;
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     OkButtonClicked() {
@@ -59,7 +59,7 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
         if (errors.length == 0) {
             //this.SaveClicked.emit(true);
             this.ReopenDone.emit(this.EventNotes);
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("confirm");
+            this.CurrentSession.CloseCurrentWindowEmit("confirm");
         }
     }
 
@@ -80,11 +80,11 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
     private SaveEntityChanges(isClosing: boolean) {
         if (this.EntityPM.IsDirty) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {
                 res.subscribe(response => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     var mm: EntityPMServiceResponse = response;
                     if (!mm.HasError) {
@@ -104,7 +104,7 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
 
                 }, error => {
                     console.log("Error===========>", error);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             });
         }

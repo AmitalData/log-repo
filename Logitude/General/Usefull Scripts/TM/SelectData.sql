@@ -1,3 +1,6 @@
+--select * from Contacts where Email like '%maheera%'
+
+--select count(*) from TMEmployeeTimes where SprintId is null
 
 -- [Ayman]
 
@@ -54,7 +57,7 @@ declare @TotalsTable table
   PerProjectTime_HasProject varchar(10)
 )
 
-set @UserId = (select top 1 Id from Contacts where Email = @Email)
+set @UserId = (select top 1 Id from Contacts where Email = @Email and Tenant = 1489)
 set @EndOfMonth = (SELECT DATEADD(month, ((@Year - 1900) * 12) + @Month, -1))
 set @StartOfMonth = (SELECT DATEADD(month, DATEDIFF(month, 0, @EndOfMonth), 0))
 set @EndOfMonth = (SELECT DATEADD(HOUR, 23, @EndOfMonth))
@@ -91,6 +94,7 @@ set @OverTime = convert(varchar,@OverTimeMinutes / 60) + ':' + convert(varchar,@
 set @PerProjectTime = convert(varchar,@PerProjectMinutes / 60) + ':' + convert(varchar,@PerProjectMinutes % 60)
 set @PerProjectTime_NoProject = convert(varchar,@PerProjectMinutes_NoProject / 60) + ':' + convert(varchar,@PerProjectMinutes_NoProject % 60)
 set @PerProjectTime_HasProject = convert(varchar,@PerProjectMinutes_HasProject / 60) + ':' + convert(varchar,@PerProjectMinutes_HasProject % 60)
+
 
 insert into @TotalsTable
 (

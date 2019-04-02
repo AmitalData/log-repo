@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {SessionInfo} from '../../Utilities/SessionInfo';
@@ -34,6 +34,7 @@ export class UsersQueryList implements OnInit {
     ReloadUserQueries: EventEmitter<any>;
     ShowNoViews: boolean = false;
     // public SearchTextValue: Control;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -64,12 +65,12 @@ export class UsersQueryList implements OnInit {
             listArgs.BackButtonTitle = this.BackButtonTitle != "" && this.BackButtonTitle != null ? this.BackButtonTitle : "Back";
             listArgs.MethodName = MethodName;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.BackCompletedEvent.emit("Completed"));
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
     }

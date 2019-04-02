@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {Component, OnInit}  from '@angular/core';
@@ -25,7 +25,7 @@ export class SaveAsTemplateComponent implements OnInit {
     Description: string;
 
     private documentTypeTemplatePMService: DocumentTypeTemplatePMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
         if (this.documentTypeTemplatePMService == null) {
@@ -59,7 +59,7 @@ export class SaveAsTemplateComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -72,7 +72,7 @@ export class SaveAsTemplateComponent implements OnInit {
         }
         else {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             var newTemplatePM: any = null;
 
             if (this.PageType == "ReportTemplate") {
@@ -89,14 +89,14 @@ export class SaveAsTemplateComponent implements OnInit {
                 var reportsTemplatePMExtendedService: ReportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
                 reportsTemplatePMExtendedService.CreateReportTemplate(newTemplatePM).subscribe((res: any) => {
 
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     var pmResponse: ServiceResponse = res;
 
 
                     if (!pmResponse.HasError) {
                         var result = pmResponse.Result;
                         if (result) {
-                            SessionLocator.CurrentSession.CurrentWindow.Close(result.Id);
+                            this.CurrentSession.CurrentWindow.Close(result.Id);
                         }
                     }
                     else {
@@ -141,7 +141,7 @@ export class SaveAsTemplateComponent implements OnInit {
 
                     if (myResult) {
 
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (myResult.HasError) {
 
                             myResult.ErrorsArray.forEach((item) => {
@@ -155,7 +155,7 @@ export class SaveAsTemplateComponent implements OnInit {
                                     this.DataContext.DocumentTypeTemplatePMLists.push(myResult.Result);
                                 }
 
-                                SessionLocator.CurrentSession.CurrentWindow.Close(myResult.Result.Id);
+                                this.CurrentSession.CurrentWindow.Close(myResult.Result.Id);
 
 
                             }

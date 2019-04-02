@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -22,7 +22,7 @@ export class ActionValidationComponent {
   
     public ValidationErrorsList: string[];
     public ValidationWarningsList: string[];
-   
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ValidationErrorsList = [];
         this.ValidationWarningsList = [];
@@ -67,12 +67,12 @@ export class ActionValidationComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     ConfirmClicked() {
 
-       // SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+       // this.CurrentSession.StartBusyIndicator("Saving...");
  
         var errors: string[] = [];//this.ValidateSending();
 
@@ -83,12 +83,12 @@ export class ActionValidationComponent {
             //this.myCCSWebService.GetSendingValidations(this.entityPM.Id, this.SelectedRecipient, this.isSendingFHLs, this.isSendingCargonaut, this.isSendingDEXX, this.entityPM.MainCarriageCarrierId).subscribe((myResponse: ServiceResponse) => {
 
             //    if (myResponse == null) {
-            //        SessionLocator.CurrentSession.StopBusyIndicator();
+            //        this.CurrentSession.StopBusyIndicator();
             //    }
 
             //    else if (myResponse.HasError) {
             //        this.ValidationErrorsList = myResponse.ErrorsArray;
-            //        SessionLocator.CurrentSession.StopBusyIndicator();
+            //        this.CurrentSession.StopBusyIndicator();
             //    }
 
             //    else {
@@ -119,14 +119,14 @@ export class ActionValidationComponent {
             //                this.SendingResultMessage = "Error sending " + this.MessageType;
             //            }
 
-            //            SessionLocator.CurrentSession.StopBusyIndicator();
+            //            this.CurrentSession.StopBusyIndicator();
             //        }
             //    }
             //});
         }
 
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 }

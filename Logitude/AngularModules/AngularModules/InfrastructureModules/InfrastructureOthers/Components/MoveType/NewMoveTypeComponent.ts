@@ -1,4 +1,4 @@
-﻿import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
+import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {Component} from '@angular/core';
 import {MoveTypePM} from '../../../../Infrastructure/EntityPMs/MoveTypePM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -23,6 +23,7 @@ export class NewMoveTypeComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public MoveTypePM: MoveTypePM;
     public MoveTypePMService: MoveTypePMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.EntityPM = new MoveTypePM();
@@ -57,16 +58,16 @@ export class NewMoveTypeComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
             this.MoveTypePMService.insert(this.MoveTypePM).subscribe(res => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
                     if (myResult) {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                 }
                 else {
@@ -102,7 +103,7 @@ export class NewMoveTypeComponent extends BaseComponent {
 
     CancelButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 }

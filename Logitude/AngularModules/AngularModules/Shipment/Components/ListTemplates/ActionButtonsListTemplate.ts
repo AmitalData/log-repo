@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -40,6 +40,7 @@ export class ActionButtonsListTemplate {
     public HasSharedDocs: boolean = true;
     public _ShipmentPMService: ShipmentPMService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         if (SessionLocator.PrivateLableSettings) {
@@ -72,22 +73,22 @@ export class ActionButtonsListTemplate {
     }
 
     CancelButtonClicked() {
-        //SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        //this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Title = "Confirm Deletion";
                 confirmWindow.Show("Are you sure you want to cancel this Shipment ?");
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        SessionLocator.CurrentSession.StartBusyIndicator("Loading ..")
+                        this.CurrentSession.StartBusyIndicator("Loading ..")
                         myResult.Result.IsCancelled = true;
                         this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
-                            SessionLocator.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
-                            SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                            this.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                            this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                         });
                     }
 
@@ -100,8 +101,8 @@ export class ActionButtonsListTemplate {
     }
 
     ConnectButtonClicked() {
-        //SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        //this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
                 if (SessionLocator.PrivateLableSettings) {
@@ -112,7 +113,7 @@ export class ActionButtonsListTemplate {
                         else {
                             this.HasSharedDocs = true;
                         }
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         var newWindow = new LogitudeWindow();
                         newWindow.Width = 1050;
                         newWindow.Height = 700;
@@ -129,12 +130,12 @@ export class ActionButtonsListTemplate {
                         newWindow.WindowArgs = windowArgs;
                         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/ForwarderShipmentsComponent');
                         newWindow.WindowClosed.subscribe(($event: any) => {
-                            SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                            this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                         });
                     });
                 }
                 else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var newWindow = new LogitudeWindow();
                     newWindow.Width = 1050;
                     newWindow.Height = 700;
@@ -151,7 +152,7 @@ export class ActionButtonsListTemplate {
                     newWindow.WindowArgs = windowArgs;
                     newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/ForwarderShipmentsComponent');
                     newWindow.WindowClosed.subscribe(($event: any) => {
-                        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                        this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                     });
                 }
             }
@@ -160,11 +161,11 @@ export class ActionButtonsListTemplate {
     }
 
     EditButtonClicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();
                 newWindow.Width = 600;
                 newWindow.Height = 350;
@@ -182,9 +183,9 @@ export class ActionButtonsListTemplate {
                     newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
                 }
                 newWindow.WindowClosed.subscribe(($event: any) => {
-                    SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                    this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                     if ($event == "MyShipmentAdded") {
-                        SessionLocator.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                        this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
                     }
                 });
             }

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
 import {ARInvoiceLineItem} from './ARInvoiceDetailsTabNormal';
@@ -18,6 +18,7 @@ export class AddEditARInvoiceLineComponent {
     public ObjectTableName = "ARInvoiceLine";
     public DataContext: ARInvoiceLineItem;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -40,7 +41,7 @@ export class AddEditARInvoiceLineComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -102,7 +103,7 @@ export class AddEditARInvoiceLineComponent {
         });
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
