@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Courier Status",
-			      				    Code =  "d74b",
+			      				    Code =  "3e7f",
 			      				    Name =  "Customs.DeclarationCourierStatus Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1089,10 +1089,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterCode",
 					  						DefaultText =  "Importer Code",
-					  						FullLocalDefaultText =  "ח.פ",
+					  						FullLocalDefaultText =  "ח.פ/ת.ז",
 					  						ListFieldLable =  "ImporterCodeListLable",
 					  						ListLableDefaultText =  "Importer",
-					  						ListLocalDefaultText =  "ח.פ",
+					  						ListLocalDefaultText =  "ח.פ/ת.ז",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3071,6 +3071,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FastIndividualProcessCode",
+					  						OldFieldName =  "FastIndividualProcessCode",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -3091,6 +3092,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FastIndividualProcessCode",
 					  						ListPropertyPath =  "FastIndividualProcessCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3134,6 +3136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ManualProcessCode",
+					  						OldFieldName =  "ManualProcessCode",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -3154,6 +3157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ManualProcessCode",
 					  						ListPropertyPath =  "ManualProcessCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3197,6 +3201,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TerminalSuspentionNumber",
+					  						OldFieldName =  "TerminalSuspentionNumber",
+					  						IsNew =  false,
+					  						IsChecked =  false,
+					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationCourierStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3221,8 +3229,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.DeclarationCourierStatus",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TerminalSuspentionNumber",
@@ -3240,6 +3254,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
