@@ -130,6 +130,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                             pointerLevel = myCustomDocumentType.PointerLevel;
                         }
                     }
+                    AppendLogLine("Update Ticket before pointer:");
                     myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
 
 
@@ -155,12 +156,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     }
 
                     customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
+                    AppendLogLine("Update pointer:");
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
                     CustomsDocumentsTicketPM myCustomsDocumentsTicketPM = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(customsDocumentsTicketPM.DocumentsFilingId, _MyDeclarationPM.Tenant).FirstOrDefault();
                     myCustomsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
+                    AppendLogLine("Update Ticket after pointer:");
                     myCustomsDocumentsTicketUpdateService.Update(myCustomsDocumentsTicketPM, true);
-
+                    AppendLogLine("after Update Ticket after pointer:");
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
                     CustomsDocumentPM customsDocumentPM;
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
@@ -209,7 +212,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
-
+                    AppendLogLine("after Update Document");
 
                 }
                 else
