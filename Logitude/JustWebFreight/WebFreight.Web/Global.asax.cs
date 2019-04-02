@@ -63,13 +63,13 @@ namespace WebFreight.Web
         System.Timers.Timer aTimer = new System.Timers.Timer();
         protected void Application_Start(object sender, EventArgs e)
         {
-			//AppDomain.CurrentDomain.FirstChanceException += (mySender, eventArgs) =>
-			//{
-			//	//eventArgs.Exception.sou
-			//	FirstChanceExceptionEventArgsLogger.LogException(eventArgs);
+			AppDomain.CurrentDomain.FirstChanceException += (mySender, eventArgs) =>
+			{
+				//eventArgs.Exception.sou
+				FirstChanceExceptionEventArgsLogger.LogException(eventArgs);
 
-			//	//Debug.WriteLine(eventArgs.Exception.ToString());
-			//};
+				//Debug.WriteLine(eventArgs.Exception.ToString());
+			};
 
 			if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
