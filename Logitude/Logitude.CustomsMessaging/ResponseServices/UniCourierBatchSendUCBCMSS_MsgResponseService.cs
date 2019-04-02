@@ -28,9 +28,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DCAInUCBCMSSWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();
-            var context = CustomContext.GetContext(requestParams.Tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            myDeclarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
+            var context = CustomContext.GetContext(requestParams.Tenant);           
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
@@ -50,6 +48,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 try
                 {
+                    var myDeclarationQueryService = new DeclarationQueryService(context);
+                    myDeclarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
                     DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPM.DeclarationId, true, false);
                     if (declarationPM != null)
                     {
