@@ -28,9 +28,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DCAInUCBCMSSWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();
-            var context = CustomContext.GetContext(requestParams.Tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            myDeclarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
+            var context = CustomContext.GetContext(requestParams.Tenant);           
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
@@ -46,10 +44,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Manifest) send for master {requestParams.AppicationId} ");
             }
 
-            foreach (var itemPM in listPM)
+            foreach (DeclarationCourierStatusPM itemPM in listPM)
             {
                 try
                 {
+                    var myDeclarationQueryService = new DeclarationQueryService(context);
+                    myDeclarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
                     DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPM.DeclarationId, true, false);
                     if (declarationPM != null)
                     {
@@ -82,25 +82,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 declarationPM.Consignments.FirstOrDefault().StorageSiteCode = customResponse.StorageSiteCode;
                                 myDeclarationUpdateService.Update(declarationPM, true);
 
-                                var requestParams1170 = new MANIFESTRequestRequestParams()
+                                if (itemPM.CourierManifestStatusCode == "V")
                                 {
-                                    Tenant = requestParams.Tenant,
-                                    LoggingEnabled = true,
-                                    LoggingObjectTableId = objectTableId,
-                                    LoggingEntityId = itemPM.DeclarationId,
-                                    LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                                    LoggingEntityId2 = objectTableIdCourierMaster,
-                                    InterfaceTypeCode = "1170",
-                                    LoggingUserId = requestParams.LoggingUserId,
-                                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                                    DeclarationId = itemPM.DeclarationId,
-                                    LoggingEntityReference = itemPM.DeclarationId,
+                                    var requestParams1170 = new MANIFESTRequestRequestParams()
+                                    {
+                                        Tenant = requestParams.Tenant,
+                                        LoggingEnabled = true,
+                                        LoggingObjectTableId = objectTableId,
+                                        LoggingEntityId = itemPM.DeclarationId,
+                                        LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
+                                        LoggingEntityId2 = objectTableIdCourierMaster,
+                                        InterfaceTypeCode = "1170",
+                                        LoggingUserId = requestParams.LoggingUserId,
+                                        RequestVIA = SendRequestVIA.WebServiceBatch,
+                                        DeclarationId = itemPM.DeclarationId,
+                                        LoggingEntityReference = itemPM.DeclarationId,
 
-                                };
-                                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
-                                LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
-                                mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                                    };
+                                    SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
+                                    LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                                    mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                                }
                             }
+                        }
+                        else
+                        {
+                            LogMessagingUtil.Instance.AppendLine($"GetSingleGeneralLockNOWAIT({declarationPM.CustomFileNo}) ");
+                            //Task .....
                         }
                     }
                 }
