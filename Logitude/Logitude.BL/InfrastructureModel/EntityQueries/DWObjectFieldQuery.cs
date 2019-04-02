@@ -306,6 +306,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).FirstOrDefault();
         }
 
+        public string GetDWObjectFieldCodeByNameDimTable(string DWDimTableCode,string DWOFName)
+        {
+            return (from a in repository.webFreightContext.DWObjectFields
+                    where a.DimensionTableCode == DWDimTableCode && a.Name == DWOFName
+                    select a.Code).FirstOrDefault();
+        }
+
         public string GetFactTableCode(string DWDimTableCode)
         {
             return (from a in repository.webFreightContext.DWObjectFields
