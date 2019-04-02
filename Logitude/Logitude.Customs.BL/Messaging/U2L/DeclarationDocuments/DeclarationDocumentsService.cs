@@ -213,7 +213,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
                     AppendLogLine("after Update Document");
-
+                    Task.Delay(5000).Wait();
+                    myCustomsDocumentsTicketUpdateService.Update(myCustomsDocumentsTicketPM, true);
                 }
                 else
                 {
