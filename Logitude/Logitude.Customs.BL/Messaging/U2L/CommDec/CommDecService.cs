@@ -203,15 +203,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     }
                 }
             }
-
-            if (!string.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
+            AppendLogLine("Importer Code: " + this._MyDeclarationPM.ImporterCode);
+            if (!string.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
             {
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(dbContext);
                 DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(this._MyDeclarationPM.Id, false, false);
                 if (currentDeclarationCourierStatusPM != null)
                 {
-
-                    if (this._MyDeclarationPM.ImporterId.Substring(0, 1) == "5")
+                    AppendLogLine("Declaration Courier Status HighLowValue: " + currentDeclarationCourierStatusPM.HighLowValue);
+                    if (this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "5")
                     {
                         if (currentDeclarationCourierStatusPM.HighLowValue == "L")
                         {
