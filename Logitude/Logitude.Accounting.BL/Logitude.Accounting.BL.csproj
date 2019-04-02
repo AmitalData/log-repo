@@ -726,6 +726,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="CoreBL\Reports\TrailReportBase - Spreadsheet4.xlsx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
