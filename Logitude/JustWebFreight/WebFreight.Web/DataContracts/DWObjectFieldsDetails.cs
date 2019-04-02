@@ -40,6 +40,8 @@ namespace WebFreight.Web.DataContracts
         public string FilterType { get; set; }
         public string DimensionTableDisplayName { get; set; }
         public string LOVAdditionalColumns { get; set; }
+        public bool HideTree { get; set; }
+
 
 
         public List<MultiSelectedValue> MultiSelectedValueLists { get; set; }

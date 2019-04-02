@@ -294,11 +294,13 @@ namespace WebFreight.Web.Helpers
             var FromTables = new List<string>();
             foreach (var field in Columns)
             {
-                
+                if (!field.DisplayName.Contains("["))
+                {
+                    field.DisplayName = "[" + field.DisplayName + "]";
+                }
                 if ((((field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(field.DimensionTableDisplayName)) || !string.IsNullOrEmpty(field.DimensionTableDisplayName)) && ((!string.IsNullOrEmpty(field.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == field.DimensionTableDisplayName).Count() == 0) || (string.IsNullOrEmpty(field.DimensionTableDisplayName) && InnerTables.Where(a => a.DimensionTableDisplayName == field.Name).Count() == 0)))// && InnerTables.Where(a => a.ParentDimTabelName == field.ParentDimTabelName).Count() == 0
                 {
-                    InnerTables.Add(field);
-                   
+                    InnerTables.Add(field); 
                 }
                 if ((field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode.ToLower() == "lookup") &&  string.IsNullOrEmpty(field.DimensionTableDisplayName))
                 {
@@ -381,15 +383,21 @@ namespace WebFreight.Web.Helpers
                 var Key = OFieldQuery.GetPrimaryKeyFieldForDWObjectTable(mytbl.ParentDimTabelName);
                 //MeFactName = OFieldQuery.GetFactTableCode(mytbl.ParentDimTabelName);
                 var FactKey = mytbl.DimensionTableDisplayName;//.Split(' ')[0];
+                
                 if ((mytbl.ParentDataTypeCode == "Dimension" || mytbl.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(mytbl.DimensionTableDisplayName))
                 {
                     FactKey = mytbl.DisplayName;// DisplayName.Split(' ')[0];//OFieldQuery.GetFactKeyFieldForDWDimTable(Fact, mytbl.ParentDimTabelName);
+                    
                     //if (!FactKey.Contains("]"))
                     //{
                     //    FactKey = FactKey + "]";
                     //}
                 }
-                if (!FactKey.Contains("["))
+                else if(mytbl.HideTree)
+                {
+                    FactKey = OFieldQuery.GetDWObjectFieldCodeByNameDimTable(mytbl.ParentDimTabelName, mytbl.DisplayName.Replace("[","").Replace("]",""));
+                }
+                if (FactKey != null && !FactKey.Contains("["))
                 {
                     FactKey = "[" + FactKey + "]";
                 }
