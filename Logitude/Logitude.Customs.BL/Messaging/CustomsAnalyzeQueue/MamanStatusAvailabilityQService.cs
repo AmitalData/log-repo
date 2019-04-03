@@ -197,18 +197,15 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             declarationUpdateService.Update(_DeclarationPM, true);
 
-
             var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_CommunicationLog.Tenant);
             var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, false, false);
-
-            currentDeclarationCourierStatusPM.CourierPaymentStatusCode = "P";
-
-
-            var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
-            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-
-
+            if (_DeclarationPM.TotalTax == 0 && _DeclarationPM.PaymentDate != null)
+            {
+                currentDeclarationCourierStatusPM.CourierPaymentStatusCode = "P";
+                var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
+                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+            }
 
         }
 
