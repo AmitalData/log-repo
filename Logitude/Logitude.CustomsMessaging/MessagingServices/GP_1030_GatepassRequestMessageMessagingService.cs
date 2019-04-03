@@ -53,16 +53,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             if (customsResponse.GatepassFeedbackMessage != null)
             {
-                if(customsResponse.GatepassFeedbackMessage.FirstOrDefault().gatepassNumber > 500000000)
+                if(customsResponse.GatepassFeedbackMessage.FirstOrDefault().gatepassNumber < 500000000)
                 {
-                    return true;
+                    return false;
                 }
             }
-            else
-            {
-                //to check
-            }
-            return false;
+            return true;
         }
 
         protected override GatepassFeedbackMessageResponseData GetIIGBLExceptionFromReponseHeader(GP_NG_1035_MSG2_GatepassFeedbackMessage customsResponse)
