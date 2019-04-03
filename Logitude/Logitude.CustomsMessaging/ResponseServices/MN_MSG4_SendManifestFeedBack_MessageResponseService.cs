@@ -384,18 +384,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode))
             {
-                if (myEventContextTagModel.EventCode == "MNC")//ODELIA SAID MNC its success !
+                if (myEventContextTagModel.EventCode == "MNC")//MNC its success !
                 {
-                    if (_MyDeclarationPM.TaxationDateTime < DateTime.Now.Date)
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                    DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, false, false);
+                    if (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "V")
                     {
-                        _MyDeclarationPM.TaxationDateTime = DateTime.Now.Date;//לפני השליחה יש לעדכן את תאריך חישוב המיסים לתאריך נוכחי על מנת להמנע מטיוטה שגויה
+                        if (_MyDeclarationPM.TaxationDateTime < DateTime.Now.Date)
+                        {
+                            _MyDeclarationPM.TaxationDateTime = DateTime.Now.Date;//לפני השליחה יש לעדכן את תאריך חישוב המיסים לתאריך נוכחי על מנת להמנע מטיוטה שגויה
+                        }
+                        using (var trans = TransactionFactory.GetNewTransaction())// I PREFERRED WITHOUT TRANS BUT  (TO 1345- 1415). .
+                        {
+                            OnSucceededSendDeclarationDelay1Min(requestParams);
+                            trans.Complete();
+                        }
                     }
-                    using (var trans = TransactionFactory.GetNewTransaction())// I PREFERRED WITHOUT TRANS BUT  (TO 1345- 1415). .
-                    {
-                        OnSucceededSendDeclarationDelay1Min(requestParams);
-                        trans.Complete();
-                    }
-
                 }
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);

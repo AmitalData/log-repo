@@ -51,7 +51,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override bool? IsOurEnvironment(GP_NG_1035_MSG2_GatepassFeedbackMessage customsResponse, GatepassRequestMessageRequestParams RequestParams)
         {
-            return false;
+            if (customsResponse.GatepassFeedbackMessage != null)
+            {
+                if(customsResponse.GatepassFeedbackMessage.FirstOrDefault().gatepassNumber < 500000000)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         protected override GatepassFeedbackMessageResponseData GetIIGBLExceptionFromReponseHeader(GP_NG_1035_MSG2_GatepassFeedbackMessage customsResponse)
