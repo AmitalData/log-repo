@@ -199,7 +199,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
             var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_CommunicationLog.Tenant);
             var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, false, false);
-            if (_DeclarationPM.TotalTax == 0 && _DeclarationPM.PaymentDate != null)
+            if (_DeclarationPM.PaymentDate.HasValue && (_DeclarationPM.TotalTax == null || _DeclarationPM.TotalTax == 0))//48446//50807
             {
                 currentDeclarationCourierStatusPM.CourierPaymentStatusCode = "P";
                 var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
