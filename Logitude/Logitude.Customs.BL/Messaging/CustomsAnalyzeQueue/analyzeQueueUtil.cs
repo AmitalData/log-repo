@@ -98,12 +98,30 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
                 analyzeQueueReposiory.Add(analyzeQueue);
                 analyzeQueueReposiory.SubmitChanges();
-
+                EnqueueAnalyzeQueue2MessageQueue(analyzeQueue.Id, defInterfaceDetail.Code, defInterfaceDetail.Partner, tenant);
                 scope.Complete();
             }
             return analyzeQueue;
         }
+        private void EnqueueAnalyzeQueue2MessageQueue(string analyzeQueueID, string InterfaceCode, string InterfacePartner, int tenant)
+        {
+            try
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), 0);
+                queueservice.Send(new Dictionary<string, string>() {
+                    { "AnalyzeQueueID", analyzeQueueID },
+                    { "InterfaceCode", InterfaceCode },
+                    { "InterfacePartner", InterfacePartner},
+                    { "Tenant", tenant.ToString() }
+                });
 
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Send FTP CommunicationLog Queue", null, null);
+            }
+        }
         public string GetCommSetting(int tenant ,string defInterfaceDetailCode,string loggedContactId ,CourierWEBAPICommSettings settings)
         {
             
