@@ -484,12 +484,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //    }
                 //}
                 var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                mySend2MasofIfNeededService.Send2Masof(entityPM);
+                mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged);
 
             }
         }
+        public bool CourierStorageSiteChanged { get; set; }
 
-        
 
         private void ResetMetadataVER(DeclarationPM entityPM)
         {
