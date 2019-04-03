@@ -63,8 +63,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
     //public TooltipContentId: string = null;
     public IconPath: string = "./Images/Help.png";
     public IconBackground: string = null;
-    public Width: number = 256;
-    public Height: number = 125;
+    public Width: number = 200;
+    public Height: number = 110;
     public IconSize: number = 17;
     mouseover(MyItem) {
         if (MyItem.HelpText) {
@@ -83,11 +83,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
             }
 
             document.getElementById(MyItem.TooltipContentId).style.position = "fixed";
-            document.getElementById(MyItem.TooltipContentId).style.top = (itemRect.top - this.Height + 5) + 'px';
+            document.getElementById(MyItem.TooltipContentId).style.top = (itemRect.top - this.Height + 7) + 'px';
 
             if (isToRight) {
-                document.getElementById(MyItem.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/Tootip.png')";
-                document.getElementById(MyItem.TooltipContentId).style.left = (itemRect.left + 5) + 'px';
+                document.getElementById(MyItem.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/TootipCenter.png')";
+                document.getElementById(MyItem.TooltipContentId).style.left = (itemRect.left + 14) + 'px';
             }
 
             else {
@@ -1303,10 +1303,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
         var Displayname = DWObjectField.DisplayName;
         if (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
             if (DWObjectField.DWObjectTableCode && DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
-                Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Code;
+                Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Name;
             }
             else {
-                Displayname = DWObjectField.Code;
+                Displayname = DWObjectField.Name;
             }
         }
         return Displayname;
@@ -1691,7 +1691,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 }
 
                                 if (!AppTool.IsNullOrEmpty(DWObjectField.Code)) {
-                                    view.DisplayName = '[' + (DWObjectField.Name.replace('[', '').replace(']', '') + ' ' + view.Code.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
+                                    view.DisplayName = '[' + (DWObjectField.Name.replace('[', '').replace(']', '') + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
                                     view.DimensionTableDisplayName = DWObjectField.Name.replace('[', '').replace(']', '');
                                 }
                                 else if (!AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
@@ -1699,7 +1699,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                     view.DimensionTableDisplayName = DWObjectField.Name;
                                 }
                                 else {
-                                    view.DisplayName = '[' + (DWObjectField.Name + ' ' + view.Code.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
+                                    view.DisplayName = '[' + (DWObjectField.Name + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
                                     view.DimensionTableDisplayName = DWObjectField.Name;
 
                                 }

@@ -503,6 +503,29 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool excludeFromProrating ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ExcludeFromProrating  
+	   {
+	    
+	     get
+		{
+		   return excludeFromProrating;
+		 }
+		 set
+		 {
+		   if(excludeFromProrating != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExcludeFromProrating",OldValue=excludeFromProrating,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   excludeFromProrating=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

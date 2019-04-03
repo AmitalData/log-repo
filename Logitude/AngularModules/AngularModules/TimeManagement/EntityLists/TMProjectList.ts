@@ -30,6 +30,7 @@ export class TMProjectList {
 	IsProrated: boolean;
 	ExternalProjectNumber: string;
 	CategoryName: string;
+	ExcludeFromProrating: boolean;
 	
 }
  
