@@ -345,6 +345,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
         void ShrinkCustomRequest(D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntity customRequest)
         {
+            if (customRequest.Attachment == null || customRequest.Attachment.IsAttachment == "false") return;
             var MD5Hash = MD5HashUtil.GetMD5Hash(customRequest.Attachment.content);
             customRequest.Attachment.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);
 
