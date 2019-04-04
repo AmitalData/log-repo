@@ -41,7 +41,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             this._InterfaceDetails = MyInterfaceDetails;
             
         }
-        public void Run(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
+        public void Run(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository, int tenant)
         {
 
 
@@ -69,7 +69,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 
 
-                _CommunicationLog = Communications.GetCommunicationLog(1, this._AnalyzeQueue.CommunicationLogId);
+                _CommunicationLog = Communications.GetCommunicationLog(tenant, this._AnalyzeQueue.CommunicationLogId);
                 if (_CommunicationLog == null)
                 {
                     throw new Exception("Cannnot GetCommunicationLog");

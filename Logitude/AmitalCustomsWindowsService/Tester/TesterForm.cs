@@ -501,7 +501,7 @@ namespace AmitalCustomsWindowsService.Tester
                 case "CustomsAnalyzeQueueWR":
                     {
                         var customsAnalyzeQueueWR = new CustomsAnalyzeQueueWR();
-                        customsAnalyzeQueueWR.DebugStep(_TBID.Text, _CBInterfaceID.Text, GetTenant());
+                        customsAnalyzeQueueWR.CheckParamsAndExec(_TBID.Text, _CBInterfaceID.Text, GetTenant());
 
                     }
                     break;
