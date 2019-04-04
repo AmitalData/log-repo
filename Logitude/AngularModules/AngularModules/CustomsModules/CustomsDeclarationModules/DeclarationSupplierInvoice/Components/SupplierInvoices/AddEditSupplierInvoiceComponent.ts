@@ -90,6 +90,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     public NewInvoices: SupplierInvoicePM[] = [];
    
     _SkipAutoInsurance: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor//(private cd: ChangeDetectorRef) {
         () {
         super();
@@ -150,8 +151,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             if (this.EntityPM.IsAccumalated) {
                 this.AccumulatedFilter = "parent";
             }
-            SessionLocator.CurrentSession.SubscriptionAdd(
-                SessionLocator.CurrentSession.AccumulatedFilterChangedEvent.subscribe((res) => {
+            this.CurrentSession.SubscriptionAdd(
+                this.CurrentSession.AccumulatedFilterChangedEvent.subscribe((res) => {
                     // this.EntityPM = res.entityPM;
 
                     this.skipedItems = 0;
@@ -203,7 +204,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     }
                 })
             );
-                SessionLocator.CurrentSession.SearchFilterChangedEvent.subscribe((res) => {
+                this.CurrentSession.SearchFilterChangedEvent.subscribe((res) => {
                     if (res.count != null && res.count != 0) {
                         this.SearchItemsFound = true;
                         this.SearchItemsMessage = "נמצאו  " + res.count + " תוצאות שתואמות לחיפוש";
@@ -501,10 +502,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     this.EntityPM.RejectChanges();
                     this.GENERAL.Dispose();
                     if (this.SaveAndNew) {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+                        this.CurrentSession.CloseCurrentWindowEmit('cancel');
                     }
                 }
 
@@ -517,10 +518,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             //this.EntityPM.RejectChanges();
             this.GENERAL.Dispose();
             if (this.SaveAndNew) {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+                this.CurrentSession.CloseCurrentWindowEmit('cancel');
             }
         }
 
@@ -619,7 +620,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                     if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
                         var confirmWindow = new ConfirmWindow();
@@ -643,7 +644,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                         //this._IsInitiateNewInstance = true;
                         //this.InitiateNewInstance();
-                        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                         this.SaveChangesSync();
                     }
 
@@ -653,7 +654,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
 
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
                         var confirmWindow = new ConfirmWindow();
@@ -674,7 +675,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                         //this.SaveChanges();
                         //this._IsInitiateNewInstance = true;
                         //this.InitiateNewInstance();
-                        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                         this.SaveChangesSync();
                     }
 
@@ -687,7 +688,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     //        this._IsInitiateNewInstance = true;
                     //        this.InitiateNewInstance();
                     //    });
-                    SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                    this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                     this.SaveChangesSync();
                 }
 
@@ -697,7 +698,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 //this.SaveChanges();
                 //this._IsInitiateNewInstance = true;
                 //this.InitiateNewInstance();
-                SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                 this.SaveChangesSync();
             }
         }
@@ -712,7 +713,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         //if (InvoiceModificationsObslist.Count > 0) {
         //    bool exist = (from a in InvoiceModificationsObslist
@@ -768,7 +769,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //                            }
             //                            else if (item.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode || item.Amount != (this.EntityPM.InvoiceAmount * this.EntityPM.VendorComissionPercentage)) {
-            //                                SessionLocator.CurrentSession.StopBusyIndicator();
+            //                                this.CurrentSession.StopBusyIndicator();
             //                                var confirm = new ConfirmWindow;
             //                                confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
 
@@ -813,7 +814,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //            else {
             //                this.ValidationErrorsList = myResult.ErrorsArray;
-            //                SessionLocator.CurrentSession.StopBusyIndicator();
+            //                this.CurrentSession.StopBusyIndicator();
 
             //            }
 
@@ -835,7 +836,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         }
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
         }
     }
@@ -845,7 +846,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             if (this.EntityPM.IncotermCode != null && (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F"))) {
                 if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
                     var confirmWindow = new ConfirmWindow();
@@ -871,9 +872,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             else if (this.EntityPM.IncotermCode != null && (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR")) {
                 if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
                     var confirmWindow = new ConfirmWindow();
@@ -978,7 +979,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 else {
                     this.ValidationErrorsList = res.ErrorsArray;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 return false;
             });
 
@@ -999,7 +1000,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 else {
                     this.ValidationErrorsList = res.ErrorsArray;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 return false;
             });
 
@@ -1071,7 +1072,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                         resolve(true);
                         if (isChromeMode) {
                             if (this.closeWindow) {
-                                SessionLocator.CurrentSession.CloseCurrentWindow();
+                                this.CurrentSession.CloseCurrentWindow();
                             }
                             else if (this._IsInitiateNewInstance) {
                                 if (this.copyInvoiceWithItem && this.entity.FullItemsCount > 500) {
@@ -1102,7 +1103,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     else {
                         this.ValidationErrorsList = res.ErrorsArray;
                     }
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     resolve(false);
                 });
 
@@ -1113,12 +1114,12 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     var res: ServiceResponse = myResult;
                     if (!res.HasError) {
                          this.entity = res.Result;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         console.log("..Saved Successfully ", this.entity);
                         resolve(true);
                         if (isChromeMode) {
                             if (this.closeWindow) {
-                                SessionLocator.CurrentSession.CloseCurrentWindow();
+                                this.CurrentSession.CloseCurrentWindow();
                             }
                             else if (this._IsInitiateNewInstance) {
                                 if (this.copyInvoiceWithItem && this.entity.FullItemsCount > 500) {
@@ -1148,7 +1149,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     }
                     else {
                         this.ValidationErrorsList = res.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
 
                     resolve(false);
@@ -1279,7 +1280,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     throw new Error('Next\prev =>Finish (Check Insurance only on save)');
                 }
                 this.LogMe("goToInsuranceInUNF");
-                SessionLocator.CurrentSession.StartBusyIndicator("Check Insurance ...");
+                this.CurrentSession.StartBusyIndicator("Check Insurance ...");
                 var toPromise = true;
                 return this.SendUnifaceRequestAndWaitPromise();
 
@@ -1314,14 +1315,14 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
 
                                 //resolveInsuranceCallback("ok")
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 resolve(true);
 
 
                             }
                             else {
                                 this.ValidationErrorsList = res.ErrorsArray;
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 console.warn("Error Saving UnifreightInsurance");
                                 resolve(false);
                             }
@@ -1359,7 +1360,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             .catch(finish => {
                 this.FinishPromiseDoWhatPlanned(true);
                 this.LogMe("catch(finish !!")
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this._IsInitiateNewInstance = this.closeWindow = false;
             });
 
@@ -1373,12 +1374,12 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
 
         this._FinishPromiseDoWhatPlannedDone = true;
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
         this.LogMe("FinishPromiseDoWhatPlanned");
         if (this.closeWindow) {
             this.GENERAL.Dispose();
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
             this._IsInitiateNewInstance = this.closeWindow = false;
             //return Promise.reject(new Error('Finish CloseCurrentWindow'));
             if (inCatchBlock != true) {
@@ -1585,10 +1586,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                             ) {
                                 if (sInsuranseIsNeeded.toString().toLowerCase() == "true" &&
                                     sInsuranseIsSucceeded === "false") {
-                                    /*SessionLocator.CurrentSession.StopBusyIndicator(); */this._IsInitiateNewInstance = this.closeWindow = false;
+                                    /*this.CurrentSession.StopBusyIndicator(); */this._IsInitiateNewInstance = this.closeWindow = false;
                                     this.closeWindow = true;
                                     ///setTimeout(() => {
-                                        SessionLocator.CurrentSession.StopBusyIndicator();
+                                        this.CurrentSession.StopBusyIndicator();
                                         var messageWindow = new MessageWindow();
                                         messageWindow.Width = 400;
                                         messageWindow.Height = 150;
@@ -1606,7 +1607,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
 
                             } else {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 resolveInsuranceCallback("nothing done ");
                             }
 
@@ -1874,7 +1875,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
     CloseWindowAfterSaveIfNeeded() {
         if (this.closeWindow === true) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
     LogMe(mess) {
@@ -1898,7 +1899,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         else {
             fullCount = this.EntityPM.FullItemsCount;
         }
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         var Z: number;
         if (this.FirstCurrentLine == null) {
             this.FirstCurrentLine = 1;
@@ -1951,7 +1952,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         else {
             fullCount = this.EntityPM.FullItemsCount;
         }
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         var Z = 0;
         if (this.FirstCurrentLine == null) {
             this.FirstCurrentLine = 1;
@@ -2070,7 +2071,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     SelectedTextBoxKeyUp(event) {
         if (event) {
 
-            //this.SelectInvoiceItemEvent = SessionLocator.CurrentSession.SelectInvoiceItemEvent.emit({ filter: this.TextValue });
+            //this.SelectInvoiceItemEvent = this.CurrentSession.SelectInvoiceItemEvent.emit({ filter: this.TextValue });
             this.GENERAL.SelectInvoiceItemMethod({ filter: this.TextValue });
         }
         if (!this.TextValue) {
@@ -2091,12 +2092,12 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
     ReloadSupplierInvoiceWithItems(skippedItems, takenItems) {
         this.loadingNextItems = false;
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, skippedItems, takenItems, this.AccumulatedFilter).subscribe(response => {
             this.EntityPM = response.Result;
             this.selectedTabCode = "GENERAL";
             this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, false, false);
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -2159,10 +2160,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     CustomerCommissionsList: VendorCommissionPM[] = [];
 
     GetCustomerCommissions() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.vendorCommissionService.GetCommissionsForCustomer(this.declarationPM.CustomerId).subscribe(response => {
             console.log("[Reponse] GetCommissionsForCustomer: ", response);
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             var result = response.Result;
             if (result)
             {

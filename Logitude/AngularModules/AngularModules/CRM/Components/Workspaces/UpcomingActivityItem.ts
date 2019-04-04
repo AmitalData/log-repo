@@ -1,4 +1,4 @@
-﻿
+
 import {Component} from '@angular/core';
 import {AppTool, DateTool, FontTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -19,6 +19,7 @@ export class UpcomingActivityItem extends BaseComponent {
     public ObjectTableName: string = "Activity";
     public ValidationErrorsList = [];
     public DataContext = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityList: ActivityList, public ActivityWorkspaceComponent: ActivityWorkspaceComponent, public OverviewWorkspaceComponent: OverviewWorkspaceComponent ) {
         super();
         this.entityList = entityList;
@@ -125,7 +126,7 @@ export class UpcomingActivityItem extends BaseComponent {
             }
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: tableName, BackButtonLabel: 'Activity' });
@@ -133,7 +134,7 @@ export class UpcomingActivityItem extends BaseComponent {
                 let isEditComponentSaved = false;
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     if (isEditComponentSaved) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 });
 
@@ -177,7 +178,7 @@ export class UpcomingActivityItem extends BaseComponent {
         });
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors = [];

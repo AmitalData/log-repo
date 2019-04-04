@@ -22,6 +22,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public ShipmentsItemsSource: QuoteConnectedEntityItem[];
     public TicketsItemsSource: QuoteConnectedEntityItem[];
     public OpportunitiesItemsSource: QuoteConnectedEntityItem[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -43,7 +44,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent) {
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "LoadConnectedShipments") {
                     this.LoadData();
                 }
@@ -79,7 +80,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     }
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetQuoteConnectedEntities(this.EntityPM.Id, this.EntityPM.OpportunityId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -88,7 +89,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     this.FillItemSources(list);
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -146,7 +147,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
     public ViewOpportunityClicked(entity: QuoteConnectedEntityItem) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entity.EntityId, ObjectTableName: "Opportunity", BackButtonLabel: " Quotes" });
@@ -158,6 +159,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
 class QuoteConnectedEntityItem {
     private myEntity: QuoteConnectedEntity = new QuoteConnectedEntity();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: QuoteConnectedEntity, public fatherComponent: ConnectionsTabComponent) {
         this.myEntity = entity;
     }
@@ -182,7 +184,7 @@ class QuoteConnectedEntityItem {
         if (!AppTool.IsNullOrEmpty(this.ObjectTable)) {
             var backLabel = "Quote: " + this.fatherComponent.EntityPM.QuoteNumber;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.EntityId, ObjectTableName: this.ObjectTable, BackButtonLabel: backLabel });

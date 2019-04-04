@@ -1,4 +1,4 @@
-﻿
+
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {DateTool, AppTool} from '../../../../../Infrastructure/Tools';
@@ -23,6 +23,7 @@ export class CustomsShipperGeneralTabComponent implements OnInit {
     
     public ItemsSource: any[] = [];
     IsReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -44,7 +45,7 @@ export class CustomsShipperGeneralTabComponent implements OnInit {
 
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.ItemsSource = [];
         this.customerDepositionListExtendedService.GetCustomerDepositionListsByCustomsShipperId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -53,7 +54,7 @@ export class CustomsShipperGeneralTabComponent implements OnInit {
                
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 

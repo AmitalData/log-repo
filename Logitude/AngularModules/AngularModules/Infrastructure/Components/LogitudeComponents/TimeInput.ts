@@ -24,9 +24,10 @@ export class TimeInput extends BaseComponent {
     @Output() Changed: EventEmitter<string> = new EventEmitter<string>();
     @Output() DisplayChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() TotalMinutesChanged: EventEmitter<any> = new EventEmitter<any>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        var idIndex = SessionLocator.CurrentSession.GetNewId("TimeInput");
+        var idIndex = this.CurrentSession.GetNewId("TimeInput");
         this.ControlId = "TimeInputControl_" + idIndex;
     }
 

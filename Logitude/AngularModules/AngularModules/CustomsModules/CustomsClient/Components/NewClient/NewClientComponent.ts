@@ -33,6 +33,7 @@ export class NewClientComponent
     requestParams: ClientSearchRequestParams;
     ResponseData: ClientSearchResponseData;
     clientMessagesService: ClientMessagesService = new ClientMessagesService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
         this.clientPM = new ClientPM();
@@ -273,20 +274,20 @@ export class NewClientComponent
 
     CancelButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
         if (this.IsFromDeclaration) {
             if (this._MyResponseObjectToShow == null) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("");
+                this.CurrentSession.CloseCurrentWindowEmit("");
             }
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit(this._MyResponseObjectToShow.FullName);
+                this.CurrentSession.CloseCurrentWindowEmit(this._MyResponseObjectToShow.FullName);
             }
         }
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 

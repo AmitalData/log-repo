@@ -32,6 +32,7 @@ export class TaskSchedulerComponent implements OnInit  {
     ShowUTCTimesLabel: string = "Show UTC Time";
     ShowUTCTimeEnabled: boolean = false;
     HasUTCFeature: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         this.infraDomainService = new InfrastructureDomainService();
         if (FeatureLocator.HasFeaturePermession("TasksScheduler", "SHOWUTCBUTTON")) {
@@ -53,7 +54,7 @@ export class TaskSchedulerComponent implements OnInit  {
 
 
     public GetTasksSchedular() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.IsHistoryGridVsisible = false;
 
@@ -94,7 +95,7 @@ export class TaskSchedulerComponent implements OnInit  {
             this.ItemsSource.push(new TaskSchedulerItemClass(item, this));
         });
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     public IsHistoryGridVsisible = false;
@@ -113,7 +114,7 @@ export class TaskSchedulerComponent implements OnInit  {
     }
     
     private LoadHistoryList() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.infraDomainService.GetTaskSchedulerHistory(this.SelectedRow.Id).subscribe(myResult => {
             if (myResult == null) {
@@ -125,7 +126,7 @@ export class TaskSchedulerComponent implements OnInit  {
                 if (!myResponse.HasError) {
                     this.HistoryItemsSource = myResponse.Result;
                     this.IsHistoryGridVsisible = true;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
@@ -171,7 +172,7 @@ export class TaskSchedulerComponent implements OnInit  {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     BuildColumns() { 

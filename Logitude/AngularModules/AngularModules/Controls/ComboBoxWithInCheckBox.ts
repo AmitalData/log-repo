@@ -1,4 +1,4 @@
-﻿/// <reference path="../infrastructure/components/logitudecomponents/basecomponent.ts" />
+/// <reference path="../infrastructure/components/logitudecomponents/basecomponent.ts" />
 import {Component, OnInit, Output, EventEmitter,AfterViewInit} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {} from "@angular/platform-browser/src/dom";
@@ -35,18 +35,19 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public CheckBoxOnly: boolean = false;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
     @Output() EditedItemSource: EventEmitter<any> = new EventEmitter();
-    public CheckSource: Array<boolean>; 
+    public CheckSource: Array<boolean>;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ItemsSource = [];
        
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.ControlId = "ComboBox_-1_-1";
             this.DropdownId = "Dropdown_-1_-1";
             this.ListControlId = "List_-1_-1";
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("ComboBox");
+            var idIndex = this.CurrentSession.GetNewId("ComboBox");
             this.ControlId = "ComboBox_" + idIndex;
             this.DropdownId = "Dropdown_" + idIndex;
             this.ListControlId = "List_" + idIndex;

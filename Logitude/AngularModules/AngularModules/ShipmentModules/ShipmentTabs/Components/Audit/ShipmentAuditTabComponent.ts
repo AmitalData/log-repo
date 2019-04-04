@@ -1,4 +1,4 @@
-﻿
+
 import {Component}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -13,6 +13,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 export class ShipmentAuditTabComponent {
     public EntityId: string;
     public EntityPM: ShipmentPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
 
@@ -29,7 +30,7 @@ export class ShipmentAuditTabComponent {
         if (this.entityArgs.EditComponent) {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "SHAU") {
-                    SessionLocator.CurrentSession.FireEvent("Shipment");
+                    this.CurrentSession.FireEvent("Shipment");
                 }
             });
         }

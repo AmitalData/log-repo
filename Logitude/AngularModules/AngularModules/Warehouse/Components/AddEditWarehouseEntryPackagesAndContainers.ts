@@ -36,6 +36,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     ViewModelTrigger: any;
     IsLoadPage: boolean = false;
     public AllPackageTypes: PackageTypeList[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         this.validator = new ClassLevelValidator();
 
@@ -142,7 +143,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
 
     CanceluttonClicked() {
         this.ResetPackageItem();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
@@ -161,13 +162,13 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
         }
     }
 
     ComplateSave() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
         this.warehouseEntryPackagePM.Dimensions = this.warehouseEntryPackageItem ? this.warehouseEntryPackageItem.Dimensions : "";
         this.warehouseEntryPackagePM.PackageTypeName = "";
@@ -184,8 +185,8 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
             this.ViewModelTrigger.WarehouseEntryPackagesLists.push(this.warehouseEntryPackagePM);
         }
 
-        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-        SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.Close("Refresh");
     }
 
     IsEnable: boolean = false;

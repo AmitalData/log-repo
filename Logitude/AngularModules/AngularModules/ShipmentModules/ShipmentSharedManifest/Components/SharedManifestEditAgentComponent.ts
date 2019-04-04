@@ -1,4 +1,4 @@
-﻿/// <reference path="sharedmanifeststarted.ts" />
+/// <reference path="sharedmanifeststarted.ts" />
 
 
 import {Component, OnInit} from '@angular/core';
@@ -25,6 +25,7 @@ export class SharedManifestEditAgentComponent implements OnInit {
     private isMyCustomer: boolean = false;
     public ValidationErrorsList: string[];
     IsSaveShipment: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService) {
         this.Listen();
     }
@@ -37,10 +38,10 @@ export class SharedManifestEditAgentComponent implements OnInit {
 
     Listen() {
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     if (this.IsSaveShipment) {
                         this.Close();
                     }
@@ -67,10 +68,10 @@ export class SharedManifestEditAgentComponent implements OnInit {
 
     IsAgentSharedManifests(partnerItem: PartnerItem) {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
         this._sharedAgentManifestService.GetIsAgentSharedManifests(partnerItem.AgentId, partnerItem.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
                 partnerItem.IsDisableNextButton = myResponse.Result ? true : false;;
             }
@@ -82,7 +83,7 @@ export class SharedManifestEditAgentComponent implements OnInit {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 
@@ -107,10 +108,10 @@ export class SharedManifestEditAgentComponent implements OnInit {
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+            this.CurrentSession.StartBusyIndicator("Saving...");
             this.DataContext.fatherComponent._agentSharedLogisticsKeyPMService.GetSingleByAgentId(this.EntityPM.AgentId).subscribe((myResponse: any) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
 
                     var agentSharedKey: any = myResponse.Result;
@@ -121,7 +122,7 @@ export class SharedManifestEditAgentComponent implements OnInit {
                                 if (this.EntityPM.ShipmentLevelCode == "C") {
 
                                     this._sharedAgentManifestService.GetCheckIfMasterShipmentHaveHouseWithOtherAgent(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.Tenant).subscribe((myResponse: any) => {
-                                        SessionLocator.CurrentSession.StopBusyIndicator();
+                                        this.CurrentSession.StopBusyIndicator();
                                         if (!myResponse.HasError) {
                                             if (myResponse.Result == true) {
                                                 this.ValidationErrorsList.push("One of the houses has agent different from the master shipment");
@@ -227,7 +228,7 @@ export class SharedManifestEditAgentComponent implements OnInit {
 
             if (this.EntityPM.IsDirty) {
                 this.IsSaveShipment = true;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
             else this.Close();
 
@@ -239,8 +240,8 @@ export class SharedManifestEditAgentComponent implements OnInit {
 
 
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
-        SessionLocator.CurrentSession.FireEvent("ShipmentPartnersChanged");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.FireEvent("ShipmentPartnersChanged");
     }
     
     private myCloner: Cloner;

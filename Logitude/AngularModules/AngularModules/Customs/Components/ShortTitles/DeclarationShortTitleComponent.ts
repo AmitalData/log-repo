@@ -14,6 +14,7 @@ import {DeclarationEditComponentController} from '../../Controller/DeclarationEd
 //C: \LW\Customs\AngularModules\AngularModules\Infrastructure\Utilities\AmitalGatewayUtil.ts
 export class DeclarationShortTitleComponent {
     public EntityPM: DeclarationPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef,public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.Listen();
@@ -28,13 +29,13 @@ export class DeclarationShortTitleComponent {
     _ShowEntityNumberClick: boolean = false;
     _CourierImporterName: string = null;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
      
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess && SessionLocator.CurrentSession.CurrentEditComponent) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildComponent();
                         this.cd.detectChanges();
                     }
@@ -99,24 +100,24 @@ export class DeclarationShortTitleComponent {
 
     EntityNumberClick() {   
         
-        if (!SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
+        if (!this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
             this.ShowCustomFileOPCFromDeclaration();
         } else {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-            var sub = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StartBusyIndicatorSaving();
+            var sub = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.CurrentSession.StopBusyIndicator();
                 sub.unsubscribe();
                 if (isSaveSuccess) {
                     this.ShowCustomFileOPCFromDeclaration();
                 } 
             });
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
 
     ShowCustomFileOPCFromDeclaration() {
 
-        var declarationEditComponentController: DeclarationEditComponentController = (SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController)
+        var declarationEditComponentController: DeclarationEditComponentController = (this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController)
         declarationEditComponentController.ForceCheckIfLockWhileReload();
          
         var unifreightMessageM =

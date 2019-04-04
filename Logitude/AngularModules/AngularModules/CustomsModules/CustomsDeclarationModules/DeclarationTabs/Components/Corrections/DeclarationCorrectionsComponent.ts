@@ -61,7 +61,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -91,29 +91,29 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //this.DisplayOnlyCheck();
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-            SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+            this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                     if (tabCode == "DCCR") {
                         //this.DisplayOnlyCheck();
                     }
@@ -123,8 +123,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
         }
     }
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     public IsDescriptionVisible: boolean = false;
@@ -138,7 +138,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     SelectedGeneralIndex: number;
     GeneralData: GeneralDataView[] = [];
     ReloadDeclarationCorrection() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         //[1] GetDeclarationCorrections();
         this.declarationWebService.GetDeclarationCorrection(this.EntityPM.Id).subscribe((myServiceResponse: ServiceResponse) => {
@@ -173,7 +173,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                 } else {
                     this.IsNoAmendmentsMsgVisible = true;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
             });
     }
@@ -259,7 +259,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(amendmentView)) {
             console.warn("[!] There is no Amendment View!");
         } else {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             switch (amendmentView.EntityName.toLowerCase()) {
 
                 case "declaration":
@@ -277,7 +277,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                             entityPM: this.EntityPM,
                             IsDisplayOnly: this.IsDisplayOnly,
                         };
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         break;
                     }
 
@@ -294,7 +294,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                             if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
 
-                                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                                this.CurrentSession.StartBusyIndicatorLoading();
                                 var windowArgs: any = {};
                                 windowArgs.EntityPM = supplierInvoicePM;
                                 windowArgs.declarationPM = this.EntityPM;
@@ -328,11 +328,11 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                                 });
                               logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
 
                             }
                             else {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 var window = new MessageWindow();
                                 window.Show("There is no invoice with such key in this declaration!!");
                             }
@@ -363,7 +363,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                                 if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
 
-                                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                                    this.CurrentSession.StartBusyIndicatorLoading();
                                     var windowArgs: any = {};
                                     windowArgs.EntityPM = supplierInvoicePM;
                                     windowArgs.declarationPM = this.EntityPM;
@@ -393,14 +393,14 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                                     logWindow.ShowCloseButton = false;
                                     logWindow.WindowArgs = windowArgs;
                                     logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
 
                                   logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
 
                                 }
                                 else {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
                                     var window = new MessageWindow();
                                     window.Show("There is no invoice with such key in this declaration!!");
                                 }
@@ -430,7 +430,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                                 if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
 
-                                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                                    this.CurrentSession.StartBusyIndicatorLoading();
 
                                     var invoiceItem = supplierInvoicePM.SupplierInvoiceItems.find(d => d.SequenceNumeric == amendmentView.ParentLine);
 
@@ -457,16 +457,16 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                                         logWindow.ShowCloseButton = false;
                                         logWindow.WindowArgs = windowArgs;
                                         logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
-                                        SessionLocator.CurrentSession.StopBusyIndicator();
+                                        this.CurrentSession.StopBusyIndicator();
 
                                       logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
                                         //end open certificate
                                     }
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
 
                                 }
                                 else {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
                                     var window = new MessageWindow();
                                     window.Show("There is no invoice with such key in this declaration!!");
                                 }
@@ -477,7 +477,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                 default:
                     {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         var window = new MessageWindow();
                         window.Show(TextCodeTranslator.Translate("Customs.General.O.WrongEntityName"));
                         break;
@@ -588,7 +588,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     //    if (AppTool.IsNullOrEmpty(amendmentView)) {
     //        console.warn("[!] There is no declaraion error for the constraint!");
     //    } else {
-    //        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+    //        this.CurrentSession.StartBusyIndicatorLoading();
     //        switch (amendmentView.EntityName.toLowerCase()) {
 
     //            case "declaration":
@@ -606,7 +606,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     //                            entityPM: this.EntityPM,
     //                            IsDisplayOnly: this.IsDisplayOnly,
     //                        };
-    //                        SessionLocator.CurrentSession.StopBusyIndicator();
+    //                        this.CurrentSession.StopBusyIndicator();
     //                    break;
     //                }
 
@@ -623,7 +623,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
     //                        if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
 
-    //                            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+    //                            this.CurrentSession.StartBusyIndicatorLoading();
     //                            var windowArgs: any = {};
     //                            windowArgs.EntityPM = supplierInvoicePM;
     //                            windowArgs.declarationPM = this.EntityPM;
@@ -657,7 +657,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
     //                            });
     //                            logWindow.Show('./Customs/Components/Declaration/EditTabs/SupplierInvoices/AddEditSupplierInvoiceComponent');
-    //                            SessionLocator.CurrentSession.StopBusyIndicator();
+    //                            this.CurrentSession.StopBusyIndicator();
 
     //                        }
     //                        else {
@@ -691,7 +691,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
     //                            if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
 
-    //                                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+    //                                this.CurrentSession.StartBusyIndicatorLoading();
     //                                var windowArgs: any = {};
     //                                windowArgs.EntityPM = supplierInvoicePM;
     //                                windowArgs.declarationPM = this.EntityPM;
@@ -721,10 +721,10 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     //                                logWindow.ShowCloseButton = false;
     //                                logWindow.WindowArgs = windowArgs;
     //                                logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
-    //                                SessionLocator.CurrentSession.StopBusyIndicator();
+    //                                this.CurrentSession.StopBusyIndicator();
 
     //                                logWindow.Show('./Customs/Components/Declaration/EditTabs/SupplierInvoices/AddEditSupplierInvoiceComponent');
-    //                                SessionLocator.CurrentSession.StopBusyIndicator();
+    //                                this.CurrentSession.StopBusyIndicator();
 
     //                            }
     //                            else {
@@ -757,7 +757,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
     //                            if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
 
-    //                                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+    //                                this.CurrentSession.StartBusyIndicatorLoading();
 
     //                                var invoiceItem = supplierInvoicePM.SupplierInvoiceItems.find(d => d.SequenceNumeric == amendmentView.ParentLine);
 
@@ -784,12 +784,12 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     //                                    logWindow.ShowCloseButton = false;
     //                                    logWindow.WindowArgs = windowArgs;
     //                                    logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
-    //                                    SessionLocator.CurrentSession.StopBusyIndicator();
+    //                                    this.CurrentSession.StopBusyIndicator();
 
     //                                    logWindow.Show('./Customs/Components/Declaration/EditTabs/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
     //                                    //end open certificate
     //                                }
-    //                                SessionLocator.CurrentSession.StopBusyIndicator();
+    //                                this.CurrentSession.StopBusyIndicator();
 
     //                            }
     //                            else {
@@ -821,8 +821,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     //        for (var xmlError of xmlErrors) {
     //            errors.push(xmlError);
     //        }
-    //        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-    //        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+    //        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+    //        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
     //    }
     //    if (error.EntityName != null) {
     //        if (error.EntityName.toLowerCase() == "supplierinvoiceitem") {

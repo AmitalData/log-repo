@@ -83,6 +83,7 @@ export class NewViewComponent {
     public IsSharedByMessageVisible: boolean = false;
     public IsSaveButtonEnabled: boolean = false;
     public IsSharedByVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;
@@ -101,15 +102,15 @@ export class NewViewComponent {
                 this.GeneralEntitiesArgs.QueryColumnsPMs = [];
             }
         }
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.SearchFieldsId = "SearchFields_-1_-1";
             this.FiltersSearchFieldsId = "FiltersSearchFieldsId_-1_-1";
         }
       
 
         else {
-            this.SearchFieldsId = "NewViewSearchFields_" + SessionLocator.CurrentSession.GetNewId("NewViewSearchFields");
-            this.FiltersSearchFieldsId = "NewViewFiltersSearchFieldsId_" + SessionLocator.CurrentSession.GetNewId("NewViewFiltersSearchFieldsId");
+            this.SearchFieldsId = "NewViewSearchFields_" + this.CurrentSession.GetNewId("NewViewSearchFields");
+            this.FiltersSearchFieldsId = "NewViewFiltersSearchFieldsId_" + this.CurrentSession.GetNewId("NewViewFiltersSearchFieldsId");
         }
         this.SelectedTabCode = "COL";
         
@@ -182,7 +183,7 @@ export class NewViewComponent {
     }
 
     private LoadQueryPM() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         var myService: QueriesPMService = new QueriesPMService();
         myService.setServiceArgs(this.serviceArgs);
 
@@ -215,11 +216,11 @@ export class NewViewComponent {
                     this.ValidationErrorsList.push("This View was deleted");
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
             else {
                 //show error
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -750,7 +751,7 @@ export class NewViewComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.Close(this.QueryId);
+        this.CurrentSession.CurrentWindow.Close(this.QueryId);
     }
 
     DeleteButtonClicked() {
@@ -776,19 +777,19 @@ export class NewViewComponent {
         }
     }
     private DoDelete(userId: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         var query = window.Queries.filter(q => q.Id == this.EntityPM.Id)[0];
 
         var myService: QueriesPMService = new QueriesPMService();
         myService.setServiceArgs(this.serviceArgs);
         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
         myService.delete(query, userId).subscribe(myResult => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             window.Queries = window.Queries.filter(a => a.Id != query.Id);
             var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
             var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
 
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         });
 
 
@@ -804,7 +805,7 @@ export class NewViewComponent {
         //this.GeneralEntitiesArgs.RemovedQueryFilters = [];
         //var ObjectTable = window.ObjectTables.filter(a => a.Name == this.CurrentObjectTable)[0];
 
-        //SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        //this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         //this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         //var myQCService: QueryColumnsPMService = new QueryColumnsPMService();
         //myQCService.setServiceArgs(this.serviceArgs);
@@ -840,12 +841,12 @@ export class NewViewComponent {
         //        myGeneralService.setServiceArgs(this.serviceArgs);
         //        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
         //            myService.delete(query).subscribe(myResult => {
-        //                SessionLocator.CurrentSession.StopBusyIndicator();
+        //                this.CurrentSession.StopBusyIndicator();
         //                window.Queries = window.Queries.filter(a => a.Id != query.Id);
         //                var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
         //                var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
 
-        //                SessionLocator.CurrentSession.CloseCurrentWindow();
+        //                this.CurrentSession.CloseCurrentWindow();
         //            });
         //        });
         //    });
@@ -1127,7 +1128,7 @@ export class NewViewComponent {
             }
 
             if (DoSaving) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
                 var theCurrentQuery = (window.Queries.filter(q => q.Id == this.QueryId)[0]);
                 var temp = window.Queries.filter(q => q.ObjectTableId == theCurrentQuery.ObjectTableId && q.UserId == theCurrentQuery.UserId && q.QueryGroupCode == theCurrentQuery.QueryGroupCode).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
@@ -1316,14 +1317,14 @@ export class NewViewComponent {
                 myResult.Result.AdvancedQueryFilterPMs.forEach((filter, key) => {
                     window.PreDefinedFilters.push(filter);
                 });
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                SessionLocator.CurrentSession.CurrentWindow.Close(newQuery.Id);
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.Close(newQuery.Id);
             });
         }
         else {
             myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                SessionLocator.CurrentSession.CurrentWindow.Close(newQuery.Id);
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.Close(newQuery.Id);
             });
         }
     }
@@ -1369,7 +1370,7 @@ export class NewViewComponent {
         }
 
         if (DoSaving == true) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             this.EntityPM.NewViewName = queryName;
 
             this.EntityPM.SpotlightModeActivated = this.ShowInSpotLight;
@@ -1594,8 +1595,8 @@ export class NewViewComponent {
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-            SessionLocator.CurrentSession.CurrentWindow.Close(this.QueryId);
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.Close(this.QueryId);
         });
     }
 }

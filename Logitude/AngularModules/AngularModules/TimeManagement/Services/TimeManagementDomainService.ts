@@ -163,6 +163,24 @@ export class TimeManagementDomainService {
         }
         return entityPM;
     }
+
+
+    Prorate(EmployeeUserId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetProrate?EmployeeUserId=' + EmployeeUserId, { headers: authHeader }).map(response => {
+                var iResponse = response.json();
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = iResponse;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
 }
 export class TimeManagementAPIHelper {
     public Id: number;

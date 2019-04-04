@@ -1,4 +1,4 @@
-﻿import {Component, EventEmitter, Output, ComponentRef} from '@angular/core';
+import {Component, EventEmitter, Output, ComponentRef} from '@angular/core';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -37,9 +37,10 @@ export class MasterActionConfirmationComponent extends BaseComponent {
     public FCLVisibility: boolean = false;
     public LCLVisibility: boolean = false;
     public GroupageVisibility: boolean = false;
-    public ErrorList =[];
+    public ErrorList = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     SetWindowArgs(args: ShipmentMenuButtonsHandler) {
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this.shipmentService = new ShipmentDomainService();
         this.shipmentService.GetConnectedShipmentsByMasterIdAndTenant(args.EntityPM.Id, args.EntityPM.Tenant).subscribe(response => {
             if (!response.HasError && response.Result) {                                
@@ -68,7 +69,7 @@ export class MasterActionConfirmationComponent extends BaseComponent {
                     this.FCL_ObsList2 = this.MasterViewModel.FCL_ObsList2;
                     this.GRO_ObsList = this.MasterViewModel.GRO_ObsList;
                     this.EnabledOkButton = this.ConfirmIsEnabled(this.MasterViewModel.HasErrors());
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.FCLVisibility = this.MasterViewModel.FCLVisibility && this.MasterViewModel.MasterVSHousesVisibility;
                     this.LCLVisibility = this.MasterViewModel.LCLVisibility && this.MasterViewModel.MasterVSHousesVisibility;
                     this.GroupageVisibility = this.MasterViewModel.GroupageVisibility && this.MasterViewModel.MasterVSHousesVisibility;
@@ -103,12 +104,12 @@ export class MasterActionConfirmationComponent extends BaseComponent {
 
 
     OkButtonClicked() {      
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("confirm");        
+            this.CurrentSession.CloseCurrentWindowEmit("confirm");        
     }
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
         
     }
 

@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, ChangeDetectorRef, OnInit}  from '@angular/core';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
@@ -20,7 +20,7 @@ export class TicketAuditTabComponent implements OnInit {
 
     EntityId: string;
     public ObjectTableName = "Ticket";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
 
      
@@ -40,7 +40,7 @@ export class TicketAuditTabComponent implements OnInit {
 
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "TIAU") {
-                    SessionLocator.CurrentSession.FireEvent(this.ObjectTableName);
+                    this.CurrentSession.FireEvent(this.ObjectTableName);
                 }
             });
         }

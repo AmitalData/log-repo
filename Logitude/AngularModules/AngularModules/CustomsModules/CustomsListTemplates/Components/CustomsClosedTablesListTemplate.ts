@@ -35,6 +35,7 @@ export class CustomsClosedTablesListTemplate {
     UpdateButtonVisibility: boolean = false;
     TableUpdateButtonOpacity: string = "1";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
 
@@ -162,11 +163,11 @@ export class CustomsClosedTablesListTemplate {
                 listArgs.BackButtonTitle = "Maintenance";
                 this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                     listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run(listArgs);
-                            //SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                            //this.CurrentSession.AddMenuReference(cmpRef);
                         });
                 });
             }
@@ -177,7 +178,7 @@ export class CustomsClosedTablesListTemplate {
         
 
         var myClosedTableStatusListService = new ClosedTableStatusListService();
-        //SessionLocator.CurrentSession.StartBusyIndicator("");
+        //this.CurrentSession.StartBusyIndicator("");
         myClosedTableStatusListService.getSingleFromCache("2").subscribe(result => {
             let status: ClosedTableStatusList = result.Result as ClosedTableStatusList;
             this._CustomsClosedTable.StatusName = status.LocalName

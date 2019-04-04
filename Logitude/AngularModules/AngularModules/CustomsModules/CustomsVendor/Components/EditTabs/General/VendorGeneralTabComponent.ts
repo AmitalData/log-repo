@@ -49,7 +49,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
 
     RequestVIA: SendRequestVIA;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.CommunicationsList = new ObservableCollection([]);
@@ -159,10 +159,10 @@ export class VendorGeneralTabComponent extends BaseComponent {
             logWindow.WindowClosed.subscribe(($event: any) => {
                 if ($event == "ok") {
 
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
                     this.customsVendorPMService.get(this.EntityPM.Id).subscribe((res: ServiceResponse) => {
                         var vendor: CustomsVendorPM = res.Result;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         if (!AppTool.IsNullOrEmpty(vendor)) {
                             this.EntityPM = vendor;
                             this.FillGridData();
@@ -236,7 +236,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
 
         var operation = OperationTypes.Delete;
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Sending");
+        this.CurrentSession.StartBusyIndicator("Customs.General.O.Sending");
 
         var ObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.CustomsVendor")[0];
 
@@ -536,7 +536,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
 
         //RefreshDataEvent refreshDataEvent = eventAggregator.GetEvent<RefreshDataEvent>();
         //refreshDataEvent.Publish(new RefreshDataEventArgs() { });
-        SessionLocator.CurrentSession.CloseCurrentWindow(); //currentAssemlyLocator.CurrentSimplogWindow.Close();
+        this.CurrentSession.CloseCurrentWindow(); //currentAssemlyLocator.CurrentSimplogWindow.Close();
         //TenantContext.Current.RefreshTableData("Customs.Vendor", DateTime.UtcNow, true);
         //this.Dispose();
     }

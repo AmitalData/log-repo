@@ -529,10 +529,15 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     //    });
     //}
+    @Output() ShowSampleDateCommand = new EventEmitter();
 
     onTextChange(value) {
         this.TextValue = value;
+        this.ShowSampleDateCommand.emit(this);
     }
+    //onTextChange(value) {
+    //    this.TextValue = value;
+    //}
 
     AndOrOpsChanged(value) {
         this.AndOr = value;

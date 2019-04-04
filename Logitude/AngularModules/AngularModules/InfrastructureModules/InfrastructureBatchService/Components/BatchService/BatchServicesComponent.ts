@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -19,7 +19,8 @@ export class BatchServicesComponent {
     public LogsItemsSource: BatchServicesLogList[] = [];
     private loadedDataList: BatchServicesDefinitionPM[] = [];
     private globalDomainService: GlobalDomainService;  
-    private infraDomainService: InfrastructureDomainService; 
+    private infraDomainService: InfrastructureDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.globalDomainService = new GlobalDomainService();
         this.infraDomainService = new InfrastructureDomainService();
@@ -77,7 +78,7 @@ export class BatchServicesComponent {
     }
 
     private GetBatchServicesDefinitions() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.IsLogsGridVsisible = false;
         
@@ -118,11 +119,11 @@ export class BatchServicesComponent {
             this.ItemsSource.push(new BatchServiceItemClass(item));
         });
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     private LoadBatchServicesLogs() {  
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
               
         this.infraDomainService.GetBatchServicesLogs(this.SelectedRow.Code, this.SelectedBatchFilter.Code).subscribe(myResult => {
             if (myResult == null) {
@@ -134,7 +135,7 @@ export class BatchServicesComponent {
                 if (!myResponse.HasError) {
                     this.LogsItemsSource = myResponse.Result;
                     this.IsLogsGridVsisible = true;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
@@ -157,7 +158,7 @@ export class BatchServicesComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

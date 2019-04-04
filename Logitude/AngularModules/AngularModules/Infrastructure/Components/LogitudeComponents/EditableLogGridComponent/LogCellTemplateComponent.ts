@@ -18,12 +18,13 @@ export class LogCellTemplateComponent implements OnDestroy {
     RIndex: number = -1;
     ObsNewElementInsertedSub: any;
     @Output() CellClicked = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(CC: LogColumnComponent, private CD: ChangeDetectorRef) {
         this.ColumnComponent = CC;
         //alert(this.ColumnComponent.LogGridId)
-        this.ObsNewElementInsertedSub = SessionLocator.CurrentSession.ObsNewElementInsertedEvent.subscribe((res) => {
+        this.ObsNewElementInsertedSub = this.CurrentSession.ObsNewElementInsertedEvent.subscribe((res) => {
             if (res.Id == this.ColumnComponent.LogGridId) {
-                //var ctrl = document.getElementById(this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + 0 + "_" + (res.length));
+                //var ctrl = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + 0 + "_" + (res.length));
                 //if (ctrl) {
                 //    ctrl.focus();
                 //}
@@ -52,13 +53,13 @@ export class LogCellTemplateComponent implements OnDestroy {
         });
     }
     focusFirstEditableElement(i: number, length: number, focusSpecificRow: boolean = false) {
-        var ctrl = document.getElementById(this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + i + "_" + length);//(length - 1 < 0 ? 0 : length - 1)
+        var ctrl = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + i + "_" + length);//(length - 1 < 0 ? 0 : length - 1)
         if (ctrl == null) {
-            ctrl = document.getElementById(this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + i + "_" + (length - 1));
+            ctrl = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + i + "_" + (length - 1));
         }
 
         if (focusSpecificRow) {
-            ctrl = document.getElementById(this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + i + "_" + length);
+            ctrl = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + i + "_" + length);
         }
 
         if (ctrl) {
@@ -216,30 +217,30 @@ export class LogCellTemplateComponent implements OnDestroy {
         this.isrequired = this.ColumnComponent.required;
 
         //this.Editindex = this.ColumnComponent.Editindex;
-        ////SessionLocator.CurrentSession.ResetRowIndex();
+        ////this.CurrentSession.ResetRowIndex();
         if (this.RIndex >= 0) {
             this.RowIndex = this.RIndex;
             //console.log("RIndex = " + this.RowIndex + " LogId : " + this.ColumnComponent.LogGridId);
         }
         else {
-            this.RowIndex = SessionLocator.CurrentSession.LogitudeGridHelper.GetNextRowIndex(this.ColumnComponent.LogGridId);
-            //this.RowIndex = SessionLocator.CurrentSession.LogitudeGridHelper.GetRowIndex(this.ColumnComponent.LogGridId);
+            this.RowIndex = this.CurrentSession.LogitudeGridHelper.GetNextRowIndex(this.ColumnComponent.LogGridId);
+            //this.RowIndex = this.CurrentSession.LogitudeGridHelper.GetRowIndex(this.ColumnComponent.LogGridId);
             //console.log("RowIndex = " + this.RowIndex + " LogId : " + this.ColumnComponent.LogGridId);
         }
         this.TempRowIndex = this.RowIndex;
-        this.OuterDivId = this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + this.RowIndex;
+        this.OuterDivId = this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + this.RowIndex;
         //if (this.RowIndex == 0) {
         //    this.RowIndex = 1;
         //}
-        var ind = SessionLocator.CurrentSession.LogitudeGridHelper.GetEditCellIndex();
-        if ((this.ColumnComponent.index + 1) == SessionLocator.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId)) {
+        var ind = this.CurrentSession.LogitudeGridHelper.GetEditCellIndex();
+        if ((this.ColumnComponent.index + 1) == this.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId)) {
             //console.log("IN " + this.RowIndex);
-            SessionLocator.CurrentSession.LogitudeGridHelper.ResetEditCellIndex();
-            ind = SessionLocator.CurrentSession.LogitudeGridHelper.GetEditCellIndex();
+            this.CurrentSession.LogitudeGridHelper.ResetEditCellIndex();
+            ind = this.CurrentSession.LogitudeGridHelper.GetEditCellIndex();
             if (this.RIndex < 0) {
-                this.RowIndex = SessionLocator.CurrentSession.LogitudeGridHelper.GetNextRowIndex(this.ColumnComponent.LogGridId);
-                SessionLocator.CurrentSession.LogitudeGridHelper.SetNextRowIndex(this.ColumnComponent.LogGridId);
-                //this.RowIndex = SessionLocator.CurrentSession.LogitudeGridHelper.SetRowIndex(this.ColumnComponent.LogGridId);
+                this.RowIndex = this.CurrentSession.LogitudeGridHelper.GetNextRowIndex(this.ColumnComponent.LogGridId);
+                this.CurrentSession.LogitudeGridHelper.SetNextRowIndex(this.ColumnComponent.LogGridId);
+                //this.RowIndex = this.CurrentSession.LogitudeGridHelper.SetRowIndex(this.ColumnComponent.LogGridId);
             }
             console.log("RowIndex = " + this.RowIndex + " LogId : " + this.ColumnComponent.LogGridId);
             this.TempRowIndex = this.RowIndex;
@@ -248,14 +249,14 @@ export class LogCellTemplateComponent implements OnDestroy {
     }
     //this.Editindex 
     KeyUpEvent($event) {
-        //if ((this.ColumnComponent.index + 1) == SessionLocator.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId)) {
+        //if ((this.ColumnComponent.index + 1) == this.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId)) {
         //    //console.log("End Of Current Row : " + this.Editindex);
-        //    SessionLocator.CurrentSession.EndOfRowReachedEvent.emit(this.RowIndex + 1);
+        //    this.CurrentSession.EndOfRowReachedEvent.emit(this.RowIndex + 1);
         //}
         if ($event.keyCode == 9) {
             if ($event.shiftKey) {
-                //SessionLocator.CurrentSession.isShiftClicked = false;
-                SessionLocator.CurrentSession.isTabWithShiftClicked = false;
+                //this.CurrentSession.isShiftClicked = false;
+                this.CurrentSession.isTabWithShiftClicked = false;
             }
         }
     }
@@ -263,49 +264,49 @@ export class LogCellTemplateComponent implements OnDestroy {
     KeyDownEvent($event) {
         if ($event.keyCode == 9) {
             if ($event.shiftKey) {
-                SessionLocator.CurrentSession.isTabWithShiftClicked = true;
+                this.CurrentSession.isTabWithShiftClicked = true;
             }
         }
         
-        var colCount = SessionLocator.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId);
+        var colCount = this.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId);
         if ((this.ColumnComponent.index + 1) == colCount && $event.keyCode == 9) {
             //console.log("End Of Current Row : " + this.Editindex);
-            SessionLocator.CurrentSession.CurrentLogGrid = this.ColumnComponent.LogGridId;
-            SessionLocator.CurrentSession.EndOfRowReachedEvent.emit(this.RowIndex + 1);
+            this.CurrentSession.CurrentLogGrid = this.ColumnComponent.LogGridId;
+            this.CurrentSession.EndOfRowReachedEvent.emit(this.RowIndex + 1);
         }
         if ($event.keyCode == 13) {
-            var element = document.getElementById(this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
+            var element = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
             if (element) {
                 element.focus();
             }
         }
         if ($event.keyCode == 121) {
             if ($event.altKey) {
-                var originalElement = document.getElementById(this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex));
-                //var nextElement = document.getElementById(this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
+                var originalElement = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex));
+                //var nextElement = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
                 var originalData = this.ColumnComponent.EditableLogGridComponent.ItemSource.Collection[this.RowIndex - 1][this.ColumnComponent.binding];
                 var nextData = this.ColumnComponent.EditableLogGridComponent.ItemSource.Collection[this.RowIndex][this.ColumnComponent.binding];
                 var elementinputs = originalElement.getElementsByTagName("input");
                 if (elementinputs.length>0){
-                    SessionLocator.CurrentSession.CopiedCell = originalData;
+                    this.CurrentSession.CopiedCell = originalData;
 
-                    SessionLocator.CurrentSession.CopyCellIntoMemory.emit(elementinputs[0].id);
+                    this.CurrentSession.CopyCellIntoMemory.emit(elementinputs[0].id);
                 }
                 //this.ColumnComponent.EditableLogGridComponent.ItemSource.Collection[this.RowIndex][this.ColumnComponent.binding] = originalData;
                 
                 if ((this.ColumnComponent.index + 1) == colCount) {
-                    SessionLocator.CurrentSession.CurrentLogGrid = this.ColumnComponent.LogGridId;
-                    SessionLocator.CurrentSession.EndOfRowReachedEvent.emit(this.RowIndex + 1);
+                    this.CurrentSession.CurrentLogGrid = this.ColumnComponent.LogGridId;
+                    this.CurrentSession.EndOfRowReachedEvent.emit(this.RowIndex + 1);
                     if (this.ColumnComponent.EditableLogGridComponent.ItemSource.Length > (this.RowIndex + 1)) {
                         var columnIndex = this.ColumnComponent.index + 1;
-                        var elementId = this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + 1 + "_" + (this.TempRowIndex+1);
-                        var nextElement = this.getNextIndexedElement(SessionLocator.CurrentSession.SessionIndex, (this.ColumnComponent.index + 1), (this.TempRowIndex));//document.getElementById(elementId);
+                        var elementId = this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + 1 + "_" + (this.TempRowIndex+1);
+                        var nextElement = this.getNextIndexedElement(this.CurrentSession.SessionIndex, (this.ColumnComponent.index + 1), (this.TempRowIndex));//document.getElementById(elementId);
                         nextElement.focus();
                     }
                 }
                 else {
                     var columnIndex = this.ColumnComponent.index + 1;
-                    var elementId = this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + columnIndex + "_" + (this.TempRowIndex);
+                    var elementId = this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + columnIndex + "_" + (this.TempRowIndex);
                     var nextElement = document.getElementById(elementId);
                     nextElement.focus();
                 }
@@ -313,7 +314,7 @@ export class LogCellTemplateComponent implements OnDestroy {
                 //var elements = originalElement.getElementsByTagName("logtextbox");
                 //var elementinputs = originalElement.getElementsByTagName("input");
                 //if (elementinputs != null && elementinputs.length>0 && nextElement != null) {
-                //    SessionLocator.CurrentSession.CopyCellIntoMemory.emit(elementinputs[0].id);
+                //    this.CurrentSession.CopyCellIntoMemory.emit(elementinputs[0].id);
 
                 //    nextElement.focus();
                 //}
@@ -366,7 +367,7 @@ export class LogCellTemplateComponent implements OnDestroy {
                 _thisComponent.EventSub.unsubscribe();
                 _thisComponent.IsClickedOnce = false;
             }
-            SessionLocator.CurrentSession.LostFocusEvent.emit("");
+            this.CurrentSession.LostFocusEvent.emit("");
 
         }
         else {
@@ -376,7 +377,7 @@ export class LogCellTemplateComponent implements OnDestroy {
 
     OnClick() {
 
-        if (SessionLocator.CurrentSession.isTabWithShiftClicked == false) {
+        if (this.CurrentSession.isTabWithShiftClicked == false) {
 
             if (this.IsEnabled && !this.ColumnComponent.IsReadOnlyGrid) {
                 if (this.isEditable && this.IgnoreMods == false) {
@@ -394,17 +395,17 @@ export class LogCellTemplateComponent implements OnDestroy {
 
         }
         else {
-            SessionLocator.CurrentSession.isTabWithShiftClicked = false;
-            //SessionLocator.CurrentSession.isShiftClicked = false;
+            this.CurrentSession.isTabWithShiftClicked = false;
+            //this.CurrentSession.isShiftClicked = false;
             //console.log("isTabWithShiftClicked = false;")
-            //SessionLocator.CurrentSession.isShiftClicked = false
-            var element = this.getPrevIndexedElement(SessionLocator.CurrentSession.SessionIndex, (this.ColumnComponent.index - 1), (this.TempRowIndex));
+            //this.CurrentSession.isShiftClicked = false
+            var element = this.getPrevIndexedElement(this.CurrentSession.SessionIndex, (this.ColumnComponent.index - 1), (this.TempRowIndex));
             if (element) {
                 element.focus();
             }
             //else {
-            //    SessionLocator.CurrentSession.AllowShiftTab = false;
-            //    //SessionLocator.CurrentSession.isTabWithShiftClicked = false;
+            //    this.CurrentSession.AllowShiftTab = false;
+            //    //this.CurrentSession.isTabWithShiftClicked = false;
             //    //console.log("isTabWithShiftClicked = false;")
             //}
         }
@@ -412,7 +413,7 @@ export class LogCellTemplateComponent implements OnDestroy {
     }
 
     SubscribeCellFocus() {
-        this.EventSub = SessionLocator.CurrentSession.SessionEvent.subscribe((res) => {
+        this.EventSub = this.CurrentSession.SessionEvent.subscribe((res) => {
             if (SessionLocator.SustainFocusOnCell) {
                 if (this.OuterDivId == res.OuterDivId) {
                     this.IsEditMode = true;
@@ -440,7 +441,7 @@ export class LogCellTemplateComponent implements OnDestroy {
                 if (mine) {
                     this.IsEditMode = false;
                     this.IsDisplayMode = true;
-                    var element = document.getElementById(this.ColumnComponent.LogGridId + SessionLocator.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
+                    var element = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
                     if (element) {
                         element.focus();
                     }
@@ -513,13 +514,13 @@ export class LogCellTemplateComponent implements OnDestroy {
     }
 
     getPrevIndexedElement(SessionIndex: number, Columnindex: number, Rowindex: number): HTMLElement {
-        //SessionLocator.CurrentSession.getColumnsCount()
+        //this.CurrentSession.getColumnsCount()
         if (Columnindex >= 0 || Rowindex > 0) {
             var ctrl = document.getElementById(this.ColumnComponent.LogGridId + SessionIndex + "_" + Columnindex + "_" + Rowindex);
             if (Columnindex < 0) {
-                var ctrl = document.getElementById(this.ColumnComponent.LogGridId + SessionIndex + "_" + (SessionLocator.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId) - 1) + "_" + (Rowindex - 1));
+                var ctrl = document.getElementById(this.ColumnComponent.LogGridId + SessionIndex + "_" + (this.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId) - 1) + "_" + (Rowindex - 1));
                 if (ctrl == null || ctrl.tabIndex != 0) {
-                    return this.getPrevIndexedElement(SessionIndex, (SessionLocator.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId) - 1), Rowindex - 1);
+                    return this.getPrevIndexedElement(SessionIndex, (this.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId) - 1), Rowindex - 1);
                 }
                 else {
                     return ctrl;
@@ -538,8 +539,8 @@ export class LogCellTemplateComponent implements OnDestroy {
     }
 
     getNextIndexedElement(SessionIndex: number, Columnindex: number, Rowindex: number): HTMLElement {
-        //SessionLocator.CurrentSession.getColumnsCount()
-        var colCount = SessionLocator.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId);
+        //this.CurrentSession.getColumnsCount()
+        var colCount = this.CurrentSession.LogitudeGridHelper.getColumnsCount(this.ColumnComponent.LogGridId);
         if (Columnindex <= colCount || Rowindex > 0) {
             var ctrl = document.getElementById(this.ColumnComponent.LogGridId + SessionIndex + "_" + Columnindex + "_" + Rowindex);
             if (Columnindex > colCount) {

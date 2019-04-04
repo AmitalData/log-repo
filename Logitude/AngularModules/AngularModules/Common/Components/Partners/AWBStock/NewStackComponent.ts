@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -21,6 +21,7 @@ export class NewStackComponent extends BaseComponent {
     public ItemsSource: MAWBStackPM[] = [];
     public AirlineStacksList: MAWBStackPM[] = [];    
     private StackDomainService: AWBStackDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.StackDomainService = new AWBStackDomainService();
@@ -113,7 +114,7 @@ export class NewStackComponent extends BaseComponent {
     }
 
     CancelClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private isOkButtonClicked: boolean = false;
@@ -130,18 +131,18 @@ export class NewStackComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             if (this.IsListGenerated) {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
                 this.StackDomainService.CreateMAWBStacksOperation(this.AirlineId, this.myStartNumber, this.myEndNumber, this.CustomerId).subscribe((myResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");                        
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");                        
                     }
                 });
             }

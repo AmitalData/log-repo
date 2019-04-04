@@ -32,9 +32,10 @@ export class QuotesComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     @Output() ReloadUserQueries = new EventEmitter();
     public QuickSearchItems: QuoteList[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-        this.SalesFunnelId = "SalesFunnel_" + SessionLocator.CurrentSession.GetNewId("SalesFunnel");
+        this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
         this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
             this.IsResourcesReady = true;
             this.InitializeServices();
@@ -668,19 +669,19 @@ export class QuotesComponent extends BaseComponent {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
     }
 
     EditQuote(entity: any) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Quote', BackButtonLabel: TextCodeTranslator.Translate("General.MH.Quotes") });
@@ -811,12 +812,12 @@ export class QuotesComponent extends BaseComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = backButtonTitle;
             listArgs.MethodName = MethodName;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });;
         }
     }

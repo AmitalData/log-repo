@@ -1,4 +1,4 @@
-﻿
+
 
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -32,7 +32,7 @@ export class MainSchedulerComponent implements OnInit {
     IsShowComponentWithTabs: boolean = false;
     IsShowComponentWithOutTabs: boolean = false;
     IsShowPackageNotIncludeMessage: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor() {
        
@@ -110,7 +110,7 @@ export class MainSchedulerComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

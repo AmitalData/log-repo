@@ -22,7 +22,7 @@ export class NewLineComponent extends BaseComponent {
     Father: DailyTimeSheetComponent;
 
     public DateOfWorkDate: TimeSheetItemDay = new TimeSheetItemDay();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myDomainService = new TimeManagementDomainService();
@@ -201,7 +201,7 @@ export class NewLineComponent extends BaseComponent {
     // Commands
     public ValidationErrorsList: string[];
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors = [];
@@ -230,8 +230,8 @@ export class NewLineComponent extends BaseComponent {
     public TimeManagementAPIHelper = new TimeManagementAPIHelper();
     public TimeSheetItem: TimeSheetItem = new TimeSheetItem();
     InsertTMEmployeeTime() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.TimeManagementAPIHelper.Id = SessionLocator.Tenant;
         this.TimeManagementAPIHelper.EmployeeUserId = this.EmployeeUserId;
@@ -266,9 +266,9 @@ export class NewLineComponent extends BaseComponent {
         }
 
         this.myDomainService.UpdateTimeSheetList(this.TimeManagementAPIHelper).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

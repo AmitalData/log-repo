@@ -61,6 +61,7 @@ export class AWBWizardComponent {
     public ValidationWarningsList: string[] = [];
     public IsValidationSingleLine: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService) {
         this.TenantPM = SessionLocator.TenantPM;
         this.myPartnersDomainService = new PartnersDomainService();
@@ -2172,8 +2173,8 @@ export class AWBWizardComponent {
             this.IsReactivateButtonDisabled = true;
         }
 
-        if (SessionLocator.CurrentSession.CurrentWindow != null) {
-            SessionLocator.CurrentSession.CurrentWindow.ShowCancelControl(this.EntityPM.IsCancelled);
+        if (this.CurrentSession.CurrentWindow != null) {
+            this.CurrentSession.CurrentWindow.ShowCancelControl(this.EntityPM.IsCancelled);
         }
 
         if (FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Action.SendToAirlineTenant")) {
@@ -2444,7 +2445,7 @@ export class AWBWizardComponent {
             else {
                 this.IsValidationSingleLine = true;
                 this.ValidationErrorsList = myRespone.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.SaveCompleted.emit(false);
             }
         });
@@ -2472,7 +2473,7 @@ export class AWBWizardComponent {
             else {
                 this.IsValidationSingleLine = true;
                 this.ValidationErrorsList = myRespone.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.SaveCompleted.emit(false);
             }
         });
@@ -2575,12 +2576,12 @@ export class AWBWizardComponent {
 
     RunPrintingManager(isConfirmedByUser: boolean) {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         var myService = new CCSWebService();
 
         myService.GetAWBPrintingStock(this.EntityPM.Id, this.isSendingCargonaut, this.isSendingDEXX, isConfirmedByUser).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!myResponse.HasError) {
                 var myResult: AWBPrintResult = myResponse.Result;
@@ -3143,7 +3144,7 @@ export class AWBWizardComponent {
         this.CloseWindow();
     }
     private CloseWindow() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     private CopyShipment() {
 
@@ -3190,10 +3191,10 @@ export class AWBWizardComponent {
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private ReloadShipment() {
@@ -3212,7 +3213,7 @@ export class AWBWizardComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             this.SetMoreButtons();
             this.ExecuteRequestedMethod();
@@ -3220,7 +3221,7 @@ export class AWBWizardComponent {
     }
     public ReloadEntity() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myService == null) {
             this.myService = new ShipmentPMService();
@@ -3238,7 +3239,7 @@ export class AWBWizardComponent {
                     this.LoadCompleted.emit(false);
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

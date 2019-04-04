@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../Components/Filters/ReportFliter';
@@ -58,9 +58,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
     IsBuildUpStimulSoftReportTimer: boolean = false;
     NumberOfRequests: number = 0;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("ReportsPreviewComponent");
+        var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
         this.FiltersAreaId = "ReportFiltersArea_" + idIndex;
 

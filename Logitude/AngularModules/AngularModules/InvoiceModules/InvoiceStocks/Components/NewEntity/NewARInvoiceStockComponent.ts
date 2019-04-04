@@ -20,7 +20,7 @@ export class NewARInvoiceStockComponent {
     public ValidationErrorsList: string[] = [];
     public EntityPM: ARInvoiceStockPM;
     private stockPMService: ARInvoiceStockPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor() {
         this.RunComponent();
@@ -84,7 +84,7 @@ export class NewARInvoiceStockComponent {
 
     CancelClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private myCloner: Cloner;
@@ -108,14 +108,14 @@ export class NewARInvoiceStockComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             this.stockPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
 
                 else {

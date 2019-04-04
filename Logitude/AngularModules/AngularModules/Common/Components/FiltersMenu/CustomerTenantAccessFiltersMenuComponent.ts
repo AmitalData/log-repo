@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 
@@ -33,8 +33,9 @@ export class CustomerTenantAccessFiltersMenuComponent {
     ImpoterFilter_W: string;
     ImpoterFilter_IP: string;
     apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.ImpoterFilter_ALL = "ImpoterFilter_ALL-1_-1";
             this.ImpoterFilter_A = "ImpoterFilter_A-1_-1";
             this.ImpoterFilter_W = "ImpoterFilter_W-1_-1";
@@ -42,7 +43,7 @@ export class CustomerTenantAccessFiltersMenuComponent {
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("ImpoterFilter");
+            var idIndex = this.CurrentSession.GetNewId("ImpoterFilter");
             this.ImpoterFilter_ALL = "ImpoterFilter_ALL_" + idIndex;
             this.ImpoterFilter_A = "ImpoterFilter_A_" + idIndex;
             this.ImpoterFilter_W = "ImpoterFilter_W_" + idIndex;

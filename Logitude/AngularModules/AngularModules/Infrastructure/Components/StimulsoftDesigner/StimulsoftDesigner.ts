@@ -27,6 +27,7 @@ export class StimulsoftDesigner {
     public TemplateId: string;
     public ReportTemplateId: string = "";
     ProcessType: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _ngZone: NgZone) {
         window.stimulsoftDesignerComponentRef = {
             zone: this._ngZone,
@@ -42,7 +43,7 @@ export class StimulsoftDesigner {
 
     stimuldesignerFinished(value) {
         // this.zone.run(() => {
-        SessionLocator.CurrentSession.CurrentWindow.Close(this.TemplateId);
+        this.CurrentSession.CurrentWindow.Close(this.TemplateId);
         // });
     }
 
@@ -65,10 +66,10 @@ export class StimulsoftDesigner {
 
                 if (ev.EventName === "StimulSaved") {
                     observable.unsubscribe();
-                    SessionLocator.CurrentSession.CurrentWindow.Close(this.TemplateId);
+                    this.CurrentSession.CurrentWindow.Close(this.TemplateId);
                 } else if (ev.EventName === "StimulReportSaved") {
                     observable.unsubscribe();
-                  SessionLocator.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
+                  this.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
                   //this.signalRChannelService.unSubscribeChannel
                 }
 
@@ -98,10 +99,10 @@ export class StimulsoftDesigner {
                 if (confirmWindow.Yes) {
 
                     if (this.TemplateId) {
-                        SessionLocator.CurrentSession.CurrentWindow.Close(this.TemplateId);
+                        this.CurrentSession.CurrentWindow.Close(this.TemplateId);
                     }
                     else {
-                        SessionLocator.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
+                        this.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
                     }
 
                 }

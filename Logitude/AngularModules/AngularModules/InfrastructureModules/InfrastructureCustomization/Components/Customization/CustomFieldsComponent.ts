@@ -24,6 +24,7 @@ export class CustomFieldsComponent {
     private loadedFields: ObjectFieldPM[];
     private _ObjectFieldPMService: ObjectFieldPMService;
     public IsAddButtonEnabled: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myService = new GeneralDomainService();
         this.CustomFieldsCollection = new ObservableCollection([]);
@@ -163,7 +164,7 @@ export class CustomFieldsComponent {
     }
 
     CancelClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
 }

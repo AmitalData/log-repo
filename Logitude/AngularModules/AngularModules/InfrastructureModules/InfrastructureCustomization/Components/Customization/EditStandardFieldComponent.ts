@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {StandardFieldItem} from './StandardFieldsComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -24,6 +24,7 @@ export class EditStandardFieldComponent extends BaseComponent {
     private generalService: GeneralDomainService;
     public EntityPM: ObjectFieldPM;
     public EntityPMLoaded: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -205,7 +206,7 @@ export class EditStandardFieldComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {        
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -237,15 +238,15 @@ export class EditStandardFieldComponent extends BaseComponent {
             }
 
             if (this.EntityPM.IsDirty) {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
                 this.myService.update(this.EntityPM).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         if (list.length == 0) {
                             CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
-                                SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                                this.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.CloseCurrentWindowEmit("Ok");
                             });
                         }
                     }
@@ -261,13 +262,13 @@ export class EditStandardFieldComponent extends BaseComponent {
                 generalService.UpdateFieldsTranslations(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
 
                     else {
                         CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                            this.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.CloseCurrentWindowEmit("Ok");
                         });
                     }
                 });

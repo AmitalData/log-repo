@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -12,7 +12,7 @@ import {LogitudeWindow} from  '../../../../Controls/Windows/LogitudeWindow';
 
 export class SentToCustomLinkComponent extends BaseComponent {
     public EntityPM: ShipmentPM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -21,11 +21,11 @@ export class SentToCustomLinkComponent extends BaseComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     ViewCustomsSettings() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Customs Settings";
         logWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceSettingsComponent');

@@ -55,7 +55,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsCustomsInvoice: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");    
@@ -710,7 +710,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -734,17 +734,17 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
                     this.BuildInvoiceLines();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
     UpdateData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -771,12 +771,12 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         item.SetVatPercentage(this.GetVatTypePercentage(item.VatTypeId));
                     });
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -951,7 +951,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     LoadEntityOpenReceivables() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myService = new ShipmentDomainService();
         myService.GetInvoiceOpenAmountReceivables(this.EntityPM.ARInvoiceTypeCode, this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
@@ -1034,7 +1034,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             this.SetGridColumnsWidth();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -1301,7 +1301,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     EditJournal() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.JournalId, ObjectTableName: 'Journal' });

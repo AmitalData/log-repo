@@ -40,6 +40,7 @@ export class AccountingLoadTestComponent extends BaseComponent implements AfterV
     IsCreateJournal: boolean;
     _JournalOpService: JournalOpService = new JournalOpService();
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService)//, public entityArgs: EntityArgs)
     {
         super();
@@ -141,7 +142,7 @@ export class AccountingLoadTestComponent extends BaseComponent implements AfterV
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         this._JournalOpService
             .GetTaskLoadTest(SessionLocator.Tenant, this._SelectedActionTypeValue, this.Amount, this._SelectedEveryMinuteValue ,this.Year)
             .subscribe(
@@ -162,13 +163,13 @@ export class AccountingLoadTestComponent extends BaseComponent implements AfterV
                     alert(err);
                 },
                 () => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             );   
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     ngAfterViewInit() {

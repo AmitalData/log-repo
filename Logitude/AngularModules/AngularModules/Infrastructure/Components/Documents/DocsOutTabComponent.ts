@@ -97,7 +97,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     IsLoadFollowUpDocumentTypeListsComplete: boolean = false;
     IsOpenSendComponent: boolean = false;
 
-   
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(
         public entityArgs: EntityArgs,
         public _documentOutPMService: DocumentOutPMService,
@@ -107,7 +107,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService,
         public _elementRef: ElementRef
     ) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.DocumentTypes = [];
         this.Listen();
     }
@@ -233,13 +233,13 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         }
 
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        //SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        //this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         if (this.isPrintRequested) {
                             this.InitializePrinting();
                         }
@@ -256,7 +256,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         }
 
         if (!this.DocOutChangedEvent) {
-            this.DocOutChangedEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.DocOutChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "RefreshDocumentOutPrint") {
                     this.InitializeDocsOutControl();
                 } else if (s == "RefreshDocumentOutSend") {
@@ -528,7 +528,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     }
 
     RefreshButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.Load();
     }
 
@@ -761,7 +761,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
 
         this.SetFollowUpList();
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
 
@@ -975,7 +975,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
             this.SelectedInternalDocument = item;
             if (this.EntityPM && this.EntityPM.IsDirty) {
                 this.isSendRequested = true;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
             else {
                 this.InitializeSending("NONE");
@@ -1071,7 +1071,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
 
         if (this.EntityPM && this.EntityPM.IsDirty) {
             this.isPrintRequested = true;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
         else {
             this.InitializePrinting();
@@ -1094,7 +1094,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
 
             else {
 
-                SessionLocator.CurrentSession.StartBusyIndicator(buildingDocumentText);
+                this.CurrentSession.StartBusyIndicator(buildingDocumentText);
                 this._documentOutPMService.getCreateDocumentOut(this.SelectedInternalDocument.DocumentTypeId, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -1109,7 +1109,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
                             }
 
 
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             this.ShowPrintControl();
                         }
                     }

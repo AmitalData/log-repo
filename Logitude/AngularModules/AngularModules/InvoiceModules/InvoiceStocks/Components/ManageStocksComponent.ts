@@ -17,6 +17,7 @@ export class ManageStocksComponent {
     public IsVisibile: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private ARInvoiceStockListService: ARInvoiceStockListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("ARInvoiceStockLine", 0).subscribe(response => {
@@ -28,14 +29,14 @@ export class ManageStocksComponent {
     }
     
     private LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         
         this.ARInvoiceStockListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.BuildItemsSource(myResponse.Result);
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     private BuildItemsSource(items: ARInvoiceStockList[]) {
@@ -75,6 +76,6 @@ export class ManageStocksComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

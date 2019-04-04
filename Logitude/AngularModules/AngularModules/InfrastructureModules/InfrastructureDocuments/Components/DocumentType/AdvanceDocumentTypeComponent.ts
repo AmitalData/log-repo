@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
@@ -24,7 +24,7 @@ export class AdvanceDocumentTypeComponent implements OnInit {
  
 
     EntityPM: DocumentTypePM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
 
@@ -76,7 +76,7 @@ export class AdvanceDocumentTypeComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }    
 
     SaveButtonClicked() {
@@ -87,7 +87,7 @@ export class AdvanceDocumentTypeComponent implements OnInit {
         this.EntityPM.IsMaster = this.IsMaster;
         this.EntityPM.IsOcean = this.IsOcean;
         this.EntityPM.IsInland = this.IsInland;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

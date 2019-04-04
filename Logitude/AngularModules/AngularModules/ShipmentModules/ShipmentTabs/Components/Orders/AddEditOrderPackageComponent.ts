@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -20,6 +20,7 @@ export class AddEditOrderPackageComponent {
     public TransportModeId: string = null;
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -57,7 +58,7 @@ export class AddEditOrderPackageComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -90,7 +91,7 @@ export class AddEditOrderPackageComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 

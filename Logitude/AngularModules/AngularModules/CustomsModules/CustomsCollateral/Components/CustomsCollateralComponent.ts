@@ -35,7 +35,8 @@ export class CustomsCollateralComponent extends BaseComponent {
    public ValidationErrorsList: string[] = [];
    requestParams: CollateralRequestParams = new CollateralRequestParams();
    responseData: INF_MSG_GenericResponseData = new INF_MSG_GenericResponseData();
-   declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
+    declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
+    private CurrentSession = SessionLocator.SelectedSession;
    constructor(public entityArgs: EntityArgs) {
         super();
     }
@@ -241,7 +242,7 @@ export class CustomsCollateralComponent extends BaseComponent {
              
                 this.customsCollateralPMService.update(this.CurrentEntity).subscribe(response => {
                     var result = response.Result;
-                    SessionLocator.CurrentSession.CollateralAnswerRefreshEvent.emit({ IsClosed: this.CurrentEntity.IsClosed  });
+                    this.CurrentSession.CollateralAnswerRefreshEvent.emit({ IsClosed: this.CurrentEntity.IsClosed  });
             this.IsUnClosedButtonEnabled = true;
             this.IsClosedButtonEnabled = false;
             this.IsClosedCollateral = true;
@@ -273,7 +274,7 @@ export class CustomsCollateralComponent extends BaseComponent {
              
                 this.customsCollateralPMService.update(this.CurrentEntity).subscribe(response => {
                     var result = response.Result;
-                    SessionLocator.CurrentSession.CollateralAnswerRefreshEvent.emit({ IsClosed: this.CurrentEntity.IsClosed });
+                    this.CurrentSession.CollateralAnswerRefreshEvent.emit({ IsClosed: this.CurrentEntity.IsClosed });
                     this.IsUnClosedButtonEnabled = false;
                     this.IsClosedButtonEnabled = true;
                     this.IsClosedCollateral = false;
@@ -346,7 +347,7 @@ export class CustomsCollateralComponent extends BaseComponent {
        
        
             if (this.CurrentEntity.CustomsCollateralsAnswers.length > 0) {
-                SessionLocator.CurrentSession.StartBusyIndicator("");
+                this.CurrentSession.StartBusyIndicator("");
                 var answerParams: CustomsCollateralsAnswerParams[] = [];
 
                 for (var tab of this.CurrentEntity.CustomsCollateralsAnswers) {
@@ -450,7 +451,7 @@ export class CustomsCollateralComponent extends BaseComponent {
     CancelButtonClicked() {
 
        
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     ViewDocumentsComponent() {

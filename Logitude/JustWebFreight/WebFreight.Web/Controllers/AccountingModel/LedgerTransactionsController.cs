@@ -38,8 +38,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                
 
                 LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter() ;
 
@@ -138,8 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                
 
                 LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
 
@@ -229,8 +227,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+               
 
                 LedgerTransactionCardIndexFilter LTCIFilter = new LedgerTransactionCardIndexFilter();
 
@@ -463,8 +460,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 // concat two list
                 IEnumerable<LedgerTransactionPM> finalTransactionsList
                     = openedTransactions
-                        .Concat(reconciledTransactions)
-                        .OrderByDescending(d => d.IsReconciled).ThenByDescending(d=>d.PaymentReconciledAmount).ToList();
+                        .Concat(reconciledTransactions);
+
+
+                finalTransactionsList
+                    = finalTransactionsList
+                        .OrderByDescending(d => d.IsReconciled).ThenByDescending(d => d.PaymentReconciledAmount).ToList();
 
 
                 ServiceResponse response = new ServiceResponse();

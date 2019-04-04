@@ -115,6 +115,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                         }
 
+                        if (entity.TransportMode != null && entity.TransportMode.Code != "A")
+                        {
+                            if (entity.ShipmentType == null || (entity.ShipmentType != null && string.IsNullOrEmpty(entity.ShipmentType.Code)))
+                            {
+                                throw new ApplicationException("Missing Shipment Type");
+                            }
+                        }
+
                         if (entity.Receivables != null && entity.Receivables.Count > 0)
                         {
                             foreach (Receivable item in entity.Receivables)
@@ -155,7 +163,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             throw new ApplicationException("Missing volume unit code");
                         }
-
+                        
                         if (string.IsNullOrEmpty(entityPM.DimensionsUnitCode))
                         {
                             throw new ApplicationException("Missing dimensions unit code");
@@ -171,6 +179,36 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             throw new ApplicationException("Missing chargeable weight unit code");
                         }
 
+                        switch (entityPM.VolumeUnitCode)
+                        {
+                            case "CBF":
+                                {
+                                    if (entityPM.DimensionsUnitCode == "Cm")
+                                    {
+                                        throw new ApplicationException("When volume unit is CBF, dimensions unit should be Inch or Cm");
+                                    }
+                                    break;
+                                }
+
+                            case "CBI":
+                                {
+                                    if (entityPM.DimensionsUnitCode != "Inc")
+                                    {
+                                        throw new ApplicationException("When volume unit is CBI, dimensions unit should be Inch");
+                                    }
+                                    break;
+                                }
+
+                            case "CBM":
+                                {
+                                    if (entityPM.DimensionsUnitCode != "Cm")
+                                    {
+                                        throw new ApplicationException("When volume unit is CBM, dimensions unit should be Cm");
+                                    }
+                                    break;
+                                }                                
+                        }
+                        
                         if (entityPM.TransportModeId == "A")
                         {
                             if (string.IsNullOrEmpty(entityPM.MainCarriageCarrierId))

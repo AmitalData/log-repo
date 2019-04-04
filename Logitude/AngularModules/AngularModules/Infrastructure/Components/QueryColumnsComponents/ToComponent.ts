@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
@@ -28,6 +28,7 @@ export class ToComponent implements OnInit {
     IsChecked: boolean = false;
  
     Key: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef,  private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
 
@@ -90,7 +91,7 @@ export class ToComponent implements OnInit {
         if (item.Email) {
             var select = new ParameterInput(this.fieldName, item.Email, true, item.Id);
             this.Destroyed();
-            SessionLocator.CurrentSession.SessionEvent.emit(select);
+            this.CurrentSession.SessionEvent.emit(select);
         }
     }
 

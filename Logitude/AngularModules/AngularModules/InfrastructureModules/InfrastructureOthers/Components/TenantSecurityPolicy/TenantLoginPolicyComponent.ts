@@ -35,6 +35,7 @@ export class TenantLoginPolicyComponent extends BaseComponent {
     public EnabledForTypesList: EnabledForType[];
     userExtendedPMService: UserExtendedPMService;
     public EnabledForUsersCount: number = 0;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService, private TenantLoginPolicyPMService: TenantLoginPolicyPMService) {
         super();
 
@@ -396,7 +397,7 @@ export class TenantLoginPolicyComponent extends BaseComponent {
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -423,12 +424,12 @@ export class TenantLoginPolicyComponent extends BaseComponent {
             return;
 
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         if (this.IsNew) {
             this.TenantLoginPolicyPMService.insert(this.EntityPM).subscribe(response => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!response.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
                 else
                     this.ValidationErrorsList = response.ErrorsArray;
@@ -436,9 +437,9 @@ export class TenantLoginPolicyComponent extends BaseComponent {
         }
         else {
             this.TenantLoginPolicyPMService.update(this.EntityPM).subscribe(response => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!response.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
                 else
                     this.ValidationErrorsList = response.ErrorsArray;

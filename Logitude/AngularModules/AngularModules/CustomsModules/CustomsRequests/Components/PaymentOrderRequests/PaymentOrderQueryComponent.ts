@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -46,7 +46,7 @@ export class PaymentOrderQueryComponent
     _CustomBankListService: CustomBankListService = new CustomBankListService();
 
     public PaymentsDetailsList: ObservableCollection;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.PaymentsDetailsList = new ObservableCollection([]);
@@ -338,10 +338,10 @@ export class PaymentOrderQueryComponent
         }
 
         this.DueChangeClearChildField(true);
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse, true);
             });
     }
@@ -376,7 +376,7 @@ export class PaymentOrderQueryComponent
 
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {

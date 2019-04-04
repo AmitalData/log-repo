@@ -18,7 +18,6 @@ import {DateTool} from '../Tools';
 declare var window: any;
 
 export class RulesValidator {
-
     public IsNewEntity: boolean;
     private _requiredFieldRules: Array<ObjectTableRulePM> = [];
     private _entityLevelRules: Array<ObjectTableRulePM> = [];
@@ -106,8 +105,8 @@ export class RulesValidator {
     }
 
     public ApplyEntityChangedRules(propertyName: string, entity: any, objectTableName: string) {
-        //if (SessionLocator.CurrentSession && SessionLocator.CurrentSession.CurrentEditComponent) {
-        //    SessionLocator.CurrentSession.CurrentEditComponent.ChangeDetectorRef.detach();
+        //if (this.CurrentSession && this.CurrentSession.CurrentEditComponent) {
+        //    this.CurrentSession.CurrentEditComponent.ChangeDetectorRef.detach();
         //}
         if (entity) {
             this.IsNewEntity = (entity.OldEntityPM === null || entity.OldEntityPM === undefined);
@@ -118,8 +117,8 @@ export class RulesValidator {
 
         this.ApplyTriggeredSetFieldValueRules(propertyName, entity, objectTableName);
         this.ApplyConditionalSetFieldRules(propertyName, entity, objectTableName, true);
-        //if (SessionLocator.CurrentSession && SessionLocator.CurrentSession.CurrentEditComponent) {
-        //    SessionLocator.CurrentSession.CurrentEditComponent.ChangeDetectorRef.detectChanges();
+        //if (this.CurrentSession && this.CurrentSession.CurrentEditComponent) {
+        //    this.CurrentSession.CurrentEditComponent.ChangeDetectorRef.detectChanges();
         //}
     }
 

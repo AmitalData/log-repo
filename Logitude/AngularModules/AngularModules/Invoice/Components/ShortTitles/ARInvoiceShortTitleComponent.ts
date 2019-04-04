@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
@@ -14,7 +14,7 @@ export class ARInvoiceShortTitleComponent {
     public EntityPM: ARInvoicePM;
     public DisplaySATSettings: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");   
@@ -27,17 +27,17 @@ export class ARInvoiceShortTitleComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.BuildComponent();
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.BuildComponent();
                 }
             });
@@ -73,7 +73,7 @@ export class ARInvoiceShortTitleComponent {
 
     ViewEntityClicked(invoiceId: string) {
         if (!AppTool.IsNullOrEmpty(invoiceId)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: invoiceId, ObjectTableName: 'ARInvoice', BackButtonLabel: "A/R Invoice: " + this.EntityPM.InvoiceNumber });

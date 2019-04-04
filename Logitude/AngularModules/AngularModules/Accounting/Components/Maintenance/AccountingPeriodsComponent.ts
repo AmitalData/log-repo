@@ -43,7 +43,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
     ShowPrompt: boolean = false;
     public isRTL: boolean = false;
     public hasReadPermision: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
         this.accountingPeriodListService = new AccountingPeriodListService();
@@ -114,7 +114,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     EditPeriod(period: AccountingPeriodList) {

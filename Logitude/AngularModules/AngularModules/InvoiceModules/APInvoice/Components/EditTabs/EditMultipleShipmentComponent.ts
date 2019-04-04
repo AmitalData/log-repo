@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 import {APInvoiceLinePM} from '../../../../Invoice/EntityPMs/APInvoiceLinePM';
 import {APInvoiceMultipleShortPM} from '../../../../Invoice/EntityPMs/APInvoiceMultipleShortPM';
@@ -46,7 +46,7 @@ export class EditMultipleShipmentComponent extends BaseComponent {
     public ShipmentId: string = null;
     public APInvoiceId: string = null;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -102,7 +102,7 @@ export class EditMultipleShipmentComponent extends BaseComponent {
 
     private myOpenPayables: ShipmentPayablePM[] = [];
     private LoadEntity() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myInvoiceDomainService.GetSingleAPInvoiceShortPM(this.APInvoiceId, this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -114,12 +114,12 @@ export class EditMultipleShipmentComponent extends BaseComponent {
 
                 else {
                     this.BuildItemsSource();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -143,7 +143,7 @@ export class EditMultipleShipmentComponent extends BaseComponent {
 
                     this.BuildItemsSource();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             });            
         });
@@ -379,7 +379,7 @@ export class EditMultipleShipmentComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -398,16 +398,16 @@ export class EditMultipleShipmentComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             this.myInvoiceDomainService.PutSingleAPInvoiceShortPM(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
 
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }
@@ -478,6 +478,7 @@ export class APInvoiceLineShortItem extends BaseComponent {
     public IsMatch: boolean = true;
     public IsEditingEnabled: boolean = false;
     public AddNewLineMode: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityPM: APInvoiceLinePM, public fatherComponent: EditMultipleShipmentComponent, isAddNewLineMode: boolean) {
         super();
         this.EntityPM = entityPM;

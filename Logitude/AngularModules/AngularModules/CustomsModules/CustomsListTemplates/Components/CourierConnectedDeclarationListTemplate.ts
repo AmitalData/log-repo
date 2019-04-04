@@ -18,7 +18,7 @@ export class CourierConnectedDeclarationListTemplate {
     entityPM: CourierMasterPM;
     IsConnectedDeclarationChecked: boolean = true;
     IsNotConnectedDeclarationChecked: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
     }
 
@@ -26,7 +26,7 @@ export class CourierConnectedDeclarationListTemplate {
     {
         this.rowData = rowData;
         this.fieldName = fieldName;
-        this.entityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM as CourierMasterPM;
+        this.entityPM = this.CurrentSession.CurrentEditComponent.EntityPM as CourierMasterPM;
 
         this.BuildDeclarationsCheckBox();       
         this.CD.detectChanges();
@@ -52,7 +52,7 @@ export class CourierConnectedDeclarationListTemplate {
     ShowDeclarationScreen() {
       //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({

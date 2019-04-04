@@ -272,7 +272,7 @@ export class SessionComponent {
         this.BusyIndicatorTimer = setTimeout(() => this.CheckBusyIndicator(), 5000);
     }
     CheckBusyIndicator() {
-        if (SessionLocator.CurrentSession.SessionIndex != this.SessionIndex) {
+        if (this.SessionIndex != this.SessionIndex) {
             if (this.ShowBusyIndicator) {
                 this.StopBusyIndicator();
             }
@@ -485,7 +485,7 @@ export class SessionComponent {
     }
     public DestroyListComponentReferences() {// itzik + ihab + mohammad !!!!
 
-        SessionLocator.CurrentSession.UnsubscribeStaticEvent();
+        this.UnsubscribeStaticEvent();
         this.ListControls = null;
         this.ListControls = new Array<ListComponent>();
         this.CurrentListComponent = null;;

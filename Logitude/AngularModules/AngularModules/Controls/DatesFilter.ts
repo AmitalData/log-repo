@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -26,15 +26,16 @@ export class DatesFilter {
     public FilterId_T: string;
     public FilterId_I: string;
     @Output() SelectedValueChanged = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.FilterId_A = "DateFilter_T_-1_-1";
             this.FilterId_T = "DateFilter_Y_-1_-1";
             this.FilterId_I = "DateFilter_P_-1_-1";
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("DatesFilter");
+            var idIndex = this.CurrentSession.GetNewId("DatesFilter");
             this.FilterId_A = "DateFilter_T_" + idIndex;
             this.FilterId_T = "DateFilter_Y_" + idIndex;
             this.FilterId_I = "DateFilter_P_" + idIndex;

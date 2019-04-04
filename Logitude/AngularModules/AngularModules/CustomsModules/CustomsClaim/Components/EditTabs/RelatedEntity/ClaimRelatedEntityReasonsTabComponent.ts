@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -40,35 +40,35 @@ export class ClaimRelatedEntityReasonsTabComponent extends BaseComponent {
     private isControlEnabled: boolean = true;
 
     ValidationErrors: string[] = [];
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
 
         this.ValidationErrors = [];
         this.ClaimsRelatedEntityReasonslist = new ObservableCollection([]);
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.BuildReasonslist();
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                     //if (tabCode == "CLMG") {
                     //    this.RefreshEntity();
                     //    this.BuildReasonslist();
@@ -88,7 +88,7 @@ export class ClaimRelatedEntityReasonsTabComponent extends BaseComponent {
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     selectedTab: LogTab;
@@ -193,7 +193,7 @@ export class ClaimRelatedEntityReasonComponent extends BaseComponent {
     public ObjectTableName = "Customs.ClaimsRelatedEntitiesReason";
     public DataContext: ClaimRelatedEntityReasonComponent = this;
     public ClaimsRelatedEntsReasonsExpslist: ObservableCollection;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityPM: ClaimsRelatedEntitiesReasonPM, public claimsRelatedEntity: ClaimsRelatedEntityPM) {
         super();
         this.ClaimsRelatedEntsReasonsExpslist = new ObservableCollection([]);

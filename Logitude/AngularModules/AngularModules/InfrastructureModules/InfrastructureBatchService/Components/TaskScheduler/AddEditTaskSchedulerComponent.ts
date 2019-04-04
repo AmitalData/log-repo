@@ -1,4 +1,4 @@
-﻿
+
 
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -32,7 +32,7 @@ export class AddEditTaskSchedulerComponent  {
 
     @ViewChild('GeneralSectionLocation', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     private GeneralTemplateComponent: any = null;
     constructor() {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
@@ -111,7 +111,7 @@ export class AddEditTaskSchedulerComponent  {
   
     LoadSchedulerDetailsData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
 
         this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
@@ -124,7 +124,7 @@ export class AddEditTaskSchedulerComponent  {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -319,7 +319,7 @@ export class AddEditTaskSchedulerComponent  {
     
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
           
 
             if (this.DataContext.IsNew) {
@@ -327,7 +327,7 @@ export class AddEditTaskSchedulerComponent  {
                 this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                         this.EntityPM = myResponse.Result;
                         this.EntityPM.IsDirty = false;
                         this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
@@ -337,7 +337,7 @@ export class AddEditTaskSchedulerComponent  {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }); 
             }
 
@@ -350,7 +350,7 @@ export class AddEditTaskSchedulerComponent  {
                         if (!myResponse.HasError) {
                             this.EntityPM = myResponse.Result;
                             this.EntityPM.IsDirty = false;
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                             this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
                         }
 
@@ -358,13 +358,13 @@ export class AddEditTaskSchedulerComponent  {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                         }
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
                 }
 
                 else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             }            
         }
@@ -372,7 +372,7 @@ export class AddEditTaskSchedulerComponent  {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private myCloner: Cloner;

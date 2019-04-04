@@ -24,7 +24,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     CourierMasterService: CourierMasterService = new CourierMasterService();
 
     public CurrentEditComponentId: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -32,26 +32,26 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess && SessionLocator.CurrentSession.CurrentEditComponent) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "COGN") {
 
                         }
@@ -177,7 +177,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         //            var errorMsg: string = "Already exist";
         //            this.UIProperties.SetValidity("AirlineId", "Customs.CourierMaster", false,"Already exist");
         //            //this.CourierMasterValidator.ValidationErrorMessageCodes.push(errorMsg);
-        //            //SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMsg);
+        //            //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMsg);
         //        }
         //    }
         //});
