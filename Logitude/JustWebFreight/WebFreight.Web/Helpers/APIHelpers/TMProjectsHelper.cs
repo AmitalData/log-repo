@@ -20,9 +20,9 @@ using WebFreight.Web.Controllers.WebDomainControllers;
 
 namespace WebFreight.Web.Helpers.APIHelpers
 {
-    public class GetTMProjectsHelper : BatchTaskExecutionsService
+    public class TMProjectsHelper : BatchTaskExecutionsService
     {
-        public GetTMProjectsHelper(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
+        public TMProjectsHelper(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
 
         }
