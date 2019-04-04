@@ -285,7 +285,7 @@ export class DWQueryBuilderService {
 
 
         if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
+            entityPM.OldEntityPM = this.deepClone(entityPM);
 
         }
         else {
@@ -384,7 +384,7 @@ export class DWQueryBuilderService {
             key => ({
                 [key]:
 
-                    key != "UIProperties" && key != "MyParentClass" && key != "Items" ? this.deepClone(obj[key], hash) : true
+                    key != "UIProperties" && key != "MyParentClass" && key != "ShowSampleDateCommand" && key != "Items" && key != "TooltipId" && key != "TooltipContentId" && key != "CurrentSession" ? this.deepClone(obj[key], hash) : true
                     
             })));
     }
@@ -454,7 +454,7 @@ export class DWQueryBuilderService {
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
 
-            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged" || jsonPMKeys[key] === "MyParentClass" || jsonPMKeys[key] === "ShowSampleDateCommand" || jsonPMKeys[key] === "Items" || jsonPMKeys[key] === "TooltipId" || jsonPMKeys[key] === "TooltipContentId" || jsonPMKeys[key] === "CurrentSession") {
                 continue;
             }
 
