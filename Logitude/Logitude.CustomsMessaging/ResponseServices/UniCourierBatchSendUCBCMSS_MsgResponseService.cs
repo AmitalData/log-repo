@@ -48,15 +48,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             bool multiThread = true;
             if (multiThread)
             {
-                var listOf100items = listPM.ChunkBy(100);
-                Parallel.For(0, listOf100items.Count, new ParallelOptions { MaxDegreeOfParallelism = 5 }, count =>
+                var listOf50items = listPM.ChunkBy(50);
+                Parallel.For(0, listOf50items.Count, new ParallelOptions { MaxDegreeOfParallelism = 5 }, count =>
                 {
-                    Debug.WriteLine($"Parallel-count {count}, CurrentThread{Thread.CurrentThread.ToString()}");
+                    Debug.WriteLine($"Parallel-count {count}, CurrentThread{Thread.CurrentThread.ManagedThreadId.ToString()}");
                     
                     using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromSeconds(100)))
                     {
                         var context1 = CustomContext.GetContext(requestParams.Tenant);
-                        foreach (DeclarationCourierStatusPM itemPM in listOf100items[count])
+                        foreach (DeclarationCourierStatusPM itemPM in listOf50items[count])
                         {
                             var changeStorgeSiteService = new ChangeStorgeSiteService(context1);
                             changeStorgeSiteService.ChangeStorgeSite(customResponse.StorageSiteCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM);

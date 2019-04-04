@@ -52,8 +52,12 @@ namespace CustomsWorkerRole
     /* 
      * ///couriernet_global _global _global
 Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('CustomsAnalyzeQueueWR','CustomsAnalyzeQueueWR');
----Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('CustomsAnalyzeQueueWR',0,1);
-Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('CustomsAnalyzeQueueWR',0,5);
+Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('CustomsAnalyzeQueueWR',0,1);
+update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =5 where CODE='CustomsAnalyzeQueueWR';
+Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('SendWEBAPIMessage2MamanQ','SendWEBAPIMessage2MamanQ');
+Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('SendWEBAPIMessage2MamanQ',0,3);
+update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEBAPIMessage2MamanQ';
+        
      */
 
     //public class SendWebAPI2MamanGWMessageECTHRDataWR
@@ -98,7 +102,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         private CommunicationLogRepository _CommunicationLogRep;
         
 
-        private CommunicationLog _WaitingCommLog;
+        
 
         private DateTime _LastCreateFtpDefinition;
         private List<InterfaceDetails> _CustomsPartnerAnalyzeQueueService;
@@ -155,7 +159,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 }
                 else
                 {
-                    WorkUntil_AnalyzeQueue_Empty_Db();
+                    WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
                 }
                 
                 
@@ -217,11 +221,25 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 .AppendLine("InterfaceCode:" + InterfaceCode)
                 .AppendLine(",Tenant" + Tenant);
 
-            DebugStep(analyzeQueueID, InterfaceCode, InterfacePartner, Tenant);
+            if ( _ReceivedBrokeredMessage.RetryNumber < 1)
+            {
+
+                CheckParamsAndExec(analyzeQueueID, InterfaceCode, InterfacePartner, Tenant);
+                _IQueueService.Complete();
+
+                this.LogDoneItemInMemory();
+            }
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine("RetryNumber >= 1>>> Failed ");
+                
+                _IQueueService.Complete();
+            }
+            
 
         }
 
-        private void WorkUntil_AnalyzeQueue_Empty_Db()
+        private void WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE()
         {
 
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
@@ -251,7 +269,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                                 {
                                     break;
                                 }
-                                Exec(customsPartnerFtpDetails, @interface, analyzeQueueRepository, analyzeQueue);
+                                Exec(customsPartnerFtpDetails, @interface, analyzeQueueRepository, analyzeQueue,1);
                                 LogDoneItemInMemory();
                             }
 
@@ -277,13 +295,13 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             }
         }
-        public void DebugStep(string analyzeQueueID, string InterfaceCode, string InterfacePartner, int tenant)
+        public void CheckParamsAndExec(string analyzeQueueID, string InterfaceCode, string InterfacePartner, int tenant)
         {
             string analyzeQueueFrom = InterfacePartner + "," + InterfaceCode;
-            DebugStep(analyzeQueueID, analyzeQueueFrom, tenant);
+            CheckParamsAndExec(analyzeQueueID, analyzeQueueFrom, tenant);
 
         }
-        public void DebugStep(string analyzeQueueID, string analyzeQueueFrom, int tenant)
+        public void CheckParamsAndExec(string analyzeQueueID, string analyzeQueueFrom, int tenant)
         {
 
             analyzeQueueFrom = analyzeQueueFrom.Trim();
@@ -313,16 +331,17 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 throw new Exception($"analyzeQueueID {analyzeQueueID} not in DB");
             }
-            Exec(customsPartnerFtpDetails, @interface, analyzeQueueRepository, analyzeQueue);
+            Exec(customsPartnerFtpDetails, @interface, analyzeQueueRepository, analyzeQueue, tenant);
+
         }
 
-        private void Exec(CustomsPartnerFtpDetails customsPartnerFtpDetails, InterfaceDetails @interface, AnalyzeQueueRepository analyzeQueueRepository, AnalyzeQueue analyzeQueue)
+        private void Exec(CustomsPartnerFtpDetails customsPartnerFtpDetails, InterfaceDetails @interface, AnalyzeQueueRepository analyzeQueueRepository, AnalyzeQueue analyzeQueue, int tenant)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 var serviceAnalyzer = customsPartnerFtpDetails.GetCustomAnalyzerQueueService(@interface);
                 //ArtemusAnalyzer analyzer = new Artemus(analyzeQueue, analyzeQueueRepository);
-                serviceAnalyzer.Run(analyzeQueue, analyzeQueueRepository);
+                serviceAnalyzer.Run(analyzeQueue, analyzeQueueRepository, tenant);
                 scope.Complete();
             }
         }
