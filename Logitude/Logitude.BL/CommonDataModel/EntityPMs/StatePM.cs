@@ -48,6 +48,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string SearchFields { get; set; }
         [DataMember]
         public string ComputedLocalName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public string QBOTransactionLocationCode { get; set; }
+
         [DataMember]
         public string CountryCode { get; set; }
         [DataMember]
