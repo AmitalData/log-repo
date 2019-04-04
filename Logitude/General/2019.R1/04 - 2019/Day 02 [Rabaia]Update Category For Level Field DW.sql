@@ -1,1 +1,1 @@
-Update DWObjectFieldCategories set DWObjectFieldCode = 'DirectHouse' where DWObjectFieldCode = '[Level]'
+Update DWObjectFieldCategories set DWObjectFieldCode = '[DirectHouse]' where DWObjectFieldCode = '[Level]'
