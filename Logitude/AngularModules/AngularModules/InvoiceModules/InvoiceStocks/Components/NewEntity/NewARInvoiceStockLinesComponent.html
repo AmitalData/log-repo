@@ -1,0 +1,217 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 300px;">
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Prefix'" [DataContext]="DataContext" [Text]="'Prefix'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Prefix'" [Text]="Prefix" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'StartNumber'" [DataContext]="DataContext" [Text]="'Start Number'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'StartNumber'" [Text]="StartNumber" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'EndNumber'" [DataContext]="DataContext" [Text]="'End Number'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'EndNumber'" [Text]="EndNumber" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Suffix'" [DataContext]="DataContext" [Text]="'Suffix'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Suffix'" [Text]="Suffix" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 70px;">
+                                                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Size'" [DataContext]="DataContext" [Text]="'Size'"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 200px;">
+                                                <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Size'" [Text]="Size" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 120px;">
+                                                <div class="RadioButton">
+                                                    <input id="ByEndNumberRadio" type="radio" name="ByTypeRadio" [checked]="IsByNumber" (click)="SetIsByNumber(true)" />
+                                                    <label for="ByEndNumberRadio">By End Number</label>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="RadioButton">
+                                                    <input id="ByAmountRadio" type="radio" name="ByTypeRadio" [checked]="!IsByNumber" (click)="SetIsByNumber(false)" />
+                                                    <label for="ByAmountRadio">By Amount</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 70px;">
+                                                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Amount'" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 200px;">
+                                                <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Amount'" [Text]="Amount" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>                                
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr class="SectionHeader" style="height: 22px; border: 1px solid #AAAAAA; border-bottom:0;">
+                    <td style="font-size: 12px; padding-left: 10px;">Invoice Numbers</td>
+                </tr>
+
+                <tr style="border: 1px solid #AAAAAA; border-top:0;">
+                    <td style="padding: 2px;">
+                        <div class="SimpleGridView">
+                            <div class="SimpleGridViewHeaderDark">
+                                <table>
+                                    <tr>
+                                        <td style="width: 120px;">{{'ARInvoiceStockLine.F.Number' | TextCodeTranslationPipe}}</td>
+                                        <td class="LastChild">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="SimpleGridViewBody">
+                                <table>
+                                    <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                        <td class="GridViewCell" style="width: 120px;">
+                                            <div>{{item.Number}}</div>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

@@ -19,9 +19,11 @@ export class ManageStocksComponent {
     private ARInvoiceStockListService: ARInvoiceStockListService;
     constructor() {
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("ARInvoiceStockLine", 0).subscribe(response => {
             this.IsVisibile = true;
             this.ARInvoiceStockListService = new ARInvoiceStockListService();
             this.LoadData();
+            });
         });
     }
     
