@@ -69,7 +69,7 @@ export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
 
     // Commands
     CancelButtonClicked() {
-        //SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
     private batchEntity: BatchTaskExecutionPM;
     public IsResponseProgressVisible: boolean = false;

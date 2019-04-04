@@ -813,7 +813,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     Subject = "Get TM Projects",
                     Tenant = tenant,
                     ChangeSetOp = ChangeSetOperation.Insert,
-                    ClassName = "WebFreight.Web.Helpers.APIHelpers.GetTMProjectsHelper,WebFreight.Web",
+                    ClassName = "WebFreight.Web.Helpers.APIHelpers.TMProjectsHelper,WebFreight.Web",
                     CreateDate = DateTime.Now,
                     PrametersXml = xmlParameters,
                     StatusCode = "C",
