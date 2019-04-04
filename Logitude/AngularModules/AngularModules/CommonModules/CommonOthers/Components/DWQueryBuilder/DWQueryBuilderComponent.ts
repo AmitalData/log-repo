@@ -63,8 +63,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
     //public TooltipContentId: string = null;
     public IconPath: string = "./Images/Help.png";
     public IconBackground: string = null;
-    public Width: number = 256;
-    public Height: number = 125;
+    public Width: number = 200;
+    public Height: number = 110;
     public IconSize: number = 17;
     mouseover(MyItem) {
         if (MyItem.HelpText) {
@@ -83,11 +83,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
             }
 
             document.getElementById(MyItem.TooltipContentId).style.position = "fixed";
-            document.getElementById(MyItem.TooltipContentId).style.top = (itemRect.top - this.Height + 5) + 'px';
+            document.getElementById(MyItem.TooltipContentId).style.top = (itemRect.top - this.Height + 7) + 'px';
 
             if (isToRight) {
-                document.getElementById(MyItem.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/Tootip.png')";
-                document.getElementById(MyItem.TooltipContentId).style.left = (itemRect.left + 5) + 'px';
+                document.getElementById(MyItem.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/TootipCenter.png')";
+                document.getElementById(MyItem.TooltipContentId).style.left = (itemRect.left + 14) + 'px';
             }
 
             else {

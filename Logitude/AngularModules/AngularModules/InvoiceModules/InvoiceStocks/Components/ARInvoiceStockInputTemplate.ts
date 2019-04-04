@@ -106,7 +106,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Stock Numbers";
         logWindow.WindowArgs = { FBLStocksList: this.ItemsSource };
-        logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewArInvoiceStockLinesComponent');
+        logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewARInvoiceStockLinesComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
 
