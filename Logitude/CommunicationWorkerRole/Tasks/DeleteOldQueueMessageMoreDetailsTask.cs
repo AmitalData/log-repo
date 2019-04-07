@@ -33,7 +33,7 @@ namespace CommunicationWorkerRole.Tasks
                         string sql = "delete top(1000) from QueueMessageMoreDetails where CreateDateTime < GETDATE() - 90";
                         if (dbms == "oracle")
                         {
-                            sql = "DELETE FROM QueueMessageMoreDetails WHERE ROWID IN  (SELECT ROWID FROM QueueMessageMoreDetails where CreateDateTime < (SELECT SYSDATE FROM DUAL) - 90 FETCH FIRST 1000 ROWS ONLY);";
+                            sql = "DELETE FROM QueueMessageMoreDetails WHERE ROWID IN  (SELECT ROWID FROM QueueMessageMoreDetails where CreateDateTime < (SELECT SYSDATE FROM DUAL) - 90 and rownum<= 1000);";
                         }
 
                         SqlCommand cmd = new SqlCommand(sql, cn);

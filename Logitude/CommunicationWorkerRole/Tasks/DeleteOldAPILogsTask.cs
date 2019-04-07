@@ -34,7 +34,7 @@ namespace CommunicationWorkerRole.Tasks
                     
                         if (dbms == "oracle")
                         {
-                            sql = "DELETE FROM APILogsData WHERE ROWID IN  (SELECT ROWID FROM APILogsData where Id in (select Id from APILogs where CreateDate < (SELECT SYSDATE FROM DUAL) - 90 FETCH FIRST 1000 ROWS ONLY));";
+                            sql = "DELETE FROM APILogsData WHERE ROWID IN  (SELECT ROWID FROM APILogsData where Id in (select Id from APILogs where CreateDate < (SELECT SYSDATE FROM DUAL) - 90 and  rownum <= 1000));";
                         }
 
                         SqlCommand cmd = new SqlCommand(sql, cn);
@@ -61,7 +61,7 @@ namespace CommunicationWorkerRole.Tasks
                         string sql = "delete top(1000) from APILogs where CreateDate < GETDATE() - 90";
                         if (dbms == "oracle")
                         {
-                            sql = "DELETE FROM APILogs WHERE ROWID IN  (SELECT ROWID FROM APILogs where CreateDate < (SELECT SYSDATE FROM DUAL) - 90 FETCH FIRST 1000 ROWS ONLY)";
+                            sql = "DELETE FROM APILogs WHERE ROWID IN  (SELECT ROWID FROM APILogs where CreateDate < (SELECT SYSDATE FROM DUAL) - 90 and  rownum<= 1000)";
                         }
 
                         SqlCommand cmd = new SqlCommand(sql, cn);
