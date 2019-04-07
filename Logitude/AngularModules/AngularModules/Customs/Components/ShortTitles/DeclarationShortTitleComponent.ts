@@ -59,7 +59,8 @@ export class DeclarationShortTitleComponent {
     public set CourierImporterName(newValue: string) { this._CourierImporterName = newValue; }
 
     private BuildComponent() {
-
+        this._EntityNumber = null;
+        this.EntityNumber = null;
         if (this.EntityPM.IsCourierDeclaration) {
 
             if (this.EntityPM.CustomFileNo && (this.EntityPM.CalculatedImporterName || this.EntityPM.ImporterName)) {
