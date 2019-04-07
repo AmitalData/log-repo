@@ -1,10 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { TMProjectPM } from '../../EntityPMs/TMProjectPM';
-import { TMProjectPMService } from '../../Services/StandardPMs/TMProjectPMService';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { DateTool } from '../../../Infrastructure/Tools';
 import { BatchTaskExecutionPM } from '../../../Infrastructure/EntityPMs/BatchTaskExecutionPM';
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
@@ -21,7 +18,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
     public DataContext = this;
     private myService: TimeManagementDomainService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.SetUIProperties();
@@ -69,7 +66,7 @@ export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     private batchEntity: BatchTaskExecutionPM;
     public IsResponseProgressVisible: boolean = false;
