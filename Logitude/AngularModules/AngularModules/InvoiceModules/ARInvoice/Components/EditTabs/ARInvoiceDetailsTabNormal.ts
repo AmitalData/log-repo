@@ -1543,6 +1543,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             logWindow.WindowClosed.subscribe(d => {
                 if ((d != null && d != "cancel")) {
                     this.InvoiceNumber = s.StockLineSelectedItem.Number;
+                    this.EntityPM.ARInvoiceStockId = s.StockLineSelectedItem.Id;
                 }
             });
         });

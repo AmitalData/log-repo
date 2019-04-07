@@ -1630,5 +1630,44 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
 
+        public HttpResponseMessage GetListOfARInvoiceStockPM()
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        string loggedUserEmail = authToken.Email;
+                        int tenant = authToken.Tenant;
+
+                        ARInvoiceStockQuery aRInvoiceStockQuery = new ARInvoiceStockQuery(tenant);
+                        ARInvoiceStockLineQuery aRInvoiceStockLineQuery = new ARInvoiceStockLineQuery(tenant);
+
+                        List<ARInvoiceStockPM> aRInvoiceStocks = aRInvoiceStockQuery.GetARInvoiceStockPMsByTenant(tenant).ToList();
+                        foreach (var item in aRInvoiceStocks)
+                        {
+                            item.ARInvoiceStockLines = aRInvoiceStockLineQuery.GetARInvoiceStockLinePMsByStockId(item.Id, item.Tenant);
+                        }
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, aRInvoiceStocks);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
     }
 }
