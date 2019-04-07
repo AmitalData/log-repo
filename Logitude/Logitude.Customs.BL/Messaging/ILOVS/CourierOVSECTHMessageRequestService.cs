@@ -227,7 +227,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
         public string MawbPrefix { get; set; }
 
 
-        public int Mawb { get; set; }
+        public string Mawb { get; set; }
         
 
         public string Hawb { get; set; }
