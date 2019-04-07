@@ -162,7 +162,9 @@ namespace WebFreight.Web.App_Code
                                 ContactRepository Repos = new ContactRepository(entityPM.Tenant);
                                 var Contact = Repos.GetSingleContact(currentTenant.LogBoxAdminUserId, entityPM.Tenant);
                                 var emailMessage = GetEmailMessage(entityPM);
-                                var subject = "New Request From " + entityPM.CompanyName;
+
+                                string env = entityPM.IsPrivateLabelCustomer? "DSV Digital": "Logbox";
+                                var subject = "New Request From "+ env + " - " + entityPM.CompanyName;
                                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                                 {
                                     From = "no-reply@amital.co.il",
@@ -262,6 +264,9 @@ namespace WebFreight.Web.App_Code
             HtmlTemplate.Append("<b>Contact Phone: </b>" + (string.IsNullOrEmpty(entityPm.ContactPhone) ? entityPm.ContactMobile : entityPm.ContactPhone));
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<b>Contact Email: </b>" + entityPm.CompanyEmail);
+            HtmlTemplate.Append("<br />");
+            HtmlTemplate.Append("<b>Company Vat : </b>" + entityPm.CompanyVat);
+
             HtmlTemplate.Append("</p>");
             emailMessage = HtmlTemplate.ToString();
             return emailMessage;

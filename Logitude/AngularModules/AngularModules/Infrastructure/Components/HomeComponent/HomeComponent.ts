@@ -323,7 +323,6 @@ export class HomeComponent implements OnDestroy{
             HeaderMessage = "Your company subscription will expire in " + SessionLocator.TenantManagementJS.SuspendDaysLeft + " days.";
             WindowMessage = "Your company subscription will expire in " + SessionLocator.TenantManagementJS.SuspendDaysLeft + " days due to credit \ncard failure. \nPlease contact your e-commerce vendor or " + email;
         }
-
         this.messageWindow.Title = HeaderMessage;
         this.messageWindow.Message = WindowMessage;
         this.messageWindow.Show(this.messageWindow.Message);
