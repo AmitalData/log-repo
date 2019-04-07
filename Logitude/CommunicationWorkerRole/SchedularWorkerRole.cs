@@ -122,9 +122,9 @@ namespace CommunicationWorkerRole
             {
                 case "D":
                     {
-                        if (task.RepeatInMinutes > 0)
+                        if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
                         {
-                            task.NextRunTime = task.NextRunTime.Value.AddMinutes(task.RepeatInMinutes + 0.0);
+                            task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
                         }
                         else
                         {

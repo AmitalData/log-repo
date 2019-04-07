@@ -37,6 +37,8 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+
 
 @Component({
     moduleId: module.id,
@@ -57,8 +59,12 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public IsCustomsInvoice: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public InvoiceNumberFilterList: CodeNameClass[];
+    public IsInvoiceStocksManagementEnabled: boolean = false;
+
+
     constructor(private entityArgs: EntityArgs) {
         super();      
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -81,7 +87,14 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
-        }        
+        }
+
+        if (SessionLocator.AccountingSettingPM.EnableInvoiceStocksManagement) {
+            this.IsInvoiceStocksManagementEnabled = true;
+        
+        }
+        this.BuildInvoiceNumberFilters();
+
     }
 
     private SaveCompletedEvent: any = null;
@@ -1481,6 +1494,48 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.JournalId,ObjectTableName: 'Journal' });
             });
+    }
+
+
+    //Invoice Number
+    private selectedInvoiceNumberFilter: CodeNameClass;
+    get SelectedInvoiceNumberFilter() { return this.selectedInvoiceNumberFilter; }
+    set SelectedInvoiceNumberFilter(value: CodeNameClass) {
+        if (this.selectedInvoiceNumberFilter != value) {
+            this.selectedInvoiceNumberFilter = value;
+            if (value.Code == "MAS") {
+                this.IsInvoiceNumberManuallySet = true;
+            }
+            if (value.Code != "MAS") {
+                this.IsInvoiceNumberManuallySet = false;
+            }
+        }
+    }
+
+    private BuildInvoiceNumberFilters() {
+        this.InvoiceNumberFilterList = [];
+        this.InvoiceNumberFilterList.push(new CodeNameClass("CNR", "Counter"));
+        if (this.IsInvoiceStocksManagementEnabled) {
+            this.InvoiceNumberFilterList.push(new CodeNameClass("STK", "Stock"));
+        }
+        if (this.AllowManualInvoiceNumber) {
+            this.InvoiceNumberFilterList.push(new CodeNameClass("MAS", "Manually Set"));
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM != null && this.EntityPM.ARInvoiceStockId)) {
+            this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "STK")[0];
+        }
+        else if (this.EntityPM != null && this.EntityPM.IsInvoiceNumberManuallySet == true) {
+            this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "MAS")[0];
+        }
+        else {
+            this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "CNR")[0];
+        }
+    }
+
+    GetInvoiceNumberFromStock() {
+
+
     }
 }
 export class ARInvoiceLineItem extends BaseComponent {

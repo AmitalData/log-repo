@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ARInvoiceStockPM } from '../../../Invoice/EntityPMs/ARInvoiceStockPM';
 import { ARInvoiceStockLinePM } from '../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
@@ -9,14 +9,16 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { InvoiceStockInputArgs } from '../../../Invoice/Args';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
     templateUrl: './ARInvoiceStockInputTemplate.html',
 })
 
-export class ARInvoiceStockInputTemplate extends BaseComponent {
+export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDestroy {
     public DataContext: ARInvoiceStockInputTemplate = this;
     public ObjectTableName: string = "ARInvoiceStock";
     public ValidationErrorsList: string[] = [];
@@ -30,6 +32,20 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
         super();
 
         this.stockPMService = new ARInvoiceStockPMService();
+
+        this.Listen();
+    }
+
+    private SessionEvent: any = null;
+    private Listen() {
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "RefreshARInvoiceStockScreen") {
+                this.SetUIProperties();
+            }
+        });
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     public InitTemplate(args: InvoiceStockInputArgs) {
@@ -38,7 +54,8 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
             this.IsEditMode = args.IsEditMode;
         }
 
-        this.InitializeData();
+        this.SetUIProperties();
+        this.FillStockLines();
     }
 
     public IsNew: boolean;
@@ -48,11 +65,35 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
             this.IsEditMode = args.IsEditMode;
         }
 
-        this.InitializeData();
+        this.FillStockLines();
     }
 
-    InitializeData() {
-       
+    private IsEditingEnabled: boolean = true;
+    SetUIProperties() {
+        var isEditingEnabled = true;
+
+        if (this.EntityPM.StatusCode == "C") {
+            isEditingEnabled = false;
+        }
+
+        this.IsEditingEnabled = isEditingEnabled;
+
+        this.UIProperties.SetEnabled("Name", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("EndDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("Description", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("Notes", this.ObjectTableName, isEditingEnabled);
+    }
+
+    FillStockLines() {
+        this.ItemsSource = [];
+        this.SelectedItem = null;
+
+        this.EntityPM.ARInvoiceStockLines.forEach(item => {
+            this.ItemsSource.push(item);
+        });
+
+        this.ItemsCount = this.ItemsSource.length;        
     }
 
     get Name() { return this.EntityPM.Name; }
@@ -92,11 +133,23 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
 
     public SelectedItem: ARInvoiceStockLinePM = null;
 
+    get IsAddEnabled() {
+        var myResult = false;
+
+        if (this.IsEditingEnabled) {
+            myResult = true;
+        }
+
+        return myResult;
+    }
+
     get IsRemoveEnabled() {
         var myResult = false;
 
-        if (this.SelectedItem != null) {
-            myResult = true;
+        if (this.IsEditingEnabled) {
+            if (this.SelectedItem != null) {
+                myResult = true;
+            }
         }
 
         return myResult;
@@ -105,21 +158,80 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
     AddStockLineClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Stock Numbers";
-        logWindow.WindowArgs = { FBLStocksList: this.ItemsSource };
+        logWindow.WindowArgs = { Stock: this.EntityPM };
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewARInvoiceStockLinesComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
-
+                this.EntityPM.NumbersAdded = true;
+                this.FillStockLines();
             }
         });
     }
 
     RemoveStockLineClicked() {
-
+        this.Remove(false);
     }
 
     RemoveSeriesClicked() {
+        this.Remove(true);
+    }
 
+    Remove(isDeletingSeries: boolean) {
+        if (this.SelectedItem != null) {
+
+            if (isDeletingSeries == true && this.SelectedItem.CreateDate == null) {
+                var win = new MessageWindow();
+                win.Show("This stock does not have a create date");
+            }
+
+            else {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 450;
+                confirmWindow.Height = 190;
+                confirmWindow.Title = "Removing Stock";
+                confirmWindow.YesButtonText = "Delete";
+                confirmWindow.NoButtonText = "Cancel";
+
+                var message = "Are you sure you want to delete the stock number";
+
+                if (isDeletingSeries) {
+                    var myGetDateFormats = DateTool.GetDateFormats(this.SelectedItem.CreateDate);
+                    message = "Are you sure you want to delete the series inserted on";
+                    message = message + "\n" + "[" + myGetDateFormats.ShortDateString + "] at [" + myGetDateFormats.ShortTimeString + "] ?";
+                }
+
+                else {
+                    message = message + " [" + this.SelectedItem.Number + "] ?";
+                }
+
+                confirmWindow.Show(message);
+
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        if (isDeletingSeries) {
+                            var deletedSeries: ARInvoiceStockLinePM[] = this.EntityPM.ARInvoiceStockLines.filter(d => d.CreateDate == this.SelectedItem.CreateDate);
+                            if (deletedSeries.length > 0) {
+                                deletedSeries.forEach(item => {
+                                    this.EntityPM.RemoveARInvoiceStockLinePM(item);
+                                });
+
+                                this.EntityPM.SeriesRemoved = true;
+                            }
+                        }
+
+                        else {
+                            this.EntityPM.RemoveARInvoiceStockLinePM(this.SelectedItem);
+                            this.EntityPM.NumberRemoved = true;
+                        }
+
+                        this.FillStockLines();
+
+                        this.EntityPM.Amount = this.ItemsCount;
+                        this.EntityPM.Remaining = this.ItemsCount;
+                    }
+                });
+            }
+        }
     }
 
     CancelClicked() {
@@ -147,7 +259,9 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
 
         this.ValidationErrorsList = errors;
 
-        if (this.ValidationErrorsList.length == 0) {
+        if (this.ValidationErrorsList.length == 0) {            
+            this.EntityPM.Amount = this.ItemsCount;
+            this.EntityPM.Remaining = this.ItemsCount;
 
             if (this.IsNew) {
                 this.CurrentSession.StartBusyIndicatorSaving();

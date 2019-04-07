@@ -54,7 +54,7 @@ namespace CommunicationWorkerRole.Tasks
                         List<TMEmployeeTime> itemsProrated =
                             (from EmployeeTimes in iQueryable
                              join Projects in iContext.TMProjects on EmployeeTimes.ProjectId equals Projects.Id
-                             where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != "" && Projects.IsProrated == true
+                             where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != "" && Projects.IsProrated == true && !Projects.ExcludeFromProrating
                              select EmployeeTimes).ToList();
 
                         if (itemsProrated.Count > 0)

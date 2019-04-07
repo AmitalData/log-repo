@@ -111,7 +111,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="AddStockLineClicked()">Add</button>
+                        <button class="Button" [disabled]="!IsAddEnabled" (click)="AddStockLineClicked()">Add</button>
                     </td>
 
                     <td style="width: 5px;">
