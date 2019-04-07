@@ -112,6 +112,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string ManualProcessCode  { get; set; }
        [DataMember]
        public string TerminalSuspentionNumber  { get; set; }
+       [DataMember]
+       public string LastMileStatusCode  { get; set; }
+       [DataMember]
+       public DateTime? LastMileStatusDate  { get; set; }
+       [DataMember]
+       public string LastMileStatusRemarks  { get; set; }
    }
 
 }

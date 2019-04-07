@@ -269,6 +269,21 @@ export class DeclarationCourierStatusPM {
     public set TerminalSuspentionNumber(newValue: string) { if (this.terminalSuspentionNumber != newValue) { this.terminalSuspentionNumber = newValue; this.MarkAsDirty("TerminalSuspentionNumber"); } }
        
 	 
+    private lastMileStatusCode: string;
+    public get LastMileStatusCode() { return this.lastMileStatusCode; }
+    public set LastMileStatusCode(newValue: string) { if (this.lastMileStatusCode != newValue) { this.lastMileStatusCode = newValue; this.MarkAsDirty("LastMileStatusCode"); } }
+       
+	 
+    private lastMileStatusDate: Date;
+    public get LastMileStatusDate() { return this.lastMileStatusDate; }
+    public set LastMileStatusDate(newValue: Date) { if (this.lastMileStatusDate != newValue) { this.lastMileStatusDate = newValue; this.MarkAsDirty("LastMileStatusDate"); } }
+       
+	 
+    private lastMileStatusRemarks: string;
+    public get LastMileStatusRemarks() { return this.lastMileStatusRemarks; }
+    public set LastMileStatusRemarks(newValue: string) { if (this.lastMileStatusRemarks != newValue) { this.lastMileStatusRemarks = newValue; this.MarkAsDirty("LastMileStatusRemarks"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

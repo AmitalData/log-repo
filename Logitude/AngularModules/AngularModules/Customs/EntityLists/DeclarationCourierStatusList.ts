@@ -57,6 +57,9 @@ export class DeclarationCourierStatusList {
 	FastIndividualProcessCode: string;
 	ManualProcessCode: string;
 	TerminalSuspentionNumber: string;
+	LastMileStatusCode: string;
+	LastMileStatusDate: Date;
+	LastMileStatusRemarks: string;
 	
 }
  

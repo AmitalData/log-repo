@@ -1147,6 +1147,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string lastMileStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastMileStatusCode  
+	   {
+	    
+	     get
+		{
+		   return lastMileStatusCode;
+		 }
+		 set
+		 {
+		   if(lastMileStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastMileStatusCode",OldValue=lastMileStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastMileStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? lastMileStatusDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastMileStatusDate  
+	   {
+	    
+	     get
+		{
+		   return lastMileStatusDate;
+		 }
+		 set
+		 {
+		   if(lastMileStatusDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastMileStatusDate",OldValue=lastMileStatusDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastMileStatusDate=value;
+		   }
+			
+		 }
+	   }
+	  private string lastMileStatusRemarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastMileStatusRemarks  
+	   {
+	    
+	     get
+		{
+		   return lastMileStatusRemarks;
+		 }
+		 set
+		 {
+		   if(lastMileStatusRemarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastMileStatusRemarks",OldValue=lastMileStatusRemarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastMileStatusRemarks=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
