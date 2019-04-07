@@ -68,7 +68,14 @@ set @DataEntryTotalMinutes = (select sum(TimeInMinutes) from TMEmployeeTimes whe
 set @HomeAndClientMinutes = (select sum(TimeInMinutes) from TMEmployeeTimes where LocationCode != 'O' and EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth)
 set @ClockTimeTotalMinutes = (select sum(datediff(minute, EntryTime, ExitTime)) from TMOfficeHours where Inactive = 0 and UserId = @UserId and EntryTime is not null and ExitTime is not null and WorkDate >= @StartOfMonth	and WorkDate <= @EndOfMonth)
 set @TotalMinutes = isnull(@HomeAndClientMinutes,0) + isnull(@ClockTimeTotalMinutes,0)
+
+if (@Month = 2)
+set @OverTimeMinutes = @TotalMinutes - (180 * 60)
+else if (@Month = 3)
+set @OverTimeMinutes = @TotalMinutes - (189 * 60)
+else
 set @OverTimeMinutes = @TotalMinutes - (207 * 60)
+
 set @PerProjectMinutes_NoProject = (select sum(FullDuration)
 								from TMEmployeeTimes
 								where EmployeeUserId = @UserId
@@ -137,7 +144,22 @@ values
 )
 
 
-select DataEntry, ClockTime, HomeAndClient, Total, OverTime, PerProjectTime from @TotalsTable
+select TotalMinutes, DataEntry, ClockTime, HomeAndClient, Total, OverTime, PerProjectTime from @TotalsTable
+
+select sum(TimeInMinutes) as TimeInMinutes, sum(ProratedDuration) as ProratedDuration, sum(FullDuration) as FullDuration from TMEmployeeTimes where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and (ProjectId is null OR ProjectId = '') 
+select sum(TimeInMinutes) as TimeInMinutes, sum(ProratedDuration) as ProratedDuration, sum(FullDuration) as FullDuration from TMEmployeeTimes where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and (ProjectId is not null and ProjectId != '')
+
+select sum(TimeInMinutes) as TimeInMinutes, sum(ProratedDuration) as ProratedDuration, sum(FullDuration) as FullDuration from TMEmployeeTimes join TMProjects on TMEmployeeTimes.ProjectId =  TMProjects.Id where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and TMProjects.IsProrated = 1
+select sum(TimeInMinutes) as TimeInMinutes, sum(ProratedDuration) as ProratedDuration, sum(FullDuration) as FullDuration from TMEmployeeTimes join TMProjects on TMEmployeeTimes.ProjectId =  TMProjects.Id where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and TMProjects.IsProrated = 0
+
+
+
+
+
+
+
+
+
 
 
 --select sum(FullDuration), convert(varchar,sum(FullDuration) / 60)
@@ -227,10 +249,10 @@ select DataEntry, ClockTime, HomeAndClient, Total, OverTime, PerProjectTime from
 --update TMEmployeeTimes set NeedsProrating = 1 where EmployeeUserId = '1-117301'
 
 --select count(*) from TMEmployeeTimes where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth
-select TimeInMinutes, ProratedDuration, FullDuration from TMEmployeeTimes where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and (ProjectId is null OR ProjectId = '')
---select count(*) from TMEmployeeTimes where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and ProjectId is not null and ProjectId <> ''
-select TimeInMinutes, ProratedDuration, FullDuration from TMEmployeeTimes join TMProjects on TMEmployeeTimes.ProjectId =  TMProjects.Id where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and TMProjects.IsProrated = 1
-select TimeInMinutes, ProratedDuration, FullDuration from TMEmployeeTimes join TMProjects on TMEmployeeTimes.ProjectId =  TMProjects.Id where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and TMProjects.IsProrated = 0
+--select TimeInMinutes, ProratedDuration, FullDuration from TMEmployeeTimes where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and (ProjectId is null OR ProjectId = '')
+----select count(*) from TMEmployeeTimes where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and ProjectId is not null and ProjectId <> ''
+--select TimeInMinutes, ProratedDuration, FullDuration from TMEmployeeTimes join TMProjects on TMEmployeeTimes.ProjectId =  TMProjects.Id where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and TMProjects.IsProrated = 1
+--select TimeInMinutes, ProratedDuration, FullDuration from TMEmployeeTimes join TMProjects on TMEmployeeTimes.ProjectId =  TMProjects.Id where EmployeeUserId = @UserId and DateOfWork >= @StartOfMonth and DateOfWork <= @EndOfMonth and TMProjects.IsProrated = 0
 
 -- 13143.4227272727
 -- 219.057045454545
