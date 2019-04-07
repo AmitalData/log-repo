@@ -41,9 +41,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 itemPoco.Id = itemPM.Id;
                 itemPoco.Tenant = itemPM.Tenant;
                 itemPoco.ARInvoiceStockId = itemPM.ARInvoiceStockId;
-                itemPoco.CreateDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
+                itemPoco.CreateDate = itemPM.CreateDate;
                 itemPoco.CreatedByUserId = loggedContactId;
-
             }
 
             itemPoco.Number = itemPM.Number;

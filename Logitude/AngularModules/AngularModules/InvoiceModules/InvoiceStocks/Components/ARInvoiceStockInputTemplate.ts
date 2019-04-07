@@ -9,7 +9,10 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { InvoiceStockInputArgs } from '../../../Invoice/Args';
+import { DateTool } from '../../../Infrastructure/Tools';
+import { InvoiceDomainService } from '../../../Invoice/Services/InvoiceDomainService';
 
 @Component({
     moduleId: module.id,
@@ -38,7 +41,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
             this.IsEditMode = args.IsEditMode;
         }
 
-        this.InitializeData();
+        this.FillStockLines();
     }
 
     public IsNew: boolean;
@@ -48,11 +51,18 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
             this.IsEditMode = args.IsEditMode;
         }
 
-        this.InitializeData();
+        this.FillStockLines();
     }
 
-    InitializeData() {
-       
+    FillStockLines() {
+        this.ItemsSource = [];
+        this.SelectedItem = null;
+
+        this.EntityPM.ARInvoiceStockLines.forEach(item => {
+            this.ItemsSource.push(item);
+        });
+
+        this.ItemsCount = this.ItemsSource.length;        
     }
 
     get Name() { return this.EntityPM.Name; }
@@ -105,21 +115,76 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
     AddStockLineClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Stock Numbers";
-        logWindow.WindowArgs = { FBLStocksList: this.ItemsSource };
+        logWindow.WindowArgs = { Stock: this.EntityPM };
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewARInvoiceStockLinesComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
-
+                this.FillStockLines();
             }
         });
     }
 
     RemoveStockLineClicked() {
-
+        this.Remove(false);
     }
 
     RemoveSeriesClicked() {
+        this.Remove(true);
+    }
 
+    Remove(isDeletingSeries: boolean) {
+        if (this.SelectedItem != null) {
+
+            if (isDeletingSeries == true && this.SelectedItem.CreateDate == null) {
+                var win = new MessageWindow();
+                win.Show("This stock does not have a create date");
+            }
+
+            else {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 450;
+                confirmWindow.Height = 190;
+                confirmWindow.Title = "Removing Stock";
+                confirmWindow.YesButtonText = "Delete";
+                confirmWindow.NoButtonText = "Cancel";
+
+                var message = "Are you sure you want to delete the stock number";
+
+                if (isDeletingSeries) {
+                    var myGetDateFormats = DateTool.GetDateFormats(this.SelectedItem.CreateDate);
+                    message = "Are you sure you want to delete the series inserted on";
+                    message = message + "\n" + "[" + myGetDateFormats.ShortDateString + "] at [" + myGetDateFormats.ShortTimeString + "] ?";
+                }
+
+                else {
+                    message = message + " [" + this.SelectedItem.Number + "] ?";
+                }
+
+                confirmWindow.Show(message);
+
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        if (isDeletingSeries) {
+                            var deletedSeries: ARInvoiceStockLinePM[] = this.EntityPM.ARInvoiceStockLines.filter(d => d.CreateDate == this.SelectedItem.CreateDate);
+                            if (deletedSeries.length > 0) {
+                                deletedSeries.forEach(item => {
+                                    this.EntityPM.RemoveARInvoiceStockLinePM(item);
+                                });
+                            }
+                        }
+
+                        else {
+                            this.EntityPM.RemoveARInvoiceStockLinePM(this.SelectedItem);
+                        }
+
+                        this.FillStockLines();
+
+                        this.EntityPM.Amount = this.ItemsCount;
+                        this.EntityPM.Remaining = this.ItemsCount;
+                    }
+                });
+            }
+        }
     }
 
     CancelClicked() {
@@ -147,7 +212,9 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
 
         this.ValidationErrorsList = errors;
 
-        if (this.ValidationErrorsList.length == 0) {
+        if (this.ValidationErrorsList.length == 0) {            
+            this.EntityPM.Amount = this.ItemsCount;
+            this.EntityPM.Remaining = this.ItemsCount;
 
             if (this.IsNew) {
                 this.CurrentSession.StartBusyIndicatorSaving();

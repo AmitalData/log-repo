@@ -7,6 +7,7 @@ using Logitude.BL.InvoiceModel.Tools.TraceEvents;
 using Logitude.BL.InvoiceModel.Tools.Validating;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
+using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -29,12 +30,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private ARInvoiceStockRepository entityRepository;
         private ARInvoiceStockLineRepository stockLineRepository;
         private ContactPM loggedContact;
+        private DateTime todayDate;
         public ARInvoiceStockService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new ARInvoiceStockRepository(objectContext);
             this.stockLineRepository = new ARInvoiceStockLineRepository(objectContext);
+            this.todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             this.GetLoggedData();
         }
@@ -71,6 +74,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.CreateARInvoiceStockLine(item);
             }
 
+            entityPM.Amount = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+
             ARInvoiceStockTracing.Trace(entityPM, Poco, isNewEntity, loggedContact.Id);
             ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -93,6 +99,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.UpdateARInvoiceStockLinesCollection();
+
+            entityPM.Amount = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
 
             ARInvoiceStockTracing.Trace(entityPM, Poco, isNewEntity, loggedContact.Id);
             ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity);
@@ -138,12 +147,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             itemPM.Id = IdCounter.GetNumber("ARInvoiceStockLine", tenant).ToString();
             itemPM.ARInvoiceStockId = entityPm.Id;
             itemPM.Tenant = tenant;
+            itemPM.CreateDate = todayDate;
 
             ARInvoiceStockLine itemPoco = new ARInvoiceStockLine()
             {
                 Id = itemPM.Id,
                 ARInvoiceStockId = itemPM.ARInvoiceStockId,
-                Tenant = itemPM.Tenant
+                Tenant = itemPM.Tenant,
+                CreateDate = itemPM.CreateDate,
             };
 
             ARInvoiceStockMapping.MapARInvoiceStockLine(itemPM, itemPoco, true, loggedContact.Id);
