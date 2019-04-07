@@ -2,6 +2,7 @@
 
 using CommunicationWorkerRole.Tasks;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data;
 using System.Data.SqlClient;
@@ -29,7 +30,7 @@ namespace CommunicationWorkerRole.Tasks
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         SqlCommand cmd = new SqlCommand("delete top(1000) from [dbo].[QueueMessageMoreDetails] where [CreateDateTime] < GETDATE() - 90", cn);
-                        cmd.CommandTimeout = 1000000;
+                        cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                         cn.Open();
                         numberOfExecuteRow = cmd.ExecuteNonQuery();
                         cn.Close();
