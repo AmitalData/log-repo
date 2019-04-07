@@ -50,6 +50,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
               ref string MoreParams,
               out string MessageOut)
         {
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
+
             MessageOut = "";
             _Stopwatch = Stopwatch.StartNew();  
             MyCommunicationsParams.Subject = "DeclarationDocumentsService ";
@@ -224,6 +226,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 
             MyGenericResponseObj.Stage = "Add Ticket Done ";
             AppendLogLine("Add Ticket:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+            AppendLogLine(Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
             MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
             //MyGenericResponseObj.ResponseXml ;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
