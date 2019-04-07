@@ -440,24 +440,30 @@ namespace CommunicationWorkerRole
 
                                                             foreach (string iTenantString in iTenantsList)
                                                             {
-                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim()){
+                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim())
+                                                                {
                                                                     isUsingRestAPI = true;
                                                                 }
                                                             }
                                                         }
+                                                    }
 
-                                                        string iTenantKeyText = iAppSettings["ChampRestAPITenantKey"].ToString();
-                                                        if (!string.IsNullOrEmpty(iTenantKeyText))
+                                                    if (!isUsingRestAPI)
+                                                    {
+                                                        if (iAppSettings["ChampRestAPITenants"] != null)
                                                         {
-                                                            int iTenantKeyNumber = Convert.ToInt32(iTenantKeyText);
+                                                            int tenant = waitingCommLog.Tenant;
+                                                            string ConfigurationString = iAppSettings["ChampRestAPITenantKey"].ToString();
 
-                                                            char[] iTenantNumberArray = waitingCommLog.Tenant.ToString().ToCharArray();
-                                                            int arrayLength = iTenantNumberArray.Length;
-                                                            int iCompareTenantKey = Convert.ToInt32(iTenantNumberArray[arrayLength - 1]);
-
-                                                            if (iCompareTenantKey <= iTenantKeyNumber)
+                                                            int ConfigurationNumber = 0;
+                                                            if (int.TryParse(ConfigurationString, out ConfigurationNumber))
                                                             {
-                                                                isUsingRestAPI = true;
+                                                                int TenanLastNumber = int.Parse(tenant.ToString().Substring(tenant.ToString().Length - 1));
+
+                                                                if (ConfigurationNumber >= TenanLastNumber)
+                                                                {
+                                                                    isUsingRestAPI = true;
+                                                                }
                                                             }
                                                         }
                                                     }
