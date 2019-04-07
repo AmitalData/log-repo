@@ -36,7 +36,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public int MonthlyDay { get; set; }
         public DateTime? StartDateTime { get; set; }
 
-        public int RepeatInMinutes { get; set; }
+        public int? RepeatInMinutes { get; set; }
 
         public bool IsLastRunError { get; set; }
 

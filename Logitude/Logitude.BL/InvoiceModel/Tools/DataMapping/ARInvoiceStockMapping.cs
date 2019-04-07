@@ -32,6 +32,12 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             poco.Remaining = entityPM.Remaining;
             poco.Amount = entityPM.Amount;
             poco.Notes = entityPM.Notes;
+
+            entityPM.NumberRemoved = false;
+            entityPM.SeriesRemoved = false;
+            entityPM.NumbersAdded = false;
+            entityPM.Cancelled = false;
+            entityPM.Reactivated = false;
         }
 
         internal static void MapARInvoiceStockLine(ARInvoiceStockLinePM itemPM, ARInvoiceStockLine itemPoco, bool isNewEntity, string loggedContactId)

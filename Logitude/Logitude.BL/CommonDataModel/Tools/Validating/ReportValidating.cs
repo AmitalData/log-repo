@@ -16,6 +16,13 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
             {
                 throw new ApplicationException("Code field is required");
             }
+
+            ReportRepository reportRepository = new ReportRepository(entityPM.Tenant);
+            Report report=reportRepository.GetSingleReportByCode(entityPM.Code, entityPM.Tenant);
+            if (report != null)
+            {
+                throw new ApplicationException("Report Code already exists");
+            }
         }      
     }
 }

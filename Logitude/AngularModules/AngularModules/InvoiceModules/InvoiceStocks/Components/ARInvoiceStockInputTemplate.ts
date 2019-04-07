@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ARInvoiceStockPM } from '../../../Invoice/EntityPMs/ARInvoiceStockPM';
 import { ARInvoiceStockLinePM } from '../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
@@ -11,15 +11,14 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { InvoiceStockInputArgs } from '../../../Invoice/Args';
-import { DateTool } from '../../../Infrastructure/Tools';
-import { InvoiceDomainService } from '../../../Invoice/Services/InvoiceDomainService';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
     templateUrl: './ARInvoiceStockInputTemplate.html',
 })
 
-export class ARInvoiceStockInputTemplate extends BaseComponent {
+export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDestroy {
     public DataContext: ARInvoiceStockInputTemplate = this;
     public ObjectTableName: string = "ARInvoiceStock";
     public ValidationErrorsList: string[] = [];
@@ -33,6 +32,20 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
         super();
 
         this.stockPMService = new ARInvoiceStockPMService();
+
+        this.Listen();
+    }
+
+    private SessionEvent: any = null;
+    private Listen() {
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "RefreshARInvoiceStockScreen") {
+                this.SetUIProperties();
+            }
+        });
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     public InitTemplate(args: InvoiceStockInputArgs) {
@@ -41,6 +54,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
             this.IsEditMode = args.IsEditMode;
         }
 
+        this.SetUIProperties();
         this.FillStockLines();
     }
 
@@ -52,6 +66,23 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
         }
 
         this.FillStockLines();
+    }
+
+    private IsEditingEnabled: boolean = true;
+    SetUIProperties() {
+        var isEditingEnabled = true;
+
+        if (this.EntityPM.StatusCode == "C") {
+            isEditingEnabled = false;
+        }
+
+        this.IsEditingEnabled = isEditingEnabled;
+
+        this.UIProperties.SetEnabled("Name", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("EndDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("Description", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("Notes", this.ObjectTableName, isEditingEnabled);
     }
 
     FillStockLines() {
@@ -102,11 +133,23 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
 
     public SelectedItem: ARInvoiceStockLinePM = null;
 
+    get IsAddEnabled() {
+        var myResult = false;
+
+        if (this.IsEditingEnabled) {
+            myResult = true;
+        }
+
+        return myResult;
+    }
+
     get IsRemoveEnabled() {
         var myResult = false;
 
-        if (this.SelectedItem != null) {
-            myResult = true;
+        if (this.IsEditingEnabled) {
+            if (this.SelectedItem != null) {
+                myResult = true;
+            }
         }
 
         return myResult;
@@ -119,6 +162,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewARInvoiceStockLinesComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
+                this.EntityPM.NumbersAdded = true;
                 this.FillStockLines();
             }
         });
@@ -170,11 +214,14 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
                                 deletedSeries.forEach(item => {
                                     this.EntityPM.RemoveARInvoiceStockLinePM(item);
                                 });
+
+                                this.EntityPM.SeriesRemoved = true;
                             }
                         }
 
                         else {
                             this.EntityPM.RemoveARInvoiceStockLinePM(this.SelectedItem);
+                            this.EntityPM.NumberRemoved = true;
                         }
 
                         this.FillStockLines();
