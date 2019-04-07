@@ -66,7 +66,7 @@ namespace WebFreight.Web
 			AppDomain.CurrentDomain.FirstChanceException += (mySender, eventArgs) =>
 			{
 				//eventArgs.Exception.sou
-				FirstChanceExceptionEventArgsLogger.LogException(eventArgs);
+				//FirstChanceExceptionEventArgsLogger.LogException(eventArgs);
 
 				//Debug.WriteLine(eventArgs.Exception.ToString());
 			};
