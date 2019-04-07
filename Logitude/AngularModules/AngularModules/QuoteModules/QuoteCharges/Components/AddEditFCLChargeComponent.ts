@@ -29,6 +29,7 @@ export class AddEditFCLChargeComponent {
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public IsVATVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
     }
@@ -82,7 +83,7 @@ export class AddEditFCLChargeComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -129,7 +130,7 @@ export class AddEditFCLChargeComponent {
             }
 
             this.DataContext.fatherComponent.ComputeTotals();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

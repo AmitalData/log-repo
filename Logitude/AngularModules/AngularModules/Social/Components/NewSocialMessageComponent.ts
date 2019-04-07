@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -42,6 +42,7 @@ export class NewSocialMessageComponent implements OnInit {
  
     ValidationErrorsList: string[] = [];
     ConversationHeaderParticipantPMLists: ConversationHeaderParticipantPM[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.conversationHeaderPMService = new ConversationHeaderPMService();
         this.conversationHeaderMessagePMService = new ConversationHeaderMessagePMService();
@@ -130,7 +131,7 @@ export class NewSocialMessageComponent implements OnInit {
         this.IsSaveConversationHeaderMessagePMComplete = false;
        
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
+        this.CurrentSession.StartBusyIndicator("Sending...");
         this.NewConversationHeaderPM = new ConversationHeaderPM();
         this.NewConversationHeaderPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         this.NewConversationHeaderPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -182,7 +183,7 @@ export class NewSocialMessageComponent implements OnInit {
                         this.ValidationErrorsList.push(error);
                     });
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
         });
@@ -230,13 +231,13 @@ export class NewSocialMessageComponent implements OnInit {
    
     StopBusyIndicator(isCloseWindow: boolean) {
         if (this.IsSaveConversationHeaderParticipantComplete && this.IsSaveConversationHeaderMessagePMComplete) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (isCloseWindow) {
-                if (this.AreaMessage == "Inbox") SessionLocator.CurrentSession.FireEvent("SocialInboxMessagesRefresh");
+                if (this.AreaMessage == "Inbox") this.CurrentSession.FireEvent("SocialInboxMessagesRefresh");
                 else if (this.AreaMessage == "Message") {
-                    SessionLocator.CurrentSession.FireEvent("SocialMessagesRefresh");
+                    this.CurrentSession.FireEvent("SocialMessagesRefresh");
                 }
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
         }
     }
@@ -245,7 +246,7 @@ export class NewSocialMessageComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     MessageInputFocus() {

@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
@@ -40,7 +40,7 @@ export class GoodsValueComponent implements OnInit, AfterViewInit {
    
     AdditionalData: any;
 
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
 
@@ -56,7 +56,7 @@ export class GoodsValueComponent implements OnInit, AfterViewInit {
     } 
    
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
     public get SupAccount() { return new CustomNumbersPipe().transform(this.AdditionalData.SupAccount,0) }

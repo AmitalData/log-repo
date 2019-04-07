@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChildren, QueryList}  from '@angular/core';
+import {Component, OnInit, ViewChildren, QueryList}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -25,6 +25,7 @@ export class SocialMainComponent implements OnInit {
     private SocialMessagesCountRefreshEvent: any = null;
 
     MessageTabTitle: string = "Message";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     
 
@@ -44,7 +45,7 @@ export class SocialMainComponent implements OnInit {
 
     Listen() {
         if (!this.SocialMessagesCountRefreshEvent) {
-            this.SocialMessagesCountRefreshEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SocialMessagesCountRefreshEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "SociaMessagesCountRefresh") {
                     this.GetCountUnReadMassage();
                 }
@@ -235,7 +236,7 @@ export class SocialMainComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     

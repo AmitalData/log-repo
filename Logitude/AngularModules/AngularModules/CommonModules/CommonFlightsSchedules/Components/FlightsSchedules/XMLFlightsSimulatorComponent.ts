@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {FlightsSchedulesRequestPM} from '../../../../Booking/EntityPMs/FlightsSchedulesRequestPM';
@@ -17,6 +17,7 @@ export class XMLFlightsSimulatorComponent {
     private ShipmentId: string = null;
     public ValidationErrorsList: string[] = [];
     private myFVRWebService: FVRWebService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -71,7 +72,7 @@ export class XMLFlightsSimulatorComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Simulating...");
+            this.CurrentSession.StartBusyIndicator("Simulating...");
 
             if (this.UseRequestId) {
                 this.SimulateRequest();
@@ -91,7 +92,7 @@ export class XMLFlightsSimulatorComponent {
 
         this.entityPMService.get(this.RequestId).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -128,7 +129,7 @@ export class XMLFlightsSimulatorComponent {
 
         this.myFVRWebService.SimulateXML(this.XML_Text, this.ShipmentId, this.BookingId, this.IsFNA).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator(); 
+            this.CurrentSession.StopBusyIndicator(); 
 
             if (myResponse != null) {
 
@@ -160,6 +161,6 @@ export class XMLFlightsSimulatorComponent {
     }
 
     private Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

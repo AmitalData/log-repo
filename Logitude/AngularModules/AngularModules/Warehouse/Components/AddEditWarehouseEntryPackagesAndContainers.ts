@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {AppTool, FormatTool} from '../../Infrastructure/Tools';
 
@@ -51,6 +51,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     ViewModelTrigger: any;
     IsLoadPage: boolean = false;
     public AllPackageTypes: PackageTypeList[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         this.validator = new ClassLevelValidator();
 
@@ -168,7 +169,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
 
     CanceluttonClicked() {
         this.ResetPackageItem();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
    
@@ -189,7 +190,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
                 this.ComplateSave();
             }
 
-         else   SessionLocator.CurrentSession.CloseCurrentWindow();
+         else   this.CurrentSession.CloseCurrentWindow();
 
         }
 
@@ -198,7 +199,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
 
     ComplateSave() {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
         //if (!this.warehouseEntryPackagePM.IsContainer) {
 
@@ -225,8 +226,8 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
             this.ViewModelTrigger.WarehouseEntryPackagesLists.push(this.warehouseEntryPackagePM);
         }
 
-        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-        SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.Close("Refresh");
 
     }
    

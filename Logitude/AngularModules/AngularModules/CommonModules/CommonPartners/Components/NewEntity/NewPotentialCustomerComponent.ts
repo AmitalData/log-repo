@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {PartnersDomainService, PartnerServicePM} from '../../../../Common/Services/PartnersDomainService';
@@ -40,7 +40,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     public IsRadioButtonsVisible: boolean = false;
     public ShowContactPart: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new CustomerPM();
@@ -490,7 +490,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -579,7 +579,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             if (!AppTool.IsNullOrEmpty(this.EntityNotes)) {
                 var note: CustomerSalesNotePM = new CustomerSalesNotePM(this.EntityPM);
@@ -601,11 +601,11 @@ export class NewPotentialCustomerComponent extends BaseComponent {
             }
 
             this.DomainService.PostPartnerAddress(partnerArgs).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     this.EntityPM = myResponse.Result.Customer;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
 
                 else {
@@ -615,7 +615,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
         }
 
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 

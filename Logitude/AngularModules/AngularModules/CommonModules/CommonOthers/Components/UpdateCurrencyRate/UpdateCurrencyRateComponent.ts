@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {RatesTablePM} from '../../../../Infrastructure/EntityPMs/RatesTablePM';
@@ -27,7 +27,7 @@ export class UpdateCurrencyRateComponent extends BaseComponent {
     private myService: RatesTablePMService;
     public IsResourcesReady: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) {
@@ -104,7 +104,7 @@ export class UpdateCurrencyRateComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -125,12 +125,12 @@ export class UpdateCurrencyRateComponent extends BaseComponent {
     }
 
     SubmitChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
@@ -153,12 +153,12 @@ export class UpdateCurrencyRateComponent extends BaseComponent {
         this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.AccountingCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
                 this.RatesList = myResponse.Result;        
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
         });
     }

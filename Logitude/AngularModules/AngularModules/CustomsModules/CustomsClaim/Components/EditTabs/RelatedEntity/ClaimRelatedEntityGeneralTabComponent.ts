@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -43,37 +43,37 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
 
     private DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.ClaimsRelatedEntitiesAmountsList = new ObservableCollection([]);
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         this.CalcClaimsRelatedEntitiesAmountsTotal();
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
                 })
             );;
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildPaymentAmountList();
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "CLMG") {
                             this.RefreshEntity();
                             this.BuildPaymentAmountList();
@@ -102,7 +102,7 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
 
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     selectedTab: LogTab;
@@ -153,8 +153,8 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
             return;
         }
         
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        SessionLocator.CurrentSession.StartBusyIndicator("")
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.StartBusyIndicator("")
         this.DeclarationExtendedListService.GetSingleDeclarationByNumber(this.ClaimEntityNumber, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
                 this.FetchDeclaration(myResponse, false);
@@ -173,7 +173,7 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
             this.UIProperties.SetValidity("ExternalClaimNumber", this.ObjectTableName, true, "");
             this.UIProperties.SetValidity("ClaimEntityNumber", this.ObjectTableName, true, "");
         }
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     ExternalClaimNumberLostFocus() {
@@ -182,11 +182,11 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
             return;
         }
         this.UIProperties.SetValidity("ClaimEntityNumber", this.ObjectTableName, true, "");
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        SessionLocator.CurrentSession.StartBusyIndicator("")
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.StartBusyIndicator("")
         this.DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.ExternalClaimNumber)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.FetchCustomFileNo(myResponse, false);
             });
     }

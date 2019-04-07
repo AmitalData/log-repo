@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -38,6 +38,7 @@ export class AddCustomerBatchComponent extends BaseComponent {
     public Parent: RelatedCustomerComponent;
     public ValidationErrorsList: Array<string> = [];
     public DataContext: AddCustomerBatchComponent = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -79,7 +80,7 @@ export class AddCustomerBatchComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -99,7 +100,7 @@ export class AddCustomerBatchComponent extends BaseComponent {
             customerTenantAccessCardsBatchPM.TotalShipment = 0;
             customerTenantAccessCardsBatchPM.Totalsucceeded = 0;
             service.insert(customerTenantAccessCardsBatchPM).subscribe(p => {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
             });;
         }
     }

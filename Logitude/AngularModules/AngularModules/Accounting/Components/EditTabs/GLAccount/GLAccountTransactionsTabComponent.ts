@@ -1,4 +1,4 @@
-﻿import { DateTool } from './../../../../Infrastructure/Tools';
+import { DateTool } from './../../../../Infrastructure/Tools';
 import {Component, OnInit, Output, EventEmitter,AfterViewInit,ChangeDetectorRef}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -64,7 +64,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     isControlAccount: boolean = false;
 
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -94,12 +94,12 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
 
         //event listening
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            var _CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (_CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            var _CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (_CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "GATR") {
                             this.LoadAllScreenData();
                         }
@@ -670,7 +670,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     //#region Buttons + CheckBox Handlers
     ReconcileButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
         this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
@@ -703,7 +703,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     }
                     this.RefreshButtonClicked();
                 });
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
 
             }
@@ -713,7 +713,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
 
-        //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     LoadAllScreenData() {

@@ -1,4 +1,4 @@
-﻿import {ShipmentArchiveFilter} from '../../../Controls/ShipmentArchiveFilter';
+import {ShipmentArchiveFilter} from '../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -38,7 +38,7 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
     public EntityId: string;
     public EntityObjectTableName: string = "";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
         this.myShipmentDomainService = new ShipmentDomainService();
@@ -316,11 +316,11 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
         this.Close();
     }
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     GetSourceEntity(Id) {
-        SessionLocator.CurrentSession.FireEvent({ Name: 'SourceEntity', Entity: this.SourceEntity, EntityId: Id });
+        this.CurrentSession.FireEvent({ Name: 'SourceEntity', Entity: this.SourceEntity, EntityId: Id });
     }
 
     private selectedTransportationTypes: TransportationTypes;
@@ -423,7 +423,7 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
             });
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
     }
@@ -462,7 +462,7 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Shipment Creation in Progress ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Shipment Creation in Progress ...");
             this.SourceEntity.IsImporterShipment = true;
             this.SourceEntity.MainCarriageFromPortId = this.SourceEntity.FromPortId;
             this.SourceEntity.MainCarriageToPortId = this.SourceEntity.ToPortId;
@@ -471,9 +471,9 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
                 this.SourceEntity.StatusId = Status.Result.Id;
                 this._ShipmentPMService.update(this.SourceEntity).subscribe(myResult => {
                     if (!myResult.HasError) {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
-                        SessionLocator.CurrentSession.CurrentWindow.Close("");
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
+                        this.CurrentSession.CurrentWindow.Close("");
                     }
                     else {
                         this.ValidationErrorsList = myResult.ErrorsArray;
@@ -482,7 +482,7 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
             });
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
     }
 }

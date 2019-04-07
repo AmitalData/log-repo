@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
@@ -55,13 +55,14 @@ export class SearchTextBox implements OnInit {
 
     public SearchTextValue: FormControl;
     LayoutDirection: string = 'ltr';
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.SearchFieldsId = "SearchFieldsId_-1_-1";
         }
 
         else {
-            this.SearchFieldsId = "SearchFieldsId_" + SessionLocator.CurrentSession.GetNewId("SearchFieldsId");
+            this.SearchFieldsId = "SearchFieldsId_" + this.CurrentSession.GetNewId("SearchFieldsId");
         }
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.SetStyles();

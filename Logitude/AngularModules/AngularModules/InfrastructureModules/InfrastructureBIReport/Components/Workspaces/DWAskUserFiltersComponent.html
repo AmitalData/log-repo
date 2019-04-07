@@ -242,7 +242,7 @@
             <table>
                 <tr *ngFor="let item of SelectedFiltersDataSource; let i=index;">
                     <td style="float:left;margin-left:15px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode == 'DateTime' || item.ParentDataTypeCode == 'Date')">
-                        <div style="width:500px;">
+                        <div style="width:700px;">
                             <table style="height:30px;">
                                 <tr style="height:30px;" class="MyFilterItem">
                                     <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;width:7px;">
@@ -276,6 +276,20 @@
                                                         (ValueChanged)="item.onTextChange($event)"
                                                         [SelectedValue]="item.TextValue">
                                                 </DWDate>
+
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td style="width:180px;" [ngSwitch]="item.ParentDataTypeCode">
+
+                                        <!--Date-->
+                                        <div *ngSwitchCase="'DateTime' || 'Date'">
+
+                                            <div style="width:162px;">
+
+                                                <DateSampleComponent [ShowSampleDateCommand]="item.ShowSampleDateCommand">
+                                                </DateSampleComponent>
 
                                             </div>
                                         </div>

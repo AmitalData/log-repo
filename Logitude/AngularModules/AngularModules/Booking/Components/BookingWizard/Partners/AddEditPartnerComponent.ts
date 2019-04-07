@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
@@ -44,6 +44,7 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
     public DataContext: AddEditPartnerComponent = this;
     public ObjectTableName: string = "Address";
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -128,7 +129,7 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
             }
             
             if (!AppTool.IsNullOrEmpty(this.CurrentPartnerId)) {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
 
                 var myService: CardListService = new CardListService();
 
@@ -144,16 +145,16 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
                         }
 
                         else {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
                     }
 
                     else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
                     , error => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
             }
         }
@@ -216,7 +217,7 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
     private OnLoadCompleted() {
         if (this.isPartnerLoaded && this.isAddressLoaded) {
             this.SetUIProperties();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 
@@ -563,20 +564,20 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
 
     private isPartnerDirty = false;
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {        
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var isValid = this.Validate();
         if (!isValid) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
 
         else {
             if (!this.EntityPM.IsDirty) {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
             else {
@@ -745,12 +746,12 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
 
         this.myPartnersDomainService.PostPartnerAddress(args).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
                 this.CurrentAddressId = myResponse.Result.AddressId;
                 this.CurrentPartnerId = myResponse.Result.PartnerId;               
                 this.FatherComponent.UpdatePartner(this.PartnerTypeCode, this.CurrentPartnerId, this.CurrentAddressId);
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
             else {
@@ -759,7 +760,7 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
         }
             , error => {
                 this.ValidationErrorsList.push(error);
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             });
     }
 }

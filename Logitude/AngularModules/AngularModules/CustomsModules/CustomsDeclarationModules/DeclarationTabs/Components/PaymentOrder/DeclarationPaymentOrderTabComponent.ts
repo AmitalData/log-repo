@@ -35,7 +35,7 @@ export class DeclarationPaymentOrderTabComponent
 
     private paymentOrderWebService: PaymentOrderWebService = new PaymentOrderWebService;
     private paymentOrderPMService: PaymentOrderPMService = new PaymentOrderPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.paymentOrderlist = new ObservableCollection([]);
@@ -56,30 +56,30 @@ export class DeclarationPaymentOrderTabComponent
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadPaymentOrders();
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCPO") {
                             //this.LoadPaymentOrders();
                         }
@@ -94,7 +94,7 @@ export class DeclarationPaymentOrderTabComponent
 
         this.paymentOrderWebService.GetPaymentOrderByPaymentOrderConnection("D", this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.GetPaymentOrderByPaymentOrderConnectionOp_Completed(myResponse, false);
             });
     }
@@ -114,9 +114,9 @@ export class DeclarationPaymentOrderTabComponent
 
     EditButtonClicked(item: PaymentOrderList) {
         if (!AppTool.IsNullOrEmpty(item)) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.paymentOrderPMService.get(item.Id).subscribe(response => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var windowArgs: any = {};
                 windowArgs.EntityPM = response.Result;
                 windowArgs.declarationPM = this.EntityPM;

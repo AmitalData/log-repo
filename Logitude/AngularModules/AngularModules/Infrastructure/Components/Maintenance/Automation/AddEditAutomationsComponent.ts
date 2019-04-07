@@ -137,7 +137,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     FollowUpNote: string = "";
 
-   
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _automationResultEmailRecipientExtendedService: AutomationResultEmailRecipientExtendedService,   public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
         super();
 
@@ -243,7 +243,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
    
     LoadDocumentType() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.DocumentTypeLists = [];
         this.AllDocumentTypeLists = [];
 
@@ -283,20 +283,20 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                         this.LoadDocumentTypeTemplate(this.DocumentTypeSelected);
                     }
 
-                    else SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    else this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     this.IsEnableAddTemplate = true;
                 }
                 else {
                     this.IsEnableAddTemplate = false;
                     this.IsEnableEditTemplate = false;
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 }
             }
 
             else {
                 this.IsEnableAddTemplate = false;
                 this.IsEnableEditTemplate = false;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
         });
     }
@@ -306,7 +306,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
 
@@ -822,8 +822,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-        SessionLocator.CurrentSession.CurrentWindow.Close("Cancel");
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.Close("Cancel");
     }
     
     AddAutomationConditionMethod(conditionType: string) {
@@ -1057,7 +1057,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         if (this.ValidationErrorsList.length == 0) {
             if (this.IsNewEntity) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
                 this.CurrentEntityPM.AutomatedDataBackup = null;
                 this.CurrentEntityPM.IsChangeAutomationXaml = false;
                 this._automationExtendedPMService.insert(this.CurrentEntityPM).subscribe(res => {
@@ -1072,14 +1072,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
                 });
             }
 
             else {
                 if ((this.IsChangeCondition || this.IsChangeSetValue || this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) || this.CheckIfAutomationSetSLAValueChange() || this.CheckIfAutomationQueuedTaskChange()) {
-                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
             
                     this.SaveAutomation();
@@ -1234,7 +1234,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
             }
             else {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
         });
     }

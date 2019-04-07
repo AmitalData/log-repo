@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var System: any;
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM'
@@ -46,6 +46,7 @@ export class SendVehicleComponent {
     ResponseData: ClientSearchResponseData;
     //------------------------------------------------------//
     ObjectTableName = "Customs.Vehicle";
+    private static CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityPMService: EntityPMService) {
 
     }
@@ -66,26 +67,26 @@ export class SendVehicleComponent {
 
     public static SaveEntityChanges(customSendOptionsArgs, EntityPM: VehiclePM, isDelete: boolean) {
         EntityPM.Tenant = SessionLocator.Tenant;
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(EntityPM.Id)) {
             //this.CancelButtonClicked();
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
         //if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
         //this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
-        //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges()
+        //this.CurrentSession.CurrentEditComponent.SaveChanges()
         let entityPMService = new EntityPMService();
         entityPMService.update("Customs.Vehicle", EntityPM).then((res: any) => {
             res.subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     //this.SaveCompleted.emit(false);
                 }
 
@@ -95,7 +96,7 @@ export class SendVehicleComponent {
 
                         var myErrors: string[] = [];
                         myErrors.push("this.EntityPM.Id is null");
-                        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList  = myErrors;
+                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList  = myErrors;
                     } else {
                         if (customSendOptionsArgs == null) {
                             //this.CancelButtonClicked();
@@ -118,7 +119,7 @@ export class SendVehicleComponent {
                                     //this.CancelButtonClicked();
                                 }
                                 ).catch((err) => {
-                                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(err);
+                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(err);
                                     //this.CancelButtonClicked();
                                 });
 
@@ -126,7 +127,7 @@ export class SendVehicleComponent {
 
                             myIIGGeneralMessagesService.PostVehicleRequest(currRequestParams)
                                 .subscribe((myServiceResponse: ServiceResponse) => {
-                                    //SessionLocator.CurrentSession.StopBusyIndicator();
+                                    //this.CurrentSession.StopBusyIndicator();
 
                                     //this.ResponseData = myServiceResponse.Result;
                                     //this.OnMassageDisplayMethod();
@@ -137,10 +138,10 @@ export class SendVehicleComponent {
                 }
 
             }, error => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var myErrors: string[] = [];
                 myErrors.push(error.message);
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myErrors;
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myErrors;
                 
             });
         });

@@ -114,11 +114,12 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
     preventSelect: boolean = false;
     SelectedItem: any;
     //**********************************************************//
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.BuildColumns();
-        SessionLocator.CurrentSession.SubscriptionAdd(
-            SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        this.CurrentSession.SubscriptionAdd(
+            this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
                 if (res == "document") {
                     this.preventSelect = true;
                 }
@@ -131,11 +132,11 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.SelectedItem.Id);
+        this.CurrentSession.CloseCurrentWindowEmit(this.SelectedItem.Id);
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     private timerToken: any;
@@ -296,7 +297,7 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
     OnRowSelected(item) {
         if (!this.preventSelect) {
             this.SelectedItem = item.rowData;
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.SelectedItem.Id);
+            this.CurrentSession.CloseCurrentWindowEmit(this.SelectedItem.Id);
         }
         else {
             this.preventSelect = false;
@@ -304,7 +305,7 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
     }
 
     OnDataLoaded(rows: any[]) {
-      SessionLocator.CurrentSession.StopBusyIndicator();
+      this.CurrentSession.StopBusyIndicator();
       this.AllowPointerEvents = 'all';
     }
 }

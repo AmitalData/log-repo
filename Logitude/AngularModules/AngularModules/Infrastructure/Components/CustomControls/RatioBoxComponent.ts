@@ -16,13 +16,14 @@ export class RatioBoxComponent extends BaseComponent implements OnInit, OnDestro
     public ObjectFieldName: string = null;
     public ObjectTableName: string = null;
     public IDataContext: RatioBoxComponent = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.Listen();
     }
 
     private Listen() {
-        this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "RatioBoxValueChanged") {
                 this.iRatio = this.DataContext[this.ObjectFieldName];
                 //this.Validate();
@@ -57,7 +58,7 @@ export class RatioBoxComponent extends BaseComponent implements OnInit, OnDestro
             this.DataContext[this.ObjectFieldName] = value;
             this.Validate();
 
-            SessionLocator.CurrentSession.FireEvent("RatioBoxValueChanged");
+            this.CurrentSession.FireEvent("RatioBoxValueChanged");
         }
     }
 

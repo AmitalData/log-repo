@@ -39,7 +39,7 @@ export class NewConsolidationComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -438,7 +438,7 @@ export class NewConsolidationComponent extends BaseComponent {
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -455,7 +455,7 @@ export class NewConsolidationComponent extends BaseComponent {
                 this.SetCurrencyRateData();                
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     SetCurrencyRateData() {
@@ -541,7 +541,7 @@ export class NewConsolidationComponent extends BaseComponent {
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -621,11 +621,11 @@ export class NewConsolidationComponent extends BaseComponent {
     }
 
     ValidateFullAccounting() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Checking ...");
+        this.CurrentSession.StartBusyIndicator("Checking ...");
 
         this.myInvoiceDomainService.ValidateARInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.BillToId, this.EntityPM.InvoiceDate).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse != null) {
 
@@ -684,11 +684,11 @@ export class NewConsolidationComponent extends BaseComponent {
         }
 
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this.myInvoiceDomainService.GetCustomerCreditLimitActualAmount(this.BillToId).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     var errors: string[] = [];
@@ -754,7 +754,7 @@ export class NewConsolidationComponent extends BaseComponent {
         }
     }
     OnEntityValid() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.InitializeComponent();
     }
@@ -774,7 +774,7 @@ export class NewConsolidationComponent extends BaseComponent {
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
 
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
     // CreditLimit

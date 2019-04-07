@@ -15,6 +15,7 @@ export class LastStatusComponent {
     private ContainerId: string = null;
     public ValidationErrorsList: string[] = [];
     public ItemsSource: ObservableCollection;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
     }
@@ -51,7 +52,7 @@ export class LastStatusComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

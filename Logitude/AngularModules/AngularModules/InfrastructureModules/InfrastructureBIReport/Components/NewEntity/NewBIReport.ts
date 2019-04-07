@@ -19,7 +19,7 @@ export class NewBIReport extends BaseComponent {
     public DataContext: NewBIReport = this;
     public ObjectTableName: string = "BIReport";
     public IsNewQuery = true;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.EntityPM = new BIReportPM();
@@ -108,7 +108,7 @@ export class NewBIReport extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+        this.CurrentSession.CloseCurrentWindowEmit('cancel');
     }
 
     OkButtonClicked() {
@@ -123,7 +123,7 @@ export class NewBIReport extends BaseComponent {
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
 
             var logWindow = new LogitudeWindow();
             var windowArgs: any = {};
@@ -140,19 +140,19 @@ export class NewBIReport extends BaseComponent {
                         this.EntityPM.DWQueryId = s.QID;
 
                         if (this.ValidationErrorsList.length == 0) {
-                            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                            this.CurrentSession.StartBusyIndicatorSaving();
                             this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
 
                                 if (myResponse.HasError) {
                                     this.ValidationErrorsList = myResponse.ErrorsArray;
                                 }
 
                                 else {
-                                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                                    this.CurrentSession.CloseCurrentWindow();
 
                                     if (d != "cancel") {
-                                        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                                        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                                             .then(cmpRef => {
                                                 cmpRef.instance.ComponentRef = cmpRef;
                                                 cmpRef.instance.Run({

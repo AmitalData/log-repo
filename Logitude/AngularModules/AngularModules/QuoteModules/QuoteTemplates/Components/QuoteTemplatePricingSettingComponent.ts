@@ -60,6 +60,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     QuoteTemplateSectionTypeName: string = "Packages";
     IsPerContainerChange: boolean = false;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -107,7 +108,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     LoadData() {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.QuoteTemplateTextDesignPMLists = [];
         this.LoadTableDesign();
     }
@@ -141,7 +142,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
         this.quoteTemplateTextDesignExtendedPMService.GetQuoteTemplateTextDesignPMListByIds(ids, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.QuoteTemplateTextDesignPMLists = pmResponse.Result;
 
@@ -630,7 +631,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
         if (this.IsSaveQuoteTemplateTextDesignRuning || this.IsSaveQuoteTemplateTableDesignRuning || this.IsSaveQuoteTemplateTextCodeRuning) {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
@@ -647,10 +648,10 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
                 this.SaveQuoteTemplateSetting();
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (this.IsPerContainerChange == true) {
-                    SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
-                } else SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CurrentWindow.Close("Refresh");
+                } else this.CurrentSession.CloseCurrentWindow();
 
             }
 
@@ -696,7 +697,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     }
 
     SaveQuoteTemplateSetting() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
             this.QuoteTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();
@@ -746,8 +747,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     SaveCompleted() {
         if (!this.IsSaveQuoteTemplateTextDesignRuning && !this.IsSaveQuoteTemplateTableDesignRuning && !this.IsSaveQuoteTemplateTextCodeRuning) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.Close("Refresh");
          
         }
 
@@ -756,7 +757,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     CloseButtonClicked() {
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

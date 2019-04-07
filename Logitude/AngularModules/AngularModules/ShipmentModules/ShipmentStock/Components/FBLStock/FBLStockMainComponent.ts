@@ -1,4 +1,4 @@
-﻿
+
 import {Component} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {FBLStockPM} from '../../../../Shipment/EntityPMs/FBLStockPM';
@@ -25,6 +25,7 @@ export class FBLStockMainComponent {
     public IsVisibile: boolean = false;
     private FBLStockExtenedPMService: FBLStockExtenedPMService;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         this._entityResourceService.getEntityResourceByTableName("FBLStock", 0).subscribe(response => {
             this.IsVisibile = true;
@@ -35,7 +36,7 @@ export class FBLStockMainComponent {
     }
 
     private LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.SelectedItem = null;
 
@@ -44,7 +45,7 @@ export class FBLStockMainComponent {
                 this.BuildItemsSource(myResponse.Result);
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     private BuildItemsSource(items: FBLStockPM[]) {
@@ -145,11 +146,11 @@ export class FBLStockMainComponent {
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
 
-                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                        this.CurrentSession.StartBusyIndicatorSaving();
 
                         this.FBLStockExtenedPMService.DeleteFBLStocksOperation(this.SelectedItem.Id, isDeletingSeries).subscribe((myResponse: ServiceResponse) => {
 
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
 
                             if (myResponse != null) {
                                 if (myResponse.HasError) {
@@ -169,6 +170,6 @@ export class FBLStockMainComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

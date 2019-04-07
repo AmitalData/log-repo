@@ -33,7 +33,7 @@ export class NewPaymentOrderComponent
     public ObjectTableName: string = "Customs.PaymentOrder";
 
     _PaymentMessagesService: PaymentMessagesService = new PaymentMessagesService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
 
@@ -96,7 +96,7 @@ export class NewPaymentOrderComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {

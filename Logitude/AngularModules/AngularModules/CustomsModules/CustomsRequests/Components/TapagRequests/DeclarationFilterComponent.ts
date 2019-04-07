@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -44,7 +44,7 @@ export class DeclarationFilterComponent
     GeneralDetailsName: any; // html component requires this property. AOT
     GeneralDetailsCustomOfficeName: any; // html component requires this property. AOT
     GeneralDetailsStatusName: any; // html component requires this property. AOT
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ClaimObservableCollection = new ObservableCollection([]);
@@ -132,10 +132,10 @@ export class DeclarationFilterComponent
             }
         }
         this.DueChangeClearChildField(true);
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse, true);
 
             });
@@ -157,10 +157,10 @@ export class DeclarationFilterComponent
         }
         this.DueChangeClearChildField(false);
 
-        SessionLocator.CurrentSession.StartBusyIndicator("")
+        this.CurrentSession.StartBusyIndicator("")
         this._DeclarationExtendedListService.GetSingleDeclarationByNumber(this.DeclarationNumber, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 this.FetchDeclaration(myResponse, false);
 
@@ -342,7 +342,7 @@ export class DeclarationFilterComponent
   
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {

@@ -19,6 +19,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { SessionComponent } from '../../../Infrastructure/Components/Session/SessionComponent';
 
 export class ARInvoiceMenuButtonsHandler {
+    private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: ARInvoicePM;
     public entityArgs: EntityArgs
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -530,12 +531,12 @@ export class ARInvoiceMenuButtonsHandler {
 
                 else if (helper.IsActivated) {
 
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
 
                     var myService = new InvoiceDomainService();
                     myService.GetCustomerCreditLimitActualAmount(this.EntityPM.BillToId).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
                             helper.Run(myResponse.Result);
@@ -688,12 +689,12 @@ export class ARInvoiceMenuButtonsHandler {
     }
     AccountingCheck() {
         if (this.EntityPM.MainEntityId) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var myService = new InvoiceDomainService();
             myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     var IsAccountingClosed = myResponse.Result;
@@ -778,12 +779,12 @@ export class ARInvoiceMenuButtonsHandler {
 
             if (this.isValid) {
                 if (this.EntityPM.MainEntityId) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
 
                     var myService = new InvoiceDomainService();
                     myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
                             var IsAccountingClosed = myResponse.Result;
@@ -871,12 +872,12 @@ export class ARInvoiceMenuButtonsHandler {
         }
     }
     InvokeAutoCredit() {
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
 
         var myService = new InvoiceDomainService();
         myService.AutoCreditARInvoice(this.EntityPM.Id, this.EntityPM.IsInvoiceNumberManuallySet, this.AutoCreditManualNumber, this.AutoCreditDate).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.entityArgs.EditComponent.ValidationErrorsList = myResponse.ErrorsArray;
@@ -892,17 +893,17 @@ export class ARInvoiceMenuButtonsHandler {
     OpenAutoCreditScreen() {
 
         if (this.EntityPM.IsConsolidationInvoice) {
-            SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+            this.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
         }
 
         if (!AppTool.IsNullOrEmpty(this.AutoCreditId)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.AutoCreditId, ObjectTableName: 'ARInvoice', BackButtonLabel: "Invoice: " + this.EntityPM.InvoiceNumber });
 
                     if (this.EntityPM.IsConsolidationInvoice) {
-                        SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+                        this.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
                     }
                 });
         }
@@ -967,12 +968,12 @@ export class ARInvoiceMenuButtonsHandler {
             }
 
             else {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
 
                 var myService = new InvoiceDomainService();
                 myService.GetShipmentLevelCode(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (!myResponse.HasError) {
                         var myShipmentLevelCode = myResponse.Result;

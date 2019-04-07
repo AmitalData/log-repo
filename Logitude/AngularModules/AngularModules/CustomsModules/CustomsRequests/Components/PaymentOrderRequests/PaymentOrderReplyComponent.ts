@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
@@ -40,7 +40,7 @@ implements AfterViewInit,IRequestsSheetMassagingComponent {
     private isControlEnabled: boolean = true;
 
     ValidationErrors: string[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -68,7 +68,7 @@ implements AfterViewInit,IRequestsSheetMassagingComponent {
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     OnMassageDisplayMethod() {
@@ -164,7 +164,7 @@ implements AfterViewInit,IRequestsSheetMassagingComponent {
     public set EntityIdKey3(newValue: string) { this.ResponseData.ConnectedEntityData.EntityIdKey3 = newValue; }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {

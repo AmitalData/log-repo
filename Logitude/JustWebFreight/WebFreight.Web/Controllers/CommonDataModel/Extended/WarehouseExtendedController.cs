@@ -40,7 +40,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 mytenant = authToken.Tenant;
 
                 if (filters.Tenant != null)
-                    mytenant = filters.Tenant.Value;
+                    mytenant = tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {

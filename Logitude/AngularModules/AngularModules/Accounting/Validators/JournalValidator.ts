@@ -1,4 +1,4 @@
-﻿import { JournalPM } from '../EntityPMs/JournalPM';
+import { JournalPM } from '../EntityPMs/JournalPM';
 import { JournalLinePM } from '../EntityPMs/JournalLinePM';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
@@ -6,6 +6,8 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 
 export class JournalValidator
 {
+    private static CurrentSession = SessionLocator.SelectedSession;
+
     public static ValidateJournal(entityPM: any)
     {
         
@@ -84,7 +86,7 @@ export class JournalValidator
 
             }
         }
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         return errors;
     }
 
@@ -129,9 +131,9 @@ export class JournalValidator
             }
             if (cSum != dSum) {
                 errors.push(TextCodeTranslator.Translate("Accounting.General.O.TotalDebitMustEqualTotalCredit") + ": " + JournalValidator.Abs(dSum - cSum).toFixed(2)); //Total debit amount must be equal to total credit amount, There is a difference of
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             } else {
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             }
         }
         return errors;

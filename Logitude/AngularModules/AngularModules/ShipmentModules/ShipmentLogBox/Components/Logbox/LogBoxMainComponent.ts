@@ -33,6 +33,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public DontShowLogboxToolTip: boolean = false;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _ShipmentPMService: ShipmentPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
@@ -48,7 +49,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.RequestedDocsLable = "Action Required";
         }
-        SessionLocator.CurrentSession.SessionEvent.subscribe(($event: any) => {
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event.Name == "ReloadShipments") {
                 this.SelectedFilter = "My Shipments";
                 this.LoadImporterShipments();
@@ -65,8 +66,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             }
 
         });
-        SessionLocator.CurrentSession.SubscriptionAdd(
-            SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        this.CurrentSession.SubscriptionAdd(
+            this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
                 if (res == "PreventLogBoxSelect") {
                     this.preventSelect = true;
                 }
@@ -101,7 +102,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                         this._ShipmentPMService.getSingleByForwarderShipmentNumber(me.ForwarderShipmentNumber).subscribe(myResult => {
                             if (!myResult.HasError) {
                                 this._ShipmentAdditionalCloudDataService.get(myResult.Result.Id).subscribe(AdditionalResult => {
-                                    //SessionLocator.CurrentSession.StopBusyIndicator();
+                                    //this.CurrentSession.StopBusyIndicator();
                                     var newWindow = new LogitudeWindow();
                                     newWindow.Width = 665;
                                     newWindow.Height = 700;
@@ -116,9 +117,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                                     //newWindow.Add(control); 
                                     newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
                                     newWindow.WindowClosed.subscribe(($event: any) => {
-                                        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                                        this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                                         //if ($event == "MyShipmentAdded") {
-                                        //    SessionLocator.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                                        //    this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
                                         //}
                                     });
                                 });
@@ -271,32 +272,48 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ServerSideSortable: true,
             SortByName: "ShipperName"
         });
-        this.columns.push({
-            FieldName: 'StatusName',
-            DataTypeCode: 'String',
-            Display: 'Status',
-            Styles: { width: '120px' },
-            HtmlListComponentName: 'StatusCellDisplayListTemplate',
-            HtmlListComponentUrl: './Shipment/Components/ListTemplates/StatusCellDisplayListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: "StatusName"
-        });
-        if (this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"))) {
+        if (this.SelectedFilter == "Action Required") {
             this.columns.push({
-                FieldName: 'StatusDate',
+                FieldName: 'Task',
                 DataTypeCode: 'String',
-                Display: 'Status Date',
-                Styles: { width: '125px' },
-                HtmlListComponentName: 'DateCellDisplayListTemplate',
-                HtmlListComponentUrl: './Shipment/Components/ListTemplates/DateCellDisplayListTemplate',
+                Display: 'Task',
+                Styles: { width: '220px' },
+                HtmlListComponentName: 'TaskCellDisplayListTemplate',
+                HtmlListComponentUrl: './Shipment/Components/ListTemplates/TaskCellDisplayListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: true,
-                SortByName: "StatusDate"
+                ServerSideSortable: false,
+                SortByName: "Task"
             });
+            this.HoverTemplateIndex = 5;
         }
         else {
-            this.HoverTemplateIndex = 5;
+            this.columns.push({
+                FieldName: 'StatusName',
+                DataTypeCode: 'String',
+                Display: 'Status',
+                Styles: { width: '120px' },
+                HtmlListComponentName: 'StatusCellDisplayListTemplate',
+                HtmlListComponentUrl: './Shipment/Components/ListTemplates/StatusCellDisplayListTemplate',
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                SortByName: "StatusName"
+            });
+            if (this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"))) {
+                this.columns.push({
+                    FieldName: 'StatusDate',
+                    DataTypeCode: 'String',
+                    Display: 'Status Date',
+                    Styles: { width: '125px' },
+                    HtmlListComponentName: 'DateCellDisplayListTemplate',
+                    HtmlListComponentUrl: './Shipment/Components/ListTemplates/DateCellDisplayListTemplate',
+                    IsCustomTemplate: true,
+                    ServerSideSortable: true,
+                    SortByName: "StatusDate"
+                });
+            }
+            else {
+                this.HoverTemplateIndex = 5;
+            }
         }
         //this.columns.push({
         //    FieldName: 'RequestedDocumentsCount',
@@ -717,7 +734,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         newWindow.WindowArgs = windowArgs;
         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/MultiArchiveShipmentsComponent');
         newWindow.WindowClosed.subscribe(($event: any) => {
-            SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+            this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
         });
     }
 }

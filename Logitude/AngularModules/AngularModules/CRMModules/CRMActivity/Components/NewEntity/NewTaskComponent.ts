@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityPMService} from '../../../../CRM/Services/StandardPMs/ActivityPMService';
 import {ActivityValidator} from '../../../../CRM/Validators/ActivityValidator';
@@ -24,6 +24,7 @@ export class NewTaskComponent extends BaseComponent implements OnInit {
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private myActivityPMService: ActivityPMService;
     private entityResourceService: EntityResourceService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -174,12 +175,12 @@ export class NewTaskComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[] = [];
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.BusinessUnitId)) {
             this.EntityPM.BusinessUnitId = SessionLocator.LoggedUserPM.BusinessUnitId;
@@ -190,20 +191,20 @@ export class NewTaskComponent extends BaseComponent implements OnInit {
 
         if (this.ValidationErrorsList.length == 0) {
             this.myActivityPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
 
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                    this.CurrentSession.CloseCurrentWindowEmit('OK');
                 }
             });
         }
 
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         } 
     }
 }
