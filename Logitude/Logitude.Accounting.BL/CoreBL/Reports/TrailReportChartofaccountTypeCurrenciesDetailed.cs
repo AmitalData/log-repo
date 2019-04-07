@@ -18,7 +18,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public TrailReportChartofaccountTypeCurrenciesDetailed(TrailReportParam trailReportParam, int timeOutInMin)
             : base(trailReportParam, timeOutInMin) { }
 
-        protected override void Prepare()
+        protected override void AdjustTrailReportFull()
         {
             var testNow = true;// (new DateTime(2016, 12, 30) > DateTime.Now);
 
@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 //Accumulate Totals From the beginning of  Account Use Until(NotInclude) (StartOfMonth)FromDate                
             (from totalCOAType in
 
-                 (from tot in QBaseGLAccountTotalByMonthsFrom0BCTilNotIncludeStartOfMonthFromDate
+                 (from tot in QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate
                   join a in QBaseAllCardsAndDetailsAccType
                   on tot.AccountId equals a.Id
                   select new { a.ChartOfAccountsTypeCode, tot.CurrencyId, tot.ForeignAmountCredit, tot.ForeignAmountDebit, tot.LocalAmountCredit, tot.LocalAmountDebit }  
@@ -72,7 +72,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo = //Accumulate Totals From StartOfMonth(FromDate) Until StartOfMonth(ToDate) 
                  (from totalCOAType in
 
-                      (from tot in QBaseTotalsFromStartOfMonthFromTilStartOfMonthTo
+                      (from tot in QBasePeriodGLATotalByMonths_TotalDelta2End_FromBeginOfMonthFromDate_Til_BeginOfMonthToDate
 
                        join a in QBaseAllCardsAndDetailsAccType
                        on tot.AccountId equals a.Id
@@ -122,7 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
           var  qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude =
                 //Accumulate Tranaction BeginOfMonth(fromDate) till (FromDate-1d)
                   (from totalCOAType in
-                       (from trans in QBaseTranactionBeginOfMonthFromTillFromDateNotInclude
+                       (from trans in QBasePeriodTransaction_TransStart_BeginOfMonthFromDate_TillFromDate_NotInclude
                         join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == false)
                             on trans.AccountId equals a.Id
                         select new { a.ChartOfAccountsTypeCode, trans.CurrencyId, trans.ForeignAmountCredit, trans.ForeignAmountDebit, trans.LocalAmountCredit, trans.LocalAmountDebit }
@@ -172,7 +172,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                   //Accumulate Tranaction BeginOfMonth(fromDate) till (FromDate-1d)
                   (from totalCOAType in
 
-                       (from trans in QBaseTranactionBeginOfMonthFromTillFromDateNotInclude
+                       (from trans in QBasePeriodTransaction_TransStart_BeginOfMonthFromDate_TillFromDate_NotInclude
                         join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == true)
                             on trans.ControlAccountId equals a.Id
                         select new { a.ChartOfAccountsTypeCode, trans.CurrencyId, trans.ForeignAmountCredit, trans.ForeignAmountDebit, trans.LocalAmountCredit, trans.LocalAmountDebit }
@@ -223,7 +223,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var qAccumulateTranactionBeginOfMonthToDateTillToDateInculde =
                 //Accumulate Tranaction BeginOfMonth(ToDate) till ToDate
             (from totalCOAType in
-                 (from trans in QBaseTranactionBeginOfMonthToDateTillToDateInculde
+                 (from trans in QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde
                   join a in QBaseAllCardsAndDetailsAccType.Where(a=>a.IsControlAccount==false)
                   on trans.AccountId equals a.Id
                   select new { a.ChartOfAccountsTypeCode, trans.CurrencyId, trans.ForeignAmountCredit, trans.ForeignAmountDebit, trans.LocalAmountCredit, trans.LocalAmountDebit }
@@ -270,13 +270,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var qAccumulateTranactionBeginOfMonthToDateTillToDateInculdeControl =
                     //Accumulate Tranaction BeginOfMonth(ToDate) till ToDate
             (from totalCOAType in
-                 (from trans in QBaseTranactionBeginOfMonthToDateTillToDateInculde
+                 (from trans in QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde
                   join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == false)
                   on trans.AccountId equals a.Id
                   select new { a.ChartOfAccountsTypeCode, trans.CurrencyId, trans.ForeignAmountCredit, trans.ForeignAmountDebit, trans.LocalAmountCredit, trans.LocalAmountDebit }
                   )
                   .Union
-                  (from trans in QBaseTranactionBeginOfMonthToDateTillToDateInculde
+                  (from trans in QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde
                    join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == true)
                    on trans.ControlAccountId equals a.Id
                    select new { a.ChartOfAccountsTypeCode, trans.CurrencyId, trans.ForeignAmountCredit, trans.ForeignAmountDebit, trans.LocalAmountCredit, trans.LocalAmountDebit }

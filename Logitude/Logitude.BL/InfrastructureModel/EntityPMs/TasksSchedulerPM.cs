@@ -38,7 +38,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public int MonthlyDay { get; set; }
         public DateTime? StartDateTime { get; set; }
 
-        public int RepeatInMinutes { get; set; }
+        public int? RepeatInMinutes { get; set; }
 
         public bool IsLastRunError { get; set; }
         public string Type { get; set; }

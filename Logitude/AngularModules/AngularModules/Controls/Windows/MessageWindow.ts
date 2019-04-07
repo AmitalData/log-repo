@@ -43,6 +43,9 @@ export class MessageWindow {
     private InstanceComponent: MessageWindowTemplateComponent = null;
     public Show(message: string) {
         this.Message = message;
+        if (!this.CurrentSession) {
+            this.CurrentSession = SessionLocator.SelectedSession;
+        }
 
         if (this.CurrentSession.SessionLocation)
         {
