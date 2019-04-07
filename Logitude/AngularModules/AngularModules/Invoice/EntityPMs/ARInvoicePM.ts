@@ -957,6 +957,11 @@ export class ARInvoicePM {
     public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
        
 	 
+    private aRInvoiceStockId: string;
+    public get ARInvoiceStockId() { return this.aRInvoiceStockId; }
+    public set ARInvoiceStockId(newValue: string) { if (this.aRInvoiceStockId != newValue) { this.aRInvoiceStockId = newValue; this.MarkAsDirty("ARInvoiceStockId"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		

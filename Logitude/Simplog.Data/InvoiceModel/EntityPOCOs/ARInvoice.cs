@@ -195,5 +195,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string BankAccountLiteId { get; set; }
         [ForeignKey("BankAccountLiteId")]
         public virtual BankAccountLite BankAccountLite { get; set; }
+
+        public string ARInvoiceStockId { get; set; }
+
     }
 }
