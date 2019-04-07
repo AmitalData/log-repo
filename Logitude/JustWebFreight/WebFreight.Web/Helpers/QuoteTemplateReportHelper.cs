@@ -796,6 +796,10 @@ namespace Logitude.BL.Helpers
                     bool ShowTotalInLocalCurrency = pricingSectionType == "PC" ? setting.ShowTotalInLocalCurrencyContainers : setting.ShowTotalInLocalCurrencyPackages;
 
 
+                    if (ShowTotalInSaleCurrency || ShowTotalInLocalCurrency)
+                    {
+                        HtmlTemplate.Append("<div  style='height:5px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+                    }
                     AppendTotalCurrencyHtml(quotePM, setting, HtmlTemplate, ShowTotalInSaleCurrency, ShowTotalInLocalCurrency, quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue,
                       Name, SaleTotalAmountInSaleCurrency, SaleTotalAmountInLocalCurrency);
                     #endregion
@@ -1439,9 +1443,11 @@ namespace Logitude.BL.Helpers
                     {
                         HtmlTemplate.Append("<div " + styledetailstitle + ">" + FieldName + "</div>");
                     }
+
+                    HtmlTemplate.Append("<div  style='height:8px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
                 }
 
-                HtmlTemplate.Append("<div  style='height:8px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+  
 
 
 
