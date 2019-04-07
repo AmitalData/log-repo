@@ -102,6 +102,11 @@ export class ARInvoiceStockPM {
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
      
 	private aRInvoiceStockLines: ARInvoiceStockLinePM[];
     get  ARInvoiceStockLines() {

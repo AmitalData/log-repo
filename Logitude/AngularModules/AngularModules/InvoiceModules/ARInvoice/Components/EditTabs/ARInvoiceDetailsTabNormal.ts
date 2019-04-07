@@ -1503,15 +1503,34 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     set SelectedInvoiceNumberFilter(value: CodeNameClass) {
         if (this.selectedInvoiceNumberFilter != value) {
             this.selectedInvoiceNumberFilter = value;
+            if (value.Code == "MAS") {
+                this.IsInvoiceNumberManuallySet = true;
+            }
+            if (value.Code != "MAS") {
+                this.IsInvoiceNumberManuallySet = false;
+            }
         }
     }
 
     private BuildInvoiceNumberFilters() {
         this.InvoiceNumberFilterList = [];
         this.InvoiceNumberFilterList.push(new CodeNameClass("CNR", "Counter"));
-        this.InvoiceNumberFilterList.push(new CodeNameClass("STK", "Stock"));
-        this.InvoiceNumberFilterList.push(new CodeNameClass("MAS", "Manually Set"));
-        this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "CNR")[0];
+        if (this.IsInvoiceStocksManagementEnabled) {
+            this.InvoiceNumberFilterList.push(new CodeNameClass("STK", "Stock"));
+        }
+        if (this.AllowManualInvoiceNumber) {
+            this.InvoiceNumberFilterList.push(new CodeNameClass("MAS", "Manually Set"));
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM != null && this.EntityPM.ARInvoiceStockId)) {
+            this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "STK")[0];
+        }
+        else if (this.EntityPM != null && this.EntityPM.IsInvoiceNumberManuallySet == true) {
+            this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "MAS")[0];
+        }
+        else {
+            this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "CNR")[0];
+        }
     }
 
     GetInvoiceNumberFromStock() {
