@@ -445,6 +445,21 @@ namespace CommunicationWorkerRole
                                                                 }
                                                             }
                                                         }
+
+                                                        string iTenantKeyText = iAppSettings["ChampRestAPITenantKey"].ToString();
+                                                        if (!string.IsNullOrEmpty(iTenantKeyText))
+                                                        {
+                                                            int iTenantKeyNumber = Convert.ToInt32(iTenantKeyText);
+
+                                                            char[] iTenantNumberArray = waitingCommLog.Tenant.ToString().ToCharArray();
+                                                            int arrayLength = iTenantNumberArray.Length;
+                                                            int iCompareTenantKey = Convert.ToInt32(iTenantNumberArray[arrayLength - 1]);
+
+                                                            if (iCompareTenantKey <= iTenantKeyNumber)
+                                                            {
+                                                                isUsingRestAPI = true;
+                                                            }
+                                                        }
                                                     }
                                                 }
 
