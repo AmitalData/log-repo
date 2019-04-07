@@ -12,6 +12,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ExcelExportService} from '../../../../Common/Services/Others/ExcelExportService'
 import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImageParameter';
 
+
 declare var UploadLogoFile, ArrayBufferToBase64;
 
 @Component({

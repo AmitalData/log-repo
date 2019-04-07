@@ -69,6 +69,15 @@ export class NewProjectComponent extends BaseComponent {
         }
     }
 
+    get ExcludeFromProrating() {
+        return this.EntityPM.ExcludeFromProrating;
+    }
+    set ExcludeFromProrating(value: boolean) {
+        if (this.EntityPM.ExcludeFromProrating != value) {
+            this.EntityPM.ExcludeFromProrating = value;
+        }
+    }
+    
     get CategoryId() {
         return this.EntityPM.CategoryId;
     }

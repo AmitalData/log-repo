@@ -1974,6 +1974,7 @@
     <Content Include="styles.css" />
     <Content Include="TimeManagement\Components\Connections\ConnectToParentComponent.html" />
     <Content Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.html" />
+    <Content Include="TimeManagement\Components\NewEntity\NewGetProjectComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewOfficeHourComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewProjectCategoryComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewProjectComponent.html" />
@@ -6323,6 +6324,7 @@
     <TypeScriptCompile Include="test.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Connections\ConnectToParentComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.ts" />
+    <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewGetProjectComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewOfficeHourComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewProjectCategoryComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewProjectComponent.ts" />
