@@ -197,17 +197,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         if (customsDocumentPM.CurrentCustomsDocumentsTicketId != customsDocumentsTicketPM.Id) customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
                     }
                     if (CustomsDocumentMetaDataValues != null && CustomsDocumentMetaDataValues.Count() > 0 && (customsDocumentPM.CustomsDocumentMetaDataValues == null || customsDocumentPM.CustomsDocumentMetaDataValues.Count() < CustomsDocumentMetaDataValues.Count())) customsDocumentPM.CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues;
-                    if (customsDocumentPM.DeclarationId != _MyDeclarationPM.Id)
-                    {
-                        customsDocumentPM.DeclarationId = _MyDeclarationPM.Id;
-                    }
 
                     customsDocumentPM.IsSendToQueue = false;
                     myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
-
                     customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
+                    if (customsDocumentPM.DeclarationId != _MyDeclarationPM.Id)
+                    {
+                        customsDocumentPM.DeclarationId = _MyDeclarationPM.Id;
+                    }
                     customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
                     customsDocumentPM.IsSendToQueue = true;
                     myCustomsDocumentUpdateService.IgnoreSendFailure = true;
