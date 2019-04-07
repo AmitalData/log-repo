@@ -406,6 +406,7 @@
     <TypeScriptCompile Include="Common\EntityLists\CustomerDepositionList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomsShipperList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
+    <TypeScriptCompile Include="Common\EntityPMInitServices\ReportPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
