@@ -949,6 +949,7 @@ div#two {
                 <li>
                     
             <asp:Button ID="ButtonYearTransfer" runat="server" Text="YearTransfer(LastY)" OnClick="ButtonYearTransfer_Click" />        
+            <asp:Button ID="ButtonGetSystem1000" runat="server" Text="Get System 1000(Tenant)" OnClick="ButtonGetSystem1000_Click" />        
                     
                 </li>
             </ul>

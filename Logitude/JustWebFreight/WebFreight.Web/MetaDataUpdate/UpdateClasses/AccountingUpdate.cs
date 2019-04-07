@@ -2057,6 +2057,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         #endregion
 
 
+
+        #region LoadTextCodes_System1000
+        private void LoadTextCodes_System1000(Dictionary<string, TextCode> textcodes)
+        {
+            ObjectTable objectTable = objectContext.ObjectTables.Where(f => f.Name == "GLAccount" && f.Tenant == 0).FirstOrDefault();
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.System1000", DefaultText = "System 1000", LocalDefaultText = "מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.Q.System1000", DefaultText = "System 1000", LocalDefaultText = "מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DeductionFileNumber", DefaultText = "Deduction File Number is undefined.", LocalDefaultText = "מספר תיק ניכויים אינו מוגדר.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+        }
+        #endregion
+
+
         #region LoadTextCodes_AutomaticReconcileMethod
         private void LoadTextCodes_AutomaticReconcileMethod(Dictionary<string, TextCode> textcodes)
         {
