@@ -91,6 +91,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleARInvoiceStock(entityPM.Id, entityPM.Tenant);
 
+            if (entityPM.Cancelled)
+            {
+                entityPM.StatusCode = "C";
+                entityPM.Inactive = true;
+            }
+
+            else if (entityPM.Reactivated)
+            {
+                entityPM.StatusCode = "A";
+                entityPM.Inactive = false;
+            }
+
             ARInvoiceStockValidating.Validate(entityPM, objectContext, this.isNewEntity);
 
             if (mapComposition)
