@@ -1,7 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TMProjectPM } from '../../EntityPMs/TMProjectPM';
+import { TMProjectPMService } from '../../Services/StandardPMs/TMProjectPMService';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { DateTool } from '../../../Infrastructure/Tools';
 import { BatchTaskExecutionPM } from '../../../Infrastructure/EntityPMs/BatchTaskExecutionPM';
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
@@ -18,7 +21,9 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
     public DataContext = this;
     private myService: TimeManagementDomainService;
+    ValidationErrorsList = [];
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
         this.SetUIProperties();
@@ -71,18 +76,33 @@ export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
     private batchEntity: BatchTaskExecutionPM;
     public IsResponseProgressVisible: boolean = false;
     GetProjectsButtonClicked() {
-        this.Retries = 0;
-        this.myService.GetTMProjectsByBatchTask(this.UserId, this.FromDate, this.ToDate).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                var mm: ServiceResponse = response;
-                this.batchEntity = mm.Result;
 
-                if (this.batchEntity != null) {
-                    this.IsResponseProgressVisible = true;
-                    this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
+        var errors: string[] = [];
+        if (this.FromDate == null) {
+            errors.push("From Date field is required");
+        }
+        if (this.ToDate == null) {
+            errors.push("To Date field is required");
+        }
+        if (this.FromDate > this.ToDate) {
+            errors.push("From Date cannot be greater than To Date");
+        }
+        this.ValidationErrorsList = errors;
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.Retries = 0;
+            this.myService.GetTMProjectsByBatchTask(this.UserId, this.FromDate, this.ToDate).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var mm: ServiceResponse = response;
+                    this.batchEntity = mm.Result;
+
+                    if (this.batchEntity != null) {
+                        this.IsResponseProgressVisible = true;
+                        this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     // Timer
@@ -122,7 +142,7 @@ export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
     private RunTimerFunction() {
         this.Retries++;
         this.GetBTE();
-        this.AdjustTimerSpeed();
+       
     }
     public StopTimer() {
         if (this.timer) {
@@ -153,6 +173,8 @@ export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
                     this.StopTimer();
                     window.Show("Faild: " + this.bteList.ErrorLog);
                 }
+
+                this.AdjustTimerSpeed();
             }
         });
     }
