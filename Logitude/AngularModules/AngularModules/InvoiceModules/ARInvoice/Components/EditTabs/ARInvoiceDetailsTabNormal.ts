@@ -1534,8 +1534,18 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
 
     GetInvoiceNumberFromStock() {
-
-
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select Invoice Number From Stock";
+        logWindow.Width = 1200;
+        logWindow.Height = 600;      
+        logWindow.Show('./InvoiceModules/InvoiceStocks/Components/StockSelection/ARInvoiceStockSelectionComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if ((d != null && d != "cancel")) {
+                    this.InvoiceNumber = s.StockLineSelectedItem.Number;
+                }
+            });
+        });
     }
 }
 export class ARInvoiceLineItem extends BaseComponent {

@@ -138,16 +138,22 @@ export class RelatedCustomerComponent extends BaseComponent{
             value = LastThirtyDaysDate;
         }
         filters.addAdditionalFilter("CreateDate", value, null, null, "GreaterThanOrEqual", false, true, false, "datetime");
-        filters.GetAll = true;        
+        filters.PageSize = 100;
+        filters.PageIndex = 0;
+        filters.SortBy = "CreateDate";
+        filters.SortDirection = "Descending";
         service.getByFilters(filters).subscribe(result => {
             this.APILogsObsList = result.Result.sort((a, b) => { return (DateTool.GetDateFromDate(a.CreateDate) === DateTool.GetDateFromDate(b.CreateDate)) ? 0 : (DateTool.GetDateFromDate(a.CreateDate) > DateTool.GetDateFromDate(b.CreateDate)) ? -1 : 1 });
-;
+
         });
     }
     QueriesSelectedChange($event) {
         var service: QueueMessageMoreDetailsListService = new QueueMessageMoreDetailsListService();
         var filters: ApiQueryFilters = new ApiQueryFilters();
-        filters.GetAll = true;
+        filters.PageSize = 100;
+        filters.PageIndex = 0;
+        filters.SortBy = "CreateDateTime";
+        filters.SortDirection = "Descending";
         service.getByFilters(filters).subscribe(result => {
             this.QueryObsList = result.Result;
         });
@@ -242,6 +248,10 @@ export class RelatedCustomerComponent extends BaseComponent{
         this.LogsSelectedChange(this.SelectedLogItem);
     }
 
+    RefreshQueues() {
+        this.QueriesSelectedChange(this.SelectedQueryItem);
+    }
+
     AddBatch() {
 
         if (this.SelectedCardPM != null) {
@@ -261,14 +271,14 @@ export class RelatedCustomerComponent extends BaseComponent{
 
     SetBatchTitle() {
         if (this.SelectedTabCode == "B") {
-            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Batch Build History";
+            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Batch Build History (last 100)";
         }
         else if (this.SelectedTabCode == "L") {
-            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Logs History";
+            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Logs History (last 100)";
             this.LogsSelectedChange(this.SelectedLogItem);
         }
         else if (this.SelectedTabCode == "Q") {
-            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Queues History ";
+            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Queues History (last 100) ";
         }
     }
     public get SelectedItem() { return this.selectedItem; }

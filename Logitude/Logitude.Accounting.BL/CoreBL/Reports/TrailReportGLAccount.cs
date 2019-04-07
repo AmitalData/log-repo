@@ -21,7 +21,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public TrailReportGLAccount(TrailReportParam trailReportParam, int timeOutInMin)
             : base(trailReportParam, timeOutInMin) { }
 
-        protected override void Prepare()
+        protected override void AdjustTrailReportFull()
         {
             var testNow = true;// (new DateTime(2016, 12, 30) > DateTime.Now);
 
@@ -33,275 +33,437 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 QBaseAllCardsAndDetailsAccType = QBaseAllCardsAndDetailsAccType.Where(coa => coa.ChartOfAccountsTypeCode == "1");
             }
 
-
-            var qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate =
-                //Accumulate Totals From the beginning of  Account Use Until(NotInclude) (StartOfMonth)FromDate                
-            (from totalCOAType in
-
-                 (
-                 from tot in
-                     QBaseGLAccountTotalByMonthsFrom0BCTilNotIncludeStartOfMonthFromDate
-                 join a in QBaseAllCardsAndDetailsAccType
-
-                  on tot.AccountId equals a.Id
-                 select new
-                 {
-                     tot.AccountId,
-                     //tot.CurrencyId , 
-                     tot.ForeignAmountCredit,
-                     tot.ForeignAmountDebit,
-                     tot.LocalAmountCredit,
-                     tot.LocalAmountDebit
-                 }
-                  )
-             group totalCOAType by new
-             {
-                 totalCOAType.AccountId,
-                 //totalCOAType.CurrencyId
-             } into g
-             select new TrailReportTemp
-             {
-
-                 AccountId_COAType = g.Key.AccountId,
-                 CurrencyId = "",//g.Key.CurrencyId,
-                 ForeignAmountCreditTotalStart = 0,//g.Sum(x => x.ForeignAmountCredit),
-                 ForeignAmountDebitTotalStart = 0,//g.Sum(x => x.ForeignAmountDebit),
-                 LocalAmountCreditTotalStart = g.Sum(x => x.LocalAmountCredit),
-                 LocalAmountDebitTotalStart = g.Sum(x => x.LocalAmountDebit),
-
-
-                 ForeignAmountCreditTransStart = 0,
-                 ForeignAmountDebitTransStart = 0,
-                 LocalAmountCreditTransStart = 0,
-                 LocalAmountDebitTransStart = 0,
-
-
-                 ForeignAmountCreditTotalDelta2End = 0,
-                 ForeignAmountDebitTotalDelta2End = 0,
-                 LocalAmountCreditTotalDelta2End = 0,
-                 LocalAmountDebitTotalDelta2End = 0,
-
-
-                 ForeignAmountCreditTransEnd = 0,
-                 ForeignAmountDebitTransEnd = 0,
-                 LocalAmountCreditTransEnd = 0,
-                 LocalAmountDebitTransEnd = 0,
-
-                      
-                 TotalDelta2End_AnyActivity=null,
-                 TransEnd_AnyActivity = null,
-
-             }
-             );
+            IQueryable<TrailReportTemp> qLocalAmountOnly_TotalStart_GroupByCOATypeId = Init_LocalAmountOnly_TotalStart_JoinAccounts_GroupByCOATypeId();
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                _DbLogger.AddExplainLog("qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate:");
-                var l1= qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate.Where(r => r.AccountId_COAType == _accountId).ToList();
+                _DbLogger.AddExplainLog("qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate:TotalStart:");
+                var l1 = qLocalAmountOnly_TotalStart_GroupByCOATypeId.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 
-            var qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo = //Accumulate Totals From StartOfMonth(FromDate) Until StartOfMonth(ToDate) 
-                 (from totalCOAType in
-
-                      (from tot in QBaseTotalsFromStartOfMonthFromTilStartOfMonthTo //// מצטברים מחודש כולל ועד חודש לא כולל
-                       join a in QBaseAllCardsAndDetailsAccType
-                       on tot.AccountId equals a.Id
-                       select new
-                       {
-                           tot.AccountId,
-                           //tot.CurrencyId, 
-                           tot.ForeignAmountCredit,
-                           tot.ForeignAmountDebit,
-                           tot.LocalAmountCredit,
-                           tot.LocalAmountDebit
-                       }
-                       )
-                  group totalCOAType by new
-                  {
-                      totalCOAType.AccountId,
-                      //totalCOAType.CurrencyId
-                  } into g
-                  select new TrailReportTemp
-                  {
-
-                      AccountId_COAType = g.Key.AccountId,
-                      CurrencyId = "",//g.Key.CurrencyId,
-
-                      ForeignAmountCreditTotalStart = 0,
-                      ForeignAmountDebitTotalStart = 0,
-                      LocalAmountCreditTotalStart = 0,
-                      LocalAmountDebitTotalStart = 0,
-
-
-
-                      ForeignAmountCreditTransStart = 0,
-                      ForeignAmountDebitTransStart = 0,
-                      LocalAmountCreditTransStart = 0,
-                      LocalAmountDebitTransStart = 0,
-
-
-                      ForeignAmountCreditTotalDelta2End = 0,//g.Sum(x => x.ForeignAmountCredit),
-                      ForeignAmountDebitTotalDelta2End = 0,//g.Sum(x => x.ForeignAmountDebit),
-                      LocalAmountCreditTotalDelta2End = g.Sum(x => x.LocalAmountCredit),
-                      LocalAmountDebitTotalDelta2End = g.Sum(x => x.LocalAmountDebit),
-
-
-                      ForeignAmountCreditTransEnd = 0,
-                      ForeignAmountDebitTransEnd = 0,
-                      LocalAmountCreditTransEnd = 0,
-                      LocalAmountDebitTransEnd = 0,
-                      TotalDelta2End_AnyActivity=g.Any() ,
-                      TransEnd_AnyActivity = null,
-
-                  }
-                  );
+            IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId = Init_LocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId();
 
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                _DbLogger.AddExplainLog("qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo:");
-                var l2 = qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo.Where(r => r.AccountId_COAType == _accountId).ToList()
+                _DbLogger.AddExplainLog("qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo:TotalDelta2End:");
+                var l2 = qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId.Where(r => r.AccountId_COAType == _accountId).ToList()
                     ;
             }
 
-
-            
-            
-            var qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude =
-                //Accumulate Tranaction BeginOfMonth(fromDate) till (FromDate-1d)
-                  (from totalCOAType in
-
-                       (
-                        from trans in QBaseTranactionBeginOfMonthFromTillFromDateNotInclude
-                        join a in QBaseAllCardsAndDetailsAccType.Where( a=>a.IsControlAccount==false)
-                            on trans.AccountId equals a.Id
-                        select new
-                        {
-                            trans.AccountId,
-                            //trans.CurrencyId, 
-                            trans.ForeignAmountCredit,
-                            trans.ForeignAmountDebit,
-                            trans.LocalAmountCredit,
-                            trans.LocalAmountDebit
-                        }
-                        )
-     
-                   group totalCOAType by new
-                {
-                    totalCOAType.AccountId,
-                    //totalCOAType.CurrencyId
-                } into g
-                   select new TrailReportTemp
-                   {
-
-                       AccountId_COAType = g.Key.AccountId,
-                       CurrencyId = "",//g.Key.CurrencyId,
-
-                       ForeignAmountCreditTotalStart = 0,
-                       ForeignAmountDebitTotalStart = 0,
-                       LocalAmountCreditTotalStart = 0,
-                       LocalAmountDebitTotalStart = 0,
-
-
-
-                       ForeignAmountCreditTransStart = 0,//g.Sum(x => x.ForeignAmountCredit),
-                       ForeignAmountDebitTransStart = 0,//g.Sum(x => x.ForeignAmountDebit),
-                       LocalAmountCreditTransStart = g.Sum(x => x.LocalAmountCredit),
-                       LocalAmountDebitTransStart = g.Sum(x => x.LocalAmountDebit),
-
-
-                       ForeignAmountCreditTotalDelta2End = 0,
-                       ForeignAmountDebitTotalDelta2End = 0,
-                       LocalAmountCreditTotalDelta2End = 0,
-                       LocalAmountDebitTotalDelta2End = 0,
-
-
-                       ForeignAmountCreditTransEnd = 0,
-                       ForeignAmountDebitTransEnd = 0,
-                       LocalAmountCreditTransEnd = 0,
-                       LocalAmountDebitTransEnd = 0,
-
-                       TotalDelta2End_AnyActivity=null,
-                       TransEnd_AnyActivity = null,
-                   }
-                  );
-
-
+            IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId = Init_LocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId();
+            IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All = qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId;
             if (!base.NotUsingControlAccount())
             {
-     
-                    var qAccumulateTranactionBeginOfMonthFromTillFromDateNotIncludeControl =
-                           (from totalCOAType in
-
-                                (
-                                from trans in QBaseTranactionBeginOfMonthFromTillFromDateNotInclude
-                                join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == true)
-                                    on trans.ControlAccountId equals a.Id
-                                select new
-                                {
-                                    AccountId =trans.ControlAccountId,//trans.AccountId,
-                                    //trans.CurrencyId, 
-                                    trans.ForeignAmountCredit,
-                                    trans.ForeignAmountDebit,
-                                    trans.LocalAmountCredit,
-                                    trans.LocalAmountDebit
-                                }
-                                )
-
-                            group totalCOAType by new
-                            {
-                                totalCOAType.AccountId,
-                                //totalCOAType.CurrencyId
-                            } into g
-                            select new TrailReportTemp
-                            {
-
-                                AccountId_COAType = g.Key.AccountId,
-                                CurrencyId = "",//g.Key.CurrencyId,
-
-                                ForeignAmountCreditTotalStart = 0,
-                                ForeignAmountDebitTotalStart = 0,
-                                LocalAmountCreditTotalStart = 0,
-                                LocalAmountDebitTotalStart = 0,
-
-
-
-                                ForeignAmountCreditTransStart = 0,//g.Sum(x => x.ForeignAmountCredit),
-                                ForeignAmountDebitTransStart = 0,//g.Sum(x => x.ForeignAmountDebit),
-                                LocalAmountCreditTransStart = g.Sum(x => x.LocalAmountCredit),
-                                LocalAmountDebitTransStart = g.Sum(x => x.LocalAmountDebit),
-
-
-                                ForeignAmountCreditTotalDelta2End = 0,
-                                ForeignAmountDebitTotalDelta2End = 0,
-                                LocalAmountCreditTotalDelta2End = 0,
-                                LocalAmountDebitTotalDelta2End = 0,
-
-
-                                ForeignAmountCreditTransEnd = 0,
-                                ForeignAmountDebitTransEnd = 0,
-                                LocalAmountCreditTransEnd = 0,
-                                LocalAmountDebitTransEnd = 0,
-
-                                TotalDelta2End_AnyActivity = null,
-                                TransEnd_AnyActivity = null,
-                            }
-                  );
-                    qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude =
-                    qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude.Union(
-                    qAccumulateTranactionBeginOfMonthFromTillFromDateNotIncludeControl);
+                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId = Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId();
+                qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All =
+                qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
+                qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
             }
 
 
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
                 _DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude:");
-                var l3 = qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude.Where(r => r.AccountId_COAType == _accountId).ToList();
+                var l3 = qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
-         
 
+            IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId = Init_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId();
+            IQueryable<TrailReportTemp> qLocalAmountOnly_LocalAmountTransEnd_GroupByCOATypeId_All = qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId;
+            if (!base.NotUsingControlAccount())
+            {
+                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId = Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId();
+
+                qLocalAmountOnly_LocalAmountTransEnd_GroupByCOATypeId_All =
+                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
+                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId);
+            }
+            if (!String.IsNullOrWhiteSpace(_accountId))
+            {
+                _DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthToDateTillToDateInculde:");
+                var l4 = qLocalAmountOnly_LocalAmountTransEnd_GroupByCOATypeId_All.Where(r => r.AccountId_COAType == _accountId).ToList();
+            }
+
+
+
+            IQueryable<TrailReportTemp> _QUnionAllMoneyData = qLocalAmountOnly_TotalStart_GroupByCOATypeId.Union(qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All).Union(qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId).Union(qLocalAmountOnly_LocalAmountTransEnd_GroupByCOATypeId_All);
+
+            bool addAllChatOfAccountTyps = true;
+            if (addAllChatOfAccountTyps)
+            {
+                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData);
+            }
+
+            if (testNow)
+            {
+                var test1111 = _QUnionAllMoneyData.ToList();
+            }
+            /*
+דוח מאזן בוחן
+1ביררת המחדל -לא יצגו כרטיסים לא פעילים .
+2לפי חיתוך\בחירה "הצג כרטיסים לא פעילים" – יצגו !
+*** כרטיסים לא פעילים (יתרת פתיחה לתקופה 0 וללא תנועות  לטווח הדוח )
+
+             */
+
+
+            var qUnionAllMoneyDataGroupByAcc =
+                (
+                from r in _QUnionAllMoneyData
+                group r by new
+                {
+                    AccountId = r.AccountId_COAType,
+                    //r.CurrencyId
+                }
+                 );
+
+
+            if (!_TrailReportParam.Suppress_DoNotShowCardWithoutActivity)
+            {
+                qUnionAllMoneyDataGroupByAcc =
+                    qUnionAllMoneyDataGroupByAcc
+                    .Where(g =>
+
+                        g.Any(x => x.TotalDelta2End_AnyActivity == true) ||
+
+                        g.Any(x => x.TransEnd_AnyActivity == true)
+                    ||
+                     (
+                     +g.Sum(x => x.LocalAmountDebitTotalStart)
+                     - g.Sum(x => x.LocalAmountCreditTotalStart)
+                     + g.Sum(x => x.LocalAmountDebitTransStart)
+                     - g.Sum(x => x.LocalAmountCreditTransStart)
+                     ) != 0m
+
+                     );
+
+            }
+
+
+            //IQueryable<TrailReportM> qMapAllCurrencySum2TRail = NewMethod(_QUnionAllMoneyData);
+            IQueryable<TrailReportM> qMapAllCurrencySum2TRail =
+              //map All to TrailReportM Schem 
+              (from g in qUnionAllMoneyDataGroupByAcc
+               select new TrailReportM()
+               {
+
+                   ChartOfAcountType = "",
+                   ChartOfAcount1 = "",
+                   ChartOfAcount2 = "",
+                   ChartOfAcount3 = "",
+                   ChartOfAcount4 = "",
+                   ChartOfAcount5 = "",
+                   ChartOfAcountCode1 = "",
+                   ChartOfAcountCode2 = "",
+                   ChartOfAcountCode3 = "",
+                   ChartOfAcountCode4 = "",
+                   ChartOfAcountCode5 = "",
+                   ChartOfAcountName1 = "",
+                   ChartOfAcountName2 = "",
+                   ChartOfAcountName3 = "",
+                   ChartOfAcountName4 = "",
+                   ChartOfAcountName5 = "",
+
+
+                   ChartOfAccountId = "",
+                   GLAccountName = "",
+                   GLAccountNumber = "",
+                   GLAccountId = g.Key.AccountId,
+                   CurrencyId = "",//g.Key.CurrencyId,
+
+                   LocalOpenBalance =
+                   (
+                   +g.Sum(x => x.LocalAmountDebitTotalStart)
+                   - g.Sum(x => x.LocalAmountCreditTotalStart)
+                   + g.Sum(x => x.LocalAmountDebitTransStart)
+                   - g.Sum(x => x.LocalAmountCreditTransStart)
+                   ),
+
+                   LocalDebit =
+                   (
+                    +g.Sum(x => x.LocalAmountDebitTotalDelta2End)//// מצטברים מחודש כולל ועד חודש לא כולל
+                    + g.Sum(x => x.LocalAmountDebitTransEnd)// תנעות מתחילת חודש אחרון כולל עד  תאריך הסיום + 1 לא כולל
+                    - g.Sum(x => x.LocalAmountDebitTransStart)//// תנעות מכולל תחילת החודש  של מתאריך עד למתאריך -לא כולל    
+                   ),
+                   LocalCredit =
+                   (
+                    +g.Sum(x => x.LocalAmountCreditTotalDelta2End)
+                    + g.Sum(x => x.LocalAmountCreditTransEnd)
+                    - g.Sum(x => x.LocalAmountCreditTransStart)
+                   ),
+                   LocalCloseBalance =
+                   (
+                   +g.Sum(x => x.LocalAmountDebitTotalStart)
+                   + g.Sum(x => x.LocalAmountDebitTotalDelta2End)
+                   + g.Sum(x => x.LocalAmountDebitTransEnd)
+                   - g.Sum(x => x.LocalAmountCreditTotalStart)
+                   - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
+                   - g.Sum(x => x.LocalAmountCreditTransEnd)
+                   ),
+
+                   ForeignOpenBalance = 0,
+                   ForeignDebit = 0,
+                   ForeignCredit = 0,
+                   ForeignCloseBalance = 0,
+
+               });
+
+            IQueryable<TrailReportM> joinq5LvlqMapAllCurrencySum2TRail = null;
+            if (_TrailReportParam.Suppress_DoNotShowCardWithoutActivity)
+            {
+
+                joinq5LvlqMapAllCurrencySum2TRail =
+                      (from chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
+                       join data in qMapAllCurrencySum2TRail
+                   on chartf.GLAccountId equals data.GLAccountId
+                   into groupJoin
+                       from groupJoinData in groupJoin.DefaultIfEmpty()
+                       select new TrailReportM()
+                       {
+                           ChartOfAcountType = chartf.ChartOfAccountTypeCode,
+                           ChartOfAcount1 = chartf.Level1Id,
+                           ChartOfAcount2 = chartf.Level2Id,
+                           ChartOfAcount3 = chartf.Level3Id,
+                           ChartOfAcount4 = chartf.Level4Id,
+                           ChartOfAcount5 = chartf.Level5Id,
+                           ChartOfAcountCode1 = chartf.Level1Code,
+                           ChartOfAcountCode2 = chartf.Level2Code,
+                           ChartOfAcountCode3 = chartf.Level3Code,
+                           ChartOfAcountCode4 = chartf.Level4Code,
+                           ChartOfAcountCode5 = chartf.Level5Code,
+                           ChartOfAcountName1 = chartf.Level1Name,
+                           ChartOfAcountName2 = chartf.Level2Name,
+                           ChartOfAcountName3 = chartf.Level3Name,
+                           ChartOfAcountName4 = chartf.Level4Name,
+                           ChartOfAcountName5 = chartf.Level5Name,
+
+                           ChartOfAccountId = chartf.ChartOfAccountId,
+                           GLAccountName = chartf.GLAccountName,
+                           GLAccountNumber = chartf.GLAccountNumber,
+                           GLAccountId = chartf.GLAccountId,
+
+                           CurrencyId = groupJoinData.CurrencyId,
+
+
+                           LocalOpenBalance = groupJoinData.LocalOpenBalance,
+                           LocalDebit = groupJoinData.LocalDebit,
+                           LocalCredit = groupJoinData.LocalCredit,
+                           LocalCloseBalance = groupJoinData.LocalCloseBalance,
+
+
+
+                           ForeignOpenBalance = groupJoinData.ForeignOpenBalance,
+
+                           ForeignDebit = groupJoinData.ForeignDebit,
+
+                           ForeignCredit = groupJoinData.ForeignCredit,
+
+                           ForeignCloseBalance = groupJoinData.ForeignCloseBalance,
+                       }
+                          );
+            }
+            else
+            {
+                joinq5LvlqMapAllCurrencySum2TRail =
+                  (from data in qMapAllCurrencySum2TRail
+                   join chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
+                   on data.GLAccountId equals chartf.GLAccountId
+                   //into groupJoin
+                   //from groupJoinData in groupJoin //.DefaultIfEmpty()
+                   select new TrailReportM()
+                   {
+                       ChartOfAcountType = chartf.ChartOfAccountTypeCode,
+                       ChartOfAcount1 = chartf.Level1Id,
+                       ChartOfAcount2 = chartf.Level2Id,
+                       ChartOfAcount3 = chartf.Level3Id,
+                       ChartOfAcount4 = chartf.Level4Id,
+                       ChartOfAcount5 = chartf.Level5Id,
+                       ChartOfAcountCode1 = chartf.Level1Code,
+                       ChartOfAcountCode2 = chartf.Level2Code,
+                       ChartOfAcountCode3 = chartf.Level3Code,
+                       ChartOfAcountCode4 = chartf.Level4Code,
+                       ChartOfAcountCode5 = chartf.Level5Code,
+                       ChartOfAcountName1 = chartf.Level1Name,
+                       ChartOfAcountName2 = chartf.Level2Name,
+                       ChartOfAcountName3 = chartf.Level3Name,
+                       ChartOfAcountName4 = chartf.Level4Name,
+                       ChartOfAcountName5 = chartf.Level5Name,
+
+                       ChartOfAccountId = chartf.ChartOfAccountId,
+                       GLAccountName = chartf.GLAccountName,
+                       GLAccountNumber = chartf.GLAccountNumber,
+                       GLAccountId = chartf.GLAccountId,
+
+                       CurrencyId = data.CurrencyId,
+
+
+                       LocalOpenBalance = data.LocalOpenBalance,
+                       LocalDebit = data.LocalDebit,
+                       LocalCredit = data.LocalCredit,
+                       LocalCloseBalance = data.LocalCloseBalance,
+
+
+
+                       ForeignOpenBalance = data.ForeignOpenBalance,
+
+                       ForeignDebit = data.ForeignDebit,
+
+                       ForeignCredit = data.ForeignCredit,
+
+                       ForeignCloseBalance = data.ForeignCloseBalance,
+                   }
+                      );
+
+            }
+            //SaveOld_QbaseTrailReportFull(qMapAllCurrencySum2TRail);
+            _QBaseTrailReportFull =
+                (from trailReportRow in joinq5LvlqMapAllCurrencySum2TRail
+                 group trailReportRow by
+             new
+             {
+                 trailReportRow.ChartOfAcountType,
+
+                 trailReportRow.ChartOfAcount1,
+                 trailReportRow.ChartOfAcount2,
+                 trailReportRow.ChartOfAcount3,
+                 trailReportRow.ChartOfAcount4,
+                 trailReportRow.ChartOfAcount5,
+                 trailReportRow.ChartOfAcountCode1,
+                 trailReportRow.ChartOfAcountCode2,
+                 trailReportRow.ChartOfAcountCode3,
+                 trailReportRow.ChartOfAcountCode4,
+                 trailReportRow.ChartOfAcountCode5,
+                 trailReportRow.ChartOfAcountName1,
+                 trailReportRow.ChartOfAcountName2,
+                 trailReportRow.ChartOfAcountName3,
+                 trailReportRow.ChartOfAcountName4,
+                 trailReportRow.ChartOfAcountName5,
+
+                 trailReportRow.ChartOfAccountId,
+                 trailReportRow.GLAccountName,
+                 trailReportRow.GLAccountNumber,
+                 trailReportRow.GLAccountId,
+
+                 //trailReportRow.CurrencyId,
+
+             }
+                     into gCOA
+
+                 select new TrailReportM()
+                 {
+                     ChartOfAcountType = gCOA.Key.ChartOfAcountType,
+                     ChartOfAcount1 = gCOA.Key.ChartOfAcount1,
+                     ChartOfAcount2 = gCOA.Key.ChartOfAcount2,
+                     ChartOfAcount3 = gCOA.Key.ChartOfAcount3,
+                     ChartOfAcount4 = gCOA.Key.ChartOfAcount4,
+                     ChartOfAcount5 = gCOA.Key.ChartOfAcount5,
+                     ChartOfAcountCode1 = gCOA.Key.ChartOfAcountCode1,
+                     ChartOfAcountCode2 = gCOA.Key.ChartOfAcountCode2,
+                     ChartOfAcountCode3 = gCOA.Key.ChartOfAcountCode3,
+                     ChartOfAcountCode4 = gCOA.Key.ChartOfAcountCode4,
+                     ChartOfAcountCode5 = gCOA.Key.ChartOfAcountCode5,
+                     ChartOfAcountName1 = gCOA.Key.ChartOfAcountName1,
+                     ChartOfAcountName2 = gCOA.Key.ChartOfAcountName2,
+                     ChartOfAcountName3 = gCOA.Key.ChartOfAcountName3,
+                     ChartOfAcountName4 = gCOA.Key.ChartOfAcountName4,
+                     ChartOfAcountName5 = gCOA.Key.ChartOfAcountName5,
+
+                     ChartOfAccountId = gCOA.Key.ChartOfAccountId,
+                     GLAccountName = gCOA.Key.GLAccountName,
+                     GLAccountNumber = gCOA.Key.GLAccountNumber,
+                     GLAccountId = gCOA.Key.GLAccountId,
+
+                     CurrencyId = "",// gCOA.Key.CurrencyId,
+
+
+                     LocalOpenBalance = gCOA.Sum(x => x.LocalOpenBalance),
+                     LocalDebit = gCOA.Sum(x => x.LocalDebit),
+                     LocalCredit = gCOA.Sum(x => x.LocalCredit),
+                     LocalCloseBalance = gCOA.Sum(x => x.LocalCloseBalance),
+
+
+
+                     ForeignOpenBalance = 0,//gCOA.Sum(x => x.ForeignOpenBalance),
+                     ForeignDebit = 0,//gCOA.Sum(x => x.ForeignDebit),
+                     ForeignCredit = 0,//gCOA.Sum(x => x.ForeignCredit),
+                     ForeignCloseBalance = 0,//gCOA.Sum(x => x.ForeignCloseBalance),
+                 }
+
+            );
+            if (testNow)
+            {
+                var tettt = _QBaseTrailReportFull.ToList();
+            }
+
+
+        }
+
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId()
+        {
+            var qAccumulateTranactionBeginOfMonthToDateTillToDateInculdeControl =
+          (from totalCOAType in
+                (
+           from trans in QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde
+           join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == true)
+           on trans.ControlAccountId equals a.Id
+           select new
+           {
+               AccountId = trans.ControlAccountId, //trans.AccountId,
+                                                   //trans.CurrencyId, 
+                   trans.ForeignAmountCredit,
+               trans.ForeignAmountDebit,
+               trans.LocalAmountCredit,
+               trans.LocalAmountDebit
+           }
+
+                )
+
+           group totalCOAType by new
+           {
+               totalCOAType.AccountId,
+                   //totalCOAType.CurrencyId
+               } into g
+           select new TrailReportTemp
+           {
+
+               AccountId_COAType = g.Key.AccountId,
+               CurrencyId = "",//g.Key.CurrencyId,
+
+                   ForeignAmountCreditTotalStart = 0,
+               ForeignAmountDebitTotalStart = 0,
+               LocalAmountCreditTotalStart = 0,
+               LocalAmountDebitTotalStart = 0,
+
+
+
+               ForeignAmountCreditTransStart = 0,
+               ForeignAmountDebitTransStart = 0,
+               LocalAmountCreditTransStart = 0,
+               LocalAmountDebitTransStart = 0,
+
+
+               ForeignAmountCreditTotalDelta2End = 0,
+               ForeignAmountDebitTotalDelta2End = 0,
+               LocalAmountCreditTotalDelta2End = 0,
+               LocalAmountDebitTotalDelta2End = 0,
+
+
+               ForeignAmountCreditTransEnd = 0,//g.Sum(x => x.ForeignAmountCredit),
+                   ForeignAmountDebitTransEnd = 0,//g.Sum(x => x.ForeignAmountDebit),
+                   LocalAmountCreditTransEnd = g.Sum(x => x.LocalAmountCredit),
+               LocalAmountDebitTransEnd = g.Sum(x => x.LocalAmountDebit),
+
+               TotalDelta2End_AnyActivity = null,
+               TransEnd_AnyActivity = g.Any(),
+           }
+           );
+            return qAccumulateTranactionBeginOfMonthToDateTillToDateInculdeControl;
+        }
+
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId()
+        {
             var qAccumulateTranactionBeginOfMonthToDateTillToDateInculde =
-            (from totalCOAType in 
-                 (from trans in QBaseTranactionBeginOfMonthToDateTillToDateInculde
-                  join a in QBaseAllCardsAndDetailsAccType.Where( a=>a.IsControlAccount==false)
+            (from totalCOAType in
+                 (from trans in QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde
+                  join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == false)
                   on trans.AccountId equals a.Id
                   select new
                   {
@@ -348,392 +510,261 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  ForeignAmountDebitTransEnd = 0,//g.Sum(x => x.ForeignAmountDebit),
                  LocalAmountCreditTransEnd = g.Sum(x => x.LocalAmountCredit),
                  LocalAmountDebitTransEnd = g.Sum(x => x.LocalAmountDebit),
-                 
-                 TotalDelta2End_AnyActivity=null,
+
+                 TotalDelta2End_AnyActivity = null,
                  TransEnd_AnyActivity = g.Any(),
              }
              );
-            if (!base.NotUsingControlAccount())
-            {
-                var qAccumulateTranactionBeginOfMonthToDateTillToDateInculdeControl =
-              (from totalCOAType in
-                    (
-               from trans in QBaseTranactionBeginOfMonthToDateTillToDateInculde
-               join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == true)
-               on trans.ControlAccountId equals a.Id
-               select new
-               {
-                   AccountId = trans.ControlAccountId, //trans.AccountId,
-                   //trans.CurrencyId, 
-                   trans.ForeignAmountCredit,
-                   trans.ForeignAmountDebit,
-                   trans.LocalAmountCredit,
-                   trans.LocalAmountDebit
-               }
+            return qAccumulateTranactionBeginOfMonthToDateTillToDateInculde;
+        }
 
-                    )
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId()
+        {
+            var qAccumulateTranactionBeginOfMonthFromTillFromDateNotIncludeControl =
+                   (from totalCOAType in
 
-               group totalCOAType by new
-               {
-                   totalCOAType.AccountId,
-                   //totalCOAType.CurrencyId
-               } into g
-               select new TrailReportTemp
-               {
+                        (
+                        from trans in QBasePeriodTransaction_TransStart_BeginOfMonthFromDate_TillFromDate_NotInclude
+                        join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == true)
+                            on trans.ControlAccountId equals a.Id
+                        select new
+                        {
+                            AccountId = trans.ControlAccountId,//trans.AccountId,
+                                                               //trans.CurrencyId, 
+                                trans.ForeignAmountCredit,
+                            trans.ForeignAmountDebit,
+                            trans.LocalAmountCredit,
+                            trans.LocalAmountDebit
+                        }
+                        )
 
-                   AccountId_COAType = g.Key.AccountId,
-                   CurrencyId = "",//g.Key.CurrencyId,
+                    group totalCOAType by new
+                    {
+                        totalCOAType.AccountId,
+                            //totalCOAType.CurrencyId
+                        } into g
+                    select new TrailReportTemp
+                    {
 
-                   ForeignAmountCreditTotalStart = 0,
-                   ForeignAmountDebitTotalStart = 0,
-                   LocalAmountCreditTotalStart = 0,
-                   LocalAmountDebitTotalStart = 0,
+                        AccountId_COAType = g.Key.AccountId,
+                        CurrencyId = "",//g.Key.CurrencyId,
 
-
-
-                   ForeignAmountCreditTransStart = 0,
-                   ForeignAmountDebitTransStart = 0,
-                   LocalAmountCreditTransStart = 0,
-                   LocalAmountDebitTransStart = 0,
+                            ForeignAmountCreditTotalStart = 0,
+                        ForeignAmountDebitTotalStart = 0,
+                        LocalAmountCreditTotalStart = 0,
+                        LocalAmountDebitTotalStart = 0,
 
 
-                   ForeignAmountCreditTotalDelta2End = 0,
-                   ForeignAmountDebitTotalDelta2End = 0,
-                   LocalAmountCreditTotalDelta2End = 0,
-                   LocalAmountDebitTotalDelta2End = 0,
+
+                        ForeignAmountCreditTransStart = 0,//g.Sum(x => x.ForeignAmountCredit),
+                            ForeignAmountDebitTransStart = 0,//g.Sum(x => x.ForeignAmountDebit),
+                            LocalAmountCreditTransStart = g.Sum(x => x.LocalAmountCredit),
+                        LocalAmountDebitTransStart = g.Sum(x => x.LocalAmountDebit),
 
 
-                   ForeignAmountCreditTransEnd = 0,//g.Sum(x => x.ForeignAmountCredit),
-                   ForeignAmountDebitTransEnd = 0,//g.Sum(x => x.ForeignAmountDebit),
-                   LocalAmountCreditTransEnd = g.Sum(x => x.LocalAmountCredit),
-                   LocalAmountDebitTransEnd = g.Sum(x => x.LocalAmountDebit),
-
-                   TotalDelta2End_AnyActivity = null,
-                   TransEnd_AnyActivity = g.Any(),
-               }
-               );
-                qAccumulateTranactionBeginOfMonthToDateTillToDateInculde=
-                qAccumulateTranactionBeginOfMonthToDateTillToDateInculde.Union(
-                qAccumulateTranactionBeginOfMonthToDateTillToDateInculdeControl); 
-            }
-            if (!String.IsNullOrWhiteSpace(_accountId))
-            {
-                _DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthToDateTillToDateInculde:");
-                var l4 = qAccumulateTranactionBeginOfMonthToDateTillToDateInculde.Where(r => r.AccountId_COAType == _accountId).ToList();
-            }
-            
+                        ForeignAmountCreditTotalDelta2End = 0,
+                        ForeignAmountDebitTotalDelta2End = 0,
+                        LocalAmountCreditTotalDelta2End = 0,
+                        LocalAmountDebitTotalDelta2End = 0,
 
 
-            IQueryable<TrailReportTemp> _QUnionAllMoneyData = qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate.Union(qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude).Union(qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo).Union(qAccumulateTranactionBeginOfMonthToDateTillToDateInculde);
+                        ForeignAmountCreditTransEnd = 0,
+                        ForeignAmountDebitTransEnd = 0,
+                        LocalAmountCreditTransEnd = 0,
+                        LocalAmountDebitTransEnd = 0,
 
-            bool addAllChatOfAccountTyps = true;
-            if (addAllChatOfAccountTyps)
-            {
-                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData);
-            }
+                        TotalDelta2End_AnyActivity = null,
+                        TransEnd_AnyActivity = null,
+                    }
+          );
+            return qAccumulateTranactionBeginOfMonthFromTillFromDateNotIncludeControl;
+        }
 
-            if (testNow)
-            {
-                var test1111 = _QUnionAllMoneyData.ToList();
-            }
-            /*
-דוח מאזן בוחן
-1ביררת המחדל -לא יצגו כרטיסים לא פעילים .
-2לפי חיתוך\בחירה "הצג כרטיסים לא פעילים" – יצגו !
-*** כרטיסים לא פעילים (יתרת פתיחה לתקופה 0 וללא תנועות  לטווח הדוח )
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId()
+        {
+            var qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude =
+                  //Accumulate Tranaction BeginOfMonth(fromDate) till (FromDate-1d)
+                  (from totalCOAType in
 
-             */ 
-            
+                       (
+                        from trans in QBasePeriodTransaction_TransStart_BeginOfMonthFromDate_TillFromDate_NotInclude
+                        join a in QBaseAllCardsAndDetailsAccType.Where(a => a.IsControlAccount == false)
+                            on trans.AccountId equals a.Id
+                        select new
+                        {
+                            trans.AccountId,
+                            //trans.CurrencyId, 
+                            trans.ForeignAmountCredit,
+                            trans.ForeignAmountDebit,
+                            trans.LocalAmountCredit,
+                            trans.LocalAmountDebit
+                        }
+                        )
 
-            var groupByAcc  =
-                (
-                from r in _QUnionAllMoneyData  
-                group r by new
+                   group totalCOAType by new
+                   {
+                       totalCOAType.AccountId,
+                       //totalCOAType.CurrencyId
+                   } into g
+                   select new TrailReportTemp
+                   {
+
+                       AccountId_COAType = g.Key.AccountId,
+                       CurrencyId = "",//g.Key.CurrencyId,
+
+                       ForeignAmountCreditTotalStart = 0,
+                       ForeignAmountDebitTotalStart = 0,
+                       LocalAmountCreditTotalStart = 0,
+                       LocalAmountDebitTotalStart = 0,
+
+
+
+                       ForeignAmountCreditTransStart = 0,//g.Sum(x => x.ForeignAmountCredit),
+                       ForeignAmountDebitTransStart = 0,//g.Sum(x => x.ForeignAmountDebit),
+                       LocalAmountCreditTransStart = g.Sum(x => x.LocalAmountCredit),
+                       LocalAmountDebitTransStart = g.Sum(x => x.LocalAmountDebit),
+
+
+                       ForeignAmountCreditTotalDelta2End = 0,
+                       ForeignAmountDebitTotalDelta2End = 0,
+                       LocalAmountCreditTotalDelta2End = 0,
+                       LocalAmountDebitTotalDelta2End = 0,
+
+
+                       ForeignAmountCreditTransEnd = 0,
+                       ForeignAmountDebitTransEnd = 0,
+                       LocalAmountCreditTransEnd = 0,
+                       LocalAmountDebitTransEnd = 0,
+
+                       TotalDelta2End_AnyActivity = null,
+                       TransEnd_AnyActivity = null,
+                   }
+                  );
+            return qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude;
+        }
+
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId()
+        {
+            var qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo = //Accumulate Totals From StartOfMonth(FromDate) Until StartOfMonth(ToDate) 
+                 (from totalCOAType in
+
+                      (from tot in QBasePeriodGLATotalByMonths_TotalDelta2End_FromBeginOfMonthFromDate_Til_BeginOfMonthToDate //// מצטברים מחודש כולל ועד חודש לא כולל
+                       join a in QBaseAllCardsAndDetailsAccType
+                       on tot.AccountId equals a.Id
+                       select new
+                       {
+                           tot.AccountId,
+                           //tot.CurrencyId, 
+                           tot.ForeignAmountCredit,
+                           tot.ForeignAmountDebit,
+                           tot.LocalAmountCredit,
+                           tot.LocalAmountDebit
+                       }
+                       )
+                  group totalCOAType by new
+                  {
+                      totalCOAType.AccountId,
+                      //totalCOAType.CurrencyId
+                  } into g
+                  select new TrailReportTemp
+                  {
+
+                      AccountId_COAType = g.Key.AccountId,
+                      CurrencyId = "",//g.Key.CurrencyId,
+
+                      ForeignAmountCreditTotalStart = 0,
+                      ForeignAmountDebitTotalStart = 0,
+                      LocalAmountCreditTotalStart = 0,
+                      LocalAmountDebitTotalStart = 0,
+
+
+
+                      ForeignAmountCreditTransStart = 0,
+                      ForeignAmountDebitTransStart = 0,
+                      LocalAmountCreditTransStart = 0,
+                      LocalAmountDebitTransStart = 0,
+
+
+                      ForeignAmountCreditTotalDelta2End = 0,//g.Sum(x => x.ForeignAmountCredit),
+                      ForeignAmountDebitTotalDelta2End = 0,//g.Sum(x => x.ForeignAmountDebit),
+                      LocalAmountCreditTotalDelta2End = g.Sum(x => x.LocalAmountCredit),
+                      LocalAmountDebitTotalDelta2End = g.Sum(x => x.LocalAmountDebit),
+
+
+                      ForeignAmountCreditTransEnd = 0,
+                      ForeignAmountDebitTransEnd = 0,
+                      LocalAmountCreditTransEnd = 0,
+                      LocalAmountDebitTransEnd = 0,
+                      TotalDelta2End_AnyActivity = g.Any(),
+                      TransEnd_AnyActivity = null,
+
+                  }
+                  );
+            return qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo;
+        }
+
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TotalStart_JoinAccounts_GroupByCOATypeId()
+        {
+            var qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate =
+            //Accumulate Totals From the beginning of  Account Use Until(NotInclude) (StartOfMonth)FromDate                
+            (from totalCOAType in
+
+                 (
+                 from tot in
+                     QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate
+                 join a in QBaseAllCardsAndDetailsAccType
+
+                  on tot.AccountId equals a.Id
+                 select new
                  {
-                     AccountId = r.AccountId_COAType,
-                     //r.CurrencyId
-                 } 
-                 );
-            
-            
-            if (!_TrailReportParam.Suppress_DoNotShowCardWithoutActivity)
-            {
-                groupByAcc =
-                    groupByAcc
-                    .Where(g =>
-
-                        g.Any(x => x.TotalDelta2End_AnyActivity == true) ||
-
-                        g.Any(x => x.TransEnd_AnyActivity == true)
-                    ||
-                     (
-                     +g.Sum(x => x.LocalAmountDebitTotalStart)
-                     - g.Sum(x => x.LocalAmountCreditTotalStart)
-                     + g.Sum(x => x.LocalAmountDebitTransStart)
-                     - g.Sum(x => x.LocalAmountCreditTransStart)
-                     ) != 0m
-
-                     );
-
-            }
-
-
-            //IQueryable<TrailReportM> qMapAllCurrencySum2TRail = NewMethod(_QUnionAllMoneyData);
-            IQueryable<TrailReportM> qMapAllCurrencySum2TRail =
-                //map All to TrailReportM Schem 
-              (from g in groupByAcc
-               select new TrailReportM()
-               {
-
-                   ChartOfAcountType = "",
-                   ChartOfAcount1 = "",
-                   ChartOfAcount2 = "",
-                   ChartOfAcount3 = "",
-                   ChartOfAcount4 = "",
-                   ChartOfAcount5 = "",
-                   ChartOfAcountCode1 = "",
-                   ChartOfAcountCode2 = "",
-                   ChartOfAcountCode3 = "",
-                   ChartOfAcountCode4 = "",
-                   ChartOfAcountCode5 = "",
-                   ChartOfAcountName1= "",
-                   ChartOfAcountName2 = "",
-                   ChartOfAcountName3 = "",
-                   ChartOfAcountName4 = "",
-                   ChartOfAcountName5= "",
-
-
-                   ChartOfAccountId ="",
-                   GLAccountName = "",
-                   GLAccountNumber="",
-                   GLAccountId = g.Key.AccountId,
-                   CurrencyId = "",//g.Key.CurrencyId,
-
-                   LocalOpenBalance =
-                   (
-                   +g.Sum(x => x.LocalAmountDebitTotalStart)
-                   - g.Sum(x => x.LocalAmountCreditTotalStart)
-                   + g.Sum(x => x.LocalAmountDebitTransStart)
-                   - g.Sum(x => x.LocalAmountCreditTransStart)
-                   ),
-
-                   LocalDebit =
-                   (
-                    +g.Sum(x => x.LocalAmountDebitTotalDelta2End)//// מצטברים מחודש כולל ועד חודש לא כולל
-                    + g.Sum(x => x.LocalAmountDebitTransEnd)// תנעות מתחילת חודש אחרון כולל עד  תאריך הסיום + 1 לא כולל
-                    - g.Sum(x => x.LocalAmountDebitTransStart)//// תנעות מכולל תחילת החודש  של מתאריך עד למתאריך -לא כולל    
-                   ),
-                   LocalCredit =
-                   (
-                    +g.Sum(x => x.LocalAmountCreditTotalDelta2End)
-                    + g.Sum(x => x.LocalAmountCreditTransEnd)
-                    - g.Sum(x => x.LocalAmountCreditTransStart)
-                   ),
-                   LocalCloseBalance =
-                   (
-                   +g.Sum(x => x.LocalAmountDebitTotalStart)
-                   + g.Sum(x => x.LocalAmountDebitTotalDelta2End)
-                   + g.Sum(x => x.LocalAmountDebitTransEnd)
-                   - g.Sum(x => x.LocalAmountCreditTotalStart)
-                   - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
-                   - g.Sum(x => x.LocalAmountCreditTransEnd)
-                   ),
-
-                   ForeignOpenBalance = 0,
-                   ForeignDebit = 0,
-                   ForeignCredit = 0,
-                   ForeignCloseBalance = 0,
-
-               });
-            
-            IQueryable<TrailReportM> joinq5LvlqMapAllCurrencySum2TRail=null;
-            if (_TrailReportParam.Suppress_DoNotShowCardWithoutActivity)
-            {
-            
-            joinq5LvlqMapAllCurrencySum2TRail =
-                  (from chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
-                      join data in qMapAllCurrencySum2TRail
-                      on chartf.GLAccountId equals data.GLAccountId
-                      into groupJoin
-                      from groupJoinData in groupJoin.DefaultIfEmpty()
-                      select new TrailReportM()
-                      {
-                          ChartOfAcountType = chartf.ChartOfAccountTypeCode,
-                          ChartOfAcount1 = chartf.Level1Id,
-                          ChartOfAcount2 = chartf.Level2Id,
-                          ChartOfAcount3 = chartf.Level3Id,
-                          ChartOfAcount4 = chartf.Level4Id,
-                          ChartOfAcount5 = chartf.Level5Id,
-                          ChartOfAcountCode1 = chartf.Level1Code,
-                          ChartOfAcountCode2 = chartf.Level2Code,
-                          ChartOfAcountCode3 = chartf.Level3Code,
-                          ChartOfAcountCode4 = chartf.Level4Code,
-                          ChartOfAcountCode5 = chartf.Level5Code,
-                          ChartOfAcountName1 = chartf.Level1Name,
-                          ChartOfAcountName2 = chartf.Level2Name,
-                          ChartOfAcountName3 = chartf.Level3Name,
-                          ChartOfAcountName4 = chartf.Level4Name,
-                          ChartOfAcountName5 = chartf.Level5Name,
-
-                          ChartOfAccountId = chartf.ChartOfAccountId,
-                          GLAccountName = chartf.GLAccountName,
-                          GLAccountNumber= chartf.GLAccountNumber,
-                          GLAccountId = chartf.GLAccountId,
-
-                          CurrencyId = groupJoinData.CurrencyId,
-
-
-                          LocalOpenBalance = groupJoinData.LocalOpenBalance,
-                          LocalDebit = groupJoinData.LocalDebit,
-                          LocalCredit = groupJoinData.LocalCredit,
-                          LocalCloseBalance = groupJoinData.LocalCloseBalance,
-
-
-
-                          ForeignOpenBalance = groupJoinData.ForeignOpenBalance,
-
-                          ForeignDebit = groupJoinData.ForeignDebit,
-
-                          ForeignCredit = groupJoinData.ForeignCredit,
-
-                          ForeignCloseBalance = groupJoinData.ForeignCloseBalance,
-                      }
-                      );
-            }
-            else
-	{
-        joinq5LvlqMapAllCurrencySum2TRail =
-          (from data in qMapAllCurrencySum2TRail
-           join chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
-           on data.GLAccountId equals chartf.GLAccountId 
-           //into groupJoin
-           //from groupJoinData in groupJoin //.DefaultIfEmpty()
-           select new TrailReportM()
-           {
-               ChartOfAcountType = chartf.ChartOfAccountTypeCode,
-               ChartOfAcount1 = chartf.Level1Id,
-               ChartOfAcount2 = chartf.Level2Id,
-               ChartOfAcount3 = chartf.Level3Id,
-               ChartOfAcount4 = chartf.Level4Id,
-               ChartOfAcount5 = chartf.Level5Id,
-               ChartOfAcountCode1 = chartf.Level1Code,
-               ChartOfAcountCode2 = chartf.Level2Code,
-               ChartOfAcountCode3 = chartf.Level3Code,
-               ChartOfAcountCode4 = chartf.Level4Code,
-               ChartOfAcountCode5 = chartf.Level5Code,
-               ChartOfAcountName1 = chartf.Level1Name,
-               ChartOfAcountName2 = chartf.Level2Name,
-               ChartOfAcountName3 = chartf.Level3Name,
-               ChartOfAcountName4 = chartf.Level4Name,
-               ChartOfAcountName5 = chartf.Level5Name,
-
-               ChartOfAccountId = chartf.ChartOfAccountId,
-               GLAccountName = chartf.GLAccountName,
-               GLAccountNumber= chartf.GLAccountNumber,
-               GLAccountId = chartf.GLAccountId,
-
-               CurrencyId = data.CurrencyId,
-
-
-               LocalOpenBalance = data.LocalOpenBalance,
-               LocalDebit = data.LocalDebit,
-               LocalCredit = data.LocalCredit,
-               LocalCloseBalance = data.LocalCloseBalance,
-
-
-
-               ForeignOpenBalance = data.ForeignOpenBalance,
-
-               ForeignDebit = data.ForeignDebit,
-
-               ForeignCredit = data.ForeignCredit,
-
-               ForeignCloseBalance = data.ForeignCloseBalance,
-           }
-              );
-
-	}
-            //SaveOld_QbaseTrailReportFull(qMapAllCurrencySum2TRail);
-            _QBaseTrailReportFull =
-                (from trailReportRow in joinq5LvlqMapAllCurrencySum2TRail
-                 group trailReportRow by
-             new
+                     tot.AccountId,
+                     //tot.CurrencyId , 
+                     tot.ForeignAmountCredit,
+                     tot.ForeignAmountDebit,
+                     tot.LocalAmountCredit,
+                     tot.LocalAmountDebit
+                 }
+                  )
+             group totalCOAType by new
              {
-                 trailReportRow.ChartOfAcountType,
+                 totalCOAType.AccountId,
+                 //totalCOAType.CurrencyId
+             } into g
+             select new TrailReportTemp
+             {
 
-                 trailReportRow.ChartOfAcount1,
-                 trailReportRow.ChartOfAcount2,
-                 trailReportRow.ChartOfAcount3,
-                 trailReportRow.ChartOfAcount4,
-                 trailReportRow.ChartOfAcount5,
-                 trailReportRow.ChartOfAcountCode1,
-                 trailReportRow.ChartOfAcountCode2,
-                 trailReportRow.ChartOfAcountCode3,
-                 trailReportRow.ChartOfAcountCode4,
-                 trailReportRow.ChartOfAcountCode5,
-                 trailReportRow.ChartOfAcountName1,
-                 trailReportRow.ChartOfAcountName2,
-                 trailReportRow.ChartOfAcountName3,
-                 trailReportRow.ChartOfAcountName4,
-                 trailReportRow.ChartOfAcountName5,
+                 AccountId_COAType = g.Key.AccountId,
+                 CurrencyId = "",//g.Key.CurrencyId,
+                 ForeignAmountCreditTotalStart = 0,//g.Sum(x => x.ForeignAmountCredit),
+                 ForeignAmountDebitTotalStart = 0,//g.Sum(x => x.ForeignAmountDebit),
+                 LocalAmountCreditTotalStart = g.Sum(x => x.LocalAmountCredit),
+                 LocalAmountDebitTotalStart = g.Sum(x => x.LocalAmountDebit),
 
-                 trailReportRow.ChartOfAccountId,
-                 trailReportRow.GLAccountName,
-                 trailReportRow.GLAccountNumber,
-                 trailReportRow.GLAccountId,
 
-                 //trailReportRow.CurrencyId,
+                 ForeignAmountCreditTransStart = 0,
+                 ForeignAmountDebitTransStart = 0,
+                 LocalAmountCreditTransStart = 0,
+                 LocalAmountDebitTransStart = 0,
+
+
+                 ForeignAmountCreditTotalDelta2End = 0,
+                 ForeignAmountDebitTotalDelta2End = 0,
+                 LocalAmountCreditTotalDelta2End = 0,
+                 LocalAmountDebitTotalDelta2End = 0,
+
+
+                 ForeignAmountCreditTransEnd = 0,
+                 ForeignAmountDebitTransEnd = 0,
+                 LocalAmountCreditTransEnd = 0,
+                 LocalAmountDebitTransEnd = 0,
+
+
+                 TotalDelta2End_AnyActivity = null,
+                 TransEnd_AnyActivity = null,
 
              }
-                     into gCOA
-
-                     select new TrailReportM()
-                     {
-                         ChartOfAcountType = gCOA.Key.ChartOfAcountType,
-                         ChartOfAcount1 = gCOA.Key.ChartOfAcount1,
-                         ChartOfAcount2 = gCOA.Key.ChartOfAcount2,
-                         ChartOfAcount3 = gCOA.Key.ChartOfAcount3,
-                         ChartOfAcount4 = gCOA.Key.ChartOfAcount4,
-                         ChartOfAcount5 = gCOA.Key.ChartOfAcount5,
-                         ChartOfAcountCode1 =  gCOA.Key.ChartOfAcountCode1,
-                         ChartOfAcountCode2 = gCOA.Key.ChartOfAcountCode2,
-                         ChartOfAcountCode3 = gCOA.Key.ChartOfAcountCode3,
-                         ChartOfAcountCode4 = gCOA.Key.ChartOfAcountCode4,
-                         ChartOfAcountCode5 = gCOA.Key.ChartOfAcountCode5,
-                         ChartOfAcountName1 = gCOA.Key.ChartOfAcountName1,
-                         ChartOfAcountName2 = gCOA.Key.ChartOfAcountName2,
-                         ChartOfAcountName3 = gCOA.Key.ChartOfAcountName3,
-                         ChartOfAcountName4 = gCOA.Key.ChartOfAcountName4,
-                         ChartOfAcountName5 = gCOA.Key.ChartOfAcountName5,
-
-                         ChartOfAccountId = gCOA.Key.ChartOfAccountId,
-                         GLAccountName = gCOA.Key.GLAccountName,
-                         GLAccountNumber= gCOA.Key.GLAccountNumber,
-                         GLAccountId = gCOA.Key.GLAccountId,
-
-                         CurrencyId = "",// gCOA.Key.CurrencyId,
-
-
-                         LocalOpenBalance = gCOA.Sum(x => x.LocalOpenBalance),
-                         LocalDebit = gCOA.Sum(x => x.LocalDebit),
-                         LocalCredit = gCOA.Sum(x => x.LocalCredit),
-                         LocalCloseBalance = gCOA.Sum(x => x.LocalCloseBalance),
-
-
-
-                         ForeignOpenBalance = 0,//gCOA.Sum(x => x.ForeignOpenBalance),
-                         ForeignDebit = 0,//gCOA.Sum(x => x.ForeignDebit),
-                         ForeignCredit = 0,//gCOA.Sum(x => x.ForeignCredit),
-                         ForeignCloseBalance = 0,//gCOA.Sum(x => x.ForeignCloseBalance),
-                     }
-
-            );
-            if (testNow)
-            {
-                var tettt = _QBaseTrailReportFull.ToList();
-            }
-
-
+             );
+            return qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate;
         }
 
         private void SaveOld_QbaseTrailReportFull(IQueryable<TrailReportM> qMapAllCurrencySum2TRail)
@@ -864,7 +895,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             );
         }
 
-        private static IQueryable<TrailReportM> NewMethod(IQueryable<TrailReportTemp> _QUnionAllMoneyData)
+        private static IQueryable<TrailReportM> NotInUse____NewMethod(IQueryable<TrailReportTemp> _QUnionAllMoneyData)
         {
             IQueryable<TrailReportM> qMapAllCurrencySum2TRail =
                 //map All to TrailReportM Schem 

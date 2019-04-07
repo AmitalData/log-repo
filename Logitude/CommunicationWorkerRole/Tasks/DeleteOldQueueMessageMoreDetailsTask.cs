@@ -20,7 +20,7 @@ namespace CommunicationWorkerRole.Tasks
         public override void StartTask()
         {
             string strConnString = TenantServerConfigration.GetDbConnection(0);
-
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             int numberOfExecuteRow = 1000;
 
             while (numberOfExecuteRow == 1000)
@@ -29,7 +29,14 @@ namespace CommunicationWorkerRole.Tasks
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        SqlCommand cmd = new SqlCommand("delete top(1000) from [dbo].[QueueMessageMoreDetails] where [CreateDateTime] < GETDATE() - 90", cn);
+                   
+                        string sql = "delete top(1000) from QueueMessageMoreDetails where CreateDateTime < GETDATE() - 90";
+                        if (dbms == "oracle")
+                        {
+                            sql = "DELETE FROM QueueMessageMoreDetails WHERE ROWID IN  (SELECT ROWID FROM QueueMessageMoreDetails where CreateDateTime < (SELECT SYSDATE FROM DUAL) - 90 and rownum<= 1000);";
+                        }
+
+                        SqlCommand cmd = new SqlCommand(sql, cn);
                         cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                         cn.Open();
                         numberOfExecuteRow = cmd.ExecuteNonQuery();
