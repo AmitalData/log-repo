@@ -123,6 +123,21 @@
                     </td>
                 </tr>
 
+                <!-- ExcludeFromProrating -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ExcludeFromProrating'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'ExcludeFromProrating'" [Checked]="ExcludeFromProrating" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
                 <!-- Description -->
                 <tr class="FormFieldRow">
                     <td style="vertical-align:top;">

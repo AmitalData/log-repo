@@ -250,7 +250,6 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     set Signature(value: string) {
         if (this.TenantPm.Signature != value) {
             this.TenantPm.Signature = value;
-            this.TenantPm.Signature = value;
         }
     }
 
@@ -527,7 +526,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
             var myService: AddressPMService = new AddressPMService();
             myService.update(address).subscribe((myRespone: ServiceResponse) => {
                 if (myRespone != null) {
-                    if (!myRespone.HasError) {                        
+                    if (!myRespone.HasError) {
                         this.SubmitTenantChanges();
                     }
 
@@ -537,6 +536,14 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
                     }
                 }
             });
+        }
+
+        else if (this.TenantPm.IsDirty) {
+            this.SubmitTenantChanges();
+        }
+
+        else {
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 

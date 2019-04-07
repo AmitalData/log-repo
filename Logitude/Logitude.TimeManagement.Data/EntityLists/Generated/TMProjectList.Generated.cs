@@ -58,6 +58,8 @@ namespace Logitude.TimeManagement.Data.EntityLists
        public string ExternalProjectNumber  { get; set; }
        [DataMember]
        public string CategoryName  { get; set; }
+       [DataMember]
+       public bool ExcludeFromProrating  { get; set; }
    }
 
 }

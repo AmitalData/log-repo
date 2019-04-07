@@ -63,8 +63,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
     //public TooltipContentId: string = null;
     public IconPath: string = "./Images/Help.png";
     public IconBackground: string = null;
-    public Width: number = 256;
-    public Height: number = 125;
+    public Width: number = 200;
+    public Height: number = 110;
     public IconSize: number = 17;
     mouseover(MyItem) {
         if (MyItem.HelpText) {
@@ -83,18 +83,18 @@ export class DWQueryBuilderComponent extends BaseComponent {
             }
 
             document.getElementById(MyItem.TooltipContentId).style.position = "fixed";
-            document.getElementById(MyItem.TooltipContentId).style.top = (itemRect.top - this.Height + 5) + 'px';
+            document.getElementById(MyItem.TooltipContentId).style.top = (itemRect.top - this.Height + 7) + 'px';
 
             if (isToRight) {
-                document.getElementById(MyItem.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/Tootip.png')";
-                document.getElementById(MyItem.TooltipContentId).style.left = (itemRect.left + 5) + 'px';
+                document.getElementById(MyItem.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/TootipCenter.png')";
+                document.getElementById(MyItem.TooltipContentId).style.left = (itemRect.left + 14) + 'px';
             }
 
             else {
                 document.getElementById(MyItem.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/TootipFlipped.png')";
                 document.getElementById(MyItem.TooltipContentId).style.left = (itemRect.left - this.Width) + 'px';
             }
-        } 
+        }
     }
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
@@ -113,7 +113,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         else {
             this.SearchFieldsId = "DWQueryBuilderSearchFields_" + this.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
         }
-     
+
 
         //this._DWQueryBuilderHelper.FillAllFactFields("Fact_Shipments");
         this._DWObjectTableListService.getAll().subscribe(myResult => {
@@ -193,24 +193,24 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                     });
                     //this.StartFiltersBusyIndicator("Restoring filters ..");
-                    this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
-                        this.ObsList = [];
-                        if (!Result.HasError) {
-                            Result.Result.forEach((field) => {
-                                if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
-                                    var view = new DWObjectFieldsDetails(field, this);
-                                    view.ParentDataTypeCode = field.DataTypeCode;
-                                    this.AllFieldsObsList.push(field);
-                                    this.ObsList.push(view);
-                                    this.ObsListAll.push(view);
-                                }
-                            });
-                            //this.DataSource = this.ObsList;
-                            this.AllFieldsWithChildrenDataSource = this.ObsList;
-                            //this.StopFiltersBusyIndicator();
-                        }
+                    //this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
+                    this.ObsList = [];
+                    if (window.DWObjectFields) {
+                        window.DWObjectFields.forEach((field) => {
+                            if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
+                                var view = new DWObjectFieldsDetails(field, this);
+                                view.ParentDataTypeCode = field.DataTypeCode;
+                                this.AllFieldsObsList.push(field);
+                                this.ObsList.push(view);
+                                this.ObsListAll.push(view);
+                            }
+                        });
+                        //this.DataSource = this.ObsList;
+                        this.AllFieldsWithChildrenDataSource = this.ObsList;
+                        //this.StopFiltersBusyIndicator();
+                    }
 
-                    });
+                    //});
                 }
             });
         });
@@ -222,7 +222,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsBIReportWorkspace = args.IsBIReportWorkspace;
         this.IsBIReportEditScreen = args.IsBIReportEditScreen;
         this.FolderId = args.FolderId;
-
+        //this.AllFieldsWithChildrenDataSource = args.DWObjectFieldsWithChildren;
         if (this.QID) {
             this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
                 if (!myResult.HasError) {
@@ -907,8 +907,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                                 if (isNaN(Number(val))) {
                                     Valid = false;
                                 }
-                            } 
-                        default: { 
+                            }
+                        default: {
                             break;
                         }
 
@@ -1296,17 +1296,17 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     }
 
-   
+
 
     public ComputeDisplayName(DWObjectField: any) {
         //(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
         var Displayname = DWObjectField.DisplayName;
         if (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
             if (DWObjectField.DWObjectTableCode && DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
-                Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Code;
+                Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Name;
             }
             else {
-                Displayname = DWObjectField.Code;
+                Displayname = DWObjectField.Name;
             }
         }
         return Displayname;
@@ -1691,7 +1691,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 }
 
                                 if (!AppTool.IsNullOrEmpty(DWObjectField.Code)) {
-                                    view.DisplayName = '[' + (DWObjectField.Name.replace('[', '').replace(']', '') + ' ' + view.Code.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
+                                    view.DisplayName = '[' + (DWObjectField.Name.replace('[', '').replace(']', '') + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
                                     view.DimensionTableDisplayName = DWObjectField.Name.replace('[', '').replace(']', '');
                                 }
                                 else if (!AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
@@ -1699,7 +1699,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                     view.DimensionTableDisplayName = DWObjectField.Name;
                                 }
                                 else {
-                                    view.DisplayName = '[' + (DWObjectField.Name + ' ' + view.Code.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
+                                    view.DisplayName = '[' + (DWObjectField.Name + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
                                     view.DimensionTableDisplayName = DWObjectField.Name;
 
                                 }
