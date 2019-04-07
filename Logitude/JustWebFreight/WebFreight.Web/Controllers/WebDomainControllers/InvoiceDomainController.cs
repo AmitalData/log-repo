@@ -1649,7 +1649,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         List<ARInvoiceStockPM> aRInvoiceStocks = aRInvoiceStockQuery.GetARInvoiceStockPMsByTenant(tenant).ToList();
                         foreach (var item in aRInvoiceStocks)
                         {
-                            item.ARInvoiceStockLines = aRInvoiceStockLineQuery.GetARInvoiceStockLinePMsByStockId(item.Id, item.Tenant);
+                            item.ARInvoiceStockLines = aRInvoiceStockLineQuery.GetARInvoiceStockLinePMsByStockId(item.Id, item.Tenant).Where(a=>!a.IsUsed).ToList();
+                            item.LinesCount = item.ARInvoiceStockLines != null ? item.ARInvoiceStockLines.Count() != 0 ? item.ARInvoiceStockLines.Count() + "" : "" : "";
                         }
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, aRInvoiceStocks);

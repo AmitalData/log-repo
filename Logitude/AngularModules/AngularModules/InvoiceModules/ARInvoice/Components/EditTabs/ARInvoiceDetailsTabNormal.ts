@@ -64,7 +64,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public InvoiceNumberFilterList: CodeNameClass[];
     public IsInvoiceStocksManagementEnabled: boolean = false;
 
-
     constructor(private entityArgs: EntityArgs) {
         super();      
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -91,10 +90,8 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         if (SessionLocator.AccountingSettingPM.EnableInvoiceStocksManagement) {
             this.IsInvoiceStocksManagementEnabled = true;
-        
         }
         this.BuildInvoiceNumberFilters();
-
     }
 
     private SaveCompletedEvent: any = null;
@@ -664,6 +661,13 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     set PrintNotes(newValue: string) {
         if (this.EntityPM.PrintNotes != newValue) {
             this.EntityPM.PrintNotes = newValue;
+        }
+    }
+
+    get ARInvoiceStockId() { return this.EntityPM.ARInvoiceStockId; }
+    set ARInvoiceStockId(newValue: string) {
+        if (this.EntityPM.ARInvoiceStockId != newValue) {
+            this.EntityPM.ARInvoiceStockId = newValue;
         }
     }
 
@@ -1498,6 +1502,8 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
 
     //Invoice Number
+
+    
     private selectedInvoiceNumberFilter: CodeNameClass;
     get SelectedInvoiceNumberFilter() { return this.selectedInvoiceNumberFilter; }
     set SelectedInvoiceNumberFilter(value: CodeNameClass) {
@@ -1506,7 +1512,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             if (value.Code == "MAS") {
                 this.IsInvoiceNumberManuallySet = true;
             }
-            if (value.Code != "MAS") {
+            else if (value.Code != "MAS") {
                 this.IsInvoiceNumberManuallySet = false;
             }
         }
@@ -1547,6 +1553,11 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 }
             });
         });
+    }
+
+    ReturnInvoiceNumberToStock() {
+        this.ARInvoiceStockId = null;
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
 }
 export class ARInvoiceLineItem extends BaseComponent {
