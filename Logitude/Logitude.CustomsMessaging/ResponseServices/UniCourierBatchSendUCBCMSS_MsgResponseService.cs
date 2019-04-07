@@ -45,7 +45,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Manifest) send for master {requestParams.AppicationId} ");
             }
-            bool multiThread = true;
+            bool multiThread = false;
             if (multiThread)
             {
                 var listOf50items = listPM.ChunkBy(50);
