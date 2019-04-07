@@ -57,8 +57,9 @@
                                                                             {{item.Name}}
                                                                         </div>
                                                                     </td>
-                                                                    <td style="float:right;padding-right:2px;width:17px;height:17px;">
-                                                                  
+                                                                    <td style="float:right;padding-right:2px;width:17px;height:17px;"></td>
+                                                                    <td style="width:2px;">
+                                                                        <div></div>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -78,13 +79,22 @@
                                                         </td>
                                                     </tr>
                                                     <tr style="height:12px;">
-                                                        <td style="height:12px;">
-                                                            <div style="text-align:left;float:left;font-style:italic;">
-                                                                Expires on:{{item.EndDate | DateTimePipe:'D'}}
-                                                            </div>
-                                                        </td>
-                                                        <td style="float:right;padding-right:2px;padding-left:2px; width:18px;height:18px;">
-                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditStockClicked(item)"></IconButton>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="height:12px;">
+                                                                        <div style="text-align:left;float:left;font-style:italic;">
+                                                                            Expires on:{{item.EndDate | DateTimePipe:'D'}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="float:right;padding-right:3px; width:18px;height:18px;">
+                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditStockClicked(item)"></IconButton>
+                                                                    </td>
+                                                                    <td style="width:2px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
                                                     </tr>
                                                     <tr style="height:2px;">
@@ -96,6 +106,7 @@
                                             </li>
                                         </ul>
                                     </ScrollViewer>
+
                                     <div *ngIf="StocksHeaderList == null || StocksHeaderList.length == 0" class="NoDataText" style="top:5px;">No Invoice Stocks</div>
 
                                 </SectionBody>
@@ -122,10 +133,9 @@
                                         <div class="SimpleGridViewHeader">
                                             <table>
                                                 <tr>
-                                                    <td style="width: 100px; min-width: 100px; max-width: 100px;">Invoice Number</td>
-                                                    <td style="width: 100px; min-width: 100px; max-width: 100px;">Created by</td>
+                                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">Invoice Number</td>
+                                                    <td style="width: 150px; min-width: 150px; max-width: 150px;">Created by</td>
                                                     <td>CreateDate</td>
-                                                   
                                                 </tr>
                                             </table>
                                         </div>
@@ -134,12 +144,14 @@
                                             <table>
                                                 <tr class="SimpleGridViewRow RowHover" *ngFor="let item of StockLines" (click)="StockLineSelectedItem = item" [class.RowSelected]="item === StockLineSelectedItem">
 
-                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                    <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
                                                         {{item.Number}}
                                                     </td>
 
-                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                        {{item.CreatedByUserName}}
+                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                        <div class="TextTrimming">
+                                                            {{item.CreatedByUserName}}
+                                                        </div>
                                                     </td>
 
                                                     <td class="LastChild">
@@ -170,7 +182,7 @@
             <table style="height: 22px;">
                 <tr>
                     <td style="float:left;">
-                        <div>
+                        <div class="NoDataText">
                             Selected numbers will be moved out of this list
                         </div>
                     </td>
