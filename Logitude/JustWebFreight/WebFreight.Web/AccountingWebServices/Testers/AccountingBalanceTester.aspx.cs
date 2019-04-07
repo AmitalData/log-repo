@@ -77,6 +77,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _AccountingIntegrityService_Click,
             _ButtonBalanceByCollector_Click,
             _ButtonLoadBankPages_Click,
+            _ButtonGetSystem1000_Click,
         }
 
         //DateTime _MyDate;
@@ -1398,6 +1399,82 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
 
         }
+
+
+        protected void ButtonGetSystem1000_Click(object sender, EventArgs e)
+        {
+
+
+
+            dynamic param = null;
+
+            var paramDefault = new
+            {
+                Tenant = 989,
+            };
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonGetSystem1000_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
+                int tenant = param.Tenant;
+                string flatFile = "";
+       //         using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+       //         {
+                    var accountingContext = AccountingContext.GetContext(tenant);
+                    ISystem1000Service System1000Service = new System1000Service();
+                    flatFile = System1000Service.GetSystem1000FlatFile(accountingContext, tenant);
+                //    if (!String.IsNullOrWhiteSpace(flatFile))
+                //    {
+                //        bool toComplete = false;
+                //        if (!toComplete)
+                //        {
+                //            throw new Exception("ddd");
+                //        }
+                //        scope.Complete();
+                //    }
+
+
+                //}
+                if (!String.IsNullOrWhiteSpace(flatFile))
+                {
+                    // var flatFileJson = JsonConvert.SerializeObject(flatFile);
+                    _LabelResult.Text = flatFile; // flatFileJson;
+                }
+                else
+                {
+                    _LabelResult.Text = "[No flat file]";
+                }
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonGetSystem1000_Click.ToString();
+                if (param == null)
+                {
+                    param = paramDefault;
+                }
+                var SerializeObjectByteParam = JsonConvert.SerializeObject(param);
+                _TextBoxParam.Text = SerializeObjectByteParam;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+
+
+        }
+
+
 
         protected void _ButtonSysCheckTotalSumIsZero_Click(object sender, EventArgs e)
         {

@@ -38,7 +38,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public string PreviousChartOfAccountsId { get; set; }
         public DateTime? PreviousChartOfAccountsChangeDate { get; set; }
         public string CustomerGLAccountId { get; set; }
-        public decimal? BalanceInLocalCurrency { get; set; }
+    //    public decimal? BalanceInLocalCurrency { get; set; }
         public bool? RevaluationEnabled { get; set; }
         public string ParentAccountId { get; set; }
         public string Category1Id { get; set; }
@@ -47,6 +47,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public string Category4Id { get; set; }
         public string Category5Id { get; set; }
         public bool? IsVATExempt { get; set; }
+        public string DeductionFileNumber { get; set; }
 
         // Card
         public string SalesmanUserId { get; set; }
@@ -61,8 +62,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public string CountryName { get; set; }
         public string PaymentTermId { get; set; }
         public string VatNumber { get; set; }
-        public decimal? LocalBalanceInDue { get; set; }
-        public DateTime? NextDueDate { get; set; }
+  //      public decimal? LocalBalanceInDue { get; set; }
+  //      public DateTime? NextDueDate { get; set; }
         
         // Contacts (SalesMans)
         public string SalesManEnglishName { get; set; }
