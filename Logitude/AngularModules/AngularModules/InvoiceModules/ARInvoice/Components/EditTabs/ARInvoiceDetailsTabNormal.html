@@ -177,7 +177,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="min-width: 100px;max-width: 100px;">
-                                                                             <ComboBox [ItemsSource]="InvoiceNumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedInvoiceNumberFilter" (SelectedItemChanged)="SelectedInvoiceNumberFilter = $event"></ComboBox>
+                                                                             <ComboBox [IsDisabled]="!IsEditingEnabled" [ItemsSource]="InvoiceNumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedInvoiceNumberFilter" (SelectedItemChanged)="SelectedInvoiceNumberFilter = $event"></ComboBox>
                                                                         </td>
 
                                                                         <td style="width: 18px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='MAS'">
@@ -244,10 +244,10 @@
                                                     <div></div>
                                                 </td>
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'" style="padding-left: 3px;padding-right: 3px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' && ARInvoiceStockId == null">
-                                                    <Hyperlink *ngIf="ARInvoiceStockId == null" (click)=" GetInvoiceNumberFromStock()" [Text]="'Get from stock'"></Hyperlink>
+                                                    <Hyperlink (click)=" GetInvoiceNumberFromStock()" [Text]="'Get from stock'" [IsEnabled]="IsEditingEnabled" ></Hyperlink>
                                                 </td>
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'" style="padding-left: 3px;padding-right: 3px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' &&ARInvoiceStockId != null">
-                                                    <Hyperlink  (click)=" ReturnInvoiceNumberToStock()" [Text]="'Return to stock'"></Hyperlink>
+                                                    <Hyperlink (click)=" ReturnInvoiceNumberToStock()" [Text]="'Return to stock'" [IsEnabled]="IsEditingEnabled" ></Hyperlink>
                                                 </td>
                                             </tr>
                                             <tr>
