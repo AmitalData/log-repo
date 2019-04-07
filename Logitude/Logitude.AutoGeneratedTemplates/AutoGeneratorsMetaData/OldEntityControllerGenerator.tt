@@ -1035,7 +1035,7 @@ if(hasCustomFields){
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
 <#+
-if(tableName == "Port" || tableName == "Carrier")
+if(tableName == "Port" || tableName == "Carrier" || tableName == "Currency")
 {
 	#>
             if(filters.Tenant != null)

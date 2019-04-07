@@ -885,7 +885,7 @@ export class InfrastructureDomainService {
             key => ({
                 [key]:
 
-                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
+                    key != "UIProperties" && key != "MyParentClass" && key != "ShowSampleDateCommand" && key != "Items" && key != "TooltipId" && key != "TooltipContentId" && key != "CurrentSession" ? this.deepClone(obj[key], hash) : true
 
             })));
     }
