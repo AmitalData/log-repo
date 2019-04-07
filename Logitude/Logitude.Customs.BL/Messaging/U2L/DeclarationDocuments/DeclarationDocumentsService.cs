@@ -161,11 +161,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     AppendLogLine("Update pointer, connected entity: " + customsDocumentPointerPM.ParentEntityId);
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
-                    CustomsDocumentsTicketPM myCustomsDocumentsTicketPM = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(customsDocumentsTicketPM.DocumentsFilingId, _MyDeclarationPM.Tenant).FirstOrDefault();
-                    myCustomsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
-                    AppendLogLine("Update Ticket after pointer, ticket pointer connected entity: " + myCustomsDocumentsTicketPM.CustomsDocumentPointers.FirstOrDefault().ParentEntityId);
-                    myCustomsDocumentsTicketUpdateService.Update(myCustomsDocumentsTicketPM, true);
-                    AppendLogLine("after Update Ticket after pointer");
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
                     CustomsDocumentPM customsDocumentPM;
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
@@ -202,6 +197,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         if (customsDocumentPM.CurrentCustomsDocumentsTicketId != customsDocumentsTicketPM.Id) customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
                     }
                     if (CustomsDocumentMetaDataValues != null && CustomsDocumentMetaDataValues.Count() > 0 && (customsDocumentPM.CustomsDocumentMetaDataValues == null || customsDocumentPM.CustomsDocumentMetaDataValues.Count() < CustomsDocumentMetaDataValues.Count())) customsDocumentPM.CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues;
+                    if (customsDocumentPM.DeclarationId != _MyDeclarationPM.Id)
+                    {
+                        customsDocumentPM.DeclarationId = _MyDeclarationPM.Id;
+                    }
 
                     customsDocumentPM.IsSendToQueue = false;
                     myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
@@ -215,8 +214,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
                     AppendLogLine("after Update Document");
-                    Task.Delay(5000).Wait();
-                    myCustomsDocumentsTicketUpdateService.Update(myCustomsDocumentsTicketPM, true);
                 }
                 else
                 {

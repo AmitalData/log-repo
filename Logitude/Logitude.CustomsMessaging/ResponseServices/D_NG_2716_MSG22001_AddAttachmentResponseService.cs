@@ -351,7 +351,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
-                    LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode = {status}");
+                    LogMessagingUtil.Instance.AppendLine($"D_NG_2716_MSG22001_AddAttachmentResponseService UpdateDeclarationCourierStatus currentDeclarationCourierStatusPM.DocumentStatusCode = {status}");
                     currentDeclarationCourierStatusPM.DocumentStatusCode = status;
                     declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 }
