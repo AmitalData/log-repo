@@ -22,6 +22,7 @@ export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
     public DataContext = this;
     private myService: TimeManagementDomainService;
     ValidationErrorsList = [];
+    private CurrentSession = SessionLocator.SelectedSession;
 
     constructor() {
         super();
@@ -70,7 +71,7 @@ export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.SelectedSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     private batchEntity: BatchTaskExecutionPM;
     public IsResponseProgressVisible: boolean = false;
