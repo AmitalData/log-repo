@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {InvoiceDomainService} from '../../../Services/InvoiceDomainService';
@@ -10,6 +10,7 @@ import {InvoiceDomainService} from '../../../Services/InvoiceDomainService';
 
 export class RecalculateExternalsComponent {
     private invoiceDomainService: InvoiceDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.invoiceDomainService = new InvoiceDomainService();
     }
@@ -78,9 +79,9 @@ export class RecalculateExternalsComponent {
     Recalculate() {
         if (this.entitiesIdsList.length == 0) {
             this.isRecalculateButtonClicked = false;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.LoadData();
-            SessionLocator.CurrentSession.FireEvent("Accounting_T");
+            this.CurrentSession.FireEvent("Accounting_T");
         }
 
         else {
@@ -101,7 +102,7 @@ export class RecalculateExternalsComponent {
 
             this.sentCount = this.sentCount + idsList.length;
 
-            SessionLocator.CurrentSession.StartBusyIndicator("Recalculating " + this.sentCount + " from " + this.allEntitiesCount);
+            this.CurrentSession.StartBusyIndicator("Recalculating " + this.sentCount + " from " + this.allEntitiesCount);
 
             this.invoiceDomainService.GetRecalculateTransfer(idsList, this.entityCode).subscribe((myResponse: ServiceResponse) => {
                 this.Recalculate();
@@ -110,6 +111,6 @@ export class RecalculateExternalsComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

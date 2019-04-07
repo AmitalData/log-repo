@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
 import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -55,7 +55,7 @@ export class CustomsSettingsComponent
 
     ValidationErrorsList: string[] = [];
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -211,7 +211,7 @@ export class CustomsSettingsComponent
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
     OkButtonClicked() {

@@ -1,4 +1,4 @@
-﻿ 
+ 
 import {Component, ViewChildren, QueryList} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
@@ -24,6 +24,7 @@ export class SATInterfaceSettingsComponent {
     public ValidationErrorsList: string[];
     //public SATFolderName = "FromLogitude\SAT";
     IsDropboxConnected: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this._entityResourceService = new EntityResourceService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
@@ -45,7 +46,7 @@ export class SATInterfaceSettingsComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -64,9 +65,9 @@ export class SATInterfaceSettingsComponent {
             this.CheckDropBoxAndSave();
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe(response => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (response.HasError) {
                     this.ValidationErrorsList = response.ErrorsArray;
                 }
@@ -78,7 +79,7 @@ export class SATInterfaceSettingsComponent {
 
                         }
 
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                     });
 
                    
@@ -98,7 +99,7 @@ export class SATInterfaceSettingsComponent {
     }
 
     CheckDropBoxAndSave() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         var myService: CommonDomainService = new CommonDomainService();
         myService.GetDropBoxAccessTocken(SessionLocator.Tenant).subscribe((myResult) => {
             if (myResult.HasError == false && !AppTool.IsNullOrEmpty(myResult.Result.DropBoxAccessToken)) {
@@ -106,18 +107,18 @@ export class SATInterfaceSettingsComponent {
             }
             if (this.IsDropboxConnected) {
                 this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe(response => {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (response.HasError) {
                         this.ValidationErrorsList = response.ErrorsArray;
                     }
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                 });
             }
             else {
 
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.ValidationErrorsList.push("Dropbox is not connected!");
             }
 

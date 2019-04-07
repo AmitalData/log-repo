@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {BookingPM} from '../../../EntityPMs/BookingPM';
@@ -17,6 +17,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 export class ChooseDescriptionOfGoodsComponent extends BaseComponent {
     public EntityPM: BookingPM;
     public ItemsSource: AWBDescriptionOfGoodsList[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -97,6 +98,6 @@ export class ChooseDescriptionOfGoodsComponent extends BaseComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

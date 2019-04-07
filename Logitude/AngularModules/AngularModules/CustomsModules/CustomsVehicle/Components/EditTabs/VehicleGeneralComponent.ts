@@ -42,7 +42,7 @@ export class VehicleGeneralComponent extends BaseComponent {
     ResponseData: INF_MSG_GenericResponseData;
     _VehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
         
@@ -65,27 +65,27 @@ export class VehicleGeneralComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.RefreshEntity();
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
                             this.RefreshEntity();
                         }
@@ -107,9 +107,9 @@ export class VehicleGeneralComponent extends BaseComponent {
     }
 
     RefreshEntity() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-            SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        if (this.CurrentSession.CurrentEditComponent) {
+            this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         }
         this.SetFieldsEditability();
     }
@@ -314,7 +314,7 @@ export class VehicleGeneralComponent extends BaseComponent {
 
         //RefreshDataEvent refreshDataEvent = eventAggregator.GetEvent<RefreshDataEvent>();
         //refreshDataEvent.Publish(new RefreshDataEventArgs() { });
-        SessionLocator.CurrentSession.CloseCurrentWindow(); //currentAssemlyLocator.CurrentSimplogWindow.Close();
+        this.CurrentSession.CloseCurrentWindow(); //currentAssemlyLocator.CurrentSimplogWindow.Close();
         //TenantContext.Current.RefreshTableData("Customs.Vehicle", DateTime.UtcNow, true);
         //this.Dispose();
     }

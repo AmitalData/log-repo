@@ -36,6 +36,8 @@ export class OpportunityMenuButtonsHandler {
     public DataContext: OpportunityMenuButtonsHandler = this;
     MenuButtonCode: string = null;
     isButtonClicked: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
+
     StopFlags() {
         this.isButtonClicked = false;
         this.MenuButtonCode = null;
@@ -71,7 +73,7 @@ export class OpportunityMenuButtonsHandler {
                 }
 
                 this.StopFlags();
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
             });
 
@@ -245,7 +247,7 @@ export class OpportunityMenuButtonsHandler {
         if (this.confirmWindow.Yes) {           
             if (this.Validate()) {
                 this.EntityPM.IsCancelled = true;
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.entityArgs.EditComponent.SaveChanges();
 
                 }
@@ -555,7 +557,7 @@ export class OpportunityMenuButtonsHandler {
                logWindow.WindowClosed.subscribe(s => {
                    if (s) {
                        
-                       SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                       SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                            .then(cmpRef => {
                                cmpRef.instance.ComponentRef = cmpRef;
                                cmpRef.instance.Run({ EntityId: s , ObjectTableName: 'Opportunity', BackButtonLabel: "Opportunity" });                              

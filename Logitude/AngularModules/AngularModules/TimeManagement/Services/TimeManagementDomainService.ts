@@ -71,6 +71,20 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    GetTMProjectsByBatchTask(employeeUserId: string, fromDate: Date, toDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetTMProjectsByBatchTask?employeeUserId=' + employeeUserId + "&fromDate=" + ServiceHelper.GetDateString(fromDate) + "&toDate=" + ServiceHelper.GetDateString(toDate);
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = listJason;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     GetNewTMProjectConnect(MainId: string, ConnectedId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -135,6 +149,7 @@ export class TimeManagementDomainService {
             });
         });
     }
+
     DeleteTimeSheetItem(Id: string, employeeUserId: string, locationCode: string, periodStartDate: Date, exitDate:Date) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -163,6 +178,24 @@ export class TimeManagementDomainService {
         }
         return entityPM;
     }
+
+
+    Prorate(EmployeeUserId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetProrate?EmployeeUserId=' + EmployeeUserId, { headers: authHeader }).map(response => {
+                var iResponse = response.json();
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = iResponse;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
 }
 export class TimeManagementAPIHelper {
     public Id: number;

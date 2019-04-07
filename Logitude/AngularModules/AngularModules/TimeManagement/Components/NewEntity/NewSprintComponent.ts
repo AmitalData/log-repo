@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SprintPM} from '../../EntityPMs/SprintPM';
 import {SprintPMService} from '../../Services/StandardPMs/SprintPMService';
@@ -17,7 +17,7 @@ export class NewSprintComponent extends BaseComponent {
     public ObjectTableName = "Sprint";
     public EntityPM: SprintPM;
     public SelectedLocationFilter: any;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
@@ -56,17 +56,17 @@ export class NewSprintComponent extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicator("Creating...");
         var myService: SprintPMService = new SprintPMService();
         myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

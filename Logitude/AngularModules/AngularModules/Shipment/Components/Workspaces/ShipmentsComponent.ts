@@ -26,6 +26,7 @@ export class ShipmentsComponent {
     public IsCloudDeployment: boolean = false;
     private myShipmentDomainService: ShipmentDomainService;
     public TestToggleIsVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myShipmentDomainService = new ShipmentDomainService();
 
@@ -137,7 +138,7 @@ export class ShipmentsComponent {
         if (this.mySelectedDirectionFilter != value) {
             this.mySelectedDirectionFilter = value;
 
-            SessionLocator.CurrentSession.ChangeSessionHeader({ DirectionId: value });
+            this.CurrentSession.ChangeSessionHeader({ DirectionId: value });
 
             this.LoadQueriesCounts();
             this.LoadDeparturesArrivals();
@@ -150,7 +151,7 @@ export class ShipmentsComponent {
         if (this.mySelectedTransportFilter != value) {
             this.mySelectedTransportFilter = value;
 
-            SessionLocator.CurrentSession.ChangeSessionHeader({ TransportId: value });
+            this.CurrentSession.ChangeSessionHeader({ TransportId: value });
 
             this.LoadQueriesCounts();
             this.LoadDeparturesArrivals();
@@ -420,7 +421,7 @@ export class ShipmentsComponent {
         });
     }
     private FullEditShipment(entity: ShipmentList) {   
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Shipment', BackButtonLabel: "Operations" });
@@ -563,7 +564,7 @@ export class ShipmentsComponent {
             listArgs.BackButtonTitle = "Operations";
             listArgs.MethodName = MethodName;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
 
                         var filtersBar: any = null;
@@ -592,15 +593,15 @@ export class ShipmentsComponent {
                                     this.mySelectedDirectionFilter = filtersBar.SelectedDirection;
                                 }
                             }
-                            //SessionLocator.CurrentSession.ChangeSessionHeader({ DirectionId: this.SelectedDirectionFilter });
-                            //SessionLocator.CurrentSession.ChangeSessionHeader({ TransportId: this.SelectedTransportFilter });
+                            //this.CurrentSession.ChangeSessionHeader({ DirectionId: this.SelectedDirectionFilter });
+                            //this.CurrentSession.ChangeSessionHeader({ TransportId: this.SelectedTransportFilter });
                             this.LoadAllScreenData()
                         });
                         listArgs.SelectedDirection = this.mySelectedDirectionFilter;
                         listArgs.SelectedTransportMode = this.mySelectedTransportFilter;
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -657,7 +658,7 @@ export class ShipmentsComponent {
             listArgs.BackButtonTitle = "Operations";
             listArgs.ShowViews = false;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
 
                         var filtersBar: any = null;
@@ -691,7 +692,7 @@ export class ShipmentsComponent {
 
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -728,12 +729,12 @@ export class ShipmentsComponent {
     }
 
     CreateMissingMastersClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating Masters");
+        this.CurrentSession.StartBusyIndicator("Creating Masters");
 
         this.myShipmentDomainService.CreateMissingMasters().subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

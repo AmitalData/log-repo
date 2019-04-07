@@ -1,4 +1,4 @@
-﻿import {Component,ChangeDetectorRef} from '@angular/core'; 
+import {Component,ChangeDetectorRef} from '@angular/core'; 
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -36,9 +36,10 @@ export class ReferenceNumberCellDisplayListTemplate {
     public ShowImg: boolean = true;
     public TransportModSRC: string = '';
     //public Imgs: Logosdictionary[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
-        if (!SessionLocator.CurrentSession.Imgs) {
-            SessionLocator.CurrentSession.Imgs = [];
+        if (!this.CurrentSession.Imgs) {
+            this.CurrentSession.Imgs = [];
         }
     }
 
@@ -51,8 +52,8 @@ export class ReferenceNumberCellDisplayListTemplate {
         var myService: WebFreightDomainService = new WebFreightDomainService();
         if (!SessionLocator.PrivateLableSettings) {
             this.ShowImg = true;
-            if (SessionLocator.CurrentSession.Imgs.filter(a => a.LogoId == rowData['PartnerLogoId']).length > 0) {
-                this.Source = SessionLocator.CurrentSession.Imgs.filter(a => a.LogoId == rowData['PartnerLogoId'])[0].Src;
+            if (this.CurrentSession.Imgs.filter(a => a.LogoId == rowData['PartnerLogoId']).length > 0) {
+                this.Source = this.CurrentSession.Imgs.filter(a => a.LogoId == rowData['PartnerLogoId'])[0].Src;
                 var isDestroyed: boolean = this.CD['destroyed'];
                 if (!isDestroyed) {
                     this.CD.detectChanges();
@@ -63,8 +64,8 @@ export class ReferenceNumberCellDisplayListTemplate {
                     myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
                         if (myResult) {
                             this.Source = "data:image/JPEG;base64," + myResult;
-                            if (SessionLocator.CurrentSession.Imgs.filter(a => a.LogoId == rowData['PartnerLogoId']).length == 0) {
-                                SessionLocator.CurrentSession.Imgs.push(new Logosdictionary(rowData['PartnerLogoId'], this.Source));
+                            if (this.CurrentSession.Imgs.filter(a => a.LogoId == rowData['PartnerLogoId']).length == 0) {
+                                this.CurrentSession.Imgs.push(new Logosdictionary(rowData['PartnerLogoId'], this.Source));
                             }
                             var isDestroyed: boolean = this.CD['destroyed'];
                             if (!isDestroyed) {

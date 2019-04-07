@@ -1,4 +1,4 @@
-﻿
+
 declare var window: any;
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
@@ -60,6 +60,7 @@ export class LogboxUploaderComponent extends BaseComponent implements OnInit {
     ObjectTableName: string;
     Tenant: number;
     ProgressBarId: string = Guid.newGuid();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _imageLibraryService: ImageLibraryService, fb: FormBuilder) {
         super();
         this.myForm = fb.group({});
@@ -106,15 +107,15 @@ export class LogboxUploaderComponent extends BaseComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.SessionEvent.emit({ Name: "LogBoxUploader", IsUploadDone: this.IsUploadDone, IsUploadCanceled: this.IsUploadCanceled, FileName: this.FileName });
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.SessionEvent.emit({ Name: "LogBoxUploader", IsUploadDone: this.IsUploadDone, IsUploadCanceled: this.IsUploadCanceled, FileName: this.FileName });
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
     CancelButtonClicked() {
         if (this.IsUploadDone) {
-            SessionLocator.CurrentSession.SessionEvent.emit({ Name: "LogBoxUploader", IsUploadDone: this.IsUploadDone, IsUploadCanceled: this.IsUploadCanceled, FileName: this.FileName });
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.SessionEvent.emit({ Name: "LogBoxUploader", IsUploadDone: this.IsUploadDone, IsUploadCanceled: this.IsUploadCanceled, FileName: this.FileName });
+            this.CurrentSession.CloseCurrentWindow();
 
         }
         else {
@@ -132,15 +133,15 @@ export class LogboxUploaderComponent extends BaseComponent implements OnInit {
                         this.IsUploadInProgress = false;
                         this.IsUploadDone = false;
                         this.IsUploadCanceled = true;
-                        SessionLocator.CurrentSession.SessionEvent.emit({ Name: "LogBoxUploader", IsUploadDone: this.IsUploadDone, IsUploadCanceled: this.IsUploadCanceled });
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.SessionEvent.emit({ Name: "LogBoxUploader", IsUploadDone: this.IsUploadDone, IsUploadCanceled: this.IsUploadCanceled });
+                        this.CurrentSession.CloseCurrentWindow();
 
                     });
                 });
             }
             else {
-                SessionLocator.CurrentSession.SessionEvent.emit({ Name: "LogBoxUploader", IsUploadDone: this.IsUploadDone, IsUploadCanceled: true, FileName: this.FileName ? this.FileName.split('.')[0] : this.FileName });
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.SessionEvent.emit({ Name: "LogBoxUploader", IsUploadDone: this.IsUploadDone, IsUploadCanceled: true, FileName: this.FileName ? this.FileName.split('.')[0] : this.FileName });
+                this.CurrentSession.CloseCurrentWindow();
             }
         }
     }

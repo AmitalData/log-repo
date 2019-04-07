@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -24,6 +24,7 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
     public _HybridPartnerListService: HybridPartnerExtendedListService;
     public _CustomerPMService: CustomerPMService;
     public _CustomerTenantAccessRequestExtendedPMService: CustomerTenantAccessRequestExtendedPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public CD: ChangeDetectorRef) {
         this._HybridPartnerListService = new HybridPartnerExtendedListService();
         this._CustomerPMService = new CustomerPMService();
@@ -52,25 +53,25 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
             res.forEach((item, key) => {
                 this.hybridPartnerList.push(new HybridPartnerData(item, this));
             });
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
         this._HybridPartnerListService.GetHybridPartnerListWithNoRequest(SessionLocator.Tenant).subscribe(res => {
             this.allhybridPartnerList = [];
             res.forEach((item, key) => {
                 this.allhybridPartnerList.push(new HybridPartnerData(item, this));
             });
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
     RefreshBtnClick() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         this.ValidationErrorsList = [];
         this.FillHybridPartnerList();
     }
 
     SendRequest(item) {
-        SessionLocator.CurrentSession.StartBusyIndicator("loading ...");
+        this.CurrentSession.StartBusyIndicator("loading ...");
         this._CustomerTenantAccessRequestExtendedPMService.get(item.ReqId).subscribe(res => {
             if (!res.HasError) { 
                 var temp = res.Result;
@@ -78,12 +79,12 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
                 this._CustomerTenantAccessRequestExtendedPMService.update(temp).subscribe(res1 => {
                     item.StatusName = "Waiting For Approval";
                     item.IsHasRequest = true;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
             else {
                 this.ValidationErrorsList = res.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -93,7 +94,7 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
         //busyIndicatorStartEvent.Publish(new BusyIndicatorStartEventArgs() { Message = "Loading ...", Start = true });
         //bool validateEntry = ValidateEntry();
         //bool hasValidationErrors = CheckValidationErrors();
-        SessionLocator.CurrentSession.StartBusyIndicator("Adding ...");
+        this.CurrentSession.StartBusyIndicator("Adding ...");
 
         if (AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CustomerId)) {
             this.ValidationErrorsList.push("Missing Customer in Tenant Definitions !");
@@ -121,7 +122,7 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
                             this._CustomerTenantAccessRequestExtendedPMService.insert(pm).subscribe(res => {
                                 // We Need To check If There Are Errors.
                                 this.FillHybridPartnerList();
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                             });
 
 
@@ -139,11 +140,11 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
                             //submitOperation.Completed += submitOperation_Completed;
                         }
                         else {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
                     }
                     else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
                 else {
@@ -152,7 +153,7 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
             });
         }
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 }
@@ -160,7 +161,7 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
 export class HybridPartnerData {
     ParentComponent: ActivationWizardComponent;
     public hybridPartnerList: HybridPartnerList;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(passedhybridPartnerList: HybridPartnerList, Parent: ActivationWizardComponent) {
         this.ParentComponent = Parent;
         this.hybridPartnerList = passedhybridPartnerList;

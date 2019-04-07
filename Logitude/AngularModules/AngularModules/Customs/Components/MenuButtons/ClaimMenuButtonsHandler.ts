@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { ClaimPM } from '../../EntityPMs/ClaimPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -23,6 +23,7 @@ export class ClaimMenuButtonsHandler {
     isButtonClicked: boolean = false;
     MenuButtonCode: string = null;
     public EntityPM: ClaimPM;
+    private CurrentSession = SessionLocator.SelectedSession;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -30,17 +31,17 @@ export class ClaimMenuButtonsHandler {
     }
 
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
         }
@@ -48,7 +49,7 @@ export class ClaimMenuButtonsHandler {
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
-            if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.CurrentSession.CurrentEditComponent != null) {
 
                 var table = window.ObjectTables.filter(d => d.Name === 'Shipment')[0];
 
@@ -122,10 +123,10 @@ export class ClaimMenuButtonsHandler {
             if (confirmWindow.Yes) {
                 this.EntityPM.IsClosed = true;
                 isCloseClaimMethod = true;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
                     (isSave) => {
                         if (isCloseClaimMethod) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             let messageWindow = new MessageWindow();
                             messageWindow.Width = 300;
                             messageWindow.Height = 180;
@@ -133,7 +134,7 @@ export class ClaimMenuButtonsHandler {
                             isCloseClaimMethod = false;
                         }
                     });
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
         });
     }
@@ -147,10 +148,10 @@ export class ClaimMenuButtonsHandler {
             if (confirmWindow.Yes) {
                 this.EntityPM.IsClosed = false;
                 isCancelCloseClaimMethod = true;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
                     (isSave) => {
                         if (isCancelCloseClaimMethod) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             let messageWindow = new MessageWindow();
                             messageWindow.Width = 300;
                             messageWindow.Height = 180;
@@ -158,7 +159,7 @@ export class ClaimMenuButtonsHandler {
                             isCancelCloseClaimMethod = false;
                         }
                     });
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
         });
         

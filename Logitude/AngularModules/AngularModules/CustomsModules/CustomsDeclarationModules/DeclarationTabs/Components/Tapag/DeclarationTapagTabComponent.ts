@@ -34,7 +34,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
     private tapagPMService: TapagPMService = new TapagPMService;
 
     IsLoaded: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.tapagObslist = new ObservableCollection([]);
@@ -76,30 +76,30 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
         this.entityArgs = null;
     }
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadTapagsList();
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCTP") {
                             this.LoadTapagsList();
                         }
@@ -114,7 +114,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
 
         this.tapagMessagesService.GetDeclarationTapagsLists(this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.GetDeclarationTapagsListsOp_Completed(myResponse, false);
             });
     }
@@ -128,15 +128,15 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     EditButtonClicked(item: TapagList) {
 
         if (!AppTool.IsNullOrEmpty(item)) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.tapagPMService.get(item.Id).subscribe(response => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 switch (item.TapagTypeCode) {
                     case "1":
                         {
@@ -151,7 +151,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
                             logWindow.WindowArgs = windowArgs;
                             //logWindow.Title = TextCodeTranslator.Translate("Customs.PaymentOrder.TH.Deficits");
                             logWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deficit/PaymentOrderDeficitComponent');
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             break;
                         }
                     case "2":
@@ -167,7 +167,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
                             logWindow.ShowCloseButton = true;
                             logWindow.WindowArgs = windowArgs;
                             logWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deposit/PaymentOrderDepositDataComponent');                          
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             break;
                         }
 
@@ -185,7 +185,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
                             logWindow.WindowArgs = windowArgs;
                             logWindow.Title = TextCodeTranslator.Translate("Customs.Guarantee.O.Guarantee");
                             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Tapag/GuaranteeDataComponent');
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             break;
                         }
 

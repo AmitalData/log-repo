@@ -129,6 +129,11 @@ export class TMProjectPM {
     public set CategoryName(newValue: string) { if (this.categoryName != newValue) { this.categoryName = newValue; this.MarkAsDirty("CategoryName"); } }
        
 	 
+    private excludeFromProrating: boolean;
+    public get ExcludeFromProrating() { return this.excludeFromProrating; }
+    public set ExcludeFromProrating(newValue: boolean) { if (this.excludeFromProrating != newValue) { this.excludeFromProrating = newValue; this.MarkAsDirty("ExcludeFromProrating"); } }
+       
+	 
 
     public OldEntityPM: TMProjectPM;
 		

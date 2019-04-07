@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool, FontTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -28,6 +28,7 @@ export class TariffsComponent {
     public myCardListService: CardListService;
     private fatherComponent: LCLChargesComponent;
     private myDomainService: PartnersDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();
         this.myDomainService = new PartnersDomainService();
@@ -43,7 +44,7 @@ export class TariffsComponent {
 
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
 
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
 
                     this.myCardListService.getSingle(this.EntityPM.MainCarriageCarrierId).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
@@ -104,25 +105,25 @@ export class TariffsComponent {
         if (this.ShowMyCarrier) {
             if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
                 this.myDomainService.GetTarrifHeadersByCardIdAndTypeCode(this.EntityPM.MainCarriageCarrierId, "S", false).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.BuildItemsSource(myResponse.Result);
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
         }
 
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.myDomainService.GetTarrifHeadersByCardIdAndTypeCode(null, "S", false).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     this.BuildItemsSource(myResponse.Result);
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -143,7 +144,7 @@ export class TariffsComponent {
     }
     
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var itemChecked = this.ItemsSource.filter(f => f.IsChecked == true)[0];
@@ -187,7 +188,7 @@ export class TariffsComponent {
             });
 
             this.fatherComponent.BuildItemsSource();            
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 }

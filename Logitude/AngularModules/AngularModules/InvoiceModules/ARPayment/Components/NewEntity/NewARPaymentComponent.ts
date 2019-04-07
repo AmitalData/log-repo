@@ -54,7 +54,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public isRTL: boolean = false;
 
     private _glaService: GLAccountListService = new GLAccountListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
 
@@ -778,7 +778,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -968,8 +968,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
     RunEditWindow() {
 
-        SessionLocator.CurrentSession.CurrentWindow.WindowClosed.subscribe(s => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        this.CurrentSession.CurrentWindow.WindowClosed.subscribe(s => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.newARPaymentPM.Id, EntityPM: this.newARPaymentPM, ObjectTableName: 'ARPayment' });
@@ -978,7 +978,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                         if (isEditComponentSaved) {
-                            SessionLocator.CurrentSession.FireEvent("NewARPaymentInvoiceTabCreated");
+                            this.CurrentSession.FireEvent("NewARPaymentInvoiceTabCreated");
                         }
                     });
 
@@ -996,14 +996,14 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 });
         });
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     fetchGLAccount() {
         return new Promise((resolve, reject) => {
 
             var _glaId = this.billtoCard.GLAccountId;
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this._glaService.getSingle(_glaId)
                 .subscribe(response => {
 
@@ -1012,13 +1012,13 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                         var glaccount = res.Result;
 
                         resolve(glaccount);
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                     else {
                         reject();
 
                         this.ValidationErrorsList = res.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
 

@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -37,6 +37,7 @@ export class RemoveTasksButtonListTemplate {
     public _ShipmentPMService: ShipmentPMService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public ShowRenewButtons: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         //if (SessionLocator.PrivateLableSettings) {
@@ -72,18 +73,18 @@ export class RemoveTasksButtonListTemplate {
     } 
 
     RemoveTasksButtonClicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Title = "Confirm Deletion";
         confirmWindow.Show("Are you sure you want to cancel tasks for this shipment ?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Loading ..")
+                this.CurrentSession.StartBusyIndicator("Loading ..")
                 this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe(myResult => {
                     if (!myResult.HasError) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
-                        SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                        this.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
                         
                     }
                 });
@@ -97,11 +98,11 @@ export class RemoveTasksButtonListTemplate {
     }
 
     EditButtonClicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();
                 newWindow.Width = 600;
                 newWindow.Height = 150;
@@ -118,9 +119,9 @@ export class RemoveTasksButtonListTemplate {
                 newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/EditLogBoxShipmentComponent');
                 //}
                 newWindow.WindowClosed.subscribe(($event: any) => {
-                    SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                    this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                     if ($event == "MyShipmentAdded") {
-                        SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+                        this.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
                     }
                 });
             }
@@ -151,9 +152,9 @@ export class RemoveTasksButtonListTemplate {
         newWindow.RTL = true;
         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DepositionRequestComponent');
         newWindow.WindowClosed.subscribe(($event: any) => {
-            SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+            this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
             if ($event == "DepositionRequest") {
-                SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+                this.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
             }
         });
 

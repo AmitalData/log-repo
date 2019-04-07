@@ -30,6 +30,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
     public TabSummaryAreaHeight: number = 150;
     private DomainService: ShipmentDomainService;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.DomainService = new ShipmentDomainService();
@@ -283,10 +284,10 @@ export class AWBPackagesTabComponent extends BaseComponent {
         this.IsBuildFromShipmentsVisible = isBuildFromShipmentsVisible;
     }
     GenerateClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.DomainService.GetShipmentConsolidationPackages(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse != null) {
                 if (!myResponse.HasError) {

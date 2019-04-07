@@ -28,7 +28,7 @@ export class TaxDeductionReportGeneralTabComponent extends BaseComponent {
     Faild: boolean = false;
     taxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
     
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.entityPM = entityArgs.EntityPM;
@@ -49,13 +49,13 @@ export class TaxDeductionReportGeneralTabComponent extends BaseComponent {
     RunService() {
         this.entityPM.StatusTypeCode = "2";
         this.Building=true;
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
         this.taxDeductionReportPMService.update(this.entityPM).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                  
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.entityPM).subscribe(myResult => {
                         var mm: ServiceResponse = myResult;
                         var entity = mm.Result;
@@ -67,7 +67,7 @@ export class TaxDeductionReportGeneralTabComponent extends BaseComponent {
 
                 else {
                   
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

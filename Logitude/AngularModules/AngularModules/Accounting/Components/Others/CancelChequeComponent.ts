@@ -22,6 +22,7 @@ export class CancelChequeComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
 
     paymentChequePMService: PaymentChequePMService = new PaymentChequePMService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -53,7 +54,7 @@ export class CancelChequeComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     FIELD_IS_REQUIERD: string;
     OkButtonClicked() {
@@ -72,7 +73,7 @@ export class CancelChequeComponent extends BaseComponent {
             this.entityPM.CancelledDate = new Date();
             this.entityPM.PaymentChequeStatusCode = "4";
             this.entityPM.CancelledByUserId = SessionLocator.LoggedUserId;
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
             this.paymentChequePMService.update(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
@@ -83,8 +84,8 @@ export class CancelChequeComponent extends BaseComponent {
                     myJournalExtendedPMService
                         .VoidJournal(this.entityPM.Tenant, this.entityPM.JournalId, "", "", "")
                         .subscribe((res: ServiceResponse) => {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
+                            this.CurrentSession.StopBusyIndicator();
 
                             if (res.HasError) {
                                 this.ValidationErrorsList = res.ErrorsArray;
@@ -97,7 +98,7 @@ export class CancelChequeComponent extends BaseComponent {
                 }
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }

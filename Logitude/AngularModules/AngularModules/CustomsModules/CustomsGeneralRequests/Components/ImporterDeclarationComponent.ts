@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
@@ -48,7 +48,7 @@ export class ImporterDeclarationComponent
     public SecurityDeclarationList: ObservableCollection;
 
     public DeclarationConectFilterList: CodeNameClass[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.PeriodDeclarationList = new ObservableCollection([]);
@@ -296,7 +296,7 @@ export class ImporterDeclarationComponent
 
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {

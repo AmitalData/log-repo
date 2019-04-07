@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -14,6 +14,7 @@ export class PrintTaxComponent extends BaseComponent {
     public DataContext = this;
     public TransferTypeCode: string = null;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -75,16 +76,16 @@ export class PrintTaxComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Building Files...");
+            this.CurrentSession.StartBusyIndicator("Building Files...");
             var service: InvoiceDomainService = new InvoiceDomainService();
             service.PrintTaxData(this.Date1, this.Date2, this.Email).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");                
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindowEmit("Ok");                
             });
         }
     }
     
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

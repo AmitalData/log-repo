@@ -23,6 +23,7 @@ export class MainMenuFollowups implements OnDestroy {
     public BackButtonLabel: string;
     public IsMainSidebarCollapsed: boolean = false;
     private DomainService: InfrastructureDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.DomainService = new InfrastructureDomainService();
         this.Listen();        
@@ -31,7 +32,7 @@ export class MainMenuFollowups implements OnDestroy {
     private FollowupsChangedEvent: any = null;
     Listen() {
         if (!this.FollowupsChangedEvent) {
-            this.FollowupsChangedEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.FollowupsChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "FollowupsChangedMainMenu") {
                     this.LoadData();
                 }
@@ -133,8 +134,9 @@ export class MainMenuFollowupItem {
     public ListItemHeight: number = 70;
     public TooltipHeight: number = 130;
     public TooltipWidth: number = 270;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private father: MainMenuFollowups) {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("FollowupItem");
+        var idIndex = this.CurrentSession.GetNewId("FollowupItem");
         this.ItemId = "FollowupItem_" + idIndex;
         this.ItemTooltipId = "FollowupItemTooltip_" + idIndex;
     }
@@ -194,7 +196,7 @@ export class MainMenuFollowupItem {
     }
 
     ViewEntityClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.EntityId, ObjectTableName: this.father.ObjectTableName, BackButtonLabel: this.father.BackButtonLabel });

@@ -81,7 +81,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
     public SelectedAsDefaultBtnVisible: boolean;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService) {
         super();
 
@@ -421,7 +421,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     }
                         if (!this.IsSendClose) {
                             this.IsSendClose = true;
-                            SessionLocator.CurrentSession.FireEvent("RefreshDocumentOutSend");
+                            this.CurrentSession.FireEvent("RefreshDocumentOutSend");
                         }
 
                 }
@@ -445,14 +445,14 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 
     IsNoTemplateFound: boolean = false;
     GetTemplates() {
        
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.DataContext.DocumentTypePM.Id, this.DataContext.DocumentTypePM.Tenant).subscribe(res => {
             this.DocumentTypeTemplateLists = new Array<DocumentTypeTemplateViewModel>();
   
@@ -761,12 +761,12 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             this.HeaderHeight = item.TemplateHeaderHeight;
             this.FooterHeight = item.TemplateFooterHeight;
             this.HtmlEditorData = item.HtmlResolve;
-            SessionLocator.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
+            this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
             this.SaveReportData(documentTypeCopyId);
             item.HtmlResolve = null;
         }
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
                 this._htmlEditorService.getEditorHtmlData(this.CurrentDocumentOut.Id, shipmentId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, this.CurrentDocumentOut.DocumentTemplateId, "", "Edit").subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -777,10 +777,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                             this.FooterHeight = myResult.FooterHeight;
                         }
                         this.StopBusyIndicator();
-                        SessionLocator.CurrentSession.StartBusyIndicator("Building document...");
+                        this.CurrentSession.StartBusyIndicator("Building document...");
                         this.SaveReportData(documentTypeCopyId);
 
-                    } else SessionLocator.CurrentSession.StopBusyIndicator();
+                    } else this.CurrentSession.StopBusyIndicator();
 
 
 
@@ -808,7 +808,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         this._htmlEditorService.saveEditedReportToServer(filter).subscribe(res => {
          
-            SessionLocator.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
+            this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -883,7 +883,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     BuildCurrentCopies(copies: Array<DocumentCopiesViewModel>, mode: string) {
         
 
-        SessionLocator.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
+        this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
         this.AddedDocumentTypeCopyViewModels = new Array<DocumentCopiesViewModel>();
         this.RemovedDocumentTypeCopyViewModels = new Array<DocumentCopiesViewModel>();
@@ -1029,7 +1029,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                     ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DataContext.DocumentTypePM.Name + " Built");
                                     
                                     if (this.DataContext.IsNotFromDocsOutListOpenPrintControl) {
-                                        SessionLocator.CurrentSession.FireEvent("RefreshDocumentOutPrint");
+                                        this.CurrentSession.FireEvent("RefreshDocumentOutPrint");
                                     }
                                 }
                             }
@@ -1095,13 +1095,13 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe(response => {
 
             if (!item.DocumentTypePM) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+                this.CurrentSession.StartBusyIndicator("Loading...");
                 this._documentTypePMService.GetSinglePMWithOutInclude(item.Id, SessionLocator.Tenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         item.DocumentTypePM = pmResponse.Result;
                     }
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.Start(item);
                 });
 
@@ -1205,11 +1205,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public UpdateDocument() {
 
 
-        SessionLocator.CurrentSession.CurrentWindow = SessionLocator.CurrentSession.Windows.filter(d=> d.Title == "Print " + this.DataContext.DocumentTypePM.Name)[0];
+        this.CurrentSession.CurrentWindow = this.CurrentSession.Windows.filter(d=> d.Title == "Print " + this.DataContext.DocumentTypePM.Name)[0];
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");
 
-        SessionLocator.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
+        this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
         if (this.CurrentDocumentOut.DocumentTemplateEditorTool == "S") {
             this.BuildCurrentCopies(this.Items, "");
@@ -1298,7 +1298,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
         
     }
 }

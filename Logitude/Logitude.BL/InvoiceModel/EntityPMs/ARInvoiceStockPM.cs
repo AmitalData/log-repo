@@ -26,7 +26,14 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public int? Amount { get; set; }
         public int? Remaining { get; set; }
         public string Notes { get; set; }
-        
+        public string StatusName { get; set; }
+
+        public bool NumbersAdded { get; set; }
+        public bool NumberRemoved { get; set; }
+        public bool SeriesRemoved { get; set; }
+        public bool Cancelled { get; set; }
+        public bool Reactivated { get; set; }
+
         private List<ARInvoiceStockLinePM> aRInvoiceStockLines;
         [Include]
         [Composition]

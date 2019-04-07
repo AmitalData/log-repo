@@ -35,7 +35,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.ARInvoiceStock).WithMany().HasForeignKey(d => d.ARInvoiceStockId);
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
-            this.HasRequired(t => t.ARInvoice).WithMany().HasForeignKey(d => d.ARInvoiceId);
+            this.HasOptional(t => t.ARInvoice).WithMany().HasForeignKey(d => d.ARInvoiceId);
         }
     }
 }

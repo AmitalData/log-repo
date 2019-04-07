@@ -51,7 +51,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
     ShowAddPackageButton: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myPackageTypeService = new PackageTypeListService();
@@ -526,14 +526,14 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
     SaveButtonClicked() {
 
         this.SaveOnWarewarehouseEntryPM();
-        SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+        this.CurrentSession.CurrentWindow.Close("Refresh");
     }
 
     SaveOnWarewarehouseEntryPM() {

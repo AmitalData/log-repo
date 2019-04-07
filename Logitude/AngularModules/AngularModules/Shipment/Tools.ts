@@ -29,6 +29,7 @@ import {ShipmentDeliveryPM} from './EntityPMs/ShipmentDeliveryPM';
 import {VatTypeList} from '../Common/EntityLists/VatTypeList';
 
 export class ShipmentTool {
+    private static CurrentSession = SessionLocator.SelectedSession;
     public static IsEditingEnabled(entityPM: ShipmentPM) {
         var myResult: boolean = true;
 
@@ -3523,6 +3524,7 @@ export class AWBCCSValidator {
     }
 }
 export class RoutingHelper {
+    private static CurrentSession = SessionLocator.SelectedSession;
     public static MainCarriageFromPortChanged(entityPM: ShipmentPM, list: PortList) {
         if (entityPM != null) {
             var myPortId: string = null;
@@ -4306,7 +4308,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveOnCarriageLeg(entityPM: ShipmentPM) {
@@ -4389,7 +4391,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment1Leg(entityPM: ShipmentPM) {
@@ -4480,7 +4482,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment2Leg(entityPM: ShipmentPM) {
@@ -4571,7 +4573,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment3Leg(entityPM: ShipmentPM) {
@@ -4662,7 +4664,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 

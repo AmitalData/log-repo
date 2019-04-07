@@ -40,6 +40,7 @@ export class PointersFromInvoicesSelectionComponent {
     @Output() MenuHeaderchangeevent = new EventEmitter();
     filterAgrs: ApiQueryFilters;
     SelectedItemChangedEvt: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.SupplierInvoicesList = new ObservableCollection([SupplierInvoiceLine]);
         this.InvoiceItemsList = new ObservableCollection([]);
@@ -285,7 +286,7 @@ export class PointersFromInvoicesSelectionComponent {
 
     CancelButtonClicked() {
         this.Dispose();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -317,7 +318,7 @@ export class PointersFromInvoicesSelectionComponent {
         this.ConnectedInvoices = this.ConnectedInvoices.substr(1, this.ConnectedInvoices.length - 1);
 
         this.Dispose();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        this.CurrentSession.CloseCurrentWindowEmit("ok");
     }
 
     ViewInitCompleted($event) {

@@ -34,12 +34,13 @@ export class StatisticsByCustomerFilterComponent extends BaseComponent {
     public IsCreateDateId: string = "IsCreateDateId";
     public IsOperationalDateId: string = "IsOperationalDateId";
     public DateRadio: string = "DateRadio_";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
-        this.IsOperationalDateId = this.IsOperationalDateId + SessionLocator.CurrentSession.GetNewId(this.IsOperationalDateId);
-        this.IsCreateDateId = this.IsCreateDateId + SessionLocator.CurrentSession.GetNewId(this.IsCreateDateId);
-        this.DateRadio = this.DateRadio + SessionLocator.CurrentSession.GetNewId(this.DateRadio);
+        this.IsOperationalDateId = this.IsOperationalDateId + this.CurrentSession.GetNewId(this.IsOperationalDateId);
+        this.IsCreateDateId = this.IsCreateDateId + this.CurrentSession.GetNewId(this.IsCreateDateId);
+        this.DateRadio = this.DateRadio + this.CurrentSession.GetNewId(this.DateRadio);
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {

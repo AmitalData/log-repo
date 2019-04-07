@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SLAHeaderPM} from '../../../../CRM/EntityPMs/SLAHeaderPM';
 import {SLALinePM} from '../../../../CRM/EntityPMs/SLALinePM';
@@ -44,7 +44,7 @@ export class NewSLAComponent extends BaseComponent {
     public EscalationPreDefinitionCachedList: EscalationPreDefinitionList[];
     public SelectedFirstResponse: EscalationArgs;
     public SelectedResolveEscalation: EscalationArgs;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     public IsNew = false;
     constructor() {
         super();
@@ -222,7 +222,7 @@ export class NewSLAComponent extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -251,12 +251,12 @@ export class NewSLAComponent extends BaseComponent {
         }
     }
     private InsertSLA() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         var service = new SLAHeaderPMService();
         service.insert(this.entityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+                this.CurrentSession.CloseCurrentWindowEmit('ok');
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -264,12 +264,12 @@ export class NewSLAComponent extends BaseComponent {
         });
     }
     private UpdateSLA() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         var service = new SLAHeaderPMService();
         service.update(this.entityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+                this.CurrentSession.CloseCurrentWindowEmit('ok');
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

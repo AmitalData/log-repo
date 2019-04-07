@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, OnInit}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -33,7 +33,7 @@ export class DocumentCustomFieldsComponent extends BaseComponent implements OnIn
     public  SelectedDocumentTypeCustomFieldPMViewModel: DocumentTypeCustomFieldPMViewModel;
 
     dateitem: Date;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService) {
         super();
       
@@ -199,13 +199,13 @@ export class DocumentCustomFieldsComponent extends BaseComponent implements OnIn
         if (this.ValidateCustomFields().length > 0) {
             return;
         }
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
         if (this.DocumentCustomArgs.editDocumentComponent != null) {
             this.DocumentCustomArgs.editDocumentComponent.ValidationErrorsList = [];
         }
 
         this._documentTypeCustomFieldService.UpdateFormCustomField(item).subscribe(res=> {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (res.HasError) {
                 if (this.DocumentCustomArgs.editDocumentComponent != null) {
                     this.DocumentCustomArgs.editDocumentComponent.ValidationErrorsList = res.ErrorsArray;

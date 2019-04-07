@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import {ShipmentPMService} from '../../Services/StandardPMs/ShipmentPMService';
@@ -10,6 +10,7 @@ import {ShipmentPMService} from '../../Services/StandardPMs/ShipmentPMService';
 
 export class ReactivateShipmentComponent {
     public EntityPM: ShipmentPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -25,11 +26,11 @@ export class ReactivateShipmentComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.EntityPM.EventNote = this.Notes;
         this.EntityPM.IsCancelled = false;
@@ -38,8 +39,8 @@ export class ReactivateShipmentComponent {
         var myService: ShipmentPMService = new ShipmentPMService();
 
         myService.update(this.EntityPM).subscribe(myResult => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CloseCurrentWindowEmit('OK');
         });        
     }
 }

@@ -24,7 +24,7 @@ export class btnComponent implements OnInit {
     public InUseVisibile: boolean = true;
     public TenantPM: TenantPM;
     public entityId: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
         this.LoadShippingLineListMethod();
@@ -113,7 +113,7 @@ export class btnComponent implements OnInit {
     }
 
     public FireEvent(eventArgs: any) {
-        SessionLocator.CurrentSession.SessionEvent.emit(eventArgs);
+        this.CurrentSession.SessionEvent.emit(eventArgs);
     }
 
     GetPortCopyToCurrentTenant() {
@@ -164,10 +164,10 @@ export class btnComponent implements OnInit {
     }
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 }

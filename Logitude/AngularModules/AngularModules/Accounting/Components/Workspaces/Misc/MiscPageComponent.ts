@@ -18,13 +18,14 @@ export class MiscPageComponent implements AfterViewInit {
     @Output() ReloadUserQueries = new EventEmitter();
     public isRTL: boolean = false;
     public isScreenLoaded: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("OpenFormatReport").subscribe((response: any) => {
 
 
          this.isScreenLoaded = true;
-         SessionLocator.CurrentSession.StopBusyIndicator();
+         this.CurrentSession.StopBusyIndicator();
            });
 
 
@@ -84,12 +85,12 @@ export class MiscPageComponent implements AfterViewInit {
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }

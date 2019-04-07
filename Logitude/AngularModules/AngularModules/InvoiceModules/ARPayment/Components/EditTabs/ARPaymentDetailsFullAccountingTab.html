@@ -723,7 +723,7 @@
                                     <log-column [header]="''" [width]="'40'" [binding]="'button'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
                                             <img *ngIf="!item.isLineValid"
-                                                [title]="'Reconciliations.O.AmountMustBSmaller2OpenAmount' | TextCodeTranslationPipe"
+                                                [title]="'Accounting.O.ARP.invoiceAmount2reconcileMSG' | TextCodeTranslationPipe"
                                                 style="margin-top: 3px;"
                                                 class="exc-remark-button exc-remark-button-red" tabindex="-1"
                                                 src="./Images/error-16.png" />

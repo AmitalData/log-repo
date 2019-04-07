@@ -110,7 +110,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
     public addedVehicles: any[] = [];
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -131,8 +131,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
             this.IsNotForAccumaltionVisibile = true;
         }
         this.CheckRequrierdFieldsForSend();
-        //SessionLocator.CurrentSession.SubscriptionAdd(
-        //SessionLocator.CurrentSession.SelectInvoiceItemEvent.subscribe((res) => {
+        //this.CurrentSession.SubscriptionAdd(
+        //this.CurrentSession.SelectInvoiceItemEvent.subscribe((res) => {
         //    var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
         //    this.SelectedRow = item;
         //    var index = this.ItemsSource.Collection.indexOf(item);
@@ -198,7 +198,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     ChildrenCount: string;
     SelectedRow: SupplierInvoiceItemLine;
     BuildItemsList() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+        this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
         this.ItemsSource.Clear();
         this.ParentItems = [];
         this.ChildrenItems = [];
@@ -247,10 +247,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
             }
         }
         if (this.EntityPM.IsAccumalated) {
-            //    SessionLocator.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
+            //    this.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
         }
         this.ItemsSource.InsertCollection(TempItemSource);
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
         this.originalItemSource.InsertCollection(TempItemSource);
         if (!AppTool.IsNullOrEmpty(this.FromClassificationJumpToSII)) {
@@ -294,10 +294,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
         }
         if (!AppTool.IsNullOrEmpty(text)) {
-            this.SearchFilterChangedEvent = SessionLocator.CurrentSession.SearchFilterChangedEvent.emit({ count: this.ItemsSource.Length });
+            this.SearchFilterChangedEvent = this.CurrentSession.SearchFilterChangedEvent.emit({ count: this.ItemsSource.Length });
         }
         else {
-            this.SearchFilterChangedEvent = SessionLocator.CurrentSession.SearchFilterChangedEvent.emit({ count: null });
+            this.SearchFilterChangedEvent = this.CurrentSession.SearchFilterChangedEvent.emit({ count: null });
         }
     }
 
@@ -325,7 +325,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                 }
             }
             if (!this.IsFromCustomsAnswer || this.IsInvoiceAnswer) {
-                SessionLocator.CurrentSession.StartBusyIndicator("");
+                this.CurrentSession.StartBusyIndicator("");
 
                 this.Parent.EntityPM = this.EntityPM;
                 if (this.Parent.EntityPM.IsDirty) {
@@ -338,10 +338,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                     this.Parent.EntityPM.FullChildrenCount = this.EntityPM.FullChildrenCount;
                     this.Parent.EntityPM.FullParentsCount = this.EntityPM.FullParentsCount;
 
-                    this.AccumulatedFilterChangedEvent = SessionLocator.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length, entityPM: entityPM });
+                    this.AccumulatedFilterChangedEvent = this.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length, entityPM: entityPM });
                     this.Parent.EntityPM = this.EntityPM;
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                 });
             }
@@ -435,7 +435,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
                     this.BuildFreightAmountsList();
                     this.BuildItemsList();
-                    //  SessionLocator.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
+                    //  this.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
 
                     if (getFreightTotals) {
                         this.GetFreightTotals();
@@ -538,11 +538,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         }
 
         //if (this.Parent.IsNewEntity) {
-        SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+        this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
         this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
             .subscribe((customsSettingList: ServiceResponse) => {
                 if (customsSettingList) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (this.Parent.IsNewEntity) {
                         let autoFillAccountType = customsSettingList.Result ? customsSettingList.Result.AutoFillAccountType : false;
                         if (autoFillAccountType) {
@@ -979,11 +979,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
 
     //private GetCountryPURForItems() {
-    //    SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+    //    this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
     //    var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     //    myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_CTRY", "NON", "NON", this.declarationPM.Tenant)
     //        .subscribe(response => {
-    //            SessionLocator.CurrentSession.StopBusyIndicator();
+    //            this.CurrentSession.StopBusyIndicator();
     //            if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
     //                this.IsCountryPURForItems = true;
     //            }
@@ -1950,7 +1950,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         if (!this.EntityPM.SupplierInvoiceItems.includes(item)) {
             this.EntityPM.AddSupplierInvoiceItem(item);
             this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this));
-            //SessionLocator.CurrentSession.ResetRowIndex();
+            //this.CurrentSession.ResetRowIndex();
             if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
 
             this.EntityPM.FullItemsCount = this.EntityPM.FullItemsCount + 1;
@@ -2005,7 +2005,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         if (!this.EntityPM.SupplierInvoiceItems.includes(item)) {
             this.EntityPM.AddSupplierInvoiceItem(item);
             this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this));
-            //SessionLocator.CurrentSession.ResetRowIndex();
+            //this.CurrentSession.ResetRowIndex();
             if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
 
             this.EntityPM.FullItemsCount = this.EntityPM.FullItemsCount + 1;
@@ -2522,7 +2522,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     ClassefierRemarkToolTip: string = "ClassefierRemarkToolTip";
     TariffErrorToolTipWrapper: string = "TariffErrorToolTipWrapper";
     TariffErrorToolTip: string = "TariffErrorToolTip";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(EntityPM: SupplierInvoiceItemPM, parent: SupplierInvoiceGeneralTabComponent) {
         super();
         this.entityPM = EntityPM;
@@ -2606,8 +2606,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
         this.GetQuantityType(false);
         this.QuantityTypeCodeLoaded =
-            //SessionLocator.CurrentSession.SubscriptionAdd(
-            SessionLocator.CurrentSession.QuantityTypeCodeLoadedEvent.subscribe((res) => {
+            //this.CurrentSession.SubscriptionAdd(
+            this.CurrentSession.QuantityTypeCodeLoadedEvent.subscribe((res) => {
                 if (this.ClassificationCode == res.ClassificationCode) {
                     this.QunatityTypeCode = res.QuantityTypeCode;
 
@@ -2872,7 +2872,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                             if (!(keys.indexOf(this.ClassificationCode) > -1)) {
                                 this.Parent.ClasificationQtyTypes[this.ClassificationCode] = myServiceResponse.Result;
                             }
-                            SessionLocator.CurrentSession.QuantityTypeCodeLoadedEvent.emit({ ClassificationCode: this.ClassificationCode, QuantityTypeCode: this.QunatityTypeCode });
+                            this.CurrentSession.QuantityTypeCodeLoadedEvent.emit({ ClassificationCode: this.ClassificationCode, QuantityTypeCode: this.QunatityTypeCode });
                             //QuantityTypeCodeLoadedEvent quantityLoadedEvent = currentAssemlyLocator.EventAggregator.GetEvent<QuantityTypeCodeLoadedEvent>();
                             //quantityLoadedEvent.Publish(new QuantityTypeCodeLoadedEventArgs() { ClassificationCode = ClassificationCode, QuantityTypeCode = this.QunatityTypeCode });
                         }
@@ -3176,7 +3176,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             //var element = document.getElementById(logCellTemplate.OuterDivId);
             // element.focus();
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
+            this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
 
         }
         if (this.Parent.IsChecked) {

@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
@@ -53,7 +53,7 @@ export class SpecialActivityRequestComponent
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
     _CustomsSettingListService: CustomsSettingListService = new CustomsSettingListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
         this.RepresentativeList = new ObservableCollection([]);
@@ -810,10 +810,10 @@ export class SpecialActivityRequestComponent
         }
 
         this.DueChangeClearChildField(true);
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.FetchDeclarationConsignment(myResponse, true);
             });
     }
@@ -837,10 +837,10 @@ export class SpecialActivityRequestComponent
             //this.UIProperties.SetEnabled("CargoIdentifierKey3", null, false);
             //this.UIProperties.SetEnabled("ImporterNumber", this.ObjectTableName, false);
 
-            SessionLocator.CurrentSession.StartBusyIndicator("");
+            this.CurrentSession.StartBusyIndicator("");
             this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
                 .subscribe((myResponse: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.FetchDeclaration(myResponse, true);
                 });
 
@@ -872,7 +872,7 @@ export class SpecialActivityRequestComponent
 
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {
@@ -1212,7 +1212,7 @@ export class RepresentativeComponent extends BaseComponent {
     private representativeNumber: number;
     private representativeName: string;
     private representativeID: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(representativeDetails: RepresentativeDetails) {
         super();
         this.RepresentativeNumber = representativeDetails.RepresentativeNumber;
@@ -1239,7 +1239,7 @@ export class RepackingCurrentRequestDetailsComponent extends BaseComponent {
     private repackingCurrentQuantity: string;
     private repackingCurrentPackageId: string;
     private repackingCurrentWeight: number;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(currentPackingDetails: CurrentPackingDetails) {
         super();
 
@@ -1293,7 +1293,7 @@ export class RepackingDesiredRequestDetailsComponent extends BaseComponent {
     private repackingDesiredQuantity: string;
     private repackingDesiredWeight: number;
     private desiredRePackingOldLineNumber: number;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(desiredPackingDetails: DesiredPackingDetails) {
         super();
 
@@ -1353,7 +1353,7 @@ export class SampleRequestDetailsComponent extends BaseComponent {
     private samplePackageId: string;
     private sampleWeight: number;
     private sampleQuantity: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(sampleRequestDetails: SampleRequestDetails) {
         super();
         this.SampleRowNumber = sampleRequestDetails.SampleRowNumber;
@@ -1445,7 +1445,7 @@ export class SampleRequestDetailsComponent extends BaseComponent {
         }
         else {
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: customsItemTextBox.InputId });
+            this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: customsItemTextBox.InputId });
         }
 
     }
@@ -1473,7 +1473,7 @@ export class SampleRequestDetailsComponent extends BaseComponent {
         }
         else {
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: samplePackageIdTextBox.InputId });
+            this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: samplePackageIdTextBox.InputId });
         }
 
     }

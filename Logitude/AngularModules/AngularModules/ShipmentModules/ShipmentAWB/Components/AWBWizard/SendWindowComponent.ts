@@ -29,6 +29,7 @@ export class SendWindowComponent {
     private myCCSWebService: CCSWebService;
     public IsRecipientsVisible: boolean = false;
     public PurchaseStockUri: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ValidationErrorsList = [];
         this.ValidationWarningsList = [];
@@ -222,7 +223,7 @@ export class SendWindowComponent {
     public LoadFHLValidators() {
         if (this.isSendingFHLs) {
 
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
 
             this.InitializeWebService();
 
@@ -262,7 +263,7 @@ export class SendWindowComponent {
                 }
 
                 this.SetMessageStatus();
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -493,12 +494,12 @@ export class SendWindowComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
     SendClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Prepairing data...");
+        this.CurrentSession.StartBusyIndicator("Prepairing data...");
 
         this.StockErrorMessage = null;
         this.StockErrorIsVisible = false;
@@ -513,12 +514,12 @@ export class SendWindowComponent {
             this.myCCSWebService.GetSendingValidations(this.entityPM.Id, this.SelectedRecipient, this.isSendingFHLs, this.isSendingCargonaut, this.isSendingDEXX, this.entityPM.MainCarriageCarrierId).subscribe((myResponse: ServiceResponse) => {
 
                 if (myResponse == null) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -549,14 +550,14 @@ export class SendWindowComponent {
                             this.SendingResultMessage = "Error sending " + this.MessageType;
                         }
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }                
             });
         }
 
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
    
@@ -709,7 +710,7 @@ export class SendWindowComponent {
                 this.SendingResultMessage = this.MessageType + " has been sent Successfully";
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             this.ReloadEntity();
 
@@ -743,17 +744,17 @@ export class SendWindowComponent {
             busyIndicatorText = "Sending FHL (" + this.sendingQueueIndex + " of " + this.myValidationResultClass.ValidHousesCount + ") " + entityNumber;
         }
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
-        SessionLocator.CurrentSession.StartBusyIndicator(busyIndicatorText);
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StartBusyIndicator(busyIndicatorText);
 
         this.myCCSWebService.Send(entityId, this.SelectedRecipient, this.isSendingCargonaut, this.isSendingDEXX).subscribe((myResponse: ServiceResponse) => {
             if (myResponse == null) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
@@ -762,14 +763,14 @@ export class SendWindowComponent {
                 this.mySendingResultClass = myResult;
 
                 if (myResult == null) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
                     if (myResult.HasStockError) {
                         this.SendingResultForeground = this.redForeground;
                         this.SendingResultMessage = "Error sending: No remaining stock";
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
 
                     else {

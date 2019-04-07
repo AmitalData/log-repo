@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { Directive, ChangeDetectorRef , Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
 
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -42,7 +42,7 @@ export class CommunicationStepsComponent
     
     
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this._communicationLogStepListService = new CommunicationLogStepListService();
@@ -120,11 +120,11 @@ export class CommunicationStepsComponent
 
 
                 }
-                // SessionLocator.CurrentSession.StopBusyIndicator();
+                // this.CurrentSession.StopBusyIndicator();
             }
             else {
 
-                // SessionLocator.CurrentSession.StopBusyIndicator();
+                // this.CurrentSession.StopBusyIndicator();
             }
 
         });

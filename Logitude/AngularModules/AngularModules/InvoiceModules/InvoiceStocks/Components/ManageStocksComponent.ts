@@ -5,7 +5,6 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ARInvoiceStockListService } from '../../../Invoice/Services/StandardLists/ARInvoiceStockListService';
-import { ARInvoiceStockPMService } from '../../../Invoice/Services/StandardPMs/ARInvoiceStockPMService';
 
 @Component({
     moduleId: module.id,
@@ -18,23 +17,26 @@ export class ManageStocksComponent {
     public IsVisibile: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private ARInvoiceStockListService: ARInvoiceStockListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("ARInvoiceStockLine", 0).subscribe(response => {
             this.IsVisibile = true;
             this.ARInvoiceStockListService = new ARInvoiceStockListService();
             this.LoadData();
+            });
         });
     }
     
     private LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         
         this.ARInvoiceStockListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.BuildItemsSource(myResponse.Result);
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     private BuildItemsSource(items: ARInvoiceStockList[]) {
@@ -48,31 +50,21 @@ export class ManageStocksComponent {
     }
 
     EditStock(item: ARInvoiceStockList) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Edit ";
+        logWindow.IsFillScreen = true;
+        logWindow.ShowEditComponent(item.Id, "ARInvoiceStock");
 
-        var stockPMService: ARInvoiceStockPMService = new ARInvoiceStockPMService();
-        stockPMService.get(item.Id).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var logWindow = new LogitudeWindow();
-                logWindow.Title = "Edit Invoice Stock";
-                logWindow.Height = 600;
-                logWindow.WindowArgs = { IsNew: false, EntityPM: myResponse.Result };
-                logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewEntity/NewARInvoiceStockComponent');
-                logWindow.WindowClosed.subscribe(s => {
-                    if (s == "OK") {
-                        this.LoadData();
-                    }
-                });
-            }
-
-            SessionLocator.CurrentSession.StopBusyIndicator();
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                this.LoadData();
+            });
         });       
     }
 
     NewStockClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "New Invoice Stock";
-        logWindow.Height = 600;
         logWindow.WindowArgs = { IsNew: true, EntityPM: null };
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewEntity/NewARInvoiceStockComponent');
         logWindow.WindowClosed.subscribe(s => {
@@ -83,6 +75,6 @@ export class ManageStocksComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
