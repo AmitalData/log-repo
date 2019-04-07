@@ -749,7 +749,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             decimal reconciledAmount = 0;
             recoLines.ForEach(recoLine =>
             {
-                if (recoLine.ReconciledWithTransactionId == paymentTransactionId)
+                if (recoLine.ReconciledWithTransactionId == paymentTransactionId && paymentTransactionId != null)
                     reconciledAmount += recoLine.ReconciliationAmount;
             });
             
