@@ -15,6 +15,8 @@ namespace WebFreight.Web.DataProviders
         public List<WarehouseEntryPackageItem> WarehouseEntryPackageList { get; set; }
 
         public List<InventoryGroup> InventoryGroupList { get; set; }
+        public decimal? TotalVolume { get; internal set; }
+
         public class InventoryGroup
         {
             public string Warehouse { get; set; }
