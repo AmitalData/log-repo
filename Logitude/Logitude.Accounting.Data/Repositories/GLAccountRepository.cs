@@ -144,6 +144,7 @@ namespace Logitude.Accounting.Data.Repositories
                     Category4Id = a.Category4Id,
 
                     Category5Id = a.Category5Id,
+                    DeductionFileNumber = a.DeductionFileNumber,
                 }
                 );
         }
@@ -394,7 +395,25 @@ namespace Logitude.Accounting.Data.Repositories
                 GetQAllByAccountTypeCode(tenant, AccountTypeCode)
                 .Where( a=> a.RevenueExpenseType =="1" || a.RevenueExpenseType =="2");
         }
-       public IQueryable<GLAccountAndMoreDTO> GetQAllCards(int tenant)
+
+ 
+        public IQueryable<CardGLAccountDataView> GetQAllVendorGLAccountCardsHavingDeduction(int tenant)
+        {
+            string accountTypeCode = "3";//only Vendor
+            ICardGLAccountDataViewContext cardGLAccountDataViewContext = CardGLAccountDataViewContext.GetContext(tenant);
+
+            var query = from a in cardGLAccountDataViewContext.CardGLAccountDataViews
+                        where a.Tenant == tenant && a.AccountTypeCode == accountTypeCode
+                        select a;
+            return query.Where(r => !String.IsNullOrEmpty(r.VatNumber)
+            && !String.IsNullOrEmpty(r.DeductionFileNumber)
+            && !(r.Inactive.HasValue && r.Inactive.Value));
+        }
+
+
+
+
+        public IQueryable<GLAccountAndMoreDTO> GetQAllCards(int tenant)
        {
            string AccountTypeCode= "1" ;//only Card
            return 
@@ -911,6 +930,7 @@ namespace Logitude.Accounting.Data.Repositories
         public string Category3Id { get;  set;  }
         public string Category4Id { get;  set;  }
         public string Category5Id { get;  set;  }
+        public string DeductionFileNumber { get; set; }
 #if false
         public static GLAccountAndMoreDTO GetGLAccountAndMore(GLAccount a, GLAccountMoreData md)
         {

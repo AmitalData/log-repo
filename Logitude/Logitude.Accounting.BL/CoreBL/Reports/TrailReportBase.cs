@@ -34,19 +34,21 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         DateTime _ToBeginOfMonth;
 
-        protected IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBaseGLAccountTotalByMonthsFrom0BCTilNotIncludeStartOfMonthFromDate;
+        protected IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> 
+            //מצטברים מתחילת חיי הכרטיסים עד תחילת החודש של FROMDATE לא כולל
+            QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate;
 
 
-        // מצטברים מחודש כולל ועד חודש לא כולל
-        protected IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBaseTotalsFromStartOfMonthFromTilStartOfMonthTo;
+        // מצטברים מתחילת חודש  מתאריך כולל ועד  תחילת חודש  עד לא כולל
+        protected IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBasePeriodGLATotalByMonths_TotalDelta2End_FromBeginOfMonthFromDate_Til_BeginOfMonthToDate;
 
         // תנעות מכולל תחילת החודש  של מתאריך עד למתאריך -לא כולל    
-        protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBaseTranactionBeginOfMonthFromTillFromDateNotInclude;
+        protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBasePeriodTransaction_TransStart_BeginOfMonthFromDate_TillFromDate_NotInclude;
 
 
 
         // תנעות מתחילת חודש אחרון כולל עד  תאריך הסיום + 1 לא כולל
-        protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBaseTranactionBeginOfMonthToDateTillToDateInculde;
+        protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde;
 
         protected IQueryable<ChartOfAccount5LevelM> QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy;
 
@@ -75,6 +77,119 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 .Get(_TrailReportParam.Tenant);
 
 
+            GetGLAccountCardPopulationByParam();
+
+            Create4MainQueriesPeriod();
+
+            CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy();
+
+            AdjustTrailReportFull();
+
+            if (_QBaseTrailReportFull == null)
+            {
+                throw new Exception("(_QBaseTrailReportFull==null)");
+            }
+            var myOutputReport = _QBaseTrailReportFull.ToList();
+            var myTotalRow =
+                (from r in
+                     myOutputReport
+                 group r by 1 into g
+                 select new TrailReportM()
+                 {
+                     ChartOfAcount1 = "Total",
+                     LocalOpenBalance = g.Sum(r => r.LocalOpenBalance),
+                     LocalDebit = g.Sum(r => r.LocalDebit),
+                     LocalCredit = g.Sum(r => r.LocalCredit),
+                     LocalCloseBalance = g.Sum(r => r.LocalCloseBalance),
+
+
+                     ForeignOpenBalance = g.Sum(r => r.ForeignOpenBalance),
+                     ForeignDebit = g.Sum(r => r.ForeignDebit),
+                     ForeignCredit = g.Sum(r => r.ForeignCredit),
+                     ForeignCloseBalance = g.Sum(r => r.ForeignCloseBalance),
+
+                 }).FirstOrDefault();
+
+            myOutputReport.Add(myTotalRow);
+
+
+            DbLog = _DbLogger.ToString();
+            return myOutputReport;
+        }
+
+        private void CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy()
+        {
+            var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
+            _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
+                qsChartOfAccount
+                .GetQChartOfAccount5LevelM(_TrailReportParam.Tenant, null
+                ///,_TrailReportParam.MyTrailReportLevel == TrailReportLevel.ChartofaccountType
+                );
+            QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
+            JoinEachAccountWithHisChartOfAccount5hierarchy(QBaseAllCardsAndDetailsAccType);
+        }
+
+        private void Create4MainQueriesPeriod()
+        {
+            QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate =
+                 (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                  where tot.Tenant == _TrailReportParam.Tenant
+                  where tot.Year < _FromBeginOfMonth.Year ||
+                  (tot.Year == _FromBeginOfMonth.Year &&
+                     tot.Month < _FromBeginOfMonth.Month)
+                  select tot
+                     );
+
+
+
+
+            QBasePeriodGLATotalByMonths_TotalDelta2End_FromBeginOfMonthFromDate_Til_BeginOfMonthToDate =
+                (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                 where tot.Tenant == _TrailReportParam.Tenant
+
+
+                 where tot.Year > _FromBeginOfMonth.Year ||
+             //(tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
+             (tot.Year == _FromBeginOfMonth.Year && tot.Month >= _FromBeginOfMonth.Month)
+
+                 where tot.Year < _ToBeginOfMonth.Year ||
+                 (tot.Year == _ToBeginOfMonth.Year && tot.Month < _ToBeginOfMonth.Month)
+                 select tot
+                 );
+
+
+
+
+            // תנעות מכולל תחילת החודש  של מתאריך עד למתאריך -לא כולל    
+            QBasePeriodTransaction_TransStart_BeginOfMonthFromDate_TillFromDate_NotInclude = (
+                from trans in _AccountingContext.LedgerTransactions
+                where trans.Tenant == _TrailReportParam.Tenant
+                //fromBeginOfMonth:20160101 until (Not INclude)_TrailReportParam.FromDate:20160113
+
+                where trans.AccountingDate >= _FromBeginOfMonth
+                where trans.AccountingDate < _TrailReportParam.FromDate//Not INclude 
+                select trans
+                   );
+
+
+
+
+            var toDateAdd1Day = _TrailReportParam.ToDate.AddDays(1);//INclude //
+            QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde =// תנעות מתחילת חודש אחרון כולל עד  תאריך הסיום + 1 לא כולל
+                (
+                from trans in _AccountingContext.LedgerTransactions
+                where trans.Tenant == _TrailReportParam.Tenant
+                //toBeginOfMonth:20160201 until (InculdeAllTransOf)_TrailReportParam.ToDate:20160215
+                where trans.AccountingDate >= _ToBeginOfMonth  //20160201
+                where trans.AccountingDate <
+                toDateAdd1Day //_TrailReportParam.ToDate.AddDays(1)//INclude //==20160216 
+                select trans
+                );
+
+        }
+
+        private void GetGLAccountCardPopulationByParam()
+        {
             var repoGLAccount = new GLAccountRepository(_AccountingContext);
             var myQBaseAllCardsAndDetailsAccType = //Get The Account List
                 repoGLAccount.
@@ -114,100 +229,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     LocalName = a.LocalName,
                 }
                 );
-            QBaseGLAccountTotalByMonthsFrom0BCTilNotIncludeStartOfMonthFromDate =
-                 (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
-                  where tot.Tenant == _TrailReportParam.Tenant
-                  where tot.Year < _FromBeginOfMonth.Year ||
-                  (tot.Year == _FromBeginOfMonth.Year &&
-                     tot.Month < _FromBeginOfMonth.Month)
-                  select tot
-                     );
-
-            QBaseTotalsFromStartOfMonthFromTilStartOfMonthTo =
-                (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
-                 where tot.Tenant == _TrailReportParam.Tenant
-
-
-                 where tot.Year > _FromBeginOfMonth.Year ||
-             //(tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
-             (tot.Year == _FromBeginOfMonth.Year && tot.Month >= _FromBeginOfMonth.Month)
-
-                 where tot.Year < _ToBeginOfMonth.Year ||
-                 (tot.Year == _ToBeginOfMonth.Year && tot.Month < _ToBeginOfMonth.Month)
-                 select tot
-                 );
-
-            // תנעות מכולל תחילת החודש  של מתאריך עד למתאריך -לא כולל    
-            QBaseTranactionBeginOfMonthFromTillFromDateNotInclude = (
-                from trans in _AccountingContext.LedgerTransactions
-                where trans.Tenant == _TrailReportParam.Tenant
-                //fromBeginOfMonth:20160101 until (Not INclude)_TrailReportParam.FromDate:20160113
-
-                where trans.AccountingDate >= _FromBeginOfMonth
-                where trans.AccountingDate < _TrailReportParam.FromDate//Not INclude 
-                select trans
-                   );
-            var toDateAdd1Day = _TrailReportParam.ToDate.AddDays(1);//INclude //
-            QBaseTranactionBeginOfMonthToDateTillToDateInculde =// תנעות מתחילת חודש אחרון כולל עד  תאריך הסיום + 1 לא כולל
-                (
-                from trans in _AccountingContext.LedgerTransactions
-                where trans.Tenant == _TrailReportParam.Tenant
-                //toBeginOfMonth:20160201 until (InculdeAllTransOf)_TrailReportParam.ToDate:20160215
-                where trans.AccountingDate >= _ToBeginOfMonth  //20160201
-                where trans.AccountingDate <
-                toDateAdd1Day //_TrailReportParam.ToDate.AddDays(1)//INclude //==20160216 
-                select trans
-                );
-            var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
-            _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
-                qsChartOfAccount
-                .GetQChartOfAccount5LevelM(_TrailReportParam.Tenant, null
-                ///,_TrailReportParam.MyTrailReportLevel == TrailReportLevel.ChartofaccountType
-                );
-            QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
-            JoinEachAccountWithisChartOfAccount5hierarchy(QBaseAllCardsAndDetailsAccType);
-
-
-
-
-            Prepare();
-
-            if (_QBaseTrailReportFull == null)
-            {
-                throw new Exception("(_QBaseTrailReportFull==null)");
-            }
-            var myOutputReport = _QBaseTrailReportFull.ToList();
-            var myTotalRow =
-                (from r in
-                     myOutputReport
-                 group r by 1 into g
-                 select new TrailReportM()
-         {
-             ChartOfAcount1 = "Total",
-             LocalOpenBalance = g.Sum(r => r.LocalOpenBalance),
-             LocalDebit = g.Sum(r => r.LocalDebit),
-             LocalCredit = g.Sum(r => r.LocalCredit),
-             LocalCloseBalance = g.Sum(r => r.LocalCloseBalance),
-
-
-             ForeignOpenBalance = g.Sum(r => r.ForeignOpenBalance),
-             ForeignDebit = g.Sum(r => r.ForeignDebit),
-             ForeignCredit = g.Sum(r => r.ForeignCredit),
-             ForeignCloseBalance = g.Sum(r => r.ForeignCloseBalance),
-
-         }).FirstOrDefault();
-
-            myOutputReport.Add(myTotalRow);
-
-
-            DbLog = _DbLogger.ToString();
-            return myOutputReport;
         }
 
-        protected abstract void Prepare();
+        protected abstract void AdjustTrailReportFull();
 
 
-        private IQueryable<ChartOfAccount5LevelM> JoinEachAccountWithisChartOfAccount5hierarchy(IQueryable<AccountCOAM> qAllCardsAndDetialsAccType)
+        private IQueryable<ChartOfAccount5LevelM> JoinEachAccountWithHisChartOfAccount5hierarchy(IQueryable<AccountCOAM> qAllCardsAndDetialsAccType)
         {
             IQueryable<ChartOfAccount5LevelM> qAllCardsAndDetialsAccTypeBy5LevelHierarchy =
                 //Join Each Account With is ChartOfAccount 5 hierarchy

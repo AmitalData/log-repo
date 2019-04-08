@@ -1423,7 +1423,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("CustomerTenantAccess", "READ", tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
-                List<CustomerTenantAccessCardsBatchPM> myResult = service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(CustomerId, CustomerTenantAccessId, tenant).ToList();
+                List<CustomerTenantAccessCardsBatchPM> myResult = service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(CustomerId, CustomerTenantAccessId, tenant).OrderByDescending(d=>d.CreateDateTime).Skip(0).Take(100).ToList();
                 foreach (var item in myResult)
                 {
                     var queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(tenant);

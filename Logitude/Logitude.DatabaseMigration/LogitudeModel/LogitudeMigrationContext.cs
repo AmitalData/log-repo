@@ -890,7 +890,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
-
+        public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
 
 
 
@@ -4804,7 +4804,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             modelBuilder.Configurations.Add(new SchedulerLogsMap());
-
+            modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
 
 
             base.OnModelCreating(modelBuilder);

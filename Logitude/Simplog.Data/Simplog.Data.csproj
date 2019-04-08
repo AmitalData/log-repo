@@ -344,6 +344,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\LoginPolicy.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLicense.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserPermittedProduct.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\UsersReleaseNotesDisplay.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UsoCFDI.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VatFormatType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VATTypesGroup.cs" />
@@ -438,6 +439,7 @@
     <Compile Include="CommonDataModel\Mapping\LoginPolicyMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserLicenseMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserPermittedProductMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\UsersReleaseNotesDisplayMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UsoCFDIMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VatFormatTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VATTypesGroupMap.cs" />

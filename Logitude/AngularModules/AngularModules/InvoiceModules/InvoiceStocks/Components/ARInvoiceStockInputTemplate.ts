@@ -12,6 +12,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { InvoiceStockInputArgs } from '../../../Invoice/Args';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
     moduleId: module.id,
@@ -28,7 +29,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
     public ItemsCount: number;
     public IsEditMode: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    constructor(public entityArgs: EntityArgs) {
         super();
 
         this.stockPMService = new ARInvoiceStockPMService();
@@ -37,15 +38,26 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
     }
 
     private SessionEvent: any = null;
+    private SaveCompletedEvent: any = null;
     private Listen() {
         this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "RefreshARInvoiceStockScreen") {
                 this.SetUIProperties();
             }
         });
+
+        this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            if (isSaveSuccess) {
+                this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                this.SetUIProperties();
+                this.FillStockLines();                
+            }
+        });
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
 
     public InitTemplate(args: InvoiceStockInputArgs) {

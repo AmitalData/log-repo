@@ -107,6 +107,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         NextDueDate = md.NextDueDate,
                                                         TotalOpenChequesInLocalCur = md.TotalOpenChequesInLocalCur,
                                                         TotFutureOpenChequesInLocalCur = md.TotFutureOpenChequesInLocalCur,
+                                                        DeductionFileNumber = a.DeductionFileNumber,
 
                                                         //categories
                                                         Category1Name = a.Category1.EnglishName,
@@ -216,7 +217,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         PreviousChartOfAccountsId = a.PreviousChartOfAccountsId,
                         PreviousChartOfAccountsChangeDate = a.PreviousChartOfAccountsChangeDate,
                         CustomerGLAccountId = a.CustomerGLAccountId,
-                        BalanceInLocalCurrency = a.BalanceInLocalCurrency,
+                  //      BalanceInLocalCurrency = a.BalanceInLocalCurrency,
                         RevaluationEnabled = a.RevaluationEnabled,
                         ParentAccountId = a.ParentAccountId,
                         IsVATExempt = a.IsVATExempt,
@@ -224,8 +225,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         LastActivityTypeName = lastActivity.ActivityType.Name,
                         LastActivityByUserName = lastActivity.User.Contact.LocalName,
                         ChartOfAccountsName = a.ChartOfAccountsEnglishName != null ? a.ChartOfAccountsEnglishName : null, //ChartOfAccountsLocalName
-                        LocalBalanceInDue = a.LocalBalanceInDue,
-                        NextDueDate = a.NextDueDate,
+                  //      LocalBalanceInDue = a.LocalBalanceInDue,
+                  //      NextDueDate = a.NextDueDate,
+                        DeductionFileNumber = a.DeductionFileNumber,
 
                         // Card
                         SalesmanUserId = a.SalesmanUserId    ,

@@ -51,7 +51,7 @@ export class ManageStocksComponent {
 
     EditStock(item: ARInvoiceStockList) {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Edit ";
+        logWindow.Title = "Edit AR Invoice Stock";
         logWindow.IsFillScreen = true;
         logWindow.ShowEditComponent(item.Id, "ARInvoiceStock");
 
