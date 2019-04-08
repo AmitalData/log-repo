@@ -65,6 +65,8 @@ export class ManageStocksComponent {
     NewStockClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "New Invoice Stock";
+        logWindow.Width = 900;
+        logWindow.Height = 600;
         logWindow.WindowArgs = { IsNew: true, EntityPM: null };
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewEntity/NewARInvoiceStockComponent');
         logWindow.WindowClosed.subscribe(s => {

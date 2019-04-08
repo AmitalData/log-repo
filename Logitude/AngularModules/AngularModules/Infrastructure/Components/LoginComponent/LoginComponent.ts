@@ -41,7 +41,7 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
-
+import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -80,6 +80,7 @@ export class LoginComponent implements OnInit {
     private myInfrastructureDomainService: InfrastructureDomainService;
     //public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     private sATInterfaceSettingPMService: SATInterfaceSettingPMService;
+    private UserExtendedPMService: UserExtendedPMService;
     constructor(private logitudeApplicationService: LogitudeApplicationService, private loginService: LoginService, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
         private _userLastLoginPMService: UserLastLoginPMService
     ) {
@@ -134,6 +135,7 @@ export class LoginComponent implements OnInit {
 
         this.myInfrastructureDomainService = new InfrastructureDomainService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
+        this.UserExtendedPMService = new UserExtendedPMService();
         //FileLoader.LoadFroalaResources();
     }
 
@@ -799,6 +801,14 @@ export class LoginComponent implements OnInit {
                 SessionLocator.FeatureToggles = myResponse.Result;
                 this.IncreaseProgressBar();
                 //33
+            }
+        });
+
+        this.UserExtendedPMService.CheckUserReleaseNotesToolTip(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                SessionLocator.ShowUserNewReleaseToolTip = myResponse.Result;
+                this.IncreaseProgressBar();
+                //34
             }
         });
 
