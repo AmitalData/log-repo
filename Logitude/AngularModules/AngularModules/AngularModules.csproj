@@ -412,6 +412,7 @@
     <TypeScriptCompile Include="Common\EntityLists\CustomsShipperList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\NumberFormatList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
+    <TypeScriptCompile Include="Common\EntityPMInitServices\ReportPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
@@ -865,6 +866,7 @@
     <Content Include="InvoiceModules\InvoiceStocks\Components\EditTabs\ARInvoiceStockGeneralTabComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\ManageStocksComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockComponent.html" />
+    <Content Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockLinesComponent.html" />
     <Content Include="Invoice\Components\AccountingTab\AccountingTab_AccountingPaymentMethod.html" />
     <Content Include="Report\Components\FilterReportComponent\VDKFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
@@ -1745,6 +1747,7 @@
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\EditTabs\ARInvoiceStockGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\ManageStocksComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockLinesComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\ModuleInvoiceStocks.ts" />
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleDeclarations.ts" />

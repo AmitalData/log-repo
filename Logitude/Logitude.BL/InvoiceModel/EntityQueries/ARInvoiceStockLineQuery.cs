@@ -25,7 +25,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<ARInvoiceStockLinePM> GetARInvoiceStockLinePMsByStockId(string stockId, int tenant)
         {
-            List<ARInvoiceStockLinePM> list = (from a in repository.context.ARInvoiceStockLines.Include("CreatedByUser").Include("UpdatedByUser")
+            List<ARInvoiceStockLinePM> list = new List<ARInvoiceStockLinePM>();
+                
+              list  = (from a in repository.context.ARInvoiceStockLines.Include("CreatedByUser").Include("UpdatedByUser")
                                           where a.Tenant == tenant && a.ARInvoiceStockId == stockId
                                           select new ARInvoiceStockLinePM()
                                           {
