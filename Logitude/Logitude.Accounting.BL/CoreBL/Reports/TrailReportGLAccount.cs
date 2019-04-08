@@ -33,58 +33,58 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 QBaseAllCardsAndDetailsAccType = QBaseAllCardsAndDetailsAccType.Where(coa => coa.ChartOfAccountsTypeCode == "1");
             }
 
-            IQueryable<TrailReportTemp> qLocalAmountOnly_TotalStart_GroupByCOATypeId = Init_LocalAmountOnly_TotalStart_JoinAccounts_GroupByCOATypeId();
+            IQueryable<TrailReportTemp> qLocalAmountOnly_TotalStart_GroupByAccount = Init_LocalAmountOnly_TotalStart_JoinAccounts_GroupByAccount();
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
                 _DbLogger.AddExplainLog("qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate:TotalStart:");
-                var l1 = qLocalAmountOnly_TotalStart_GroupByCOATypeId.Where(r => r.AccountId_COAType == _accountId).ToList();
+                var l1 = qLocalAmountOnly_TotalStart_GroupByAccount.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 
-            IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId = Init_LocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId();
+            IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByAccount = Init_LocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByAccount();
 
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
                 _DbLogger.AddExplainLog("qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo:TotalDelta2End:");
-                var l2 = qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId.Where(r => r.AccountId_COAType == _accountId).ToList()
+                var l2 = qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByAccount.Where(r => r.AccountId_COAType == _accountId).ToList()
                     ;
             }
 
-            IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId = Init_LocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId();
-            IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All = qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId;
+            IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount = Init_LocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByAccount();
+            IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All = qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount;
             if (!base.NotUsingControlAccount())
             {
-                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId = Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId();
-                qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All =
-                qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
-                qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
+                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount = Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount();
+                qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All =
+                qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount.Union(
+                qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount);
             }
 
 
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
                 _DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude:");
-                var l3 = qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All.Where(r => r.AccountId_COAType == _accountId).ToList();
+                var l3 = qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 
-            IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId = Init_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId();
-            IQueryable<TrailReportTemp> qLocalAmountOnly_LocalAmountTransEnd_GroupByCOATypeId_All = qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId;
+            IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount = Init_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount();
+            IQueryable<TrailReportTemp> qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All = qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount;
             if (!base.NotUsingControlAccount())
             {
-                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId = Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId();
+                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount = Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount();
 
-                qLocalAmountOnly_LocalAmountTransEnd_GroupByCOATypeId_All =
-                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
-                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId);
+                qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All =
+                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount.Union(
+                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount);
             }
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
                 _DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthToDateTillToDateInculde:");
-                var l4 = qLocalAmountOnly_LocalAmountTransEnd_GroupByCOATypeId_All.Where(r => r.AccountId_COAType == _accountId).ToList();
+                var l4 = qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 
 
 
-            IQueryable<TrailReportTemp> _QUnionAllMoneyData = qLocalAmountOnly_TotalStart_GroupByCOATypeId.Union(qAccumulateLocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All).Union(qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId).Union(qLocalAmountOnly_LocalAmountTransEnd_GroupByCOATypeId_All);
+            IQueryable<TrailReportTemp> _QUnionAllMoneyData = qLocalAmountOnly_TotalStart_GroupByAccount.Union(qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All).Union(qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByAccount).Union(qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All);
 
             bool addAllChatOfAccountTyps = true;
             if (addAllChatOfAccountTyps)
@@ -396,7 +396,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         }
 
-        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId()
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount()
         {
             var qAccumulateTranactionBeginOfMonthToDateTillToDateInculdeControl =
           (from totalCOAType in
@@ -458,7 +458,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return qAccumulateTranactionBeginOfMonthToDateTillToDateInculdeControl;
         }
 
-        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId()
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount()
         {
             var qAccumulateTranactionBeginOfMonthToDateTillToDateInculde =
             (from totalCOAType in
@@ -518,7 +518,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return qAccumulateTranactionBeginOfMonthToDateTillToDateInculde;
         }
 
-        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId()
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount()
         {
             var qAccumulateTranactionBeginOfMonthFromTillFromDateNotIncludeControl =
                    (from totalCOAType in
@@ -580,7 +580,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return qAccumulateTranactionBeginOfMonthFromTillFromDateNotIncludeControl;
         }
 
-        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId()
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByAccount()
         {
             var qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude =
                   //Accumulate Tranaction BeginOfMonth(fromDate) till (FromDate-1d)
@@ -643,7 +643,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude;
         }
 
-        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByCOATypeId()
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByAccount()
         {
             var qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo = //Accumulate Totals From StartOfMonth(FromDate) Until StartOfMonth(ToDate) 
                  (from totalCOAType in
@@ -703,7 +703,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo;
         }
 
-        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TotalStart_JoinAccounts_GroupByCOATypeId()
+        private IQueryable<TrailReportTemp> Init_LocalAmountOnly_TotalStart_JoinAccounts_GroupByAccount()
         {
             var qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate =
             //Accumulate Totals From the beginning of  Account Use Until(NotInclude) (StartOfMonth)FromDate                
