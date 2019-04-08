@@ -9442,6 +9442,8 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.PartnerName = string.IsNullOrEmpty(customerId) ? "All" : "";
             dataProvider.Warehouse = string.IsNullOrEmpty(warehouseId) ? "All" : "";
             dataProvider.ShipperConsignee = string.IsNullOrEmpty(shipperConsigneeId) ? "All" : "";
+            dataProvider.TotalVolume = result.Sum(s => s.Volume);
+
             if (!string.IsNullOrEmpty(customerId))
             {
                 Card customer = CardRepository.GetSingleCard(customerId, tenant, true);

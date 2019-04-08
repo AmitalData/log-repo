@@ -1,7 +1,5 @@
 ﻿using Logitude.BL.Helpers;
-using Logitude.Server.Tools.Counters;
 using Logitude.TimeManagement.BL.EntityPMs;
-using Logitude.TimeManagement.BL.EntityQueryServices;
 using Logitude.TimeManagement.BL.EntityUpdateServices;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
@@ -10,21 +8,19 @@ using Microsoft.TeamFoundation.WorkItemTracking.WebApi;
 using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
+using Microsoft.VisualStudio.Services.WebApi.Patch.Json;
+using Microsoft.VisualStudio.Services.WebApi.Patch;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Transactions;
-using System.Web;
+
 
 namespace WebFreight.Web.Helpers
 {
@@ -256,6 +252,68 @@ namespace WebFreight.Web.Helpers
             }
             myTMEmployeeTimeRepository.SubmitChanges();
             return list;
+        }
+
+
+        public void CalculateCompletedWorkHours(int tenant)
+        {
+            ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
+            List<TMEmployeeTime> tmEmployeelist = (from d in myContext.TMEmployeeTimes
+                                                   where d.Tenant == tenant && d.DateOfWork != null &&d.WINumber != null
+                                                   select d).ToList();
+
+            var groupedItems = (from d in tmEmployeelist
+                                group d by new { d.WINumber, d.TimeInMinutes, d.Tenant } into g
+                                select new
+                                {
+                                    Tenant = g.Key.Tenant,
+                                    WINumber = g.Key.WINumber,
+                                    CompletedWork = (g.Sum(s => g.Key.TimeInMinutes)) / 60.00,
+                                });
+            int counter = 0; 
+
+            foreach (var item in groupedItems)
+            {
+                counter += 1; 
+
+                // Create a connection to the account
+                string accountUri = "https://logitudeteam.visualstudio.com";
+                var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
+                int workItemId = Int32.Parse(item.WINumber);
+                // new VssOAuthAccessTokenCredential(personalAccessToken)
+                VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("logitudo@live.com", personalAccessToken));
+                // Get an instance of the work item tracking client
+                WorkItemTrackingHttpClient witClient = connection.GetClient<WorkItemTrackingHttpClient>();
+                //object completedWork = null;
+                try
+                {
+                    // Get the specified work item
+                    WorkItem workitem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
+                    JsonPatchDocument patchDocument = new JsonPatchDocument();
+                    patchDocument.Add(new JsonPatchOperation()
+                    {
+                        Operation = Operation.Replace,
+                        Path = "/fields/Microsoft.VSTS.Scheduling.CompletedWork",
+                        Value = item.CompletedWork.ToString("0.##"),
+                    });
+
+                    witClient.UpdateWorkItemAsync(patchDocument, Int32.Parse(item.WINumber));
+                    if(counter == 10)
+                    {
+                        counter = 0;
+                        System.Threading.Thread.Sleep(5000);
+                    }
+                }
+                catch (AggregateException aex)
+                {
+                    VssServiceException vssex = aex.InnerException as VssServiceException;
+                    if (vssex != null)
+                    {
+                        Console.WriteLine(vssex.Message);
+                    }
+                }
+
+            }
         }
     }
 }
