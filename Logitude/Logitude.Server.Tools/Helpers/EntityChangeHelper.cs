@@ -1158,6 +1158,9 @@ namespace Logitude.Server.Tools.Helpers
             if (automationFollowUp != null)
             {
                 #region Fill Data
+                ContactRepository contactRepository = new ContactRepository(0);
+                string userId = contactRepository.GetContactIdByUserTypeAndTenant("S", entityChange.Tenant);
+                if(string.IsNullOrEmpty(userId)) userId = entityChange.CreateByUserId;
 
                 string ownerId = automationFollowUp.OwnerValue;
                 string note = automationFollowUp.NoteValue;
@@ -1212,7 +1215,7 @@ namespace Logitude.Server.Tools.Helpers
                                 string documentTypeId = documentTypeIds.Where(d => d == documentTypeList.Id).FirstOrDefault();
                                 if (string.IsNullOrEmpty(documentTypeId))
                                 {
-                                    AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, documentTypeList.Name, eventTypeId, date, followUpRepository, followUpDateFieldName, documentTypeList.Id, documentTypeList.Area);
+                                    AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, documentTypeList.Name, eventTypeId, date, followUpRepository, followUpDateFieldName, userId, documentTypeList.Id, documentTypeList.Area);
                                     isAddFollowUp = true;
                                     documentTypeIds.Add(documentTypeList.Id);
                                 }
@@ -1224,7 +1227,7 @@ namespace Logitude.Server.Tools.Helpers
                         bool isFollowUpExist = followUpRepository.CheckIfFollowUpExist(entityChange.EntityId, automationFollowUp.ObjectTableName, automationFollowUp.EventTypeId, entityChange.Tenant);
                         if (!isFollowUpExist)
                         {
-                            AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, note, eventTypeId, date, followUpRepository, followUpDateFieldName);
+                            AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, note, eventTypeId, date, followUpRepository, followUpDateFieldName,userId);
                             isAddFollowUp = true;
                         }
                     }
@@ -1251,10 +1254,11 @@ namespace Logitude.Server.Tools.Helpers
             }
         }
 
-        private void AddFollowUp(string automationId, EntityChange entityChange, AutomationFollowUp automationFollowUp, string ownerId, string note, string eventTypeId, DateTime? date, FollowUpRepository followUpRepository, string followUpDateFieldName, string documentTypeId = null, string area = null)
+        private void AddFollowUp(string automationId, EntityChange entityChange, AutomationFollowUp automationFollowUp, string ownerId, string note, string eventTypeId, DateTime? date, FollowUpRepository followUpRepository, string followUpDateFieldName, string userId,string documentTypeId = null, string area = null)
         {
+            int tenant = entityChange.Tenant;
             FollowUp followUp = new FollowUp();
-            followUp.Id = IdCounter.GetNumber("FollowUp", entityChange.Tenant).ToString();
+            followUp.Id = IdCounter.GetNumber("FollowUp", tenant).ToString();
             followUp.EventTypeId = eventTypeId;
             if (automationFollowUp.ObjectTableName == "Shipment" || automationFollowUp.ObjectTableName == "Master") followUp.ShipmentId = entityChange.EntityId;
 
@@ -1271,8 +1275,22 @@ namespace Logitude.Server.Tools.Helpers
             if (!string.IsNullOrEmpty(documentTypeId)) followUp.DocumentTypeId = documentTypeId;
             if (!string.IsNullOrEmpty(area)) followUp.Area = area;
 
-            followUp.Tenant = entityChange.Tenant;
+            followUp.Tenant = tenant;
             followUpRepository.Add(followUp);
+            
+            EventTypeRepository eventTypeRepository = new EventTypeRepository(tenant);
+            string followUpEnglishName = eventTypeRepository.GetEventTypeNameById(followUp.EventTypeId, tenant);
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = tenant,
+                EventTypeCode = "SFCR",
+                UserId = userId,
+                EntityId = entityChange.EntityId,
+                ObjectTableName = "Shipment",
+                Notes = followUpEnglishName,
+            });
+
+
         }
 
         #endregion
