@@ -184,7 +184,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 _CourierMasterPM.FlightNumber = _LogitudeMasterCourier.FlightNumber;
                 _CourierMasterPM.WeightValueCode = TranslateWeightValue(_LogitudeMasterCourier.WeightValueCode);
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
-                //_CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
+                _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
 
                 AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -213,7 +213,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
         }
 
 
-        private object TranslateStorageSite(string amitalstorageSiteCode)
+        private string TranslateStorageSite(string amitalstorageSiteCode)
         {
             if (String.IsNullOrWhiteSpace(amitalstorageSiteCode))
             {

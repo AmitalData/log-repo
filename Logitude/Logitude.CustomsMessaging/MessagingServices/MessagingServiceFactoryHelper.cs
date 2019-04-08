@@ -404,6 +404,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             ((new DCAInUCB8250_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            DCAInUCBStorageSite_MsgMessagingService>
+                            ((new DCAInUCBStorageSite_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             MN_MSG8370_CargoSplitMessagingService>
                             ((new MN_MSG8370_CargoSplitMessagingService()).MainInterfaceCode);
 

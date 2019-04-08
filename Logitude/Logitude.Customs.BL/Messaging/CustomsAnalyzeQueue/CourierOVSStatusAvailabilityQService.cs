@@ -68,7 +68,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 else if (idList.Count > 1)
                 {
 
-                    if (string.IsNullOrWhiteSpace(mySTBMessage.CourierHawbDate))
+                    if (!mySTBMessage.CourierHawbDate.HasValue)
                     {
                         res.ErrorMessage = $"mySTBMessage.CourierHawbDate is null  unable to choose what to do ??";
                         res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
@@ -76,10 +76,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                         return res;
                     }
                     var consignmentQueryService = new ConsignmentQueryService(_CommunicationLog.Tenant);
-                    string myDeclarationId = consignmentQueryService.GetDeclarationIdBythirdCargoID(mySTBMessage.CourierHawbDate, _CommunicationLog.Tenant, idList);
+                    string myDeclarationId = consignmentQueryService.GetDeclarationIdBythirdCargoID(mySTBMessage.CourierHawbDate.GetValueOrDefault().ToString("ddMMyy"), _CommunicationLog.Tenant, idList);
                     if (string.IsNullOrWhiteSpace(myDeclarationId))
                     {
-                        res.ErrorMessage = $"myDeclarationId=GetDeclarationIdBythirdCargoID({mySTBMessage.CourierHawbDate}) is null  unable to choose what to do ??";
+                        res.ErrorMessage = $"myDeclarationId=GetDeclarationIdBythirdCargoID({mySTBMessage.CourierHawbDate}) is null  unable to choose what to do ?? {mySTBMessage.CourierHawbNumber}";
                         res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
                         //leave to master res.EntityID = idList.First();
 
@@ -209,7 +209,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             var myXElementSTBMessage = XElement.Parse(communicationsData);
 
             mySTBMessage.CourierHawbNumber = (string)GetXElement(myXElementSTBMessage, "CourierHawbNumber");//<CourierHawbNumber>177553172644104455</CourierHawbNumber>
-            mySTBMessage.CourierHawbDate = (string)GetXElement(myXElementSTBMessage, "CourierHawbDate");//<CourierHawbDate>241118</CourierHawbDate>
+            mySTBMessage.CourierHawbDate = (DateTime)GetXElement(myXElementSTBMessage, "CourierHawbDate");//<CourierHawbDate>241118</CourierHawbDate>
             mySTBMessage.StatusCode = (string)GetXElement(myXElementSTBMessage, "StatusCode");//<EventCode>1234</EventCode>
 
 
@@ -238,7 +238,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
     {
 
         public string CourierHawbNumber { get; set; }
-        public string CourierHawbDate { get; set; }
+        public DateTime? CourierHawbDate { get; set; }
         /// <summary>
         /// AVA- זמין
         //REL- יצא מהמסוף

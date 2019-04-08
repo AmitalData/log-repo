@@ -264,6 +264,11 @@ export class DeclarationCourierStatusPM {
     public set ManualProcessCode(newValue: string) { if (this.manualProcessCode != newValue) { this.manualProcessCode = newValue; this.MarkAsDirty("ManualProcessCode"); } }
        
 	 
+    private terminalSuspentionNumber: string;
+    public get TerminalSuspentionNumber() { return this.terminalSuspentionNumber; }
+    public set TerminalSuspentionNumber(newValue: string) { if (this.terminalSuspentionNumber != newValue) { this.terminalSuspentionNumber = newValue; this.MarkAsDirty("TerminalSuspentionNumber"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

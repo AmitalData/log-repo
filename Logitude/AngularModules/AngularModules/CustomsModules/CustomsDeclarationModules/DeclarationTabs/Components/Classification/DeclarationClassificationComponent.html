@@ -100,25 +100,26 @@
 
                                     </td>
 
+                                    <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditCasualSupplier()" [IsEnabled]="!IsDisplayOnly"></IconButton></td>
 
                                     <td style="width: 10px;"><div></div></td>
 
 
                                     <!-- ImporterCode -->
                                     <!--<td style="width: 115px;">
-            <LogLabel [ObjectFieldName]="'ImporterCode'"
-                      [ObjectTableName]="ObjectTableName"
-                      [Text]="'שם לקוח'"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td style="width: 100px;">
-            <LogTextBox [ObjectFieldName]="'CalculatedImporterName'" [ObjectTableName]="ObjectTableName"
-                        [HideColumns]="true"
-                        [DataContext]="DataContext"
-                        [Text]="CalculatedImporterName"></LogTextBox>
+        <LogLabel [ObjectFieldName]="'ImporterCode'"
+                  [ObjectTableName]="ObjectTableName"
+                  [Text]="'שם לקוח'"
+                  [DataContext]="DataContext"></LogLabel>
+    </td>
+    <td style="width: 100px;">
+        <LogTextBox [ObjectFieldName]="'CalculatedImporterName'" [ObjectTableName]="ObjectTableName"
+                    [HideColumns]="true"
+                    [DataContext]="DataContext"
+                    [Text]="CalculatedImporterName"></LogTextBox>
 
 
-        </td>-->
+    </td>-->
 
                                     <td style="width: 115px;">
                                         <LogLabel [ObjectFieldName]="'ImporterCode'" [ObjectTableName]="ObjectTableName"
@@ -178,9 +179,11 @@
                                     <td style="width: 150px;">
                                         <LogLabel [ObjectFieldName]="'TotalInvoiceAmountInUSD'"
                                                   [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                  [Text]="'ערך סחורה בUsd'"
+                                                  [Text]="'ערך סחורה ב USD'"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
+
+
 
                                     <td style="width: 160px;">
                                         <LogTextBox [FocusOnMe]="'true'"
@@ -191,6 +194,7 @@
                                                     [HideColumns]="true"></LogTextBox>
 
                                     </td>
+                                    <td style="width: 25px;"></td>
 
                                     <td style="width: 10px;"><div></div></td>
 
@@ -254,6 +258,7 @@
                                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
                                     </td>
+                                    <td style="width: 25px;"></td>
                                     <td style="width: 10px;"><div></div></td>
 
                                     <!-- GrossMassMeasure -->

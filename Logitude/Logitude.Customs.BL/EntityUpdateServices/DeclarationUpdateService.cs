@@ -549,12 +549,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             }
 
-          
+            if (entityPM.IsCourierDeclaration && entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                if (CheckIfRequiredFieldForCourierHasChanged(entityPM, entityPOCO))
+                {
+                    entityPM.ManifestCargoStatusCode = null;
+                }
+            }
 
             base.OnUpdating(entityPM, entityPOCO);
         }
 
-        private bool CheckIfUpdatingAllowed(DeclarationPM myDeclarationPM)
+        public bool CheckIfUpdatingAllowed(DeclarationPM myDeclarationPM)
         {
             string text = "";
             var context = CustomContext.GetContext(myDeclarationPM.Tenant);
@@ -2150,6 +2156,77 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 util.CalculateInsurance(entityPM);
 
             }
+        }
+
+        public bool CheckIfRequiredFieldForCourierHasChanged(DeclarationPM entityPM, Declaration entityPOCO)
+        {
+            //Check Declaration fields
+            if (entityPOCO.AgentId != entityPM.AgentId || entityPOCO.ImporterName != entityPM.ImporterName || entityPOCO.ImporterAddress != entityPM.ImporterAddress)
+            {
+                return true;
+            }
+
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(entityPM);
+            //Check SupplierInvoice fields
+            if (entityPM.SupplierInvoices != null)
+            {
+                foreach (SupplierInvoicePM supplierInvoiceItem in entityPM.SupplierInvoices)
+                {
+                    foreach (SupplierInvoicePM dbOccsupplierInvoiceItem in dbOccDeclarationPM.SupplierInvoices)
+                    {
+                        if (supplierInvoiceItem.SequenceNumeric == dbOccsupplierInvoiceItem.SequenceNumeric)
+                        {
+                            if (supplierInvoiceItem.VendorId != dbOccsupplierInvoiceItem.VendorId
+                                || supplierInvoiceItem.IncotermCode != dbOccsupplierInvoiceItem.IncotermCode)
+                            {
+                                return true;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            //Check Consignments fields
+            if (entityPM.Consignments != null)
+            {
+                foreach (ConsignmentPM consignmentItem in entityPM.Consignments)
+                {
+                    foreach (ConsignmentPM dbOccconsignmentItem in dbOccDeclarationPM.Consignments)
+                    {
+                        if (consignmentItem.SequenceNumeric == dbOccconsignmentItem.SequenceNumeric)
+                        {
+                            if (consignmentItem.StorageSiteCode != dbOccconsignmentItem.StorageSiteCode
+                                || consignmentItem.ManifestNumber != dbOccconsignmentItem.ManifestNumber
+                                || consignmentItem.ThirdCargoID != dbOccconsignmentItem.ThirdCargoID
+                                || consignmentItem.CargoDescription != dbOccconsignmentItem.CargoDescription)
+                            {
+                                return true;
+                            }
+
+                            foreach (ConsignmentPackagePM consignmentPackageItem in consignmentItem.ConsignmentPackages)
+                            {
+                                foreach (ConsignmentPackagePM dbOccconsignmentPackageItem in dbOccconsignmentItem.ConsignmentPackages)
+                                {
+                                    if (consignmentPackageItem.LineNumber == dbOccconsignmentPackageItem.LineNumber)
+                                    {
+                                        if (consignmentPackageItem.PackageQuantity != dbOccconsignmentPackageItem.PackageQuantity
+                                            || consignmentPackageItem.GrossMassMeasure != dbOccconsignmentPackageItem.GrossMassMeasure
+                                            || consignmentPackageItem.PackageTypeCode != dbOccconsignmentPackageItem.PackageTypeCode)
+                                        {
+                                            return true;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

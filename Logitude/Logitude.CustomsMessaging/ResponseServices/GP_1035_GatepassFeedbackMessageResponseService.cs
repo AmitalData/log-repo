@@ -28,10 +28,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(GP_NG_1035_MSG2_GatepassFeedbackMessage customResponse, GatepassRequestMessageRequestParams requestParams)
         {
-
             ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
             var gatepassRequestQueryService = new GatepassRequestQueryService(customContext);
             var gatepassRequestUpdateService = new GatepassRequestUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+            CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(customContext);
 
             this.MyResponseData = new GatepassFeedbackMessageResponseData();
             this.MyResponseData.Succeeded = true;
@@ -46,19 +46,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
+            //Checking for Exceptions
+            if (customResponse.ResponseContentHeader.Exception != null)
+            {
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = true;
+                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription;
+                LogMessagingUtil.Instance.AppendLine(customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription);
+            }
+
             foreach (var gatepassFeedbackMessageItem in customResponse.GatepassFeedbackMessage)
             {
                 this._GatepassRequestPM = gatepassRequestQueryService.GetGatepassRequestByGatepassNumber(gatepassFeedbackMessageItem.gatepassNumber, requestParams.Tenant);
                 if (this._GatepassRequestPM != null)
                 {
-                    if(this._GatepassRequestPM.CustomsUpdateDateTime != null && this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date > gatepassFeedbackMessageItem.dateTime)
+                    CourierMasterPM courierMasterPM = myCourierMasterQueryService.GetSingle(_GatepassRequestPM.MasterCourierId, false, false);
+                    if(courierMasterPM != null)
+                    {
+                        this.MyResponseData.UserMessage = " משוב לבקשת העברה" + courierMasterPM.AirlinePrefix + "-" + courierMasterPM.MAWB;
+                    }
+
+                    if (this._GatepassRequestPM.CustomsUpdateDateTime != null && this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date > gatepassFeedbackMessageItem.dateTime)
                     {
                         LogMessagingUtil.Instance.AppendLine("GatepassFeedbackMessage was rejected because it is out of date");
                         this.MyResponseData.HasException = true;
                         this.MyResponseData.UserMessage = "המסר נדחה בגלל שהוא עדכני לשעה " + gatepassFeedbackMessageItem.dateTime.Date.ToString("g") + " ויש עדכון משעה " + this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date.ToString("g");
                         return;
                     }
-                    
+
                     this._GatepassRequestPM.ChangeSetOp = ChangeSetOperation.Update;
                     this._GatepassRequestPM.CustomsUpdateDateTime = gatepassFeedbackMessageItem.dateTime;
 
@@ -75,6 +90,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 this._GatepassRequestPM.GatepassRequestStatus = "2";
                                 myEventContextTagModel.EventCode = "VGE";
                                 myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
+                                this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
                             }
                             else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
                             {
@@ -89,6 +105,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 this._GatepassRequestPM.GatepassRequestStatus = "6";
                                 myEventContextTagModel.EventCode = "VGE";
                                 myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
+                                this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
                             }
                             else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
                             {
@@ -174,7 +191,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 foreach (var item in exception)
                 {
-                    exceptionDescription += string.Concat(exceptionDescription, item.ExceptionLevel, ": ", item.ExeptionDescription, "\n");
+                    string itemExceptionLevel = "";
+                    switch (item.ExceptionLevel)
+                    {
+                        case 1:
+                            itemExceptionLevel = "שגיאה ";
+                            break;
+                        case 2:
+                            itemExceptionLevel = "התראה ";
+                            break;
+                        case 3:
+                            itemExceptionLevel = "אזהרה ";
+                            break;
+                    }
+                    exceptionDescription += string.Concat(exceptionDescription, itemExceptionLevel, ": ", item.ExeptionDescription, "\n");
                 }
             }
             return exceptionDescription;
