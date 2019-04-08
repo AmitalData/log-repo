@@ -206,11 +206,11 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
         IDbSet<DWHSetting> DWHSettings { get; set; }
         IDbSet<PaymentGatewayPartners> PaymentGatewayPartners { get; set; }
-
         IDbSet<TemperatureUnit> TemperatureUnits { get; set; }
-
         IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         IDbSet<CustomsShipper> CustomsShippers { get; }
+        IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set;}
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

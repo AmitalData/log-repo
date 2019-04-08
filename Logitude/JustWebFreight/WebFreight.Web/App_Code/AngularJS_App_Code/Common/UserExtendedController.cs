@@ -5,6 +5,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -716,6 +717,59 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             }
         }
 
+        public HttpResponseMessage GetAddUserToReleaseNotesUsers(string userId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                UsersReleaseNotesDisplayRepository usersReleaseNotesDisplayRepository = new UsersReleaseNotesDisplayRepository(tenant);
+                UsersReleaseNotesDisplay usersReleaseNotesDisplay = new UsersReleaseNotesDisplay()
+                {
+                    Id = IdCounter.GetNumber("UsersReleaseNotesDisplay", tenant).ToString(),
+                    Tenant = tenant,
+                    UserId = userId,
+                };
+
+                usersReleaseNotesDisplayRepository.Add(usersReleaseNotesDisplay);
+                usersReleaseNotesDisplayRepository.SubmitChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK, userId);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetCheckUserReleaseNotesToolTip(string userId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                UsersReleaseNotesDisplayRepository usersReleaseNotesDisplayRepository = new UsersReleaseNotesDisplayRepository(tenant);
+                UsersReleaseNotesDisplay usersReleaseNotesDisplay = usersReleaseNotesDisplayRepository.GetSingleUsersReleaseNotesDisplayByUserId(userId, tenant);
+
+                bool show = true;
+                if(usersReleaseNotesDisplay != null)
+                {
+                    show = false;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, show);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 

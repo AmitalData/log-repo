@@ -2,16 +2,13 @@ import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ARInvoiceStockPM } from '../../../Invoice/EntityPMs/ARInvoiceStockPM';
 import { ARInvoiceStockLinePM } from '../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
-import { ARInvoiceStockPMService } from '../../../Invoice/Services/StandardPMs/ARInvoiceStockPMService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { InvoiceStockInputArgs } from '../../../Invoice/Args';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
     moduleId: module.id,
@@ -23,29 +20,50 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
     public ObjectTableName: string = "ARInvoiceStock";
     public ValidationErrorsList: string[] = [];
     public EntityPM: ARInvoiceStockPM;
-    private stockPMService: ARInvoiceStockPMService;
     public ItemsSource: ARInvoiceStockLinePM[] = [];
     public ItemsCount: number;
     public IsEditMode: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    constructor(public entityArgs: EntityArgs) {
         super();
-
-        this.stockPMService = new ARInvoiceStockPMService();
-
+        
         this.Listen();
     }
 
     private SessionEvent: any = null;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null; 
     private Listen() {
         this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "RefreshARInvoiceStockScreen") {
                 this.SetUIProperties();
             }
         });
+
+        if (this.entityArgs != null && this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                    this.SetUIProperties();
+                    this.FillStockLines();
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                    this.SetUIProperties();
+                    this.FillStockLines();
+                }
+            });
+        }
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
     public InitTemplate(args: InvoiceStockInputArgs) {
@@ -157,13 +175,13 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
 
     AddStockLineClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Stock Numbers";
+        logWindow.Title = "Stock Numbers";        
         logWindow.WindowArgs = { Stock: this.EntityPM };
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewARInvoiceStockLinesComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
-                this.EntityPM.NumbersAdded = true;
-                this.FillStockLines();
+                this.IsNew = false;
+                this.FillStockLines();                
             }
         });
     }
@@ -227,55 +245,6 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
                         this.FillStockLines();
 
                         this.EntityPM.Amount = this.ItemsCount;
-                        this.EntityPM.Remaining = this.ItemsCount;
-                    }
-                });
-            }
-        }
-    }
-
-    CancelClicked() {
-        this.RejectChanges();
-        this.CurrentSession.CloseCurrentWindow();
-    }
-
-    private myCloner: Cloner;
-    private Clone() {
-        this.myCloner = new Cloner(this.DataContext);
-        this.myCloner.AddField('Name');
-        this.myCloner.AddField('StartDate');
-        this.myCloner.AddField('EndDate');
-        this.myCloner.AddField('Description');
-        this.myCloner.AddField('Notes');
-        this.myCloner.AddEntity(this.EntityPM);
-    }
-    private RejectChanges() {
-        this.myCloner.RejectChanges();
-    }
-
-    OkClicked() {
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-
-        this.ValidationErrorsList = errors;
-
-        if (this.ValidationErrorsList.length == 0) {            
-            this.EntityPM.Amount = this.ItemsCount;
-            this.EntityPM.Remaining = this.ItemsCount;
-
-            if (this.IsNew) {
-                this.CurrentSession.StartBusyIndicatorSaving();
-
-                this.stockPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-
-                    this.CurrentSession.StopBusyIndicator();
-
-                    if (!myResponse.HasError) {
-                        this.CurrentSession.CloseCurrentWindowEmit("OK");
-                    }
-
-                    else {
-                        this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
                 });
             }

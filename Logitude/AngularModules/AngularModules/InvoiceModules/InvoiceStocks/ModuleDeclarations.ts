@@ -3,7 +3,7 @@ import { NewARInvoiceStockComponent } from './Components/NewEntity/NewARInvoiceS
 import { ARInvoiceStockInputTemplate } from './Components/ARInvoiceStockInputTemplate';
 import { ARInvoiceStockGeneralTabComponent } from './Components/EditTabs/ARInvoiceStockGeneralTabComponent';
 import { NewARInvoiceStockLinesComponent } from './Components/NewEntity/NewARInvoiceStockLinesComponent';
-
+import { ARInvoiceStockSelectionComponent } from './Components/StockSelection/ARInvoiceStockSelectionComponent';
 export const Components =
     [
         ManageStocksComponent,
@@ -11,6 +11,7 @@ export const Components =
         ARInvoiceStockInputTemplate,
         ARInvoiceStockGeneralTabComponent,
         NewARInvoiceStockLinesComponent,
+        ARInvoiceStockSelectionComponent,
     ];
 
 export class ModuleDeclarations {
@@ -24,6 +25,7 @@ export class ModuleDeclarations {
             case "ARInvoiceStockInputTemplate": { myResult = ARInvoiceStockInputTemplate; break; }
             case "ARInvoiceStockGeneralTabComponent": { myResult = ARInvoiceStockGeneralTabComponent; break; }
             case "NewARInvoiceStockLinesComponent": { myResult = NewARInvoiceStockLinesComponent; break; }
+            case "ARInvoiceStockSelectionComponent": { myResult = ARInvoiceStockSelectionComponent; break; }
         }
 
         return myResult;

@@ -33,6 +33,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SeriesRemoved { get; set; }
         public bool Cancelled { get; set; }
         public bool Reactivated { get; set; }
+        public string LinesCount { get; set; }
 
         private List<ARInvoiceStockLinePM> aRInvoiceStockLines;
         [Include]
