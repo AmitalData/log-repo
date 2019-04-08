@@ -50,6 +50,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
               ref string MoreParams,
               out string MessageOut)
         {
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
+
             MessageOut = "";
             _Stopwatch = Stopwatch.StartNew();  
             MyCommunicationsParams.Subject = "DeclarationDocumentsService ";
@@ -159,11 +161,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     AppendLogLine("Update pointer, connected entity: " + customsDocumentPointerPM.ParentEntityId);
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
-                    CustomsDocumentsTicketPM myCustomsDocumentsTicketPM = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(customsDocumentsTicketPM.DocumentsFilingId, _MyDeclarationPM.Tenant).FirstOrDefault();
-                    myCustomsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
-                    AppendLogLine("Update Ticket after pointer, ticket pointer connected entity: " + myCustomsDocumentsTicketPM.CustomsDocumentPointers.FirstOrDefault().ParentEntityId);
-                    myCustomsDocumentsTicketUpdateService.Update(myCustomsDocumentsTicketPM, true);
-                    AppendLogLine("after Update Ticket after pointer");
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
                     CustomsDocumentPM customsDocumentPM;
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
@@ -205,16 +202,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
-
                     customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
+                    if (customsDocumentPM.DeclarationId != _MyDeclarationPM.Id)
+                    {
+                        customsDocumentPM.DeclarationId = _MyDeclarationPM.Id;
+                    }
                     customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
                     customsDocumentPM.IsSendToQueue = true;
                     myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
                     AppendLogLine("after Update Document");
-                    Task.Delay(5000).Wait();
-                    myCustomsDocumentsTicketUpdateService.Update(myCustomsDocumentsTicketPM, true);
                 }
                 else
                 {
@@ -224,6 +222,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 
             MyGenericResponseObj.Stage = "Add Ticket Done ";
             AppendLogLine("Add Ticket:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+            AppendLogLine(Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
             MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
             //MyGenericResponseObj.ResponseXml ;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
