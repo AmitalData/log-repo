@@ -22,6 +22,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 export class ARPaymentMenuButtonsHandler {
     public EntityPM: ARPaymentPM;
     public entityArgs: EntityArgs
+    private CurrentSession = SessionLocator.SelectedSession;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -451,7 +452,7 @@ export class ARPaymentMenuButtonsHandler {
         // full accounting validation
         //lines validation
         if(SessionLocator.TenantPM.AccountingActivated){
-            var _edit = SessionLocator.CurrentSession.CurrentEditComponent;
+            var _edit = this.CurrentSession.CurrentEditComponent;
             if(!_edit.IsEditValid){
                 _edit.ValidationErrorsList = [TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines')];
                 return;

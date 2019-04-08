@@ -36,6 +36,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
     answerFileFilterItems: ApiQueryFilters;
     ItemsList: ObservableCollection;
     IsClosed: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
         this.ItemsList = new ObservableCollection([]);
@@ -50,27 +51,27 @@ export class DecCargoSplitConComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.currentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+            this.currentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            //SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-            //    SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-            //        if (this.currentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            //this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+            //    this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+            //        if (this.currentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
             //            if (tabCode == "DEGC") {
             //                this.DisplayOnlyCheck();
             //            }
@@ -92,8 +93,8 @@ export class DecCargoSplitConComponent extends BaseComponent {
                 this.ItemsList.Insert(item);
             }
         }
-        SessionLocator.CurrentSession.SubscriptionAdd(
-        SessionLocator.CurrentSession.CollateralAnswerRefreshEvent.subscribe((res) => {
+        this.CurrentSession.SubscriptionAdd(
+        this.CurrentSession.CollateralAnswerRefreshEvent.subscribe((res) => {
             this.SetClosedDeclarationCargoSplitScreesn(res.IsClosed);
             })
         );
@@ -257,9 +258,9 @@ export class DecCargoSplitConComponent extends BaseComponent {
     }
 
     DisplayOnlyCheck() {
-        this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             return;
         }
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
@@ -418,10 +419,10 @@ export class DecCargoSplitConComponent extends BaseComponent {
 
     lastDeletedItem: DecCargoSplitConsItemPM;
     DeleteSelected(item: any) {
-        //SessionLocator.CurrentSession.StartBusyIndicator("");
+        //this.CurrentSession.StartBusyIndicator("");
         this.lastDeletedItem = item.EntityPM;
 
-        //var SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        //var SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
             //SaveCompletedEvent.unsubscribe();
             this.ItemsList.Remove(item);
             this.EntityPM.RemoveDecCargoSplitConsItem(item.EntityPM);
@@ -431,8 +432,8 @@ export class DecCargoSplitConComponent extends BaseComponent {
                 if (!myResponse.HasError) {
                     this.ItemsSource.Remove(item);
                     
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.StopBusyIndicator();
 
                 }
 
@@ -441,7 +442,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
             */
         //});
 
-        //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        //this.CurrentSession.CurrentEditComponent.SaveChanges();
         
     }
 
@@ -494,18 +495,18 @@ export class DecCargoSplitConComponent extends BaseComponent {
 
 
         if (errors.length > 0) {
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         }
 
 
         else {
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             if (this.EntityPM.IsDirty) {
-                SessionLocator.CurrentSession.StartBusyIndicator("");
+                this.CurrentSession.StartBusyIndicator("");
                 this.declarationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
                     var declaration = response.Result;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!AppTool.IsNullOrEmpty(declaration)) {
                         if (!AppTool.IsNullOrEmpty(item)) {
                             this.EditItem(item);
@@ -524,9 +525,9 @@ export class DecCargoSplitConComponent extends BaseComponent {
     }
 
     RefreshEntity() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-            SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        if (this.CurrentSession.CurrentEditComponent) {
+            this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         }
         
     }
@@ -554,7 +555,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
     set ConItemPackDetStatusVisibility(value: boolean) { this.conItemPackDetStatusVisibility = value; }
 
     EditItem(item: DecCargoSplitConsItemPM) {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         /*
         var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
 
@@ -594,7 +595,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
                 if (event != 'cancel') {
 
                     this.RefreshEntity();
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
                 else {
                     this.ReloadMyScreen();
@@ -604,7 +605,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
             });
             logWindow.IsHideHeader = true;
             logWindow.Show('./Customs/Components/Declaration/EditTabs/SupplierInvoices/AddEditSupplierInvoiceComponent');
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
         */
     }
@@ -1065,7 +1066,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
 
 export class DecCargoSplitConsItemModel extends BaseComponent {
     public EntityPM: DecCargoSplitConsItemPM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(line: DecCargoSplitConsItemPM) {
         super();
         this.EntityPM = line;
@@ -1125,7 +1126,7 @@ export class DecCargoSplitConsItemModel extends BaseComponent {
 
         if (this.valid != true) {
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: parentCargoConsinmentItemTextBox.InputId });
+            this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: parentCargoConsinmentItemTextBox.InputId });
 
         }
         //this.ParentCargoConsinmentItem = newValue;
@@ -1153,7 +1154,7 @@ export class DecCargoSplitConsItemModel extends BaseComponent {
         }
         if (this.valid != true) {
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: grossMassMeasureTextBox.InputId });
+            this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: grossMassMeasureTextBox.InputId });
 
         }
     }

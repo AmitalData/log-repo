@@ -103,6 +103,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ShipmentClassesGeneraor.tt</DependentUpon>
     </Compile>
+    <Compile Include="AutoGenerators\ControllersGenerator.cs">
+      <DependentUpon>ControllersGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +173,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ShipmentClassesGeneraor.cs</LastGenOutput>
       <LastOutputs>.\ShipmentClassesGeneraor.cs</LastOutputs>
+    </Content>
+    <Content Include="AutoGenerators\ControllersGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
+      <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
     <None Include="EntityFiles\CommonDataModel\NumberFormat.lxml">
       <SubType>Designer</SubType>
@@ -501,6 +511,11 @@
     </None>
     <None Include="EntityFiles\InvoiceModel\ARInvoicePayment.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoiceStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARInvoiceStock.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\ARInvoiceStockLine.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARInvoiceStocksStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoiceTotalVAT.lxml">
       <SubType>Designer</SubType>
     </None>

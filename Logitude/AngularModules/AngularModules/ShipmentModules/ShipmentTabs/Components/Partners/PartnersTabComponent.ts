@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy}  from '@angular/core';
+import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -30,6 +30,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     public EntityPM: ShipmentPM;
     public ObjectTableName: string;
     public ItemsCollection: PartnerItem[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -44,7 +45,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "AWBWizardClosed") {
                     this.UpdateScreen();
                 }
@@ -276,7 +277,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
                     myPartnerItem.Reference1 = null;
                     myPartnerItem.Reference2 = null;
                     this.SetAddButtonsIsDisabled();
-                    SessionLocator.CurrentSession.FireEvent("ShipmentPartnersChanged");
+                    this.CurrentSession.FireEvent("ShipmentPartnersChanged");
                 }
             });
         }

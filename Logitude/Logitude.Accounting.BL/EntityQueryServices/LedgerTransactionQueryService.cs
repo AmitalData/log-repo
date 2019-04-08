@@ -550,6 +550,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                             JournalNumber = j.JournalNumber,
                                                             Notes = a.Notes,
                                                             Reference2 = a.Reference2,
+                                                            LedgerTransactionId = a.Id,
                                                             OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber:null,
                                                         }).ToList();
 
@@ -569,6 +570,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<LedgerTransactionPM> GetReconciledInvoicesTransactionsForARPayment(string arpaymentId, string billToGLAccountId, int tenant)
         {
+            List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>(); // result
             LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
             ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
 
@@ -576,26 +578,33 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             // get payment transaction
             LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
-            string paymentTransactionId = paymentTransaction.Id;
-            
-            // get reconcile lines for this payment
-            List<ReconciliationLinePM> recoLines = recoLineQuery.GetLinesByReconciledWithTransactionId(paymentTransactionId, tenant);
+            if (paymentTransaction != null)
+            {
+                string paymentTransactionId = paymentTransaction.Id;
 
-            // get transactions connected to reco lines
-            List<string> recoLinesTransactionsId = recoLines.Select(d => d.TransactionId).ToList();
-            List<LedgerTransactionPM> reconciledTransactions = transactionsQuery.GetLedgerTransactionPMsByIdList(recoLinesTransactionsId, tenant);
+                // get reconcile lines for this payment
+                List<ReconciliationLinePM> recoLines = recoLineQuery.GetLinesByReconciledWithTransactionId(paymentTransactionId, tenant);
 
-            // exclude partially reconcile transactions
-            reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true).ToList();
+                // get transactions connected to reco lines
+                List<string> recoLinesTransactionsId = recoLines.Select(d => d.TransactionId).ToList();
+                reconciledTransactions = transactionsQuery.GetLedgerTransactionPMsByIdList(recoLinesTransactionsId, tenant);
 
-            reconciledTransactions = FillTransactionsReconciliationNumbers(reconciledTransactions, tenant);
+                // exclude partially reconcile transactions
+                reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
 
+                reconciledTransactions = FillTransactionsReconciliationNumbers(reconciledTransactions, tenant);
+                reconciledTransactions = FillReconciledPaymentTransactionAmount(reconciledTransactions.ToList(), paymentTransaction != null ? paymentTransaction.Id : null, tenant);
+
+            }
             return reconciledTransactions;
 
         }
-        public List<LedgerTransactionPM> GetOpenInvoicesTransactionsForAccount(string billToGLAccountId, int tenant)
+        public List<LedgerTransactionPM> GetOpenInvoicesTransactionsForAccount(string billToGLAccountId, string arpaymentId, int tenant)
         {
             IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
+
+            // get payment transaction
+            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
 
             // filter transactions by account and source type
             transactions = transactions
@@ -606,7 +615,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         && d.SourceTypeCode == AccountingEntityValues.ARInvoice)
                     .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
 
+           
             List<LedgerTransactionPM> openInvoicesTransactions = FillTransactionsReconciliationNumbers(transactions.ToList(), tenant);
+            openInvoicesTransactions = FillReconciledPaymentTransactionAmount(openInvoicesTransactions.ToList(), paymentTransaction != null ? paymentTransaction.Id : null, tenant);
 
             return openInvoicesTransactions;
         }
@@ -619,6 +630,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             trans4invoices.ForEach(t =>
             {
                 t.RecoNumber = GetReconciliationsNumbersForTransaction(t.Id, tenant);
+
+
+            });
+
+            return trans4invoices;
+        }
+        private List<LedgerTransactionPM> FillReconciledPaymentTransactionAmount(List<LedgerTransactionPM> transactions, string paymentTransactionId, int tenant)
+        {
+            List<LedgerTransactionPM> trans4invoices = new List<LedgerTransactionPM>();
+
+            trans4invoices = transactions.ToList();
+            trans4invoices.ForEach(t =>
+            {
+                t.PaymentReconciledAmount = GetPaymentReocnciliationAmountForTransaction(t.Id, paymentTransactionId, tenant);
 
             });
 
@@ -713,7 +738,25 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return numbersString;
         }
-  
+
+        private decimal GetPaymentReocnciliationAmountForTransaction(string transactionId, string paymentTransactionId, int tenant)
+        {
+            ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
+            ReconciliationQueryService recoQuery = new ReconciliationQueryService(tenant);
+
+            // get reconciliation lines for the transaction
+            List<ReconciliationLinePM> recoLines = recoLineQuery.GetLinesByTransactionId(transactionId, tenant).ToList();
+
+            decimal reconciledAmount = 0;
+            recoLines.ForEach(recoLine =>
+            {
+                if (recoLine.ReconciledWithTransactionId == paymentTransactionId && paymentTransactionId != null)
+                    reconciledAmount += recoLine.ReconciliationAmount;
+            });
+            
+            return reconciledAmount;
+        }
+
 
     }
     public class JournalLineLedgerDTO

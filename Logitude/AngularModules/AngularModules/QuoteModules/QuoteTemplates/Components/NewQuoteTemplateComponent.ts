@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
 import {QuoteTemplateList} from '../../../Quote/EntityLists/QuoteTemplateList';
@@ -39,6 +39,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
 
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -119,9 +120,9 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
     LoadQuoteTemplateList() {
         this.QuoteTemplateLists = [];
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType, SessionLocator.LoggedUserPM.IsCustomerCare, SessionLocator.Tenant).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
        
@@ -161,7 +162,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     }
 
     CreateNewQuoteTemplate() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateExtendedPMService.insert(this.EntityPM).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -170,7 +171,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                     var window = new MessageWindow();
@@ -186,7 +187,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
  
     CopyQuoteTemplatePM() {
      
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateExtendedPMService.GetCopyQuoteTemplate(this.SelectedQuoteTemplate.Id, this.EntityPM.Name, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe(res => {
            
             var pmResponse: ServiceResponse = res;
@@ -195,9 +196,9 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
                     this.EntityPM = pmResponse.Result;
                     this.OpenEditQuoteTemplateComponent();
                 }
-                else SessionLocator.CurrentSession.StopBusyIndicator();
+                else this.CurrentSession.StopBusyIndicator();
             } else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                     var window = new MessageWindow();
@@ -232,6 +233,6 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

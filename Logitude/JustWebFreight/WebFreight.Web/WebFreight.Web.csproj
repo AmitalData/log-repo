@@ -341,7 +341,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Profact3.3.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\..\packages\Profact3.3.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
@@ -1658,6 +1658,8 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APPaymentStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APPaymentViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStocksStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStockViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceTransferStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceViewsController.Generated.cs" />
@@ -1679,6 +1681,7 @@
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\APPaymentController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\APPaymentMethodController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARInvoiceController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARInvoiceStockController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARPaymentController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\BankAccountLiteController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\CreditCardTypeController.Generated.cs" />
@@ -2191,6 +2194,7 @@
     <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />
@@ -2223,6 +2227,7 @@
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
+    <Compile Include="Helpers\FirstChanceExceptionEventArgsLogger.cs" />
     <Compile Include="Helpers\FlatFileHelper.cs" />
     <Compile Include="Helpers\IISManager.cs" />
     <Compile Include="Helpers\ImporterDepositionHelper.cs" />
@@ -2250,6 +2255,7 @@
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="Helpers\TMMessageBuilderAnalyzer.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
+    <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.BankAccountLite.cs" />
     <Compile Include="LinksGateway.aspx.cs">
@@ -2637,6 +2643,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoicePaymentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStockLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStocksStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStockUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceTotalVATUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceTransferStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceTypeUpdateClass.cs" />

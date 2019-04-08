@@ -44,16 +44,16 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
     public flag: boolean = true;
     public CountriesDashboardLegendId: string;
     public DirectionAndtransportModeLegendId: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TenantPM = InfraSettings.TenantPM;
         this.myChartsService = new DashboardDomainService();
-        this.ShipmentQuantityByTimeOverViewId = this.ShipmentQuantityByTimeOverViewId + SessionLocator.CurrentSession.GetChartId();
-        this.DirectionAndTransportModeOverViewId = this.DirectionAndTransportModeOverViewId + SessionLocator.CurrentSession.GetChartId();
-        this.CountriesOverviewId = this.CountriesOverviewId + SessionLocator.CurrentSession.GetChartId();
-        this.CountriesDashboardLegendId = "CountriesDashboardLegendId_" + SessionLocator.CurrentSession.GetNewId("CountriesDashboardLegendId");
-        this.DirectionAndtransportModeLegendId = "DirectionAndtransportModeLegendId_" + SessionLocator.CurrentSession.GetNewId("DirectionAndtransportModeLegendId");
+        this.ShipmentQuantityByTimeOverViewId = this.ShipmentQuantityByTimeOverViewId + this.CurrentSession.GetChartId();
+        this.DirectionAndTransportModeOverViewId = this.DirectionAndTransportModeOverViewId + this.CurrentSession.GetChartId();
+        this.CountriesOverviewId = this.CountriesOverviewId + this.CurrentSession.GetChartId();
+        this.CountriesDashboardLegendId = "CountriesDashboardLegendId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");
+        this.DirectionAndtransportModeLegendId = "DirectionAndtransportModeLegendId_" + this.CurrentSession.GetNewId("DirectionAndtransportModeLegendId");
     }
     public ShipmentQuantityByTimeOverViewId: string = "ShipmentQuantityByTimeOverViewId_";
     public CountriesOverviewId: string = "CountriesOverviewId_";

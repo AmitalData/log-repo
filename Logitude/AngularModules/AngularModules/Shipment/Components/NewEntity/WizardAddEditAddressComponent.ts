@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AddressPM} from '../../../Common/EntityPMs/AddressPM';
 import {AddressPMService} from '../../../Common/Services/StandardPMs/AddressPMService';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -28,6 +28,7 @@ export class WizardAddEditAddressComponent extends BaseComponent {
     public PartnerTypeId: string = null;
     private myService: AddressPMService;
     private IsCustomer: boolean;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new AddressPM();
@@ -45,7 +46,7 @@ export class WizardAddEditAddressComponent extends BaseComponent {
 
             if (!AppTool.IsNullOrEmpty(entityId)) {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
 
                 this.myService.get(entityId).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
@@ -56,7 +57,7 @@ export class WizardAddEditAddressComponent extends BaseComponent {
                         this.EntityPM = myResponse.Result;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.SetUIProperties();
                 });
             }
@@ -369,7 +370,7 @@ export class WizardAddEditAddressComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -410,7 +411,7 @@ export class WizardAddEditAddressComponent extends BaseComponent {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.IsNewEntity) {
                 this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
@@ -419,10 +420,10 @@ export class WizardAddEditAddressComponent extends BaseComponent {
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
@@ -433,10 +434,10 @@ export class WizardAddEditAddressComponent extends BaseComponent {
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 

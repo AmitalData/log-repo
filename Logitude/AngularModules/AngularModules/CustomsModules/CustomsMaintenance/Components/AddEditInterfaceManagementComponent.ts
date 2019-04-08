@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
 import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -58,7 +58,7 @@ export class AddEditInterfaceManagementComponent
 
     ValidationErrorsList: string[] = [];
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -76,7 +76,7 @@ export class AddEditInterfaceManagementComponent
     SetWindowArgs(WinArg) {
         ;
         this._TenantInterfaceManagementList = WinArg.SelectedItem;
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe(response => {
@@ -86,7 +86,7 @@ export class AddEditInterfaceManagementComponent
                     .subscribe(rsp => {
                         this.entityPM = rsp.Result;
                         this.ValidScreen()
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
 
             });
@@ -206,7 +206,7 @@ export class AddEditInterfaceManagementComponent
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {

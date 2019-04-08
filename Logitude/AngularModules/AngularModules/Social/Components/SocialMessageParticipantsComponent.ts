@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -32,6 +32,7 @@ export class SocialMessageParticipantsComponent implements OnInit {
     ConversationHeaderId: string = "";
     ExcludedResult: string[];
     Area: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.conversationHeaderParticipantExtendedPMService = new ConversationHeaderParticipantExtendedPMService();
     }
@@ -79,10 +80,10 @@ export class SocialMessageParticipantsComponent implements OnInit {
 
         this.ExcludedResult = [];
         this.ConversationHeaderParticipantPMLists = [];
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.conversationHeaderParticipantExtendedPMService.GetAllConversationHeaderParticipantPMByConversationHeaderId(this.ConversationHeaderId).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 this.BluidLists(pmResponse.Result);
 
@@ -128,7 +129,7 @@ export class SocialMessageParticipantsComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

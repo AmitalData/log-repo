@@ -35,6 +35,7 @@ using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.BLExt;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -327,7 +328,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
-                CreateReconciliationForARPayment(theEntityPm);
+                if(theEntityPm.StatusCode != "VD")
+                    CreateReconciliationForARPayment(theEntityPm);
             }
 
             paymentRepository.Update(payment);
@@ -1725,7 +1727,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (!_payment.IsFullAccounting)
                 return;
 
-            bool showLocal = false;
+            ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
+            bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
 
             // Validate lines amount to reconcile
             if (_payment.InvoicesTransactions
@@ -1739,7 +1742,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
             decimal payAmount = Convert.ToDecimal(_payment.GLAccountRecoMethodCode == "0" ? _payment.AmountInLocalCurrency : _payment.AmountInPaymentCurrency);
             if (amount2reconcile > payAmount)
-                throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.selectedinvoicesishigherthanpayamount", _payment.Tenant, showLocal));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
 
 
 
@@ -1781,6 +1784,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        public ContactPM GetLoggedContactPM(int tenant)
+        {
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
         #endregion
     }
 }

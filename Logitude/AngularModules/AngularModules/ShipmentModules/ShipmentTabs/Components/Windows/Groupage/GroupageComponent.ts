@@ -22,6 +22,7 @@ export class GroupageComponent {
     public ShipmentsPackages: GroupageListItem[] = [];
     public MyGroupagePackages: GroupageListItem[] = [];
     public ToggleItems: ToggleItem[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -176,7 +177,7 @@ export class GroupageComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 
@@ -255,12 +256,12 @@ export class GroupageComponent {
 
             ServiceLocator.SendTotangoUserActivity("Master", "Building packages for ocean groupage");
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
 
 
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 }
@@ -271,6 +272,7 @@ export class GroupageListItem {
     public ShipmentPM: ShipmentPM = null;
     public ItemsSource: GroupageInsideItem[] = [];
     public InsideGridHeight: number = 70;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: ShipmentPackagePM, public fatherComponent: GroupageComponent, isGroupage: boolean) {
         this.EntityPM = item;
         this.ShipmentPM = fatherComponent.EntityPM;

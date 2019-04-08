@@ -62,6 +62,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
     NewUserPM: UserPM = new UserPM();
 
     private userPMService: UserPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder,  public _passwordChangeService: PasswordChangeService, public _roleExtendedPMService: RoleExtendedPMService) {
         super();
   
@@ -214,11 +215,11 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                 this.ValidationErrorsList = [];
                 this.NewUserPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.NewUserPM.Technology = "AG";
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
                 this.userPMService.insert(this.NewUserPM).subscribe(myResult=> {
                     if (myResult) {
 
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (myResult.HasError) {
 
                             myResult.ErrorsArray.forEach((item) => {
@@ -227,14 +228,14 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                         }
                         else {
                             var newUserPM: UserPM = myResult.Result;
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit(newUserPM.Id);
+                            this.CurrentSession.CloseCurrentWindowEmit(newUserPM.Id);
                         }
 
                     }
 
 
                 }, error=> {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     var dd: any = error;
                     console.log(dd.text);
                 })
@@ -251,7 +252,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

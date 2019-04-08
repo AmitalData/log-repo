@@ -6,6 +6,7 @@ import { AGGridCustomHeader } from './Components/TemplateRenderer/AGGridCustomHe
 import { EditShipmentLinkRendererComponent } from './Components/TemplateRenderer/EditShipmentLinkRendererComponent';
 import { AgGridColumnsOperations } from './Components/NewEntity/AgGridColumnsOperations';
 import { DWAskUserFiltersComponent } from './Components/Workspaces/DWAskUserFiltersComponent'; 
+import { DateSampleComponent } from './Components/Workspaces/DateSampleComponent'; 
 
 export const Components =
     [
@@ -16,7 +17,8 @@ export const Components =
         AgGridColumnsOperations,
         DWAskUserFiltersComponent,
         AGGridCustomHeader,
-        EditShipmentLinkRendererComponent
+        EditShipmentLinkRendererComponent,
+        DateSampleComponent
     ];
 
 export class ModuleDeclarations {
@@ -31,6 +33,8 @@ export class ModuleDeclarations {
             case "DWAskUserFiltersComponent": { myResult = DWAskUserFiltersComponent; break; }
             case "AGGridCustomHeader": { myResult = AGGridCustomHeader; break; }
             case "EditShipmentLinkRendererComponent": { myResult = EditShipmentLinkRendererComponent; break; }
+            case "DateSampleComponent": { myResult = DateSampleComponent; break; }
+
         }
         return myResult;
     }

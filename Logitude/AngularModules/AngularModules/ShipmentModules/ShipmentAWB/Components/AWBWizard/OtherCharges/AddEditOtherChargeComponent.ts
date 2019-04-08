@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
@@ -18,6 +18,7 @@ export class AddEditOtherChargeComponent extends BaseComponent implements AfterV
     public DataContext: AWBWizardOtherChargeItem;
     public ValidationErrorsList: string[] = [];
     public TenantZeroAirlineId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -40,7 +41,7 @@ export class AddEditOtherChargeComponent extends BaseComponent implements AfterV
     CancelButtonClicked() {
         this.RejectChanges();
         this.DataContext.IsWindowMode = false;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -88,7 +89,7 @@ export class AddEditOtherChargeComponent extends BaseComponent implements AfterV
             }
 
             this.DataContext.fatherComponent.ComputeTotals();
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
             this.DataContext.IsWindowMode = false;
         }
     }

@@ -50,6 +50,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public LocalCurrencyCode: string;
     public AllInMatchText: string;
     IsShowTotalPerContainer: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -84,7 +85,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "FCLPackagesChanged") {
                     this.SetUIProperties();
                     this.BuildItemsSource();

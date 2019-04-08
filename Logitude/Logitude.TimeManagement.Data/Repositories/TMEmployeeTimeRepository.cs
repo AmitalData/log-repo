@@ -59,6 +59,11 @@ namespace Logitude.TimeManagement.Data.Repositories
                     select d);
 
         }
+
+        public IQueryable<TMEmployeeTime> GetAllWithoutTenant()
+        {
+            return from a in context.TMEmployeeTimes select a;
+        }
     }
 }
    

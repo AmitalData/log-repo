@@ -78,6 +78,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     sharedLogisticsSummary: SharedLogisticsSummary;
     myTenantPM: TenantPM;
     public tenantPMService: TenantPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedLogisticsService: SharedLogisticsService, public _documentTypeListService: DocumentTypeListService) {
         if (this.tenantPMService == null) {
             this.tenantPMService = new TenantPMService();
@@ -347,11 +348,11 @@ export class SharedLogisticsMainComponent implements OnInit {
             listArgs.BackButtonTitle = backButtonTitle;
             //listArgs.ShowViews = false;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -440,11 +441,11 @@ export class SharedLogisticsMainComponent implements OnInit {
             listArgs.BackButtonTitle = backButtonTitle;
             listArgs.ShowViews = false;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
     }

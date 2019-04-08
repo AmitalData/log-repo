@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -24,10 +24,10 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
     providers: [SharedAgentManifestService, AgentSharedManifestPMService, EntityResourceService],
 })
 export class SharedManifestComponent {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, private _entityResourceService: EntityResourceService, private _aentSharedManifestPMService: AgentSharedManifestPMService) {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
     }
     IsShowMarkASCompleted: boolean = false;
     public ValidationWarningsList: string[] = [];
@@ -66,7 +66,7 @@ export class SharedManifestComponent {
     LoadData() {
 
       
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(res => {
             this._entityResourceService.getEntityResourceByTableName("Master").subscribe(res1 => {
                 this.IsLoadComponent = true;
@@ -95,10 +95,10 @@ export class SharedManifestComponent {
                             this.HousesList = this.ManifestSL.Houses;
                             this.CheckifShipmentCreateOrNotAndEnableEdit();
 
-                        } else SessionLocator.CurrentSession.StopBusyIndicator();
+                        } else this.CurrentSession.StopBusyIndicator();
 
 
-                    } else SessionLocator.CurrentSession.StopBusyIndicator();
+                    } else this.CurrentSession.StopBusyIndicator();
                 });
             });
         });
@@ -198,7 +198,7 @@ export class SharedManifestComponent {
 
         this.ShowAreaButton = true;
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     OpenSharedManifestAdditionalComponent(houseEntity: HouseSL) {
@@ -256,7 +256,7 @@ export class SharedManifestComponent {
     EditShipment(houseEntity: HouseSL) {
         var entityId: string = !houseEntity ? this.ManifestSL.EntityId : houseEntity.EntityId;
         if (!AppTool.IsNullOrEmpty(entityId)) {
-            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
 
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -279,18 +279,18 @@ export class SharedManifestComponent {
 
     UpDateAgentSharedManifest(status:string) {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving....");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving....");
 
         this.CurrentEntity.StatusCode = status;
         this.CurrentEntity.UpdateDate = DateTool.GetCurrentDateAsUtc();
         this._aentSharedManifestPMService.update(this.CurrentEntity).subscribe(res => {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.RefreshSharedManifiestoStatus();
         });
     }
 
     CheckIfAnyShipmentHaveMasterNumber(master: string, longMaster: string) {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this._sharedAgentManifestService.GetCheckIfAnyShipmentHaveMasterNumber(master, longMaster, SessionInfo.LoggedUserTenant).subscribe((myResponse: ServiceResponse) => {
 
             if (!myResponse.HasError) {
@@ -300,7 +300,7 @@ export class SharedManifestComponent {
                 }
 
             }
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         });
 
 
@@ -316,7 +316,7 @@ export class SharedManifestComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
@@ -358,4 +358,3 @@ export class SharedManifestComponent {
 
 
 
- 

@@ -44,7 +44,7 @@ export class CreateEditTicketComponent extends BaseComponent {
     _CardListService: CardListService = new CardListService();
     _ConfirmationTypeListService: ConfirmationTypeListService = new ConfirmationTypeListService();
     public ValidationErrorsList: string[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -70,7 +70,7 @@ export class CreateEditTicketComponent extends BaseComponent {
                 if (!AppTool.IsNullOrEmpty(customsSetting)) {
                     if (customsSetting.UnifreightCertificateActivated) {
                         //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-                        let myDec = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        let myDec = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //if (AmitalGatewayUtil.Instance.IsDeclarationInUse(myDec.CustomFileNo, myDec.IsConvertedDeclaration, myDec.IsConnectedToUnifreight)) {
                         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {     //'Search Certificate Document' Icon Is Not Appearing - Certificate Multi Entry - Edit Declaration 
                             this.IsSearchIconVisibile = true;
@@ -317,9 +317,9 @@ export class CreateEditTicketComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("no");
+        this.CurrentSession.CloseCurrentWindowEmit("no");
 
-       // SessionLocator.CurrentSession.CloseCurrentWindow();
+       // this.CurrentSession.CloseCurrentWindow();
     }
     FIELD_IS_REQUIERD: string;
     GetRequierdFieldErrorText(fieldName) {
@@ -520,7 +520,7 @@ export class CreateEditTicketComponent extends BaseComponent {
 
     UpdateTicket() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         var certificateTicket: CertificateTicket = new CertificateTicket();
         certificateTicket.DeclarationId = this.declarationId;
         certificateTicket.InvoiceNumber = null;
@@ -564,9 +564,9 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.multiCertificatesService.PutCertificateTickets(certificateTicket)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
-                    //SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    //this.CurrentSession.CloseCurrentWindow();
                 }
             });
     }
@@ -581,14 +581,14 @@ export class CreateEditTicketComponent extends BaseComponent {
                     (myUnifreightMessageM.LogitudeEntity == "Customs.Declaration" || myUnifreightMessageM.LogitudeEntity == "Declaration") &&
                     myUnifreightMessageM.LogitudeEntityNumber == this.Parent.DeclarationPM.Id) {
                     sub.unsubscribe();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.UnifreightCertificateCallbackAction(myUnifreightMessageM);
 
 
                 }
 
             });
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         
         this._CardListService.getSingle(this.Parent.DeclarationPM.CustomerId)
             .subscribe(res => {
@@ -656,11 +656,11 @@ export class CreateEditTicketComponent extends BaseComponent {
             funcSetTicketAndOkClick();
             return;
         }
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
         
         this._ConfirmationTypeListService.getSingle(sResponseConfirmationTypeCode)
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 let myConfirmationTypeList :ConfirmationTypeList=res.Result;
                 if (AppTool.IsNullOrEmpty(myConfirmationTypeList)) {
                     let msg = new MessageWindow();

@@ -1,4 +1,4 @@
-﻿import {Component, EventEmitter, Output, ComponentRef} from '@angular/core';
+import {Component, EventEmitter, Output, ComponentRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -26,7 +26,7 @@ export class ActionStepsTemplate extends BaseComponent {
 
     @Output() SaveClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter < boolean>();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor( private entityPMService: EntityPMService) {
         super();
     }
@@ -41,7 +41,7 @@ export class ActionStepsTemplate extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     OkButtonClicked() {
@@ -51,7 +51,7 @@ export class ActionStepsTemplate extends BaseComponent {
 
         if (errors.length == 0) {
             //this.SaveClicked.emit(true);
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("confirm");
+            this.CurrentSession.CloseCurrentWindowEmit("confirm");
         }
     }
 
@@ -72,11 +72,11 @@ export class ActionStepsTemplate extends BaseComponent {
     private SaveEntityChanges(isClosing: boolean) {
         if (this.EntityPM.IsDirty) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res:any)  => {
                 res.subscribe(response => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     var mm: EntityPMServiceResponse = response;
                     if (!mm.HasError) {
@@ -96,7 +96,7 @@ export class ActionStepsTemplate extends BaseComponent {
 
                 }, error => {
                     console.log("Error===========>", error);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             });
         }

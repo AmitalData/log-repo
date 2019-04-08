@@ -24,7 +24,7 @@ export class ImporterDetailsComponent extends BaseComponent {
     declarationPMService: DeclarationPMService = new DeclarationPMService();
     public OriginalEntityPM: DeclarationPM;
     public ClonedEntityPM: DeclarationPM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -622,7 +622,7 @@ export class ImporterDetailsComponent extends BaseComponent {
 
      CancelButtonClicked() {
          this.RejectChanges();
-         SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+         this.CurrentSession.CloseCurrentWindowEmit("cancel");
      }
 
      GetPassportNumber(passportNumber: string) {
@@ -658,8 +658,8 @@ export class ImporterDetailsComponent extends BaseComponent {
         this.EntityPM.CalculatedImporterName = null
 
         //this.OkButtonClicked();
-        //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-        //SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        //this.CurrentSession.CurrentEditComponent.SaveChanges();
+        //this.CurrentSession.CloseCurrentWindowEmit("ok");
     }
     OkButtonClicked() {
         if (this.type == "Importer" && this.isCourierDeclaration) {
@@ -677,7 +677,7 @@ export class ImporterDetailsComponent extends BaseComponent {
             }
         }
         
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
         var passportNumber: string;
             switch (this.type) {
                 case "Importer": {
@@ -757,10 +757,10 @@ export class ImporterDetailsComponent extends BaseComponent {
 
 
             if (this.doDisable) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
             }
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("!ok");
+                this.CurrentSession.CloseCurrentWindowEmit("!ok");
             }
         
          

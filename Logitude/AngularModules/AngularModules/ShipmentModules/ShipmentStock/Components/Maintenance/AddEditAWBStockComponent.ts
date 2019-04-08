@@ -20,6 +20,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
     public DataContext: AddEditAWBStockComponent = this;
     public ObjectTableName: string = "MessagingStock";
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -145,7 +146,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -181,11 +182,11 @@ export class AddEditAWBStockComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             if (this.DataContext.IsNew) {
-                SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+                this.CurrentSession.StartBusyIndicatorCreating();
             }
 
             else {
-                SessionLocator.CurrentSession.StartBusyIndicator("Updating...");
+                this.CurrentSession.StartBusyIndicator("Updating...");
             }
 
             this.Submit();
@@ -202,18 +203,18 @@ export class AddEditAWBStockComponent extends BaseComponent {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.FatherComponent.BuilItemsSource();
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
 
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                     }
                 }
                     , error => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
             }
 
@@ -223,24 +224,24 @@ export class AddEditAWBStockComponent extends BaseComponent {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.FatherComponent.BuilItemsSource();
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
 
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                     }
                 }
                     , error => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
             }
         }
 
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 

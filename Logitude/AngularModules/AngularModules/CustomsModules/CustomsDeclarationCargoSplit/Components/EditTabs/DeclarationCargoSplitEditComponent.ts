@@ -32,6 +32,7 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
     public TabsItemsSource: TabItem[] = [];
     public IsNewEntity: boolean = false;
     public ValidationErrorsList: any[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityPMService: EntityPMService, public EntityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new DeclarationCargoSplitPM();
@@ -113,12 +114,12 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        //SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        //this.CurrentSession.CloseCurrentWindowEmit("Ok");
         this.SaveEntityChanges(null);
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
     private SaveEntityChanges(customSendOptionsArgs) {
             this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -128,12 +129,12 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
                 return;
             }
 
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
                 this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -175,7 +176,7 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
                         }
 
                     }, error => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         var myErrors: string[] = [];
                         myErrors.push(error.message);
                         this.ValidationErrorsList = myErrors;

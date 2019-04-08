@@ -50,7 +50,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public todayDate: Date;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");      
@@ -256,7 +256,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -280,17 +280,17 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
                     this.BuildInvoiceLines();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
     UpdateData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -317,12 +317,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         item.SetVatPercentage(this.GetVatTypePercentage(item.VatTypeId));
                     });
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -1102,6 +1102,7 @@ export class APInvoiceLineItem extends BaseComponent {
     public IsScreenEnabled: boolean;
     public CorrectionByUserName = "";
     public LocalCurrencyId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(line: APInvoiceLinePM, public fatherComponent: APInvoiceDetailsTabGeneral, public AddNewLineMode) {
         super();
         this.invoiceLinePM = line;

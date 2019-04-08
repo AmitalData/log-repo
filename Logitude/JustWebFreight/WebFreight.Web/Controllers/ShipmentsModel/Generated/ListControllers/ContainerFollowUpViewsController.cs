@@ -147,7 +147,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                 if (filters.Tenant != null)
                 {
-                    tenant = filters.Tenant.Value;
+                    tenant = tenant;
                 }
 
                 QueryOperations queryOperations = new QueryOperations()

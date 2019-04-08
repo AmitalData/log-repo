@@ -112,7 +112,7 @@ export class NotificationBellComponent {
 
     SelectedLine(item: NotificationBellLine) {
 
-        // SessionLocator.CurrentSession.CloseNotificationBellEvent.emit({  });
+        // this.CurrentSession.CloseNotificationBellEvent.emit({  });
         if (!this.PreventSelect) {
 
             var selected = item.entity;
@@ -494,7 +494,7 @@ export class NotificationBellLine {
     entity: NotificationPM;
     Parent: NotificationBellComponent
     notificationExtendedListService: NotificationExtendedListService = new NotificationExtendedListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityPM: NotificationPM, parent: NotificationBellComponent) {
         this.entity = entityPM;
         this.Parent = parent;

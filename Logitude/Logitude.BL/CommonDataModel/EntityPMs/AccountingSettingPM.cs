@@ -51,6 +51,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool EnableMultiCurrencyAPPayments { get; set; }
         public bool IsAPPaymentsTransferEnabled { get; set; }
         public bool EnableNegativeOffsetARPayments { get; set; }
-        public bool EnableNegativeOffsetAPPayments { get; set; }        
+        public bool EnableNegativeOffsetAPPayments { get; set; }
+        public bool EnableInvoiceStocksManagement { get; set; }
     }
 }

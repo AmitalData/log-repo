@@ -35,7 +35,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
     public IsEnabledConnect: boolean = false;
     public ConnectFeatureTitle: string;
     public DisConnectFeatureTitle: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
 
@@ -131,7 +131,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
         else {
             if (isLoading) {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
                 if (this.myService == null) {
                     this.myService = new APPaymentListService();
                 }
@@ -202,7 +202,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
                         this.SetGridColumnsWidth();
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
         }
@@ -237,6 +237,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
 
 export class APInvoicePaymentItem {
     public IsConnected: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private item: APPaymentList, private fatherComponent: APInvoicePaymentsTabComponent) {
         this.SetUIProperties();
     }
@@ -301,7 +302,7 @@ export class APInvoicePaymentItem {
     get ForeignAmount() { return this.item.AmountInPaymentCurrency; }
 
     ViewEntityClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.item.Id, ObjectTableName: 'APPayment', BackButtonLabel: "A/P Invoice: " + this.fatherComponent.EntityPM.InvoiceNumber });
@@ -309,7 +310,7 @@ export class APInvoicePaymentItem {
                 let isEditComponentSaved = false;
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     if (isEditComponentSaved) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 });
 
@@ -364,8 +365,8 @@ export class APInvoicePaymentItem {
     }
 
     SaveEntity() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
 }

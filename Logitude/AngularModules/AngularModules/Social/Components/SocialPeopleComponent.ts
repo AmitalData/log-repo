@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -23,6 +23,7 @@ export class SocialPeopleComponent implements OnInit {
     private SocialContactLinkEvent: any = null;
     public items: any[] = [];
     @Output() SearchFieldchangeevent = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _entityListService: EntityListService) {
 
     }
@@ -43,7 +44,7 @@ export class SocialPeopleComponent implements OnInit {
 
     Listen() {
         if (!this.SocialContactLinkEvent) {
-            this.SocialContactLinkEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SocialContactLinkEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s) {
                     if (s[0] == "SocialContactLinkEvent") {
                         this.ViewPostUserFeedsButtonClick(s[1]);
@@ -104,7 +105,7 @@ export class SocialPeopleComponent implements OnInit {
             postsArgs.UserId = user.Id;
             postsArgs.ScreenCode = "UserPostsControl";
             postsArgs.IsUserMode = true;
-            SessionLocator.DynamicLoader.Load("./Social/Components/SocialPostsComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Social/Components/SocialPostsComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.InitializePostComponent(postsArgs);
@@ -179,7 +180,7 @@ export class SocialPeopleComponent implements OnInit {
     }
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

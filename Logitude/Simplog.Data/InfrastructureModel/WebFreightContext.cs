@@ -109,6 +109,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
             modelBuilder.Configurations.Add(new AWBStatuMap());

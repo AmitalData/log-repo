@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
@@ -34,6 +34,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
     RegardingEntity: string = "";
     EntityId: string = "";
     EntityDescription: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -59,7 +60,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "LoadActivity") {
                     this.LoadActivities();
                 }
@@ -234,7 +235,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
     ViewEntity(entity) {
         if (!AppTool.IsNullOrEmpty(entity.Id)) {
             this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({EntityId: entity.Id, ObjectTableName: "Activity", BackButtonLabel: "Quotes" });

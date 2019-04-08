@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {PackagePM} from '../../../../Common/EntityPMs/PackagePM';
 import {PackageConnectedPackagePM} from '../../../../Common/EntityPMs/PackageConnectedPackagePM';
@@ -27,6 +27,7 @@ export class AddEditUserPackageComponent extends BaseComponent {
     public IsNewMode: boolean = false;
     public IsEditMode: boolean = false;
     private allExistingPackagesCodes: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
     }
@@ -126,7 +127,7 @@ export class AddEditUserPackageComponent extends BaseComponent {
             this.RejectChanges();
         }
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -154,7 +155,7 @@ export class AddEditUserPackageComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.FeaturePackageTypeCode.toUpperCase() == "BS") {
                 this.EntityPM.ConnectedPackages = [];
@@ -181,8 +182,8 @@ export class AddEditUserPackageComponent extends BaseComponent {
             if (this.IsNewMode) {
                 myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
                 });
             }
@@ -190,8 +191,8 @@ export class AddEditUserPackageComponent extends BaseComponent {
             else {
                 myService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
                 });
             }

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
@@ -20,6 +20,7 @@ export class AddEditOCIComponent extends BaseComponent {
     public ObjectTableName: string;
     public DataContext: AWBWizardOCIItem;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -36,7 +37,7 @@ export class AddEditOCIComponent extends BaseComponent {
     CancelButtonClicked() {
         this.RejectChanges();
         this.DataContext.IsWindowMode = false;
-        SessionLocator.CurrentSession.CloseCurrentWindow();       
+        this.CurrentSession.CloseCurrentWindow();       
     }
     
     OkButtonClicked() {
@@ -64,7 +65,7 @@ export class AddEditOCIComponent extends BaseComponent {
             }
 
             this.DataContext.IsWindowMode = false;
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 

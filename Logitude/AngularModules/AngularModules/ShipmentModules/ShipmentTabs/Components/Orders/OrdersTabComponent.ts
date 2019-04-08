@@ -38,6 +38,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     public ItemsSource: ShipmentOrderPackageItem[] = [];
     public DataContext: OrdersTabComponent = this;
     public IsResourcesReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -799,7 +800,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         if (this.EntityPM.BookingNumberOfPackages != newValue) {
             this.EntityPM.BookingNumberOfPackages = newValue;
 
-            SessionLocator.CurrentSession.SessionEvent.emit("UpdatePackagesTab");
+            this.CurrentSession.SessionEvent.emit("UpdatePackagesTab");
         }
     }
 

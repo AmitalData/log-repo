@@ -55,7 +55,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 //not needed
                 //if (this.newVersionAdded) {
                 //    this.documentTypeCode = value;
-                //    SessionLocator.CurrentSession.StopBusyIndicator();
+                //    this.CurrentSession.StopBusyIndicator();
                 //    var confirmWindow = new ConfirmWindow();
                 //    confirmWindow.Width = 400;
                 //    confirmWindow.Height = 200;
@@ -121,6 +121,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     CRENumber: string;
     LayoutDirection: string = 'rtl';
     SecondChildVisibility: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
+
     get Remarks() {
         if (this.CustomsDocumentsTicket) {
             return this.CustomsDocumentsTicket.Remarks;
@@ -271,7 +273,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     LoadDocumentPage() {
         if (this.CustomsDocument) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this._CustomDocumentViewerService.GetDocumentPage(this.CustomsDocument.DocumentId, 0, this.IsConnectedToUniFreight).subscribe((myResponse: ServiceResponse) => {
                 var result = myResponse.Result;
                 if (result) {
@@ -288,7 +290,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     this.base64Image = null;
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -577,7 +579,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             }
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         if (this.ViewDisableMessageVisibility) {
             this.CancelButtonClicked();
             return;
@@ -603,7 +605,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 }
 
                 if (AppTool.IsNullOrEmpty(this.CustomsDocument.DeclarationId)) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var messageWindow = new MessageWindow();
                     messageWindow.Width = 400;
                     messageWindow.Height = 200;
@@ -685,7 +687,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.PerformSubmitChanges();
         }
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.CustomsDocument.IsMetaDataReady = false;
 
             //here we pop a confirm window to ask weather to continue or not if there is required fields errors.
@@ -698,7 +700,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             confirmWindow.Show(requiredFieldsWarning);
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+                    this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
                     this.PerformSubmitChanges();
                     confirmWindow.Close();
                 }
@@ -719,20 +721,20 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.CustomsDocumentsTicket.RejectChanges();
         }
         if (this.newVersionAdded) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
 
         }
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+            this.CurrentSession.CloseCurrentWindowEmit("cancel");
         }
     }
 
     InsertNewTicket() {
         var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
         customsDocumentsTicketPMService.insert(this.CustomsDocumentsTicket).subscribe((resp: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!resp.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
             }
         });
     }
@@ -882,13 +884,13 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
                     }
                     else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         if (docRes.ErrorsArray && docRes.ErrorsArray.length > 0) {
                             this.ValidationErrorsList = docRes.ErrorsArray;
                         }
                         //let jDoit = false;
                         //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לא נמצא כרטיס חתימה חברתי (מסר 2715)
-                        //    SessionLocator.CurrentSession.StopBusyIndicator();
+                        //    this.CurrentSession.StopBusyIndicator();
                         //    var messageWindow = new MessageWindow();
                         //    messageWindow.Width = 400;
                         //    messageWindow.Height = 200;
@@ -914,9 +916,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             if (this.CustomsDocumentsTicket.IsDirty) {
                 var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
                 customsDocumentsTicketPMService.update(this.CustomsDocumentsTicket).subscribe((ticketRes: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!ticketRes.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
                     else {
                         var messageWindow = new MessageWindow();
@@ -933,13 +935,13 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 });
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
             }
         }
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
     }
 
@@ -1058,10 +1060,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.CustomsDocument.CustomsDocId = null;
                 this.CustomsDocument.ForceRemoveCustomsDocId = true;
                 confirmWindow.Close();
-                SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
                 var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
                 customsDocumentPMService.update(this.CustomsDocument).subscribe((docRes: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!docRes.HasError) {
                         // this.CheckEditEnabled(this.IsCustomsDocumentInRequest, !this.IsDisplayOnly);
 

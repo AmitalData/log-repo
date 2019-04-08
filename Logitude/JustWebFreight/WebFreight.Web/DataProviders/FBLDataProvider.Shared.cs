@@ -6,7 +6,7 @@ namespace WebFreight.Web.DataProviders
     public class FBLDataProvider
     {
         public string ShipperAddress { get; set; }
-        public string ShipperAddress_NoTel { get; set; }
+        public string ShipperAddress_NoTel { get; set; }       
         public string ShipmentNumber { get; set; }
         public string BookingNumber { get; set; }
         public string CompanyName { get; set; }
@@ -225,6 +225,9 @@ namespace WebFreight.Web.DataProviders
         public string Notify1ATTN { get; set; }
         public string Notify2ATTN { get; set; }
         public string AgentATTN { get; set; }
+
+        public string ShipperAddress_NoTelFax { get; set; }
+        public string ConsigneeAddress_NoTelFax { get; set; }
     } 
     
     public class ReceivablesCharges

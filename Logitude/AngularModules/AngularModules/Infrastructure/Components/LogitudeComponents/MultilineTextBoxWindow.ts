@@ -18,6 +18,7 @@ export class MultilineTextBoxWindow implements OnInit {
     public DataContext: any;
     DisplayMode: boolean = false;
 
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -40,9 +41,9 @@ export class MultilineTextBoxWindow implements OnInit {
     ngOnInit() {}
 
     OkButtonClicked(){
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.text);
+        this.CurrentSession.CloseCurrentWindowEmit(this.text);
     }
     CancelButtonClicked(){
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("<!#cancelled>");
+        this.CurrentSession.CloseCurrentWindowEmit("<!#cancelled>");
     }
 }

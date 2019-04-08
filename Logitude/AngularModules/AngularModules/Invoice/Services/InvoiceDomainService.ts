@@ -725,7 +725,18 @@ export class InvoiceDomainService {
         });
     }
 
-
+    GetListOfARInvoiceStockPM() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetListOfARInvoiceStockPM?';
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
     
 
     MapARPaymentJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {

@@ -41,6 +41,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
     public NumberFieldTextAlign: string = "right";
     @ViewChild('Template', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public isRTL: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
     }
 
@@ -247,7 +248,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
 
                             this.DetectChanges();
 
-                            SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+                            this.CurrentSession.SessionEvent.subscribe(s => {
                                 if (s == "SpotLightDetectChanges") {
                                     this.DetectChanges();
                                 }

@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, OnDestroy, ElementRef, Renderer, OnInit, AfterViewInit, AfterContentInit, OnChanges, Output, EventEmitter, RenderComponentType, ContentChildren, ContentChild, ViewChildren, QueryList, ChangeDetectorRef, TemplateRef, DoCheck, IterableDiffers} from '@angular/core';
 //import {CORE_DIRECTIVES} from '@angular/common';
@@ -43,8 +43,8 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     public set ItemSource(newValue: ObservableCollection) {
         this.itemSource = newValue;
         newValue.Changed.subscribe((evt) => {
-            SessionLocator.CurrentSession.LogitudeGridHelper.ResetRowIndex(this.LogGridId);
-            SessionLocator.CurrentSession.LogitudeGridHelper.ResetNextRowIndex(this.LogGridId);
+            this.CurrentSession.LogitudeGridHelper.ResetRowIndex(this.LogGridId);
+            this.CurrentSession.LogitudeGridHelper.ResetNextRowIndex(this.LogGridId);
             var OldCount = this.group.length;
             if (this.groupby) {
                 this.group = new GroupByPipe().ShapeGrouping(this.ItemSource.Collection, this.groupby);
@@ -114,7 +114,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         if (this.MyTimer) {
             clearTimeout(this.MyTimer);
         }
-        SessionLocator.CurrentSession.ObsNewElementInsertedEvent.emit({ length: this.group.length, Id: this.LogGridId, RowIndex: rowIndex });
+        this.CurrentSession.ObsNewElementInsertedEvent.emit({ length: this.group.length, Id: this.LogGridId, RowIndex: rowIndex });
     }
 
     OnRowMouseOut(rowIndex, BackGround, IsSelected) {
@@ -239,9 +239,10 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     DetailsDivId: string = null;
     WindowResizeSub: any;
     EndOfRowReachedSub: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _elementRef: ElementRef, private _renderer: Renderer, private cd: ChangeDetectorRef, differs: IterableDiffers) {
         this.differ = differs.find([]).create(null);
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.LogGridId = "LogGrid_-1_-1";
             this.LogGridRowsId = "LogGridRows_-1_-1";
             this.LogGridColumnsId = "LogGridColumns_-1_-1";
@@ -250,15 +251,15 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         }
 
         else {
-            this.LogGridId = "edit-log-grid_" + SessionLocator.CurrentSession.LogitudeGridHelper.GetEditableLogGridIndexId();
-            this.LogGridRowsId = "edit-log-gridRows_" + SessionLocator.CurrentSession.LogitudeGridHelper.GetEditableLogGridRowsIndexId();
-            this.LogGridColumnsId = "edit-log-gridColumns_" + SessionLocator.CurrentSession.LogitudeGridHelper.GetEditableLogGridColumnsIndexId();
-            this.ColumnId = "ColumnId_" + SessionLocator.CurrentSession.LogitudeGridHelper.GetLogGridColumnsIndexId();
-            this.DetailsDivId = "DetailsDivId_" + SessionLocator.CurrentSession.LogitudeGridHelper.GetDetailsDivId();
+            this.LogGridId = "edit-log-grid_" + this.CurrentSession.LogitudeGridHelper.GetEditableLogGridIndexId();
+            this.LogGridRowsId = "edit-log-gridRows_" + this.CurrentSession.LogitudeGridHelper.GetEditableLogGridRowsIndexId();
+            this.LogGridColumnsId = "edit-log-gridColumns_" + this.CurrentSession.LogitudeGridHelper.GetEditableLogGridColumnsIndexId();
+            this.ColumnId = "ColumnId_" + this.CurrentSession.LogitudeGridHelper.GetLogGridColumnsIndexId();
+            this.DetailsDivId = "DetailsDivId_" + this.CurrentSession.LogitudeGridHelper.GetDetailsDivId();
         }
         this.controller = new EditGridVirtualRowController();
         //window.onresize = this.onWindowResized.bind(this);
-        this.WindowResizeSub = SessionLocator.CurrentSession.WindowResizeEvent.subscribe((res) => {
+        this.WindowResizeSub = this.CurrentSession.WindowResizeEvent.subscribe((res) => {
             this.onWindowResized(res);
         });
         //document.onmouseup = (e) => {
@@ -897,15 +898,15 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 }
             });
         }
-        this.EndOfRowReachedSub = SessionLocator.CurrentSession.EndOfRowReachedEvent.subscribe((res) => {
-            if (this.LogGridId == SessionLocator.CurrentSession.CurrentLogGrid) {
+        this.EndOfRowReachedSub = this.CurrentSession.EndOfRowReachedEvent.subscribe((res) => {
+            if (this.LogGridId == this.CurrentSession.CurrentLogGrid) {
                 this.RowEnded.emit(res);
             }
         });
-        SessionLocator.CurrentSession.LogitudeGridHelper.SetColumnsCount(true, this.LogGridId);
-        SessionLocator.CurrentSession.LogitudeGridHelper.ResetEditCellIndex();
-        SessionLocator.CurrentSession.LogitudeGridHelper.ResetRowIndex(this.LogGridId);
-        SessionLocator.CurrentSession.LogitudeGridHelper.ResetNextRowIndex(this.LogGridId);
+        this.CurrentSession.LogitudeGridHelper.SetColumnsCount(true, this.LogGridId);
+        this.CurrentSession.LogitudeGridHelper.ResetEditCellIndex();
+        this.CurrentSession.LogitudeGridHelper.ResetRowIndex(this.LogGridId);
+        this.CurrentSession.LogitudeGridHelper.ResetNextRowIndex(this.LogGridId);
         if (this.dataSource) {
             this.controller.setDataSource(this.dataSource);
         }
@@ -1516,7 +1517,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             value.LogGridId = this.LogGridId;
             value.EditableLogGridComponent = this;
             if (value.IgnoreColumn == false) {
-                SessionLocator.CurrentSession.LogitudeGridHelper.SetColumnsCount(false, this.LogGridId);
+                this.CurrentSession.LogitudeGridHelper.SetColumnsCount(false, this.LogGridId);
             }
             value.IsReadOnlyGrid = this.IsReadOnly;
             ////HeaderTemplateDiv

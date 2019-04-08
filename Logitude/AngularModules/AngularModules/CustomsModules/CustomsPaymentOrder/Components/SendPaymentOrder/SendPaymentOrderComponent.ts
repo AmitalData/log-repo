@@ -47,7 +47,7 @@ export class SendPaymentOrderComponent {
 
     SaveCompletedEvent: any;
     LoadCompletedEvent: any;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityPMService: EntityPMService) {
     }
 
@@ -60,20 +60,20 @@ export class SendPaymentOrderComponent {
     }
 
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+        if (this.CurrentSession.CurrentEditComponent) {
 
             if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             if (!this.LoadCompletedEvent) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
@@ -97,34 +97,34 @@ export class SendPaymentOrderComponent {
     reloadEvent: any;
     public SaveEntityChanges(customSendOptionsArgs, isDelete: boolean) {
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         this.PaymentOrderPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (myResponse.HasError) {
                 this.ValidationErrors = myResponse.ErrorsArray;
                 this.FillValidationErrors(this.presendValidationsTitle);
             }
             else {
                 this.EntityPM = myResponse.Result;
-                if (SessionLocator.CurrentSession.CurrentEditComponent) {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    this.reloadEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (this.CurrentSession.CurrentEditComponent) {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                         this.reloadEvent.unsubscribe();
                         if (isLoadSuccess) {
-                            this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                            SessionLocator.CurrentSession.StartBusyIndicator("");
+                            this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                            this.CurrentSession.StartBusyIndicator("");
 
                             if (this.PostSendPaymentOrderChecksAndPrecalculations() == true) {
                                 this.SendPaymentOrder();
                             }
                             else {
-                                SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                                 this.FillValidationErrors(this.presendValidationsTitle);
                             }
                         }
@@ -191,7 +191,7 @@ export class SendPaymentOrderComponent {
             .then((res) => {
                 console.log(res);
                 this.ResponseData = res;
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
             ).catch((err) => {
                 this.ValidationErrors.push(err);
@@ -202,7 +202,7 @@ export class SendPaymentOrderComponent {
 
         myPaymentOrderWebService.PostSendPaymentOrderRequest(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
-                //SessionLocator.CurrentSession.StopBusyIndicator();
+                //this.CurrentSession.StopBusyIndicator();
                 //OnSendCompleted(); //to check refresh !!!! ????
                 //this.BuildProtestsList();
                 //RefreshProperties();

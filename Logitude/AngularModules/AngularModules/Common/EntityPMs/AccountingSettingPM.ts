@@ -245,6 +245,11 @@ export class AccountingSettingPM {
     public set EnableNegativeOffsetAPPayments(newValue: boolean) { if (this.enableNegativeOffsetAPPayments != newValue) { this.enableNegativeOffsetAPPayments = newValue; this.MarkAsDirty("EnableNegativeOffsetAPPayments"); } }
        
 	 
+    private enableInvoiceStocksManagement: boolean;
+    public get EnableInvoiceStocksManagement() { return this.enableInvoiceStocksManagement; }
+    public set EnableInvoiceStocksManagement(newValue: boolean) { if (this.enableInvoiceStocksManagement != newValue) { this.enableInvoiceStocksManagement = newValue; this.MarkAsDirty("EnableInvoiceStocksManagement"); } }
+       
+	 
 
     public OldEntityPM: AccountingSettingPM;
 		

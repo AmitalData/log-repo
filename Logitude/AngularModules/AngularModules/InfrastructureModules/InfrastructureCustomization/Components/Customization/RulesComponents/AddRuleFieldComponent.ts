@@ -35,6 +35,7 @@ export class AddRuleFieldComponent extends BaseComponent {
     public RuleFieldTXTAreaId: string;
     public SelectedObjectField: ObjectFieldPM;
     FieldsLovQueryFilters: ApiQueryFilters;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -134,15 +135,15 @@ export class AddRuleFieldComponent extends BaseComponent {
     OkButtonClicked() {
         if (this.SelectedObjectFieldId) {
             if (this.Expression) {
-                SessionLocator.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldId + ',' + this.Expression);
+                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldId + ',' + this.Expression);
             }
             else {
-                SessionLocator.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldId);
+                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldId);
             }
         }
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

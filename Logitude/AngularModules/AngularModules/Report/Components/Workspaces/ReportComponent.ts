@@ -22,7 +22,7 @@ export class ReportComponent {
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsViewReport: boolean = false;
     showLocal: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
         this.LoadData();
@@ -194,7 +194,7 @@ export class ReportComponent {
     LoadComplete(groupList: ReportGroupList, reportList: ReportList) {
 
         if (!this.IsLoadSettingWorkerRoleRuning && !this.IsLoadReportsTemplateListRuning) {
-            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates, this.ReportsRunUsingWR);

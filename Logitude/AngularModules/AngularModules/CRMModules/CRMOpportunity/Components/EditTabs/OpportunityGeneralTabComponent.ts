@@ -1,4 +1,4 @@
-﻿import {Component, OnInit,ViewChild,ViewContainerRef} from '@angular/core';
+import {Component, OnInit,ViewChild,ViewContainerRef} from '@angular/core';
 import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {OpportunityPMService} from '../../../../CRM/Services/StandardPMs/OpportunityPMService';
@@ -36,6 +36,8 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     public ValidationErrorsList: Array<String> = [];
     public ResetOpportunitiy: boolean = true;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public ScreenCode: string = "Opportunity.AdditionalFields";
     public get Subject() { return this.EntityPM.Subject; }
     public set Subject(value: string) { if (this.EntityPM.Subject != value) this.EntityPM.Subject = value; }
@@ -47,18 +49,18 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     OpportunityPMInitService.InitValues(this.EntityPM, false);
                     this.SetFieldsEnabled();
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetFieldsEnabled();
 
                 }

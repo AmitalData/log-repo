@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TMProjectPM} from '../../EntityPMs/TMProjectPM';
 import {TMProjectPMService} from '../../Services/StandardPMs/TMProjectPMService';
@@ -18,7 +18,7 @@ export class ConnectToParentComponent extends BaseComponent {
     public ObjectTableName = "TMProject";
     public EntityPM: TMProjectPM;
     public SelectedLocationFilter: any;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();              
     }
@@ -44,7 +44,7 @@ export class ConnectToParentComponent extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[]=[];
@@ -57,14 +57,14 @@ export class ConnectToParentComponent extends BaseComponent {
                 this.ValidationErrorsList.push('you must select a project');
             }
             else {
-                SessionLocator.CurrentSession.StartBusyIndicator("Updating...");
+                this.CurrentSession.StartBusyIndicator("Updating...");
                 var myService: TimeManagementDomainService = new TimeManagementDomainService();
                 myService.GetNewTMProjectConnect(this.EntityPM.Id, this.projectId).subscribe((myResponse: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!myResponse.HasError) {
                         this.EntityPM.ProjectNumber = myResponse.Result;
                         this.EntityPM.IsDirty = false;
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                        this.CurrentSession.CloseCurrentWindowEmit('OK');
                     }
                     else {
                         this.ValidationErrorsList = myResponse.ErrorsArray;

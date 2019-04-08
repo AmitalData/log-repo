@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, OnDestroy, Output, EventEmitter} from '@angular/core';
 import {FollowUpPM} from '../../../EntityPMs/FollowUpPM';
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
@@ -42,9 +42,10 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
     public EventTypes: EventTypeList[] = [];
     public IsResourcesReady: boolean = false;
     public IsComponentVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
-        var idIndex = SessionLocator.CurrentSession.GetNewId("HelperFollowups");
+        var idIndex = this.CurrentSession.GetNewId("HelperFollowups");
         this.ComponentId = "HelperFollowups_" + idIndex;
         this.ComponentButtonId = "HelperFollowupsButton_" + idIndex;
         this.ComponentContentId = "HelperFollowupsContent_" + idIndex;        
@@ -54,7 +55,7 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
     private FollowupsChangedEvent: any = null;
     Listen() {
         if (!this.FollowupsChangedEvent) {
-            this.FollowupsChangedEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.FollowupsChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "FollowupsChanged") {
                     this.BuildItemsSource();
                 }
@@ -137,7 +138,7 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
         AppTool.KillEventEmitter(this.FollowupsChangedEvent);
 
         if (this.IsComponentVisible) {
-            SessionLocator.CurrentSession.FireEvent("FollowupsChangedMainMenu");
+            this.CurrentSession.FireEvent("FollowupsChangedMainMenu");
         }
 
         this.StopPositionTimer();
@@ -362,8 +363,9 @@ export class HelperFollowup {
     public ListItemHeight: number = 34;
     public TooltipHeight: number = 130;
     public TooltipWidth: number = 270;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityPM: any) {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("FollowupItem");
+        var idIndex = this.CurrentSession.GetNewId("FollowupItem");
         this.ItemId = "FollowupItem_" + idIndex;
         this.ItemTooltipId = "FollowupItemTooltip_" + idIndex;
 
@@ -422,6 +424,7 @@ export class HelperFollowup {
 export class AddDataContext extends BaseComponent {
     public EntityPM: FollowUpPM;
     public ObjectTableName: string = "FollowUp";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private father: HelperFollowups) {
         super();
         this.EntityPM = new FollowUpPM();
@@ -561,7 +564,7 @@ export class AddDataContext extends BaseComponent {
             }
 
             this.father.CloseAddEdit();
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 }
@@ -570,6 +573,7 @@ export class EditDataContext extends BaseComponent {
     public IconPath: string = null;
     public EntityPM: any = null;
     public ObjectTableName: string = "FollowUp";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: HelperFollowup, private father: HelperFollowups) {
         super();
         this.Name = item.Name;
@@ -630,8 +634,8 @@ export class EditDataContext extends BaseComponent {
         }
 
         this.father.CloseAddEdit();
-        SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
-        SessionLocator.CurrentSession.FireEvent("FollowupDeleted");
+        this.CurrentSession.FireEvent("FollowupsChanged");
+        this.CurrentSession.FireEvent("FollowupDeleted");
     }
     DoneFollowupClicked() {
         this.Done = true;
@@ -713,11 +717,11 @@ export class EditDataContext extends BaseComponent {
         if (errors.length == 0) {
 
             if (this.Done == true) {
-                SessionLocator.CurrentSession.FireEvent("FollowupDeleted");
+                this.CurrentSession.FireEvent("FollowupDeleted");
             }
 
             this.father.CloseAddEdit();
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 

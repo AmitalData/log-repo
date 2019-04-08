@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
@@ -41,7 +41,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     ActualEntryDateOldValue: Date;
     ExpectedEntryDateOldValue: Date;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public _traceEventExtendedPMService: TraceEventExtendedPMService ) {
         super();
         this.warehouseEntryPM = this.entityArgs.EntityPM;
@@ -86,13 +86,13 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     Listen() {
 
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EventTypeCodeList = [];
-                        this.warehouseEntryPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.warehouseEntryPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                         //if (this.WarehouseEntryPackagesDetailsComponent) {
                         //    var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, IsFromShipment: true, IsEditMode: true };
@@ -119,9 +119,9 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.warehouseEntryPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.warehouseEntryPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
@@ -267,7 +267,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
             traceEventArgs.EntityId = this.warehouseEntryPM.Id;
             traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
             this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
-                SessionLocator.CurrentSession.FireEvent("LoadEventTabData");
+                this.CurrentSession.FireEvent("LoadEventTabData");
             });
         }      
     }

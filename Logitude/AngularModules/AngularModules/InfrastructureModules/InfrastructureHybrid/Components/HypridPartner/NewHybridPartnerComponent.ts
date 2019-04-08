@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core'; 
+import {Component} from '@angular/core'; 
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator'; 
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {HybridPartnerPM} from '../../../../Common/EntityPMs/HybridPartnerPM';
@@ -20,6 +20,7 @@ export class NewHybridPartnerComponent extends BaseComponent {
     DataContext: NewHybridPartnerComponent = this;  
     myentityPM: HybridPartnerPM = new HybridPartnerPM();
     _HybridPartnerPMService: HybridPartnerPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super(); 
         this._HybridPartnerPMService = new HybridPartnerPMService(); 
@@ -68,11 +69,11 @@ export class NewHybridPartnerComponent extends BaseComponent {
       
        
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
             this._HybridPartnerPMService.insert(this.myentityPM).subscribe(myResult => {
                 if (!myResult.HasError) {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             });  
         }
@@ -80,6 +81,6 @@ export class NewHybridPartnerComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

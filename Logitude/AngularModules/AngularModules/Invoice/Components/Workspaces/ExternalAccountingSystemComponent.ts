@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -22,6 +22,7 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
     public ObjectTableName: string = "AccountingSetting";
     public ValidationErrorsList: string[];
     public IsResourcesReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityResourceService: EntityResourceService) {
         super();
 
@@ -39,7 +40,7 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
     }
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -49,7 +50,7 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
             this.IsResourcesReady = true;
             this.SetUIProperties();
             this.SetQuickBookProperties();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -82,12 +83,12 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
         this.EntityPM.QBOAccessToken = null;
         this.EntityPM.QBOAccessTokenSecret = null;
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Disconnecting..");
+        this.CurrentSession.StartBusyIndicator("Disconnecting..");
 
         this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
             if (myResponse1.HasError) {
                 this.ValidationErrorsList = myResponse1.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
@@ -100,7 +101,7 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
                 });
 
                 this.SetQuickBookProperties();
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -133,7 +134,7 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         if (this.AccountingSystemCode != "QBO") {
             if (this.EntityPM.QBOrealMeID) {
@@ -153,7 +154,7 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
             this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -183,14 +184,14 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
 
     SaveChanges() {
         if (!this.EntityPM.IsDirty) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
         else {
             this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
                 if (myResponse1.HasError) {
                     this.ValidationErrorsList = myResponse1.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -202,13 +203,13 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
                         }
                     });
 
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
             });
         }
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

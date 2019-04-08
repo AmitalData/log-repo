@@ -31,6 +31,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsResourcesReady: boolean = false;
     public ItemsSource: ObservableCollection;
     public TransportModeId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -935,7 +936,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.EntityPM.EstimateProfit = AppTool.Round(myProfitAmount, 2);
         }
 
-        SessionLocator.CurrentSession.FireEvent("FCLPackagesChanged");
+        this.CurrentSession.FireEvent("FCLPackagesChanged");
     }
 
     DeleteFCLPackage(packageIndex: string) {

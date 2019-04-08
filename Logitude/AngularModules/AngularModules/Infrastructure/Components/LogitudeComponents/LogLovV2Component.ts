@@ -224,7 +224,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     @Input() DisplayFieldsFromList: string;
     public isRTL: boolean = false;
     private LovPartnerTypes: Array<PartnerTypeList> = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityListService: EntityListService, private entityPMService: EntityPMService,
         private _entityResourceService: EntityResourceService) {
         this.show = false;
@@ -375,7 +375,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             if (this.FocusOnMe) {
                 var element = document.getElementById(this.ElementId);
                 element.focus();
-                SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, OnBlurEvent: this.OnBlurEvent });
+                this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, OnBlurEvent: this.OnBlurEvent });
                 this.timerToken = setTimeout(() => {
                     Selection(element);
                 }, 1);
@@ -477,18 +477,18 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.SetControlIds(baseIdCombination);
 
         if (this.FocusOnMe) {// it means it is inside a grid.
-            this.CopyValueSubs = SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.ElementId) {
-                    //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
-                    this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
+                    //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
                     this.GetSingle(this.LookUpTable);
-                    SessionLocator.CurrentSession.CopiedCell = null;
+                    this.CurrentSession.CopiedCell = null;
                 }
             });
 
-            //if (SessionLocator.CurrentSession.CopiedCell) {
-            //    this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-            //    SessionLocator.CurrentSession.CopiedCell = null;
+            //if (this.CurrentSession.CopiedCell) {
+            //    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+            //    this.CurrentSession.CopiedCell = null;
             //}
         }
 
@@ -2149,7 +2149,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             this.OnEditCompleted();
                     });
                 }
-                //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 //    .then(cmpRef => {
                 //        cmpRef.instance.ComponentRef = cmpRef;
                 //        cmpRef.instance.Run({ EntityId: currentEntity.Id, ObjectTableName: objectTableName });

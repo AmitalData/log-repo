@@ -24,6 +24,7 @@ export class MaintenanceComponent {
     public ItemsSource: MaintenanceMenuItem[];
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ItemsSource = [];
         this.BuildPagesMenu();
@@ -840,7 +841,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "ACYT": {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
                     this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
@@ -876,11 +877,11 @@ export class MaintenanceComponent {
                 }
                 case "MTUS": {
                     this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((resp: any) => {
-                        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run(null);
-                                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                this.CurrentSession.AddMenuReference(cmpRef);
                             });
                     });
                     break;
@@ -993,11 +994,11 @@ export class MaintenanceComponent {
                 }
                 case "MTTC": {
                     this._entityResourceService.getEntityResourceByTableName("TicketClassification", 0).subscribe((resp: any) => {
-                        SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketClassificationMaintenanceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketClassificationMaintenanceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run();
-                                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                this.CurrentSession.AddMenuReference(cmpRef);
                             });
                     });
                     break;
@@ -1211,11 +1212,11 @@ export class MaintenanceComponent {
 
                 //  case "TXRP": {
                 //    this._entityResourceService.getEntityResourceByTableName("TaxReport", 0).subscribe((resp: any) => {
-                //        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                //        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 //            .then(cmpRef => {
                 //                cmpRef.instance.ComponentRef = cmpRef;
                 //                cmpRef.instance.Run(null);
-                //                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                //                this.CurrentSession.AddMenuReference(cmpRef);
                 //            });
                 //    });
                 //    break;
@@ -1268,11 +1269,11 @@ export class MaintenanceComponent {
                             listArgs.BackButtonTitle = "Maintenance";
                             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                                 listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
-                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         cmpRef.instance.ComponentRef = cmpRef;
                                         cmpRef.instance.Run(listArgs);
-                                        //SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                        //this.CurrentSession.AddMenuReference(cmpRef);
                                     });
                             });
                         }
@@ -1371,11 +1372,11 @@ export class MaintenanceComponent {
             var listArgs = new ListComponentArgs();
             listArgs.DisplayTitle = item.TranslatedName;//TextCodeTranslator.Translate();
             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsClosedTablesComponent',
-                SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     //cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
     }
@@ -1385,11 +1386,11 @@ export class MaintenanceComponent {
             var listArgs = new ListComponentArgs();
             listArgs.DisplayTitle = item.TranslatedName;//TextCodeTranslator.Translate();
             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsMaintenance/Components/Maintenance/InterfaceManagementComponent',
-                SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     //cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
     }

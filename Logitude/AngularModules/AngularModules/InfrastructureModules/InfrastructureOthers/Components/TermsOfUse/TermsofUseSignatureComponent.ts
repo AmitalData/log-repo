@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 
@@ -28,6 +28,7 @@ export class TermsofUseSignatureComponent implements OnInit {
 
 
     TermsofUseSignatureSelectedViewModel: TermsofUseSignaturePMViewModel;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _termsofUseSignatureExtendedPM: TermsofUseSignatureExtendedPM) {
  
 
@@ -49,7 +50,7 @@ export class TermsofUseSignatureComponent implements OnInit {
 
 
     LoadData() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.TermsofUseSignaturePMLists = [];
         this._termsofUseSignatureExtendedPM.GetTermsofUseSignatures(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe(res => {
 
@@ -63,11 +64,11 @@ export class TermsofUseSignatureComponent implements OnInit {
                     });
 
                 }
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             }
             else {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
 
 

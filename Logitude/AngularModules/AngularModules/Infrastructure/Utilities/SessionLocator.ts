@@ -47,7 +47,8 @@ export class SessionLocator {
     public static ApplicationLocation: ViewContainerRef;  
     public static SATInterfaceSettings: SATInterfaceSettingPM;
     public static FeatureToggles: FeatureToggleList[] = [];
-    public static CurrentSession: SessionComponent;
+    public static SelectedSession: SessionComponent;
+    public static ShowUserNewReleaseToolTip: boolean = true;
     public static AllSessions: Array<SessionComponent>;
     public static AddSession(mySession: SessionComponent) {
         if (SessionLocator.AllSessions == null) {

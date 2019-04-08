@@ -75,7 +75,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
 
     //#endregion
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -126,7 +126,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
 
     SetFilter() {
-        var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+        var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
         if (myDeclarationEditComponentController.CustomsAnswersShowManifest) {
             this.CourierFilterSelectedValue = 'Manifest';
             this.IsManifest = true;
@@ -142,29 +142,29 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.SetFilter();
                         this.ReloadDeclarationErrors();
                         this.DisplayOnlyCheck();
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCCA") {
                             this.SetFilter();
                             this.ReloadDeclarationErrors();
@@ -200,14 +200,14 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     //#endregion
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     DisplayOnlyCheck() {
-        this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
@@ -321,7 +321,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     AllConstraintCount: number = 0;
     // get errors code
     ReloadDeclarationErrors() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         //[1] GetDeclarationConstraints();
         this.declarationWebService.GetDeclarationConstraintsByDeclrationId(this.EntityPM.Id)
@@ -332,7 +332,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                 if (!AppTool.IsNullOrEmpty(res)) {
 
                     if (res.length == 0)
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     else if (res.length > 50) {
                         this.AllConstraintCount = res.length;
                         res = res.slice(0, 50);
@@ -353,7 +353,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
                     this.LoadDeclarationErrors();
                 } else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                 }
 
@@ -418,7 +418,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     errorsForDeclaration;
     LoadDeclarationErrors() {
         //[2] GetDeclarationErrors();
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();//Avoiding ReSend !!
+        this.CurrentSession.StartBusyIndicatorLoading();//Avoiding ReSend !!
         this.declarationWebService.GetDeclarationErrors(this.EntityPM.Id, this.ListVersionId, this.CourierFilterSelectedValue)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 console.log("[Response] GetDeclarationErrors : ", myServiceResponse.Result);
@@ -427,7 +427,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                 this.errorsForDeclaration = res;
 
                 if (res && res.length == 0) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.LoadConstriantsList([]);
                 }
                 this.GetResources(res);
@@ -457,7 +457,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
                     this.DisplayOnlyCheck();
                 } else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                 }
 
@@ -527,7 +527,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.WarningsCount = "";
         }
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
     }
 
@@ -582,9 +582,9 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         this.RequestVIA = event.RequestVIA;
 
         if (this.EntityPM.IsDirty) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
 
-            var event = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            var event = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
 
                 if (event) {
                     event.unsubscribe();
@@ -644,8 +644,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.OnSendCompleted();
 
         }).catch((err) => {
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = err;
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = err;
         });
 
 
@@ -669,7 +669,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         if (AppTool.IsNullOrEmpty(declarationError)) {
             console.warn("[!] There is no declaraion error for the constraint!");
         } else {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             switch (declarationError.EntityName.toLowerCase()) {
 
                 case "declaration":
@@ -689,10 +689,10 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                         };
                         logWindow.WindowClosed.subscribe(($event: any) => {
                             if ($event != 'cancel') {
-                                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             }
                         });
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         // Remove DetectChanges from answer tab
                         this.cd.detach();
@@ -719,7 +719,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
                             if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
 
-                                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                                this.CurrentSession.StartBusyIndicatorLoading();
                                 var windowArgs: any = {};
                                 windowArgs.EntityPM = supplierInvoicePM;
                                 windowArgs.declarationPM = this.EntityPM;
@@ -753,11 +753,11 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                 logWindow.Title = this.GetEditedScreenTitle(declarationError.EntityName, declarationError);
                                 logWindow.WindowClosed.subscribe(($event: any) => {
                                     if ($event != 'cancel') {
-                                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                     }
                                 });
                               logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
 
                                 // Remove DetectChanges from answer tab
                                 this.cd.detach();
@@ -769,7 +769,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
                             }
                             else {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 var window = new MessageWindow();
                                 window.Show("There is no invoice with such key in this declaration!!");
                             }
@@ -802,7 +802,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                
 
 
-                                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                                    this.CurrentSession.StartBusyIndicatorLoading();
                                     var windowArgs: any = {};
                                     windowArgs.EntityPM = supplierInvoicePM;
                                     windowArgs.declarationPM = this.EntityPM;
@@ -828,18 +828,18 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
 
                                     }
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
                                     windowArgs.IsDisplayOnly = this.IsDisplayOnly;
                                     logWindow.ShowCloseButton = false;
                                     logWindow.WindowArgs = windowArgs;
                                     logWindow.Title = this.GetEditedScreenTitle(declarationError.EntityName, declarationError);
                                     logWindow.WindowClosed.subscribe(($event: any) => {
                                         if ($event != 'cancel') {
-                                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                         }
                                     });
                                   logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
 
                                     // Remove DetectChanges from answer tab
                                     this.cd.detach();
@@ -879,7 +879,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
                                 if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
 
-                                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                                    this.CurrentSession.StartBusyIndicatorLoading();
 
                                     var invoiceItem = supplierInvoicePM.SupplierInvoiceItems.find(d => d.SequenceNumeric == declarationError.ParentLine);
 
@@ -908,10 +908,10 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                         logWindow.ShowCloseButton = false;
                                         logWindow.WindowArgs = windowArgs;
                                         logWindow.Title = this.GetEditedScreenTitle(declarationError.EntityName, declarationError);
-                                        SessionLocator.CurrentSession.StopBusyIndicator();
+                                        this.CurrentSession.StopBusyIndicator();
                                         logWindow.WindowClosed.subscribe(($event: any) => {
                                             if ($event != 'cancel') {
-                                                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                             }
                                         });
                                       logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
@@ -925,7 +925,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                                 this.cd.detectChanges();
                                             }, 100);                                        });
                                     }
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
 
                                 }
                                 else {
@@ -957,8 +957,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             for (var xmlError of xmlErrors) {
                 errors.push(xmlError);
             }
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         }
         if (error.EntityName != null) {
             if (error.EntityName.toLowerCase() == "supplierinvoiceitem") {
@@ -1061,7 +1061,7 @@ export class ConstraintLineModel extends BaseComponent {
     hasNoError: boolean = false;
     parent: CustomsAnswersComponent;
     displayOnly: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private declarationError: DeclarationErrorView, private constraintPM: DeclarationConstraintPM, Parent: CustomsAnswersComponent) {
         super();
         this.parent = Parent;
@@ -1483,7 +1483,7 @@ export class ConstraintLineModel extends BaseComponent {
     PaymentNumberLinkClicked() {
         if (!AppTool.IsNullOrEmpty(this.PaymentOrderId)) {
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.PaymentOrderId, ObjectTableName: 'Customs.PaymentOrder' });

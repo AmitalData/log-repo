@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -16,11 +16,17 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
     public ObjectTableName: string = "AccountingSetting";
     public DataContext: any;
     public IsEnableMultiCurrencyARPaymentsVisible: boolean = false;
+    public IsEnableInvoiceStocksManagementVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
         if (FeatureLocator.HasFeaturePermession("ARPayment", "EnableMultiCurrency")) {
             this.IsEnableMultiCurrencyARPaymentsVisible = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "ManageStocks")) {
+            this.IsEnableInvoiceStocksManagementVisible = true;
         }
     }
 
@@ -33,11 +39,11 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
     //Commands 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private myCloner: Cloner;
@@ -56,4 +62,3 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
     }
 }
 
-   

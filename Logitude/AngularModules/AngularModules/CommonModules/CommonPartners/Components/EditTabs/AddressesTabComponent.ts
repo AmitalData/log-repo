@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
@@ -31,6 +31,7 @@ export class AddressesTabComponent {
     public DomainService: PartnersDomainService;
     public IsVisibile: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response=> {
             this.IsVisibile = true;
@@ -56,22 +57,22 @@ export class AddressesTabComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetUIProperties();
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetUIProperties();
                 }
             });
 
-            SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "EntityActivated") {
                     if (this.ObjectTableName == "Customer") {
                         this.SetUIProperties();
@@ -103,12 +104,12 @@ export class AddressesTabComponent {
     public AllAddresses: AddressPM[] = [];
     private LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.DomainService.GetAllAddressesPMsbyCardId(this.EntityId).subscribe((myResult:any) => {
             this.AllAddresses = myResult;
             this.BuildItemsSource();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     public BuildItemsSource() {

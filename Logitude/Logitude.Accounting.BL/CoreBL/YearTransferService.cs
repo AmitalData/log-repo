@@ -197,8 +197,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 //DocumentDate = journal.do
                 LocalAmount = (myCurrencySum.LocalAmountDebit - myCurrencySum.LocalAmountCredit),
                 ForeignAmount = (myCurrencySum.ForeignAmountDebit - myCurrencySum.ForeignAmountCredit),
-                DocumentDate = journal.CreateDate,
-                DueDate = journal.CreateDate,
+//                DocumentDate = journal.CreateDate,
+                DocumentDate = _EndOfYearUserInput.AddDays(1),
+//                DueDate = journal.CreateDate,
+                DueDate = _EndOfYearUserInput.AddDays(1),
                 Notes = TranslateTextsClassTranslate("General.MC.ACC.YearTransfer", 0, useLocal),
 
             };

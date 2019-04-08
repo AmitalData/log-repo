@@ -26,7 +26,7 @@ export class MultiCertificateUpdateComponent extends BaseComponent {
     _MultiCertificatesService: MultiCertificatesService = new MultiCertificatesService();
     CertPM: SupplierInvioceItemCertificatPM;
     InvoicPM: SupplierInvoicePM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.SetUIProperties();
@@ -116,7 +116,7 @@ export class MultiCertificateUpdateComponent extends BaseComponent {
     //#endregion
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     OkButtonClicked() {
@@ -183,7 +183,7 @@ export class MultiCertificateUpdateComponent extends BaseComponent {
                         msg.RTL = true;
                         msg.ShowSuccessIcon = true;
                         msg.WindowClosed.subscribe(() => {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
                         });
                         msg.Show(txt.replace("#Number", updatedRowCount + ""));
 
@@ -202,7 +202,7 @@ export class MultiCertificateUpdateComponent extends BaseComponent {
 
         var updatedRowCount = 0;
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Updating...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Updating...");
 
         //Update certificates by search fields
         if (this.InvoicPM.SupplierInvoiceItems) {
@@ -230,7 +230,7 @@ export class MultiCertificateUpdateComponent extends BaseComponent {
             });
         }
 
-        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
         // Show response message
         if (updatedRowCount == 0) {
@@ -244,7 +244,7 @@ export class MultiCertificateUpdateComponent extends BaseComponent {
             msg.RTL = true;
             msg.ShowSuccessIcon = true;
             msg.WindowClosed.subscribe(() => {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
             });
             msg.Show(txt.replace("#Number", updatedRowCount + ""));
 

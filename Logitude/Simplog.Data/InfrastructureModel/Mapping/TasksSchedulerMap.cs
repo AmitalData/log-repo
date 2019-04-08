@@ -60,6 +60,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.SchedulerDetailsXML)
                  .IsMaxLength()
                  .IsUnicode(true);
+            this.Property(t => t.RepeatInMinutes).IsOptional();
 
 
             // Table & Column Mappings

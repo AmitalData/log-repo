@@ -136,6 +136,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ChargeableWeight = shipment.ChargeableWeight;
                 myDataProvider.ProjectNumber = shipment.ProjectNumber;
                 myDataProvider.ARInvoices = shipment.ARInvoices;
+                myDataProvider.IsDangerous = shipment.IsDangerous;
 
                 if (shipment.DocumentsClosingDate != null)
                 {

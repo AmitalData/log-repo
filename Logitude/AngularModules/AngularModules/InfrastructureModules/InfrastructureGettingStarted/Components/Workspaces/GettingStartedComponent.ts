@@ -30,6 +30,7 @@ export class GettingStartedComponent extends BaseComponent {
     public DataContext: GettingStartedComponent = this;
     public VideosObslist: HelpResourceArgs[] = [];
     public HowToObslist: HelpResourceArgs[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.LoadData();
@@ -296,13 +297,13 @@ export class GettingStartedComponent extends BaseComponent {
     ViewList(entity: string) {
         if (entity == "User") {
             this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((resp: any) => {
-                SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         var args = new UserArgs();
                         args.BackButtonText = TextCodeTranslator.Translate("General.MH.GettingStarted");
                         cmpRef.instance.Run(args);
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -359,11 +360,11 @@ export class GettingStartedComponent extends BaseComponent {
         listArgs.QueryCode = queryCode;
         listArgs.ObjectTableName = objectTableName;
         listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.GettingStarted");
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
     }
 

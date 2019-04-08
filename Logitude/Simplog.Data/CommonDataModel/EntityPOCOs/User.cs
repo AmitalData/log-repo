@@ -66,6 +66,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool ShowInboxToolTip { get; set; }
         public bool ShowLocalNameInLOV { get; set; }
         public string UserRoles { get; set; }
-        public bool ShowNewReleaseToolTip { get; set; }
     }
 }

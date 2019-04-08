@@ -106,7 +106,7 @@ export class CustomsRequestsSheetsComponent
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private _CD: ChangeDetectorRef) {
         super();
         this._CustomsRequestsSheetStatusListService = new CustomsRequestsSheetStatusListService();
@@ -153,7 +153,7 @@ export class CustomsRequestsSheetsComponent
 
     }
     InitScreen() {
-        //SessionLocator.CurrentSession.StartBusyIndicator("");
+        //this.CurrentSession.StartBusyIndicator("");
         this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequestsSheet", 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("CommunicationLog", 0).subscribe(response => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe(response => {
@@ -169,7 +169,7 @@ export class CustomsRequestsSheetsComponent
 
                     this._CustomsRequestsSheetStatusListService.getAll()/*getAllFromCache()*/.subscribe((resCRSSttsList) => {
 
-                        //SessionLocator.CurrentSession.StopBusyIndicator();
+                        //this.CurrentSession.StopBusyIndicator();
 
                         var listCustomsRequestsSheetStatusList: CustomsRequestsSheetStatusList[]
                             = resCRSSttsList.Result;
@@ -191,7 +191,7 @@ export class CustomsRequestsSheetsComponent
                             this._CD.detectChanges();
                         }
                         this.CRSSearch();
-                        //SessionLocator.CurrentSession.StopBusyIndicator();
+                        //this.CurrentSession.StopBusyIndicator();
 
                     })
                 });
@@ -211,7 +211,7 @@ export class CustomsRequestsSheetsComponent
     CRSSearch() {
         
         this.IsSearchButtonEnabled = false;
-        //SessionLocator.CurrentSession.StartBusyIndicator("");
+        //this.CurrentSession.StartBusyIndicator("");
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
@@ -471,7 +471,7 @@ export class CustomsRequestsSheetsComponent
             .getExtendedByFilters("Customs.CustomsRequestsSheet", filters);
         myout.then(res => {
             this.IsSearchButtonEnabled = true;
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
         });
 
         return myout;

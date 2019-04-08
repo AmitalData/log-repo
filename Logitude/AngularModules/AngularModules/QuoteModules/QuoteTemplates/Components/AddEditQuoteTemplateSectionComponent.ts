@@ -31,7 +31,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
     IsNewQuoteTemplateSession: boolean;
     private _entityResourceService: EntityResourceService = new EntityResourceService();  
     QuoteTemplateId: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSectionPMService = new QuoteTemplateSectionPMService();
@@ -54,7 +54,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
         if (this.IsNewQuoteTemplateSession) this.QuoteTemplateSectionViewModel = this.GetNewInstance();
         this.Name = this.QuoteTemplateSectionViewModel.Name;
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
 
 
 
@@ -64,7 +64,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
 
         this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, sectionDocId, "", "", "", "", SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.ReloadFroalaEditor(pmResponse.Result);
             }
@@ -131,8 +131,8 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
                     }
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.Close("Refresh");
             }
 
             else {
@@ -190,7 +190,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
             if (this.IsNewQuoteTemplateSession) {
         
       
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
 
 
@@ -217,7 +217,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
                 this.QuoteTemplateSectionViewModel.EntityPM.IschangeBodySection = this.QuoteTemplateSectionViewModel.HtmlBody != htmlbody ? true : false;
 
                 if (this.QuoteTemplateSectionViewModel.EntityPM.IsDirty || this.QuoteTemplateSectionViewModel.EntityPM.IschangeBodySection) {
-                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
                     this.QuoteTemplateSectionViewModel.Templatedata = quotetemplateSectionBody;
 
@@ -260,8 +260,8 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.Close("");
     }
 }
 
