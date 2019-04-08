@@ -422,6 +422,18 @@ export class DailyTimeSheetComponent extends BaseComponent {
             }
         });
     }
+
+    CalculationButtonClicked() {
+        if (this.myDomainService == null) {
+            this.myDomainService = new TimeManagementDomainService();
+        }
+
+        this.myDomainService.GetCalculationCompleteWork().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
 }
 
 export class ItemSourceItem extends BaseComponent {

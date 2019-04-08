@@ -17,7 +17,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.CountryId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
-
+            this.Property(t => t.QBOTransactionLocationCode).HasMaxLength(3).IsUnicode(false);
             // Table & Column Mappings
             this.ToTable("States");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -30,6 +30,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CountryId).HasColumnName("CountryId");
             this.Property(t => t.AddedManually).HasColumnName("AddedManually");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.QBOTransactionLocationCode).HasColumnName("QBOTransactionLocationCode");
 
             // Relationships
             this.HasRequired(t => t.Country).WithMany().HasForeignKey(d => d.CountryId);
