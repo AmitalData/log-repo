@@ -263,19 +263,21 @@ namespace WebFreight.Web.Helpers
                                                    select d).ToList();
 
             var groupedItems = (from d in tmEmployeelist
-                                group d by new { d.WINumber, d.TimeInMinutes, d.Tenant } into g
+                                group d by new { d.WINumber, d.Tenant } into g
                                 select new
                                 {
                                     Tenant = g.Key.Tenant,
                                     WINumber = g.Key.WINumber,
-                                    CompletedWork = (g.Sum(s => g.Key.TimeInMinutes)) / 60.00,
+                                    CompletedWork = (g.Sum(s => s.TimeInMinutes))/60.00,
                                 });
-            int counter = 0; 
-
+            int counter = 0;
+            int currentIndex = 0;
+            int groupSize = groupedItems.Count();
             foreach (var item in groupedItems)
             {
-                counter += 1; 
-
+                counter += 1;
+                currentIndex += 1;
+               
                 // Create a connection to the account
                 string accountUri = "https://logitudeteam.visualstudio.com";
                 var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
@@ -301,7 +303,7 @@ namespace WebFreight.Web.Helpers
                     if(counter == 10)
                     {
                         counter = 0;
-                        System.Threading.Thread.Sleep(5000);
+                        System.Threading.Thread.Sleep(1000);
                     }
                 }
                 catch (AggregateException aex)
