@@ -525,6 +525,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             line.IsUsed = true;
                             line.ARInvoiceId = aRInvoice.Id;
+                            line.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            line.UpdatedByUserId = this.loggedContact.Id;
                             line.ShipmentNumber = aRInvoice.MainEntityReference;
                             aRInvoiceStockLineRepository.Update(line);
                             aRInvoiceStockLineRepository.SubmitChanges();
@@ -545,6 +547,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             line.IsUsed = false;
                             line.ARInvoiceId = null;
                             line.ShipmentNumber = null;
+                            line.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            line.UpdatedByUserId = this.loggedContact.Id;
                             aRInvoiceStockLineRepository.Update(line);
                             aRInvoiceStockLineRepository.SubmitChanges();
                             stock = aRInvoiceStockQuery.GetSinglePM(line.ARInvoiceStockId, aRInvoice.Tenant);
@@ -555,6 +559,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             line.IsUsed = true;
                             line.ARInvoiceId = aRInvoice.Id;
                             line.ShipmentNumber = aRInvoice.MainEntityReference;
+                            line.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            line.UpdatedByUserId = this.loggedContact.Id;
                             aRInvoiceStockLineRepository.Update(line);
                             aRInvoiceStockLineRepository.SubmitChanges();
                             stock = aRInvoiceStockQuery.GetSinglePM(line.ARInvoiceStockId, aRInvoice.Tenant);
