@@ -88,6 +88,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         entityPM.SetApproved = true;
                         entityPM.IsExternalEntity = true;
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo, entityPM.Tenant);
+                       
                         ARPaymentService service = new ARPaymentService(MyContext, entity.Tenant);
                         entityPM = mappingService.SetARPaymentPMFields(entityPM);
                         service.Create(entityPM);
