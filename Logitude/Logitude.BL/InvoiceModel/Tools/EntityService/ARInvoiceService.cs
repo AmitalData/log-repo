@@ -519,6 +519,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         ARInvoiceStockLine line = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
                         line.IsUsed = true;
                         line.ARInvoiceId = aRInvoice.Id;
+                        line.ShipmentNumber = aRInvoice.MainEntityReference;
                         aRInvoiceStockLineRepository.Update(line);
                         aRInvoiceStockLineRepository.SubmitChanges();
                     }
@@ -533,12 +534,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             line = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine( this.invoice.ARInvoiceStockId, aRInvoice.Tenant);
                             line.IsUsed = false;
                             line.ARInvoiceId = null;
+                            line.ShipmentNumber = null;
                         }
                         else
                         {
                             line = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
                             line.IsUsed = true;
                             line.ARInvoiceId = aRInvoice.Id;
+                            line.ShipmentNumber = aRInvoice.MainEntityReference;
                         }
                         aRInvoiceStockLineRepository.Update(line);
                         aRInvoiceStockLineRepository.SubmitChanges();
