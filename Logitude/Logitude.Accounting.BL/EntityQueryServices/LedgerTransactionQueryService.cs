@@ -550,6 +550,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                             JournalNumber = j.JournalNumber,
                                                             Notes = a.Notes,
                                                             Reference2 = a.Reference2,
+                                                            LedgerTransactionId = a.Id,
                                                             OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber:null,
                                                         }).ToList();
 
@@ -576,7 +577,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
 
             // get payment transaction
-            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
+            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId && t.SourceTypeCode == AccountingEntityValues.ARInvoice).FirstOrDefault();
             if (paymentTransaction != null)
             {
                 string paymentTransactionId = paymentTransaction.Id;
