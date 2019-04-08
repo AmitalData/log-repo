@@ -2626,7 +2626,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp1;
             }
-            else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined) {
+            else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
                 this.callCount = 2;
                 var forceEnableAdd = false;
                 if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0) {
@@ -2812,7 +2812,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null);
                 this.currentFilter = this.LookUp1;
             }
-            else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined) {
+            else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
                 this.callCount = 2;
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp1 && this.LookUpTable.DependencyFilter2 != this.LookUp1 && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
