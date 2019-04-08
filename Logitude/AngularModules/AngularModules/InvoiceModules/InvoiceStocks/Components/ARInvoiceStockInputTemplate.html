@@ -147,12 +147,13 @@
                     <table>
                         <tr>
                             <td style="width: 100px; min-width: 100px; max-width: 100px;">Invoice Number</td>
-                            <td style="width: 90px; min-width: 90px; max-width: 90px;">CreateDate</td>
-                            <td style="width: 100px; min-width: 100px; max-width: 100px;">Created by</td>
-                            <td style="width: 90px; min-width: 90px; max-width: 90px;">Last Action Date</td>
-                            <td style="width: 100px; min-width: 100px; max-width: 100px;">Last Action by</td>
-                            <td style="width: 100px; min-width: 100px; max-width: 100px;">Shipment Number</td>
+                            <td style="width: 100px; min-width: 100px; max-width: 100px;">CreateDate</td>
+                            <td style="width: 140px; min-width: 140px; max-width: 140px;">Created by</td>
+                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Last Action Date</td>
+                            <td style="width: 140px; min-width: 140px; max-width: 140px;">Last Action by</td>
+                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Shipment Number</td>
                             <td style="width: 70px; min-width: 70px; max-width: 70px;">Used</td>
+                            <td class="LastChild"></td>
                         </tr>
                     </table>
                 </div>
@@ -165,34 +166,37 @@
                                 {{item.Number}}
                             </td>
 
-                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
                                 {{item.CreateDate | DateTimePipe:'D'}}
                             </td>
 
-                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                            <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
                                 {{item.CreatedByUserName}}
                             </td>
 
-                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
                                 {{item.UpdateDate | DateTimePipe:'D'}}
                             </td>
 
-                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                            <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
                                 {{item.UpdatedByUserName}}
                             </td>
 
-                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
                                 {{item.ShipmentNumber}}
                             </td>
 
                             <td class="GridViewCell" style="width: 70px; min-width: 70px; max-width: 70px;">
-                                <div></div>
+                                <img *ngIf="item.IsUsed" width="18" height="18" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
                             </td>
 
+                            <td class="CellTools">
+                                <div></div>
+                            </td>
                         </tr>
 
                         <tr>
-                            <td colspan="4">
+                            <td colspan="8">
                                 <div></div>
                             </td>
                         </tr>

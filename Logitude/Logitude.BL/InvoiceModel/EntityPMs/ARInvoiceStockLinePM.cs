@@ -21,10 +21,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string UpdatedByUserId { get; set; }
         public bool IsUsed { get; set; }
         public string ARInvoiceId { get; set; }
+        public string ShipmentNumber { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         public string CreatedByUserName { get; set; }
-        public string UpdatedByUserName { get; set; }
+        public string UpdatedByUserName { get; set; }        
     }
 }
