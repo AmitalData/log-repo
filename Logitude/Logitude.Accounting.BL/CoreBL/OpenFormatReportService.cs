@@ -1464,9 +1464,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append(' ', 9);
                 }
-               
 
-                
+
+
 
 
 
@@ -1481,8 +1481,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 //    myStringBuilder.Append(a);
                 //    myStringBuilder.Append(' ', 9);
                 //}
-
-                myStringBuilder.Append('0', 7);
+                string c100 = C100Count.ToString();
+                 if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
+                
                 myStringBuilder.Append(' ', 13);
                  myStringBuilder.AppendLine();
                 //D110
@@ -1670,7 +1672,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 7);
+                
+                    if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
 
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 7);
@@ -2163,9 +2167,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 9);
                 }
 
-               
 
-                myStringBuilder.Append('0', 7);
+
+                string c100 = C100Count.ToString();
+                if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                myStringBuilder.Append(a + c100.PadLeft(7, '0'));
                 myStringBuilder.Append(' ', 13);
                  myStringBuilder.AppendLine();
 
@@ -2364,7 +2370,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 7);
+                    if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
 
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 7);
@@ -2764,8 +2771,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 9);
                 }
 
-                
-                myStringBuilder.Append('0', 7);
+                string c100 = C100Count.ToString();
+                if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                myStringBuilder.Append(a + c100.PadLeft(7, '0'));
                 myStringBuilder.Append(' ', 13);
                  myStringBuilder.AppendLine();
 
@@ -2988,7 +2996,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append('0', 8);
                     }
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 7);
+
+                 
+                    if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
 
@@ -3162,7 +3173,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 9);
                 }
 
-                myStringBuilder.Append('0', 7);
+
+                string c100 = C100Count.ToString();
+                if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                myStringBuilder.Append(a + c100.PadLeft(7, '0'));
                 myStringBuilder.Append(' ', 13);
                  myStringBuilder.AppendLine();
 
@@ -3277,7 +3291,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 7);
+
+                   
+                    if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
 
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
@@ -3493,7 +3510,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 7);
+
+                       
+                        if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                        myStringBuilder.Append(a + c100.PadLeft(7, '0'));
 
                         myStringBuilder.Append(a);
                         myStringBuilder.Append(' ', 60);
