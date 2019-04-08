@@ -1,6 +1,8 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Models;
+using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -23,6 +25,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class UniCourierBatchSendUCBCMSS_MsgResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DCAInUCBCMSSWithResponseContentHeader, GenericRequestParams>
     {
+
         public override INF_MSG_GenericResponseData GetResponse(DCAInUCBCMSSWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
@@ -38,7 +41,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
             var qs = new DeclarationCourierStatusQueryService(context);
-            List<string> lockedDeclarations = new List<string>();
+            List<DeclarationPM> lockedDeclarations = new List<DeclarationPM>();
             List <DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
             listPM = qs.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
             if (listPM.Count == 0)
@@ -77,15 +80,65 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             }
 
-            this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
+            if(lockedDeclarations != null && lockedDeclarations.Count() > 0)
+            {
+                List<string> declarationsList = new List<string>();
+                string message = string.Concat("אתר אחסון בטיסה השתנה ל ", customResponse.StorageSiteCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
+                foreach (DeclarationPM itemDeclaration in lockedDeclarations)
+                {
+                    declarationsList.Add(itemDeclaration.CustomFileNo);
+                }
+                RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "FSE", message);
+            }
 
+            this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
             this.MyResponseData.UserMessage = mess.ToString();
             this.MyResponseData.Succeeded = true;
         }
 
-    }
+        private void RaiseEvent(DeclarationPM declarationPM, List<string> declarationsList, string eventCode, string remarks)
+        {
+            try
+            {
+                string loggingUserId = "";
+                loggingUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant);
 
+                var eventContextTagModel = declarationPM.CurrentContextTag as EventContextTagModel;
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = declarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = eventCode,
+                    notes = "DO_NOT_RAISE_EVENT",
+                    CommunicationLoggingEntityReference = declarationPM.DeclarationNumber,
+                    EntityId = declarationPM.Id,
+                    UserId = loggingUserId,
+                    CommunicationSubject = "Event from logitude",
+
+                    MyUnifreightEventParam = new UnifreightEventParam()
+                    {
+                        Code = eventCode,
+                        Mode = UnifreightEventMode.@new,
+                        EventDateTime = DateTime.Now,
+                        Entname = "CFIFILEM",
+                        PrimaryNum = declarationPM.CustomFileNo,
+                        PrimaryNumList = declarationsList,
+                        EventRemarks = remarks,
+                        EventUser = loggingUserId,
+                    }
+                };
+
+                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = " + eventCode + " CustomFileNo= " + declarationPM.CustomFileNo + "   ");
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true);
+            }
+            catch (System.Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
+        }
+    }
 
     class ChangeStorgeSiteService
     {
@@ -96,7 +149,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.context = context;
         }
 
-        public void ChangeStorgeSite(string StorageSiteCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<string> lockedDeclarations, DeclarationCourierStatusPM itemPM)
+        public void ChangeStorgeSite(string StorageSiteCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM)
         {
 
             
@@ -118,7 +171,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     catch (System.Exception)
                     {
                         LogMessagingUtil.Instance.AppendLine($"GetSingleGeneralLockNOWAIT(CCUFILEM, {declarationPM.CustomFileNo}) ==> Already Lock => try later (*5) ");
-                        lockedDeclarations.Add(declarationPM.CustomFileNo);
                         isUpdateDeclaration = false;
                     }
                     if (!myDeclarationUpdateService.CheckIfUpdatingAllowed(declarationPM))
@@ -164,8 +216,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     else
                     {
-                        LogMessagingUtil.Instance.AppendLine($"GetSingleGeneralLockNOWAIT({declarationPM.CustomFileNo}) ");
-                        //Task .....
+                        lockedDeclarations.Add(declarationPM);
                     }
                 }
             }
