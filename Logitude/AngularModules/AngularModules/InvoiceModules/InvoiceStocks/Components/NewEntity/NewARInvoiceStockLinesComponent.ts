@@ -5,6 +5,8 @@ import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceSto
 import { AppTool, FormatTool, DateTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ARInvoiceStockPMService } from '../../../../Invoice/Services/StandardPMs/ARInvoiceStockPMService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     moduleId: module.id,
@@ -218,7 +220,7 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
     public IsListGenerated: boolean = false;
     private GenerateErrors: string[] = [];
     GenerateList(myStartNumber: number, myEndNumber: number, myAmount) {
-        this.IsListGenerated = false;        
+        this.IsListGenerated = false;
         var StocksListCount = this.Stock.ARInvoiceStockLines == null ? 0 : this.Stock.ARInvoiceStockLines.length;
 
         if (myEndNumber < myStartNumber) {
@@ -245,10 +247,10 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
             else {
                 this.StartGenerating(myStartNumber, myEndNumber);
             }
-        }        
+        }
 
         else {
-            this.StartGenerating(myStartNumber, myEndNumber);            
+            this.StartGenerating(myStartNumber, myEndNumber);
         }
 
         this.GenerateErrors.forEach(item => {
@@ -261,7 +263,7 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
 
         while (myStartNumber <= myEndNumber) {
             this.IsListGenerated = true;
-            var paddingStartNumber: string = myStartNumber.toString();            
+            var paddingStartNumber: string = myStartNumber.toString();
 
             if (!AppTool.IsNullOrZero(this.Size)) {
                 if (myStartNumber.toString().length < this.Size) {
@@ -282,7 +284,7 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
             else if (AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.Suffix)) {
                 invoiceNumber = paddingStartNumber.toString() + this.Suffix;
             }
-                        
+
             var newEntityPM = new ARInvoiceStockLinePM(this.Stock);
             newEntityPM.Tenant = SessionLocator.Tenant;
             newEntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -293,12 +295,12 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
             newEntityPM.UpdateDate = todayDate;
             newEntityPM.Number = invoiceNumber;
 
-            if (this.ItemsSource.filter(f => f.Number == invoiceNumber)[0] == null) {
+            if (this.Stock.ARInvoiceStockLines.filter(f => f.Number == invoiceNumber)[0] == null) {
                 this.ItemsSource.push(newEntityPM);
             }
 
             else {
-                this.GenerateErrors.push("Invoice Number: " + invoiceNumber + " already exists in the stock!");
+                this.GenerateErrors.push("Invoice Number: [" + invoiceNumber + "] already exists in the stock!");
                 myStartNumber = myEndNumber + 1;
             }
 
@@ -317,18 +319,53 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
 
         this.Validate();
 
-            this.GenerateErrors.forEach(item => {
-                this.ValidationErrorsList.push(item);
-            });
+        this.GenerateErrors.forEach(item => {
+            this.ValidationErrorsList.push(item);
+        });
 
-            if (this.ValidationErrorsList.length == 0) {
-                if (this.IsListGenerated) {
-                    this.ItemsSource.forEach(item => {
-                        this.Stock.AddARInvoiceStockLinePM(item);
+        if (this.ValidationErrorsList.length == 0) {
+            if (this.IsListGenerated) {
+                this.CurrentSession.StartBusyIndicatorSaving();
+                
+                this.ItemsSource.forEach(item => {
+                    this.Stock.AddARInvoiceStockLinePM(item);
+                });
+
+                this.Stock.NumbersAdded = true;
+                this.Stock.Amount = this.Stock.ARInvoiceStockLines.length;
+
+                var stockPMService: ARInvoiceStockPMService = new ARInvoiceStockPMService();
+                if (AppTool.IsNullOrEmpty(this.Stock.Id)) {
+                    stockPMService.insert(this.Stock).subscribe((myResponse: ServiceResponse) => {
+
+                        this.CurrentSession.StopBusyIndicator();
+
+                        if (!myResponse.HasError) {
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
+                        }
+
+                        else {
+                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                        }
                     });
+                }
 
-                    this.CurrentSession.CloseCurrentWindowEmit("OK");
+                else {
+                    stockPMService.update(this.Stock).subscribe((myResponse: ServiceResponse) => {
+
+                        this.CurrentSession.StopBusyIndicator();
+
+                        if (!myResponse.HasError) {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            this.CurrentSession.CloseCurrentWindow();
+                        }
+
+                        else {
+                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                        }
+                    });
                 }
             }
+        }
     }
 }

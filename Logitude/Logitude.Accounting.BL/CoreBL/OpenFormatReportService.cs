@@ -1464,9 +1464,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append(' ', 9);
                 }
-               
 
-                
+
+
 
 
 
@@ -1481,8 +1481,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 //    myStringBuilder.Append(a);
                 //    myStringBuilder.Append(' ', 9);
                 //}
-
-                myStringBuilder.Append('0', 7);
+                string c100 = C100Count.ToString();
+                 if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
+                
                 myStringBuilder.Append(' ', 13);
                  myStringBuilder.AppendLine();
                 //D110
@@ -1670,7 +1672,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 7);
+                
+                    if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
 
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 7);
@@ -2163,9 +2167,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 9);
                 }
 
-               
 
-                myStringBuilder.Append('0', 7);
+
+                string c100 = C100Count.ToString();
+                if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                myStringBuilder.Append(a + c100.PadLeft(7, '0'));
                 myStringBuilder.Append(' ', 13);
                  myStringBuilder.AppendLine();
 
@@ -2364,7 +2370,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 7);
+                    if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
 
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 7);
@@ -2764,8 +2771,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 9);
                 }
 
-                
-                myStringBuilder.Append('0', 7);
+                string c100 = C100Count.ToString();
+                if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                myStringBuilder.Append(a + c100.PadLeft(7, '0'));
                 myStringBuilder.Append(' ', 13);
                  myStringBuilder.AppendLine();
 
@@ -2988,7 +2996,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append('0', 8);
                     }
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 7);
+
+                 
+                    if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
 
@@ -3162,7 +3173,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 9);
                 }
 
-                myStringBuilder.Append('0', 7);
+
+                string c100 = C100Count.ToString();
+                if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                myStringBuilder.Append(a + c100.PadLeft(7, '0'));
                 myStringBuilder.Append(' ', 13);
                  myStringBuilder.AppendLine();
 
@@ -3277,7 +3291,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 7);
+
+                   
+                    if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                    myStringBuilder.Append(a + c100.PadLeft(7, '0'));
 
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 60);
@@ -3493,7 +3510,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 7);
+
+                       
+                        if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
+                        myStringBuilder.Append(a + c100.PadLeft(7, '0'));
 
                         myStringBuilder.Append(a);
                         myStringBuilder.Append(' ', 60);
@@ -4089,44 +4109,44 @@ namespace Logitude.Accounting.BL.CoreBL
             if (B100Count.ToString().Length >15)
             {
                 B100Count.ToString().Substring(0, 15);
-                stringBuilder.Append(a + B100Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + B100Count.ToString().PadLeft(19, '0'));
             }
             else
             {
-                stringBuilder.Append(a + B100Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + B100Count.ToString().PadLeft(19, '0'));
             }
             stringBuilder.AppendLine();
             stringBuilder.Append("B110");
             if (B110Count.ToString().Length > 15)
             {
                 B110Count.ToString().Substring(0, 15);
-                stringBuilder.Append(a + B110Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + B110Count.ToString().PadLeft(19, '0'));
             }
             else
             {
-                stringBuilder.Append(a + B110Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + B110Count.ToString().PadLeft(19, '0'));
             }
              stringBuilder.AppendLine();
             stringBuilder.Append("C100");
             if (C100Count.ToString().Length > 15)
             {
                 C100Count.ToString().Substring(0, 15);
-                stringBuilder.Append(a + C100Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + C100Count.ToString().PadLeft(19, '0'));
             }
             else
             {
-                stringBuilder.Append(a + C100Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + C100Count.ToString().PadLeft(19, '0'));
             }
             stringBuilder.AppendLine();
             stringBuilder.Append("D110");
             if (D110Count.ToString().Length > 15)
             {
                 D110Count.ToString().Substring(0, 15);
-                stringBuilder.Append(a + D110Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + D110Count.ToString().PadLeft(19, '0'));
             }
             else
             {
-                stringBuilder.Append(a + D110Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + D110Count.ToString().PadLeft(19, '0'));
             }
 
              stringBuilder.AppendLine();
@@ -4134,13 +4154,27 @@ namespace Logitude.Accounting.BL.CoreBL
             if (D120Count.ToString().Length > 15)
             {
                 D120Count.ToString().Substring(0, 15);
-                stringBuilder.Append(a + D120Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + D120Count.ToString().PadLeft(19, '0'));
             }
             else
             {
-                stringBuilder.Append(a + D120Count.ToString().PadLeft(15, '0'));
+                stringBuilder.Append(a + D120Count.ToString().PadLeft(19, '0'));
             }
+            stringBuilder.AppendLine();
+            stringBuilder.Append("M100");
+            stringBuilder.Append('0', 19);
 
+            stringBuilder.AppendLine();
+            stringBuilder.Append("A100");
+            stringBuilder.Append('0', 18);
+            stringBuilder.Append("1");
+         
+
+            stringBuilder.AppendLine();
+            stringBuilder.Append("Z900");
+            stringBuilder.Append('0', 18);
+            stringBuilder.Append("1");
+           
 
             DocumentsFilingPM docOut = CreateINIDocumnetFiling(stringBuilder, openFormatReportPM);
 
