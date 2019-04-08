@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
 
@@ -185,25 +185,32 @@ export class UserExtendedPMService {
 
     }
 
+    AddUserToReleaseNotesUsers(userId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-    //GetUserListsByUserIds(userIds:string[],  tenant: number) {
-    //    var authHeader = new Headers();
-    //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetAddUserToReleaseNotesUsers?userId=' + userId,
+            { headers: authHeader }).map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
 
-    //    return this._http.get(this._apiUrl + '?tenant=' + tenant, { headers: authHeader }).map(response => {
-    //        var pmresponse: ServiceResponse;
-    //        pmresponse = new ServiceResponse();
+            pmresponse.Result = response.json();
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+    }
 
-    //        pmresponse.Result = response.json();
-    //        return pmresponse;
-    //    }).catch(ServiceHelper.HandleServiceError);
+    CheckUserReleaseNotesToolTip(userId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+        return this._http.get(this._apiUrl + '/GetCheckUserReleaseNotesToolTip?userId=' + userId,
+            { headers: authHeader }).map(response => {
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
 
-    //}
-
-
-
-
-
+                pmresponse.Result = response.json();
+                return pmresponse;
+            }).catch(ServiceHelper.HandleServiceError);
+    }
 }
 

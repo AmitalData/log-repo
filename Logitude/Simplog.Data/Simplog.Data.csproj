@@ -514,6 +514,7 @@
     <Compile Include="CommonDataModel\Repositories\TwoFactorAuthenticationDeviceRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\LoginPolicyRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\NumberFormatRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\UsersReleaseNotesDisplayRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\WarehouseTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UsoCFDIRepository.cs" />
     <Compile Include="Helpers\AutomationFollowUp.cs" />
