@@ -140,7 +140,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsFullAccounting { get; set; }
         public string GLAccountId { get; set; }
         public string GLAccountRecoMethodCode { get; set; }
-
+        public bool IsExternalEntity { get; set; }
         private List<LedgerTransactionPM> invoicesTransactions;
         public virtual List<LedgerTransactionPM> InvoicesTransactions
         {

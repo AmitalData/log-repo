@@ -33,7 +33,8 @@ export class ARInvoiceStockMenuButtonsHandler {
                     }
 
                     if (this.actionCompleted) {
-                        this.CurrentSession.FireEvent("RefreshARInvoiceStockScreen");
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        //this.CurrentSession.FireEvent("RefreshARInvoiceStockScreen");
                     }
                 }
             });

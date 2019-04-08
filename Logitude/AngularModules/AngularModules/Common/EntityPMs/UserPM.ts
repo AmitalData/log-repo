@@ -471,11 +471,6 @@ export class UserPM {
     public set UserRoles(newValue: string) { if (this.userRoles != newValue) { this.userRoles = newValue; this.MarkAsDirty("UserRoles"); } }
        
 	 
-    private showNewReleaseToolTip: boolean;
-    public get ShowNewReleaseToolTip() { return this.showNewReleaseToolTip; }
-    public set ShowNewReleaseToolTip(newValue: boolean) { if (this.showNewReleaseToolTip != newValue) { this.showNewReleaseToolTip = newValue; this.MarkAsDirty("ShowNewReleaseToolTip"); } }
-       
-	 
 
     public OldEntityPM: UserPM;
 		

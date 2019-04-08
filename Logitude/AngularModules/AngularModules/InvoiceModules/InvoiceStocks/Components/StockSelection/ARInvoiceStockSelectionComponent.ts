@@ -67,11 +67,10 @@ export class ARInvoiceStockSelectionComponent {
         if (stock != null) {
             this.StockLines = [];
             this.StockLineSelectedItem = null;
-            stock.StockHeader.ARInvoiceStockLines.filter(a => !a.IsUsed).forEach(item => {
+            stock.StockHeader.ARInvoiceStockLines.forEach(item => {
                 this.StockLines.push(item);
             });
             this.StocksLineCount = this.StockLines.length;
-            stock.SetCount(this.StocksLineCount);
         }
     }
 
@@ -85,11 +84,11 @@ export class ARInvoiceStockSelectionComponent {
         }
     }
 
-    EditStockClicked(item: ARInvoiceStockPM) {
+    EditStockClicked(item: StockHeaderData) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Edit ";
         logWindow.IsFillScreen = true;
-        logWindow.ShowEditComponent(item.Id, "ARInvoiceStock");
+        logWindow.ShowEditComponent(item.StockHeader.Id, "ARInvoiceStock");
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 this.LoadData();
@@ -120,21 +119,18 @@ export class ARInvoiceStockSelectionComponent {
 export class StockHeaderData {
 
     StockHeader: ARInvoiceStockPM;
-    LinesCount: string;
 
-    constructor(entity: ARInvoiceStockPM, count: number = null) {
+    constructor(entity: ARInvoiceStockPM) {
         this.StockHeader = entity;
-        this.SetCount(count);
     }
 
-    SetCount(count : number) {
-        if (count == 0) {
-            this.LinesCount = "";
-        }
-        else {
-            this.LinesCount = count + "";
+    get LinesCount() { return this.StockHeader.LinesCount; }
+    set LinesCount(newValue: string) {
+        if (this.StockHeader.LinesCount != newValue) {
+            this.StockHeader.LinesCount = newValue;
         }
     }
+
     get Name() { return this.StockHeader.Name; }
     set Name(newValue: string) {
         if (this.StockHeader.Name != newValue) {

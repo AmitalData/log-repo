@@ -35,6 +35,7 @@ using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.BLExt;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -1726,7 +1727,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (!_payment.IsFullAccounting)
                 return;
 
-            bool showLocal = false;
+            ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
+            bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
 
             // Validate lines amount to reconcile
             if (_payment.InvoicesTransactions
@@ -1782,6 +1784,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        public ContactPM GetLoggedContactPM(int tenant)
+        {
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
         #endregion
     }
 }

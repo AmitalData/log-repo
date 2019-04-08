@@ -132,6 +132,11 @@ export class ARInvoiceStockPM {
     public set Reactivated(newValue: boolean) { if (this.reactivated != newValue) { this.reactivated = newValue; this.MarkAsDirty("Reactivated"); } }
        
 	 
+    private linesCount: string;
+    public get LinesCount() { return this.linesCount; }
+    public set LinesCount(newValue: string) { if (this.linesCount != newValue) { this.linesCount = newValue; this.MarkAsDirty("LinesCount"); } }
+       
+	 
      
 	private aRInvoiceStockLines: ARInvoiceStockLinePM[];
     get  ARInvoiceStockLines() {
