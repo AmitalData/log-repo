@@ -577,7 +577,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
 
             // get payment transaction
-            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId && t.SourceTypeCode == AccountingEntityValues.ARInvoice).FirstOrDefault();
+            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
             if (paymentTransaction != null)
             {
                 string paymentTransactionId = paymentTransaction.Id;
@@ -590,7 +590,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 reconciledTransactions = transactionsQuery.GetLedgerTransactionPMsByIdList(recoLinesTransactionsId, tenant);
 
                 // exclude partially reconcile transactions
-                reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true).ToList();
+                reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
 
                 reconciledTransactions = FillTransactionsReconciliationNumbers(reconciledTransactions, tenant);
                 reconciledTransactions = FillReconciledPaymentTransactionAmount(reconciledTransactions.ToList(), paymentTransaction != null ? paymentTransaction.Id : null, tenant);
