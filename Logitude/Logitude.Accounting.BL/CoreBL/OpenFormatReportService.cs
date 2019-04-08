@@ -174,14 +174,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 9);
                 }
               
-                if(item.JournalNumber== "2004")
+              
+                if (item.LedgerTransactionId != null)
                 {
+                    string[] ledgerId = item.LedgerTransactionId.ToString().Split('-');
 
-                }
-                if (item.JournalNumber != null)
-                {
-                    if (item.JournalNumber.Length > 10) { item.JournalNumber.Substring(0, 10); }
-                    myStringBuilder.Append( item.JournalNumber.PadLeft(10, '0'));
+
+
+                    if (ledgerId[1].Length > 10) { ledgerId[1]=ledgerId[1].Substring(0, 10); }
+                    myStringBuilder.Append(ledgerId[1].PadLeft(10, '0'));
                 }
                 else
                 {
@@ -191,7 +192,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.JournalLineNumber.ToString().Length > 9) { item.JournalLineNumber.ToString().Substring(0, 5); }
                 myStringBuilder.Append( item.JournalLineNumber.ToString().PadLeft(5, '0'));
 
-                myStringBuilder.Append(' ', 8);
+                if (item.JournalNumber != null)
+                {
+                    if (item.JournalNumber.Length > 8) { item.JournalNumber= item.JournalNumber.Substring(0, 8); }
+                    myStringBuilder.Append(item.JournalNumber.PadLeft(8, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append(' ', 8);
+                }
                 myStringBuilder.Append(' ', 15);
 
                 if (item.AccountingEntityReference != null)
