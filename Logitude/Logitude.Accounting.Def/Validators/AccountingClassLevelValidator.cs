@@ -96,6 +96,7 @@ namespace Logitude.Accounting.Def.Validators
                                     {
                                         try
                                         {
+                                            //var sss= Convert.ToBase64String(Encoding.GetEncoding("windows-1255").GetBytes("DDDDDDFF AAAAAAAשששששש")) ;
                                             var entityPMEncode = (value as EntityPM);
                                             if (!String.IsNullOrWhiteSpace(entityPMEncode.EncodeBase64NVARCHARFieldsBy))
                                             {
