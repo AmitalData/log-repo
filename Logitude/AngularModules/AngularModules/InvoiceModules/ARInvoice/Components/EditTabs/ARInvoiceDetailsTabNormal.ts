@@ -64,7 +64,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public InvoiceNumberFilterList: CodeNameClass[];
     public IsInvoiceStocksManagementEnabled: boolean = false;
 
-
     constructor(private entityArgs: EntityArgs) {
         super();      
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -91,10 +90,8 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         if (SessionLocator.AccountingSettingPM.EnableInvoiceStocksManagement) {
             this.IsInvoiceStocksManagementEnabled = true;
-        
         }
         this.BuildInvoiceNumberFilters();
-
     }
 
     private SaveCompletedEvent: any = null;
@@ -664,6 +661,13 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     set PrintNotes(newValue: string) {
         if (this.EntityPM.PrintNotes != newValue) {
             this.EntityPM.PrintNotes = newValue;
+        }
+    }
+
+    get ARInvoiceStockId() { return this.EntityPM.ARInvoiceStockId; }
+    set ARInvoiceStockId(newValue: string) {
+        if (this.EntityPM.ARInvoiceStockId != newValue) {
+            this.EntityPM.ARInvoiceStockId = newValue;
         }
     }
 
@@ -1498,25 +1502,62 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
 
     //Invoice Number
+
+    
     private selectedInvoiceNumberFilter: CodeNameClass;
     get SelectedInvoiceNumberFilter() { return this.selectedInvoiceNumberFilter; }
     set SelectedInvoiceNumberFilter(value: CodeNameClass) {
         if (this.selectedInvoiceNumberFilter != value) {
             this.selectedInvoiceNumberFilter = value;
+            if (value.Code == "MAS") {
+                this.IsInvoiceNumberManuallySet = true;
+            }
+            else if (value.Code != "MAS") {
+                this.IsInvoiceNumberManuallySet = false;
+            }
         }
     }
 
     private BuildInvoiceNumberFilters() {
         this.InvoiceNumberFilterList = [];
         this.InvoiceNumberFilterList.push(new CodeNameClass("CNR", "Counter"));
-        this.InvoiceNumberFilterList.push(new CodeNameClass("STK", "Stock"));
-        this.InvoiceNumberFilterList.push(new CodeNameClass("MAS", "Manually Set"));
-        this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "CNR")[0];
+        if (this.IsInvoiceStocksManagementEnabled) {
+            this.InvoiceNumberFilterList.push(new CodeNameClass("STK", "Stock"));
+        }
+        if (this.AllowManualInvoiceNumber) {
+            this.InvoiceNumberFilterList.push(new CodeNameClass("MAS", "Manually Set"));
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM != null && this.EntityPM.ARInvoiceStockId)) {
+            this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "STK")[0];
+        }
+        else if (this.EntityPM != null && this.EntityPM.IsInvoiceNumberManuallySet == true) {
+            this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "MAS")[0];
+        }
+        else {
+            this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "CNR")[0];
+        }
     }
 
     GetInvoiceNumberFromStock() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select Invoice Number From Stock";
+        logWindow.Width = 1200;
+        logWindow.Height = 600;      
+        logWindow.Show('./InvoiceModules/InvoiceStocks/Components/StockSelection/ARInvoiceStockSelectionComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if ((d != null && d != "cancel")) {
+                    this.InvoiceNumber = s.StockLineSelectedItem.Number;
+                    this.EntityPM.ARInvoiceStockId = s.StockLineSelectedItem.Id;
+                }
+            });
+        });
+    }
 
-
+    ReturnInvoiceNumberToStock() {
+        this.ARInvoiceStockId = null;
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
 }
 export class ARInvoiceLineItem extends BaseComponent {

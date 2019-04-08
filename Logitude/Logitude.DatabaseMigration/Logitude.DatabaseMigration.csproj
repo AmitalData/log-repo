@@ -846,6 +846,14 @@
     <Compile Include="Migrations\201904080540535_AddUserReleaseNotesTable_Samar.Designer.cs">
       <DependentUpon>201904080540535_AddUserReleaseNotesTable_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.cs" />
+    <Compile Include="Migrations\201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.Designer.cs">
+      <DependentUpon>201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904071001330_NullableRepeateInMunites_Rabaia.cs" />
+    <Compile Include="Migrations\201904071001330_NullableRepeateInMunites_Rabaia.Designer.cs">
+      <DependentUpon>201904071001330_NullableRepeateInMunites_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1418,6 +1426,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904070545303_SetInvoiceIdNotRequiredOnStockLineLevel_Samar.resx">
       <DependentUpon>201904070545303_SetInvoiceIdNotRequiredOnStockLineLevel_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.resx">
+      <DependentUpon>201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904071001330_NullableRepeateInMunites_Rabaia.resx">
+      <DependentUpon>201904071001330_NullableRepeateInMunites_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904071048425_DropShowNewReleaseToolTipFromUser_Samar.resx">
       <DependentUpon>201904071048425_DropShowNewReleaseToolTipFromUser_Samar.cs</DependentUpon>
