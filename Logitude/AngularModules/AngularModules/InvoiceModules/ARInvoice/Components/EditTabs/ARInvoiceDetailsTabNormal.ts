@@ -91,6 +91,10 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         if (SessionLocator.AccountingSettingPM.EnableInvoiceStocksManagement) {
             this.IsInvoiceStocksManagementEnabled = true;
         }
+
+        if (!AppTool.IsNullOrEmpty(this.ARInvoiceStockId)) {
+            this.IsInvoiceNumberComboBoxEnabled = false;
+        }
         this.BuildInvoiceNumberFilters();
     }
 
@@ -1504,7 +1508,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
     //Invoice Number
     IsInvoiceNumberComboBoxEnabled = true;
-    
+
     private selectedInvoiceNumberFilter: CodeNameClass;
     get SelectedInvoiceNumberFilter() { return this.selectedInvoiceNumberFilter; }
     set SelectedInvoiceNumberFilter(value: CodeNameClass) {

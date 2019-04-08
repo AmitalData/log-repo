@@ -165,7 +165,7 @@
                                                 <td *ngIf="AllowManualInvoiceNumber || IsInvoiceStocksManagementEnabled">
                                                     <table>
                                                         <tr>
-                                                            <td style="min-width: 100px;">
+                                                            <td style="width: 100px;">
                                                                 <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                             </td>
 
@@ -173,9 +173,10 @@
                                                                 <div></div>
                                                             </td>
 
-                                                            <td style="min-width: 80px;max-width: 80px;">
+                                                            <td style="min-width: 100px;max-width: 100px;width:100px;">
                                                                 <ComboBox [IsDisabled]="!IsEditingEnabled || !IsInvoiceNumberComboBoxEnabled" [ItemsSource]="InvoiceNumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedInvoiceNumberFilter" (SelectedItemChanged)="SelectedInvoiceNumberFilter = $event"></ComboBox>
                                                             </td>
+
                                                             <td>
                                                                 <div></div>
                                                             </td>
