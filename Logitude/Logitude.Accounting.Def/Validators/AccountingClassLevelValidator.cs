@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using Logitude.Server.Tools;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -89,7 +91,35 @@ namespace Logitude.Accounting.Def.Validators
                             {
                                 if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
                                 {
-                                    return false;
+
+                                    if (type.Name.Contains("PM") && objectfeildprop.DataTypeCode == "nText")
+                                    {
+                                        try
+                                        {
+                                            var entityPMEncode = (value as EntityPM);
+                                            if (!String.IsNullOrWhiteSpace(entityPMEncode.EncodeBase64NVARCHARFieldsBy))
+                                            {
+                                                var valDecode = Encoding.GetEncoding(entityPMEncode.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(propertyValue.ToString()));
+                                                if (valDecode.Length > objectfeildprop.MaxLength || valDecode.Length < objectfeildprop.MinLength)
+                                                {
+                                                    return false;
+                                                }
+
+                                            }
+
+                                        }
+                                        catch (Exception)
+                                        {
+
+                                            return false;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                    
                                 }
                             }
                         }
