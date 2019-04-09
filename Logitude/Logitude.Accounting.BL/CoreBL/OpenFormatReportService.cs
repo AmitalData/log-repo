@@ -195,11 +195,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.JournalNumber != null)
                 {
                     if (item.JournalNumber.Length > 8) { item.JournalNumber= item.JournalNumber.Substring(0, 8); }
-                    myStringBuilder.Append(item.JournalNumber.PadLeft(8, ' '));
+                    myStringBuilder.Append(item.JournalNumber.PadLeft(8, '0'));
                 }
                 else
                 {
-                    myStringBuilder.Append(' ', 8);
+                    myStringBuilder.Append('0', 8);
                 }
                 myStringBuilder.Append(' ', 15);
 
