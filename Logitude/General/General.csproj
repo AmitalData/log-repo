@@ -198,6 +198,7 @@
     <Content Include="2019.R1\03 - 2019\Day 03 [Abed] UpdateQuoteTemplateTextCodeFieldsChargeNots.sql" />
     <Content Include="2019.R1\03 - 2019\Day 21 [Abed]CustomerTenantAccessesAddSomeFieldsToSearchField.sql" />
     <Content Include="2019.R1\04 - 2019\Day 02 [Rabaia]Update Category For Level Field DW.sql" />
+    <Content Include="2019.R1\04 - 2019\Day 8 [Khalid] Delete TextCodes and Features APInvoice ErrorInTransferInvoices.sql" />
     <Content Include="2019.R1\04 - 2019\Day 7 [Abed]DROPCONSTRAINTFK_dbo.APILogsData_dbo.APILogs_Id.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
@@ -1779,6 +1780,11 @@
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments NumberOfHouses.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments TEU.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] ShipmentPayablesReceivablesFields.sql" />
+    <Content Include="Usefull Scripts\Islam\contact computed Key.sql" />
+    <Content Include="Usefull Scripts\Islam\duplicated contacts issue script fix.sql" />
+    <Content Include="Usefull Scripts\Islam\duplicated Global Contacts Fix.sql" />
+    <Content Include="Usefull Scripts\Islam\duplicated user codes.sql" />
+    <Content Include="Usefull Scripts\Islam\zombie Global contacts issue fix.sql" />
     <Content Include="Usefull Scripts\Queries\01_Shipments.sql" />
     <Content Include="Usefull Scripts\Queries\02_Quotes.sql" />
     <Content Include="Usefull Scripts\Queries\03_AccountsReceivables.sql" />

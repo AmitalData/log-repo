@@ -974,6 +974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             ObjectTablePM TaxReportObjectTable = objectTables.Where(d => d.Name == "TaxReport").FirstOrDefault();
             ObjectTablePM TaxDeductionReportObjectTable = objectTables.Where(d => d.Name == "TaxDeductionReport").FirstOrDefault();
             ObjectTablePM AccountingIntegrityCheckObjectTable = objectTables.Where(d => d.Name == "AccountingIntegrityCheck").FirstOrDefault();
+            ObjectTablePM OpenFormatReportObjectTable = objectTables.Where(d => d.Name == "OpenFormatReport").FirstOrDefault();
 
             #endregion
 
@@ -1207,7 +1208,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             #endregion
 
             Feature AccountingIntegrityCheckFeature_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Features.Menu", Packagable = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AccountingIntegrityCheck.Features.Menu", NameTextCodeDefaultText = "Accounting Integrity Checks", FullLocalDefaultText = "", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
+            #region OpenFormatReport
+            Feature OpenFormatReportFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TestingMode", Packagable = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "OpenFormatReport.Features.TestingMode", NameTextCodeDefaultText = "Testing Mode", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #endregion
             #endregion
 
             textCodeRep.SubmitChanges();

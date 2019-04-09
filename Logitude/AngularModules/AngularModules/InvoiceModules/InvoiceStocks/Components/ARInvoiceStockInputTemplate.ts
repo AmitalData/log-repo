@@ -165,7 +165,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
         var myResult = false;
 
         if (this.IsEditingEnabled) {
-            if (this.SelectedItem != null) {
+            if (this.SelectedItem != null && !this.SelectedItem.IsUsed) {
                 myResult = true;
             }
         }

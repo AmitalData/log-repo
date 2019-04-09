@@ -47,7 +47,8 @@ var LogitudeRoutingClass = function () {
     this.DisplayAreaWhite = " ";
     this.DisplayAreaWhiteCarrier = " ";
     //this.EndListBorder = " ";
-    this.DisplayAcutalEstimateAera =" ";
+    this.DisplayAcutalEstimateAera = " ";
+    this.PortNameMarginVisibility = "visible";
  
 };
 
@@ -891,14 +892,18 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
     leg.LegHeader = "Main Carriage Leg 1";
 
     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I") {
+        leg.PortNameMarginVisibility = "collapse";
+
         leg.FromFlagSRC = "../images/Flags/" + shipment.FromPartnerCountryCode + ".png";        
         leg.FromPortName = $.trim(shipment.FromPartnerCity);
 
         leg.ToFlagSRC = "../images/Flags/" + shipment.ToPartnerCountryCode + ".png";        
-        leg.ToPortName = $.trim(shipment.ToPartnerCity);
+        leg.ToPortName = $.trim(shipment.ToPartnerCity);        
     }
 
     else {
+        leg.PortNameMarginVisibility = "visible";
+
         leg.FromFlagSRC = "../images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
         leg.FromPortCode = $.trim(shipment.MainCarriageFromPortCode);
         leg.FromPortName = $.trim(shipment.MainCarriageFromPortName);

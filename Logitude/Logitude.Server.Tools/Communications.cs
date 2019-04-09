@@ -604,15 +604,18 @@ namespace Logitude.Server.Tools
             communicationLogRepository.Add(commLog);
             communicationLogRepository.SubmitChanges();
 
-            IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", 0);
-            Dictionary<string, string> message = new Dictionary<string, string>()
-                    {
-                        { "CommunicationLogId", commLog.Id},
-                        { "Tenant", commLog.Tenant.ToString() },
-                    };
+			//IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", 0);
+			//Dictionary<string, string> message = new Dictionary<string, string>()
+			//        {
+			//            { "CommunicationLogId", commLog.Id},
+			//            { "Tenant", commLog.Tenant.ToString() },
+			//        };
 
-            queueservice.Send(message);
-        }
+			//queueservice.Send(message);
+
+			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", commLog.Tenant.ToString() } });
+		}
 
     }
 

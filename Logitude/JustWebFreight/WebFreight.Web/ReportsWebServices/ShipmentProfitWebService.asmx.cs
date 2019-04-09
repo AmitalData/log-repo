@@ -390,6 +390,7 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.ATA = ServiceDateConvertor(shipmentPM.MainCarriageATA);
                 provider.ATD_DateTime = shipmentPM.MainCarriageATD;
                 provider.ATA_DateTime = shipmentPM.MainCarriageATA;
+                provider.BranchName = shipmentPM.BranchName;
 
                 if (currentUser != null)
                 {

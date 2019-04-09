@@ -17,7 +17,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool InActive { get; set; }
         public bool AddedManually { get; set; }
         public string SearchFields { get; set; }
-
+        public string QBOTransactionLocationCode { get; set; }
         public string CountryId { get; set; }
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }

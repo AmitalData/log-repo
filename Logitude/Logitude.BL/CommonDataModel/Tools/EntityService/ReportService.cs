@@ -45,7 +45,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new Report();
             this.Poco.Id = this.entityPm.Id;
 
-            ReportValidating.Validate(entityPM);
+            ReportValidating.Validate(entityPM, this.ObjectContext, this.isNewEntity);
             ReportTracing.Trace(entityPM, Poco, isNewEntity);
             ReportMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -58,7 +58,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleReport(entityPM.Id, entityPm.Tenant);
             
-            ReportValidating.Validate(entityPM);
+            ReportValidating.Validate(entityPM, this.ObjectContext, this.isNewEntity);
             ReportTracing.Trace(entityPM, Poco, isNewEntity);
             ReportMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);

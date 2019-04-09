@@ -586,14 +586,15 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TransactionsList"
+                                <logitude-edit-grid
+                                [IsReadOnly]="EntityPM.StatusCode == 'CL' || EntityPM.StatusCode == 'VD'"  GridWidth="100%" GridHeight="100%" [ItemSource]="TransactionsList"
                                     [UseVirtuallization]="true">
 
                                     <!-- Is Reconciled -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
                                         <log-cell-template template="let item" [IgnoreMods]="true">
                                             <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount > 0" (Checked)="item.IsChecked = $event"
-                                                [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0)"></CheckBox>
+                                                [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && (EntityPM.StatusCode != 'CL' && EntityPM.StatusCode != 'VD')"></CheckBox>
                                         </log-cell-template>
                                     </log-column>
 

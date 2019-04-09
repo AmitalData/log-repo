@@ -11,6 +11,11 @@ namespace Simplog.Data.Helpers
     [DataContract(Namespace = "")]
     public class AutomationFollowUp
     {
+
+        
+        [DataMember]
+        public string FollowUpEnglishName { get; set; }
+
         [DataMember]
         public string EventTypeId { get; set; }
         [DataMember]
