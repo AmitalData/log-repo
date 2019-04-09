@@ -6,6 +6,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading;
 using System.Transactions;
 
 namespace CommunicationWorkerRole.Tasks
@@ -21,9 +22,10 @@ namespace CommunicationWorkerRole.Tasks
         {
             string strConnString = TenantServerConfigration.GetDbConnection(0);
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            int numberOfExecuteRow = 1000;
+            int numberOfExecuteRows = 1000;
+            int numberOfRecords = 0;
 
-            while (numberOfExecuteRow == 1000)
+            while (numberOfExecuteRows == 1000 && numberOfRecords < 500000)
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
@@ -39,11 +41,14 @@ namespace CommunicationWorkerRole.Tasks
                         SqlCommand cmd = new SqlCommand(sql, cn);
                         cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                         cn.Open();
-                        numberOfExecuteRow = cmd.ExecuteNonQuery();
+                        numberOfExecuteRows = cmd.ExecuteNonQuery();
+                        numberOfRecords += numberOfExecuteRows;
                         cn.Close();
                         scope.Complete();
                     }
                 }
+                Thread.Sleep(1000);
+
             }
 
         }
