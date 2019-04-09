@@ -168,10 +168,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return payment;
         }
 
-        public bool CheckARPaymentNumber(string number, int tenant)
+        public bool CheckARPaymentNumber(string number,string id, int tenant)
         {
             bool exist = (from a in repository.context.ARPayments.Include("LocalCurrency").Include("Status")
-                                 where a.PaymentNo == number && a.Tenant == tenant
+                                 where a.PaymentNo == number &&a.Id != id && a.Tenant == tenant
                                  select a).Any();
 
             return exist;
