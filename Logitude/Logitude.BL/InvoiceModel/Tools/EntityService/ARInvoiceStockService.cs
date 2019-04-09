@@ -89,7 +89,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleARInvoiceStock(entityPM.Id, entityPM.Tenant);
-            
+
+            ARInvoiceStockValidating.Validate(entityPM, objectContext, this.isNewEntity);
+
+            if (mapComposition)
+            {
+                this.aRInvoiceStockLinesChangeSet = entityPM.ARInvoiceStockLines;
+            }
+
+            this.UpdateARInvoiceStockLinesCollection();
+
+
             if (entityPM.Cancelled)
             {
                 entityPM.StatusCode = "C";
@@ -103,22 +113,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
-                if(entityPM.Amount > 0 && entityPM.Remaining == entityPM.Amount && entityPM.EndDate <= TenantServerConfigration.GetCurrentDateTime(tenant))
-                {
-                    entityPM.StatusCode = "E";
-                }
+                entityPM.StatusCode = GetStockStatus(entityPM);
+                ARInvoiceStocksStatusRepository aRInvoiceStocksStatusRepository = new ARInvoiceStocksStatusRepository(entityPM.Tenant);
+                entityPM.StatusName = aRInvoiceStocksStatusRepository.GetSingleARInvoiceStocksStatus(entityPM.StatusCode).Name;
+
             }
-
-            ARInvoiceStockValidating.Validate(entityPM, objectContext, this.isNewEntity);
-
-            if (mapComposition)
-            {
-                this.aRInvoiceStockLinesChangeSet = entityPM.ARInvoiceStockLines;
-            }
-
-            this.UpdateARInvoiceStockLinesCollection();
 
             entityPM.Amount = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && !d.IsUsed).Count();
 
             ARInvoiceStockTracing.Trace(entityPM, Poco, isNewEntity, loggedContact.Id);
             ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity);
@@ -220,6 +222,61 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             entityPm.Inactive = false;
+        }
+
+        private string GetStockStatus(ARInvoiceStockPM stock)
+        {
+            int stockLinesCount = stock.ARInvoiceStockLines.Where(d => d.IsUsed && d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            string statusCode = "";
+            
+            if (stockLinesCount == 0)
+            {
+                if (stock.EndDate != null)
+                {
+                    if (stock.EndDate >= todayDate)
+                    {
+                        statusCode = "N";
+                    }
+                    else
+                    {
+                        statusCode = "E";
+                    }
+                }
+                else
+                {
+                    statusCode = "N";
+                }
+            }
+
+            else
+            {
+                if (stock.Amount == stockLinesCount)
+                {
+                    statusCode = "U";
+                }
+
+                else if ((stock.Amount != stockLinesCount))
+                {
+                    if (stock.EndDate != null)
+                    {
+                        if (stock.EndDate >= todayDate)
+                        {
+                            statusCode = "A";
+                        }
+                        else
+                        {
+                            statusCode = "E";
+                        }
+                    }
+                    else
+                    {
+                        statusCode = "A";
+                    }
+                }
+            }
+
+            return statusCode;
         }
     }
 }
