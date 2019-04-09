@@ -8,7 +8,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel; 
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers; 
 using Logitude.BL.CommonDataModel.EntityPMs;
