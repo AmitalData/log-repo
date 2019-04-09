@@ -27,7 +27,7 @@ namespace Logitude.TimeManagement.Data.Repositories
             var project = (from d in context.TMProjects
                           where d.Tenant == tenant
                           && d.ProjectNumber == number
-                          select d).FirstOrDefault();
+                          select d).FirstOrDefault();  
 
             if (project != null)
             {
