@@ -978,7 +978,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 arPaymentcheque.StatusCode = "1"; // In Cashbook  
                                 arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                                 arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
-
+                                
                                IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
                                 paymentUpdate.Update(arPaymentcheque);
 
