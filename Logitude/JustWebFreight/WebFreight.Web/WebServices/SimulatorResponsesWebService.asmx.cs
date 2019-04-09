@@ -346,9 +346,12 @@ namespace WebFreight.Web.WebServices
                     else
                     {
 
-                        IQueueService queueservice = QueueServiceManager.GetQueueService(emailqueueName, tenant);
-                        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
-                    }
+                        //IQueueService queueservice = QueueServiceManager.GetQueueService(emailqueueName, tenant);
+                        //queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
+
+						DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+						queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
+					}
 
                 }
             }

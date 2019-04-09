@@ -104,7 +104,8 @@ namespace CommunicationWorkerRole
                     try
                     {
                         int tenant = 0;
-                        queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+
+						queueservice = new DbQueueService(queueName, 0);//QueueServiceManager.GetQueueService(queueName, 0);
                         var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
                         LastActivity = DateTime.UtcNow;
                         
@@ -845,21 +846,21 @@ namespace CommunicationWorkerRole
             try
             {
 
-                //string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(queueName);
+				//string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(queueName);
 
-                //if (!StorageAcountDetails.NameSpaceManager.QueueExists(emailQueueName))
-                //{
-                //    queueDescription = new QueueDescription(emailQueueName);
-                //    queueDescription.MaxSizeInMegabytes = 5120;
-                //    queueDescription.EnableDeadLetteringOnMessageExpiration = false;
-                //    queueDescription.MaxDeliveryCount = 1000;
-                //    StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription);
-                //}
+				//if (!StorageAcountDetails.NameSpaceManager.QueueExists(emailQueueName))
+				//{
+				//    queueDescription = new QueueDescription(emailQueueName);
+				//    queueDescription.MaxSizeInMegabytes = 5120;
+				//    queueDescription.EnableDeadLetteringOnMessageExpiration = false;
+				//    queueDescription.MaxDeliveryCount = 1000;
+				//    StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription);
+				//}
 
-                //client = StorageAcountDetails.CreateServiceBusQueueClient(emailQueueName);
+				//client = StorageAcountDetails.CreateServiceBusQueueClient(emailQueueName);
 
 
-                queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+				queueservice = new DbQueueService(queueName, 0);//QueueServiceManager.GetQueueService(queueName, 0);
                 //queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
             }
             catch (Exception ex)
