@@ -376,11 +376,126 @@ namespace Logitude.Update
         {
             this.InsertPortStates(this.GetStream(), "IN");
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            this.FillQBOTransactionStates(this.GetStream());
+        }
+
+        private void FillQBOTransactionStates(StreamReader streamReader)
+        {
+            if (streamReader != null)
+            {
+                List<StatesQBOCode> AllDataLines = new List<StatesQBOCode>();
+
+                using (TextFieldParser csvParser = new TextFieldParser(streamReader))
+                {
+                    csvParser.CommentTokens = new string[] { "#" };
+                    csvParser.SetDelimiters(new string[] { "," });
+                    csvParser.HasFieldsEnclosedInQuotes = true;
+                    string[] columns = null;
+                    while ((columns = csvParser.ReadFields()) != null)
+                    {
+                        string State = this.GetValue(columns, 0);
+                        string code = this.GetValue(columns, 2);
+                        
+                        StatesQBOCode myItem = new StatesQBOCode();
+                        myItem.State = State;
+                        myItem.Code = code;
+                        StatesQBOCode xItem = AllDataLines.Where(d => d.State == State && myItem.Code == code).FirstOrDefault();
+                        if (xItem == null && myItem.State != null && myItem.Code != null)
+                        {
+                            AllDataLines.Add(myItem);
+                        }
+                    }
+                    Thread thread = new Thread(() => this.RunAddingStatesQBO(AllDataLines));
+                    thread.IsBackground = true;
+                    thread.Start();
+
+                }
+
+            }
+        }
+
+        private void RunAddingStatesQBO(List<StatesQBOCode> allDataLines)
+        {
+            allDataLines = allDataLines.Where(d => !string.IsNullOrEmpty(d.State)).ToList();
+            if (this.checkBox1.Checked)
+            {
+                SetControlPropertyValue(InsertStatesQBOLbl, "Text", "Updating ...");
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+                List<Tenant> tenants = myCommonContext.Tenants.ToList();
+                if (tenants.Count > 0)
+                {
+                    foreach (Tenant tenantOBJ in tenants)
+                    {
+                        this.ComputeStatesQBO(tenantOBJ.Id, allDataLines);
+                    }
+                }
+
+                SetControlPropertyValue(InsertStatesQBOLbl, "Text", "Done All");
+
+            }
+            else
+            {
+                int tenant = int.Parse(this.textBox1.Text);
+                this.ComputeStatesQBO(tenant, allDataLines);
+            }
+           
+        }
+
+        private void ComputeStatesQBO(int tenant, List<StatesQBOCode> allDataLines)
+        {
+            if (allDataLines.Count > 0)
+            {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+
+                var myCount = 0;
+                foreach (StatesQBOCode item in allDataLines)
+                {
+                    State stateDB = myCommonContext.States.Where(p => p.Code == item.State && p.Tenant == tenant).FirstOrDefault();
+                    if (stateDB != null && !String.IsNullOrEmpty(item.Code))
+                    {
+
+                        stateDB.QBOTransactionLocationCode = item.Code;
+                        myCommonContext.States.Attach(stateDB);
+                        myCommonContext.SetAsModified(stateDB);
+
+                    }
+
+                    myCount++;
+                    if (myCount > 500)
+                    {
+                        myCommonContext.SaveChanges();
+                    }
+
+
+                }
+                myCommonContext.SaveChanges();
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                SetControlPropertyValue(InsertStatesQBOLbl, "Text", "Done in " + ts.ToString());
+            }
+        }
+
+        private void AddStates_Load(object sender, EventArgs e)
+        {
+
+        }
     }
     public class StatesPorts
     {
         public string State { get; set; }
         public string Port { get; set; }
+    }
+
+    public class StatesQBOCode
+    {
+        public string State { get; set; }
+        public string Code { get; set; }
     }
 }
 

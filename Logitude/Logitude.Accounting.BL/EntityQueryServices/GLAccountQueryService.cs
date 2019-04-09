@@ -91,6 +91,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //return pms;
         }
 
+ 
+
+        public IQueryable<CardGLAccountDataView> GetQAllVendorGLAccountCardsHavingDeduction(int tenant)
+        {
+            var pocoGLAccountCard = this.repository.GetQAllVendorGLAccountCardsHavingDeduction(tenant);
+            return pocoGLAccountCard;
+        }
+
+
+
         public List<int> GetTenantByNextDueDate(DateTime today, List<string> accountTypeCodeList)
         {
             return this.repository.GetTenantByNextDueDate(today, accountTypeCodeList);

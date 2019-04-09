@@ -94,7 +94,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
-                                  ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -179,7 +178,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
-                              ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -266,7 +264,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
-                                      ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -350,7 +347,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
-                                  ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -422,7 +418,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
-                              ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -509,7 +504,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
-                                      ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -594,7 +588,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
-                                  ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -667,7 +660,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
-                              ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -753,7 +745,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
-                                      ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -836,7 +827,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
-                                  ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -908,7 +898,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
-                              ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -986,7 +975,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ShowInboxToolTip = a.ShowInboxToolTip,
                                            ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                            UserRoles = a.UserRoles,
-                                           ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                                        };
             return users;
         }
@@ -1050,7 +1038,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ShowInboxToolTip = a.ShowInboxToolTip,
                             ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                             UserRoles = a.UserRoles,
-                            ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                         };
 
             IQueryable<UserPM> query2 = null;
@@ -1258,7 +1245,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  DocumentFilingInbox = a.DocumentFilingInbox,
                                  ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                  ShowInboxToolTip = a.ShowInboxToolTip,
-                                 ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                              }).FirstOrDefault();
 
             if (entity == null)
@@ -1278,7 +1264,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               DocumentFilingInbox = a.DocumentFilingInbox,
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
-                              ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                           }).FirstOrDefault();
             }
 
@@ -1340,7 +1325,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                  UserRoles = a.UserRoles,
-                                 ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                              }).FirstOrDefault();
 
             if (entity != null)
@@ -1449,7 +1433,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-                                      ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                                   }).ToList();
             return users;
         }
@@ -1565,7 +1548,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                           ShowInboxToolTip = a.ShowInboxToolTip,
                           ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-                          ShowNewReleaseToolTip = a.ShowNewReleaseToolTip,
                       }).FirstOrDefault();
 
             if (entity != null)

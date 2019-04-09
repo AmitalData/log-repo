@@ -107,7 +107,7 @@ export class NewARInvoiceStockComponent {
 
         this.ValidationErrorsList = errors;
 
-        if (this.ValidationErrorsList.length == 0) {
+        if (this.ValidationErrorsList.length == 0 && this.EntityPM.IsDirty) {
             this.CurrentSession.StartBusyIndicatorSaving();
 
             this.stockPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
@@ -122,6 +122,10 @@ export class NewARInvoiceStockComponent {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
             });
+        }
+
+        else {
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 }

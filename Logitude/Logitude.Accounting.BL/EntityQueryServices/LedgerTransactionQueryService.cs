@@ -550,6 +550,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                             JournalNumber = j.JournalNumber,
                                                             Notes = a.Notes,
                                                             Reference2 = a.Reference2,
+                                                            LedgerTransactionId = a.Id,
                                                             OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber:null,
                                                         }).ToList();
 
@@ -589,7 +590,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 reconciledTransactions = transactionsQuery.GetLedgerTransactionPMsByIdList(recoLinesTransactionsId, tenant);
 
                 // exclude partially reconcile transactions
-                reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true).ToList();
+                reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
 
                 reconciledTransactions = FillTransactionsReconciliationNumbers(reconciledTransactions, tenant);
                 reconciledTransactions = FillReconciledPaymentTransactionAmount(reconciledTransactions.ToList(), paymentTransaction != null ? paymentTransaction.Id : null, tenant);
@@ -749,7 +750,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             decimal reconciledAmount = 0;
             recoLines.ForEach(recoLine =>
             {
-                if (recoLine.ReconciledWithTransactionId == paymentTransactionId)
+                if (recoLine.ReconciledWithTransactionId == paymentTransactionId && paymentTransactionId != null)
                     reconciledAmount += recoLine.ReconciliationAmount;
             });
             

@@ -70,6 +70,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TotalAmountForTaxReport).HasPrecision(16, 2);
             this.Property(t => t.TotaVatableAmountForTaxReport).HasPrecision(16, 2);
             this.Property(t => t.TotalVAT).HasPrecision(16, 2);
+            this.Property(t => t.ARInvoiceStockId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ARInvoices");
@@ -171,6 +172,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TotaVatableAmountForTaxReport).HasColumnName("TotaVatableAmountForTaxReport");
             this.Property(t => t.SATApprovalDate).HasColumnName("SATApprovalDate");
             this.Property(t => t.IsFullAccounting).HasColumnName("IsFullAccounting");
+            this.Property(t => t.ARInvoiceStockId).HasColumnName("ARInvoiceStockId");
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);

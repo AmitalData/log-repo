@@ -32,7 +32,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public IQueryable<ARInvoiceStockPM> GetARInvoiceStockPMsByTenant(int tenant)
         {
             return from a in repository.context.ARInvoiceStocks
-                   where a.Tenant == tenant
+                   where a.Tenant == tenant && !a.Inactive
                    select new ARInvoiceStockPM()
                    {
                        Id = a.Id,

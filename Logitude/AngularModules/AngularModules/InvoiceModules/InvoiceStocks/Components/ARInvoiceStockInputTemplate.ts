@@ -1,35 +1,69 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ARInvoiceStockPM } from '../../../Invoice/EntityPMs/ARInvoiceStockPM';
 import { ARInvoiceStockLinePM } from '../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
-import { ARInvoiceStockPMService } from '../../../Invoice/Services/StandardPMs/ARInvoiceStockPMService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { InvoiceStockInputArgs } from '../../../Invoice/Args';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
     moduleId: module.id,
     templateUrl: './ARInvoiceStockInputTemplate.html',
 })
 
-export class ARInvoiceStockInputTemplate extends BaseComponent {
+export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDestroy {
     public DataContext: ARInvoiceStockInputTemplate = this;
     public ObjectTableName: string = "ARInvoiceStock";
     public ValidationErrorsList: string[] = [];
     public EntityPM: ARInvoiceStockPM;
-    private stockPMService: ARInvoiceStockPMService;
     public ItemsSource: ARInvoiceStockLinePM[] = [];
     public ItemsCount: number;
     public IsEditMode: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    constructor(public entityArgs: EntityArgs) {
         super();
+        
+        this.Listen();
+    }
 
-        this.stockPMService = new ARInvoiceStockPMService();
+    private SessionEvent: any = null;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null; 
+    private Listen() {
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "RefreshARInvoiceStockScreen") {
+                this.SetUIProperties();
+            }
+        });
+
+        if (this.entityArgs != null && this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                    this.SetUIProperties();
+                    this.FillStockLines();
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                    this.SetUIProperties();
+                    this.FillStockLines();
+                }
+            });
+        }
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
     public InitTemplate(args: InvoiceStockInputArgs) {
@@ -38,7 +72,8 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
             this.IsEditMode = args.IsEditMode;
         }
 
-        this.InitializeData();
+        this.SetUIProperties();
+        this.FillStockLines();
     }
 
     public IsNew: boolean;
@@ -48,11 +83,35 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
             this.IsEditMode = args.IsEditMode;
         }
 
-        this.InitializeData();
+        this.FillStockLines();
     }
 
-    InitializeData() {
-       
+    private IsEditingEnabled: boolean = true;
+    SetUIProperties() {
+        var isEditingEnabled = true;
+
+        if (this.EntityPM.StatusCode == "C") {
+            isEditingEnabled = false;
+        }
+
+        this.IsEditingEnabled = isEditingEnabled;
+
+        this.UIProperties.SetEnabled("Name", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("EndDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("Description", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("Notes", this.ObjectTableName, isEditingEnabled);
+    }
+
+    FillStockLines() {
+        this.ItemsSource = [];
+        this.SelectedItem = null;
+
+        this.EntityPM.ARInvoiceStockLines.forEach(item => {
+            this.ItemsSource.push(item);
+        });
+
+        this.ItemsCount = this.ItemsSource.length;        
     }
 
     get Name() { return this.EntityPM.Name; }
@@ -92,11 +151,23 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
 
     public SelectedItem: ARInvoiceStockLinePM = null;
 
+    get IsAddEnabled() {
+        var myResult = false;
+
+        if (this.IsEditingEnabled) {
+            myResult = true;
+        }
+
+        return myResult;
+    }
+
     get IsRemoveEnabled() {
         var myResult = false;
 
-        if (this.SelectedItem != null) {
-            myResult = true;
+        if (this.IsEditingEnabled) {
+            if (this.SelectedItem != null && !this.SelectedItem.IsUsed) {
+                myResult = true;
+            }
         }
 
         return myResult;
@@ -104,64 +175,76 @@ export class ARInvoiceStockInputTemplate extends BaseComponent {
 
     AddStockLineClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Stock Numbers";
-        logWindow.WindowArgs = { FBLStocksList: this.ItemsSource };
+        logWindow.Title = "Stock Numbers";        
+        logWindow.WindowArgs = { Stock: this.EntityPM };
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewARInvoiceStockLinesComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
-
+                this.IsNew = false;
+                this.FillStockLines();                
             }
         });
     }
 
     RemoveStockLineClicked() {
-
+        this.Remove(false);
     }
 
     RemoveSeriesClicked() {
-
+        this.Remove(true);
     }
 
-    CancelClicked() {
-        this.RejectChanges();
-        this.CurrentSession.CloseCurrentWindow();
-    }
+    Remove(isDeletingSeries: boolean) {
+        if (this.SelectedItem != null) {
 
-    private myCloner: Cloner;
-    private Clone() {
-        this.myCloner = new Cloner(this.DataContext);
-        this.myCloner.AddField('Name');
-        this.myCloner.AddField('StartDate');
-        this.myCloner.AddField('EndDate');
-        this.myCloner.AddField('Description');
-        this.myCloner.AddField('Notes');
-        this.myCloner.AddEntity(this.EntityPM);
-    }
-    private RejectChanges() {
-        this.myCloner.RejectChanges();
-    }
+            if (isDeletingSeries == true && this.SelectedItem.CreateDate == null) {
+                var win = new MessageWindow();
+                win.Show("This stock does not have a create date");
+            }
 
-    OkClicked() {
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+            else {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 450;
+                confirmWindow.Height = 190;
+                confirmWindow.Title = "Removing Stock";
+                confirmWindow.YesButtonText = "Delete";
+                confirmWindow.NoButtonText = "Cancel";
 
-        this.ValidationErrorsList = errors;
+                var message = "Are you sure you want to delete the stock number";
 
-        if (this.ValidationErrorsList.length == 0) {
+                if (isDeletingSeries) {
+                    var myGetDateFormats = DateTool.GetDateFormats(this.SelectedItem.CreateDate);
+                    message = "Are you sure you want to delete the series inserted on";
+                    message = message + "\n" + "[" + myGetDateFormats.ShortDateString + "] at [" + myGetDateFormats.ShortTimeString + "] ?";
+                }
 
-            if (this.IsNew) {
-                this.CurrentSession.StartBusyIndicatorSaving();
+                else {
+                    message = message + " [" + this.SelectedItem.Number + "] ?";
+                }
 
-                this.stockPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                confirmWindow.Show(message);
 
-                    this.CurrentSession.StopBusyIndicator();
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        if (isDeletingSeries) {
+                            var deletedSeries: ARInvoiceStockLinePM[] = this.EntityPM.ARInvoiceStockLines.filter(d => d.CreateDate == this.SelectedItem.CreateDate);
+                            if (deletedSeries.length > 0) {
+                                deletedSeries.forEach(item => {
+                                    this.EntityPM.RemoveARInvoiceStockLinePM(item);
+                                });
 
-                    if (!myResponse.HasError) {
-                        this.CurrentSession.CloseCurrentWindowEmit("OK");
-                    }
+                                this.EntityPM.SeriesRemoved = true;
+                            }
+                        }
 
-                    else {
-                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                        else {
+                            this.EntityPM.RemoveARInvoiceStockLinePM(this.SelectedItem);
+                            this.EntityPM.NumberRemoved = true;
+                        }
+
+                        this.FillStockLines();
+
+                        this.EntityPM.Amount = this.ItemsCount;
                     }
                 });
             }

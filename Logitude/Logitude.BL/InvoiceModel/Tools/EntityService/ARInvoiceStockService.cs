@@ -7,6 +7,7 @@ using Logitude.BL.InvoiceModel.Tools.TraceEvents;
 using Logitude.BL.InvoiceModel.Tools.Validating;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
+using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -29,12 +30,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private ARInvoiceStockRepository entityRepository;
         private ARInvoiceStockLineRepository stockLineRepository;
         private ContactPM loggedContact;
+        private DateTime todayDate;
         public ARInvoiceStockService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new ARInvoiceStockRepository(objectContext);
             this.stockLineRepository = new ARInvoiceStockLineRepository(objectContext);
+            this.todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             this.GetLoggedData();
         }
@@ -71,6 +74,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.CreateARInvoiceStockLine(item);
             }
 
+            entityPM.Amount = entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+
             ARInvoiceStockTracing.Trace(entityPM, Poco, isNewEntity, loggedContact.Id);
             ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -93,6 +98,29 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.UpdateARInvoiceStockLinesCollection();
+
+
+            if (entityPM.Cancelled)
+            {
+                entityPM.StatusCode = "C";
+                entityPM.Inactive = true;
+            }
+
+            else if (entityPM.Reactivated)
+            {
+                this.RecalculateStatusAfterReactivate();                
+            }
+
+            else
+            {
+                entityPM.StatusCode = GetStockStatus(entityPM);
+                ARInvoiceStocksStatusRepository aRInvoiceStocksStatusRepository = new ARInvoiceStocksStatusRepository(entityPM.Tenant);
+                entityPM.StatusName = aRInvoiceStocksStatusRepository.GetSingleARInvoiceStocksStatus(entityPM.StatusCode).Name;
+
+            }
+
+            entityPM.Amount = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && !d.IsUsed).Count();
 
             ARInvoiceStockTracing.Trace(entityPM, Poco, isNewEntity, loggedContact.Id);
             ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity);
@@ -138,12 +166,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             itemPM.Id = IdCounter.GetNumber("ARInvoiceStockLine", tenant).ToString();
             itemPM.ARInvoiceStockId = entityPm.Id;
             itemPM.Tenant = tenant;
+            itemPM.CreateDate = todayDate;
 
             ARInvoiceStockLine itemPoco = new ARInvoiceStockLine()
             {
                 Id = itemPM.Id,
                 ARInvoiceStockId = itemPM.ARInvoiceStockId,
-                Tenant = itemPM.Tenant
+                Tenant = itemPM.Tenant,
+                CreateDate = itemPM.CreateDate,
             };
 
             ARInvoiceStockMapping.MapARInvoiceStockLine(itemPM, itemPoco, true, loggedContact.Id);
@@ -167,6 +197,86 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 stockLineRepository.Remove(itemPoco);
             }
+        }
+
+        private void RecalculateStatusAfterReactivate()
+        {
+            if (entityPm.Amount > 0 && entityPm.Remaining != 0 && entityPm.Remaining < entityPm.Amount && entityPm.EndDate <= TenantServerConfigration.GetCurrentDateTime(tenant))
+            {
+                entityPm.StatusCode = "E";
+            }
+
+            else if(entityPm.Amount > 0 && entityPm.Remaining == 0 && entityPm.EndDate >= TenantServerConfigration.GetCurrentDateTime(tenant))
+            {
+                entityPm.StatusCode = "U";
+            }
+
+            else if (entityPm.Amount > 0 && entityPm.Remaining <= (entityPm.Amount - 1) && entityPm.EndDate >= TenantServerConfigration.GetCurrentDateTime(tenant))
+            {
+                entityPm.StatusCode = "A";
+            }
+
+            else
+            {
+                entityPm.StatusCode = "N";
+            }
+
+            entityPm.Inactive = false;
+        }
+
+        private string GetStockStatus(ARInvoiceStockPM stock)
+        {
+            int stockLinesCount = stock.ARInvoiceStockLines.Where(d => d.IsUsed && d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            string statusCode = "";
+            
+            if (stockLinesCount == 0)
+            {
+                if (stock.EndDate != null)
+                {
+                    if (stock.EndDate >= todayDate)
+                    {
+                        statusCode = "N";
+                    }
+                    else
+                    {
+                        statusCode = "E";
+                    }
+                }
+                else
+                {
+                    statusCode = "N";
+                }
+            }
+
+            else
+            {
+                if (stock.Amount == stockLinesCount)
+                {
+                    statusCode = "U";
+                }
+
+                else if ((stock.Amount != stockLinesCount))
+                {
+                    if (stock.EndDate != null)
+                    {
+                        if (stock.EndDate >= todayDate)
+                        {
+                            statusCode = "A";
+                        }
+                        else
+                        {
+                            statusCode = "E";
+                        }
+                    }
+                    else
+                    {
+                        statusCode = "A";
+                    }
+                }
+            }
+
+            return statusCode;
         }
     }
 }

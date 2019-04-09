@@ -180,295 +180,290 @@
 <table style="background: white; min-width: 1024px; min-height: 600px;" *ngIf="!IsNewSignupTenant" [style.direction]="LayoutDirection" [style.font-family]="SystemFontFamily">
     <tr>
         <td style="vertical-align: top;" (click)="OnClickOutSide()">
+            <div class="MediaFill">
+                <div class="MediaFillRelative">
 
-            <!-- Header -->
-            <div class="AppHeaderBackground" [class.AppHeaderBackgroundOrange]="ChangeHeaderColor === true" style="position: absolute; left:0; right:0; top: 0px; height: 51px;">
-                <table>
-                    <tr style="height: 5px;">
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+                    <!-- Header -->
+                    <div class="AppHeaderBackground" [class.AppHeaderBackgroundOrange]="ChangeHeaderColor === true" style="position: absolute; left:0; right:0; top: 0px; height: 51px;">
+                        <table>
+                            <tr style="height: 5px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
 
-                    <tr style="height: 1px;">
-                        <td>
+                            <tr style="height: 1px;">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:1px;color:red" class="Value">
+                                                {{TrialMessage}}
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;" class="Value">
+                                                {{LoggedUser}}
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;" class="Label" title="{{ProductInfo}}">
+                                                ({{Company}})
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 20px;" *ngIf="IsBellVisible">
+                                                <div>
+                                                    <IconButton id="111Bell" [Name]="'Bell'" [IsIconOnly]="true" (blur)="OnBellBlur()" (click)="onBellButtonClicked()" style="position:relative; display:block; bottom:1px"></IconButton>
+                                                </div>
+
+                                                <div (click)="onBellButtonClicked()" [style.height.px]="height" [style.width.px]="width" style="user-select: none;cursor: pointer; border-radius:15px;background-color:#c8373b; position:absolute; top:-4px;right:6px" *ngIf="IsBadjCountVisibile">
+                                                    <span style="color:white; font-size:10px;  text-align:center; position:absolute;top:5px  " [style.right.px]="right" [style.top.px]="top" [style.left.px]="left"> {{badjCount}}</span>
+                                                </div>
+
+                                                <NotificationBellComponent (mouseover)="OnControlMouseOver()" (mouseout)="OnControlMouseOut()" [ParentComponent]="DataContext" style="position:absolute;right:initial;left:-50px;z-index: 1;" *ngIf="IsControlVisibile"></NotificationBellComponent>
+                                            </td>
+
+                                            <td style="width: 20px;" *ngIf="IfBlueSnapContracts">
+                                                <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
+                                                    <IconButton [Name]="'payments'" [IsIconOnly]="true"></IconButton>
+                                                    <div class="ToggleButtonMenu" style="right:-50px">
+                                                        <button *ngIf="IsLogBox == false && IsBluesnapAccount" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
+                                                        <hr />
+                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG')">Subscribe to Logitude</button>
+                                                        <hr />
+                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('AWB')">Subscribe to e-AWB</button>
+                                                        <hr />
+                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('BUY')">Buy e-AWB Stock</button>
+                                                        <hr />
+                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
+                                                        <hr />
+                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 20px;">
+                                                <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
+                                                    <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
+                                                    <div class="ToggleButtonMenu" style="right:-50px">
+                                                        <!-- Please If you want to add a new button but this condition in that button *ngIf="IsLogBox == false"-->
+                                                        <button *ngIf="IsCustomizationVisible" (click)="LanguageSettingsClicked()">Language Settings</button>
+                                                        <button *ngIf="IsSignatureVisible" (click)="SignatureClicked()">Signature</button>
+                                                        <button *ngIf="IsLogBox == true" (click)="ShowDocTypesDefScreen()">Document Types Definition</button>
+                                                        <button *ngIf="IsChangePasswordVisible" (click)="ChangePasswordClicked()">Change Password</button>
+                                                        <button *ngIf="IsCustomizationVisible" (click)="CustomizationClicked()">Customization</button>
+                                                        <button *ngIf="IsCustomizationVisible" (click)="TranslateLabelsClicked()">Translate Labels</button>
+                                                        <button *ngIf="IsCustomizationVisible" (click)="TranslationClicked()">Translation</button>
+                                                        <button *ngIf="IsCustomizationVisible" (click)="DefaultTranslationClicked()">Default Translation</button>
+                                                        <button *ngIf="IsCurrenciesRatesVisible" (click)="CurrenciesRatesClicked()">Currencies Rates</button>
+                                                        <button *ngIf="IsDataBackupVisible" (click)="DataBackupClicked()">Data Backup</button>
+                                                        <button *ngIf="IsDocumentsBackupVisible" (click)="DocumentsBackupClicked()">Documents Backup</button>
+                                                        <button *ngIf="Tenant == 0" (click)="LoadSampleDataClicked()">Load Sample Data</button>
+                                                        <button *ngIf="IsFillLocalStorageVisible" (click)="FillStorageClicked()">Fill Local Storage</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 20px;">
+                                                <IconButton [Name]="'Help'" [IsIconOnly]="true" (click)="HelpButtonClicked()" title="Help Center"></IconButton>
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 20px;">
+                                                <IconButton *ngIf="!_AmitalBrowserInUse" [Name]="'Signout'" [IsIconOnly]="true" (click)="SignoutClicked()" title="Sign Out"></IconButton>
+                                            </td>
+
+                                            <td style="width: 8px;">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Environmen  -->
+                    <div [className]="LayoutDirection=='rtl' ? 'logoRTL' : 'logo'">
+                        <a [attr.href]="EnvironmentUrl" [attr.target]="'_blank'" style="text-decoration:none;">
                             <table>
                                 <tr>
-                                    <td>
+                                    <td style="width: 1px;">
+                                        <img [attr.src]="EnvironmentSRC" style="width: 40px; height: 23px; vertical-align:middle;" />
+                                    </td>
+
+                                    <td style="width: 3px;">
                                         <div></div>
                                     </td>
 
-                                    <td style="width:420px;" *ngIf="ShowNewReleaseToolTip">
-                                        <div class="OrangeInfo" style="margin: 5px;">
+                                    <td style="color: #45494A; font-size: 12px;">
+                                        {{EnvironmentName != 'LogBox' ? EnvironmentName : ''}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </a>
+                    </div>
+
+                    <div *ngIf="ShowNewReleaseToolTip" style="height: 25px; width: 420px; position:absolute; left:0; right:0; top: 8px; margin: auto;">
+                        <div class="GreenInfo" style="margin: 5px;">
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <img class="CenterCenter" height="25" src="./Images/Balloons.png" />
+                                    </td>
+
+                                    <td class="Value" style="font-size:12px;">
+                                        {{'General.O.ShowNewRelease' | TextCodeTranslationPipe}}
+                                    </td>
+
+                                    <td style="font-size:12px;">
+                                        <div>
+                                            <span class="hyperlink" (click)="ViewReleaseNotes()">{{'General.B.PressHere' | TextCodeTranslationPipe}}</span>
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 18px; padding-left:4px;">
+                                        <span class="hyperlink" (click)="HideReleaseMessageClicked()">
+                                            <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div style="position: absolute; left:0; right:0; bottom:0; top: 25px;" #ApplicationLocation>
+                        <div class="SessionsTabControl">
+                            <div class="TabControlHead">
+                                <ul>
+                                    <li *ngFor="let tab of Tabs" [class.Selected]="tab.IsSelected" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" (click)="SelectionChanged(tab)"
+                                        [style.width]="(_AmitalBrowserInUse  && !tab.IsSelected ) ? '0px' : '160px'">
+
+                                        <div class="InnerChild" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
                                             <table>
                                                 <tr>
-                                                    <td style="width:40px;">
-                                                        <img class="CenterCenter" height="25" src="./Images/Balloons.png" />
-                                                    </td>
-
-                                                    <td class="Value" style="font-size:12px;">
-                                                        {{'General.O.ShowNewRelease' | TextCodeTranslationPipe}}
-                                                    </td>
-
-                                                    <td style="font-size:12px;">
-                                                        <div>
-                                                            <span class="hyperlink" (click)="ViewReleaseNotes()">{{'General.B.PressHere' | TextCodeTranslationPipe}}</span>
+                                                    <td style="width: 20px; min-width: 20px; vertical-align: top;">
+                                                        <div style="margin-top: -2px;">
+                                                            <img [attr.src]="tab.IconSource" *ngIf="tab.IsSelected" />
+                                                            <img [attr.src]="tab.IconSourceGray" *ngIf="!tab.IsSelected" />
                                                         </div>
                                                     </td>
 
-                                                    <td style="width: 18px; padding-left:4px;">
-                                                        <span class="hyperlink" (click)="HideReleaseMessageClicked()">
-                                                            <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
-                                                        </span>
+                                                    <td style="width: 2px; min-width: 2px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="MediaFill">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 1px; color: #1B1C1C;">
+                                                                        {{tab.Header}}
+                                                                    </td>
+
+                                                                    <td style="width: 5px; min-width: 5px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width:20px;" *ngIf="tab.DirectionId">
+                                                                        <div style="width: 100%; height: 100%; position:relative;">
+                                                                            <img *ngIf="tab.IsSelected" class="CenterCenter" [attr.src]="'./_Resources/Images/Icons/Directions/' + tab.DirectionId + '.png'" />
+                                                                            <img *ngIf="!tab.IsSelected" class="CenterCenter" [attr.src]="'./_Resources/Images/Icons/Directions/' + tab.DirectionId + '_g.png'" />
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width:20px;" *ngIf="tab.TransportId">
+                                                                        <div style="width: 100%; height: 100%; position:relative;">
+                                                                            <img *ngIf="tab.IsSelected" class="CenterCenter" [attr.src]="'./_Resources/Images/Icons/TransportModes/' + tab.TransportId + '.png'" />
+                                                                            <img *ngIf="!tab.IsSelected" class="CenterCenter" [attr.src]="'./_Resources/Images/Icons/TransportModes/' + tab.TransportId + '_g.png'" />
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+
+
+
+                                                    <td style="width: 2px; min-width: 2px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 2px; min-width: 2px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 8px; vertical-align: top;" *ngIf="Tabs.length > 1">
+                                                        <div (click)="CloseTab(tab)" style="width: 8px; height: 9px; margin-top: 3px; cursor: pointer; background: url('./Images/Tab.X.Blue.png') no-repeat;" *ngIf="tab.IsSelected"
+                                                             [hidden]="_AmitalBrowserInUse">
+                                                        </div>
+
+                                                        <div (click)="CloseTab(tab)" style="width: 8px; height: 9px; margin-top: 3px; cursor: pointer;" *ngIf="!tab.IsSelected" class="TabCloseIcon"
+                                                             [hidden]="_AmitalBrowserInUse">
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </div>
-                                    </td>
+                                    </li>
 
-                                    <td>
-                                        <div></div>
-                                    </td>
+                                    <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse && !IsApplicationBlocked">+</li>
+                                </ul>
+                                <div *ngIf="IsShowLastSuccessfulLoginComponent" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'" style="height:20px;margin-top:-23px">
+                                    <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>
 
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width:1px;color:red" class="Value">
-                                        {{TrialMessage}}
-                                    </td>
-
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 1px;" class="Value">
-                                        {{LoggedUser}}
-                                    </td>
-
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 1px;" class="Label" title="{{ProductInfo}}">
-                                        ({{Company}})
-                                    </td>
-
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 20px;" *ngIf="IsBellVisible">                                       
-                                        <div>
-                                            <IconButton id="111Bell" [Name]="'Bell'" [IsIconOnly]="true" (blur)="OnBellBlur()" (click)="onBellButtonClicked()" style="position:relative; display:block; bottom:1px"></IconButton>
-                                        </div>
-                                     
-                                        <div (click)="onBellButtonClicked()" [style.height.px]="height" [style.width.px]="width" style="user-select: none;cursor: pointer; border-radius:15px;background-color:#c8373b; position:absolute; top:-4px;right:6px" *ngIf="IsBadjCountVisibile">
-                                            <span style="color:white; font-size:10px;  text-align:center; position:absolute;top:5px  " [style.right.px]="right" [style.top.px]="top" [style.left.px]="left"> {{badjCount}}</span>
-                                        </div>
-
-                                        <NotificationBellComponent (mouseover)="OnControlMouseOver()" (mouseout)="OnControlMouseOut()" [ParentComponent]="DataContext" style="position:absolute;right:initial;left:-50px;z-index: 1;" *ngIf="IsControlVisibile"></NotificationBellComponent>
-                                    </td>
-
-                                    <td style="width: 20px;" *ngIf="IfBlueSnapContracts">
-                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" >
-                                            <IconButton [Name]="'payments'" [IsIconOnly]="true"></IconButton>
-                                            <div class="ToggleButtonMenu" style="right:-50px">
-                                                <button *ngIf="IsLogBox == false && IsBluesnapAccount" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
-                                                <hr />
-                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG')">Subscribe to Logitude</button>
-                                                <hr />
-                                                <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('AWB')">Subscribe to e-AWB</button>
-                                                <hr />
-                                                <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('BUY')">Buy e-AWB Stock</button>
-                                                <hr />
-                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
-                                                <hr />
-                                                <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
-
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 20px;">                                      
-                                        <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;" >
-                                            <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
-                                            <div class="ToggleButtonMenu" style="right:-50px">
-                                                <!-- Please If you want to add a new button but this condition in that button *ngIf="IsLogBox == false"-->
-                                                <button *ngIf="IsCustomizationVisible" (click)="LanguageSettingsClicked()">Language Settings</button>
-                                                <button *ngIf="IsSignatureVisible" (click)="SignatureClicked()">Signature</button>
-                                                <button *ngIf="IsLogBox == true" (click)="ShowDocTypesDefScreen()">Document Types Definition</button>
-                                                <button *ngIf="IsChangePasswordVisible" (click)="ChangePasswordClicked()">Change Password</button>
-                                                <button *ngIf="IsCustomizationVisible" (click)="CustomizationClicked()">Customization</button>
-                                                <button *ngIf="IsCustomizationVisible" (click)="TranslateLabelsClicked()">Translate Labels</button>
-                                                <button *ngIf="IsCustomizationVisible" (click)="TranslationClicked()">Translation</button>
-                                                <button *ngIf="IsCustomizationVisible" (click)="DefaultTranslationClicked()">Default Translation</button>
-                                                <button *ngIf="IsCurrenciesRatesVisible" (click)="CurrenciesRatesClicked()">Currencies Rates</button>
-                                                <button *ngIf="IsDataBackupVisible" (click)="DataBackupClicked()">Data Backup</button>
-                                                <button *ngIf="IsDocumentsBackupVisible" (click)="DocumentsBackupClicked()">Documents Backup</button>
-                                                <button *ngIf="Tenant == 0" (click)="LoadSampleDataClicked()">Load Sample Data</button>                                               
-                                                <button *ngIf="IsFillLocalStorageVisible" (click)="FillStorageClicked()">Fill Local Storage</button>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 20px;">
-                                        <IconButton [Name]="'Help'" [IsIconOnly]="true" (click)="HelpButtonClicked()" title="Help Center"></IconButton>
-                                    </td>
-
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 20px;">
-                                        <IconButton *ngIf="!_AmitalBrowserInUse" [Name]="'Signout'" [IsIconOnly]="true" (click)="SignoutClicked()" title="Sign Out"></IconButton>
-                                    </td>
-
-                                    <td style="width: 8px;">
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Environmen -->
-            <div [className]="LayoutDirection=='rtl' ? 'logoRTL' : 'logo'">
-                <a [attr.href]="EnvironmentUrl" [attr.target]="'_blank'" style="text-decoration:none;">
-                    <table>
-                        <tr>
-                            <td style="width: 1px;">
-                                <img [attr.src]="EnvironmentSRC" style="width: 40px; height: 23px; vertical-align:middle;" />
-                            </td>
-
-                            <td style="width: 3px;">
-                                <div></div>
-                            </td>
-
-                            <td style="color: #45494A; font-size: 12px;">
-                                {{EnvironmentName != 'LogBox' ? EnvironmentName : ''}}
-                            </td>
-                        </tr>
-                    </table>
-                </a>
-            </div>
-
-            <div style="position: absolute; left:0; right:0; bottom:0; top: 25px;" #ApplicationLocation>
-                <div class="SessionsTabControl">
-                    <div class="TabControlHead">
-                        <ul>
-                            <li *ngFor="let tab of Tabs" [class.Selected]="tab.IsSelected" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" (click)="SelectionChanged(tab)"
-                                [style.width]="(_AmitalBrowserInUse  && !tab.IsSelected ) ? '0px' : '160px'">
-
-                                <div class="InnerChild" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 20px; min-width: 20px; vertical-align: top;">
-                                                <div style="margin-top: -2px;">
-                                                    <img [attr.src]="tab.IconSource" *ngIf="tab.IsSelected" />
-                                                    <img [attr.src]="tab.IconSourceGray" *ngIf="!tab.IsSelected" />
-                                                </div>
-                                            </td>
-
-                                            <td style="width: 2px; min-width: 2px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td>
-                                                <div class="MediaFill">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width: 1px; color: #1B1C1C;">
-                                                                {{tab.Header}}
-                                                            </td>
-
-                                                            <td style="width: 5px; min-width: 5px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="width:20px;" *ngIf="tab.DirectionId">
-                                                                <div style="width: 100%; height: 100%; position:relative;">
-                                                                    <img *ngIf="tab.IsSelected" class="CenterCenter" [attr.src]="'./_Resources/Images/Icons/Directions/' + tab.DirectionId + '.png'" />
-                                                                    <img *ngIf="!tab.IsSelected" class="CenterCenter" [attr.src]="'./_Resources/Images/Icons/Directions/' + tab.DirectionId + '_g.png'" />
-                                                                </div>
-                                                            </td>
-
-                                                            <td style="width:20px;" *ngIf="tab.TransportId">
-                                                                <div style="width: 100%; height: 100%; position:relative;">
-                                                                    <img *ngIf="tab.IsSelected" class="CenterCenter" [attr.src]="'./_Resources/Images/Icons/TransportModes/' + tab.TransportId + '.png'" />
-                                                                    <img *ngIf="!tab.IsSelected" class="CenterCenter" [attr.src]="'./_Resources/Images/Icons/TransportModes/' + tab.TransportId + '_g.png'" />
-                                                                </div>
-                                                            </td>
-
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </td>
-
-
-
-                                            <td style="width: 2px; min-width: 2px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td style="width: 2px; min-width: 2px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td style="width: 8px; vertical-align: top;" *ngIf="Tabs.length > 1">
-                                                <div (click)="CloseTab(tab)" style="width: 8px; height: 9px; margin-top: 3px; cursor: pointer; background: url('./Images/Tab.X.Blue.png') no-repeat;" *ngIf="tab.IsSelected"
-                                                     [hidden]="_AmitalBrowserInUse">
-                                                </div>
-
-                                                <div (click)="CloseTab(tab)" style="width: 8px; height: 9px; margin-top: 3px; cursor: pointer;" *ngIf="!tab.IsSelected" class="TabCloseIcon"
-                                                     [hidden]="_AmitalBrowserInUse">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
                                 </div>
-                            </li>
-
-                            <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse && !IsApplicationBlocked">+</li>
-                        </ul>
-                        <div *ngIf="IsShowLastSuccessfulLoginComponent" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'"  style="height:20px;margin-top:-23px">
-                            <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>
-                           
-                        </div>
 
 
-                    </div>
-
-                    <div class="TabControlBody" (mouseup)="OnSessionMouseUp($event)" style="background: white;" id="ApplicationSession">
-                        <div class="MediaFillAbsolute" *ngFor="let tab of Tabs;" [hidden]="!tab.IsSelected">
-                            <div style="width: 120px;padding-right:10px;">
-                                <BackButton [IsEnabled]="!IsAmitalBackButtonDisable"  *ngIf="_AmitalBrowserInUse && this.Tabs[1]==tab && tab.SessionComponent && tab.SessionComponent.CurrentEditComponent==null " [Text]="'   Back   '" (click)="AmitalBackButtonClicked()"></BackButton>
                             </div>
-                            <div LocationDirective Code="SessionLocation" Index="{{tab.Index}}"></div>
+
+                            <div class="TabControlBody" (mouseup)="OnSessionMouseUp($event)" style="background: white;" id="ApplicationSession">
+                                <div class="MediaFillAbsolute" *ngFor="let tab of Tabs;" [hidden]="!tab.IsSelected">
+                                    <div style="width: 120px;padding-right:10px;">
+                                        <BackButton [IsEnabled]="!IsAmitalBackButtonDisable" *ngIf="_AmitalBrowserInUse && this.Tabs[1]==tab && tab.SessionComponent && tab.SessionComponent.CurrentEditComponent==null " [Text]="'   Back   '" (click)="AmitalBackButtonClicked()"></BackButton>
+                                    </div>
+                                    <div LocationDirective Code="SessionLocation" Index="{{tab.Index}}"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </td>
     </tr>
 </table>

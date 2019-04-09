@@ -50,9 +50,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PreviousChartOfAccountsId).HasColumnName("PreviousChartOfAccountsId");
             this.Property(t => t.PreviousChartOfAccountsChangeDate).HasColumnName("PreviousChartOfAccountsChangeDate");
             this.Property(t => t.CustomerGLAccountId).HasColumnName("CustomerGLAccountId");
-            this.Property(t => t.BalanceInLocalCurrency).HasColumnName("BalanceInLocalCurrency");
-            this.Property(t => t.LocalBalanceInDue).HasColumnName("LocalBalanceInDue");
-            this.Property(t => t.NextDueDate).HasColumnName("NextDueDate");
+        //    this.Property(t => t.BalanceInLocalCurrency).HasColumnName("BalanceInLocalCurrency");
+        //    this.Property(t => t.LocalBalanceInDue).HasColumnName("LocalBalanceInDue");
+        //    this.Property(t => t.NextDueDate).HasColumnName("NextDueDate");
 
             this.Property(t => t.RevaluationEnabled).HasColumnName("RevaluationEnabled");
             this.Property(t => t.ParentAccountId).HasColumnName("ParentAccountId");
@@ -62,6 +62,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Category4Id).HasColumnName("Category4Id");
             this.Property(t => t.Category5Id).HasColumnName("Category5Id");
             this.Property(t => t.IsVATExempt).HasColumnName("IsVATExempt");
+            this.Property(t => t.DeductionFileNumber).HasColumnName("DeductionFileNumber");
 
             // Card
             this.Property(t => t.SalesmanUserId).HasColumnName("SalesmanUserId");

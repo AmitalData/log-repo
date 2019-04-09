@@ -18,5 +18,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool AddedManually { get; set; }
         public string CountryEnglishName { get; set; }
         public string CountryId { get; set; }
+        public string QBOTransactionLocationCode { get; set; }
+
     }
 }

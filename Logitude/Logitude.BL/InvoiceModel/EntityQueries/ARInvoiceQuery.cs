@@ -1361,6 +1361,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             TotaVatableAmountForTaxReport =a.TotaVatableAmountForTaxReport,
                             SATApprovalDate = a.SATApprovalDate,
                             IsFullAccounting = a.IsFullAccounting,
+                            ARInvoiceStockId = a.ARInvoiceStockId,
                         };
 
             return query;
@@ -1599,6 +1600,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               TotaVatableAmountForTaxReport = a.TotaVatableAmountForTaxReport,
                                               SATApprovalDate = a.SATApprovalDate,
                                               IsFullAccounting = a.IsFullAccounting,
+                                              ARInvoiceStockId = a.ARInvoiceStockId,
                                           }).ToList();
             return invoices;
         }
@@ -1709,6 +1711,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     TotaVatableAmountForTaxReport = entityPOCO.TotaVatableAmountForTaxReport,
                     SATApprovalDate = entityPOCO.SATApprovalDate,
                     IsFullAccounting = entityPOCO.IsFullAccounting,
+                    ARInvoiceStockId = entityPOCO.ARInvoiceStockId,
                 };
 
                 ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
@@ -2022,6 +2025,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TotaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport,
                              SATApprovalDate = entity.SATApprovalDate,
                              IsFullAccounting = entity.IsFullAccounting,
+                             ARInvoiceStockId = entity.ARInvoiceStockId,
                          };
 
             return result;

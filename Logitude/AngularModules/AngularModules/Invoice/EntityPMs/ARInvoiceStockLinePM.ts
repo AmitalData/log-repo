@@ -78,6 +78,11 @@ export class ARInvoiceStockLinePM {
     public set ARInvoiceId(newValue: string) { if (this.aRInvoiceId != newValue) { this.aRInvoiceId = newValue; this.MarkAsDirty("ARInvoiceId"); } }
        
 	 
+    private shipmentNumber: string;
+    public get ShipmentNumber() { return this.shipmentNumber; }
+    public set ShipmentNumber(newValue: string) { if (this.shipmentNumber != newValue) { this.shipmentNumber = newValue; this.MarkAsDirty("ShipmentNumber"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }

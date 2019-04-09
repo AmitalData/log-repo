@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ARInvoiceStockPM } from '../../../../Invoice/EntityPMs/ARInvoiceStockPM';
 import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
-import { AppTool, FormatTool } from '../../../../Infrastructure/Tools';
+import { AppTool, FormatTool, DateTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ARInvoiceStockPMService } from '../../../../Invoice/Services/StandardPMs/ARInvoiceStockPMService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     moduleId: module.id,
@@ -17,6 +19,7 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public Stock: ARInvoiceStockPM;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ItemsSource: ARInvoiceStockLinePM[] = [];
     constructor() {
         super();
     }
@@ -149,8 +152,8 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.StartNumber)) {
             this.UIProperties.SetRequired("StartNumber", null, true);
         }
-        else if (!this.StartNumber.match(/^[0-9]{7}$/)) {
-            var msgStartNumbe = "Invalid " + TextCodeTranslator.Translate("MAWBStack.O.StartNumber") + ": (should be 7 digits)";
+        else if (!FormatTool.IsNumeric(this.StartNumber)) {
+            var msgStartNumbe = "Invalid StartNumber: should be digits";
             errors.push(msgStartNumbe);
             this.UIProperties.SetValidity("StartNumber", null, false, msgStartNumbe);
         }
@@ -160,8 +163,8 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(this.EndNumber)) {
                 this.UIProperties.SetRequired("EndNumber", null, true);
             }
-            else if (!this.EndNumber.match(/^[0-9]{7}$/)) {
-                var msgEndNumber = "Invalid " + TextCodeTranslator.Translate("MAWBStack.O.EndNumber") + ": (should be 7 digits)";
+            else if (!FormatTool.IsNumeric(this.EndNumber)) {
+                var msgEndNumber = "Invalid End Number: should be digits";
                 errors.push(msgEndNumber);
                 this.UIProperties.SetValidity("EndNumber", null, false, msgEndNumber);
             }
@@ -183,8 +186,126 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
     }
 
+    public SelectedItem: any = null;
     private RunGenerator() {
+        this.ItemsSource = [];
+        this.GenerateErrors = [];
+        this.SelectedItem = null;
 
+        if (this.IsByNumber) {
+            if (!AppTool.IsNullOrEmpty(this.StartNumber) && !AppTool.IsNullOrEmpty(this.EndNumber)) {
+                if (FormatTool.IsNumeric(this.StartNumber) && FormatTool.IsNumeric(this.EndNumber)) {
+                    var NumericStartNumber = +this.StartNumber;
+                    var NumericEndNumber = +this.EndNumber;
+                    var NumericAmount = NumericEndNumber - NumericStartNumber + 1;
+                    this.amount = NumericAmount.toString();
+                    this.GenerateList(NumericStartNumber, NumericEndNumber, NumericAmount);
+                }
+            }
+        }
+
+        else {
+            if (!AppTool.IsNullOrEmpty(this.StartNumber) && !AppTool.IsNullOrEmpty(this.Amount)) {
+                if (FormatTool.IsNumeric(this.StartNumber) && FormatTool.IsNumeric(this.Amount)) {
+                    var NumericStartNumber = +this.StartNumber;
+                    var NumericAmount = +this.Amount;
+                    var NumericEndNumber = NumericStartNumber + NumericAmount - 1;
+                    this.endNumber = NumericEndNumber.toString();
+                    this.GenerateList(NumericStartNumber, NumericEndNumber, NumericAmount);
+                }
+            }
+        }
+    }
+
+    public IsListGenerated: boolean = false;
+    private GenerateErrors: string[] = [];
+    GenerateList(myStartNumber: number, myEndNumber: number, myAmount) {
+        this.IsListGenerated = false;
+        var StocksListCount = this.Stock.ARInvoiceStockLines == null ? 0 : this.Stock.ARInvoiceStockLines.length;
+
+        if (myEndNumber < myStartNumber) {
+            this.GenerateErrors.push("End number must be greater than start number");
+        }
+
+        else if (myAmount > 1000) {
+            this.GenerateErrors.push("Maximum number of added stacks in one transaction is 1000");
+        }
+
+        else if ((myAmount > 10000) || ((StocksListCount + myAmount) > 10000)) {
+            this.GenerateErrors.push("Maximum number of generated stacks is 10000");
+        }
+
+        else if (!AppTool.IsNullOrZero(this.Size)) {
+            if (myStartNumber.toString().length > this.Size) {
+                this.GenerateErrors.push("Start Number should be " + this.Size + " digits maximum");
+            }
+
+            else if (myEndNumber.toString().length > this.Size) {
+                this.GenerateErrors.push("End Number should be " + this.Size + " digits maximum");
+            }
+
+            else {
+                this.StartGenerating(myStartNumber, myEndNumber);
+            }
+        }
+
+        else {
+            this.StartGenerating(myStartNumber, myEndNumber);
+        }
+
+        this.GenerateErrors.forEach(item => {
+            this.ValidationErrorsList.push(item);
+        });
+    }
+
+    private StartGenerating(myStartNumber: number, myEndNumber: number) {
+        var todayDate = DateTool.GetCurrentDateAsUtc();
+
+        while (myStartNumber <= myEndNumber) {
+            this.IsListGenerated = true;
+            var paddingStartNumber: string = myStartNumber.toString();
+
+            if (!AppTool.IsNullOrZero(this.Size)) {
+                if (myStartNumber.toString().length < this.Size) {
+                    paddingStartNumber = myStartNumber.toString().padStart(this.Size, "0");
+                }
+            }
+
+            var invoiceNumber: string = paddingStartNumber.toString();
+
+            if (!AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.Suffix)) {
+                invoiceNumber = this.Prefix + paddingStartNumber.toString() + this.Suffix;
+            }
+
+            else if (!AppTool.IsNullOrEmpty(this.Prefix) && AppTool.IsNullOrEmpty(this.Suffix)) {
+                invoiceNumber = this.Prefix + paddingStartNumber.toString();
+            }
+
+            else if (AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.Suffix)) {
+                invoiceNumber = paddingStartNumber.toString() + this.Suffix;
+            }
+
+            var newEntityPM = new ARInvoiceStockLinePM(this.Stock);
+            newEntityPM.Tenant = SessionLocator.Tenant;
+            newEntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+            newEntityPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+            newEntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+            newEntityPM.UpdatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+            newEntityPM.CreateDate = todayDate;
+            newEntityPM.UpdateDate = todayDate;
+            newEntityPM.Number = invoiceNumber;
+
+            if (this.Stock.ARInvoiceStockLines.filter(f => f.Number == invoiceNumber)[0] == null) {
+                this.ItemsSource.push(newEntityPM);
+            }
+
+            else {
+                this.GenerateErrors.push("Invoice Number: [" + invoiceNumber + "] already exists in the stock!");
+                myStartNumber = myEndNumber + 1;
+            }
+
+            myStartNumber++;
+        }
     }
 
     CancelClicked() {
@@ -198,28 +319,53 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
 
         this.Validate();
 
-        //    this.GenerateErrors.forEach(item => {
-        //        this.ValidationErrorsList.push(item);
-        //    });
+        this.GenerateErrors.forEach(item => {
+            this.ValidationErrorsList.push(item);
+        });
 
-        //    if (this.ValidationErrorsList.length == 0) {
-        //        if (this.IsListGenerated) {
+        if (this.ValidationErrorsList.length == 0) {
+            if (this.IsListGenerated) {
+                this.CurrentSession.StartBusyIndicatorSaving();
+                
+                this.ItemsSource.forEach(item => {
+                    this.Stock.AddARInvoiceStockLinePM(item);
+                });
 
-        //            this.CurrentSession.StartBusyIndicatorSaving();
+                this.Stock.NumbersAdded = true;
+                this.Stock.Amount = this.Stock.ARInvoiceStockLines.length;
 
-        //            this.StackDomainService.CreateMAWBStacksOperation(this.AirlineId, this.myStartNumber, this.myEndNumber, this.CustomerId).subscribe((myResponse: ServiceResponse) => {
+                var stockPMService: ARInvoiceStockPMService = new ARInvoiceStockPMService();
+                if (AppTool.IsNullOrEmpty(this.Stock.Id)) {
+                    stockPMService.insert(this.Stock).subscribe((myResponse: ServiceResponse) => {
 
-        //                this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
-        //                if (myResponse.HasError) {
-        //                    this.ValidationErrorsList = myResponse.ErrorsArray;
-        //                }
+                        if (!myResponse.HasError) {
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
+                        }
 
-        //                else {
-        //                    this.CurrentSession.CloseCurrentWindowEmit("OK");
-        //                }
-        //            });
-        //        }
-        //    }
+                        else {
+                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                        }
+                    });
+                }
+
+                else {
+                    stockPMService.update(this.Stock).subscribe((myResponse: ServiceResponse) => {
+
+                        this.CurrentSession.StopBusyIndicator();
+
+                        if (!myResponse.HasError) {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            this.CurrentSession.CloseCurrentWindow();
+                        }
+
+                        else {
+                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                        }
+                    });
+                }
+            }
+        }
     }
 }
