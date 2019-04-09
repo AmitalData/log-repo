@@ -41,60 +41,60 @@ namespace WebFreight.Web.CustomWebServices
     public class CustomClosedTablesWebService : System.Web.Services.WebService
     {
 
-        [WebMethod]
-        public void FillCustomClosedTablesData(string closedTableId, bool updateAll, int tenant)
-        {
-            //LoadCustomClosedTables.FillCustomClosedTablesData();
+		[WebMethod]
+		public void FillCustomClosedTablesData(string closedTableId, bool updateAll, int tenant)
+		{
+			//LoadCustomClosedTables.FillCustomClosedTablesData();
 
-            var doViaComm = true;
-            if (doViaComm)
-            {
-                if (updateAll)
-                {
-                    LoadCustomClosedTables.UpdateAllClosedTables(tenant);
+			var doViaComm = true;
+			if (doViaComm)
+			{
+				if (updateAll)
+				{
+					LoadCustomClosedTables.UpdateAllClosedTables(tenant);
 
-                }
-                else
-                {
-                    SYSTBL_NG_9000_MSG_SystemTableRequestMessageService.SendIt(closedTableId, tenant);
-                }
-                return;
-            }
+				}
+				else
+				{
+					SYSTBL_NG_9000_MSG_SystemTableRequestMessageService.SendIt(closedTableId, tenant);
+				}
+				return;
+			}
 
-            Dictionary<string, string> messageProperties = new Dictionary<string, string>();
-            BrokeredMessage message = new BrokeredMessage();
-            if (updateAll)
-            {
-               
-                message.Properties["type"] = "all";
-                message.Properties["closedtableid"] = null;
-                message.Properties["tenant"] = tenant;
+			Dictionary<string, string> messageProperties = new Dictionary<string, string>();
+			BrokeredMessage message = new BrokeredMessage();
+			if (updateAll)
+			{
 
-                messageProperties.Add("type", "all");
-                messageProperties.Add("closedtableid", null);
-                messageProperties.Add("tenant", tenant.ToString());
-            }
-            else
-            {
-                message.Properties["type"] = "single";
-                message.Properties["closedtableid"] = closedTableId;
-                message.Properties["tenant"] = tenant;
+				message.Properties["type"] = "all";
+				message.Properties["closedtableid"] = null;
+				message.Properties["tenant"] = tenant;
 
-                messageProperties.Add("type", "single");
-                messageProperties.Add("closedtableid", closedTableId);
-                messageProperties.Add("tenant", tenant.ToString());
-            }
+				messageProperties.Add("type", "all");
+				messageProperties.Add("closedtableid", null);
+				messageProperties.Add("tenant", tenant.ToString());
+			}
+			else
+			{
+				message.Properties["type"] = "single";
+				message.Properties["closedtableid"] = closedTableId;
+				message.Properties["tenant"] = tenant;
 
-            string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(SBQueueNames.updateclosedtables.ToString());
-            QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
+				messageProperties.Add("type", "single");
+				messageProperties.Add("closedtableid", closedTableId);
+				messageProperties.Add("tenant", tenant.ToString());
+			}
 
-            client.Send(message);
+			string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(SBQueueNames.updateclosedtables.ToString());
+			QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
 
+			client.Send(message);
 
-            IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
-            queueservice.Send(messageProperties);
+			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+			//IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+			queueservice.Send(messageProperties);
 
-        }
+		}
 
        
 

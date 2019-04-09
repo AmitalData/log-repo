@@ -195,11 +195,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.JournalNumber != null)
                 {
                     if (item.JournalNumber.Length > 8) { item.JournalNumber= item.JournalNumber.Substring(0, 8); }
-                    myStringBuilder.Append(item.JournalNumber.PadLeft(8, ' '));
+                    myStringBuilder.Append(item.JournalNumber.PadLeft(8, '0'));
                 }
                 else
                 {
-                    myStringBuilder.Append(' ', 8);
+                    myStringBuilder.Append('0', 8);
                 }
                 myStringBuilder.Append(' ', 15);
 
@@ -1647,7 +1647,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (line.VatPercentage != null)
                     {
-                        string VatPercentage =  line.VatPercentage.ToString();
+                       // string VatPercentage =  line.VatPercentage.ToString();
+                        string VatPercentage = Format((decimal)line.VatPercentage);
                         if (VatPercentage.Length > 4) { VatPercentage = VatPercentage.Substring(0, 4); }
                         myStringBuilder.Append(a + VatPercentage.PadLeft(4, '0'));
                     }
