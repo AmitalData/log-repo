@@ -1070,8 +1070,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             IQueryable<Contact> contacts = repository.GetContactsByIds(contactIds, tenant);
             List<string> contactEmailLists = (from a in contacts
-                                              where contactIds.Contains(a.Id) && !a.InActive
-                                             select a.Email).ToList();
+                                              where contactIds.Contains(a.Id) && !a.InActive && a.UserType == "R"
+                                              select a.Email).ToList();
             return contactEmailLists;
         }
 

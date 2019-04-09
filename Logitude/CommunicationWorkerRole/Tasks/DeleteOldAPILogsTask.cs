@@ -5,6 +5,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading;
 using System.Transactions;
 
 namespace CommunicationWorkerRole.Tasks
@@ -23,55 +24,49 @@ namespace CommunicationWorkerRole.Tasks
 
             #region APILogsData
             int numberOfExecuteRows = 1000;
-            while (numberOfExecuteRows == 1000)
+            int numberOfRecords = 0;
+            while (numberOfExecuteRows == 1000 && numberOfRecords < 500000)
             {
-
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         string sql = "delete top(1000) from APILogsData where id in (select id from APILogs where CreateDate < GETDATE() - 90 )";
-                    
-                        if (dbms == "oracle")
-                        {
-                            sql = "DELETE FROM APILogsData WHERE ROWID IN  (SELECT ROWID FROM APILogsData where Id in (select Id from APILogs where CreateDate < (SELECT SYSDATE FROM DUAL) - 90 and  rownum <= 1000));";
-                        }
-
                         SqlCommand cmd = new SqlCommand(sql, cn);
                         cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                         cn.Open();
                         numberOfExecuteRows = cmd.ExecuteNonQuery();
+                        numberOfRecords += numberOfExecuteRows;
                         cn.Close();
                         scope.Complete();
                     }
                 }
-
+                Thread.Sleep(1000);
             }
             #endregion
 
 
             #region APILogs
             numberOfExecuteRows = 1000;
-            while (numberOfExecuteRows == 1000)
+            numberOfRecords = 0;
+            while (numberOfExecuteRows == 1000 && numberOfRecords < 500000)
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         string sql = "delete top(1000) from APILogs where CreateDate < GETDATE() - 90";
-                        if (dbms == "oracle")
-                        {
-                            sql = "DELETE FROM APILogs WHERE ROWID IN  (SELECT ROWID FROM APILogs where CreateDate < (SELECT SYSDATE FROM DUAL) - 90 and  rownum<= 1000)";
-                        }
-
                         SqlCommand cmd = new SqlCommand(sql, cn);
                         cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                         cn.Open();
                         numberOfExecuteRows = cmd.ExecuteNonQuery();
+                        numberOfRecords += numberOfExecuteRows;
                         cn.Close();
                         scope.Complete();
                     }
                 }
+
+                Thread.Sleep(1000);
             }
 
             #endregion
