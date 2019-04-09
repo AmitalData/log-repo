@@ -450,7 +450,7 @@ namespace CommunicationWorkerRole
 
                                                     if (!isUsingRestAPI)
                                                     {
-                                                        if (iAppSettings["ChampRestAPITenants"] != null)
+                                                        if (iAppSettings["ChampRestAPITenantKey"] != null)
                                                         {
                                                             int tenant = waitingCommLog.Tenant;
                                                             string ConfigurationString = iAppSettings["ChampRestAPITenantKey"].ToString();
