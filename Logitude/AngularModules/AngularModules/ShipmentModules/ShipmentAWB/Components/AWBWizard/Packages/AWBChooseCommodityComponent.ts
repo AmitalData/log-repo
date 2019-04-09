@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {CommodityList} from '../../../../../Common/EntityLists/CommodityList';
@@ -27,6 +27,7 @@ export class AWBChooseCommodityComponent {
     public AllCommoditiesCount: number = 0;
     private myService: CommodityListService;
     private DomainService: CommonDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myService = new CommodityListService();
         this.LoadAllData();
@@ -164,7 +165,7 @@ export class AWBChooseCommodityComponent {
     }
 
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     AddCommodityClicked() {

@@ -194,10 +194,12 @@
     <Content Include="2019.R1\03 - 2019\Day 07 [Samar] delete country Id field from tenant management.sql" />
     <Content Include="2019.R1\03 - 2019\Day 15 [Maheera] Add TMQueueMessageBuilderWorkerRole.sql" />
     <Content Include="2019.R1\03 - 2019\Day 24 [Abed]AddIndexToAPILogsAndQueueMessageMoreDetails.sql" />
-    <Content Include="2019.R1\03 - 2019\Day 21 [Abed] DeleteOldQueueMessageMoreDetailsProcedure.sql" />
     <Content Include="2019.R1\03 - 2019\Day 20 [Abed] Deleting Old RecordsFromAPILogsAndQueueMessageMoreDetails.sql" />
     <Content Include="2019.R1\03 - 2019\Day 03 [Abed] UpdateQuoteTemplateTextCodeFieldsChargeNots.sql" />
     <Content Include="2019.R1\03 - 2019\Day 21 [Abed]CustomerTenantAccessesAddSomeFieldsToSearchField.sql" />
+    <Content Include="2019.R1\04 - 2019\Day 02 [Rabaia]Update Category For Level Field DW.sql" />
+    <Content Include="2019.R1\04 - 2019\Day 8 [Khalid] Delete TextCodes and Features APInvoice ErrorInTransferInvoices.sql" />
+    <Content Include="2019.R1\04 - 2019\Day 7 [Abed]DROPCONSTRAINTFK_dbo.APILogsData_dbo.APILogs_Id.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
@@ -565,6 +567,7 @@
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Abed] updateTasksSchedulerFieldType.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman1] UpdateARInvoicesIsPrinted.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman2] UpdateShipmentARInvoices.sql" />
+    <Content Include="Main Branch\2019\04 - 2019\Day 07 [Rabaia] DeleteTaskSchedulerHistories SP.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />

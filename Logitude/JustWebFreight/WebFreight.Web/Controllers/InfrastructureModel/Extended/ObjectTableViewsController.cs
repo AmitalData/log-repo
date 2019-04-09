@@ -102,7 +102,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
                 if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                    tenant = tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {

@@ -48,6 +48,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  Tenant = a.Tenant,
                                  CountryCode = a.Country.Code,
                                  SearchFields = a.SearchFields,
+                                 QBOTransactionLocationCode=a.QBOTransactionLocationCode,
                                  ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                              }).FirstOrDefault();
 
@@ -74,6 +75,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              Tenant = a.Tenant,
                                              CountryCode = a.Country.Code,
                                              SearchFields = a.SearchFields,
+                                             QBOTransactionLocationCode = a.QBOTransactionLocationCode,
                                              ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                          };
             return states;
@@ -102,6 +104,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              CountryCode = a.Country.Code,
                              SearchFields = a.SearchFields,
+                             QBOTransactionLocationCode = a.QBOTransactionLocationCode,
                              ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                          }).AsQueryable();
 
@@ -147,7 +150,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                Tenant = state.Tenant,
                                                CountryId = state.CountryId,
                                                SearchFields = state.SearchFields,
-                                               AddedManually=state.AddedManually,
+                                               QBOTransactionLocationCode = state.QBOTransactionLocationCode,
+                                               AddedManually = state.AddedManually,
                                            };
             return result;
         }

@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 declare var attachmentUploader, ResultAsArray: any;
 import {Component, OnInit, ElementRef, Output, EventEmitter}  from '@angular/core';
@@ -54,7 +54,7 @@ export class ReportTemplateComponent implements OnInit {
 
 
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor( public entityArgs: EntityArgs,public _elementRef: ElementRef) {
         this.reportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
         this.reportsTemplatePMService = new ReportsTemplatePMService();
@@ -101,7 +101,7 @@ export class ReportTemplateComponent implements OnInit {
     LoadReportsTemplatePMLists() {
         this.ReportsTemplatePMLists = [];
         this.MessageReportsTemplatePMLists = [];
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.reportsTemplatePMExtendedService.GetReportsTemplatePMsByReportId(this.EntityPM.Id).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -136,7 +136,7 @@ export class ReportTemplateComponent implements OnInit {
                 }
             }
            
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
 
         });
@@ -166,11 +166,11 @@ export class ReportTemplateComponent implements OnInit {
 
 
     UpdateReportsTemplatePM(item: ReportsTemplatePM) {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.IsChange = true;
         this.reportsTemplatePMService.update(item).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
@@ -317,7 +317,7 @@ export class ReportTemplateComponent implements OnInit {
 
 
     CopyButtonClicked(item: ReportsTemplatePM) {
-        SessionLocator.CurrentSession.StartBusyIndicator("copy template...");
+        this.CurrentSession.StartBusyIndicator("copy template...");
         this.IsChange = true;
         this.reportsTemplatePMExtendedService.GetCopyReportsTemplate(item.Id, SessionLocator.LoggedUserId).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
@@ -331,7 +331,7 @@ export class ReportTemplateComponent implements OnInit {
                     this.CurrentReportsTemplatePM = result;
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 

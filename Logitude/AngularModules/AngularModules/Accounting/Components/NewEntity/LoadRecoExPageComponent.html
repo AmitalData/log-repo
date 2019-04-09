@@ -18,6 +18,12 @@
         <!-- Request -->
         <div class="class-request-content">
             <table style="width: 350px;height: 270px;padding-top: 10px;">
+                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                    <td>
+                        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                    </td>
+                </tr>
+
                 <!-- Request Fields -->
 
                 <tr style="height:35px">

@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 import {Component, OnInit, ViewChildren, QueryList} from '@angular/core';
@@ -48,6 +48,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     ObjectTableId: string;
     IsFromShipment: boolean = true;
     IsLoadPage: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.warehouseEntryPM = this.warehouseHelper.GetNewWarehouseEntry(this);
@@ -224,7 +225,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {PackagePM} from '../../../../Common/EntityPMs/PackagePM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -22,6 +22,7 @@ export class UserPackagesComponent implements OnInit {
     private loadedDataList: PackagePM[] = [];
     public EntityPMService: PackagePMService;
     public DomainService: InfrastructureDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.EntityPMService = new PackagePMService();
         this.DomainService = new InfrastructureDomainService();
@@ -34,7 +35,7 @@ export class UserPackagesComponent implements OnInit {
     LoadData(startBusyIndicator: boolean) {
 
         if (startBusyIndicator) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
         }
 
         this.DomainService.GetPackagesBMs().subscribe((myResponse: ServiceResponse) => {
@@ -45,7 +46,7 @@ export class UserPackagesComponent implements OnInit {
             this.BuildItemsSource();
 
             if (startBusyIndicator) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -101,7 +102,7 @@ export class UserPackagesComponent implements OnInit {
     ImportFeaturesFile(event: any) {
         var file: any = UploadLogoFile(this.ImportFeaturesFileHtmlId);
         if (file && file.name && file.name.toLowerCase().indexOf("csv") != -1) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             this.ArrayBufferToBase64(file, this);
         }
     }
@@ -112,7 +113,7 @@ export class UserPackagesComponent implements OnInit {
         file.Base64String = data;
 
         service.ImportFeaturePackages(file).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             var wind = new MessageWindow();
             wind.Show("Import completed successfully");
@@ -139,7 +140,7 @@ export class UserPackagesComponent implements OnInit {
             };
 
             reader.onerror = function (e) {                
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
                 var wind = new MessageWindow();
                 wind.Show("Error Importing file");
@@ -229,7 +230,7 @@ export class UserPackagesComponent implements OnInit {
         }
     }
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 export class UserPackageItemClass {

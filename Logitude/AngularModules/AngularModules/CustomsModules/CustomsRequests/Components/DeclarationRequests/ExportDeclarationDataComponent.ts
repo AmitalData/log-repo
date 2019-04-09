@@ -38,7 +38,7 @@ export class ExportDeclarationDataComponent
     public InvoiceList: ObservableCollection;
     public RequestList: ObservableCollection;
     public GovernmentProcedureList: string[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -157,7 +157,7 @@ export class ExportDeclarationDataComponent
     
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {

@@ -55,7 +55,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public isRTL: boolean = false;
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
 
@@ -1222,7 +1222,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     EditGLAccount(arg: string) {
         if (arg == "BA") {
             if (!AppTool.IsNullOrEmpty(this.bankAccount.GLAccountId)) {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: this.bankAccount.GLAccountId, ObjectTableName: 'GLAccount' });
@@ -1231,7 +1231,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
         else {
             if (!AppTool.IsNullOrEmpty(this.BranchGLAccountId)) {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: this.BranchGLAccountId, ObjectTableName: 'GLAccount' });
@@ -1356,7 +1356,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private RequestedCommandParam: string = null;
     ApplyRequestedCommand() {
         if (this.RequestedCommandCode == "ViewInvoice") {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'ARInvoice' });
@@ -1397,6 +1397,7 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
     public SortingValue: number = 0;
     public LocalCurrencyId: string = null;
     public IsMultiCurrency: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: ARInvoiceList, private trigger: ARPaymentDetailsTabComponent) {
         super();
 

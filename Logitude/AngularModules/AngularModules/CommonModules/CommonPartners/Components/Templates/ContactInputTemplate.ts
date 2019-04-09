@@ -30,7 +30,7 @@ export class ContactInputTemplate extends BaseComponent {
     public DomainService: PartnersDomainService;
     public ShowSearchContacts: boolean = false;
     public ShowSecondPartOfWindow: boolean = true;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.EntityPM = new ContactPM();
@@ -42,11 +42,11 @@ export class ContactInputTemplate extends BaseComponent {
 
     private LoadEntityCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null && SessionLocator.CurrentSession.CurrentEditComponent.ObjectTableName == "Contact") {
+        if (this.CurrentSession.CurrentEditComponent != null && this.CurrentSession.CurrentEditComponent.ObjectTableName == "Contact") {
             if (this.LoadEntityCompletedEvent == null) {
-                this.LoadEntityCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadEntityCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }

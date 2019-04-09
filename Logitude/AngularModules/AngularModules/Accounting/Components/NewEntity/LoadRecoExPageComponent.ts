@@ -79,6 +79,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
     ResponseMessage: any;
     UploadButtonIsEnabled: boolean = true;
     _DecodedLoadedString: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -110,7 +111,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     //* grid handlers in seperate region
@@ -127,7 +128,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
 
     SendBankFile(): any {
         //throw new Error("Method not implemented.");
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         if (this.fileUploadParamerter != null && this.fileUploadParamerter.Base64String != null) {
             this._ReconcileExternalPageExtendedPMService.LoadBankPages(this.fileUploadParamerter)
                 .subscribe((myServiceResponse: ServiceResponse) => {
@@ -135,9 +136,18 @@ export class LoadRecoExPageComponent extends BaseComponent {
                 var response = myServiceResponse.Result;
 
                 
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                if (!AppTool.IsNullOrEmpty(response)) {
-                }
+                    this.CurrentSession.StopBusyIndicator();
+                    if (myServiceResponse.HasError) {
+                        this.ValidationErrorsList = myServiceResponse.ErrorsArray;
+                        this.ShowMessage(response);
+                    } else {
+
+                        if (!AppTool.IsNullOrEmpty(response)) {
+                            this.ShowMessage(JSON.stringify(response.Result));
+                            this.CancelButtonClicked();
+                        }
+
+                    }
             });
         }
 
@@ -161,7 +171,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
             this.FileExtension = temp[temp.length - 1];
             this.FileName = file.name.replace("." + this.FileExtension, "");
 
-            if (this.FileExtension != "txt") {
+            if (this.FileExtension.toLowerCase() != "txt") {
                 this.ShowMessage("חובה קובץ TXT");
                 return;
             }

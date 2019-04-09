@@ -18,6 +18,7 @@ export class SchedulerDateListTemplate {
     public dateValue: any;
     public Type: string;
     schedulerExtendedPMService: SchedulerExtendedPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
     }
@@ -52,7 +53,7 @@ export class SchedulerDateListTemplate {
     }
 
     ShowFullLog() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this.schedulerExtendedPMService.GetSchedulerHistoryLogs(this.rowData["Id"]).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
@@ -81,7 +82,7 @@ export class SchedulerDateListTemplate {
             //    this.ValidationErrorsList = myResponse.ErrorsArray;
             //}
            
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
       
         

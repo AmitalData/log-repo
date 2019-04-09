@@ -1,4 +1,4 @@
-﻿
+
 
 declare var System: any;
 declare var window: any;
@@ -89,6 +89,7 @@ export class SocialPostsComponent implements OnInit {
 
     ShowBusyIndicator: boolean = false;
     BusyIndicatorText: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         this.postExtendedPMService = new PostExtendedPMService();
         this.contactPMService = new ContactPMService();
@@ -115,7 +116,7 @@ export class SocialPostsComponent implements OnInit {
  
     Listen() {
         if (!this.SocialPostsRefreshEvent) {
-            this.SocialPostsRefreshEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SocialPostsRefreshEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "SocialPostsRefresh") {
                     this.LoadingSocialList();
                 } 
@@ -293,7 +294,7 @@ export class SocialPostsComponent implements OnInit {
         if (!this.IsLoadRun) {
             this.IsLoadRun = true;
             this.IsNoData = false;
-            //SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+            //this.CurrentSession.StartBusyIndicator("Loading...");
             this.BusyIndicatorText = "Loading...";
             this.ShowBusyIndicator = true;
             this.postFilters.PageIndex = this.PageIndex;
@@ -399,12 +400,12 @@ export class SocialPostsComponent implements OnInit {
 
     ImageUploadedCompleted(event) {
 
-        SessionLocator.CurrentSession.FireEvent({ Name: 'RefreshSocialLogo', ImageId: event });
+        this.CurrentSession.FireEvent({ Name: 'RefreshSocialLogo', ImageId: event });
 
         if (this.LoggedContactPM != null) {
             if (this.LoggedContactPM.ImageDetailId != event) {
 
-                //SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+                //this.CurrentSession.StartBusyIndicator("Saving...");
                 this.BusyIndicatorText = "Saving...";
                 this.ShowBusyIndicator = true;
 
@@ -412,8 +413,8 @@ export class SocialPostsComponent implements OnInit {
                 this.ImageId = event;
                 this.contactPMService.update(this.LoggedContactPM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
-                    SessionLocator.CurrentSession.FireEvent("SocialMessagesRefresh");
-                    //SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.FireEvent("SocialMessagesRefresh");
+                    //this.CurrentSession.StopBusyIndicator();
                     this.ShowBusyIndicator = false;
                     this.PostsPMLists.filter(d => d.CreatedById == SessionLocator.LoggedUserId || (d.PostComments.length > 0 && d.PostComments.filter(d => d.CreatedById == SessionLocator.LoggedUserId)[0] != null)).forEach((post) => {
 
@@ -490,13 +491,13 @@ export class SocialPostsComponent implements OnInit {
                 entityPM.DefaultColor = this.LoggedContactDefaultColor;
                 
                 this.IsChange = true;
-                //SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+                //this.CurrentSession.StartBusyIndicator("Saving...");
                 this.BusyIndicatorText = "Saving...";
                 this.ShowBusyIndicator = true;
 
                 this.postPMService.insert(entityPM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
-                    //SessionLocator.CurrentSession.StopBusyIndicator();
+                    //this.CurrentSession.StopBusyIndicator();
                     this.ShowBusyIndicator = false;
                     if (!pmResponse.HasError && pmResponse.Result) {
 
@@ -534,7 +535,7 @@ export class SocialPostsComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -588,7 +589,7 @@ export class SocialPostsComponent implements OnInit {
             postsArgs.TiggerViewModel = this;
 
 
-            SessionLocator.DynamicLoader.Load("./Social/Components/SocialPostsComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Social/Components/SocialPostsComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.InitializePostComponent(postsArgs);
@@ -603,7 +604,7 @@ export class SocialPostsComponent implements OnInit {
             var table = window.ObjectTables.filter(d => d.Id == item.EntityPM.ObjectTableId)[0];
             if (table) {
                 this._entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe(response => {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
 
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -634,12 +635,12 @@ export class SocialPostsComponent implements OnInit {
             if (confirmWindow.Yes) {
                 item.EntityPM.IsCancelled = true;
                 this.IsChange = true;
-                //SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+                //this.CurrentSession.StartBusyIndicator("Saving...");
                 this.BusyIndicatorText = "Saving...";
                 this.ShowBusyIndicator = true;
                 this.postPMService.update(item.EntityPM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
-                    //SessionLocator.CurrentSession.StopBusyIndicator();
+                    //this.CurrentSession.StopBusyIndicator();
                     this.ShowBusyIndicator = false;
                     if (!pmResponse.HasError && pmResponse.Result) {
                   
@@ -700,13 +701,13 @@ export class SocialPostsComponent implements OnInit {
           
         }
 
-        //SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        //this.CurrentSession.StartBusyIndicator("Saving...");
         this.BusyIndicatorText = "Saving...";
         this.ShowBusyIndicator = true;
 
             this.postPMService.update(item.EntityPM).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
-                //SessionLocator.CurrentSession.StopBusyIndicator();
+                //this.CurrentSession.StopBusyIndicator();
                 this.ShowBusyIndicator = false;
                 if (!pmResponse.HasError && pmResponse.Result) {
 
@@ -727,13 +728,13 @@ export class SocialPostsComponent implements OnInit {
             postLikePM.UserId = SessionLocator.LoggedUserId;
             postLikePM.UserName = SessionLocator.LoggedUserPM.EnglishName;
             postLikePM.PostId = item.EntityPM.Id;
-            //SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+            //this.CurrentSession.StartBusyIndicator("Saving...");
             this.BusyIndicatorText = "Saving...";
             this.ShowBusyIndicator = true;
 
             this.postExtendedPMService.InsertPostLike(postLikePM).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
-                //SessionLocator.CurrentSession.StopBusyIndicator();
+                //this.CurrentSession.StopBusyIndicator();
                 this.ShowBusyIndicator = false;
               if (!pmResponse.HasError && pmResponse.Result) {
                   if (!item.EntityPM.PostLikes.filter(d => d.PostId == item.EntityPM.Id && d.UserId == SessionLocator.LoggedUserId)[0]) {
@@ -754,12 +755,12 @@ export class SocialPostsComponent implements OnInit {
                 item.EntityPM.RemovePostLike(postLikePM);
             }
 
-            //SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+            //this.CurrentSession.StartBusyIndicator("Saving...");
             this.BusyIndicatorText = "Saving...";
             this.ShowBusyIndicator = true;
             this.postExtendedPMService.DeletePostLike(item.EntityPM.Id, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
-                //SessionLocator.CurrentSession.StopBusyIndicator();
+                //this.CurrentSession.StopBusyIndicator();
                 this.ShowBusyIndicator = false;
                 if (!pmResponse.HasError) {
                     this.PefreshCommentLike(item);
@@ -982,7 +983,7 @@ export class SocialPostsComponent implements OnInit {
     //IsLoadedSocial
     StopBusyIndicator() {
         if (this.IsLoadedSocial && this.IsLoadedLoggedContact && this.IsLoadedSocialContact) {
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
             this.ShowBusyIndicator = false;
             this.MessagePost = "What are you working on?";
             this.HeightInPutPost = "30px";
@@ -1307,13 +1308,13 @@ export class PostViewModelData {
        entityPM.ObjectTableId = parentPos.ViewMode.postFilters.ObjectTableId;
        entityPM.EntityId = parentPos.ViewMode.postFilters.EntityId;
        parentPos.ViewMode.IsChange = true;
-       //SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+       //this.CurrentSession.StartBusyIndicator("Saving...");
        this.ViewMode.BusyIndicatorText = "Saving...";
        this.ViewMode.ShowBusyIndicator = true;
      //  parentPos.EntityPM.AddPostComment(entityPM);
        parentPos.ViewMode.postPMService.insert(entityPM).subscribe(res => {
            var pmResponse: ServiceResponse = res;
-           //SessionLocator.CurrentSession.StopBusyIndicator();
+           //this.CurrentSession.StopBusyIndicator();
            this.ViewMode.ShowBusyIndicator = false;
            if (!pmResponse.HasError && pmResponse.Result) {
                parentPos.EntityPM.PostComments.push(entityPM);

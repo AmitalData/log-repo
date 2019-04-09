@@ -38,6 +38,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
     @Output() SearchFieldchangeevent = new EventEmitter();
     public IsNewEntityButtonVisible: boolean = false;
     public NewEntityButtonLabel: string = "New";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -307,7 +308,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
 
     //Commands 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow(); 
+        this.CurrentSession.CloseCurrentWindow(); 
     }
 
     TextChanged(searchtext) {
@@ -329,7 +330,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
 
     AddNewEntityClicked() {
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-            SessionLocator.CurrentSession.CloseCurrentWindow(); 
+            this.CurrentSession.CloseCurrentWindow(); 
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
@@ -337,7 +338,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
             logWindow.Title = this.NewEntityButtonLabel;
 
             logWindow.WindowClosed.subscribe((event: any) => {
-                SessionLocator.CurrentSession.FireEvent("NewAirlineShippingLineClosed");
+                this.CurrentSession.FireEvent("NewAirlineShippingLineClosed");
                 CachedDataManager.RefreshTableData(this.ObjectTableName, true);
             });
 

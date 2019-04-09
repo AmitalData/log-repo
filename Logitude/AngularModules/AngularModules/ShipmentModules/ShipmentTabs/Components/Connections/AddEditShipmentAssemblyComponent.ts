@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentAssemblyPM} from '../../../../Shipment/EntityPMs/ShipmentAssemblyPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -23,6 +23,7 @@ export class AddEditShipmentAssemblyComponent extends BaseComponent {
     public IsNew: boolean;
     public ValidationErrorsList: string[] = [];
     private myCardListService: CardListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -123,7 +124,7 @@ export class AddEditShipmentAssemblyComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -144,7 +145,7 @@ export class AddEditShipmentAssemblyComponent extends BaseComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
     }
 

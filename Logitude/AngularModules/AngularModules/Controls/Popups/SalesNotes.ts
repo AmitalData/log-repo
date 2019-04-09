@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, OnDestroy} from '@angular/core';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {EntityArgs} from '../../Infrastructure/DataContracts/EntityArgs';
@@ -31,8 +31,9 @@ export class SalesNotes implements OnInit, OnDestroy {
     public NotesList: SalesNoteItem[] = [];
     @Output() OnAddButtonClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() OnEditButtonClicked: EventEmitter<CustomerSalesNotePM> = new EventEmitter<CustomerSalesNotePM>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("SalesNotes");
+        var idIndex = this.CurrentSession.GetNewId("SalesNotes");
         this.ComponentId = "SalesNotes_" + idIndex;
         this.ComponentButtonId = "SalesNotesButton_" + idIndex;
         this.ComponentContentId = "SalesNotesContent_" + idIndex;
@@ -49,7 +50,7 @@ export class SalesNotes implements OnInit, OnDestroy {
     Listen() {
         if (this.entityArgs.EditComponent) {
             if (!this.SalesNotesChangedEvent) {
-                this.SalesNotesChangedEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+                this.SalesNotesChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                     switch (s) {
                         case "CustomerSalesNotesChanged":
                             {

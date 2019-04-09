@@ -27,6 +27,8 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
     public entityArgs: EntityArgs
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -369,7 +371,7 @@ export class QuoteMenuButtonsHandler {
                     var result: boolean = resp.Result;
                     if (result) {
                         errors.push("Cannot change quote type when connected to shipments");
-                        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors
+                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors
                     }
 
                     if (errors.length == 0) {

@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool, DateTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -21,6 +21,7 @@ export class OverviewTabComponent implements OnDestroy {
     public ContainersList: Container[] = [];
     public FollowupsList: FollowupClass[] = [];
     public IsVisibile: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public entityResourceService: EntityResourceService) {
         entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response=> {
            
@@ -48,7 +49,7 @@ export class OverviewTabComponent implements OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "FollowupsChanged") {
                     this.BuildFollowups();
                 }
@@ -336,9 +337,10 @@ class FollowupClass {
     public ListItemHeight: number = 40;
     public TooltipHeight: number = 130;
     public TooltipWidth: number = 270;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityPM: ShipmentFollowUpPM) {
         this.EntityPM = entityPM;
-        var idIndex = SessionLocator.CurrentSession.GetNewId("FollowupItem");
+        var idIndex = this.CurrentSession.GetNewId("FollowupItem");
         this.ItemId = "FollowupItem_" + idIndex;
         this.ItemTooltipId = "FollowupItemTooltip_" + idIndex;
 

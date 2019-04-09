@@ -1,4 +1,4 @@
-﻿/// <reference path="../../tools.ts" />
+/// <reference path="../../tools.ts" />
 declare var Stimulsoft: any;
 declare var jQuery: any;
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
@@ -42,7 +42,7 @@ export class StimulsoftDesignerComponent implements OnInit {
     //DocumenttypeCode: string;
     //DocumenttypecopyId: string;
 
-   
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplatePMExtendedService:DocumentTypeTemplatePMExtendedService) {
         Stimulsoft.Base.StiLicense.key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHmx0GX2YaQY2fO4QUxViJm3MQEqlPzuUWXG/MVALbDozqE5ju" +
             "b1Lxxc9dG4qgTwOniU2gMMveQV+dJH1XkfRD1MNXb7qftfSxhKy/sz48Bbjuk1L3hTtOWwLJkGU/7cdsKzMCby7tGL" +
@@ -155,7 +155,7 @@ export class StimulsoftDesignerComponent implements OnInit {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.CurrentWindow.Close("");
     }
 
     SaveButtonClicked() {

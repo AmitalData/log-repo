@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.DataContract
         public string CreatedByUser { get; set; }
 
         public string OppositGLAccount { get; set; }
-
+        public string LedgerTransactionId { get; set; }
 
     }
 

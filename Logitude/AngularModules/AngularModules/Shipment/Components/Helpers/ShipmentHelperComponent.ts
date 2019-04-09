@@ -26,6 +26,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsFollowupsVisible: boolean = false;
     public IsAnalyzeChampXMLButtonVisible: boolean = false;
     _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
 
         //this.cd.detach();
@@ -135,7 +136,7 @@ export class ShipmentHelperComponent implements OnDestroy {
         logWindow.WindowArgs = myAWBWizardArgs;
         logWindow.Show('./ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardComponent');
         logWindow.WindowClosed.subscribe(s => {
-            SessionLocator.CurrentSession.FireEvent("AWBWizardClosed");
+            this.CurrentSession.FireEvent("AWBWizardClosed");
         });
     }
     ngOnDestroy() {
@@ -275,7 +276,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             logWindow.WindowArgs = myAWBWizardArgs;
             logWindow.Show('./ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardComponent');
             logWindow.WindowClosed.subscribe(s => {
-                SessionLocator.CurrentSession.FireEvent("AWBWizardClosed");
+                this.CurrentSession.FireEvent("AWBWizardClosed");
             });
         }
 
@@ -291,7 +292,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             logWindow.WindowArgs = myFSRWizardArgs;
             logWindow.Show('./ShipmentModules/ShipmentAWB/Components/FSRWizard/FSRWizardComponent');
             logWindow.WindowClosed.subscribe(s => {
-                SessionLocator.CurrentSession.FireEvent("AWBWizardClosed");
+                this.CurrentSession.FireEvent("AWBWizardClosed");
             });
         }
     }
@@ -398,7 +399,7 @@ export class ShipmentHelperComponent implements OnDestroy {
 
         if (this.EntityPM.IsDirty) {
             this.isSharingDocumentRequested = true;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
         else {
             this.StartSharingDocument();
@@ -432,7 +433,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     ShareManifestClicked() {
         if (this.EntityPM.IsDirty) {
             this.isShareManifestRequested = true;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
         else {
             this.StartShareManifest();
@@ -463,7 +464,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     UpdateSharedAgentClicked() {
         if (this.EntityPM.IsDirty) {
             this.isUpdateSharedAgentRequested = true;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
         else {
             this.StartShareManifest(true);

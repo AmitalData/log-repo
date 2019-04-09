@@ -28,6 +28,7 @@ export class SupplierInvoiceSelectionComponent {
     supplierInvoiceItemList: SupplierInvoiceItemList[];
     entityResourceService: EntityResourceService = new EntityResourceService();
     supplierInvoiceExtendedListService: SupplierInvoiceExtendedListService = new SupplierInvoiceExtendedListService
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.SupplierInvoicesList = new ObservableCollection([SupplierInvoiceLine]);
         this.InvoiceItemsList = new ObservableCollection([]);
@@ -174,13 +175,13 @@ export class SupplierInvoiceSelectionComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
     OkButtonClicked() {
         this.parent.SelectedInvoiceItems = this.SelectedInvoiceItems;
         this.parent.SelectedInvoices = this.SelectedInvoices;
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        this.CurrentSession.CloseCurrentWindowEmit("ok");
     }
 
     SelectedItem: SupplierInvoiceItemLine;

@@ -1,4 +1,4 @@
-﻿import {Component,ViewChildren,OnInit} from '@angular/core';
+import {Component,ViewChildren,OnInit} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
@@ -35,6 +35,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     LogoSmallFileHtmlId: string = Guid.NewRandomString();
 
     @ViewChildren(LocationDirective) public AllLocations: LocationDirective;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.EntityPM = new TenantManagmentPrivateLabelsPM();          
@@ -296,7 +297,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -316,7 +317,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
                     if (response) {
                         if (!response.HasError) {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
                         else {
                             this.ValidationErrorsList = response.ErrorsArray;
@@ -329,7 +330,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
                     if (response) {
                         if (!response.HasError) {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
                         else {
                             this.ValidationErrorsList = response.ErrorsArray;

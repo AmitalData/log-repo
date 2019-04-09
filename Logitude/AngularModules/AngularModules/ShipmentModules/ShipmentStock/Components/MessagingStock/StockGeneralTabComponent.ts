@@ -19,6 +19,7 @@ export class StockGeneralTabComponent extends BaseComponent {
     public DataContext = this;
     public ItemsSource: MessagingStockUsageHistoryPM[];
     public StockTypesList: CodeNameClass[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -50,8 +51,8 @@ export class StockGeneralTabComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.SetUIProperties();
                 }
@@ -144,7 +145,7 @@ export class StockGeneralTabComponent extends BaseComponent {
 
     private myService: MessagingStockPMService;
     RefreshButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myService == null) {
             this.myService = new MessagingStockPMService();
@@ -152,7 +153,7 @@ export class StockGeneralTabComponent extends BaseComponent {
 
         this.myService.get(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse != null) {
                 if (!myResponse.HasError) {

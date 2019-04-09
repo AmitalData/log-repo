@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
@@ -14,6 +14,7 @@ export class ExportFileComponent {
     public IsExportingInProgress: boolean = true;
     public IsExportingSuccess: boolean = false;
     public IsExportingError: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         
     }
@@ -55,6 +56,6 @@ export class ExportFileComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

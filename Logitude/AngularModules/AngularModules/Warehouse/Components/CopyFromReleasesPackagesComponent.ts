@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -38,6 +38,7 @@ export class CopyFromReleasesPackagesComponent implements OnInit {
     ShipmentPM: ShipmentPM;
     ShipmentDeliveryPM: ShipmentDeliveryPM;
     FatherComponent: DeliveryPackagesTabComponent;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _warehouseReleaseListExtendedService: WarehouseReleaseListExtendedService, public _warehouseReleasePackagePMExtendedService: WarehouseReleasePackagePMExtendedService) {
         this.WarehouseReleaseLists = [];
     }
@@ -61,12 +62,12 @@ export class CopyFromReleasesPackagesComponent implements OnInit {
 
 
     LoadWarehouseReleasesPackages() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.WarehouseReleaseLists = [];
         if (this.ShipmentPM != null) {
             this._warehouseReleaseListExtendedService.getWarehouseReleaseListsByShipmentId(this.ShipmentPM.Id, SessionLocator.Tenant).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                // IsNoReleasePackage
                 if (!pmResponse.HasError) {
 
@@ -90,7 +91,7 @@ export class CopyFromReleasesPackagesComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -104,7 +105,7 @@ export class CopyFromReleasesPackagesComponent implements OnInit {
         confirmWindow.Show("Please confirm copying packages from " + (item.ReleaseNumberLabel + item.ReleaseNumberValue));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Copy release Package...");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Copy release Package...");
 
                 if (!item.IsLoad) {
                     this._warehouseReleasePackagePMExtendedService.GetWarehouseReleasePackagePMListsByWarehouseReleaseId(item.Id, SessionLocator.Tenant).subscribe(res => {
@@ -114,7 +115,7 @@ export class CopyFromReleasesPackagesComponent implements OnInit {
                             item.WarehouseReleasePackage = pmResponse.Result;
                             item.IsLoad = true;
                             this.CopyReleasePackageToShipmentDeliveryPM(item);
-                        } else SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        } else this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     });
 
                 } else {
@@ -129,7 +130,7 @@ export class CopyFromReleasesPackagesComponent implements OnInit {
 
 
     CopyReleasePackageToShipmentDeliveryPM(item: WarehouseReleaseClass) {
-        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
         if (item != null) {
 
@@ -163,7 +164,7 @@ export class CopyFromReleasesPackagesComponent implements OnInit {
     ViewEntity(item: WarehouseReleaseClass) {
         var myBackButtonLabel = "Warehouse Releases" ;
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: item.Id, ObjectTableName: "WarehouseRelease", BackButtonLabel: myBackButtonLabel });

@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, ChangeDetectorRef} from '@angular/core';
 import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
@@ -38,6 +38,7 @@ export class InviteeCheckBoxComponent extends BaseComponent {
     }
 
     Key: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef, private _entityListService: EntityListService) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -87,7 +88,7 @@ export class InviteeCheckBoxComponent extends BaseComponent {
         if (this.selectedItem != null && this.isCheckedFlag && this.isClickedFlag) {
             var select = new InviteeParameterInput(this.fieldName, this.selectedItem.Email, this.selectedItem.Id, this.selectedItem.EnglishName, this.IsChecked);
             this.Destroyed();
-            SessionLocator.CurrentSession.SessionEvent.emit({ Name: "InviteeCheckBoxComponent", select: select });
+            this.CurrentSession.SessionEvent.emit({ Name: "InviteeCheckBoxComponent", select: select });
             this.selectedItem = null;
             this.isCheckedFlag = false;
             this.isClickedFlag = false;

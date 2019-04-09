@@ -65,7 +65,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
     _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
     _CardListService: CardListService = new CardListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -87,7 +87,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             this.isUsedOutside = true;
         }
 
-        this.chartId = "CustomerOverview_" + SessionLocator.CurrentSession.GetChartId();
+        this.chartId = "CustomerOverview_" + this.CurrentSession.GetChartId();
         this.Listen();
     }
 
@@ -95,21 +95,21 @@ export class GLAccountOverviewComponent extends BaseComponent {
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadAllData();
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                         this.LoadAllData();
                     }
@@ -119,9 +119,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
             //
             if (this.TabSelectedEvent == null) {
-                this.TabSelectedEvent = SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                this.TabSelectedEvent = this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (tabCode == "GAOV") {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadAllData();
                     }
                 });
@@ -152,9 +152,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
     GetDefaultValues() {
 
         // Get GLAccountMoreData
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe(myResult => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             console.log("_GLAccountMoreDataListService.getSingle", myResult);
 
             var mm: ServiceResponse = myResult;
@@ -240,7 +240,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         }
         else
         {
-            SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("GATR");
+            this.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("GATR");
         }
 
     }
@@ -249,11 +249,11 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     ReconcileButtonClicked()
     {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
         this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.AccountPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
@@ -289,19 +289,19 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     GetNonReconciledTransactionsCount() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
 
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
 
-                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(($event) => {
+                this.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(($event) => {
                     if ($event == true) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                 });
             }
@@ -385,7 +385,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     ItemEditButton(_noteList: AccountingNoteList){
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this._AccountingNotePMService.get(_noteList.Id)
             .subscribe(myResult => {
@@ -394,12 +394,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 if (!mm.HasError) {
                     var _notePM = mm.Result;
                     this.OpenAccountingNote(_notePM);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
 
                 }
                 else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
 
@@ -412,14 +412,14 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var res = mm.Result;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.GetAccountingNotes();
 
                 }
                 else {
                     var msg = new MessageWindow();
                     msg.Show(mm.ErrorsArray[0]);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
     }
@@ -553,7 +553,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -566,7 +566,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
@@ -726,10 +726,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
         args.IsCustomer = true;
         args.GroupByDate = this.DateFilterSelectedValue == "filter_Accounting" ? "AccountingDate" : "DueDate";
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._GLAccountExtendedListService.GetAgingReport(args).subscribe((myResponse: ServiceResponse) => {
             console.log("GetAgingReport: ", periods);
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!myResponse.HasError) {
                 var res = myResponse.Result;

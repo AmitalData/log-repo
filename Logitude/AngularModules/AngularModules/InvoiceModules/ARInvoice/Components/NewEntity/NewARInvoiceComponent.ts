@@ -47,6 +47,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -676,7 +677,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -698,12 +699,12 @@ export class NewARInvoiceComponent extends BaseComponent {
                         this.VatTypePercentagesList = myResponse2.Result;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -800,7 +801,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }    
     OkButtonClicked() {
         var errors: string[] = [];
@@ -881,11 +882,11 @@ export class NewARInvoiceComponent extends BaseComponent {
     }
 
     ValidateFullAccounting() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Checking ...");
+        this.CurrentSession.StartBusyIndicator("Checking ...");
 
         this.myInvoiceDomainService.ValidateARInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.BillToId, this.EntityPM.InvoiceDate).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse != null) {
 
@@ -944,11 +945,11 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
 
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this.myInvoiceDomainService.GetCustomerCreditLimitActualAmount(this.BillToId).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     var errors: string[] = [];
@@ -1027,7 +1028,7 @@ export class NewARInvoiceComponent extends BaseComponent {
             this.IsConstituentInvoice = false;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.InitializeComponent();   
     }
@@ -1186,7 +1187,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
         this.BuildTotalVATs();
         this.ComputeTotals();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
     SetInvoiceLineVatType(list: ChargesTypeList, myReceivable: ShipmentReceivablePM, invoiceLine: ARInvoiceLinePM) {

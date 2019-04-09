@@ -118,6 +118,7 @@ namespace WebFreight.Web.DataProviders
 
         public DateTime? ATD_DateTime { get; set; }
         public DateTime? ATA_DateTime { get; set; }
+        public string BranchName { get; set; }
     }
 
     public class ProfitDetailsClass

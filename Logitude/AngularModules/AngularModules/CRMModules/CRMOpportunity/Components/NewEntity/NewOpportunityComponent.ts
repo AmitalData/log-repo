@@ -1,4 +1,4 @@
-﻿
+
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -43,7 +43,7 @@ export class NewOpportunityComponent extends BaseComponent   {
     public IsNew: boolean = true;
     public get Subject() { return this.EntityPM.Subject; }
     public set Subject(value: string) { if (this.EntityPM.Subject != value) this.EntityPM.Subject = value; }
-
+    private CurrentSession = SessionLocator.SelectedSession;
     public get OwnerId() {
         if (this.EntityPM.OwnerId != null)
             return this.EntityPM.OwnerId;   
@@ -74,23 +74,23 @@ export class NewOpportunityComponent extends BaseComponent   {
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         this.myService = new OpportunityPMService();
         this.myService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
+                this.CurrentSession.StopBusyIndicator();
 
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

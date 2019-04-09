@@ -33,6 +33,7 @@ using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.EntityMapping;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityMapping;
+using Simplog.Data.InvoiceModel;
 
 namespace Logitude.DatabaseMigration.LogitudeModel
 {
@@ -889,7 +890,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
-
+        public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
 
 
 
@@ -1811,14 +1812,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<QuickbooksSyncRequestTicket> QuickbooksSyncRequestTickets { get; set; }
         public IDbSet<CardExternalCodeByCurrency> CardExternalCodeByCurrencies { get; set; }
         public IDbSet<ARInvoiceLineAction> ARInvoiceLineActions { get; set; }
-
-
         public IDbSet<SATInterface> SATInterfaces { get; set; }
         public IDbSet<SATInterfaceSetting> SATInterfaceSettings { get; set; }
         public IDbSet<SATTransferStatus> SATTransferStatus { get; set; }
         public IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; set; }
-
-
+        public IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus { get; set; }
+        public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
+        public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
         #endregion
 
         #region Quotes Context
@@ -4409,7 +4409,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
             modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
-
+            modelBuilder.Configurations.Add(new ARInvoiceStockMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStockLineMap());
 
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -4427,6 +4428,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new ARInvoiceLineActionMap());
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
@@ -4802,7 +4804,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             modelBuilder.Configurations.Add(new SchedulerLogsMap());
-
+            modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
 
 
             base.OnModelCreating(modelBuilder);

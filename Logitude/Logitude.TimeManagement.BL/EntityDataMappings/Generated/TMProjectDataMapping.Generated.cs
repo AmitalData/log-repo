@@ -39,7 +39,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         BudgetId, 
 	         CategoryId, 
 	         IsProrated, 
-	         ExternalProjectNumber,
+	         ExternalProjectNumber, 
+	         ExcludeFromProrating,
 	      }
 
 
@@ -66,7 +67,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         CategoryId, 
 	         IsProrated, 
 	         ExternalProjectNumber, 
-	         CategoryName,
+	         CategoryName, 
+	         ExcludeFromProrating,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -158,6 +160,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalProjectNumber))
             {
 				entityPOCO.ExternalProjectNumber = entityPM.ExternalProjectNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromProrating))
+            {
+				entityPOCO.ExcludeFromProrating = entityPM.ExcludeFromProrating;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -256,6 +263,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 					entityPM.ExternalProjectNumber = entityPOCO.ExternalProjectNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExcludeFromProrating))
+            {
+					entityPM.ExcludeFromProrating = entityPOCO.ExcludeFromProrating;
+            }
+
 		}
 
 		public void PMToOldPM(TMProjectPM entityPM, TMProjectPM oldEntityPM)
@@ -345,6 +357,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalProjectNumber))
             {
                 oldEntityPM.ExternalProjectNumber = entityPM.ExternalProjectNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromProrating))
+            {
+                oldEntityPM.ExcludeFromProrating = entityPM.ExcludeFromProrating;
             }
 			
 		}

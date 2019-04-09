@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList}  from '@angular/core';
+import {Component, ViewChildren, QueryList}  from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -36,7 +36,7 @@ export class ClientEditComponent extends BaseComponent{
    responseData: INF_MSG_GenericResponseData;
    clientMessageService: ClientMessagesService = new ClientMessagesService();
    public ValidationErrorsList: string[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
    constructor(public entityArgs: EntityArgs) {
        super();
 
@@ -245,7 +245,7 @@ export class ClientEditComponent extends BaseComponent{
         if (this.isNewClient) {
             this.clientPMService.insert(this.CurrentEntity).subscribe(response => {
                 var result = response.Result;
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
 
             });
         }
@@ -253,8 +253,8 @@ export class ClientEditComponent extends BaseComponent{
         else {
             this.clientPMService.update(this.CurrentEntity).subscribe(response => {
                 var result = response.Result;
-               // SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+               // this.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CloseCurrentWindow();
 
             });
 
@@ -289,7 +289,7 @@ export class ClientEditComponent extends BaseComponent{
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicator("");
+            this.CurrentSession.StartBusyIndicator("");
 
             var currRequestParams = new CreateClientRequestParams();
             currRequestParams.LoggingEnabled = true;
@@ -428,7 +428,7 @@ export class ClientEditComponent extends BaseComponent{
 
     CancelButtonClicked() {
         this.CurrentEntity.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

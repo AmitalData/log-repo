@@ -58,6 +58,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     public IsProrateReceivablesVisible: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     private myDomainService: ShipmentDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -111,7 +112,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "ReceivablesGenerated") {
                     this.BuildItemsSource();
                     this.ComputeShipmentFields();
@@ -734,7 +735,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                 Generator.GeneratePayablesFromQuote(this.BaseQuote);
                 Generator.GenerateReceivablesFromQuote(this.BaseQuote);
                 this.OnEntityDataGenerated();
-                SessionLocator.CurrentSession.FireEvent("PayablesGenerated");
+                this.CurrentSession.FireEvent("PayablesGenerated");
                 break;
             }
 
@@ -766,7 +767,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                         if (s) {
                             this.BaseQuote = comp.BaseQuote;
                             this.OnEntityDataGenerated();
-                            SessionLocator.CurrentSession.FireEvent("PayablesGenerated");
+                            this.CurrentSession.FireEvent("PayablesGenerated");
                         }
                     });
                 });
@@ -796,7 +797,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                             if (!myResponse.HasError) {
                                 this.OriginShipment = myResponse.Result;
                                 this.entityArgs.OriginEntity = myResponse.Result;
-                                SessionLocator.CurrentSession.FireEvent("OriginShipmentLoaded");
+                                this.CurrentSession.FireEvent("OriginShipmentLoaded");
 
                                 var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
                                 Generator.GenerateReceivablesFromOriginShipment(this.OriginShipment);
@@ -1045,7 +1046,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         if (this.SavingRequestParam) {
             var entityId = this.SavingRequestParam;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'ARInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
@@ -1076,7 +1077,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         if (this.SavingRequestParam) {
             var entityId = this.SavingRequestParam;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'Quote', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
@@ -1148,7 +1149,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityPM: comp.EntityPM, ObjectTableName: 'ARInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });

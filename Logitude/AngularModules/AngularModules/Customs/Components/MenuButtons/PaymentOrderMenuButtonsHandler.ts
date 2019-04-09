@@ -25,24 +25,24 @@ export class PaymentOrderMenuButtonsHandler {
     isButtonClicked: boolean = false;
     MenuButtonCode: string = null;
     public EntityPM: PaymentOrderPM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
     }
 
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
         }
@@ -50,7 +50,7 @@ export class PaymentOrderMenuButtonsHandler {
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
-            if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.CurrentSession.CurrentEditComponent != null) {
 
                 var table = window.ObjectTables.filter(d => d.Name === 'Shipment')[0];
 
@@ -156,11 +156,11 @@ export class PaymentOrderMenuButtonsHandler {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.EntityPM.IsClosed = true;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
                     (isSave) => {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM(); let window = new MessageWindow();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM(); let window = new MessageWindow();
                     });
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
         });
     }
@@ -172,11 +172,11 @@ export class PaymentOrderMenuButtonsHandler {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.EntityPM.IsClosed = false;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
                     (isSave) => {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM(); let window = new MessageWindow();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM(); let window = new MessageWindow();
                     });
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
         });
     }

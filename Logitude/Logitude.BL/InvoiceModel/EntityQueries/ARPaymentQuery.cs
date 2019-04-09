@@ -136,8 +136,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         void GetGLAccountFields(ARPaymentPM paymentPM)
         {
             GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
-            paymentPM.GLAccountId = glaccount.Id;
-            paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+            if (glaccount != null)
+            {
+                paymentPM.GLAccountId = glaccount.Id;
+                paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+            }
         }
 
         private GLAccountPM getGLAccount(string billToId, int tenant)
@@ -165,6 +168,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return payment;
         }
 
+        public bool CheckARPaymentNumber(string number,string id, int tenant)
+        {
+            bool exist = (from a in repository.context.ARPayments.Include("LocalCurrency").Include("Status")
+                                 where a.PaymentNo == number &&a.Id != id && a.Tenant == tenant
+                                 select a).Any();
+
+            return exist;
+        }
 
 
         public ARPaymentPM GetSinglePaymentByPaymentNumber_00(string paymentNo, int tenant)

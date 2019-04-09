@@ -24,7 +24,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class JournalController : ApiController
     {
-        public HttpResponseMessage GetSingleJournal(string id, string number)
+        public HttpResponseMessage GetSingleJournal(string id, string number, string externalNo, string externalSystem)
         {
             try
             {
@@ -45,7 +45,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     Result = Service.GetJournalByNumber(number, tenant);
                 }
-
+               if((externalNo != null && externalSystem==null) || externalNo== null && externalSystem != null)
+                {
+                    throw new Exception("Both ExternalEntityCode And ExternalEnittyReference are required");
+                }
+                if(externalNo != null && externalSystem != null)
+                {
+                    Result = Service.GetSingleJournalByExternalNoAndExternalSystem(externalNo, externalSystem, tenant);
+                }
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }

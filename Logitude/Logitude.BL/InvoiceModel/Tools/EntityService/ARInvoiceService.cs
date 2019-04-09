@@ -255,7 +255,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARInvoiceHelper helper = new ARInvoiceHelper();
             helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity,this.objectContext,this.myCommonContext,isVoidingInvoice);
-
+         
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
@@ -264,6 +264,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 shipmentReceivableRepository.SubmitChanges();
             }
+
+            this.ARInvoiceStockNumber(entityPM);
 
             this.GetForeignFields();
             this.RunStoredProcedures();
@@ -449,7 +451,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
-                
+                this.ARInvoiceStockNumber(entityPM);
+
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
@@ -477,6 +480,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.BuildSearchFields();
+
+               
             }
 
             invoiceRepository.Update(invoice);
@@ -502,6 +507,71 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.OnApprovingInvoice();
         }
 
+        private void ARInvoiceStockNumber(ARInvoicePM aRInvoice)
+        {
+            if(!this.isApprovingInvoice && !this.isVoidingInvoice)
+            {
+                ARInvoiceStockLineRepository aRInvoiceStockLineRepository = new ARInvoiceStockLineRepository(aRInvoice.Tenant);
+                ARInvoiceStockQuery aRInvoiceStockQuery = new ARInvoiceStockQuery(aRInvoice.Tenant);
+                IInvoiceContext context = InvoiceContext.GetContext(tenant); ;
+                ARInvoiceStockService aRInvoiceStockService = new ARInvoiceStockService(context, aRInvoice.Tenant);
+
+                if (this.isNewEntity)
+                {
+                    if(aRInvoice.ARInvoiceStockId != null)
+                    {
+                        ARInvoiceStockLine line = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
+                        if(line != null)
+                        {
+                            line.IsUsed = true;
+                            line.ARInvoiceId = aRInvoice.Id;
+                            line.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            line.UpdatedByUserId = this.loggedContact.Id;
+                            line.ShipmentNumber = aRInvoice.MainEntityReference;
+                            aRInvoiceStockLineRepository.Update(line);
+                            aRInvoiceStockLineRepository.SubmitChanges();
+                            ARInvoiceStockPM stock = aRInvoiceStockQuery.GetSinglePM(line.ARInvoiceStockId, aRInvoice.Tenant);
+                            aRInvoiceStockService.Update(stock,false);
+                        }
+                    }
+                }
+                else
+                {
+                    if (aRInvoice.ARInvoiceStockId != this.invoice.ARInvoiceStockId)
+                    {
+                        ARInvoiceStockLine line = new ARInvoiceStockLine();
+                        ARInvoiceStockPM stock = new ARInvoiceStockPM();
+                        if (aRInvoice.ARInvoiceStockId == null)
+                        {
+                            line = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine( this.invoice.ARInvoiceStockId, aRInvoice.Tenant);
+                            line.IsUsed = false;
+                            line.ARInvoiceId = null;
+                            line.ShipmentNumber = null;
+                            line.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            line.UpdatedByUserId = this.loggedContact.Id;
+                            aRInvoiceStockLineRepository.Update(line);
+                            aRInvoiceStockLineRepository.SubmitChanges();
+                            stock = aRInvoiceStockQuery.GetSinglePM(line.ARInvoiceStockId, aRInvoice.Tenant);
+                        }
+                        else
+                        {
+                            line = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
+                            line.IsUsed = true;
+                            line.ARInvoiceId = aRInvoice.Id;
+                            line.ShipmentNumber = aRInvoice.MainEntityReference;
+                            line.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            line.UpdatedByUserId = this.loggedContact.Id;
+                            aRInvoiceStockLineRepository.Update(line);
+                            aRInvoiceStockLineRepository.SubmitChanges();
+                            stock = aRInvoiceStockQuery.GetSinglePM(line.ARInvoiceStockId, aRInvoice.Tenant);
+                        }
+                       
+                        aRInvoiceStockService.Update(stock, false);
+                    }
+                }
+            }
+        }
+       
         private void BuildFlatfile(ARInvoicePM ARInvoice)
         {
 

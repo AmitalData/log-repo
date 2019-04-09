@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {CustomerPM} from '../../../../../Common/EntityPMs/CustomerPM';
 import {ProductTypeList} from '../../../../../Common/EntityLists/ProductTypeList';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
@@ -19,6 +19,7 @@ export class CustomerForwarderByProductSplitComponent extends BaseComponent {
     public ObjectTableName: string = "Customer";
     public ProductTypes: ProductTypeList[] = [];
     public ItemsSource: ObservableCollection;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -38,7 +39,7 @@ export class CustomerForwarderByProductSplitComponent extends BaseComponent {
     }
     CencelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var myPipe = new GroupByPipe();
@@ -55,7 +56,7 @@ export class CustomerForwarderByProductSplitComponent extends BaseComponent {
             this.EntityPM.ForwarderName = null;
         }
 
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     private myCloner: Cloner;

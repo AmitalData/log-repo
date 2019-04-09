@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
 import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
@@ -26,7 +26,7 @@ export class TicketClosureComponent extends BaseComponent {
     public DataContext: TicketClosureComponent = this;
     public StageButtonCode: string;
     public IsOkClosed = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -107,7 +107,7 @@ export class TicketClosureComponent extends BaseComponent {
     CancelButtonClicked() {
         this.RejectChanges();
         this.IsOkClosed = false;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -135,7 +135,7 @@ export class TicketClosureComponent extends BaseComponent {
                         this.EntityPM.StageName = stage.Name;
                     }
                     this.IsOkClosed = true;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
                 else {
                     this.ValidationErrorsList = resp.ErrorsArray;

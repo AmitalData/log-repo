@@ -91,6 +91,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //return pms;
         }
 
+ 
+
+        public IQueryable<CardGLAccountDataView> GetQAllVendorGLAccountCardsHavingDeduction(int tenant)
+        {
+            var pocoGLAccountCard = this.repository.GetQAllVendorGLAccountCardsHavingDeduction(tenant);
+            return pocoGLAccountCard;
+        }
+
+
+
         public List<int> GetTenantByNextDueDate(DateTime today, List<string> accountTypeCodeList)
         {
             return this.repository.GetTenantByNextDueDate(today, accountTypeCodeList);
@@ -595,6 +605,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                };
             return Accounts;
         }
+
+        internal object GetSinglePM(string billToGLAccountId)
+        {
+            throw new NotImplementedException();
+        }
+
         public static TaxDeductionReportData taxDeduction;
         public TaxDeductionReportData GetTaxDeductionReportData(int? reportYear, int tenant)
         {

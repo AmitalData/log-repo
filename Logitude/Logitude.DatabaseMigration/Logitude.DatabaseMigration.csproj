@@ -810,6 +810,62 @@
     <Compile Include="Migrations\201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.Designer.cs">
       <DependentUpon>201903191307309_OperationalClosedByUserId_Shipment_Khalid_Add_Field.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904020925182_AddExcludeFromProratingToTMProject_Maheera.cs" />
+    <Compile Include="Migrations\201904020925182_AddExcludeFromProratingToTMProject_Maheera.Designer.cs">
+      <DependentUpon>201904020925182_AddExcludeFromProratingToTMProject_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903280733289_AddARInvoiceStocksStatusTable_Samar.cs" />
+    <Compile Include="Migrations\201903280733289_AddARInvoiceStocksStatusTable_Samar.Designer.cs">
+      <DependentUpon>201903280733289_AddARInvoiceStocksStatusTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903280900186_AddARInvoiceStockTable_Samar.cs" />
+    <Compile Include="Migrations\201903280900186_AddARInvoiceStockTable_Samar.Designer.cs">
+      <DependentUpon>201903280900186_AddARInvoiceStockTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903281015382_AddARInvoiceStockLineTable_Samar.cs" />
+    <Compile Include="Migrations\201903281015382_AddARInvoiceStockLineTable_Samar.Designer.cs">
+      <DependentUpon>201903281015382_AddARInvoiceStockLineTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903310718253_AddManageStocksParameterToAccountingSetting_Samar.cs" />
+    <Compile Include="Migrations\201903310718253_AddManageStocksParameterToAccountingSetting_Samar.Designer.cs">
+      <DependentUpon>201903310718253_AddManageStocksParameterToAccountingSetting_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903310906076_AddNotesFieldToARInvoiceStock_Samar.cs" />
+    <Compile Include="Migrations\201903310906076_AddNotesFieldToARInvoiceStock_Samar.Designer.cs">
+      <DependentUpon>201903310906076_AddNotesFieldToARInvoiceStock_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904070545303_SetInvoiceIdNotRequiredOnStockLineLevel_Samar.cs" />
+    <Compile Include="Migrations\201904070545303_SetInvoiceIdNotRequiredOnStockLineLevel_Samar.Designer.cs">
+      <DependentUpon>201904070545303_SetInvoiceIdNotRequiredOnStockLineLevel_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904071048425_DropShowNewReleaseToolTipFromUser_Samar.cs" />
+    <Compile Include="Migrations\201904071048425_DropShowNewReleaseToolTipFromUser_Samar.Designer.cs">
+      <DependentUpon>201904071048425_DropShowNewReleaseToolTipFromUser_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904080540535_AddUserReleaseNotesTable_Samar.cs" />
+    <Compile Include="Migrations\201904080540535_AddUserReleaseNotesTable_Samar.Designer.cs">
+      <DependentUpon>201904080540535_AddUserReleaseNotesTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.cs" />
+    <Compile Include="Migrations\201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.Designer.cs">
+      <DependentUpon>201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904071001330_NullableRepeateInMunites_Rabaia.cs" />
+    <Compile Include="Migrations\201904071001330_NullableRepeateInMunites_Rabaia.Designer.cs">
+      <DependentUpon>201904071001330_NullableRepeateInMunites_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.cs" />
+    <Compile Include="Migrations\201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.Designer.cs">
+      <DependentUpon>201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.cs" />
+    <Compile Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.Designer.cs">
+      <DependentUpon>201904081010543_ARPaymentIsExternalEntityMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs" />
+    <Compile Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.Designer.cs">
+      <DependentUpon>201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1361,6 +1417,48 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903241237510_AddCommodityNumberToWarehouseEntry_Samar.resx">
       <DependentUpon>201903241237510_AddCommodityNumberToWarehouseEntry_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903280733289_AddARInvoiceStocksStatusTable_Samar.resx">
+      <DependentUpon>201903280733289_AddARInvoiceStocksStatusTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903280900186_AddARInvoiceStockTable_Samar.resx">
+      <DependentUpon>201903280900186_AddARInvoiceStockTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281015382_AddARInvoiceStockLineTable_Samar.resx">
+      <DependentUpon>201903281015382_AddARInvoiceStockLineTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903310718253_AddManageStocksParameterToAccountingSetting_Samar.resx">
+      <DependentUpon>201903310718253_AddManageStocksParameterToAccountingSetting_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903310906076_AddNotesFieldToARInvoiceStock_Samar.resx">
+      <DependentUpon>201903310906076_AddNotesFieldToARInvoiceStock_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.resx">
+      <DependentUpon>201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904020925182_AddExcludeFromProratingToTMProject_Maheera.resx">
+      <DependentUpon>201904020925182_AddExcludeFromProratingToTMProject_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904070545303_SetInvoiceIdNotRequiredOnStockLineLevel_Samar.resx">
+      <DependentUpon>201904070545303_SetInvoiceIdNotRequiredOnStockLineLevel_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.resx">
+      <DependentUpon>201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904071001330_NullableRepeateInMunites_Rabaia.resx">
+      <DependentUpon>201904071001330_NullableRepeateInMunites_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904071048425_DropShowNewReleaseToolTipFromUser_Samar.resx">
+      <DependentUpon>201904071048425_DropShowNewReleaseToolTipFromUser_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904080540535_AddUserReleaseNotesTable_Samar.resx">
+      <DependentUpon>201904080540535_AddUserReleaseNotesTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.resx">
+      <DependentUpon>201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.resx">
+      <DependentUpon>201904081010543_ARPaymentIsExternalEntityMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

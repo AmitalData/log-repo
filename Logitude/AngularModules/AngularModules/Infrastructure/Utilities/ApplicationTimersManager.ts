@@ -36,6 +36,7 @@ export class ApplicationTimersManager {
     signalRChannelService: SignalRChannelService;
 
     @Output() SignoutCompleted = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
 
@@ -193,10 +194,10 @@ export class ApplicationTimersManager {
                     if (!this.IsUserUnlock) {//
                         this.IsUserUnlock = true;
 
-                        if (SessionLocator.CurrentSession) {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
-                            if (SessionLocator.CurrentSession.CurrentWindow) {
-                                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        if (this.CurrentSession) {
+                            this.CurrentSession.StopBusyIndicator();
+                            if (this.CurrentSession.CurrentWindow) {
+                                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             }
                         }
                         var args = "";

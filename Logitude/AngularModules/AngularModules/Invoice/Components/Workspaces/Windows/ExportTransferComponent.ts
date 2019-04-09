@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AccountingTransferHeaderPM} from '../../../EntityPMs/AccountingTransferHeaderPM';
 import {AccountingTransferHeaderPMService} from '../../../Services/StandardPMs/AccountingTransferHeaderPMService';
@@ -19,6 +19,7 @@ export class ExportTransferComponent {
     public IsExportingSuccess: boolean = false;
     public IsExportingError: boolean = false;
     private entityPMService: AccountingTransferHeaderPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.entityPMService = new AccountingTransferHeaderPMService();
     }
@@ -52,7 +53,7 @@ export class ExportTransferComponent {
 
             else {
                 this.IsExportingSuccess = true;
-                SessionLocator.CurrentSession.FireEvent("TransferExportFirstTime");
+                this.CurrentSession.FireEvent("TransferExportFirstTime");
             }
         });
     }
@@ -66,6 +67,6 @@ export class ExportTransferComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

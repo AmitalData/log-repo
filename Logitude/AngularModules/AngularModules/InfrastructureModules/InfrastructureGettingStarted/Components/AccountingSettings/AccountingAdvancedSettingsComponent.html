@@ -82,8 +82,7 @@
                                             <LogLov [ObjectFieldName]="'RegistryDateTypeCode'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"
-                                                    [LookUpTableName]="'RegistryDateType'"
-                                                    >
+                                                    [LookUpTableName]="'RegistryDateType'">
                                             </LogLov>
                                         </td>
 
@@ -119,6 +118,29 @@
 
                                         <td>
                                             <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- EnableInvoiceStocksManagement -->
+                                    <tr class="FormFieldRow" *ngIf="IsEnableInvoiceStocksManagementVisible">
+                                        <td colspan="3">
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 220px;">
+                                                        <LogLabel [ObjectFieldName]="'EnableInvoiceStocksManagement'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td style="width: 20px;">
+                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'EnableInvoiceStocksManagement'" [Checked]="DataContext.EnableInvoiceStocksManagement" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                    </td>
+
+                                                    <td>
+                                                        <div>
+                                                            <Hyperlink (click)="DataContext.ManageStocksClicked()" [IsEnabled]="DataContext.EnableInvoiceStocksManagement" [Text]="'Manage Stocks'"></Hyperlink>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
 

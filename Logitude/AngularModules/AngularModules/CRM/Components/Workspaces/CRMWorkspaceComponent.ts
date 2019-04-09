@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList} from '@angular/core';
+import {Component, ViewChildren, QueryList} from '@angular/core';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -15,6 +15,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 export class CRMWorkspaceComponent {
     public IsContactsVisible: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         this.RunComponent();
 
@@ -180,7 +181,7 @@ export class CRMWorkspaceComponent {
                         }
                     }
 
-                    SessionLocator.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.CRM") + "\\" + this.GetPageName() });
+                    this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.CRM") + "\\" + this.GetPageName() });
                 }
             }
         }

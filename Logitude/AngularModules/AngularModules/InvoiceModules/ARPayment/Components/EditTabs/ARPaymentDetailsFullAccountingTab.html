@@ -586,14 +586,15 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TransactionsList"
+                                <logitude-edit-grid
+                                [IsReadOnly]="EntityPM.StatusCode == 'CL' || EntityPM.StatusCode == 'VD'"  GridWidth="100%" GridHeight="100%" [ItemSource]="TransactionsList"
                                     [UseVirtuallization]="true">
 
                                     <!-- Is Reconciled -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
                                         <log-cell-template template="let item" [IgnoreMods]="true">
-                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"
-                                                [IsEnabled]="!item.IsReconciled"></CheckBox>
+                                            <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount > 0" (Checked)="item.IsChecked = $event"
+                                                [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && (EntityPM.StatusCode != 'CL' && EntityPM.StatusCode != 'VD')"></CheckBox>
                                         </log-cell-template>
                                     </log-column>
 
@@ -625,7 +626,7 @@
                                             <div style="width: 100%;padding: 0 3px; text-align: right;direction: ltr;"
                                                 class="TextTrimming">
                                                 {{ item.OriginalAmount | NumbersPipe:'N2'}}
-                                                {{item.OriginalAmountCurrency}}
+                                                <!-- {{item.OriginalAmountCurrency}} -->
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -651,10 +652,13 @@
                                                 <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox *ngIf="!item.IsReconciled" [FocusOnMe]="'true'"
-                                                    [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"
+                                                <LogTextBox #AmountToReconcileTextBox
+                                                    *ngIf="!item.IsReconciled" [FocusOnMe]="'true'"
+                                                    [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"  [DebounceTime]="1"
                                                     [InputType]="'decimal'" [DigitsAfterPoint]="2" [DataContext]="item"
-                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true">
+                                                    [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"
+                                                    (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)"
+                                                    >
                                                 </LogTextBox>
 
                                                 <div class="TextTrimming"
@@ -675,6 +679,16 @@
                                             {{item.ReconciledAmount | NumbersPipe:'N2'}}
                                         </log-cell-template>
                                     </log-column>
+
+                                    <!-- PaymentReconciledAmount -->
+                                    <!-- <log-column [width]="'130'"
+                                        [header]="'PaymentReconciledAmount'"
+                                        [Alignment]="isRTL ? 'right' : 'left'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
+                                            [Alignment]="'right'">
+                                            {{item.PaymentReconciledAmount | NumbersPipe:'N2'}}
+                                        </log-cell-template>
+                                    </log-column> -->
 
                                     <!-- DueDate -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'"
@@ -709,17 +723,16 @@
                                         </log-cell-template>
                                     </log-column>
 
-
                                     <!--  -->
-                                    <log-column [header]="''" [width]="'40'" [binding]="'button'">
+                                    <!-- <log-column [header]="''" [width]="'40'" [binding]="'button'">
                                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
                                             <img *ngIf="!item.isLineValid"
-                                                [title]="'Reconciliations.O.AmountMustBSmaller2OpenAmount' | TextCodeTranslationPipe"
+                                                [title]="'Accounting.O.ARP.invoiceAmount2reconcileMSG' | TextCodeTranslationPipe"
                                                 style="margin-top: 3px;"
                                                 class="exc-remark-button exc-remark-button-red" tabindex="-1"
                                                 src="./Images/error-16.png" />
                                         </log-cell-template>
-                                    </log-column>
+                                    </log-column> -->
 
                                 </logitude-edit-grid>
 
@@ -784,7 +797,7 @@
 
 
                                         <div float-start class="amount-div">
-                                            <div class="amount">{{OpenAmount | NumbersPipe:'N2'}}</div>
+                                            <div class="amount">{{paymentAmountTotal - amount2reconcileTotal | NumbersPipe:'N2'}}</div>
                                             <div class="label">{{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}
                                                 {{PaymentCurrencyCode}}
                                             </div>

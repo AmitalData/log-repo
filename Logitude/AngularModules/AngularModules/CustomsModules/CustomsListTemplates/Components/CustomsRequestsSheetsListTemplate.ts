@@ -28,6 +28,7 @@ export class CustomsRequestsSheetsListTemplate {
     ReAnalyzeButtonIsEnabled: boolean = false;
     ReAnalyzeButtonVisibility: boolean = false;
     CancleButtonOpacity: string = "1";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
     }
@@ -68,7 +69,7 @@ export class CustomsRequestsSheetsListTemplate {
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal', BackButtonLabel: 'Back' });
@@ -109,7 +110,7 @@ export class CustomsRequestsSheetsListTemplate {
         this.IsCancelled = true;
         //FirePropertyChanged("IsCancelled");
         this.CD.detectChanges();
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         var mappedEntity = new CustomsRequestsSheetPM();
         mappedEntity.Id = id;
         mappedEntity.RequestStatusCode = "99";
@@ -117,7 +118,7 @@ export class CustomsRequestsSheetsListTemplate {
         myCustomsRequestSheetExtendedPMService.PostSetCustomsRequestSheetStatus(mappedEntity)
             .subscribe((r: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (r.Result) {
                     //alert(r.Result);
                     this.IsCancelled = false;
@@ -165,14 +166,14 @@ export class CustomsRequestsSheetsListTemplate {
 
 
         this.CD.detectChanges();
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
 
         var myCustomsRequestSheetExtendedPMService = new CustomsRequestSheetExtendedPMService();
         myCustomsRequestSheetExtendedPMService.PostSetCustomsRequestSheetStatus
         myCustomsRequestSheetExtendedPMService.PostCustomsRequestSheetReQueue(this._CustomsRequestsSheet)
             .subscribe((r: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (r.Result) {
                     //alert(r.Result);
                     this.IsCancelled = false;

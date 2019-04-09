@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator'; 
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {DateTool} from '../../../../Infrastructure/Tools';
@@ -19,7 +19,7 @@ export class BlockedCustomerComponent extends BaseComponent {
     public ObjectTableName: string = "Customer";
     public DataContext: BlockedCustomerComponent = this;
     public ProductsObslist: ProductObslistItem[] = [];
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ProductsObslist = [];
@@ -48,7 +48,7 @@ export class BlockedCustomerComponent extends BaseComponent {
         this.ProductsObslist = [];
         var service = new CustomerProductExtendedService();
         service.GetCustomerProducts(this.entityList.Id, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-            //SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            //this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!response.HasError) {
                 var myResult = response.Result;
                 if (myResult) {
@@ -62,7 +62,7 @@ export class BlockedCustomerComponent extends BaseComponent {
 
     // Commands 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

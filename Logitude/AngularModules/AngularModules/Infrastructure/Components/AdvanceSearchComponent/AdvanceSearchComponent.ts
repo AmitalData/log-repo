@@ -54,7 +54,7 @@ export class AdvanceSearchComponent implements OnInit {
     private serviceArgs: ServiceArgs;
     public BooleanValues = ["True", "False", "No Filter"];
     LayoutDirection: string = 'ltr';
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private pubSubService: PubSubService, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;
@@ -62,14 +62,14 @@ export class AdvanceSearchComponent implements OnInit {
             //'ShipperName': ['', Validators.required]
 
         });
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.AdvanceQueryDropButtonId = "dvanceQueryDropButton_-1_-1";
             this.AdvanceQuerySearchFieldsId = "AdvanceQuerySearchFields_-1_-1"; 
         }
 
         else {
-            this.AdvanceQueryDropButtonId = "dvanceQueryDropButton_" + SessionLocator.CurrentSession.GetNewId("dvanceQueryDropButton");
-            this.AdvanceQuerySearchFieldsId = "AdvanceQuerySearchFields_" + SessionLocator.CurrentSession.GetNewId("AdvanceQuerySearchFields"); 
+            this.AdvanceQueryDropButtonId = "dvanceQueryDropButton_" + this.CurrentSession.GetNewId("dvanceQueryDropButton");
+            this.AdvanceQuerySearchFieldsId = "AdvanceQuerySearchFields_" + this.CurrentSession.GetNewId("AdvanceQuerySearchFields"); 
         }
 
         //RTL Layout

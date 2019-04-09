@@ -107,7 +107,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         OppositeAccountLocalName, 
 	         OppositeAccountDisplayNumber, 
 	         RecoNumber, 
-	         ReconciliationId,
+	         ReconciliationId, 
+	         PaymentReconciledAmount,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

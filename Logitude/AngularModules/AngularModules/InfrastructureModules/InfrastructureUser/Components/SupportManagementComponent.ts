@@ -22,10 +22,11 @@ export class SupportManagementComponent extends BaseComponent  {
     private iService: TenantManagementPMService;
     SystemSupportEnabledKey: string = "";
     DistributorSupportEnabledKey: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.iService = new TenantManagementPMService();
         this.iService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
@@ -40,7 +41,7 @@ export class SupportManagementComponent extends BaseComponent  {
                 this.IsResourcesReady = true;
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
         
@@ -75,7 +76,7 @@ export class SupportManagementComponent extends BaseComponent  {
     }
     
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
@@ -115,21 +116,21 @@ export class SupportManagementComponent extends BaseComponent  {
 
         this.ValidationErrorsList = [];
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.EntityPM.IsSystemSupportEnabled = this.IsSystemSupportEnabledCheck;
         this.EntityPM.IsDistributorSupportEnabled = this.IsDistributorSupportEnabledCheck;
 
         this.iService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }                 
         });
     }

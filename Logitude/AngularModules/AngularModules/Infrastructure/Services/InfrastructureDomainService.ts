@@ -400,6 +400,35 @@ export class InfrastructureDomainService {
         });
     }
 
+    getDWObjectFieldsWithChildrenByDWTableId(DWOTId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var MyApi = ServiceHelper.GetLogitudeURL() + 'api/dwobjectfields'
+        return this._http.get(MyApi + "/getDWObjectFieldsWithChildrenByDWTableId" + '?DWOTId=' + DWOTId, { headers: authHeader }).map(response => {
+
+
+            var result = response.json();
+
+            var entity: any;
+            var DWObjectFieldPMLists: any[];
+            DWObjectFieldPMLists = new Array<any>();
+
+
+            result.forEach((item) => {
+                entity = this.MapJsonToEntityPM(item);
+                DWObjectFieldPMLists.push(entity);
+            });
+
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = DWObjectFieldPMLists;
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+
+
+    }
+
     private MapJsonToBusinessHourEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: BusinessHourPM = null) {
         if (!entityPM) {
             entityPM = new BusinessHourPM();
@@ -801,7 +830,7 @@ export class InfrastructureDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {
+    MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: any = null) {
 
         if (!entityPM) {
 
@@ -811,7 +840,7 @@ export class InfrastructureDomainService {
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties") {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
@@ -856,7 +885,7 @@ export class InfrastructureDomainService {
             key => ({
                 [key]:
 
-                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
+                    key != "UIProperties" && key != "MyParentClass" && key != "ShowSampleDateCommand" && key != "Items" && key != "TooltipId" && key != "TooltipContentId" && key != "CurrentSession" ? this.deepClone(obj[key], hash) : true
 
             })));
     }

@@ -24,6 +24,7 @@ export class FTPDetailComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     private myService: FTPDetailPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityResourceService: EntityResourceService) {
         super();
     }
@@ -140,7 +141,7 @@ export class FTPDetailComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -159,20 +160,20 @@ export class FTPDetailComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             var myService: FTPDetailPMService = new FTPDetailPMService();
 
             if (this.IsNew) {
                 myService.insert(this.EntityPM).subscribe(myResult => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("Ok");
                     }
 
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
@@ -181,13 +182,13 @@ export class FTPDetailComponent extends BaseComponent {
                 myService.update(this.EntityPM).subscribe(myResult => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("Ok");
                     }
 
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }

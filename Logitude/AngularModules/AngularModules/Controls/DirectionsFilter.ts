@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 
@@ -42,8 +42,9 @@ export class DirectionsFilter {
   
     public itmImportShipments: boolean = false;
     @Output() SelectedValueChanged = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.FilterId_E = "DirectionsFilter_E_-1_-1";
             this.FilterId_I = "DirectionsFilter_I_-1_-1";
             this.FilterId_R = "DirectionsFilter_R_-1_-1";
@@ -52,7 +53,7 @@ export class DirectionsFilter {
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("DirectionsFilter");
+            var idIndex = this.CurrentSession.GetNewId("DirectionsFilter");
             this.FilterId_E = "DirectionsFilter_E_" + idIndex;
             this.FilterId_I = "DirectionsFilter_I_" + idIndex;
             this.FilterId_R = "DirectionsFilter_R_" + idIndex;

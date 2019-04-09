@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../../Quote/EntityPMs/QuoteTemplatePM';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -68,6 +68,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     PreviewPdfId: string;
     IsShowPreviewPDF: boolean = true;
     IsReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -95,10 +96,10 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     private SendToCustomerEvent: any = null;
     Listen() {
         if (!this.SendToCustomerEvent) {
-            this.SendToCustomerEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SendToCustomerEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "SendToCustomerCompleted") {
 
-                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
                     this.currentDocumentVersion.IsSent = true;
                     this.currentDocumentVersion.SendDate = DateTool.GetCurrentDateTimeAsUtc();
 
@@ -110,11 +111,11 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     if (this.QuotePM.StageId == myDraftStage.Id || this.QuotePM.StageId == myCreateStage.Id) {
                         this.QuotePM.ActionType = "SetAsSentToCustomer";
                     }
-                    //SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ActionType = "SetAsSentToCustomer";
+                    //this.CurrentSession.CurrentEditComponent.EntityPM.ActionType = "SetAsSentToCustomer";
 
                     this.quotePMService.update(this.QuotePM).subscribe(response => {
 
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
       
 
@@ -131,7 +132,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                             this.BuildDocumentVersion();
                         }
 
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
                     });
               
@@ -170,8 +171,8 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         this.froalaEditorSetting.Id = Guid.newGuid();
         this.froalaEditorSetting.IsDisableEdit = true;
         this.froalaEditorSetting.HtmlString = "";
-        this.froalaEditorSetting.Height = (SessionLocator.CurrentSession.CurrentWindow.Height - 100);
-        this.HeightPdf = (SessionLocator.CurrentSession.CurrentWindow.Height - 100);
+        this.froalaEditorSetting.Height = (this.CurrentSession.CurrentWindow.Height - 100);
+        this.HeightPdf = (this.CurrentSession.CurrentWindow.Height - 100);
 
         this.LoadData();
 
@@ -265,7 +266,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     LoadData() {
         //this.QuotePM.StageId
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
 
         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
@@ -305,7 +306,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     LoadTemplates(templateId:string = null) {
         this.quoteTemplateExtendedPMService.GetQuoteTemplateListsByQuoteTemplateTypeAndTenant(this.QuotePM.QuoteTypeCode, SessionLocator.Tenant).subscribe(response => {
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!response.HasError) {
                 this.QuotationTemplates = response.Result;
 
@@ -552,7 +553,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             }
 
             if (enableGenerate) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
 
                 if (this.QuotePM.QuoteTemplateId != this.selectedQuoteTemplatePM.Id) {
                     this.QuotePM.QuoteTemplateId = this.selectedQuoteTemplatePM.Id;
@@ -573,7 +574,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
                 this.quoteTemplateExtendedPMService.GetUpdatedQuoteDocumentVersion(this.currentDocumentVersion.QuoteId, this.currentDocumentVersion.VersionNumber, this.selectedQuoteTemplatePM.Id, SessionLocator.LoggedUserId, this.currentDocumentVersion.Tenant, isGenerate).subscribe(response => {
                     var pmResponse: ServiceResponse = response;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!pmResponse.HasError && pmResponse.Result) {
 
                         var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
@@ -593,7 +594,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
             }
             else {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
                 this.GetQuoteTemplatePdf();
             }
         }
@@ -603,7 +604,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     BuildDocumentVersion() {
 
         if (this.selectedQuoteTemplatePM != null) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
 
             var quoteDocumentVersion: QuoteDocumentVersionPM = new QuoteDocumentVersionPM(this.QuotePM);
 
@@ -642,7 +643,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
             this.quotePMService.update(this.QuotePM).subscribe(response => {
 
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 if (!response.HasError) {
                     this.ReportVersions = this.QuotePM.QuoteDocumentVersions.sort((a, b) => { return (a.VersionNumber === a.VersionNumber) ? 0 : (a.VersionNumber < a.VersionNumber) ? -1 : 1 });
@@ -657,15 +658,15 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 }
                 else { }
 
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
 
-            //SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(response => {
+            //this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(response => {
 
             //});
-            //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            //this.CurrentSession.CurrentEditComponent.SaveChanges();
 
-            //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            //this.CurrentSession.CurrentEditComponent.SaveChanges();
             //this.quotePMService.update(this.QuotePM).subscribe(response => {
             //    if (!response.HasError) {
             //        this.ReportVersions = this.QuotePM.QuoteDocumentVersions.sort((a, b) => { return (a.VersionNumber === a.VersionNumber) ? 0 : (a.VersionNumber < a.VersionNumber) ? -1 : 1 });
@@ -698,7 +699,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
 
     RefreshVersions() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         this.quoteTemplateExtendedPMService.GetQuoteDocumentVersionsByQuoteId(this.QuotePM.Id, SessionLocator.Tenant).subscribe(response => {
             var pmResponse: ServiceResponse = response;
             if (!pmResponse.HasError && pmResponse.Result) {
@@ -725,10 +726,10 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     }
 
     GetQuoteTemplatePdf() {
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuotePM.Id, this.SelectedQuoteTemplateList.Id, SessionLocator.LoggedUserId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
 
                 var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
@@ -886,13 +887,13 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     this.UploadFileToServer();
 
                 }
-                else { SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator(); }
+                else { this.CurrentSession.CurrentWindow.StopBusyIndicator(); }
 
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-            // SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            // this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
     UploadFileToServer() {
@@ -906,7 +907,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 //txtMessage.Text = "File uploaded manually, no overview is available.";
                 //txtMessage.Visibility = Visibility.Visible;
                 this.IsFileUploadedManually = true;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.RefreshVersions();
 
             }
@@ -945,7 +946,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     LoadQuoteCustomerEmail() {
         if (this.QuotePM) {
             this.quoteTemplateExtendedPMService.GetQuoteCustomerEmailByContactId(this.QuotePM.CustomerContactId).subscribe(response => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!response.HasError) {
                     this.QuoteCustomerEmail = response.Result;
                 }
@@ -1021,19 +1022,19 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
     ExcludeSection(sectionViewModel: QuoteTemplateSectionViewModel) {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         this.quoteTemplateSectionExtendedPMService.GetMakeQuoteTemplateSectionsExcluded(this.QuotePM.Id, this.selectedQuoteTemplateList.Id, sectionViewModel.Id, SessionLocator.Tenant).subscribe(response => {
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.PreviewQuoteTemplatePdfReport();
         });
 
     }
     IncludeSection(sectionViewModel: QuoteTemplateSectionViewModel) {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         this.quoteTemplateSectionExtendedPMService.GetMakeQuoteTemplateSectionsIncluded(this.QuotePM.Id, this.selectedQuoteTemplateList.Id, sectionViewModel.Id, SessionLocator.Tenant).subscribe(response => {
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.PreviewQuoteTemplatePdfReport();
         });
     }

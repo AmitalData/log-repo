@@ -1,4 +1,4 @@
-﻿
+
 
 declare var window: any;
 import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
@@ -83,7 +83,7 @@ export class LoadTestComponent
     public _OpenDecFiligList: number[] = [];
     public _SendDecList: number[] = [];
     public _SaveDecList: number[] = [];
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -136,7 +136,7 @@ export class LoadTestComponent
 
     _current: number = 0;
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     _LogProccess: string;
     get LogProccess() {
@@ -347,10 +347,10 @@ export class CustomLoadTest {
             //    "שליחת הצהרת יבוא", false)
             //    .then((res) => {
             //        this.ResponseData = res;
-            //        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            //        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             //    }
             //    ).catch((err) => {
-            //        SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+            //        this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             //        this.ValidationErrors.push(err);
             //        this.FillValidationErrors("Errors");
             //    });
@@ -368,7 +368,7 @@ export class CustomLoadTest {
                 var myDuration = Number(t.toPrecision(2));;
                 this._parentLoadTestComponent._SendDecList.push(myDuration);
 
-                //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 if (this._ArrayOfDocumentsFilingPM.length > 0) {
                     if (this._SendDeclarationCounter > 1) {
                         if (!this._HaveTicket) {
@@ -402,7 +402,7 @@ export class CustomLoadTest {
         this.LogMe("ConnectTicket");
         this._LoadTestService.GetTicket(SessionLocator.Tenant, this._DeclarationPM.Id)
             .subscribe((response: ServiceResponse) => {
-                //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 if (response.Result == "Ok") {
                     this._HaveTicket = true;
                 } else {

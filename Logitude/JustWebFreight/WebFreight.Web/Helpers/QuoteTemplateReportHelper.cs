@@ -446,6 +446,7 @@ namespace Logitude.BL.Helpers
 
         public byte[] GetQuoteTemplateHtmlReport(QuotePM quotePM, QuoteTemplatePM template, QuoteTemplateSettingPM setting, List<QuoteTemplateSectionPM> templateSections, List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList, List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList, List<QuoteTemplateTextCodePM> textcodes, int tenant, string userId, bool includeHeaderFooter, string requestArea, int? userTenant = null)
         {
+            
             int tenantNumber = userTenant != null ? (int)userTenant : tenant;
             string htmlString = "";
 
@@ -525,6 +526,7 @@ namespace Logitude.BL.Helpers
                     {
                         htmlString += Environment.NewLine + GetBodyString(sectiondata);
                         htmlString += Environment.NewLine;
+
                     }
                 }
             }
@@ -622,16 +624,14 @@ namespace Logitude.BL.Helpers
                 quoteTemplateTextDesignLines = quoteTemplateTextDesignsList.Where(t => t.Id == quotetemplatetableDesignPM.LinesDesignId).FirstOrDefault();
 
                 isRightToLeft = setting.RightToLeft;
-
-          
-           
-   
-       
-                HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+                
+                HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
                 if ((pricingSectionType == "PP" && setting.ShowTitlePricingPackages) || (pricingSectionType == "PC" && setting.ShowTitlePricingContainsers))
                 {
                     BuildPricingTitle(HtmlTemplate, quotetemplateTextDesignPMPricingTitle, pricingSectionType, textcodes, setting.RightToLeft);
+
+                    HtmlTemplate.Append("<div  style='height:8px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
                 }
 
                 string StyleTable = GetStyleTable(quotetemplatetableDesignPM);
@@ -748,7 +748,8 @@ namespace Logitude.BL.Helpers
 
 
                 HtmlTemplate.Append("</table>");
-                HtmlTemplate.Append("<p style='height:1px ;margin-bottom:3px;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</p>");
+
+                //HtmlTemplate.Append("<div style='height:5px ;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</p>");
                 #endregion
 
                 if (!isShowPerContainers)
@@ -795,13 +796,17 @@ namespace Logitude.BL.Helpers
                     bool ShowTotalInLocalCurrency = pricingSectionType == "PC" ? setting.ShowTotalInLocalCurrencyContainers : setting.ShowTotalInLocalCurrencyPackages;
 
 
+                    if (ShowTotalInSaleCurrency || ShowTotalInLocalCurrency)
+                    {
+                        HtmlTemplate.Append("<div  style='height:5px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+                    }
                     AppendTotalCurrencyHtml(quotePM, setting, HtmlTemplate, ShowTotalInSaleCurrency, ShowTotalInLocalCurrency, quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue,
                       Name, SaleTotalAmountInSaleCurrency, SaleTotalAmountInLocalCurrency);
                     #endregion
 
 
                     HtmlTemplate.Append("</div>");
-                    HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+                    HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
                     #endregion
                 }
@@ -936,7 +941,7 @@ namespace Logitude.BL.Helpers
 
 
                     HtmlTemplate.Append("</table>");
-                    HtmlTemplate.Append("<p style='height:1px ;margin-bottom:3px;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</p>");
+                    HtmlTemplate.Append("<div style='height:10px ;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</div>");
 
                 }
 
@@ -1076,7 +1081,7 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<meta charset='utf-8'>");
             HtmlTemplate.Append("</head>");
             HtmlTemplate.Append("<body>");
-            HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
             if (QuoteTemplaetHeaderFieldList.Count() > 0)
             {
@@ -1326,7 +1331,7 @@ namespace Logitude.BL.Helpers
                 HtmlTemplate.Append("</div>");
             }
 
-            HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
             HtmlTemplate.Append("</body>");
             HtmlTemplate.Append("</html>");
 
@@ -1369,7 +1374,7 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<meta charset='utf-8'>");
             HtmlTemplate.Append("</head>");
             HtmlTemplate.Append("<body>");
-            HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
             if (QuoteTemplaetDetailsFieldList.Count() > 0)
             {
@@ -1418,7 +1423,7 @@ namespace Logitude.BL.Helpers
                     {
                         quotetemplateTextDesignPMDetailsTitle.Alignment = "Right";
                     }
-                    string styledetailstitle = GetSpanRowStyle(quotetemplateTextDesignPMDetailsTitle, "", "auto");
+                    string styledetailstitle = GetSpanRowStyle(quotetemplateTextDesignPMDetailsTitle, "Header", "auto");
 
                     FieldName = "";
                     FieldName = GetNameColum("GENERALDETAILS", textcodes, "QD");
@@ -1438,9 +1443,11 @@ namespace Logitude.BL.Helpers
                     {
                         HtmlTemplate.Append("<div " + styledetailstitle + ">" + FieldName + "</div>");
                     }
+
+                    HtmlTemplate.Append("<div  style='height:8px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
                 }
 
-                HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+  
 
 
 
@@ -1652,7 +1659,7 @@ namespace Logitude.BL.Helpers
                 HtmlTemplate.Append("</div>");
             }
 
-            HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
             HtmlTemplate.Append("</body>");
             HtmlTemplate.Append("</html>");
 
@@ -2403,7 +2410,7 @@ namespace Logitude.BL.Helpers
                 }
             }
 
-            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            //HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
         }
 
         private string GetStyleTableHeaderFooter(QuoteTemplateTableDesignPM tableDesign, string height)
@@ -2571,7 +2578,7 @@ namespace Logitude.BL.Helpers
             string unDerLine = Design.UnDerLine ? ";text-decoration: underline" : "";
 
             string visible = type == "TotalHidden" ? ";visibility:hidden" : "";
-            string margin = type == "" ? ";margin-top:35px" : type == "PricingTitle" || type == "PricingTableTitle" ? ";margin-top:20px" : "";
+            string margin = type == "" ? ";margin-top:35px" : "";
 
 
 
@@ -2584,10 +2591,6 @@ namespace Logitude.BL.Helpers
                  ";font-size:" + fontSize + ";color:" + textColor + ";vertical-align:central" + unDerLine  + widht + visible + margin + ";background-color:" + backgroundColor + " '";
 
             }
-
-           
-
-
 
             return style;
         }
@@ -2843,9 +2846,9 @@ namespace Logitude.BL.Helpers
                         if (ViewFixedPrice)
                         {
                             string AA = " ";
-                            if (chargePM.SaleUnitPrice != null)
+                            if (chargePM.SaleAmountInSaleCurrency != null)
                             {
-                                double value = (double)chargePM.SaleUnitPrice;
+                                double value = (double)chargePM.SaleAmountInSaleCurrency;
                                 AA = value.ToString("N"); // 1,234.512
                             }
                             HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
