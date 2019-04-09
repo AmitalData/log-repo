@@ -165,6 +165,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
+            if (_MyDeclarationPM.IsCourierDeclaration && this._MyDeclarationPM.PaymentDate.HasValue)
+            {
+                if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
+                {
+                    // Clear Fields
+                    _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
+                    _MyDeclarationPM.PaymentDate = null;
+                    _MyDeclarationPM.PaymentOrderNumber = null;
+                    _MyDeclarationPM.PaymentStatusCode = null;
+                    _MyDeclarationPM.CourierCustomStatusCode = null;
+                    _MyDeclarationPM.CourierSuspentionCode = null;
+                    _MyDeclarationPM.CourierSuspentionReasonCode = null;
+
+                    // Delete Payment
+                    var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
+                    var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                    if (declarationPaymentPM != null)
+                    {
+                        declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Delete;
+                        if (declarationPaymentPM.DeclarationPaymentMethods.Any())
+                        {
+                            foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
+                            {
+                                item.ChangeSetOp = ChangeSetOperation.Delete;
+                            }
+                        }
+                        DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                    }
+
+                    // Delete Status
+                    DeclarationUpdateService.DelDeclarationStatus(_MyDeclarationPM, "", "RSH");
+                }
+            }
+
             if (requestParams.GetType() == typeof(DeclarationRestoreRequestParams))// moran 10.1.16 Task 19724 // Mirit 24/01/16 19845 
             {
                 //if (this._MyDeclarationPM.CorrectionsXml != null)
@@ -180,64 +215,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 //    return;
                 //}
-                if (this._MyDeclarationPM.PaymentDate.HasValue) //If declaration was already paid 
+                if (this._MyDeclarationPM.PaymentDate.HasValue && !_MyDeclarationPM.IsCourierDeclaration)  //If declaration was already paid 
                 {
-                    if (_MyDeclarationPM.IsCourierDeclaration)
+                    //Task 44715 allow update of 1.0 if current <1.0 and it's a restore response
+                    if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
+                        && (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value)) //Compare Declaration Version
+
+                    //if (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value) //Compare Declaration Version
                     {
-                        if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
-                        {
-                            // Clear Fields
-                            _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
-                            _MyDeclarationPM.PaymentDate = null;
-                            _MyDeclarationPM.PaymentOrderNumber = null;
-                            _MyDeclarationPM.PaymentStatusCode = null;
-                            _MyDeclarationPM.CourierCustomStatusCode = null;
-                            _MyDeclarationPM.CourierSuspentionCode = null;
-                            _MyDeclarationPM.CourierSuspentionReasonCode = null;
-
-                            // Delete Payment
-                            var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
-                            var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-                            if (declarationPaymentPM != null)
-                            {
-                                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Delete;
-                                if (declarationPaymentPM.DeclarationPaymentMethods.Any())
-                                {
-                                    foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
-                                    {
-                                        item.ChangeSetOp = ChangeSetOperation.Delete;
-                                    }
-                                }
-                                DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                                declarationPaymentUpdateService.Update(declarationPaymentPM, true);
-                            }
-
-                            // Delete Status
-                            DeclarationUpdateService.DelDeclarationStatus(_MyDeclarationPM, "", "RSH");
-                        }
+                        string mess = "נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")" + " הצהרה כבר שולמה ויש שוני בין הגרסאות";
+                        LogMessagingUtil.Instance.AppendLine(mess);
+                        this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                        this.MyResponseData.Succeeded = true;
+                        this.MyResponseData.UserMessage = mess;
+                        this.MyResponseData.HasException = true;
+                        return;
                     }
                     else
                     {
-                        //Task 44715 allow update of 1.0 if current <1.0 and it's a restore response
-                        if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
-                            && (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value)) //Compare Declaration Version
-
-                        //if (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value) //Compare Declaration Version
-                        {
-                            string mess = "נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")" + " הצהרה כבר שולמה ויש שוני בין הגרסאות";
-                            LogMessagingUtil.Instance.AppendLine(mess);
-                            this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                            this.MyResponseData.Succeeded = true;
-                            this.MyResponseData.UserMessage = mess;
-                            this.MyResponseData.HasException = true;
-                            return;
-                        }
-                        else
-                        {
-                            _MyDeclarationPM.PaymentDate = null;
-                            _MyDeclarationPM.PaymentOrderNumber = "";
-                            _MyDeclarationPM.PaymentStatusCode = "";
-                        }
+                        _MyDeclarationPM.PaymentDate = null;
+                        _MyDeclarationPM.PaymentOrderNumber = "";
+                        _MyDeclarationPM.PaymentStatusCode = "";
                     }
                 }
             }
@@ -736,26 +734,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
             myDeclarationUpdateService.IsFromCustomsFeedback = true;
             myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
-            if(!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
+            if (!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
             {
-                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
+                if (currentDeclarationCourierStatusPM != null)
                 {
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
-                    if (currentDeclarationCourierStatusPM != null)
+                    if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
                     {
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                         currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
                         currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                         LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 900");
+                    }
+                    else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
+                    {
+                        currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 900");
+                    }
+                    if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                     }
                 }
             }
 
             //var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
             //if (setting.IsConnectedToUniFreight)
-                if (_MyDeclarationPM.IsConnectedToUnifreight)
+            if (_MyDeclarationPM.IsConnectedToUnifreight)
             {
                 //<--- Yuval Chalup 09.11.2015 TASK-16498 - Update PaymentOrderNumber in Payment
                 if (customResponse.DeclarationPaymentDetails != null)
