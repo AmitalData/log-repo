@@ -41,10 +41,12 @@
             this.InsertStatesTenantZeroLbl = new System.Windows.Forms.Label();
             this.InsertStatesUSPortsLbl = new System.Windows.Forms.Label();
             this.InsertStatesAUSPortsLbl = new System.Windows.Forms.Label();
+            this.InsertStatesQBOLbl = new System.Windows.Forms.Label();
             this.InsertStatesMEXPortsLbl = new System.Windows.Forms.Label();
             this.InsertStatesCanadaPortsLbl = new System.Windows.Forms.Label();
             this.InsertStatesIndiaPortsLbl = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button7 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button5
@@ -157,6 +159,14 @@
             this.InsertStatesAUSPortsLbl.Size = new System.Drawing.Size(0, 13);
             this.InsertStatesAUSPortsLbl.TabIndex = 103;
             // 
+            // InsertStatesQBOLbl
+            // 
+            this.InsertStatesQBOLbl.AutoSize = true;
+            this.InsertStatesQBOLbl.Location = new System.Drawing.Point(240, 372);
+            this.InsertStatesQBOLbl.Name = "InsertStatesQBOLbl";
+            this.InsertStatesQBOLbl.Size = new System.Drawing.Size(14, 13);
+            this.InsertStatesQBOLbl.TabIndex = 103;
+            // 
             // InsertStatesMEXPortsLbl
             // 
             this.InsertStatesMEXPortsLbl.AutoSize = true;
@@ -191,16 +201,28 @@
             this.checkBox1.Text = "Add For All Tenants";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(23, 360);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(203, 36);
+            this.button7.TabIndex = 108;
+            this.button7.Text = "Fill QBOTransactionLocationType ";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // AddStates
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(586, 424);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.InsertStatesIndiaPortsLbl);
             this.Controls.Add(this.InsertStatesCanadaPortsLbl);
             this.Controls.Add(this.InsertStatesMEXPortsLbl);
             this.Controls.Add(this.InsertStatesAUSPortsLbl);
+            this.Controls.Add(this.InsertStatesQBOLbl);
             this.Controls.Add(this.InsertStatesUSPortsLbl);
             this.Controls.Add(this.InsertStatesTenantZeroLbl);
             this.Controls.Add(this.label1);
@@ -214,6 +236,7 @@
             this.Controls.Add(this.button38);
             this.Name = "AddStates";
             this.Text = "AddStates";
+            this.Load += new System.EventHandler(this.AddStates_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,9 +256,11 @@
         private System.Windows.Forms.Label InsertStatesTenantZeroLbl;
         private System.Windows.Forms.Label InsertStatesUSPortsLbl;
         private System.Windows.Forms.Label InsertStatesAUSPortsLbl;
+        private System.Windows.Forms.Label InsertStatesQBOLbl;        
         private System.Windows.Forms.Label InsertStatesMEXPortsLbl;
         private System.Windows.Forms.Label InsertStatesCanadaPortsLbl;
         private System.Windows.Forms.Label InsertStatesIndiaPortsLbl;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button7;
     }
 }
