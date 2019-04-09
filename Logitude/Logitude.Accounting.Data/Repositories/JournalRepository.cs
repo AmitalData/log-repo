@@ -13,6 +13,7 @@ using System.Data.Entity.Core.Objects;
 using System.Diagnostics;
 using System.Data.Entity;
 using Logitude.Server.Tools;
+using Simplog.Data.InvoiceModel;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -365,9 +366,14 @@ namespace Logitude.Accounting.Data.Repositories
         {
             int days= DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
             DateTime date = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
+
+            IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
+
+
             return (from a in context.Journals
                     join r in context.JournalLines on a.Id equals r.JournalId
                     join m in context.JournalAdditionalDatas on a.Id equals m.JournalId
+                
                     where a.AccountingEntityCode == "2" && (m.TaxReportId == null ||m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null) && a.Tenant== tenant
                     && r.DocumentDate <= date 
 
