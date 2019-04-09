@@ -1197,6 +1197,11 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (!string.IsNullOrEmpty(ownerId))
                 {
+
+                    EventTypeRepository eventTypeRepository = new EventTypeRepository(entityChange.Tenant);
+                    automationFollowUp.FollowUpEnglishName = eventTypeRepository.GetEventTypeNameById(automationFollowUp.EventTypeId, entityChange.Tenant);
+
+
                     FollowUpRepository followUpRepository = new FollowUpRepository(entityChange.Tenant);
                     bool isAddFollowUp = false;
                     if (automation.ResultCode == "DOCOUTFOLLOWUP" || automation.ResultCode == "DOCINFOLLOWUP")
@@ -1277,9 +1282,7 @@ namespace Logitude.Server.Tools.Helpers
 
             followUp.Tenant = tenant;
             followUpRepository.Add(followUp);
-            
-            EventTypeRepository eventTypeRepository = new EventTypeRepository(tenant);
-            string followUpEnglishName = eventTypeRepository.GetEventTypeNameById(followUp.EventTypeId, tenant);
+    
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = tenant,
@@ -1287,7 +1290,7 @@ namespace Logitude.Server.Tools.Helpers
                 UserId = userId,
                 EntityId = entityChange.EntityId,
                 ObjectTableName = "Shipment",
-                Notes = followUpEnglishName,
+                Notes = automationFollowUp.FollowUpEnglishName,
             });
 
 
