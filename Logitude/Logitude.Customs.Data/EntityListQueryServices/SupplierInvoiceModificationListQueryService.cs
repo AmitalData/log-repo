@@ -30,9 +30,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    InvoiceCounterKey = a.InvoiceCounterKey,
                                                    Tenant = a.Tenant,
                                                    TypeCode = a.TypeCode,
-
-
-
+                                                   CurrencyTypeName = a.CurrencyType != null ? (a.CurrencyType.LocalName != null ? a.CurrencyType.LocalName : a.CurrencyType.EnglishName) : null,
+                                                   TypeName = a.ModificationAndDiscountType != null ? (a.ModificationAndDiscountType.LocalName != null ? a.ModificationAndDiscountType.LocalName : a.ModificationAndDiscountType.EnglishName) : null,
+                                                   ModificationCounterKey = a.ModificationCounterKey,
                                                     });
             return query;
 		}
