@@ -28,8 +28,8 @@ namespace WebFreight.Web.DataProviders
         public string EmployeeName { get; set; }
         public string DayOfWork { get; set; }
         public DateTime? DateOfWork { get; set; }
-        public double? RequiredWorkHours { get; set; }
-
+        public int RequiredWorkMins { get; set; }
+        public string RequiredWorkHours { get; set; }
         public double MinutesFromClock { get; set; }
         public double MinutesFromOffice { get; set; }
         public double MinutesFromHome { get; set; }
