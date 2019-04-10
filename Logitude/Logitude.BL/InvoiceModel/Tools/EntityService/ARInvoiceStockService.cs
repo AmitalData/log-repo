@@ -99,7 +99,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.UpdateARInvoiceStockLinesCollection();
 
-
             if (entityPM.Cancelled)
             {
                 entityPM.StatusCode = "C";
@@ -201,7 +200,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void RecalculateStatusAfterReactivate()
         {
-            if (entityPm.Amount > 0 && entityPm.Remaining != 0 && entityPm.Remaining < entityPm.Amount && entityPm.EndDate <= TenantServerConfigration.GetCurrentDateTime(tenant))
+            if (entityPm.Amount > 0 && entityPm.Remaining != 0 && entityPm.Remaining <= entityPm.Amount && entityPm.EndDate <= TenantServerConfigration.GetCurrentDateTime(tenant))
             {
                 entityPm.StatusCode = "E";
             }
