@@ -480,6 +480,11 @@ export class TenantPM {
     public set CustomerTenantShareImportFile(newValue: boolean) { if (this.customerTenantShareImportFile != newValue) { this.customerTenantShareImportFile = newValue; this.MarkAsDirty("CustomerTenantShareImportFile"); } }
        
 	 
+    private customerTenantShareExportFile: boolean;
+    public get CustomerTenantShareExportFile() { return this.customerTenantShareExportFile; }
+    public set CustomerTenantShareExportFile(newValue: boolean) { if (this.customerTenantShareExportFile != newValue) { this.customerTenantShareExportFile = newValue; this.MarkAsDirty("CustomerTenantShareExportFile"); } }
+       
+	 
     private allowAgentInCustomersLOV: boolean;
     public get AllowAgentInCustomersLOV() { return this.allowAgentInCustomersLOV; }
     public set AllowAgentInCustomersLOV(newValue: boolean) { if (this.allowAgentInCustomersLOV != newValue) { this.allowAgentInCustomersLOV = newValue; this.MarkAsDirty("AllowAgentInCustomersLOV"); } }

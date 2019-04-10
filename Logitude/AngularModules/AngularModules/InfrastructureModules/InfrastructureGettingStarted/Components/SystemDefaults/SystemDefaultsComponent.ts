@@ -104,6 +104,7 @@ export class SystemDefaultsComponent extends BaseComponent{
         this.UIProperties.SetEnabled("CustomerId", "Tenant", false);
         this.UIProperties.SetEnabled("IsCustomerTenantShare", "Tenant", false);
         this.UIProperties.SetEnabled("CustomerTenantShareImportFile", "Tenant", false);
+        this.UIProperties.SetEnabled("CustomerTenantShareExportFile", "Tenant", false);
 
         this.UIProperties.SetEnabled("RegulatedAgentRegimeActivated", "Tenant", false);
         this.UIProperties.SetEnabled("RegulatedAgentNumber", "Tenant", false);
@@ -159,6 +160,8 @@ export class SystemDefaultsComponent extends BaseComponent{
             this.SetUIProperties();
             this.UIProperties.SetVisibility("IsCustomerTenantShare", "Tenant", FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES"));
             this.UIProperties.SetVisibility("CustomerTenantShareImportFile", "Tenant", FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES"));
+            this.UIProperties.SetVisibility("CustomerTenantShareExportFile", "Tenant", FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES"));
+
         });
     }
 
@@ -454,6 +457,13 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
+    get CustomerTenantShareExportFile() { return this.TenantPm.CustomerTenantShareExportFile; }
+    set CustomerTenantShareExportFile(value: boolean) {
+        if (this.TenantPm.CustomerTenantShareExportFile != value) {
+            this.TenantPm.CustomerTenantShareExportFile = value;
+        }
+    }
+
     get IsQuoteSubjectEdited() { return this.TenantPm.IsQuoteSubjectEdited; }
     set IsQuoteSubjectEdited(value: boolean) {
         if (this.TenantPm.IsQuoteSubjectEdited != value) {
@@ -553,6 +563,15 @@ export class SystemDefaultsComponent extends BaseComponent{
     }
 
     get CustomerTenantShareImportFileVisible() {
+        var result = false;
+        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    get CustomerTenantShareExportFileVisible() {
         var result = false;
         if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
             result = true;
