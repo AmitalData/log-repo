@@ -1024,7 +1024,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
 
                     //&& !entityPM.IsCancelled // for LogBox
-                    if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && !entityPM.IsCancelled && loggedTenant.IsCustomerTenantShare && (loggedTenant.CustomerTenantShareImportFile ? entityPM.DirectionId.ToUpper() == "I" || entityPM.DirectionId.ToUpper() == "C" : entityPM.DirectionId.ToUpper() == "C"))
+                    if (IsShipmentMatchLogBoxConditions(loggedTenant,entityPM))
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
@@ -1060,7 +1060,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
 
                     //&& !entityPM.IsCancelled // for LogBox
-                    if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && loggedTenant.IsCustomerTenantShare && (loggedTenant.CustomerTenantShareImportFile ? entityPM.DirectionId.ToUpper() == "I" || entityPM.DirectionId.ToUpper() == "C" : entityPM.DirectionId.ToUpper() == "C"))
+                    if (IsShipmentMatchLogBoxConditions(loggedTenant, entityPM))
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
@@ -1110,6 +1110,43 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+
+        private bool IsShipmentMatchLogBoxConditions(Tenant loggedTenant,ShipmentPM entityPM)
+        {
+            if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && !entityPM.IsCancelled && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant,entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsImportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareImportFile == true)
+            {
+                return (entityPM.DirectionId.ToUpper() == "I");
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsExportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareExportFile == true)
+            {
+                return (entityPM.DirectionId.ToUpper() == "E");
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void RunStoredProcedures()
         {
             RunStoredProcedureClass.UpdateForeignPartnerCountryCode(entityPM.Id, entityPM.Tenant);
@@ -2954,37 +2991,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 //this.InitializeBookingData();
             }
 
-            //try
-            //{
-            //    if (tenantPM == null)
-            //    {
-            //        tenantQuery = new TenantQuery(entityPM.Tenant);
-            //        tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-            //    }
-            //    //&& !entityPM.IsCancelled // for LogBox
-            //    if (!entityPM.DontAddToImportersQueue && tenantPM.IsCustomerTenantShare &&(tenantPM.CustomerTenantShareImportFile ? entityPM.DirectionId.ToUpper() == "I" || entityPM.DirectionId.ToUpper() == "C" : entityPM.DirectionId.ToUpper() == "C"))
-            //    {
-            //        CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-            //        CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
-
-            //        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess)
-            //        {
-            //            var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
-            //            IQueueService queueservice = new DbQueueService();
-            //            queueservice.InitializeQueue("ImportersShipmentQueue", 0);
-            //            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", entityPM.CustomerId } }, null, entityPM.CustomerId);
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    string ip = "";
-            //    if (HttpContext.Current != null && HttpContext.Current.Request != null)
-            //    {
-            //        ip = HttpContext.Current.Request.UserHostAddress;
-            //    }
-            //    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
-            //}
+          
         }
 
         private void AddPaymentReceivedToQueue()

@@ -978,7 +978,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 arPaymentcheque.StatusCode = "1"; // In Cashbook  
                                 arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                                 arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
-
+                                
                                IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
                                 paymentUpdate.Update(arPaymentcheque);
 
@@ -1560,6 +1560,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
+
+            if (paymentPM.InvoicesTransactions.Count == 0)
+                return;
 
             // reco payment line
             var _recoPYLine = CreatePaymentRecoLine(paymentPM);

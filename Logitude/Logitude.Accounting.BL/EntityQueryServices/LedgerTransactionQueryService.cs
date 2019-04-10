@@ -622,6 +622,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return openInvoicesTransactions;
         }
 
+        public List<LedgerTransactionPM> GetReconciledInvoicesTransactionsForPayment(string arpaymentId, string billToGLAccountId, int tenant) // reconciled and partially reconciled
+        {
+            List<LedgerTransactionPM> reconciledInvoicesTransactions = GetReconciledInvoicesTransactionsForARPayment(arpaymentId, billToGLAccountId, tenant);
+            List<LedgerTransactionPM> openedAndPartiallyInvoicesTransactions = GetOpenInvoicesTransactionsForAccount(billToGLAccountId, arpaymentId, tenant);
+
+            List<LedgerTransactionPM> reconciledTransactions 
+                = reconciledInvoicesTransactions.Concat(
+                    openedAndPartiallyInvoicesTransactions.Where(d => d.PaymentReconciledAmount != 0) // partially invoices reconciled with this payment
+                    ).ToList();
+
+            return reconciledTransactions;
+        }
+
         private List<LedgerTransactionPM> FillTransactionsReconciliationNumbers(List<LedgerTransactionPM> transactions, int tenant)
         {
             List<LedgerTransactionPM> trans4invoices = new List<LedgerTransactionPM>();
@@ -733,7 +746,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<ReconciliationPM> recos = recoQuery.GetReconciliationsByIds(recosIds, tenant);
 
             // join reconciliations numbers
-            List<string> numbers = recos.Select(d => d.Number).ToList();
+            List<string> numbers = recos.Where(d=>d.IsCancelled == false).Select(d => d.Number).ToList();
             string numbersString = string.Join(",", numbers.ToArray());
 
             return numbersString;
@@ -750,7 +763,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             decimal reconciledAmount = 0;
             recoLines.ForEach(recoLine =>
             {
-                if (recoLine.ReconciledWithTransactionId == paymentTransactionId && paymentTransactionId != null)
+                if (recoLine.ReconciledWithTransactionId == paymentTransactionId && paymentTransactionId != null && recoLine.IsRecoCancelled == false)
                     reconciledAmount += recoLine.ReconciliationAmount;
             });
             

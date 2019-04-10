@@ -347,6 +347,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                 cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
                                 cmpRef.instance.BackCompleted.subscribe(bk => {
                                     // this.CurrentSession.CloseCurrentWindow();
+                                    this.GetData();
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                 });
                             });
                     }

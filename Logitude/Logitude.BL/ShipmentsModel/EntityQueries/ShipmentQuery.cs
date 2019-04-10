@@ -849,9 +849,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.IssuingCarrierAgentId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.IssuingCarrierAgentId, shipment.Tenant, true);
-                shipmentPM.IssuingCarrierAgentName = loadedCard.EnglishName;
-                shipmentPM.IssuingCarrierAgentNote = loadedCard.Notes;
-
+                if (loadedCard != null)
+                {
+                    shipmentPM.IssuingCarrierAgentName = loadedCard.EnglishName;
+                    shipmentPM.IssuingCarrierAgentNote = loadedCard.Notes;
+                } 
                 if (!string.IsNullOrEmpty(shipment.IssuingCarrierAddressId))
                 {
                     Address myAddress = addressRepository.GetSingleAddress(shipmentPM.IssuingCarrierAddressId, tenant);

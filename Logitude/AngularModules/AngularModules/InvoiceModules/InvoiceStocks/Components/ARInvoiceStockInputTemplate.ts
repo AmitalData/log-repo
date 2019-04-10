@@ -26,13 +26,13 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
-        
+
         this.Listen();
     }
 
     private SessionEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+    private LoadCompletedEvent: any = null;
     private Listen() {
         this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "RefreshARInvoiceStockScreen") {
@@ -68,7 +68,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
 
     public InitTemplate(args: InvoiceStockInputArgs) {
         if (args != null) {
-            this.EntityPM = args.Stock;            
+            this.EntityPM = args.Stock;
             this.IsEditMode = args.IsEditMode;
         }
 
@@ -111,7 +111,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
             this.ItemsSource.push(item);
         });
 
-        this.ItemsCount = this.ItemsSource.length;        
+        this.ItemsCount = this.ItemsSource.length;
     }
 
     get Name() { return this.EntityPM.Name; }
@@ -175,13 +175,13 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
 
     AddStockLineClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Stock Numbers";        
+        logWindow.Title = "Stock Numbers";
         logWindow.WindowArgs = { Stock: this.EntityPM };
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/NewARInvoiceStockLinesComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
                 this.IsNew = false;
-                this.FillStockLines();                
+                this.FillStockLines();
             }
         });
     }
@@ -196,10 +196,15 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
 
     Remove(isDeletingSeries: boolean) {
         if (this.SelectedItem != null) {
+            var win = new MessageWindow();
+            var usedSeries: ARInvoiceStockLinePM[] = this.EntityPM.ARInvoiceStockLines.filter(d => d.CreateDate == this.SelectedItem.CreateDate && d.IsUsed);
 
-            if (isDeletingSeries == true && this.SelectedItem.CreateDate == null) {
-                var win = new MessageWindow();
+            if (isDeletingSeries && this.SelectedItem.CreateDate == null) {
                 win.Show("This stock does not have a create date");
+            }
+
+            else if (isDeletingSeries && usedSeries.length > 0) {
+                win.Show("You can't remove this series, since it contains at least one used number");
             }
 
             else {
@@ -211,19 +216,21 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
                 confirmWindow.NoButtonText = "Cancel";
 
                 var message = "Are you sure you want to delete the stock number";
+                var removeNotes = "";
 
                 if (isDeletingSeries) {
                     var myGetDateFormats = DateTool.GetDateFormats(this.SelectedItem.CreateDate);
                     message = "Are you sure you want to delete the series inserted on";
                     message = message + "\n" + "[" + myGetDateFormats.ShortDateString + "] at [" + myGetDateFormats.ShortTimeString + "] ?";
+                    removeNotes = "Invoice numbers inserted on [" + myGetDateFormats.ShortDateString + "] at [" + myGetDateFormats.ShortTimeString + "] removed";
                 }
 
                 else {
                     message = message + " [" + this.SelectedItem.Number + "] ?";
+                    removeNotes = "Invoice  number [" + this.SelectedItem.Number + "] removed";
                 }
 
                 confirmWindow.Show(message);
-
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         if (isDeletingSeries) {
@@ -234,12 +241,14 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
                                 });
 
                                 this.EntityPM.SeriesRemoved = true;
+                                this.EntityPM.EventNotes = removeNotes;
                             }
                         }
 
                         else {
                             this.EntityPM.RemoveARInvoiceStockLinePM(this.SelectedItem);
                             this.EntityPM.NumberRemoved = true;
+                            this.EntityPM.EventNotes = removeNotes;
                         }
 
                         this.FillStockLines();

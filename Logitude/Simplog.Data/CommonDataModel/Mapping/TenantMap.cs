@@ -61,6 +61,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CustomerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IsCustomerTenantShare).IsRequired();
             this.Property(t => t.CustomerTenantShareImportFile).IsRequired();
+            this.Property(t => t.CustomerTenantShareExportFile).IsRequired();
             this.Property(t => t.AllowAgentInCustomersLOV).IsRequired();
             this.Property(t => t.LogBoxAdminUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SCACCode).HasMaxLength(4).IsUnicode(false);
@@ -111,6 +112,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CustomerId).HasColumnName("CustomerId");
             this.Property(t => t.IsCustomerTenantShare).HasColumnName("IsCustomerTenantShare");
             this.Property(t => t.CustomerTenantShareImportFile).HasColumnName("CustomerTenantShareImportFile");
+            this.Property(t => t.CustomerTenantShareExportFile).HasColumnName("CustomerTenantShareExportFile");
             this.Property(t => t.IsNotesRightToLeftEnabled).HasColumnName("IsNotesRightToLeftEnabled");
             this.Property(t => t.IsInternalTicketByDefault).HasColumnName("IsInternalTicketByDefault");
             this.Property(t => t.IsFullTextSearchEnabled).HasColumnName("IsFullTextSearchEnabled");

@@ -10745,6 +10745,7 @@ namespace WebFreight.Web.ReportsWebServices
                 transactionsDataProvider.IsAccountMulticurrency = (bool)glaccountPM.IsMultiCurrency;
                 transactionsDataProvider.AccountCurrencySign = glaccountPM.CurrencySign;
                 transactionsDataProvider.AccountCurrencyCode = glaccountPM.CurrencyCode;
+                transactionsDataProvider.AccountReconcileMethod = glaccountPM.ReconcileMethodCode;
             }
             else
             {

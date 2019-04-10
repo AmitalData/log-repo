@@ -2642,7 +2642,11 @@ namespace WebFreight.Web.InfrastructureModel
                     AccountingVATSplit = a.AccountingVATSplit,
                     ReceivableCreditAccount = a.ReceivableCreditAccount,
                     PayableDebitAccount = a.PayableDebitAccount,
-
+                    IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
+                    IsExport = a.IsExport,
+                    IsImport = a.IsImport,
+                    IsDomestic = a.IsDomestic,
+                    IsDrop = a.IsDrop,
                 };
 
                 VatType vattype = tenantZeroVatTypes.Where(d => d.Id == a.VatTypeId).FirstOrDefault();
@@ -2651,9 +2655,10 @@ namespace WebFreight.Web.InfrastructureModel
                     VatType newVat = currentTenantVatTypes.Where(d => d.Code == vattype.Code && d.Tenant == theTenant).FirstOrDefault();
                     charge.VatTypeId = newVat.Id;
                 }
-                theChargesTypeRepository.Add(charge);
 
+                theChargesTypeRepository.Add(charge);
             }
+
             theChargesTypeRepository.SubmitChanges();
         }
         

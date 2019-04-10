@@ -820,7 +820,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                    
                     if (isValidatingChronological)
                     {
-                        if (loggedTenant.AccountingSetting.IsARInvoiceChronologicalDates && !entityPM.IsExternalAPI)
+                        if (loggedTenant.AccountingSetting.IsARInvoiceChronologicalDates && !entityPM.IsExternalEntity)
                         {
                             ARInvoice lastApprovedInvoice = (from a in myContext.ARInvoices
                                                                where a.Tenant == entityPM.Tenant
