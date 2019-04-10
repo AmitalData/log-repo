@@ -907,32 +907,23 @@ namespace Logitude.Server.Tools.Helpers
 
                 else if (automationCondition.OperatorCode == "<" || automationCondition.OperatorCode == "<F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue))
-                    {
-                        int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                        if (reslutCompare >= 0) isValid = false;
-                        return isValid;
-                    }
+                    int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
+                    if (reslutCompare >= 0) isValid = false;
+                    return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == ">=" || automationCondition.OperatorCode == ">=F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue))
-                    {
-                        int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                        if (reslutCompare == -1) isValid = false;
-                        return isValid;
-                    }
+                    int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
+                    if (reslutCompare == -1) isValid = false;
+                    return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "<=" || automationCondition.OperatorCode == "<=F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue))
-                    {
-                        int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                        if (reslutCompare == 1) isValid = false;
-                        return isValid;
-                    }
+                    int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
+                    if (reslutCompare == 1) isValid = false;
+                    return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "CHANGEDTO")
