@@ -165,6 +165,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
+            if (_MyDeclarationPM.IsCourierDeclaration && this._MyDeclarationPM.PaymentDate.HasValue)
+            {
+                if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
+                {
+                    // Clear Fields
+                    _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
+                    _MyDeclarationPM.PaymentDate = null;
+                    _MyDeclarationPM.PaymentOrderNumber = null;
+                    _MyDeclarationPM.PaymentStatusCode = null;
+                    _MyDeclarationPM.CourierCustomStatusCode = null;
+                    _MyDeclarationPM.CourierSuspentionCode = null;
+                    _MyDeclarationPM.CourierSuspentionReasonCode = null;
+
+                    // Delete Payment
+                    var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
+                    var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                    if (declarationPaymentPM != null)
+                    {
+                        declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Delete;
+                        if (declarationPaymentPM.DeclarationPaymentMethods.Any())
+                        {
+                            foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
+                            {
+                                item.ChangeSetOp = ChangeSetOperation.Delete;
+                            }
+                        }
+                        DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                    }
+
+                    // Delete Status
+                    DeclarationUpdateService.DelDeclarationStatus(_MyDeclarationPM, "", "RSH");
+                }
+            }
+
             if (requestParams.GetType() == typeof(DeclarationRestoreRequestParams))// moran 10.1.16 Task 19724 // Mirit 24/01/16 19845 
             {
                 //if (this._MyDeclarationPM.CorrectionsXml != null)
@@ -180,64 +215,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 //    return;
                 //}
-                if (this._MyDeclarationPM.PaymentDate.HasValue) //If declaration was already paid 
+                if (this._MyDeclarationPM.PaymentDate.HasValue && !_MyDeclarationPM.IsCourierDeclaration)  //If declaration was already paid 
                 {
-                    if (_MyDeclarationPM.IsCourierDeclaration)
+                    //Task 44715 allow update of 1.0 if current <1.0 and it's a restore response
+                    if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
+                        && (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value)) //Compare Declaration Version
+
+                    //if (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value) //Compare Declaration Version
                     {
-                        if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
-                        {
-                            // Clear Fields
-                            _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
-                            _MyDeclarationPM.PaymentDate = null;
-                            _MyDeclarationPM.PaymentOrderNumber = null;
-                            _MyDeclarationPM.PaymentStatusCode = null;
-                            _MyDeclarationPM.CourierCustomStatusCode = null;
-                            _MyDeclarationPM.CourierSuspentionCode = null;
-                            _MyDeclarationPM.CourierSuspentionReasonCode = null;
-
-                            // Delete Payment
-                            var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
-                            var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-                            if (declarationPaymentPM != null)
-                            {
-                                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Delete;
-                                if (declarationPaymentPM.DeclarationPaymentMethods.Any())
-                                {
-                                    foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
-                                    {
-                                        item.ChangeSetOp = ChangeSetOperation.Delete;
-                                    }
-                                }
-                                DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                                declarationPaymentUpdateService.Update(declarationPaymentPM, true);
-                            }
-
-                            // Delete Status
-                            DeclarationUpdateService.DelDeclarationStatus(_MyDeclarationPM, "", "RSH");
-                        }
+                        string mess = "נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")" + " הצהרה כבר שולמה ויש שוני בין הגרסאות";
+                        LogMessagingUtil.Instance.AppendLine(mess);
+                        this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                        this.MyResponseData.Succeeded = true;
+                        this.MyResponseData.UserMessage = mess;
+                        this.MyResponseData.HasException = true;
+                        return;
                     }
                     else
                     {
-                        //Task 44715 allow update of 1.0 if current <1.0 and it's a restore response
-                        if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
-                            && (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value)) //Compare Declaration Version
-
-                        //if (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value) //Compare Declaration Version
-                        {
-                            string mess = "נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")" + " הצהרה כבר שולמה ויש שוני בין הגרסאות";
-                            LogMessagingUtil.Instance.AppendLine(mess);
-                            this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                            this.MyResponseData.Succeeded = true;
-                            this.MyResponseData.UserMessage = mess;
-                            this.MyResponseData.HasException = true;
-                            return;
-                        }
-                        else
-                        {
-                            _MyDeclarationPM.PaymentDate = null;
-                            _MyDeclarationPM.PaymentOrderNumber = "";
-                            _MyDeclarationPM.PaymentStatusCode = "";
-                        }
+                        _MyDeclarationPM.PaymentDate = null;
+                        _MyDeclarationPM.PaymentOrderNumber = "";
+                        _MyDeclarationPM.PaymentStatusCode = "";
                     }
                 }
             }

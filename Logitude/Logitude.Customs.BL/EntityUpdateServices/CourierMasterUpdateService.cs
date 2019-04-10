@@ -329,7 +329,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 string setDeclarationsList = "";
 
                 CustomsRequiredFieldErrors errorsForCourierDeclaration = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(entityPM.Id, entityPM.Tenant);
-                if (errorsForCourierDeclaration == null || (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields == null))
+                if (errorsForCourierDeclaration == null || (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields == null) ||
+                    (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count == 0))
                 {
                     CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
                     List<string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);

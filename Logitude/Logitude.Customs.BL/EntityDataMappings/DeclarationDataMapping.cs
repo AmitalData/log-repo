@@ -72,7 +72,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.ImporterPassCountryName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.TransferImporterCountryName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ProcedureCurrentName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.ImporterName);
+            //this.CustomMappedPMProperties.Add(PMPropertyNames.ImporterName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.DepartmentName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.DeclarationDocumentTypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CustomerCode);
