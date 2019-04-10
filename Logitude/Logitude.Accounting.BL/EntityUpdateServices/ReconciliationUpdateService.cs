@@ -37,6 +37,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
+using Logitude.BL.InvoiceModel.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -284,9 +285,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     service.VoidJournal(journal.Id, tenant, StornoOverrideM);
                     //Voided
                 }
-
-                // update payment amount
-                UpdatePaymentOpenAmountForReconciliaiton(entityPM);
             }
 
             base.OnUpdating(entityPM, entityPOCO);
@@ -370,52 +368,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public bool SuppressResetDraftOpenReconciliation { get; set; }
         protected override void AfterUpdating(ReconciliationPM entityPM, EntityPM entityParentPM)
         {
+            // Draft reconciliation
             if (SuppressResetDraftOpenReconciliation)
-            {
                 return;
-            }
             var repoLedger = new LedgerTransactionRepository(MainContext as IAccountingContext);
             repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
 
 
-            //IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            //ReconciliationUpdateService recoUpdateService = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            //entityPM.ChangeSetOp = ChangeSetOperation.Update;
-            //recoUpdateService.Update(entityPM, false);
-
-
-            //
-            // calculate payment open amount
-            UpdatePaymentOpenAmountForReconciliaiton(entityPM);
-
+            // update connected ARPayment 
+            ARPaymentReconciliationService arpRecoService = new ARPaymentReconciliationService(entityPM.Tenant);
+            arpRecoService.UpdatePaymentOpenAmountAndStatusForReconciliaiton(entityPM);
 
         }
 
-        //protected override void Trace(ReconciliationPM entityPM, Reconciliation entityPOCO, string changesXml)
-        //{
-        //    if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-        //    {
-        //        //create trace event with created type.
-        //    }
-        //    else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-        //    {
-
-
-        //    }
-        //    base.Trace(entityPM, entityPOCO, changesXml);
-        //}
-
-
-
-        //private ContactPM LoggedContact(int tenant)
-        //{
-        //    ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), tenant);
-        //    if (loggedContact == null)
-        //    {
-        //        loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-        //    }
-        //    return loggedContact;
-        //}
 
         protected override void Validate(ReconciliationPM entityPM)
         {
@@ -483,37 +448,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
-
-        private void UpdatePaymentOpenAmountForReconciliaiton(ReconciliationPM entityPM)
-        {
-            IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
-            LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
-            ARPaymentService paymentService = new ARPaymentService(MyContext, entityPM.Tenant);
-
-            // get reconciliation transactions
-            List<string> ledgerTransactionIds = entityPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(d => d.TransactionId).ToList();
-            List<LedgerTransactionPM> ledgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(ledgerTransactionIds, entityPM.Tenant);
-
-            var hasARPayment = ledgerTransactions.Any(d => d.SourceTypeCode == AccountingEntityValues.ARPayment);
-            if (hasARPayment)
-            {
-                // calculate total of reconciled invoice transactions for this payment (any invoice that has a reconciliation with this payment)
-                LedgerTransactionPM paymentTransaction = ledgerTransactions.Where(d => d.SourceTypeCode == AccountingEntityValues.ARPayment).FirstOrDefault();
-                List<LedgerTransactionPM> reconciledInvoicesTransactions 
-                    = transQuery.GetReconciledInvoicesTransactionsForPayment(paymentTransaction.SourceId, paymentTransaction.AccountId, paymentTransaction.Tenant);
-                decimal paymentReconciledInvoicesTotal = reconciledInvoicesTransactions.Sum(d => d.PaymentReconciledAmount).Value;
-
-                // get ARPayment
-                ARPaymentQuery paymentQuery = new ARPaymentQuery(paymentTransaction.Tenant);
-                ARPaymentPM paymentPM = paymentQuery.GetSinglePM(paymentTransaction.SourceId, paymentTransaction.Tenant);
-
-                // calculate open amount for payment
-                paymentPM.OpenAmount = paymentPM.AmountInPaymentCurrency.Value - (double)paymentReconciledInvoicesTotal;
-
-                paymentService.Update(paymentPM);
-
-            }
-        }
-
+        
     }
 }
