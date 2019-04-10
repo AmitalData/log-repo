@@ -8,6 +8,7 @@ using System.Web;
 using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -101,23 +102,28 @@ namespace WebFreight.Web.Helpers
         {
             int tenant = depositionRequestAM.CustomerTenant;
             string systemEmail = "system@tenant" + tenant + ".com";
-            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            ShipmentPM shipmentPM = shipmentQuery.GetSinglePMByForwarderShipmentNumber(depositionRequestAM.ForwarderShipmentNumber, tenant);
-            string shipmentId = string.Empty;
-            if (shipmentPM != null)
-            {
-                shipmentId = shipmentPM.Id;
-                shipmentPM.IsDepositionRequired = true;
-                shipmentPM.ImporterDepositionRequestDetails = depositionRequestAM.VendorCode + "^" + depositionRequestAM.VendorName;
-                shipmentPM.IsShipmentComputedFieldChange = true;
-                IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
-                ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, systemEmail);
-                shipmentService.Update();
 
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            string shipmentId = shipmentQuery.GetShipmentIdByForwarderShipmentNumber(depositionRequestAM.ForwarderShipmentNumber, tenant);
+
+            if (shipmentId != null)
+            {
+                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
+                ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentId, tenant);
+                if (shipmentComputedFields != null)
+                {
+                    shipmentComputedFields.IsDepositionRequired = true;
+                    shipmentComputedFields.ImporterDepositionRequestDetails = depositionRequestAM.VendorCode + "^" + depositionRequestAM.VendorName;
+                    ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                    shipmentComputedFieldsHelper.UpdateShipmentComputedFields(shipmentComputedFields);
+                }
             }
             return shipmentId;
 
         }
+
+
+
 
         private void MapDepositionRequestPMToDepositionRequestAM(DepositionRequestPM depositionRequestPM, DepositionRequestAM depositionRequestAM)
         {
