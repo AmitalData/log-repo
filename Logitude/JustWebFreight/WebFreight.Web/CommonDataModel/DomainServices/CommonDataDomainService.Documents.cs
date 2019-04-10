@@ -2341,9 +2341,13 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 ShipmentCompField.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(entity.EntityId, entity.ObjectTableId, Tenant);
                 ShipmentCompField.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(entity.EntityId, entity.ObjectTableId, Tenant);
                 ShipmentCompField.IsRequestedDocuments = documentsFilingQuery.GetIfIsRequestedForEntity(entity.EntityId, Tenant);
-                ShipmentCompField.RequestedDocumentsCount = documentsFilingQuery.GetRequestedDocCountForEntity(entity.EntityId, Tenant); 
-                    shipmentComputedFieldsRepository.Update(ShipmentCompField);
-                    shipmentComputedFieldsRepository.SubmitChanges();
+                ShipmentCompField.RequestedDocumentsCount = documentsFilingQuery.GetRequestedDocCountForEntity(entity.EntityId, Tenant);
+                ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+
+
+               // shipmentComputedFieldsRepository.Update(ShipmentCompField);
+                  //  shipmentComputedFieldsRepository.SubmitChanges();
                 }
         }
 
