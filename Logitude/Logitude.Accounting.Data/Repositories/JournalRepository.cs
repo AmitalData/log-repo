@@ -14,6 +14,8 @@ using System.Diagnostics;
 using System.Data.Entity;
 using Logitude.Server.Tools;
 using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Logitude.Accounting.Data.DataContract;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -362,24 +364,38 @@ namespace Logitude.Accounting.Data.Repositories
                     select record).Any();
         }
 
-        public List<Journal> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
+        public List<TaxReportData> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
         {
             int days= DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
             DateTime date = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
 
             IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
+            List<ARInvoice> invoices = (from a in invoicecontext.ARInvoices
+                                        where a.InvoiceDate <= date
+                                        select a).ToList();
 
-
-            return (from a in context.Journals
+            List< Journal> journals=(from a in context.Journals
                     join r in context.JournalLines on a.Id equals r.JournalId
                     join m in context.JournalAdditionalDatas on a.Id equals m.JournalId
-                
                     where a.AccountingEntityCode == "2" && (m.TaxReportId == null ||m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null) && a.Tenant== tenant
                     && r.DocumentDate <= date 
 
-                    select a).ToList();
+                    select a ).ToList();
 
+            List<TaxReportData> data = (from a in journals
+                                        join n in invoices on a.AccountingEntityId equals n.Id
+                                        where n.TotalAmountForTaxReport != null
+                                        select new TaxReportData()
+                                        {
+                                            Id = a.Id,
+                                            AccountingEntityId = a.AccountingEntityId,
+                                            TaxReportTotalAmount = n.TotalAmountForTaxReport,
 
+                                        }).ToList();
+
+            return data;
+
+           
         }
 
         public Journal GetJournalByIdAndTenant(string id, int tenant)

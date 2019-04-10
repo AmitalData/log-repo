@@ -57,7 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
                 JournalRepository journalRepository = new JournalRepository(tenant);
-                List<Journal> journals = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
+                List<TaxReportData> journals = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
 
                 ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
 
@@ -80,7 +80,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<TaxReportLinePM> reportLinesList = new List<TaxReportLinePM>();
 
                 //Outputs
-                foreach (Journal a in journals)
+                foreach (TaxReportData a in journals)
                 {
                     string vatNumber = null;
                     var exist = reportLinesList.Where(d => d.JournalId == a.Id).Any();
