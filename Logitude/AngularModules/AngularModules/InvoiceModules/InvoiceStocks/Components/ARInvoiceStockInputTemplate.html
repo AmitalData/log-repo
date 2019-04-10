@@ -146,13 +146,13 @@
                 <div class="SimpleGridViewHeader">
                     <table>
                         <tr>
-                            <td style="width: 100px; min-width: 100px; max-width: 100px;">Invoice Number</td>
-                            <td style="width: 100px; min-width: 100px; max-width: 100px;">CreateDate</td>
-                            <td style="width: 140px; min-width: 140px; max-width: 140px;">Created by</td>
-                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Last Action Date</td>
-                            <td style="width: 140px; min-width: 140px; max-width: 140px;">Last Action by</td>
-                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Shipment Number</td>
-                            <td style="width: 70px; min-width: 70px; max-width: 70px;">Used</td>
+                            <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoiceStockLine.F.Number' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'ARInvoiceStockLine.F.CreateDate' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoiceStockLine.F.CreatedByUserName' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'ARInvoiceStockLine.F.UpdateDate' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoiceStockLine.F.UpdatedByUserName' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 120px; min-width: 120px; max-width: 120px;">{{'ARInvoiceStockLine.F.ShipmentNumber' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 70px; min-width: 70px; max-width: 70px;">{{'ARInvoiceStockLine.F.IsUsed' | TextCodeTranslationPipe}}</td>
                             <td class="LastChild"></td>
                         </tr>
                     </table>
@@ -166,16 +166,18 @@
                                 {{item.Number}}
                             </td>
 
-                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                {{item.CreateDate | DateTimePipe:'D'}}
+                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                <span class="Value">{{item.CreateDate | DateTimeToDatePipe}}</span>
+                                <span class="Label">{{item.CreateDate | DateTimeToTimePipe}}</span>
                             </td>
 
                             <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
                                 {{item.CreatedByUserName}}
                             </td>
 
-                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
-                                {{item.UpdateDate | DateTimePipe:'D'}}
+                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                <span class="Value">{{item.UpdateDate | DateTimeToDatePipe}}</span>
+                                <span class="Label">{{item.UpdateDate | DateTimeToTimePipe}}</span>
                             </td>
 
                             <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">

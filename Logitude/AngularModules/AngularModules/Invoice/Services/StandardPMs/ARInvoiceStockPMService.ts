@@ -21,6 +21,7 @@ import {ARInvoiceStockPM} from '../../EntityPMs/ARInvoiceStockPM';
 
 import {ARInvoiceStockLinePM} from '../../EntityPMs/ARInvoiceStockLinePM';
 import {ARInvoiceStockPMInitService} from '../../EntityPMInitServices/ARInvoiceStockPMInitService';
+import {ARInvoiceStockValidator} from '../../Validators/ARInvoiceStockValidator';
 
 @Injectable()
 
@@ -81,6 +82,12 @@ export class ARInvoiceStockPMService {
                 validator = new ClassLevelValidator();
                  
                 var errorsArray = validator.Validate("ARInvoiceStock", entityPM);
+                var customValidator :ARInvoiceStockValidator = new ARInvoiceStockValidator();
+                var validationErrorsArr = customValidator.Validate(entityPM);
+				if(validationErrorsArr)
+				{
+					errorsArray = errorsArray.concat(validationErrorsArr);
+				}
                  
 
                 var serviceResponse: ServiceResponse;
@@ -136,6 +143,12 @@ export class ARInvoiceStockPMService {
                 validator = new ClassLevelValidator();
                
                 var errorsArray = validator.Validate("ARInvoiceStock", entityPM);
+                var customValidator :ARInvoiceStockValidator = new ARInvoiceStockValidator();
+                var validationErrorsArr = customValidator.Validate(entityPM);
+				if(validationErrorsArr)
+				{
+					errorsArray = errorsArray.concat(validationErrorsArr);
+				}
                  
 
                 var serviceResponse: ServiceResponse;
