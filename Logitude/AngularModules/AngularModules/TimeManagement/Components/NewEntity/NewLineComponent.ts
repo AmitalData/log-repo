@@ -200,7 +200,10 @@ export class NewLineComponent extends BaseComponent {
     // Commands
     public ValidationErrorsList: string[];
     CancelButtonClicked() {
-        this.RejectChanges();
+        if (!this.IsNew) {
+            this.RejectChanges();
+        }
+     
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -288,6 +291,7 @@ export class NewLineComponent extends BaseComponent {
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {
+       
         this.myCloner.RejectChanges();
     }
 }
