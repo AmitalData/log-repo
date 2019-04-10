@@ -44,7 +44,10 @@ export class SplitButtonComponent implements OnInit {
 
 
   @Input()
-  public OnClickedShowMenuContent: boolean = false;
+    public OnClickedShowMenuContent: boolean = false;
+
+    @Input()
+    public AsRegularButton: boolean = false;
 
   @Input()
   public get ButtonCodeText() { return this._ButtonCodeText; }

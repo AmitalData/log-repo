@@ -991,13 +991,14 @@ export class ShowGeneralLOVReturnSelected {
             //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
             './CustomsModules/CustomsMaintenance/Components/GeneralLOVComponent'
         );
-
+        AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
         logWindow.WindowClosed.subscribe((event1: any) => {
             ///AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
             if (event1 == "Cancel") {
 
             }
             SessionLocator.CurrentSession.StopBusyIndicator();
+            AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
             AmitalGatewayUtil.Instance.ShowGeneralLOVReturnSelectedCallBack(event1);
 
 
