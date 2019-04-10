@@ -141,6 +141,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     // IsEntityValid: boolean = true;
 
+    public IsGridReadOnly(): boolean{
+        return this.EntityPM.StatusCode == 'CL' || this.EntityPM.StatusCode == 'VD' || this.EntityPM.OpenAmount == 0;
+    }
 
 
     public get IsEntityValid(): boolean {
