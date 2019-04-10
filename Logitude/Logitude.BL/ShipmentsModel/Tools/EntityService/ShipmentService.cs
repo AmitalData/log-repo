@@ -417,7 +417,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentReceivablesCollection();
                     this.UpdateShipmentAWBPrintOnliesCollection();
                     this.UpdateShipmentConsoleShipmentsCollection();
-                    this.UpdateShipmentFollowUpsCollection();
+                    this.UpdateShipmentFollowUpsCollection("InSert");
                     this.UpdateShipmentCarrierStatusesCollection();
                     this.UpdateShipmentAWBOCIsCollection();
                     this.UpdateShipmentCommoditiesCollection();
@@ -449,6 +449,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
                     RunAutomation("OnUpdate");
+
+                    this.UpdateShipmentFollowUpsCollection();
+
                     UpdateShipmentComputedFields();
 
 
@@ -1709,90 +1712,40 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
 
-        private void UpdateShipmentFollowUpsCollection()
+        private void UpdateShipmentFollowUpsCollection(string changeSet = "Update")
         {
             if (shipmentFollowUpsChangeSet != null)
             {
-                List<FollowUp> doneFollowUps = new List<FollowUp>();
+                bool isChange = false;
 
-                foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet)
+                if (changeSet == "InSert")
                 {
-                    switch (itemPM.ChangeSetOp)
+                    #region Insert FollowUp
+                    List<FollowUp> doneFollowUps = new List<FollowUp>();
+                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert))
                     {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateShipmentFollowUp(itemPM);
-                                followUpRepository.SubmitChanges();
-
-                                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                {
-                                    Tenant = tenant,
-                                    EventTypeCode = "SFCR",
-                                    UserId = this.loggedContact.Id,
-                                    EntityId = this.entityPM.Id,
-                                    ObjectTableName = "Shipment",
-                                    Notes = itemPM.EventTypeFollowUpName,
-                                });
-
-                                if (itemPM.Done)
-                                {
-                                    itemPM.Deleted = true;
-                                    FollowUp follow = followUpRepository.GetSingleFollowUp(itemPM.Id, tenant);
-                                    doneFollowUps.Add(follow);
-
-                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                    {
-                                        Tenant = tenant,
-                                        EventTypeCode = "SFCM",
-                                        UserId = this.loggedContact.Id,
-                                        EntityId = this.entityPM.Id,
-                                        ObjectTableName = "Shipment",
-                                        Notes = itemPM.EventTypeFollowUpName,
-                                    });
-                                }
-
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteShipmentFollowUp(itemPM);
-                                followUpRepository.SubmitChanges();
-                                break;
-                            }
-
-                        default: { break; }
-                    }
-                }
-
-                if (doneFollowUps.Count > 0)
-                {
-                    foreach (FollowUp itemPoco in doneFollowUps)
-                    {
-                        if (!entityPM.IsHybrid)
+                        isChange = true;
+                        if (itemPM.Done) itemPM.Deleted = true;
+                        this.CreateShipmentFollowUp(itemPM);
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
                         {
-                            shipmentTracing.TraceShipmentOnCreateDoneFollowUp(itemPoco);
-                        }
+                            Tenant = tenant,
+                            EventTypeCode = "SFCR",
+                            UserId = this.loggedContact.Id,
+                            EntityId = this.entityPM.Id,
+                            ObjectTableName = "Shipment",
+                            Notes = itemPM.EventTypeFollowUpName,
+                        });
 
-                        followUpRepository.Remove(itemPoco);
-                        followUpRepository.SubmitChanges();
                     }
-                }
+                    if (isChange) followUpRepository.SubmitChanges();
+                    #endregion
 
-                foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
-                {
-                    if (itemPM.Done)
+                    #region Done FollowUp
+                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert && d.Done))
                     {
-                        itemPM.Deleted = true;
-                        entityPM.MarkFollowUpsAsDone = true;
-
-                        if (!entityPM.IsHybrid)
-                        {
-                            shipmentTracing.TraceShipmentOnUpdateDoneFollowUp(itemPM);
-                        }
-
-                        this.DeleteShipmentFollowUp(itemPM);
-                        followUpRepository.SubmitChanges();
+                        FollowUp follow = followUpRepository.GetSingleFollowUp(itemPM.Id, tenant);
+                        doneFollowUps.Add(follow);
 
                         EventTracer.CreateTraceEvent(new EventTracerArgs()
                         {
@@ -1803,15 +1756,76 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             ObjectTableName = "Shipment",
                             Notes = itemPM.EventTypeFollowUpName,
                         });
+
+                    }
+                    if (doneFollowUps.Count > 0)
+                    {
+                        foreach (FollowUp itemPoco in doneFollowUps)
+                        {
+                            if (!entityPM.IsHybrid)
+                            {
+                                shipmentTracing.TraceShipmentOnCreateDoneFollowUp(itemPoco);
+                            }
+
+                            followUpRepository.Remove(itemPoco);
+
+                        }
+
+                        followUpRepository.SubmitChanges();
                     }
 
-                    else
+                    #endregion
+                }
+                else
+                {
+                    #region Delete & Update FollowUp
+                    isChange = false;
+                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete))
                     {
-                        this.UpdateShipmentFollowUp(itemPM);
+                        this.DeleteShipmentFollowUp(itemPM);
+                        isChange = true;
                     }
+
+                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
+                    {
+                        if (itemPM.Done)
+                        {
+                            itemPM.Deleted = true;
+                            entityPM.MarkFollowUpsAsDone = true;
+
+                            if (!entityPM.IsHybrid)
+                            {
+                                shipmentTracing.TraceShipmentOnUpdateDoneFollowUp(itemPM);
+                            }
+
+                            this.DeleteShipmentFollowUp(itemPM);
+                            followUpRepository.SubmitChanges();
+
+                            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                            {
+                                Tenant = tenant,
+                                EventTypeCode = "SFCM",
+                                UserId = this.loggedContact.Id,
+                                EntityId = this.entityPM.Id,
+                                ObjectTableName = "Shipment",
+                                Notes = itemPM.EventTypeFollowUpName,
+                            });
+                        }
+
+                        else
+                        {
+                            this.UpdateShipmentFollowUp(itemPM);
+                        }
+
+                        isChange = true;
+                    }
+
+                    if (isChange) followUpRepository.SubmitChanges();
+                    #endregion
+
+                    this.ComputeNumerOfFollowUps();
                 }
 
-                this.ComputeNumerOfFollowUps();
             }
         }
 
