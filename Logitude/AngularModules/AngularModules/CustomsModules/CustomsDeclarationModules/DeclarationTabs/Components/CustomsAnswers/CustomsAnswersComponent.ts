@@ -147,7 +147,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.IsManifest = true;
             this.IsConstraintsVisible = false;
             console.log("CustomsAnswersShowManifest");
-            myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
+            //myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
         }
         else {
             this.CourierFilterSelectedValue = 'Declaration';
