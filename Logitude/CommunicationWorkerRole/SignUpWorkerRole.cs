@@ -150,7 +150,7 @@ namespace CommunicationWorkerRole
                 {
                     From = "admin@fnarsoft.com",
                     To = "jalal@logitudeworld.com",
-                    CC = "Perla@logitudeworld.com;zaki@logitudeworld.com;isra@logitudeworld.com;maram@logitudeworld.com;fajr@logitudeworld.com;Liraz@logitudeworld.com;ahmada@logitudeworld.com;ahmadb@logitudeworld.com;Alex@logitudeworld.com;jinan@amital.co.il;eman@logitudeworld.com",
+                    CC = "Perla@logitudeworld.com;zaki@logitudeworld.com;isra@logitudeworld.com;maram@logitudeworld.com;fajr@logitudeworld.com;ahmada@logitudeworld.com;ahmadb@logitudeworld.com;eman@logitudeworld.com;diaa@logitudeworld.com;maryam@logitudeworld.com;azhar@logitudeworld.com",
                     BCC = "",
                     Subject = "SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,
@@ -178,7 +178,7 @@ namespace CommunicationWorkerRole
                 {
                     From = "admin@fnarsoft.com",
                     To = "ahmada@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
-                    CC = "ahmadb@logitudeworld.com;YaronC@AMITAL.CO.IL;boazelkana@gmail.com;basel@amital.co.il",
+                    CC = "ahmadb@logitudeworld.com;YaronC@AMITAL.CO.IL;boazelkana@gmail.com",
                     BCC = "",
                     Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,
