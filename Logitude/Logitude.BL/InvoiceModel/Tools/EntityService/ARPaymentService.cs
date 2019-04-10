@@ -1561,6 +1561,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
 
+            if (paymentPM.InvoicesTransactions.Count == 0)
+                return;
+
             // reco payment line
             var _recoPYLine = CreatePaymentRecoLine(paymentPM);
             _recoPYLine.TransactionId = paymentTransaction.Id;
