@@ -30,7 +30,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Tenant = entityPM.Tenant;
                 entityPM.CreateDate = todayDateTime;
 
-                if (entityPM.IsExternalAPI)
+                if (entityPM.IsExternalAPI )
                 {
                     entity.IssuedByUserId = entityPM.IssuedByUserId;
                     entity.CreatedByUserId = entityPM.CreatedByUserId;
@@ -118,7 +118,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entityPM.MasterNumber = null;
                 }
             }
-
+            entity.IsExternalEntity = entityPM.IsExternalEntity;
             entity.HouseNumber = entityPM.HouseNumber;
             entity.MasterNumber = entityPM.MasterNumber;
             entityPM.UpdateDate = todayDateTime;
