@@ -95,6 +95,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         entityPM.IsExternalEntity = true;
                         entityPM.IsExternalAPI = true;
                         entityPM.Tenant = entity.Tenant;
+                        entityPM.IsGeneralInvoice = true;
                         if (entity.IsDraft)
                         {
                             entityPM.SetApproved = false;

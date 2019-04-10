@@ -45,7 +45,14 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             
                 if (invoicePM != null && invoicePM.StatusCode == "AD")
                 {
-
+                    if (invoicePM.BillToId != invoice.BillToId)
+                    {
+                        throw new ApplicationException("The bill to is different than the credited invoice bill to");
+                    }
+                    if (Math.Abs(invoicePM.AmountInLocalCurrency.Value) != Math.Abs(invoice.AmountInLocalCurrency.Value))
+                    {
+                        throw new ApplicationException("The total amount is different than the credited invoice total amount");
+                    }
 
                     ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(tenant);
 
@@ -91,7 +98,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 
 
-
+                    
+                      
                         invoicePM.IsCancelled = true;
                         invoicePM.CancelledByARInvoiceId = invoice.Id;
                         invoicePM.StatusCode = "AR";
