@@ -24,7 +24,7 @@
                     <td style="width:20px;"><div style="width:20px"></div></td>
                     <td style="width:100px;"><div style="width:80px;">Time Required:</div></td>
                     <td style="width:120px;">
-                        <LogTextBox [NoObjectField]="true" [InputType]="'double'"  [DigitsAfterPoint]="'2'"  [ObjectFieldName]="'TimeRequired'" [DataContext]="DataContext"></LogTextBox>
+                        <TimeInput [TextAlign]="'left'" [TotalMinutes]="DateOfWorkMinutes" (TotalMinutesChanged)="DateOfWorkMinutes = $event" [InputValue]="DateOfWorkDateFormat" [DisplayValue]="DateOfWorkDateFormat" (Changed)="DateOfWorkDateFormat = $event" [IsShowText]="false"></TimeInput>
                     </td>
                     <td style="width:20px;"><div style="width:20px"></div></td>
                     <td style="width:200px;">
