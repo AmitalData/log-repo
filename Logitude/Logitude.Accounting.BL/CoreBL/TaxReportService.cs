@@ -57,7 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
                 JournalRepository journalRepository = new JournalRepository(tenant);
-                List<TaxReportData> journals = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
+                List<TaxReportData> TaxReportJournalData = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
 
                 ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
 
@@ -68,7 +68,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 CardRepository cardRepository = new CardRepository(tenant);
                 TenantQuery tenantQuery = new TenantQuery(tenant);
                 TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
-                List<string> AccountingEntiyIds = journals.Select(d => d.AccountingEntityId).ToList();
+                List<string> AccountingEntiyIds = TaxReportJournalData.Select(d => d.AccountingEntityId).ToList();
 
                 List<ARInvoice> invoices = aRInvoiceRepository.GetARInvoicesByIds(taxReport.Tenant, AccountingEntiyIds);
                 List<string> cardIds = invoices.Select(d => d.BillToId).ToList();
@@ -80,7 +80,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<TaxReportLinePM> reportLinesList = new List<TaxReportLinePM>();
 
                 //Outputs
-                foreach (TaxReportData a in journals)
+                foreach (TaxReportData a in TaxReportJournalData)
                 {
                     string vatNumber = null;
                     var exist = reportLinesList.Where(d => d.JournalId == a.Id).Any();
