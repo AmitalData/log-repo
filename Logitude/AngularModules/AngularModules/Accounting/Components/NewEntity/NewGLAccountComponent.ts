@@ -186,6 +186,7 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.RevenueExpenseType = value;
             } else {
                 // enable fields
+                this.IsMultiCurrency = false;
                 this.IsMultiCurrencyCheckboxEnabled = true;
                 this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
