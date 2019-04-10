@@ -84,6 +84,7 @@ export class TenantList {
 		CustomerName: string;
 		IsCustomerTenantShare: boolean;
 		CustomerTenantShareImportFile: boolean;
+		CustomerTenantShareExportFile: boolean;
 		AllowAgentInCustomersLOV: boolean;
 		IsCorrespondenceRightToLeftEnabled: boolean;
 		IsNotesRightToLeftEnabled: boolean;
