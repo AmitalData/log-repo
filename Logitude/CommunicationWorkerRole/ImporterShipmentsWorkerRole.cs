@@ -617,12 +617,19 @@ namespace CommunicationWorkerRole
                                                                 Code = Shipment.OnCarriageToPortCode,
                                                                 CountryCode = Shipment.OnCarriageToPortCountryCode
                                                             },
-                                                            Incoterm = new CodeProperties()
-                                                            {
-                                                                Code = Shipment.IncotermCode
-                                                            }
+                                                            //Incoterm = new CodeProperties()
+                                                            //{
+                                                            //    Code = Shipment.IncotermCode
+                                                            //}
 
                                                         };
+                                                        if (!string.IsNullOrEmpty(Shipment.IncotermCode))
+                                                        {
+                                                            shipmentAM.Incoterm = new CodeProperties()
+                                                            {
+                                                                Code = Shipment.IncotermCode
+                                                            };
+                                                        }
                                                         shipmentAM.ShipmentPackagesAM = new List<ShipmentPackageAM>();
                                                         foreach (var package in Shipment.ShipmentPackages)
                                                         {
@@ -838,12 +845,18 @@ namespace CommunicationWorkerRole
                                                                 Code = Shipment.OnCarriageToPortCode,
                                                                 CountryCode = Shipment.OnCarriageToPortCountryCode
                                                             },
-                                                            Incoterm = new CodeProperties()
+                                                            //Incoterm = new CodeProperties()
+                                                            //{
+                                                            //    Code = Shipment.IncotermCode
+                                                            //}
+                                                        };
+                                                        if (!string.IsNullOrEmpty(Shipment.IncotermCode))
+                                                        {
+                                                            shipmentAM.Incoterm = new CodeProperties()
                                                             {
                                                                 Code = Shipment.IncotermCode
-                                                            }
-                                                        };
-
+                                                            };
+                                                        }
                                                         shipmentAM.ShipmentPackagesAM = new List<ShipmentPackageAM>();
                                                         foreach (var package in Shipment.ShipmentPackages)
                                                         {
