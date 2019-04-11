@@ -23,11 +23,11 @@ namespace Logitude.TimeManagement.Data.Repositories
 
         public string GetTMProjectByNumber(string number, int tenant)
         {
-            var projectId = "";
+            string projectId = null;
             var project = (from d in context.TMProjects
                           where d.Tenant == tenant
                           && d.ProjectNumber == number
-                          select d).FirstOrDefault();
+                          select d).FirstOrDefault();  
 
             if (project != null)
             {

@@ -40,6 +40,7 @@ using System.Net.Http.Headers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using System.Xml.Linq;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.WebServices
 {
@@ -244,23 +245,27 @@ namespace WebFreight.Web.WebServices
                         ShipmentCompField.IsRequestedDocuments = documentsFilingQuery.GetIfIsRequestedForEntity(extDocPM.EntityId, tenant);
                         ShipmentCompField.RequestedDocumentsCount = documentsFilingQuery.GetRequestedDocCountForEntity(extDocPM.EntityId, tenant);
 
-                       //if (extDocPM.HasFile)
-                       //{
-                       //    //DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
-                       //    //DocumentsFilingPM extDocPM = documentsFilingQuery.GetSinglePM(externalDocumentId, tenant);
-                       //    bool hasmissing = documentsFilingQuery.CheckMissingDocForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
-                       //    ShipmentCompField.IsMissingDocuments = hasmissing;
-                       //}
-                       //else
-                       //{
-                       //    if (extDocPM.DocumentTypeCode == "740" || extDocPM.DocumentTypeCode == "706" || extDocPM.DocumentTypeCode == "380")
-                       //    {
-                       //        ShipmentCompField.IsMissingDocuments = true;
-                       //    } 
-                       //}
-                       //ShipmentCompField.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
-                       shipmentComputedFieldsRepository.Update(ShipmentCompField);
-                       shipmentComputedFieldsRepository.SubmitChanges();
+                        //if (extDocPM.HasFile)
+                        //{
+                        //    //DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
+                        //    //DocumentsFilingPM extDocPM = documentsFilingQuery.GetSinglePM(externalDocumentId, tenant);
+                        //    bool hasmissing = documentsFilingQuery.CheckMissingDocForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
+                        //    ShipmentCompField.IsMissingDocuments = hasmissing;
+                        //}
+                        //else
+                        //{
+                        //    if (extDocPM.DocumentTypeCode == "740" || extDocPM.DocumentTypeCode == "706" || extDocPM.DocumentTypeCode == "380")
+                        //    {
+                        //        ShipmentCompField.IsMissingDocuments = true;
+                        //    } 
+                        //}
+                        //ShipmentCompField.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
+
+                        ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+
+                        //shipmentComputedFieldsRepository.Update(ShipmentCompField);
+                      // shipmentComputedFieldsRepository.SubmitChanges();
                    }
 
                }

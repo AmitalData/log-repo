@@ -875,6 +875,12 @@ namespace Logitude.Server.Tools.Helpers
 
                 #endregion
 
+
+                if (automationCondition.OperatorCode == "<=" || automationCondition.OperatorCode == "<=F" || automationCondition.OperatorCode == ">" || automationCondition.OperatorCode == ">F" || automationCondition.OperatorCode == ">=" || automationCondition.OperatorCode == ">=F" || automationCondition.OperatorCode == "<" || automationCondition.OperatorCode == "<F")
+                {
+                    if (string.IsNullOrEmpty(automationConditionvalue) || string.IsNullOrEmpty(automationConditionFieldValue)) return false;
+                }
+
                 if (automationCondition.OperatorCode == "=" || automationCondition.OperatorCode == "=F")
                 {
                     if (automationConditionFieldValue != automationConditionvalue) isValid = false;
@@ -897,7 +903,7 @@ namespace Logitude.Server.Tools.Helpers
                     if (!string.IsNullOrEmpty(automationConditionFieldValue) && automationConditionFieldValue.Contains(automationConditionvalue)) isValid = false;
                     return isValid;
                 }
-
+               
                 else if (automationCondition.OperatorCode == ">" || automationCondition.OperatorCode == ">F")
                 {
                     int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
@@ -907,32 +913,23 @@ namespace Logitude.Server.Tools.Helpers
 
                 else if (automationCondition.OperatorCode == "<" || automationCondition.OperatorCode == "<F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue))
-                    {
-                        int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                        if (reslutCompare >= 0) isValid = false;
-                        return isValid;
-                    }
+                    int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
+                    if (reslutCompare >= 0) isValid = false;
+                    return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == ">=" || automationCondition.OperatorCode == ">=F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue))
-                    {
-                        int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                        if (reslutCompare == -1) isValid = false;
-                        return isValid;
-                    }
+                    int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
+                    if (reslutCompare == -1) isValid = false;
+                    return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "<=" || automationCondition.OperatorCode == "<=F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue))
-                    {
-                        int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                        if (reslutCompare == 1) isValid = false;
-                        return isValid;
-                    }
+                    int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
+                    if (reslutCompare == 1) isValid = false;
+                    return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "CHANGEDTO")
