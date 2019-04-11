@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .BorderItem {
         margin-top: 10px;
@@ -264,63 +264,137 @@
                                         <tr>
                                             <td>
                                                 <table>
-                                                    <tr class="FormFieldRow">
-                                                        <td style="width:18px;">
-                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInQuote'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                    <tr>
+                                                        <td style="width:100px;">
+                                                            <table>
+                                                                <tr class="FormFieldRow">
+                                                                    <td style="width:18px;">
+                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInQuote'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+
+                                                                    <td style="width:5px;"><div></div></td>
+
+                                                                    <td style="width:70px;">
+                                                                        <label class="Label">{{'ChargesType.F.IsAutoDisplayInQuote.Short' | TextCodeTranslationPipe}}</label>
+                                                                    </td>
+
+                                                                    <td><div></div></td>
+                                                                </tr>
+
+                                                                <tr class="FormFieldRow">
+                                                                    <td>
+                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInShipment'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+
+                                                                    <td style="width:5px;"><div></div></td>
+
+                                                                    <td>
+                                                                        <label class="Label">{{'ChargesType.F.IsAutoDisplayInShipment.Short' | TextCodeTranslationPipe}}</label>
+                                                                    </td>
+
+                                                                    <td><div></div></td>
+                                                                </tr>
+
+                                                                <tr class="FormFieldRow">
+                                                                    <td>
+                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInConsolidation'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+
+                                                                    <td style="width:5px;"><div></div></td>
+
+                                                                    <td>
+                                                                        <label class="Label">{{'ChargesType.F.IsAutoDisplayInConsolidation.Short' | TextCodeTranslationPipe}}</label>
+                                                                    </td>
+
+                                                                    <td><div></div></td>
+                                                                </tr>
+
+                                                                <tr class="FormFieldRow" *ngIf="CustomsFieldsIsVisible">
+                                                                    <td>
+                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInCustoms'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+
+                                                                    <td style="width:5px;"><div></div></td>
+
+                                                                    <td>
+                                                                        <label class="Label">{{'ChargesType.F.IsAutoDisplayInCustoms.Short' | TextCodeTranslationPipe}}</label>
+                                                                    </td>
+
+                                                                    <td><div></div></td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
 
-                                                        <td style="width:5px;"><div></div></td>
-
-                                                        <td style="width:70px;">
-                                                            <label class="Label">{{'ChargesType.F.IsAutoDisplayInQuote.Short' | TextCodeTranslationPipe}}</label>
+                                                        <td style="width:10px;">
+                                                            <div></div>
                                                         </td>
 
-                                                        <td><div></div></td>
-                                                    </tr>
+                                                        <td style="width:100px;">
+                                                            <table>
+                                                                <tr class="FormFieldRow">
+                                                                    <td style="width:18px;">
+                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsExport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
 
-                                                    <tr class="FormFieldRow">
+                                                                    <td style="width:5px;"><div></div></td>
+
+                                                                    <td style="width:70px;">
+                                                                        <label class="Label">{{'ChargesType.F.IsExport' | TextCodeTranslationPipe}}</label>
+                                                                    </td>
+
+                                                                    <td><div></div></td>
+                                                                </tr>
+
+                                                                <tr class="FormFieldRow">
+                                                                    <td>
+                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsImport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+
+                                                                    <td style="width:5px;"><div></div></td>
+
+                                                                    <td>
+                                                                        <label class="Label">{{'ChargesType.F.IsImport' | TextCodeTranslationPipe}}</label>
+                                                                    </td>
+
+                                                                    <td><div></div></td>
+                                                                </tr>
+
+                                                                <tr class="FormFieldRow">
+                                                                    <td>
+                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsDomestic'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+
+                                                                    <td style="width:5px;"><div></div></td>
+
+                                                                    <td>
+                                                                        <label class="Label">{{'ChargesType.F.IsDomestic' | TextCodeTranslationPipe}}</label>
+                                                                    </td>
+
+                                                                    <td><div></div></td>
+                                                                </tr>
+
+                                                                <tr class="FormFieldRow" *ngIf="CustomsFieldsIsVisible">
+                                                                    <td>
+                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsDrop'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+
+                                                                    <td style="width:5px;"><div></div></td>
+
+                                                                    <td>
+                                                                        <label class="Label">{{'ChargesType.F.IsDrop' | TextCodeTranslationPipe}}</label>
+                                                                    </td>
+
+                                                                    <td><div></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
                                                         <td>
-                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInShipment'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            <div></div>
                                                         </td>
-
-                                                        <td style="width:5px;"><div></div></td>
-
-                                                        <td>
-                                                            <label class="Label">{{'ChargesType.F.IsAutoDisplayInShipment.Short' | TextCodeTranslationPipe}}</label>
-                                                        </td>
-
-                                                        <td><div></div></td>
-                                                    </tr>
-
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInConsolidation'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                        </td>
-
-                                                        <td style="width:5px;"><div></div></td>
-
-                                                        <td>
-                                                            <label class="Label">{{'ChargesType.F.IsAutoDisplayInConsolidation.Short' | TextCodeTranslationPipe}}</label>
-                                                        </td>
-
-                                                        <td><div></div></td>
-                                                    </tr>
-
-                                                    <tr class="FormFieldRow" *ngIf="CustomsFieldsIsVisible">
-                                                        <td>
-                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInCustoms'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                        </td>
-
-                                                        <td style="width:5px;"><div></div></td>
-
-                                                        <td>
-                                                            <label class="Label">{{'ChargesType.F.IsAutoDisplayInCustoms.Short' | TextCodeTranslationPipe}}</label>
-                                                        </td>
-
-                                                        <td><div></div></td>
                                                     </tr>
                                                 </table>
-                                            </td>
+                                            </td>                                            
                                         </tr>
 
                                     </table>

@@ -16,6 +16,7 @@ namespace WebFreight.Web.DataProviders
         public bool IsAccountMulticurrency { get; set; }
         public string AccountCurrencySign { get; set; }
         public string AccountCurrencyCode { get; set; }
+        public string AccountReconcileMethod { get; set; }
 
         // Others
         public string PrintedByUser { get; set; }

@@ -63,7 +63,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Stimulsoft.Report">
-      <HintPath>..\General\Dlls\StimulSoft new\Stimulsoft.Report.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Stimulsoft Reports.Silverlight 2015.1 Trial\Bin\Stimulsoft.Report.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -240,6 +240,7 @@
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckTotals.cs" />
     <Compile Include="CoreBL\System1000Service.cs" />
     <Compile Include="CoreBL\TaxDeductionReportService.cs" />
+    <Compile Include="CoreBL\ARPaymentReconciliationService.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
     <Compile Include="DataContract\OpenFormatReportData.cs" />

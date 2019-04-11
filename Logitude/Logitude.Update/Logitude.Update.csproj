@@ -278,6 +278,12 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="bin\Debug\JustWebFreightConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="bin\Debug\JustWebFreightappSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Logitude.Update.Sivug.CustomsBookEntities.datasource" />
     <None Include="Properties\Settings.settings">
@@ -386,7 +392,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
     <Folder Include="Production\" />
     <Folder Include="ZipFiles\" />
   </ItemGroup>

@@ -63,7 +63,7 @@ export class NewARInvoiceStockComponent {
                 this.StockInputTemplate.InitTemplate(args);
             });
     }
-    
+
     SetWindowArgs(args: InvoiceStockInputArgs) {
         if (args != null) {
             if (args.Stock != null) {
@@ -105,23 +105,33 @@ export class NewARInvoiceStockComponent {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
+        if (this.EntityPM.StartDate > this.EntityPM.EndDate) {
+            errors.push("Start Date cannot be greater than End Date");
+        }
+
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            this.CurrentSession.StartBusyIndicatorSaving();
+            if (this.EntityPM.IsDirty) {
+                this.CurrentSession.StartBusyIndicatorSaving();
 
-            this.stockPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                this.stockPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
-                if (!myResponse.HasError) {
-                    this.CurrentSession.CloseCurrentWindowEmit("OK");
-                }
+                    if (!myResponse.HasError) {
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
+                    }
 
-                else {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;
-                }
-            });
+                    else {
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                    }
+                });
+            }
+
+            else {
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
         }
     }
 }

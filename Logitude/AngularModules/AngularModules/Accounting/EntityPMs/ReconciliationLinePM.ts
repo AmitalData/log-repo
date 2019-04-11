@@ -157,6 +157,11 @@ export class ReconciliationLinePM {
     public set ReconciledWithTransactionId(newValue: string) { if (this.reconciledWithTransactionId != newValue) { this.reconciledWithTransactionId = newValue; this.MarkAsDirty("ReconciledWithTransactionId"); } }
        
 	 
+    private isRecoCancelled: boolean;
+    public get IsRecoCancelled() { return this.isRecoCancelled; }
+    public set IsRecoCancelled(newValue: boolean) { if (this.isRecoCancelled != newValue) { this.isRecoCancelled = newValue; this.MarkAsDirty("IsRecoCancelled"); } }
+       
+	 
 
     public OldEntityPM: ReconciliationLinePM;
 	

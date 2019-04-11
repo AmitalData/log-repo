@@ -188,6 +188,12 @@
                                             </button>
                                         </td>
 
+                                        <td *ngIf="false" style="width: 80px;">
+                                            <button class="Button" style="height:25px;width:25px;" (click)="CalculationButtonClicked()">
+                                                Calculation
+                                            </button>
+                                        </td>
+
                                         <td style="width:5px;">
                                             <div></div>
                                         </td>
@@ -295,6 +301,27 @@
                                             <Hyperlink [FontSize]="14" (click)="item.ViewWI(item.WINumber)" [Text]="item.WINumber"></Hyperlink>
                                         </log-cell-template>
                                     </log-column>
+
+
+                                    <!-- SprintId -->
+                                    <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.SprintId' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.SprintName}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [FocusOnMe]="'true'"
+                                                        [DataContext]="item.DataContext"
+                                                        [ObjectTableName]="'TMEmployeeTime'"
+                                                        [ObjectFieldName]="'SprintId'"
+                                                        [SelectedValue]="item.SprintId"
+                                                        [LookUpTableName]="'Sprint'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
 
                                     <!-- Description -->
                                     <log-column [width]="'250'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.Description' | TextCodeTranslationPipe ">

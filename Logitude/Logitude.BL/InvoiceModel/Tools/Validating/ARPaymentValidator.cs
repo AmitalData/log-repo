@@ -224,7 +224,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     if (loggedTenant.AccountingSetting != null)
                     {
-                        if (loggedTenant.AccountingSetting.IsARPaymentChronologicalDates)
+                        if (loggedTenant.AccountingSetting.IsARPaymentChronologicalDates && !entityPM.IsExternalEntity)
                         {
                             ARPayment lastApprovedPayment = (from a in myContext.ARPayments
                                                              where a.Tenant == entityPM.Tenant

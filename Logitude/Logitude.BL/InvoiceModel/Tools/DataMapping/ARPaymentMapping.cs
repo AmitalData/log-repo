@@ -62,6 +62,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.ChequeOrPaymentRef = entityPM.ChequeOrPaymentRef;
                 entity.ValueDate = entityPM.ValueDate;
                 entity.CreditCardTypeId = entityPM.CreditCardTypeId;
+                entity.ChequeOrPaymentRef = entityPM.ChequeOrPaymentRef;
+                entity.CreateDate = entityPM.CreateDate;
             }
             #endregion
 
@@ -93,6 +95,20 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.FirstApproveDate = entityPM.FirstApproveDate;
             entity.IsFullAccounting = entityPM.IsFullAccounting;
+            entity.IsExternalEntity = entityPM.IsExternalEntity;
+
+            if (entityPM.IsExternalEntity) {
+                entity.ChequeOrPaymentRef = entityPM.ChequeOrPaymentRef;
+                entity.CreateDate = entityPM.CreateDate;
+                entity.PaymentNo = entityPM.PaymentNo;
+                entity.AmountInLocalCurrency = entityPM.AmountInLocalCurrency;
+                entity.AmountInPaymentCurrency = entityPM.AmountInPaymentCurrency;
+                entity.LocalCurrencyId = entityPM.LocalCurrencyId;
+            }
+
+
+
+
 
             if (entityPM.StatusCode == "AD" && entityPM.OpenAmount == 0)
             {

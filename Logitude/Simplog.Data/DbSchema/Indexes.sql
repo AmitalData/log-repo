@@ -661,3 +661,6 @@ GO
 CREATE NONCLUSTERED INDEX [DocumentsFilings_Tenant_ForwarderDocumentId]
 ON [dbo].[DocumentsFilings] ([Tenant],[ForwarderDocumentId])
 
+CREATE NONCLUSTERED INDEX [Shipments_SecurityKey_Tenant_IsCancelled]
+ON [dbo].[Shipments] ([SecurityKey],[Tenant],[IsCancelled])
+

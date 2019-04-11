@@ -27,6 +27,12 @@ namespace Logitude.BL.DataContracts
         public List<GoodsValueDetails> GoodsValueDetails { get; set; }
         public string DenyReason { get; set; }
         public PaymentData PaymentData { get; set; }
+        public string ShipmentNumber { get; set; }
+        public string DeclarationXmlData { get; set; }
+        public string PaymentRequestXML { get; set; }
+        
+
+
         //public string VersionId { get; set; }
 
         /*

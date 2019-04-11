@@ -180,6 +180,34 @@ export class NewChargesTypeComponent extends BaseComponent {
         }
     }
 
+    get IsImport() { return this.EntityPM.IsImport; }
+    set IsImport(newValue: boolean) {
+        if (this.EntityPM.IsImport != newValue) {
+            this.EntityPM.IsImport = newValue;
+        }
+    }
+
+    get IsExport() { return this.EntityPM.IsExport; }
+    set IsExport(newValue: boolean) {
+        if (this.EntityPM.IsExport != newValue) {
+            this.EntityPM.IsExport = newValue;
+        }
+    }
+
+    get IsDrop() { return this.EntityPM.IsDrop; }
+    set IsDrop(newValue: boolean) {
+        if (this.EntityPM.IsDrop != newValue) {
+            this.EntityPM.IsDrop = newValue;
+        }
+    }
+
+    get IsDomestic() { return this.EntityPM.IsDomestic; }
+    set IsDomestic(newValue: boolean) {
+        if (this.EntityPM.IsDomestic != newValue) {
+            this.EntityPM.IsDomestic = newValue;
+        }
+    }
+
     get DueTypeCode() { return this.EntityPM.DueTypeCode; }
     set DueTypeCode(newValue: string) {
         if (this.EntityPM.DueTypeCode != newValue) {
@@ -277,7 +305,13 @@ export class NewChargesTypeComponent extends BaseComponent {
     FinishButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);        
-        
+
+        if (this.EntityPM.IsAutoDisplayInQuote || this.EntityPM.IsAutoDisplayInShipment || this.EntityPM.IsAutoDisplayInConsolidation || this.EntityPM.IsAutoDisplayInCustoms) {
+            if (!this.EntityPM.IsExport && !this.EntityPM.IsImport && !this.EntityPM.IsDomestic && !this.EntityPM.IsDrop) {
+                errors.push("Please select at least one direction (export, import, domestic or drop)");
+            }
+        }
+
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {

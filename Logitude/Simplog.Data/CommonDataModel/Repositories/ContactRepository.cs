@@ -487,6 +487,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entity;
         }
 
+        public string GetContactIdByUserTypeAndTenant(string userType, int tenant)
+        {
+            string contactId = (from a in context.Contacts
+                              where a.Tenant == tenant && a.UserType == userType && a.Email.Contains("system")
+                              select a.Id).FirstOrDefault();
+            return contactId;
+        }
+
+
+
+
         public IQueryable<Contact> GetContactsByIds(List<string> trackedIds, int tenant)
         {
             IQueryable<Contact> contactlist = (from a in context.Contacts

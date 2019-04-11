@@ -5,7 +5,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
-
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -80,6 +80,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.JournalId = transaction.JournalId;
                     entityPM.OpenAmountCurrencySign = transaction.OpenAmountCurrencySign;
                     entityPM.SearchFields = transaction.SearchFields;
+                }
+            }
+
+            // This properties only to view it on Reconciliatio OPC
+            if (entityPOCO.ReconciliationId != null)
+            {
+                ReconciliationRepository recoRepo = new ReconciliationRepository(entityPOCO.Tenant);
+                Reconciliation reco = recoRepo.GetSingle(entityPOCO.ReconciliationId, entityPOCO.Tenant);
+
+                if (reco != null)
+                {
+                    entityPM.IsRecoCancelled = reco.IsCancelled;
                 }
             }
         }

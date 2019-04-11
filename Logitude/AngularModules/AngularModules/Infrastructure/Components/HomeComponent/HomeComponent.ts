@@ -24,7 +24,7 @@ import { DetectUserInActivity } from '../../Helpers/DetectUserInActivity';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BluesnapContractPMService } from '../../Services/StandardPMs/BluesnapContractPMService';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { UserPMService } from '../../../Common/Services/StandardPMs/UserPMService';
+import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -74,9 +74,9 @@ export class HomeComponent implements OnDestroy{
             tokenExpiration.Start(SessionInfo.WebTokenLifeTimeInMinutes, SessionInfo.WebTokenExpirationWarningInMinutes , "M");//(3, 1, "M")
         }
 
-        //if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ReleaseNotesURL) && SessionLocator.LoggedUserPM.ShowNewReleaseToolTip) {
-        //    this.ShowNewReleaseToolTip = true;
-        //}
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ReleaseNotesURL) && SessionLocator.ShowUserNewReleaseToolTip) {
+            this.ShowNewReleaseToolTip = true;
+        }
     }
 
     OnSessionMouseUp($event) {
@@ -1650,17 +1650,16 @@ export class HomeComponent implements OnDestroy{
     }
 
     HideReleaseMessageClicked() {        
-        //SessionLocator.LoggedUserPM.ShowNewReleaseToolTip = false;
+        this.ShowNewReleaseToolTip = false;
 
-        //var service: UserPMService = new UserPMService();
-        //service.update(SessionLocator.LoggedUserPM).subscribe((response: ServiceResponse) => {            
-        //    if (response) {
-        //        if (!response.HasError) {
-        //            SessionLocator.LoggedUserPM = response.Result;
-        //            this.ShowNewReleaseToolTip = false;
-        //        }
-        //    }
-        //});
+        var service: UserExtendedPMService = new UserExtendedPMService();
+        service.AddUserToReleaseNotesUsers(SessionLocator.LoggedUserId).subscribe((response: ServiceResponse) => {            
+            if (response) {
+                if (!response.HasError) {
+
+                }
+            }
+        });
     }
 }
 

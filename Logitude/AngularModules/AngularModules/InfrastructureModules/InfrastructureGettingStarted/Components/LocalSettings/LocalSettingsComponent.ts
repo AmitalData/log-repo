@@ -165,6 +165,9 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
 
 
     get NumberFormatCode() {
+        if (this.TenantPm.NumberFormatCode == null || this.TenantPm.NumberFormatCode == "")
+            return "CD";
+        else
         return this.TenantPm.NumberFormatCode;
     }
     set NumberFormatCode(value: string) {

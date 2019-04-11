@@ -858,6 +858,22 @@
     <Compile Include="Migrations\201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.Designer.cs">
       <DependentUpon>201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.cs" />
+    <Compile Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.Designer.cs">
+      <DependentUpon>201904081010543_ARPaymentIsExternalEntityMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs" />
+    <Compile Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.Designer.cs">
+      <DependentUpon>201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.cs" />
+    <Compile Include="Migrations\201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.Designer.cs">
+      <DependentUpon>201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.cs" />
+    <Compile Include="Migrations\201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.Designer.cs">
+      <DependentUpon>201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1425,6 +1441,9 @@
     <EmbeddedResource Include="Migrations\201903310906076_AddNotesFieldToARInvoiceStock_Samar.resx">
       <DependentUpon>201903310906076_AddNotesFieldToARInvoiceStock_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.resx">
+      <DependentUpon>201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904020925182_AddExcludeFromProratingToTMProject_Maheera.resx">
       <DependentUpon>201904020925182_AddExcludeFromProratingToTMProject_Maheera.cs</DependentUpon>
     </EmbeddedResource>
@@ -1445,6 +1464,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.resx">
       <DependentUpon>201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.resx">
+      <DependentUpon>201904081010543_ARPaymentIsExternalEntityMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.resx">
+      <DependentUpon>201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.resx">
+      <DependentUpon>201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

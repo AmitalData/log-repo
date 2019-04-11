@@ -154,6 +154,7 @@ export class AccountingSettingsComponent extends BaseComponent {
             }
         }
 
+        this.UIProperties.SetEnabled("EnableInvoiceStocksManagement", this.ObjectTableName, !this.IsARInvoiceChronologicalDates);
         this.SetUIProperties_RegistryDate();
     }
     SetUIProperties_RegistryDate() {
@@ -224,6 +225,12 @@ export class AccountingSettingsComponent extends BaseComponent {
     set IsARInvoiceChronologicalDates(value: boolean) {
         if (this.EntityPM.IsARInvoiceChronologicalDates != value) {
             this.EntityPM.IsARInvoiceChronologicalDates = value;
+
+            if (value) {
+                this.EnableInvoiceStocksManagement = false;
+            }
+
+            this.UIProperties.SetEnabled("EnableInvoiceStocksManagement", this.ObjectTableName, !value);
         }
     }
 
@@ -443,8 +450,7 @@ export class AccountingSettingsComponent extends BaseComponent {
 
     ManageStocksClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1200;
-        logWindow.Height = 600;
+        logWindow.IsFillScreen_90 = true;
         logWindow.IsShowCloseButton = true;
         logWindow.Title = "Invoice Stocks";
         logWindow.Show('./InvoiceModules/InvoiceStocks/Components/ManageStocksComponent');

@@ -83,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CustomerName { get; set; }
         public bool IsCustomerTenantShare { get; set; }
         public bool CustomerTenantShareImportFile { get; set; }
+        public bool CustomerTenantShareExportFile { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }
         public bool IsCorrespondenceRightToLeftEnabled { get; set; }
         public bool IsNotesRightToLeftEnabled { get; set; }

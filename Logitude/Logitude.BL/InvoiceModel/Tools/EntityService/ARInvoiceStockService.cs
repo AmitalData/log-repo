@@ -74,8 +74,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.CreateARInvoiceStockLine(item);
             }
 
-            entityPM.Amount = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
-            entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            entityPM.Amount = entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
 
             ARInvoiceStockTracing.Trace(entityPM, Poco, isNewEntity, loggedContact.Id);
             ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity);
@@ -91,18 +90,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleARInvoiceStock(entityPM.Id, entityPM.Tenant);
 
-            if (entityPM.Cancelled)
-            {
-                entityPM.StatusCode = "C";
-                entityPM.Inactive = true;
-            }
-
-            else if (entityPM.Reactivated)
-            {
-                entityPM.StatusCode = "A";
-                entityPM.Inactive = false;
-            }
-
             ARInvoiceStockValidating.Validate(entityPM, objectContext, this.isNewEntity);
 
             if (mapComposition)
@@ -112,8 +99,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.UpdateARInvoiceStockLinesCollection();
 
+            if (entityPM.Cancelled)
+            {
+                entityPM.StatusCode = "C";
+                entityPM.Inactive = true;
+            }
+
+            else if (entityPM.Reactivated)
+            {
+                this.RecalculateStatusAfterReactivate();                
+            }
+
+            else
+            {
+                entityPM.StatusCode = GetStockStatus(entityPM);
+                ARInvoiceStocksStatusRepository aRInvoiceStocksStatusRepository = new ARInvoiceStocksStatusRepository(entityPM.Tenant);
+                entityPM.StatusName = aRInvoiceStocksStatusRepository.GetSingleARInvoiceStocksStatus(entityPM.StatusCode).Name;
+
+            }
+
             entityPM.Amount = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
-            entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && !d.IsUsed).Count();
 
             ARInvoiceStockTracing.Trace(entityPM, Poco, isNewEntity, loggedContact.Id);
             ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity);
@@ -190,6 +196,86 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 stockLineRepository.Remove(itemPoco);
             }
+        }
+
+        private void RecalculateStatusAfterReactivate()
+        {
+            if (entityPm.Amount > 0 && entityPm.Remaining != 0 && entityPm.Remaining <= entityPm.Amount && entityPm.EndDate <= TenantServerConfigration.GetCurrentDateTime(tenant))
+            {
+                entityPm.StatusCode = "E";
+            }
+
+            else if(entityPm.Amount > 0 && entityPm.Remaining == 0 && entityPm.EndDate >= TenantServerConfigration.GetCurrentDateTime(tenant))
+            {
+                entityPm.StatusCode = "U";
+            }
+
+            else if (entityPm.Amount > 0 && entityPm.Remaining <= (entityPm.Amount - 1) && entityPm.EndDate >= TenantServerConfigration.GetCurrentDateTime(tenant))
+            {
+                entityPm.StatusCode = "A";
+            }
+
+            else
+            {
+                entityPm.StatusCode = "N";
+            }
+
+            entityPm.Inactive = false;
+        }
+
+        private string GetStockStatus(ARInvoiceStockPM stock)
+        {
+            int stockLinesCount = stock.ARInvoiceStockLines.Where(d => d.IsUsed && d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            string statusCode = "";
+            
+            if (stockLinesCount == 0)
+            {
+                if (stock.EndDate != null)
+                {
+                    if (stock.EndDate >= todayDate)
+                    {
+                        statusCode = "N";
+                    }
+                    else
+                    {
+                        statusCode = "E";
+                    }
+                }
+                else
+                {
+                    statusCode = "N";
+                }
+            }
+
+            else
+            {
+                if (stock.Amount == stockLinesCount)
+                {
+                    statusCode = "U";
+                }
+
+                else if ((stock.Amount != stockLinesCount))
+                {
+                    if (stock.EndDate != null)
+                    {
+                        if (stock.EndDate >= todayDate)
+                        {
+                            statusCode = "A";
+                        }
+                        else
+                        {
+                            statusCode = "E";
+                        }
+                    }
+                    else
+                    {
+                        statusCode = "A";
+                    }
+                }
+            }
+
+            return statusCode;
         }
     }
 }
