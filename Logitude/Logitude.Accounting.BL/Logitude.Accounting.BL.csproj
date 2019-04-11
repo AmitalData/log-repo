@@ -177,6 +177,7 @@
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
     <Compile Include="CoreBL\Batch\BatchAccountingLoadTestTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchCreateTaxReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchIntegrityCheckService.cs" />

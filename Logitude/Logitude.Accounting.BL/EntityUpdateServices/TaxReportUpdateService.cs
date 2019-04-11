@@ -21,6 +21,11 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using System.Xml.Serialization;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -128,17 +133,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void AfterUpdating(TaxReportPM entityPM, EntityPM entityParentPM)
         {
-            IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
-            TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
-            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
-
+            //IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
+            //TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
+            //TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
-                TaxReportService.CalculateReportTotals(entityPM, lines);
-                entityPM.ChangeSetOp = ChangeSetOperation.Update;
-                taxReportUpdateService.Update(entityPM, true);
+
+             //   TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
+
             }
+            //if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            //{
+            //    List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
+            //    TaxReportService.CalculateReportTotals(entityPM, lines);
+            //    entityPM.ChangeSetOp = ChangeSetOperation.Update;
+            //    taxReportUpdateService.Update(entityPM, true);
+            //}
 
         }
 
