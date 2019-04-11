@@ -47,8 +47,6 @@ export class DeclarationCourierStatusList {
 	PendingRemarks: string;
 	CourierSuspentionReasonName: string;
 	AcceptanceStatusCode: string;
-	MamanStatusCode: string;
-	MamanErrorXml: string;
 	CourierSuspentionCode: string;
 	CourierSuspentionName: string;
 	SpecialActionStatus: string;

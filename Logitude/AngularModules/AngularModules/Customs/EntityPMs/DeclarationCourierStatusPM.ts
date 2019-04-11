@@ -219,16 +219,6 @@ export class DeclarationCourierStatusPM {
     public set AcceptanceStatusCode(newValue: string) { if (this.acceptanceStatusCode != newValue) { this.acceptanceStatusCode = newValue; this.MarkAsDirty("AcceptanceStatusCode"); } }
        
 	 
-    private mamanStatusCode: string;
-    public get MamanStatusCode() { return this.mamanStatusCode; }
-    public set MamanStatusCode(newValue: string) { if (this.mamanStatusCode != newValue) { this.mamanStatusCode = newValue; this.MarkAsDirty("MamanStatusCode"); } }
-       
-	 
-    private mamanErrorXml: string;
-    public get MamanErrorXml() { return this.mamanErrorXml; }
-    public set MamanErrorXml(newValue: string) { if (this.mamanErrorXml != newValue) { this.mamanErrorXml = newValue; this.MarkAsDirty("MamanErrorXml"); } }
-       
-	 
     private courierSuspentionCode: string;
     public get CourierSuspentionCode() { return this.courierSuspentionCode; }
     public set CourierSuspentionCode(newValue: string) { if (this.courierSuspentionCode != newValue) { this.courierSuspentionCode = newValue; this.MarkAsDirty("CourierSuspentionCode"); } }

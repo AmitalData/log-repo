@@ -88,8 +88,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PendingRemarks, 
 	         CourierSuspentionReasonName, 
 	         AcceptanceStatusCode, 
-	         MamanStatusCode, 
-	         MamanErrorXml, 
 	         CourierSuspentionCode, 
 	         CourierSuspentionName, 
 	         SpecialActionStatus, 
