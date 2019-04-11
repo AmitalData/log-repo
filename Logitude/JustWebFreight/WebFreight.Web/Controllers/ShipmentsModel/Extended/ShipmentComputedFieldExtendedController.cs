@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityAMs;
@@ -40,19 +41,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
-
-                if (shipmentPM != null)
+                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(authToken.Tenant);
+                ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(id, authToken.Tenant);
+                if (shipmentComputedFields != null && shipmentComputedFields.IsDepositionRequired)
                 {
-                    shipmentPM.IsDepositionRequired = false;
-                    shipmentPM.IsShipmentComputedFieldChange = true;
-
-                    IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
-                    ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
-                    shipmentService.Update();
-
-
+                    shipmentComputedFields.IsDepositionRequired = false;
+                    ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                    shipmentComputedFieldsHelper.UpdateShipmentComputedFields(shipmentComputedFields);
+        
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                     var objecttable = objectTabelRepository.GetObjectTableByName("Shipment", 0, true);
 

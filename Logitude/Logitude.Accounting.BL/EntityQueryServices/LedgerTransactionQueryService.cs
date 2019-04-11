@@ -622,6 +622,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return openInvoicesTransactions;
         }
 
+        /// <summary>
+        /// Returns any invoice transaction which is reconciled with the payment. --Abdullah
+        /// </summary>
+        /// <param name="arpaymentId">Payment id</param>
+        /// <param name="billToGLAccountId">Payment bill to account id</param>
+        /// <param name="tenant">Tenant</param>
+        /// <returns>List of invoices ledger transactions</returns>
         public List<LedgerTransactionPM> GetReconciledInvoicesTransactionsForPayment(string arpaymentId, string billToGLAccountId, int tenant) // reconciled and partially reconciled
         {
             List<LedgerTransactionPM> reconciledInvoicesTransactions = GetReconciledInvoicesTransactionsForARPayment(arpaymentId, billToGLAccountId, tenant);
