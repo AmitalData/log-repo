@@ -1216,6 +1216,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string storageSiteStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteStatusCode  
+	   {
+	    
+	     get
+		{
+		   return storageSiteStatusCode;
+		 }
+		 set
+		 {
+		   if(storageSiteStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteStatusCode",OldValue=storageSiteStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string storageSiteErrorText ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteErrorText  
+	   {
+	    
+	     get
+		{
+		   return storageSiteErrorText;
+		 }
+		 set
+		 {
+		   if(storageSiteErrorText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteErrorText",OldValue=storageSiteErrorText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteErrorText=value;
+		   }
+			
+		 }
+	   }
+	  private string storageSiteStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteStatusName  
+	   {
+	    
+	     get
+		{
+		   return storageSiteStatusName;
+		 }
+		 set
+		 {
+		   if(storageSiteStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteStatusName",OldValue=storageSiteStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteStatusName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

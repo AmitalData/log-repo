@@ -284,6 +284,21 @@ export class DeclarationCourierStatusPM {
     public set LastMileStatusRemarks(newValue: string) { if (this.lastMileStatusRemarks != newValue) { this.lastMileStatusRemarks = newValue; this.MarkAsDirty("LastMileStatusRemarks"); } }
        
 	 
+    private storageSiteStatusCode: string;
+    public get StorageSiteStatusCode() { return this.storageSiteStatusCode; }
+    public set StorageSiteStatusCode(newValue: string) { if (this.storageSiteStatusCode != newValue) { this.storageSiteStatusCode = newValue; this.MarkAsDirty("StorageSiteStatusCode"); } }
+       
+	 
+    private storageSiteErrorText: string;
+    public get StorageSiteErrorText() { return this.storageSiteErrorText; }
+    public set StorageSiteErrorText(newValue: string) { if (this.storageSiteErrorText != newValue) { this.storageSiteErrorText = newValue; this.MarkAsDirty("StorageSiteErrorText"); } }
+       
+	 
+    private storageSiteStatusName: string;
+    public get StorageSiteStatusName() { return this.storageSiteStatusName; }
+    public set StorageSiteStatusName(newValue: string) { if (this.storageSiteStatusName != newValue) { this.storageSiteStatusName = newValue; this.MarkAsDirty("StorageSiteStatusName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

@@ -63,6 +63,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                   IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
                                                                   //IsACCTab = (d.MamanStatusCode == "2"), ???
+                                                                  IsACCTab = (a.StorageSiteStatusCode == "2" || a.SpecialActionStatus == "X"),
                                                                   CourierManifestStatusCode = !_RequiredFieldErrorsForCourierDeclarationIsValid ? "M" : a.CourierManifestStatusCode,
                                                                   CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
                                                                   CourierPaymentStatusCode = a.CourierPaymentStatusCode,
@@ -88,14 +89,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   PendingRemarks = a.PendingRemarks,
                                                                   CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null,
                                                                   AcceptanceStatusCode = d.AcceptanceStatusCode,
-                                                                  MamanStatusCode = d.MamanStatusCode,
-                                                                  MamanErrorXml = d.MamanErrorXml,
+                                                                  //MamanStatusCode = d.MamanStatusCode,
+                                                                  //MamanErrorXml = d.MamanErrorXml,
                                                                   CourierSuspentionCode = d.CourierSuspentionCode,
                                                                   CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
                                                                   SpecialActionStatus = a.SpecialActionStatus,
                                                                   //SpecialActionsErrorXml = ao.text,
                                                                   FastIndividualProcessCode = a.FastIndividualProcessCode,
                                                                   ManualProcessCode = a.ManualProcessCode,
+                                                                  TerminalSuspentionNumber = a.TerminalSuspentionNumber,
+                                                                  LastMileStatusCode = a.LastMileStatusCode,
+                                                                  LastMileStatusDate = a.LastMileStatusDate,
+                                                                  LastMileStatusRemarks = a.LastMileStatusRemarks,
+                                                                  StorageSiteStatusCode = a.StorageSiteStatusCode,
+                                                                  StorageSiteStatusName = a.MamanStatus != null ? a.MamanStatus.LocalName : null,
+                                                                  StorageSiteErrorText = a.StorageSiteErrorText,
                                                               });
 
 

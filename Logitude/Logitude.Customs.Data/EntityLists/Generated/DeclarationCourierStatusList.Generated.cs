@@ -118,6 +118,12 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? LastMileStatusDate  { get; set; }
        [DataMember]
        public string LastMileStatusRemarks  { get; set; }
+       [DataMember]
+       public string StorageSiteStatusCode  { get; set; }
+       [DataMember]
+       public string StorageSiteErrorText  { get; set; }
+       [DataMember]
+       public string StorageSiteStatusName  { get; set; }
    }
 
 }

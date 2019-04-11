@@ -60,6 +60,9 @@ export class DeclarationCourierStatusList {
 	LastMileStatusCode: string;
 	LastMileStatusDate: Date;
 	LastMileStatusRemarks: string;
+	StorageSiteStatusCode: string;
+	StorageSiteErrorText: string;
+	StorageSiteStatusName: string;
 	
 }
  
