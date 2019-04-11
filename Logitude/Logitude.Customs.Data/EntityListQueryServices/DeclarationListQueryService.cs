@@ -256,7 +256,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CasualImporterContact = a.CasualImporterContact,
                                                      CasualSupplierAddress = a.CasualSupplierAddress,
                                                      CasualSupplierName = a.CasualSupplierName,
-                                                     MamanErrorXml = a.MamanErrorXml,
+                                                     //MamanErrorXml = a.MamanErrorXml,
                                                      ItemsProcessTypesList = a.ItemsProcessTypesList,
                                                      CourierSuspentionCode = a.CourierSuspentionCode,
                                                      CourierSuspentionName = a.CourierSuspention != null ? a.CourierSuspention.LocalName : null,

@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Courier Status",
-			      				    Code =  "6b20",
+			      				    Code =  "7c69",
 			      				    Name =  "Customs.DeclarationCourierStatus Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2617,8 +2617,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "MamanStatusCode",
 					  						OldFieldName =  "MamanStatusCode",
 					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
+					  						IsChecked =  true,
+					  						IsDeleted =  true,
 					  						ObjectTableName =  "Customs.DeclarationCourierStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2683,8 +2683,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "MamanErrorXml",
 					  						OldFieldName =  "MamanErrorXml",
 					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
+					  						IsChecked =  true,
+					  						IsDeleted =  true,
 					  						ObjectTableName =  "Customs.DeclarationCourierStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3465,6 +3465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StorageSiteStatusCode",
+					  						OldFieldName =  "StorageSiteStatusCode",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -3487,6 +3488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StorageSiteStatusCode",
 					  						ListPropertyPath =  "StorageSiteStatusCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3530,6 +3532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StorageSiteErrorText",
+					  						OldFieldName =  "StorageSiteErrorText",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -3551,6 +3554,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StorageSiteErrorText",
 					  						ListPropertyPath =  "StorageSiteErrorText",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3594,6 +3598,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StorageSiteStatusName",
+					  						OldFieldName =  "StorageSiteStatusName",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -3615,6 +3620,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StorageSiteStatusName",
 					  						ListPropertyPath =  "StorageSiteStatusName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
