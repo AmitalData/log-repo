@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -16,17 +17,17 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
     public class BankAccountPageAnalyzer
     {
         private List<BankPageDTO> _BankPagesDTO;
-        List<TenantPagesOfAccountDTO> _TenantBankPagesDTO= new List<TenantPagesOfAccountDTO>();
+        List<TenantPagesOfAccountDTO> _TenantBankPagesDTO = new List<TenantPagesOfAccountDTO>();
 
 
         static string ConvertFromDosHeberwToWinHeberw(string FileContent862)
         {
             var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
-            //var txt = File.ReadAllText(@"C: \Users\itzik\Desktop\zevel\Pages\pages.txt", dosEnc);
-            
+                                                                      //var txt = File.ReadAllText(@"C: \Users\itzik\Desktop\zevel\Pages\pages.txt", dosEnc);
+
             byte[] dosBytes = dosEnc.GetBytes(FileContent862);
             var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
-            
+
             var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dosBytes);
             string winHebrewString = winHebrewEncoding.GetString(hebBytes);
             return winHebrewString;
@@ -34,14 +35,15 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             //File.WriteAllText(@"C: \Users\itzik\Desktop\zevel\Pages\pages_win1255.txt", hebrewString);
 
         }
-        public void Analyze(int? ptenant , string FileContent)
+        public void Analyze(int? ptenant, string FileContent)
         {
-            
+
             try
             {
-                FileContent=ConvertFromDosHeberwToWinHeberw(FileContent);
+                FileContent = ConvertFromDosHeberwToWinHeberw(FileContent);
                 int? tenantFromPage4Tester = null;
-                _BankPagesDTO = CreateBankPagesDTOFromFile(FileContent,out tenantFromPage4Tester);
+                _BankPagesDTO = CreateBankPagesDTOFromFile(FileContent, out tenantFromPage4Tester);
+                
                 if (tenantFromPage4Tester.HasValue)
                 {
                     ptenant = tenantFromPage4Tester.Value;
@@ -57,25 +59,25 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
 
                 throw new Exception("LoadBankPageFromFile(FileContent) failed while CreateBankPagesDTOFromFile ", e);
             }
-            int tenant= ptenant.Value;
-            TenantBankPagesFilter(tenant,_BankPagesDTO);
+            int tenant = ptenant.Value;
+            TenantBankPagesFilter(tenant, _BankPagesDTO);
 
             foreach (var validBankAccountDTO in _TenantBankPagesDTO)
             {
                 foreach (var newPageOfBankAccountDTO in validBankAccountDTO.PagesOfAccount.OrderBy(r => r.MyBankAccountM.PageNo))
                 {
 
-                    var accurateBankAccount=_BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
+                    var accurateBankAccount = _BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
 
                     AnalyzeeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
 
                 }
             }
-            
+
         }
-        
+
         private ReconcileExternalPageQueryService _ReconcileExternalPageQueryService;
-        
+
 
         private void TenantBankPagesFilter(int tenant, List<BankPageDTO> bankPages)
         {
@@ -83,9 +85,9 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             _BankCodeQueryService = new BankCodeQueryService(tenant);
             _BankAccountQueryService = new BankAccountQueryService(tenant);
             _ReconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
-            
+
             var bankPagesGBAccountNumber = (from bp in bankPages
-                      group bp by new { bp.BankCode, bp.MyBankAccountM.AccountNumber }
+                                            group bp by new { bp.BankCode, bp.MyBankAccountM.AccountNumber }
                      );
             foreach (var pagesOfAccountGroup in bankPagesGBAccountNumber)
             {
@@ -94,7 +96,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                 var pagesOfAccount = pagesOfAccountGroup.ToList();
 
 
-                var bankcodePM = _BankCodeQueryService.GetSingle(BankCode, false, true);
+                var bankcodePM = _BankCodeQueryService.GetSingleByCode(BankCode, tenant);
                 if (bankcodePM == null)
                 {
                     MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {BankCode} not exist in Tenant {pagesOfAccount.First().RawLine}");
@@ -107,14 +109,14 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                     continue;
                 }
                 _TenantBankPagesDTO.Add(new TenantPagesOfAccountDTO() { DBBankaccountPM = dbBankaccountPM, PagesOfAccount = pagesOfAccount });
-                
-                
+
+
             }
         }
 
-        
 
-        private void AnalyzeeNewPage(int tenant,  BankAccountPM dbBankaccountPM, BankPageDTO newPageOfBankAccount)
+
+        private void AnalyzeeNewPage(int tenant, BankAccountPM dbBankaccountPM, BankPageDTO newPageOfBankAccount)
         {
             string errorPageValidation = PageValidationClientSide(newPageOfBankAccount);
             if (!string.IsNullOrWhiteSpace(errorPageValidation))
@@ -128,11 +130,16 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             //    return;
             //}
 
-            var prevReconcileExternalPagePM = _ReconcileExternalPageQueryService.GetPrevPageNoByPageNo(int.Parse(dbBankaccountPM.LastPageNumber), dbBankaccountPM.Id, tenant);
-            
+            ReconcileExternalPagePM prevReconcileExternalPagePM = null;
+            if (dbBankaccountPM.LastPageNumber!=null)
+            {
+                prevReconcileExternalPagePM=
+                _ReconcileExternalPageQueryService.GetPrevPageNoByPageNo(int.Parse(dbBankaccountPM.LastPageNumber), dbBankaccountPM.Id, tenant);
+            } 
 
 
             var newBankPageLines = newPageOfBankAccount.GetCopyOfBankPageLines();
+
             if (prevReconcileExternalPagePM != null)
             {
 
@@ -151,7 +158,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             }
 
 
-            ReconcileExternalPagePM entityPM = MapReconcileExternalPagePM(tenant, newPageOfBankAccount, newBankPageLines, dbBankaccountPM);
+            ReconcileExternalPagePM entityPM = MapReconcileExternalPagePM(tenant, newPageOfBankAccount, dbBankaccountPM);
 
             InsertBankPage(tenant, newPageOfBankAccount, entityPM);
 
@@ -161,6 +168,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
         {
             try
             {
+                
+
                 using (var scope = TransactionFactory.GetTransaction())
                 {
 
@@ -180,15 +189,17 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             }
         }
 
-        private static ReconcileExternalPagePM MapReconcileExternalPagePM(int tenant, 
-            BankPageDTO newPageOfBankAccount, 
-             List<BankPageLineDTO> newBankPageLines,
+   
+
+        private static ReconcileExternalPagePM MapReconcileExternalPagePM(int tenant,
+            BankPageDTO newPageOfBankAccount,
              
+
              BankAccountPM dbBankaccountPM
             )
         {
 
-            
+            List<BankPageLineDTO> newBankPageLines = newPageOfBankAccount.GetCopyOfBankPageLines();
             var entityPM = new ReconcileExternalPagePM()
             {
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -210,8 +221,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
 
                 FromDate = newBankPageLines.First().ReferenceDate,
                 ToDate = newBankPageLines.Last().ReferenceDate,
-                
-                
+
+
 
                 ReconcileExternalPageLines = new List<ReconcileExternalPageLinePM>()
             };
@@ -238,10 +249,15 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
         public ResultLoadBankPage MyResultLoadBankPage = new ResultLoadBankPage();
         private void AddExceptionInsertBankPage(ReconcileExternalPagePM entityPM, BankPageDTO newPageOfBankAccount, Exception ex)
         {
-            this.MyResultLoadBankPage.SuccessPageList.Add($"Exception insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} >{ex.ToString()} ");
+
+            var dataXml = ProxyUtil.JsonConvertSerialize(newPageOfBankAccount);
+
+            this.MyResultLoadBankPage.ExceptionPageList.Add($"Exception insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} >{ex.ToString()} " + 
+                Environment.NewLine +
+                dataXml);
 
         }
-        
+
         private void AddSuccessInsertBankPage(ReconcileExternalPagePM entityPM, BankPageDTO newPageOfBankAccount)
         {
             this.MyResultLoadBankPage.SuccessPageList.Add($"Success insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} =new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  ");
@@ -254,7 +270,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             {
                 return $"BankPageLines.Count == 0  (client sidecheck )";
             }
-            var lineWithoutRef= CopyOfBankPageLines.FirstOrDefault(r => string.IsNullOrWhiteSpace(r.Reference));
+            var lineWithoutRef = CopyOfBankPageLines.FirstOrDefault(r => string.IsNullOrWhiteSpace(r.Reference));
             if (lineWithoutRef != null)
             {
                 return $"lineWithoutRef  {lineWithoutRef.RawLine} (client sidecheck )";
@@ -265,17 +281,17 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             {
                 return $"maxDate>todate  {maxDate} (client sidecheck )";
             }
-                
+
             return null;
         }
 
-        
-        private List<BankPageDTO> CreateBankPagesDTOFromFile(string FileContent,out int? tenant)
+
+        private List<BankPageDTO> CreateBankPagesDTOFromFile(string FileContent, out int? tenant)
         {
             tenant = null;
             var bankPages = new List<BankPageDTO>();
             var lines = FileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            
+
             BankPageDTO bankPage = null;
             foreach (string rawLine in lines)
             {
@@ -283,7 +299,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                 {
                     if (rawLine.StartsWith("//Tenant="))//for tester 
                     {
-                        string tenantS=rawLine.Split(new string[] { "//Tenant=" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                        string tenantS = rawLine.Split(new string[] { "//Tenant=" }, StringSplitOptions.RemoveEmptyEntries)[0];
                         tenant = int.Parse(tenantS);
                     }
                     continue;// remark do nothing ...
@@ -324,7 +340,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             return bankPages;
         }
 
-        public static DateTime TryGetDateTime(string rawLine, string txtDateTime, string fieldname, string pos,string @format= "yyyyMMddHHmm")
+        public static DateTime TryGetDateTime(string rawLine, string txtDateTime, string fieldname, string pos, string @format = "yyyyMMddHHmm")
         {
             DateTime date = DateTime.MinValue;
             DateTime.TryParseExact(txtDateTime, @format/*"yyyyMMddHHmm"*/, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
@@ -349,12 +365,12 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
         public const string RowType = "031";
         public string RawLine { get; set; }
         public BankAccountDTO MyBankAccountM { get; private set; }
-        List<BankPageLineDTO> MyBankPageLines { get; set; }
+        public List<BankPageLineDTO> MyBankPageLines { get; set; }
         public string BankCode { get; private set; }
         //public string BranchNumber { get; private set; }
         //public string AccountNumber { get; private set; }
         public DateTime CreateDate { get; private set; }
-        
+
 
         internal static BankPageDTO Create(string rawLine)
         {
@@ -364,7 +380,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             {
                 throw new Exception($"{rawLine} not start with  RowType={RowType} ");
             }
-            
+
             var rec = new BankPageDTO();
             rec.RawLine = rawLine;
             rec.MyBankPageLines = new List<BankPageLineDTO>();
@@ -381,11 +397,11 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             rec.CreateDate = date; ;
 
 
-            
+
             return rec;
         }
 
-        
+
 
         internal void AddBankAccountM(string rawLine)
         {
@@ -402,8 +418,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                     Exception($"{rawLine} AddBankAccountM (this.MyBankAccountM.BankCode != this.BankCode)");
 
             }
-            
-            
+
+
 
         }
         internal List<BankPageLineDTO> GetCopyOfBankPageLines()
@@ -413,9 +429,9 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
         internal void AddBankPageLineM(string rawLine)
         {
             BankPageLineDTO myBankPageLineM = BankPageLineDTO.Create(rawLine);
-            decimal totAmount =this.MyBankAccountM.OpenBalance + MyBankPageLines.Sum(r => r.Amount);
+            decimal totAmount = this.MyBankAccountM.OpenBalance + MyBankPageLines.Sum(r => r.Amount);
             decimal totAmountIncludeCurrPage = totAmount + myBankPageLineM.Amount;
-            if (totAmountIncludeCurrPage!= myBankPageLineM.BalanceAfter)
+            if (totAmountIncludeCurrPage != myBankPageLineM.BalanceAfter)
             {
                 ///throw new Exception($"{rawLine} AddBankPageLineM (totAmountIncludeCurrPage!= myBankPageLineM.BalanceAfter)");
             }
@@ -429,7 +445,9 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
         public string BranchNumber { get; private set; }
         public string AccountNumber { get; private set; }
         public int PageNo { get; private set; }
+
         public decimal OpenBalance { get; private set; }
+
         public decimal CloseBalance { get; private set; }
 
         //public DateTime FromDate { get; private set; }
@@ -439,37 +457,56 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
 
         internal static BankAccountDTO Create(string rawLine)
         {
-            rawLine = rawLine ?? "";
-            if (!rawLine.StartsWith(RowType))
+            try
             {
-                throw new Exception($"{rawLine} not start with  RowType={RowType} ");
+
+
+                rawLine = rawLine ?? "";
+                if (!rawLine.StartsWith(RowType))
+                {
+                    throw new Exception($"{rawLine} not start with  RowType={RowType} ");
+                }
+                var rec = new BankAccountDTO();
+                rec.BankCode = rawLine.Substring(4 - 1, 3);
+                rec.BankCode = (rec.BankCode ?? "").Trim();
+                rec.BranchNumber = rawLine.Substring(7 - 1, 4).Trim();
+
+                rec.AccountNumber = rawLine.Substring(11 - 1, 16).Trim();
+                rec.PageNo = int.Parse(rawLine.Substring(50 - 1, 8));
+
+                string OpenBalanceSign = rawLine.Substring(58 - 1, 1);
+
+                rec.OpenBalance = decimal.Parse(rawLine.Substring(58, 16 - 1));
+                if (OpenBalanceSign == "-")
+                {
+                    rec.OpenBalance = -1 * rec.OpenBalance;
+                }
+                string CloseBalanceSign = rawLine.Substring(74 - 1, 1);
+                rec.CloseBalance = decimal.Parse(rawLine.Substring(74, 16 - 1));
+                if (CloseBalanceSign == "-")
+                {
+                    rec.CloseBalance = -1 * rec.CloseBalance;
+                }
+                //string txtDateTime = rawLine.Substring(58 - 1, 16);
+                //string fieldname = "FromDate";
+                //string pos = "58 - 1, 16";
+                //DateTime date = BankAccountPageAnalyzer.TryGetDateTime(rawLine, txtDateTime, fieldname, pos);
+                //rec.FromDate = date; ;
+
+
+                //txtDateTime = rawLine.Substring(74 - 1, 16);
+                //fieldname = "ToDate";
+                //pos = "74 - 1, 16";
+                //date = BankAccountPageAnalyzer.TryGetDateTime(rawLine, txtDateTime, fieldname, pos);
+                //rec.ToDate = date; ;
+                return rec;
+
             }
-            var rec = new BankAccountDTO();
-            rec.BankCode= rawLine.Substring(4 - 1, 3);
-            rec.BankCode = (rec.BankCode ?? "").Trim();
-            rec.BranchNumber = rawLine.Substring(7 - 1, 4).Trim();
+            catch (Exception e)
+            {
 
-            rec.AccountNumber = rawLine.Substring(11 - 1, 16).Trim();
-            rec.PageNo = int.Parse(rawLine.Substring(50 - 1, 8));
-
-
-            rec.OpenBalance = decimal.Parse(rawLine.Substring(58 - 1, 16));
-            rec.CloseBalance = decimal.Parse(rawLine.Substring(74 - 1, 16));
-            //string txtDateTime = rawLine.Substring(58 - 1, 16);
-            //string fieldname = "FromDate";
-            //string pos = "58 - 1, 16";
-            //DateTime date = BankAccountPageAnalyzer.TryGetDateTime(rawLine, txtDateTime, fieldname, pos);
-            //rec.FromDate = date; ;
-
-
-            //txtDateTime = rawLine.Substring(74 - 1, 16);
-            //fieldname = "ToDate";
-            //pos = "74 - 1, 16";
-            //date = BankAccountPageAnalyzer.TryGetDateTime(rawLine, txtDateTime, fieldname, pos);
-            //rec.ToDate = date; ;
-            return rec;
-
-
+                throw new Exception($"BankAccountDTO Create({rawLine})", e);
+            }
         }
     }
     class BankPageLineDTO
@@ -492,20 +529,20 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             {
                 throw new Exception($"{rawLine} not start with  RowType={RowType} ");
             }
-            
+
             var rec = new BankPageLineDTO();
             rec.RawLine = rawLine;
-            rec.Reference= rawLine.Substring(4 - 1, 16).Trim();
+            rec.Reference = rawLine.Substring(4 - 1, 16).Trim();
 
             string txtDateTime = rawLine.Substring(87 - 1, 8);
             string fieldname = "ReferenceDate";
             string pos = "87 - 1, 8";
-            DateTime date = BankAccountPageAnalyzer.TryGetDateTime(rawLine, txtDateTime, fieldname, pos,format:  "yyyyMMdd");
+            DateTime date = BankAccountPageAnalyzer.TryGetDateTime(rawLine, txtDateTime, fieldname, pos, format: "yyyyMMdd");
             rec.ReferenceDate = date; ;
 
             string sign = rawLine.Substring(112 - 1, 1);
-            decimal Amount =  decimal.Parse(rawLine.Substring(112 , 16-1)); //Format 14.2
-            if (sign=="-")
+            decimal Amount = decimal.Parse(rawLine.Substring(112, 16 - 1)); //Format 14.2
+            if (sign == "-")
             {
                 Amount = -1 * Amount;
             }
@@ -513,7 +550,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
 
 
             sign = rawLine.Substring(128 - 1, 1);
-            Amount=decimal.Parse(rawLine.Substring(128 , 16-1)); //Format 14.2
+            Amount = decimal.Parse(rawLine.Substring(128, 16 - 1)); //Format 14.2
             if (sign == "-")
             {
                 Amount = -1 * Amount;
