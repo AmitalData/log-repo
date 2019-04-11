@@ -302,6 +302,27 @@
                                         </log-cell-template>
                                     </log-column>
 
+
+                                    <!-- SprintId -->
+                                    <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.SprintId' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.SprintName}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [FocusOnMe]="'true'"
+                                                        [DataContext]="item.DataContext"
+                                                        [ObjectTableName]="'TMEmployeeTime'"
+                                                        [ObjectFieldName]="'SprintId'"
+                                                        [SelectedValue]="item.SprintId"
+                                                        [LookUpTableName]="'Sprint'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
                                     <!-- Description -->
                                     <log-column [width]="'250'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.Description' | TextCodeTranslationPipe ">
                                         <log-cell-template template="let item" #logcelltemplate>

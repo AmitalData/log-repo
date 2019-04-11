@@ -252,8 +252,9 @@ namespace WebFreight.Web.Helpers
             communicationLogRepository.Add(log);
             communicationLogRepository.SubmitChanges();
 
-            IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
+			//IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
 
             return log.Id;
         }

@@ -149,6 +149,11 @@ export class TMEmployeeTimePM {
     public set LocationName(newValue: string) { if (this.locationName != newValue) { this.locationName = newValue; this.MarkAsDirty("LocationName"); } }
        
 	 
+    private sprintName: string;
+    public get SprintName() { return this.sprintName; }
+    public set SprintName(newValue: string) { if (this.sprintName != newValue) { this.sprintName = newValue; this.MarkAsDirty("SprintName"); } }
+       
+	 
 
     public OldEntityPM: TMEmployeeTimePM;
 		

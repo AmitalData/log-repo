@@ -91,6 +91,10 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         if (SessionLocator.AccountingSettingPM.EnableInvoiceStocksManagement) {
             this.IsInvoiceStocksManagementEnabled = true;
         }
+
+        if (!AppTool.IsNullOrEmpty(this.ARInvoiceStockId)) {
+            this.IsInvoiceNumberComboBoxEnabled = false;
+        }
         this.BuildInvoiceNumberFilters();
     }
 
@@ -104,6 +108,9 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
+                }
+                else {
+                    this.IsInvoiceNumberComboBoxEnabled = !this.IsInvoiceNumberComboBoxEnabled;
                 }
             });
 
@@ -621,6 +628,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         if (this.EntityPM.IsInvoiceNumberManuallySet != value) {
 
             if (!value) {
+               
                 this.InvoiceNumber = null;
             }
 
@@ -644,7 +652,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
     set InvoiceNumber(value: string) {
         if (this.EntityPM.InvoiceNumber != value) {
-            if (this.IsInvoiceNumberManuallySet) {
+            if (this.IsInvoiceNumberManuallySet || (this.SelectedInvoiceNumberFilter != null && this.SelectedInvoiceNumberFilter.Code == "STK")) {
                 this.EntityPM.InvoiceNumber = value;
             }
         }
@@ -1502,8 +1510,14 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
 
     //Invoice Number
+    private isInvoiceNumberComboBoxEnabled = true;
+    get IsInvoiceNumberComboBoxEnabled() { return this.isInvoiceNumberComboBoxEnabled; }
+    set IsInvoiceNumberComboBoxEnabled(value: boolean) {
+        if (this.isInvoiceNumberComboBoxEnabled != value) {
+            this.isInvoiceNumberComboBoxEnabled = value;
+        }
+    }
 
-    
     private selectedInvoiceNumberFilter: CodeNameClass;
     get SelectedInvoiceNumberFilter() { return this.selectedInvoiceNumberFilter; }
     set SelectedInvoiceNumberFilter(value: CodeNameClass) {
@@ -1549,7 +1563,9 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             logWindow.WindowClosed.subscribe(d => {
                 if ((d != null && d != "cancel")) {
                     this.InvoiceNumber = s.StockLineSelectedItem.Number;
-                    this.EntityPM.ARInvoiceStockId = s.StockLineSelectedItem.Id;
+                    this.ARInvoiceStockId = s.StockLineSelectedItem.Id;
+                    this.IsInvoiceNumberComboBoxEnabled = false;
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                 }
             });
         });
@@ -1557,6 +1573,8 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
     ReturnInvoiceNumberToStock() {
         this.ARInvoiceStockId = null;
+        this.InvoiceNumber = null;
+        this.IsInvoiceNumberComboBoxEnabled = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
 }

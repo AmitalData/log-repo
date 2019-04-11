@@ -64,7 +64,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CurrencySign, 
 	         OpenAmountCurrencySign, 
 	         SearchFields, 
-	         ReconciledWithTransactionId,
+	         ReconciledWithTransactionId, 
+	         IsRecoCancelled,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -620,6 +620,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isRecoCancelled ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRecoCancelled  
+	   {
+	    
+	     get
+		{
+		   return isRecoCancelled;
+		 }
+		 set
+		 {
+		   if(isRecoCancelled != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRecoCancelled",OldValue=isRecoCancelled,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isRecoCancelled=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

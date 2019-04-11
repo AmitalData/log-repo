@@ -9482,264 +9482,214 @@ namespace WebFreight.Web.ReportsWebServices
         #endregion
 
         #region Employees TimeSheet Report 
-        [WebMethod]
-        public byte[] LoadEmployeeTimeSheetData(byte[] xmlFilters, int tenant)
-        {
-            EmployeeTimeSheetDataProvider dataprovider = GetEmployeeTimeSheetDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(EmployeeTimeSheetDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
-        }
-        private EmployeeTimeSheetDataProvider GetEmployeeTimeSheetDataProvider(byte[] xmlFilters, int tenant)
-        {
-            EmployeeTimeSheetDataProvider result = new EmployeeTimeSheetDataProvider();
-            result.EmployeeTimeSheetList = new List<EmployeeTimeSheetData>();
+        //[WebMethod]
+        //public byte[] LoadEmployeeTimeSheetData(byte[] xmlFilters, int tenant)
+        //{
+        //    EmployeeTimeSheetDataProvider dataprovider = GetEmployeeTimeSheetDataProvider(xmlFilters, tenant);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(EmployeeTimeSheetDataProvider));
+        //    MemoryStream memstream = new MemoryStream();
+        //    serializer.Serialize(memstream, dataprovider);
+        //    memstream.Seek(0, SeekOrigin.Begin);
+        //    var reader = new StreamReader(memstream);
+        //    string content = reader.ReadToEnd();
+        //    byte[] bytearray = memstream.ToArray();
+        //    return bytearray;
+        //}
+        //private EmployeeTimeSheetDataProvider GetEmployeeTimeSheetDataProvider(byte[] xmlFilters, int tenant)
+        //{
+        //    EmployeeTimeSheetDataProvider result = new EmployeeTimeSheetDataProvider();
+        //    result.EmployeeTimeSheetList = new List<EmployeeTimeSheetData>();
 
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            TMEmployeeTimeRepository employeeTimeRepository = new TMEmployeeTimeRepository(tenant);
-            IQueryable<TMEmployeeTime> iQueryable = employeeTimeRepository.GetAll(tenant);
+        //    ContactRepository contactRepository = new ContactRepository(tenant);
+        //    TMEmployeeTimeRepository employeeTimeRepository = new TMEmployeeTimeRepository(tenant);
+        //    IQueryable<TMEmployeeTime> iQueryable = employeeTimeRepository.GetAll(tenant);
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+        //    MemoryStream memorystream = new MemoryStream(xmlFilters);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+        //    QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
-            QueryFilterItem filterItem_EmployeeUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
-            QueryFilterItem filterItem_TimeRequired = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TimeRequired").FirstOrDefault();
+        //    QueryFilterItem filterItem_EmployeeUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
+        //    QueryFilterItem filterItem_TimeRequired = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TimeRequired").FirstOrDefault();
 
-            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
-            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+        //    QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+        //    QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
 
-            DateTime? fromDate = null;
-            DateTime? toDate = null;
-            string employeeUserId = null;
-            double? timeRequired = 9.0;
+        //    DateTime? fromDate = null;
+        //    DateTime? toDate = null;
+        //    string employeeUserId = null;
+        //    double? timeRequired = 9.0;
 
-            if (filterItem_FromDate != null)
-            {
-                if (filterItem_FromDate.FieldValue != null)
-                {
-                    fromDate = (DateTime)filterItem_FromDate.FieldValue;
-                }
-            }
+        //    if (filterItem_FromDate != null)
+        //    {
+        //        if (filterItem_FromDate.FieldValue != null)
+        //        {
+        //            fromDate = (DateTime)filterItem_FromDate.FieldValue;
+        //        }
+        //    }
 
-            if (filterItem_ToDate != null)
-            {
-                if (filterItem_ToDate.FieldValue != null)
-                {
-                    toDate = (DateTime)filterItem_ToDate.FieldValue;
-                }
-            }
+        //    if (filterItem_ToDate != null)
+        //    {
+        //        if (filterItem_ToDate.FieldValue != null)
+        //        {
+        //            toDate = (DateTime)filterItem_ToDate.FieldValue;
+        //        }
+        //    }
 
-            if (filterItem_EmployeeUserId != null)
-            {
-                if (filterItem_EmployeeUserId.FieldValue != null)
-                {
-                    employeeUserId = filterItem_EmployeeUserId.FieldValue.ToString();
-                }
-            }
-            if (filterItem_TimeRequired != null)
-            {
-                if (filterItem_TimeRequired.FieldValue != null)
-                {
-                    timeRequired = Convert.ToDouble(filterItem_TimeRequired.FieldValue);
-                }
-            }
+        //    if (filterItem_EmployeeUserId != null)
+        //    {
+        //        if (filterItem_EmployeeUserId.FieldValue != null)
+        //        {
+        //            employeeUserId = filterItem_EmployeeUserId.FieldValue.ToString();
+        //        }
+        //    }
+        //    if (filterItem_TimeRequired != null)
+        //    {
+        //        if (filterItem_TimeRequired.FieldValue != null)
+        //        {
+        //            timeRequired = Convert.ToDouble(filterItem_TimeRequired.FieldValue);
+        //        }
+        //    }
 
-            if (fromDate != null && toDate != null)
-            {
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-            }
+        //    if (fromDate != null && toDate != null)
+        //    {
+        //        iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+        //        iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+        //    }
 
-            if (!string.IsNullOrEmpty(employeeUserId))
-            {
-                iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
-                Contact contact = contactRepository.GetSingleContact(employeeUserId, tenant);
-                if (contact != null)
-                {
-                    result.EmployeeUserName = contact.EnglishName;
-                }
-            }
+        //    if (!string.IsNullOrEmpty(employeeUserId))
+        //    {
+        //        iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
+        //        Contact contact = contactRepository.GetSingleContact(employeeUserId, tenant);
+        //        if (contact != null)
+        //        {
+        //            result.EmployeeUserName = contact.EnglishName;
+        //        }
+        //    }
 
-            result.FromDate = fromDate.Value;
-            result.ToDate = toDate.Value;
-            result.EmployeeUserId = employeeUserId;
+        //    result.FromDate = fromDate.Value;
+        //    result.ToDate = toDate.Value;
+        //    result.EmployeeUserId = employeeUserId;
 
-            // Office Hours 
-            ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
-            IQueryable<TMOfficeHour> officeHours = (from a in myContext.TMOfficeHours
-                                                    where !a.Inactive && a.Tenant == tenant && a.UserId == employeeUserId && a.WorkDate != null &&
-                                                    System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) &&
-                                                    System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate)
-                                                    select a);
+        //    // Office Hours 
+        //    ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
+        //    IQueryable<TMOfficeHour> officeHours = (from a in myContext.TMOfficeHours
+        //                                            where !a.Inactive && a.Tenant == tenant && a.UserId == employeeUserId && a.WorkDate != null &&
+        //                                            System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) &&
+        //                                            System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate)
+        //                                            select a);
 
-            EmployeeTimeSheetData timSheetItem = null;
-            double timeFromClock_Total = 0;
-            double timeFromOffice_Total = 0;
-            double timeFromHome_Total = 0;
-            double timeFromClient_Total = 0;
-            double differenceTime_Total = 0;
-            double totalWorkHrs_Total = 0;
-            double overTime_Total = 0;
+        //    EmployeeTimeSheetData timSheetItem = null;
+        //    double timeFromClock_Total = 0;
+        //    double timeFromOffice_Total = 0;
+        //    double timeFromHome_Total = 0;
+        //    double timeFromClient_Total = 0;
+        //    double differenceTime_Total = 0;
+        //    double totalWorkHrs_Total = 0;
+        //    double overTime_Total = 0;
 
-            var start = fromDate.Value;
-            var end = toDate.Value;
-            var dateList = Enumerable.Range(0, 1 + end.Subtract(start).Days).Select(offset => start.AddDays(offset)).ToList();
+        //    var start = fromDate.Value;
+        //    var end = toDate.Value;
+        //    var dateList = Enumerable.Range(0, 1 + end.Subtract(start).Days).Select(offset => start.AddDays(offset)).ToList();
 
-            var EmployeeDateList = (from d in iQueryable
-                                    group d by new { d.DateOfWork, d.EmployeeUserId } into g
-                                    select new
-                                    {
-                                        DateOfWork = System.Data.Entity.DbFunctions.TruncateTime(g.Key.DateOfWork),
-                                        EmployeeUserId = g.Key.EmployeeUserId,
-                                    });
+        //    var EmployeeDateList = (from d in iQueryable
+        //                            group d by new { d.DateOfWork, d.EmployeeUserId } into g
+        //                            select new
+        //                            {
+        //                                DateOfWork = System.Data.Entity.DbFunctions.TruncateTime(g.Key.DateOfWork),
+        //                                EmployeeUserId = g.Key.EmployeeUserId,
+        //                            });
 
-            EmployeeDateList = (from d in EmployeeDateList
-                                group d by new { d.DateOfWork, d.EmployeeUserId } into g
-                                select new
-                                {
-                                    DateOfWork = System.Data.Entity.DbFunctions.TruncateTime(g.Key.DateOfWork),
-                                    EmployeeUserId = g.Key.EmployeeUserId,
-                                });
-
-
-            foreach (var dateItem in dateList)
-            {
-
-                List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(dateItem) && d.EmployeeUserId == employeeUserId).ToList();
-                timSheetItem = new EmployeeTimeSheetData();
-                timSheetItem.EmployeeName = result.EmployeeUserName;
-                timSheetItem.DayOfWork = dateItem.ToString("dddd");
-                var date = dateItem;
-                if (date != null)
-                {
-                    timSheetItem.DateOfWork = date;
-                }
-                if (timSheetItem.DayOfWork != null && (timSheetItem.DayOfWork.ToLower() == "friday" || timSheetItem.DayOfWork.ToLower() == "saturday"))
-                {
-                    timSheetItem.RequiredWorkHours = 0;
-                }
-                else
-                {
-                    timSheetItem.RequiredWorkHours = timeRequired;
-                }
-
-                timSheetItem.TimeFromClock = "";
-                timSheetItem.TimeFromOffice = "";
-                timSheetItem.TimeFromHome = "";
-                timSheetItem.TimeFromClient = "";
-                timSheetItem.DifferenceTime = "";
-                timSheetItem.TotalWorkHrs = "";
-                timSheetItem.OverTime = "";
-
-                List<TMOfficeHour> officeDays = officeHours.Where(a => System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) == System.Data.Entity.DbFunctions.TruncateTime(dateItem) && a.UserId == employeeUserId).ToList();
-                double timeFromClock = 0;
-                foreach (var day in officeDays)
-                {
-                    DateTime? entry = (day != null && day.EntryTime != null) ? day.EntryTime : day.RecordedEntryTime;
-                    DateTime? exit = (day != null && day.ExitTime != null) ? day.ExitTime : day.RecordedExitTime;
-                    if (entry != null && exit != null)
-                    {
-                        timeFromClock += Math.Round((exit.Value - entry.Value).TotalHours, 2);
-                    }
-                }
-                timeFromClock_Total += timeFromClock;
-                timSheetItem.TimeFromClock = DateFormat(timeFromClock);
-
-                var timeFromOffice = Math.Round((itemGrouplist.Where(d => d.LocationCode == "O").Sum(a => a.TimeInMinutes)) / 60.0, 2);
-                timeFromOffice_Total += timeFromOffice;
-                timSheetItem.TimeFromOffice = DateFormat(timeFromOffice);
-
-                var timeFromHome = Math.Round((itemGrouplist.Where(d => d.LocationCode == "H").Sum(a => a.TimeInMinutes)) / 60.0, 2);
-                timeFromHome_Total += timeFromHome;
-                timSheetItem.TimeFromHome = DateFormat(timeFromHome);
-
-                var timeFromClient = Math.Round((itemGrouplist.Where(d => d.LocationCode == "C").Sum(a => a.TimeInMinutes)) / 60.0, 2);
-                timeFromClient_Total += timeFromClient;
-                timSheetItem.TimeFromClient = DateFormat(timeFromClient);
-
-                var differenceTime = Math.Round((timeFromOffice - timeFromClock), 2);
-                differenceTime_Total += differenceTime;
-                timSheetItem.DifferenceTime = DateFormat(differenceTime);
-
-                var totalWorkHrs = Math.Round((timeFromClock + timeFromClient + timeFromHome), 2);
-                totalWorkHrs_Total += totalWorkHrs;
-                timSheetItem.TotalWorkHrs = DateFormat(totalWorkHrs);
-
-                var overTime = Math.Round((totalWorkHrs - timSheetItem.RequiredWorkHours.Value), 2);
-                overTime_Total += overTime;
-                timSheetItem.OverTime = DateFormat(overTime);
-
-                result.EmployeeTimeSheetList.Add(timSheetItem);
-            }
+        //    EmployeeDateList = (from d in EmployeeDateList
+        //                        group d by new { d.DateOfWork, d.EmployeeUserId } into g
+        //                        select new
+        //                        {
+        //                            DateOfWork = System.Data.Entity.DbFunctions.TruncateTime(g.Key.DateOfWork),
+        //                            EmployeeUserId = g.Key.EmployeeUserId,
+        //                        });
 
 
+        //    foreach (var dateItem in dateList)
+        //    {
 
-            result.Total_RequiredWorkHours = result.EmployeeTimeSheetList.Sum(a => a.RequiredWorkHours);
-            result.Total_TimeFromClock = DateFormat(Math.Round(timeFromClock_Total, 2));
-            result.Total_TimeFromOffice = DateFormat(Math.Round(timeFromOffice_Total, 2));
-            result.Total_DifferenceTime = DateFormat(Math.Round(differenceTime_Total, 2));
-            result.Total_TimeFromHome = DateFormat(Math.Round(timeFromHome_Total, 2));
-            result.Total_TimeFromClient = DateFormat(Math.Round(timeFromClient_Total, 2));
-            result.Total_TotalWorkHrs = DateFormat(Math.Round(totalWorkHrs_Total, 2));
-            result.Total_OverTime = DateFormat(Math.Round(overTime_Total, 2));
-            return result;
-        }
+        //        List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(dateItem) && d.EmployeeUserId == employeeUserId).ToList();
+        //        timSheetItem = new EmployeeTimeSheetData();
+        //        timSheetItem.EmployeeName = result.EmployeeUserName;
+        //        timSheetItem.DayOfWork = dateItem.ToString("dddd");
+        //        var date = dateItem;
+        //        if (date != null)
+        //        {
+        //            timSheetItem.DateOfWork = date;
+        //        }
+        //        if (timSheetItem.DayOfWork != null && (timSheetItem.DayOfWork.ToLower() == "friday" || timSheetItem.DayOfWork.ToLower() == "saturday"))
+        //        {
+        //            timSheetItem.RequiredWorkHours = 0;
+        //        }
+        //        else
+        //        {
+        //            timSheetItem.RequiredWorkHours = timeRequired;
+        //        }
 
-        private string DateFormat(double time)
-        {
-            var result = "";
-            var isMinus = false;
-            if (time != 0)
-            {
-                var ts = TimeSpan.FromHours(time);
-                var h = 0.0;
-                if (ts.TotalHours < 0)
-                {
-                    isMinus = true;
-                    var h_Abs = Math.Abs(ts.TotalHours);
-                    h = System.Math.Floor(h_Abs);
-                }
-                else
-                {
-                    h = System.Math.Floor(ts.TotalHours);
-                }
+        //        timSheetItem.TimeFromClock = "";
+        //        timSheetItem.TimeFromOffice = "";
+        //        timSheetItem.TimeFromHome = "";
+        //        timSheetItem.TimeFromClient = "";
+        //        timSheetItem.DifferenceTime = "";
+        //        timSheetItem.TotalWorkHrs = "";
+        //        timSheetItem.OverTime = "";
 
-                if (Math.Abs(ts.TotalHours) < 1)
-                {
-                    h = 0;
-                }
-                if (isMinus)
-                {
-                    h = h * -1;
-                }
-                var m = (ts.TotalHours - h) * 60;
-                if (isMinus)
-                {
-                    if (m < 0)
-                        m = m * -1;
-                    if (h < 0)
-                        h = h * -1;
-                    result = "- " + h + ":" + m.ToString("00");
-                }
-                else
-                {
-                    result = h + ":" + m.ToString("00");
-                }
-            }
-            return result;
-        }
-        public List<DateTime> GetDates(int year, int month)
-        {
-            return Enumerable.Range(1, DateTime.DaysInMonth(year, month))  // Days: 1, 2 ... 31 etc.
-                             .Select(day => new DateTime(year, month, day)) // Map each day to a date
-                             .ToList(); // Load dates into a list
-        }
+        //        List<TMOfficeHour> officeDays = officeHours.Where(a => System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) == System.Data.Entity.DbFunctions.TruncateTime(dateItem) && a.UserId == employeeUserId).ToList();
+        //        double timeFromClock = 0;
+        //        foreach (var day in officeDays)
+        //        {
+        //            DateTime? entry = (day != null && day.EntryTime != null) ? day.EntryTime : day.RecordedEntryTime;
+        //            DateTime? exit = (day != null && day.ExitTime != null) ? day.ExitTime : day.RecordedExitTime;
+        //            if (entry != null && exit != null)
+        //            {
+        //                timeFromClock += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+        //            }
+        //        }
+        //        timeFromClock_Total += timeFromClock;
+        //        timSheetItem.TimeFromClock = DateFormat(timeFromClock);
+
+        //        var timeFromOffice = Math.Round((itemGrouplist.Where(d => d.LocationCode == "O").Sum(a => a.TimeInMinutes)) / 60.0, 2);
+        //        timeFromOffice_Total += timeFromOffice;
+        //        timSheetItem.TimeFromOffice = DateFormat(timeFromOffice);
+
+        //        var timeFromHome = Math.Round((itemGrouplist.Where(d => d.LocationCode == "H").Sum(a => a.TimeInMinutes)) / 60.0, 2);
+        //        timeFromHome_Total += timeFromHome;
+        //        timSheetItem.TimeFromHome = DateFormat(timeFromHome);
+
+        //        var timeFromClient = Math.Round((itemGrouplist.Where(d => d.LocationCode == "C").Sum(a => a.TimeInMinutes)) / 60.0, 2);
+        //        timeFromClient_Total += timeFromClient;
+        //        timSheetItem.TimeFromClient = DateFormat(timeFromClient);
+
+        //        var differenceTime = Math.Round((timeFromOffice - timeFromClock), 2);
+        //        differenceTime_Total += differenceTime;
+        //        timSheetItem.DifferenceTime = DateFormat(differenceTime);
+
+        //        var totalWorkHrs = Math.Round((timeFromClock + timeFromClient + timeFromHome), 2);
+        //        totalWorkHrs_Total += totalWorkHrs;
+        //        timSheetItem.TotalWorkHrs = DateFormat(totalWorkHrs);
+
+        //        var overTime = Math.Round((totalWorkHrs - timSheetItem.RequiredWorkHours.Value), 2);
+        //        overTime_Total += overTime;
+        //        timSheetItem.OverTime = DateFormat(overTime);
+
+        //        result.EmployeeTimeSheetList.Add(timSheetItem);
+        //    }
+
+
+
+        //    result.Total_RequiredWorkHours = result.EmployeeTimeSheetList.Sum(a => a.RequiredWorkHours);
+        //    result.Total_TimeFromClock = DateFormat(Math.Round(timeFromClock_Total, 2));
+        //    result.Total_TimeFromOffice = DateFormat(Math.Round(timeFromOffice_Total, 2));
+        //    result.Total_DifferenceTime = DateFormat(Math.Round(differenceTime_Total, 2));
+        //    result.Total_TimeFromHome = DateFormat(Math.Round(timeFromHome_Total, 2));
+        //    result.Total_TimeFromClient = DateFormat(Math.Round(timeFromClient_Total, 2));
+        //    result.Total_TotalWorkHrs = DateFormat(Math.Round(totalWorkHrs_Total, 2));
+        //    result.Total_OverTime = DateFormat(Math.Round(overTime_Total, 2));
+        //    return result;
+        //}
         #endregion
 
         #region Work Per Hours Project Report 
@@ -10172,6 +10122,56 @@ namespace WebFreight.Web.ReportsWebServices
                 result.Total_TotalWIWorkedHours_Employee = DateFormat(Math.Round(totalWIWorkedDays_Employee, 2));
             }
             return result;
+        }
+
+        private string DateFormat(double time)
+        {
+            var result = "";
+            var isMinus = false;
+            if (time != 0)
+            {
+                var ts = TimeSpan.FromHours(time);
+                var h = 0.0;
+                if (ts.TotalHours < 0)
+                {
+                    isMinus = true;
+                    var h_Abs = Math.Abs(ts.TotalHours);
+                    h = System.Math.Floor(h_Abs);
+                }
+                else
+                {
+                    h = System.Math.Floor(ts.TotalHours);
+                }
+
+                if (Math.Abs(ts.TotalHours) < 1)
+                {
+                    h = 0;
+                }
+                if (isMinus)
+                {
+                    h = h * -1;
+                }
+                var m = (ts.TotalHours - h) * 60;
+                if (isMinus)
+                {
+                    if (m < 0)
+                        m = m * -1;
+                    if (h < 0)
+                        h = h * -1;
+                    result = "- " + h + ":" + m.ToString("00");
+                }
+                else
+                {
+                    result = h + ":" + m.ToString("00");
+                }
+            }
+            return result;
+        }
+        public List<DateTime> GetDates(int year, int month)
+        {
+            return Enumerable.Range(1, DateTime.DaysInMonth(year, month))  // Days: 1, 2 ... 31 etc.
+                             .Select(day => new DateTime(year, month, day)) // Map each day to a date
+                             .ToList(); // Load dates into a list
         }
         #endregion
 
@@ -10745,6 +10745,7 @@ namespace WebFreight.Web.ReportsWebServices
                 transactionsDataProvider.IsAccountMulticurrency = (bool)glaccountPM.IsMultiCurrency;
                 transactionsDataProvider.AccountCurrencySign = glaccountPM.CurrencySign;
                 transactionsDataProvider.AccountCurrencyCode = glaccountPM.CurrencyCode;
+                transactionsDataProvider.AccountReconcileMethod = glaccountPM.ReconcileMethodCode;
             }
             else
             {

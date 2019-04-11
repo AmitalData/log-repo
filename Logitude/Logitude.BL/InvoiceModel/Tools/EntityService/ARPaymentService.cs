@@ -322,18 +322,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.CreateARInvoiceMessage(setApproved);
 
 
+            paymentRepository.Update(payment);
+            paymentRepository.SubmitChanges();
+
             // Full Accounting => Reconciliation
             if (theEntityPm.IsFullAccounting == true)
             {
                 if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
-                if(theEntityPm.StatusCode != "VD")
+                if (theEntityPm.StatusCode != "VD")
                     CreateReconciliationForARPayment(theEntityPm);
             }
 
-            paymentRepository.Update(payment);
-            paymentRepository.SubmitChanges();
             this.TraceConnected();
             this.GetForeignFields();
             this.BuildEntitiesNumbers();
@@ -978,7 +979,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 arPaymentcheque.StatusCode = "1"; // In Cashbook  
                                 arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                                 arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
-
+                                
                                IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
                                 paymentUpdate.Update(arPaymentcheque);
 
@@ -1561,6 +1562,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
 
+            if (paymentPM.InvoicesTransactions.Count == 0)
+                return;
+
             // reco payment line
             var _recoPYLine = CreatePaymentRecoLine(paymentPM);
             _recoPYLine.TransactionId = paymentTransaction.Id;
@@ -1740,8 +1744,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // Validate sum of line's amount to reconcile
             decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
-            decimal payAmount = Convert.ToDecimal(_payment.GLAccountRecoMethodCode == "0" ? _payment.AmountInLocalCurrency : _payment.AmountInPaymentCurrency);
-            if (amount2reconcile > payAmount)
+            if (amount2reconcile > (decimal)_payment.OpenAmount)
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
 
 
