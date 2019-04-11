@@ -71,6 +71,8 @@ export class DetectUserInActivity {
 
     DoInactive(viewModeil: any) {
 
+        if (this.CurrentSession == null) this.CurrentSession = SessionLocator.SelectedSession;
+
         if (viewModeil.IsSignout) {
             if (!SessionLocator.IsSiguOut) {
                 SessionLocator.IsSiguOut = true;
