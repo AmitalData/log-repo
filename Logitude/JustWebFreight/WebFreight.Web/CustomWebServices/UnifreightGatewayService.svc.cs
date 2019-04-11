@@ -179,6 +179,10 @@ namespace WebFreight.Web.CustomWebServices
             _AllIUnifreightGenericService.Add(curr);
             _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.Courier.CourierPendingReasonService>(curr);
 
+            curr = "Logitude.Customs.BL.Messaging.U2L.CourierStatus.CourierStatusService";
+            _AllIUnifreightGenericService.Add(curr);
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CourierStatus.CourierStatusService>(curr);
+
         }
 
         private static void AddSendDirectMessageService()
