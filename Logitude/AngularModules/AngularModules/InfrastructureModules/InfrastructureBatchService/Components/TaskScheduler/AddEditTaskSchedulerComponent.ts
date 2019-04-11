@@ -250,7 +250,7 @@ export class AddEditTaskSchedulerComponent  {
 
 
         if (this.DataContext.Type == "FTP") {
-            this.DataContext.ServiceClassName = "ServiceClassName";
+            this.DataContext.ServiceClassName = "FTPClassName";
 
 
             if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
@@ -273,9 +273,9 @@ export class AddEditTaskSchedulerComponent  {
             errors.push(msg.replace("%FieldName", "Name"));
         }
 
-        if (AppTool.IsNullOrEmpty(this.DataContext.Description)) {
-            errors.push(msg.replace("%FieldName", "Description"));
-        }
+        //if (AppTool.IsNullOrEmpty(this.DataContext.Description)) {
+        //    errors.push(msg.replace("%FieldName", "Description"));
+        //}
         
         if (this.DataContext.StartDateTime == null) {
             errors.push(msg.replace("%FieldName", "Start Date Time"));
@@ -393,7 +393,16 @@ export class AddEditTaskSchedulerComponent  {
         this.myCloner.AddField('Thursday');
         this.myCloner.AddField('Friday');
         this.myCloner.AddField('TriggerType');
-      
+
+        this.myCloner.AddField('Host');
+        this.myCloner.AddField('UserName');
+        this.myCloner.AddField('Folder');
+        this.myCloner.AddField('Password');
+        this.myCloner.AddField('From');
+        this.myCloner.AddField('Subject');
+        this.myCloner.AddField('Prefix');
+        this.myCloner.AddField('Extension');
+
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {
