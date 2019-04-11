@@ -57,6 +57,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Logitude.TariffModule.Data">
+      <HintPath>..\Logitude.TariffModule.Data\bin\Debug\Logitude.TariffModule.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Logitude.TimeManagement.Data">
       <HintPath>..\Logitude.TimeManagement.Data\obj\Debug\Logitude.TimeManagement.Data.dll</HintPath>
     </Reference>
@@ -866,6 +869,10 @@
     <Compile Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.Designer.cs">
       <DependentUpon>201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.cs" />
+    <Compile Include="Migrations\201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.Designer.cs">
+      <DependentUpon>201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1459,6 +1466,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.resx">
       <DependentUpon>201904081010543_ARPaymentIsExternalEntityMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.resx">
+      <DependentUpon>201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
