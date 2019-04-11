@@ -303,7 +303,7 @@
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                           [ButtonText]=_ReadyMNFToBatchSendButtonText
-                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
@@ -320,7 +320,7 @@
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                           [ButtonText]=SelectedMNFToBatchSendButtonText
-                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
@@ -341,7 +341,7 @@
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
                                                                                           [ButtonText]=_ReadyDECToBatchSendButtonText
-                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="115">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
@@ -373,7 +373,19 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td style="width:1px"></td>
-                                                                        <td><button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button></td>
+                                                                        <td style="width:200px">
+                                                                            <!--<button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button>-->
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLTerminal('M')"
+                                                                                          [IsDisabled]="!(IsILOVLEnabled || IsMamanEnabled)" 
+                                                                                          [ButtonText]="'שדר מסר ש.מ.ב למסוף'"
+                                                                                          [AsRegularButton]="'true'"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                        </td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
