@@ -772,9 +772,9 @@ implements OnDestroy
         });
 
         this.columns.push({
-            FieldName: 'MamanStatusCode',
+            FieldName: 'StorageSiteStatus',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.MamanStatusCode"),
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatus"),
             Styles: { width: '55px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
@@ -895,7 +895,7 @@ implements OnDestroy
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
         switch (this._SelectedTabFilter.Code) {
-            case "ACC":
+            //case "ACC":
             case "ALL": {
                 break;
             }
@@ -992,7 +992,7 @@ implements OnDestroy
 
         switch (this._SelectedACCValue) {
             case "W": {
-                filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("StorageSiteStatusCode", "2", null, null, "Equals", false, false, false, "string");
                 break;
             }
             case "WS": {

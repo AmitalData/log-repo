@@ -54,6 +54,16 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ManualProcessCode).HasColumnName("ManualProcessCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.TerminalSuspentionNumber).HasColumnName("TerminalSuspentionNumber").HasMaxLength(6).IsUnicode(false);
+
+            this.Property(t => t.LastMileStatusCode).HasColumnName("LastMileStatusCode").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.LastMileStatusDate).HasColumnName("LastMileStatusDate");
+
+            this.Property(t => t.LastMileStatusRemarks).HasColumnName("LastMileStatusRemarks").HasMaxLength(2000).IsUnicode(true);
+
+            this.Property(t => t.StorageSiteStatusCode).HasColumnName("StorageSiteStatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.StorageSiteErrorText).HasColumnName("StorageSiteErrorText").HasMaxLength(1200).IsUnicode(true);
         }
     }
 }
