@@ -67,6 +67,29 @@ namespace CommunicationWorkerRole
         string Token;
         Contact User;
         string CorrelationId;
+        private bool IsImportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareImportFile == true)
+            {
+                return (entityPM.DirectionId.ToUpper() == "I");
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
+            {
+                return (entityPM.DirectionId.ToUpper() == "E");
+            }
+            else
+            {
+                return false;
+            }
+        }
         public override async void AsyncRun()
         {
             APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
@@ -186,7 +209,7 @@ namespace CommunicationWorkerRole
                                         var tenantQuery = new TenantQuery(ForwarderShipment.Tenant);
                                         var tenantPM = tenantQuery.GetSinglePM(ForwarderShipment.Tenant);
 
-                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
+                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare && (ForwarderShipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment) || IsExportShipmentsAllowedForLogBox(tenantPM,ForwarderShipment)))
                                         {
                                             importerTenant = customerTenantAccessInfo.CustomerTenant;
                                             ShipmentPM ImporterShipment = null;
@@ -204,7 +227,7 @@ namespace CommunicationWorkerRole
                                                     }
 
                                                 }
-                                                else if (ForwarderShipment.DirectionId.ToUpper() == "C")//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
+                                                else if (ForwarderShipment.DirectionId.ToUpper() == "C" || ForwarderShipment.DirectionId.ToUpper() == "E")//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
                                                 {
                                                     ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ForwarderShipment.CustomerShipmentNumber, importerTenant);
                                                     EntityId = ImporterShipment.Id;

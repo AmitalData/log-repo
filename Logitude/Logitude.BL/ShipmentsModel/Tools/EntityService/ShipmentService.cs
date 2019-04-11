@@ -1134,7 +1134,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private bool IsExportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
         {
-            if (loggedTenant.CustomerTenantShareExportFile == true)
+            if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
             {
                 return (entityPM.DirectionId.ToUpper() == "E");
             }
