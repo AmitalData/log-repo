@@ -203,38 +203,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     }
                 }
             }
-            AppendLogLine("Importer Code: " + this._MyDeclarationPM.ImporterCode);
-            if (!string.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
-            {
-                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(dbContext);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(this._MyDeclarationPM.Id, false, false);
-                if (currentDeclarationCourierStatusPM != null)
-                {
-                    AppendLogLine("Declaration Courier Status HighLowValue: " + currentDeclarationCourierStatusPM.HighLowValue);
-                    if (this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "5")
-                    {
-                        if (currentDeclarationCourierStatusPM.HighLowValue == "L")
-                        {
-                            _MyDeclarationPM.ProcedureCurrentCode = "4000007";
-                        }
-                        else if (currentDeclarationCourierStatusPM.HighLowValue == "H")
-                        {
-                            _MyDeclarationPM.ProcedureCurrentCode = "4000001";
-                        }
-                    }
-                    else
-                    {
-                        if (currentDeclarationCourierStatusPM.HighLowValue == "L")
-                        {
-                            _MyDeclarationPM.ProcedureCurrentCode = "4000507";
-                        }
-                        else if (currentDeclarationCourierStatusPM.HighLowValue == "H")
-                        {
-                            _MyDeclarationPM.ProcedureCurrentCode = "4000501";
-                        }
-                    }
-                }
-            }
 
             if (this._MyDeclarationPM.Consignments.Count == 1) // moran 11.1.17 - AMI-59265 - moved before creating invoices
             {
@@ -360,6 +328,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     AppendLogLine("Update:InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 }
             }
+
+            AppendLogLine("Importer Code: " + this._MyDeclarationPM.ImporterCode);
 
             if (this._LogitudeCommDecFile.CustomsDocuments != null && this._LogitudeCommDecFile.CustomsDocuments.Where(d => d.Blocked != "1").Count() > 0) // moran 2.6.16 - AMI-56624
             {
