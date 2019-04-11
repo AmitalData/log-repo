@@ -34,6 +34,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "EZR,EnableAzureRootFolder", 
                 Code = "EZR", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LEX", 
+                Name = "LogBoxExport", 
+                SearchFields = "LEX,LogBoxExport", 
+			});
 			
             return all;
        }
