@@ -44,8 +44,17 @@
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;SAIN&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Set as Inactive&quot;" LocalName="&quot;Set as Inactive&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;REAC&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Reactivated&quot;" LocalName="&quot;Reactivated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;TLAD&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Tariff Lines Added&quot;" LocalName="&quot;Tariff Lines Added&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <MenuButtons MenuButtonGroupType="&quot;TariffEdit&quot;" MenuButtonGroupName="&quot;TariffEditButtonsGroup&quot;">
+    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;More&quot;">
+      <MenuItem EventCode="&quot;Inactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Inactive&quot;" />
+      <MenuItem EventCode="&quot;Reactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Reactivate&quot;" />
+    </MenuButton>
+  </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
