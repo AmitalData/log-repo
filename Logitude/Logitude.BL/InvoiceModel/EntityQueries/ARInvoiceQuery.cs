@@ -2082,5 +2082,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return myResult;
         }
+
+        public List<ARInvoicePM> GetARInvoicePMsByIdList(List<string> idList, int tenant)
+        {
+            List<ARInvoice> entityPOCOs =
+                        (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus")
+                         where idList.Contains(a.Id) && a.Tenant == tenant
+                         select a).ToList();
+
+            List<ARInvoicePM> pms = entityPOCOs.Select(poco => GetSingleMappedEntityPM(poco, true)).ToList();
+            return pms;
+        }
+
     }
 }

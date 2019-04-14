@@ -119,6 +119,11 @@ export class ReconciliationPM {
     public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
        
 	 
+    private accountReconcileMethodCode: string;
+    public get AccountReconcileMethodCode() { return this.accountReconcileMethodCode; }
+    public set AccountReconcileMethodCode(newValue: string) { if (this.accountReconcileMethodCode != newValue) { this.accountReconcileMethodCode = newValue; this.MarkAsDirty("AccountReconcileMethodCode"); } }
+       
+	 
 
     public OldEntityPM: ReconciliationPM;
 		
