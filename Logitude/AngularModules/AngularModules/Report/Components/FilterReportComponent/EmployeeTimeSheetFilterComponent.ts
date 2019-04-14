@@ -5,6 +5,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -26,6 +27,42 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
     queryFilterItem: QueryFilterItem;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "TMEmployeeTime";
+
+    private dateOfWorkMinutes = 0;
+    get DateOfWorkMinutes() {
+        return this.dateOfWorkMinutes;
+    }
+    set DateOfWorkMinutes(value: number) {
+        if (this.dateOfWorkMinutes != value) {
+            this.dateOfWorkMinutes = value;
+            this.DateOfWorkDateFormat = this.ApplyTimeFormat(value);
+        }
+    }
+    ApplyTimeFormat(minutes) {
+        var formattedMinutes = "";
+        var val = minutes;
+        var h = val / 60 | 0,
+            m = val % 60 | 0;
+        var result = h + ":" + AppTool.PadLeft("" + m, 2, '0');
+        if (result == "0:00") {
+            formattedMinutes = "";
+        }
+        else {
+            formattedMinutes = result;
+        }
+        return formattedMinutes;
+    }
+
+    private dateOfWorkDateFormat = "";
+    get DateOfWorkDateFormat() {
+        return this.dateOfWorkDateFormat;
+    }
+    set DateOfWorkDateFormat(value: string) {
+        if (this.dateOfWorkDateFormat != value) {
+            this.dateOfWorkDateFormat = value;
+        }
+    }
+
 
     constructor() {
         super();
@@ -102,6 +139,7 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "TimeRequired";
+            this.TimeRequired = this.DateOfWorkMinutes;
             this.queryFilterItem.FieldValue = this.TimeRequired;
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
