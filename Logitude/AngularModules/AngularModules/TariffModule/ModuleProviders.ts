@@ -4,7 +4,7 @@ import { TariffVersionListService } from './Services/StandardLists/TariffVersion
 import { TariffListService } from './Services/StandardLists/TariffListService';
 import { TariffPMService } from './Services/StandardPMs/TariffPMService';
 import { TariffVersionPMService } from './Services/StandardPMs/TariffVersionPMService';
-
+import { TariffDomainService } from './Services/TariffDomainService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -21,7 +21,10 @@ export class ModuleProviders {
             // PM
             case "TariffVersionPMService": { myResult = new TariffVersionPMService(); break; }
             case "TariffPMService": { myResult = new TariffPMService(); break; }
-                          
+
+           // DomainService
+            case "TariffDomainService": { myResult = new TariffDomainService(); break; }
+     
         }
 
         return myResult;

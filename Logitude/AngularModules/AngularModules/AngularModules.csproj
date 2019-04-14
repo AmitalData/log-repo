@@ -1977,6 +1977,7 @@
     <Content Include="Social\Components\SocialPostsComponent.html" />
     <Content Include="Social\Components\SocialMessagesComponent.html" />
     <Content Include="styles.css" />
+    <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.html" />
     <Content Include="TimeManagement\Components\Connections\ConnectToParentComponent.html" />
     <Content Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.html" />
@@ -6327,6 +6328,7 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBSpecialHandlingCodePMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />
@@ -6338,6 +6340,7 @@
     <TypeScriptCompile Include="TariffModule\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleProviders.ts" />
     <TypeScriptCompile Include="TariffModule\Module_Tariff.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\TariffDomainService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffTypeListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffVersionListService.ts" />
