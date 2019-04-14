@@ -2259,22 +2259,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
 
-
-            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-            {
-                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
-                ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
-                if (entityComputedFields != null)
-                {
-                    shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
-                    shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
-                    shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
-                    shipmentPM.ImporterDepositionRequestDetails = entityComputedFields.ImporterDepositionRequestDetails;
-                }
-            }
-
-
-
+            
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
@@ -3091,7 +3076,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return returnShipment;
         }
 
-        public ShipmentPM MapShipmentToShipmentPMForAutomation(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData , ShipmentComputedFields entityComputedFields)
+        public ShipmentPM MapShipmentToShipmentPMForAutomation(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData)
         {
             if (masterData == null)
             {
@@ -3104,11 +3089,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             #region ShipmentComputedFields
             if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
             {
-                if (entityComputedFields == null)
-                {
-                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
-                    entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
-                }
+                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
+                ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
 
                 if (entityComputedFields != null)
                 {
@@ -11910,10 +11892,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
 
-        public string GetShipmentIdByForwarderShipmentNumber(string agentRef, int tenant)
+        public string GetShipmentIdByForwarderShipmentNumber(string forwarderShipmentNumber, int tenant)
         {
             string shipmentId = (from a in repository.context.Shipments
-                                 where a.Tenant == tenant && a.ForwarderShipmentNumber == agentRef && !a.IsCancelled
+                                 where a.Tenant == tenant && a.ForwarderShipmentNumber == forwarderShipmentNumber && !a.IsCancelled
                                  select a.Id).FirstOrDefault();
 
             return shipmentId;

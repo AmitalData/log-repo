@@ -7,6 +7,7 @@ using Logitude.BL.Validators;
 using System.Runtime.Serialization;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
@@ -2325,6 +2326,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsDigitalSignRequired { get; set; }
         public bool IsDepositionRequired { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
+
+
+        public ShipmentComputedFields ShipmentComputedFields { get; set; }
         
         public bool IsShipmentComputedFieldChange { get; set; }
 

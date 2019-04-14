@@ -338,5 +338,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsFullAccounting { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConcurrencyGUID { get; set; }
+        public string NewConcurrencyGUID { get; set; }
     }
 }

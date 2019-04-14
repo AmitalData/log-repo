@@ -39,7 +39,7 @@ namespace Logitude.TimeManagement.Data.EntityMapping
 
             this.Property(t => t.DateOfWork).HasColumnName("DateOfWork");
 
-            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.Description).HasColumnName("Description").IsRequired().HasMaxLength(500).IsUnicode(true);
 
             this.Property(t => t.TimeInMinutes).HasColumnName("TimeInMinutes");
 
