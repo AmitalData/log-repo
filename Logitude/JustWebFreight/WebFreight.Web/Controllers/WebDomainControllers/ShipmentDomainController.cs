@@ -553,7 +553,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetShipmentsQueriesCounts(int tenant, string transportModeId, string SearchFilter, string serviceContextUser, string TypeCode = null)
+        public HttpResponseMessage GetShipmentsQueriesCounts(int tenant, string transportModeId, string directionId, string SearchFilter, string serviceContextUser, string TypeCode = null)
         {
             try
             {
@@ -566,7 +566,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, SearchFilter, serviceContextUser, TypeCode);
+                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, directionId, SearchFilter, serviceContextUser, TypeCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

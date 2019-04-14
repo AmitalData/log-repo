@@ -962,6 +962,11 @@ export class ARInvoicePM {
     public set ARInvoiceStockId(newValue: string) { if (this.aRInvoiceStockId != newValue) { this.aRInvoiceStockId = newValue; this.MarkAsDirty("ARInvoiceStockId"); } }
        
 	 
+    private isInvoiceNumberFromStock: boolean;
+    public get IsInvoiceNumberFromStock() { return this.isInvoiceNumberFromStock; }
+    public set IsInvoiceNumberFromStock(newValue: boolean) { if (this.isInvoiceNumberFromStock != newValue) { this.isInvoiceNumberFromStock = newValue; this.MarkAsDirty("IsInvoiceNumberFromStock"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		
@@ -986,4 +991,4 @@ export class ARInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

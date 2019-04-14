@@ -119,7 +119,7 @@ namespace Logitude.BL.DataContracts
         {
             if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
             {
-                return (entityPM.DirectionId.ToUpper() == "E");
+                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
             }
             else
             {
