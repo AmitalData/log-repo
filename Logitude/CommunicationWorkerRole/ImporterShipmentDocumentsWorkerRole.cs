@@ -220,14 +220,14 @@ namespace CommunicationWorkerRole
                                                     IsNewLog = false;
                                                 }
                                                 var msg = "Start Checking Parent Entity Direction" + DateTime.Now;
-                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(ForwarderShipment), null, null, "");
+                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
 
                                                 if (ForwarderShipment.DirectionId.ToUpper() == "I" && !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
                                                 {
 
                                                     var CustomsShipmentPM = shipmentQuery.GetSingleShipmentPM(ForwarderShipment.CustomFileId, tenant); // todo: I Should Ask About this
                                                     msg = "Getting Custom shipment Id for current import shipment ( " + ForwarderShipment.CustomFileId + " )" + DateTime.Now;
-                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(CustomsShipmentPM), null, null, "");
+                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
 
                                                     if (CustomsShipmentPM != null && !string.IsNullOrEmpty(CustomsShipmentPM.CustomerShipmentNumber))
                                                     {
@@ -239,7 +239,7 @@ namespace CommunicationWorkerRole
                                                 {
                                                     //ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ForwarderShipment.CustomerShipmentNumber, importerTenant);
                                                     msg = "Getting Custom shipment number" + DateTime.Now;
-                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(ForwarderShipment), null, null, "");
+                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
 
                                                     EntityNumber = ForwarderShipment.CustomerShipmentNumber;// ImporterShipment.ShipmentNumber;
                                                 }
