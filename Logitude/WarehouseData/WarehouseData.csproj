@@ -266,6 +266,7 @@
     <Content Include="WarehouseScript\Others\Day 08[Abed] UpdateObjectFieldCopyToDW.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\Others\Day 14 [Abed]AddFunctionResolveCustomFieldValue.sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

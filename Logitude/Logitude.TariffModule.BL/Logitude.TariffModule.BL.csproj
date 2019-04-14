@@ -46,9 +46,6 @@
     <Reference Include="Logitude.SystemLogs">
       <HintPath>..\Logitude.SystemLogs\bin\Debug\Logitude.SystemLogs.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.TariffModule.Data">
-      <HintPath>..\Logitude.TariffModule.Data\bin\Debug\Logitude.TariffModule.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Logitude.TariffModule.MetaData">
       <HintPath>..\Logitude.TariffModule.MetaData\bin\Debug\Logitude.TariffModule.MetaData.dll</HintPath>
     </Reference>
@@ -116,6 +113,12 @@
     <Folder Include="DataContracts\" />
     <Folder Include="Helpers\" />
     <Folder Include="TraceEvents\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
+      <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
+      <Name>Logitude.TariffModule.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

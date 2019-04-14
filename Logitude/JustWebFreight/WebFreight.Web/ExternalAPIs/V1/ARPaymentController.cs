@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -144,7 +146,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         ARPaymentQueryService mappingService = new ARPaymentQueryService(tenant);
-                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
+                        ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
+                        ARPaymentList payment = paymentQuery.GetPaymentByPaymentNumber(entity.PaymentNo, tenant);
+                        if(payment == null)
+                        {
+                            throw new ApplicationException("ARPayment with number " + entity.PaymentNo + " doesn't exist");
+                        }
+                        entity.Id = payment.Id;
+                       ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
                         entityPM.IsExternalEntity = true;
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo, entityPM.Id, entityPM.Tenant);
 

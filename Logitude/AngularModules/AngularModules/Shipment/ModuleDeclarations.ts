@@ -35,8 +35,7 @@ import {SplitShipmentComponent} from './Components/SplitShipment/SplitShipmentCo
 import { SplitPartialPackageComponent } from './Components/SplitShipment/SplitPartialPackageComponent';
 import { RemoveTasksButtonListTemplate } from './Components/ListTemplates/RemoveTasksButtonListTemplate';
 import { AnalyzeChampXMLComponent } from './Components/Helpers/AnalyzeChampXMLComponent';
-
-
+import { ShipmenDirectionConvertComponent } from './Components/MenuButtons/ShipmenDirectionConvertComponent';
 
 export const Components =
     [
@@ -75,6 +74,7 @@ export const Components =
         SplitPartialPackageComponent,
         RemoveTasksButtonListTemplate,
         AnalyzeChampXMLComponent,
+        ShipmenDirectionConvertComponent,
     ];
 
 export const ControlsComponents =
@@ -124,7 +124,7 @@ export class ModuleDeclarations {
             case "SplitPartialPackageComponent": { myResult = SplitPartialPackageComponent; break; }
             case "RemoveTasksButtonListTemplate": { myResult = RemoveTasksButtonListTemplate; break; }
             case "AnalyzeChampXMLComponent": { myResult = AnalyzeChampXMLComponent; break; }
-                
+            case "ShipmenDirectionConvertComponent": { myResult = ShipmenDirectionConvertComponent; break; }
         }
 
         return myResult;

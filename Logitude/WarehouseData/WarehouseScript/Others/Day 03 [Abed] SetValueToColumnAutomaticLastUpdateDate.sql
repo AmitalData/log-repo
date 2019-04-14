@@ -24,3 +24,5 @@ update  DWHSettings set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUp
 update  MoveTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  Vessels set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  SpecialServicesTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+update  ObjectFields set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+

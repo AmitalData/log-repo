@@ -173,6 +173,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.SATApprovalDate).HasColumnName("SATApprovalDate");
             this.Property(t => t.IsFullAccounting).HasColumnName("IsFullAccounting");
             this.Property(t => t.ARInvoiceStockId).HasColumnName("ARInvoiceStockId");
+            this.Property(t => t.IsInvoiceNumberFromStock).HasColumnName("IsInvoiceNumberFromStock");
+
+             
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);

@@ -378,6 +378,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // update connected ARPayment 
             ARPaymentReconciliationService arpRecoService = new ARPaymentReconciliationService(entityPM.Tenant);
             arpRecoService.UpdatePaymentOpenAmountAndStatusForReconciliaiton(entityPM);
+            arpRecoService.UpdateConnectedInvoices(entityPM);
 
         }
 
