@@ -305,13 +305,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CasualImporterTel { get; set; }
         [Column("CasualImporterContact")]
 	    public string CasualImporterContact { get; set; }
-        [ForeignKey("MamanStatus")]
-        [Column("MamanStatusCode")]
-	    public string MamanStatusCode { get; set; }
-	      
-        public virtual MamanStatus MamanStatus { get; set; }
-        [Column("MamanErrorXml")]
-	    public string MamanErrorXml { get; set; }
         [Column("ItemsProcessTypesList")]
 	    public string ItemsProcessTypesList { get; set; }
         [Column("IsClose")]
