@@ -495,7 +495,7 @@ export class ShipmentHelperComponent implements OnDestroy {
 
     ShowINTTRAWizard() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "INTTRA Wizard";
+        logWindow.Title = "Shipping Instructions Wizard";
         logWindow.WindowArgs = { Shipment: this.EntityPM, EntityArgs: this.entityArgs };
         logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/WizardComponent');
     }
