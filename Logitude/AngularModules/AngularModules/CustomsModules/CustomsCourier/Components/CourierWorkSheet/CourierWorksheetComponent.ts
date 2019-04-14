@@ -764,7 +764,7 @@ implements OnDestroy
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '80px' },
+            Styles: { width: '75px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -772,10 +772,10 @@ implements OnDestroy
         });
 
         this.columns.push({
-            FieldName: 'StorageSiteStatus',
+            FieldName: 'StorageSiteStatusCode',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatus"),
-            Styles: { width: '55px' },
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatusCode"),
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -817,7 +817,7 @@ implements OnDestroy
             FieldName: 'IsClosedForFollowUp',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '70px' },
+            Styles: { width: '65px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
