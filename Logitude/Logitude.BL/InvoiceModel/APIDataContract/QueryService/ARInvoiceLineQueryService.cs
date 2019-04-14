@@ -3,6 +3,7 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
@@ -107,6 +108,17 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     temp.ExchangeRateDate = item.ExchangeRateDate;
                     temp.Quantity = item.Quantity;
                     temp.Tenant = Tenant;
+                    //temp.LineActionCode = item.LineActionCode;
+                    ARInvoiceLineActionQueryService ARInvoiceLineActionQuery = new ARInvoiceLineActionQueryService(Tenant);
+                    if (item.ARInvoiceLineAction != null)
+                    {
+                        var ARInvoiceLineActionPM = ARInvoiceLineActionQuery.ARInvoiceLineActionDataMappingAndValidatin(item.ARInvoiceLineAction, Tenant);
+                        if (ARInvoiceLineActionPM != null)
+                        {
+                            temp.LineActionCode = ARInvoiceLineActionPM.Code;
+                        }
+                    }
+
                     if (myChargesTypePM != null)
                     {
                         if (string.IsNullOrEmpty(temp.Description))
@@ -187,6 +199,18 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     temp.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                     temp.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
                     temp.VatPercentage = item.VatPercentage;
+                    //temp.LineActionCode = item.LineActionCode;
+
+                    if (item.LineActionCode != null)
+                    {
+                        ARInvoiceLineActionQueryService ARInvoiceLineActionQueryService = new ARInvoiceLineActionQueryService(Tenant);
+                        temp.ARInvoiceLineAction = ARInvoiceLineActionQueryService.ARInvoiceLineActionDataMapping(item.LineActionCode, Tenant);
+
+                    }
+
+
+
+
                     MyList.Add(temp);
                 }
 
