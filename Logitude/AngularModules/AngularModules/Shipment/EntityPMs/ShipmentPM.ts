@@ -4240,7 +4240,11 @@ export class ShipmentPM {
     private convertShipmentToFCL: boolean;
     public get ConvertShipmentToFCL() { return this.convertShipmentToFCL; }
     public set ConvertShipmentToFCL(newValue: boolean) { if (this.convertShipmentToFCL != newValue) { this.convertShipmentToFCL = newValue; this.MarkAsDirty("ConvertShipmentToFCL"); } }
-    
+
+    private shipmentDirectionConverted: boolean;
+    public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
+    public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
