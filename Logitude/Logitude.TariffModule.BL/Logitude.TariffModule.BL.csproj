@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="CloseTables\DetailsClassesGenerated\TariffTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TariffTypeStruct.Generated.cs" />
+    <Compile Include="DataContracts\TariffsSummary.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffLineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffTypeDataMapping.Generated.cs" />
@@ -95,10 +96,12 @@
     <Compile Include="EntityQueryServices\Generated\TariffQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffVersionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\TariffQueryService.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffVersionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\TariffUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\TariffModuleClassLevelValidator.cs" />
     <Compile Include="Validators\TariffModuleValidationClass.cs" />
@@ -110,7 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIDataContract\" />
-    <Folder Include="DataContracts\" />
     <Folder Include="Helpers\" />
     <Folder Include="TraceEvents\" />
   </ItemGroup>
