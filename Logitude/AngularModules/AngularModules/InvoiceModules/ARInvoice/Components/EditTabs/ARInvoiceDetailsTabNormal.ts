@@ -86,6 +86,10 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.IsEditExchangeRateVisible = true;
         }
 
+        if (SessionLocator.AccountingSettingPM.EnableInvoiceStocksManagement) {
+            this.AllowStockInvoiceNumber = true;
+        }
+
         if (!AppTool.IsNullOrEmpty(this.ARInvoiceStockId)) {
             this.IsInvoiceNumberComboBoxEnabled = false;
         }
@@ -223,6 +227,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public RateIsEnabled: boolean = false;
     public VatTypeFilterIsEnabled: boolean = false;
     public AllowManualInvoiceNumber: boolean = false;
+    public AllowStockInvoiceNumber: boolean = false;
     public PaymentTermDisplayInLOV: boolean = true;
     SetUIProperties() {
         var isEditingEnabled = InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
