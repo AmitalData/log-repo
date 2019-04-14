@@ -333,6 +333,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     linePM.Line = ++count;
                     linePM.ChangeSetOp = ChangeSetOperation.Insert;
+                linePM.UpdatedByUserId = taxReport.UpdatedByUserId;
                     lineUpdateService.Update(linePM, true);
                 }
 
@@ -732,7 +733,51 @@ namespace Logitude.Accounting.BL.CoreBL
             return result;
         }
 
-    }
+
+        public static BatchTaskExecutionPM CreateTaxReportFileInBatch(string taxReportId, int tenant)
+        {
+           
+            PNCFileArgs args = new PNCFileArgs() { ReportId = taxReportId, Tenant = tenant };
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(PNCFileArgs));
+            serializer.Serialize(stringwriter, args);
+            string xmlParameters = stringwriter.ToString();
+            BatchTaskExecutionPM taskExe = null;
+            taskExe = new BatchTaskExecutionPM()
+            {
+                Subject = "Create a new Tax Report",
+                Tenant = tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchCreateTaxReportService,Logitude.Accounting.BL",
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = "C",
+
+            };
+
+
+
+            IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            bteUpdateService.Update(taskExe, true);
+
+            // 2- Send to queue
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+
+         
+
+
+            queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", tenant.ToString() }
+                });
+            return taskExe;
+        }
+
+
+        }
     public class PNCFileArgs
     {
         //public TaxReportPM ReportPM { get; set; }

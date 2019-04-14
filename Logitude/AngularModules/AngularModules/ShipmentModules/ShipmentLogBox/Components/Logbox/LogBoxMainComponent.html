@@ -147,10 +147,16 @@
                                                 <SearchTextBox [ObjectTableName]="'Shipment'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [SearchText]="SearchFilter" [PlaceHolder]="'Search Shipments And Documents ...'"></SearchTextBox>
                                             </td>
 
-                                            <td style="width: 10px;">
+                                            <td *ngIf="ToggleIsExportShipments" style="width: 10px;">
                                                 <div></div>
                                             </td>
+                                            <td *ngIf="ToggleIsExportShipments" style="width: 117px; vertical-align: middle; position:relative;"> 
+                                                <DirectionsFilter [HideImportDomistic]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                                            </td>
 
+                                            <td style="width: 3px;">
+                                                <div></div>
+                                            </td>
                                             <td style="width: 117px; vertical-align: middle; position:relative;">
                                                 <TransportsFilter (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
                                             </td>

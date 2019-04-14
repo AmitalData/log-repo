@@ -10411,7 +10411,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         }
 
-        public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string SearchFilter, string serviceContextUser, string TypeCode = null)
+        public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string directionId, string SearchFilter, string serviceContextUser, string TypeCode = null)
         {
             ImporterQueriesDataCounts myResult = new ImporterQueriesDataCounts() { Id = 1 };
 
@@ -10425,6 +10425,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (!string.IsNullOrEmpty(transportModeId))
             {
                 allShipments = allShipments.Where(d => d.TransportModeId == transportModeId);
+            }
+            if (!string.IsNullOrEmpty(directionId))
+            {
+                allShipments = allShipments.Where(d => d.DirectionId == directionId);
             }
             if (!string.IsNullOrEmpty(SearchFilter))
             {

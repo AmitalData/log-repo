@@ -104,6 +104,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.AmountInLocalCurrency = entityPM.AmountInLocalCurrency;
                 entity.AmountInPaymentCurrency = entityPM.AmountInPaymentCurrency;
                 entity.LocalCurrencyId = entityPM.LocalCurrencyId;
+                entity.Bank = entityPM.Bank;
+                entity.BankBranch = entityPM.BankBranch;
+                entity.Account = entityPM.Account;
             }
 
 

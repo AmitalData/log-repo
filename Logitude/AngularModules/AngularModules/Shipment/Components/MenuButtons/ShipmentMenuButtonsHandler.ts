@@ -11,7 +11,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ShipmentDomainService} from '../../Services/ShipmentDomainService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {MenuButtonsTemplateArgs} from './MenuButtonsTemplateComponent';
+import { MenuButtonsTemplateArgs} from './MenuButtonsTemplateComponent';
 import {ShipmentTool} from '../../Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentValidator} from '../../Validators/ShipmentValidator';
@@ -22,6 +22,7 @@ import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { ConvertDirectionArgs } from './ShipmenDirectionConvertComponent';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -228,6 +229,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = true;
                         }
                     }
+
                     if (button.EventCode == "ConvertShipmentToLCL") {
                         if (buttonEnabled) {
                             if (this.EntityPM.ShipmentTypeId == "FCLD") {
@@ -241,6 +243,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = true;
                         }
                     }
+
                     if (button.EventCode == "ConvertShipmentToFCL") {
                         if (buttonEnabled) {
                             if (this.EntityPM.ShipmentTypeId == "LCLD") {
@@ -249,6 +252,15 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             else {
                                 button.IsHidden = true;
                             }
+                        }
+                        else {
+                            button.IsHidden = true;
+                        }
+                    }
+
+                    if (button.EventCode == "ConvertShipmentDirection") {
+                        if (buttonEnabled) {
+                            button.IsHidden = false;
                         }
                         else {
                             button.IsHidden = true;
@@ -339,6 +351,11 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         break;
                     }
 
+                    case "ConvertShipmentDirection": {
+                        this.ConvertShipmentDirectionClicked();
+                        break;
+                    }
+
                     default: {
                         this.isButtonClicked = false;
                         break;
@@ -378,6 +395,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             this.DoConvertShipmentType("ToFCL");
                         }
 
+                        if (this.IsConvertDirectionClicked) {
+                            this.DoConvertShipmentDirection();
+                        }
+
                         if (this.Reload) {
                             this.entityArgs.EditComponent.ReloadEntityPM();
                         }
@@ -415,6 +436,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.Reload = false;
         this.IsConvertToLCLClicked = false;
         this.IsConvertToFCLClicked = false;
+        this.IsConvertDirectionClicked = false;
     }
     Validate() {
         var validator = new ShipmentValidator();
@@ -1030,54 +1052,6 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         }
     }
     private DoConvertShipmentType(type: string) {
-        var errors: string[] = this.VaidateConvertShipmentType();
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
-            var args = new MenuButtonsTemplateArgs();
-            args.ObjectTableName = "Shipment";
-            args.EntityPM = this.EntityPM;
-            args.EventNote = null;
-            args.IsNotesStackPanelVisible = true;
-            var windowTitle: string;
-
-            switch (type) {
-                case "ToLCL":
-                    {
-                        this.currentActionName = "ConvertShipmentToLCL";
-                        args.NotesHeader = "Convert Shipment From FCL To LCL...";
-                        windowTitle = "Convert Shipment From FCL To LCL";
-                        break;
-                    }
-
-                case "ToFCL":
-                    {
-                        this.currentActionName = "ConvertShipmentToFCL";
-                        args.NotesHeader = "Convert Shipment From LCL To FCL...";
-                        windowTitle = "Convert Shipment From LCL To FCL";
-                        break;
-                    }
-            }
-            
-            var logWindow = new LogitudeWindow();
-            logWindow.WindowArgs = args;
-            logWindow.Width = 935;
-            logWindow.Height = 570;
-
-            logWindow.Title = windowTitle;
-            logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
-            logWindow.ComponentLoaded.subscribe(s => {
-                logWindow.WindowClosed.subscribe(d => {
-                    var notes = s.EventNotes;
-                    if (d == "confirm") {
-                        this.EntityPM.EventNote = notes;
-                        this.ShowConfirmConvertShipmentType(type);                        
-                    }                   
-                });
-            });
-        }
-    }
-    private VaidateConvertShipmentType(): string[] {
         var errors: string[] = [];
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.QuoteId)) {
@@ -1096,40 +1070,185 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         else if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
             errors.push("Cannot change shipment type when connected to house shipments ");
         }
-        
-        return errors;
+
+        else if (this.EntityPM.IsOperationalClosed) {
+            errors.push("Cannot change shipment type when shipment is operationally closed");
+        }
+
+        else if (this.EntityPM.MainCarriageATD != null || this.EntityPM.Transshipment1ATD != null || this.EntityPM.Transshipment2ATD != null
+            || this.EntityPM.Transshipment3ATD != null || this.EntityPM.MainCarriageATA != null || this.EntityPM.Transshipment1ATA != null
+            || this.EntityPM.Transshipment2ATA != null || this.EntityPM.Transshipment3ATA != null) {
+            errors.push("Cannot change shipment type when shipment contains actual departure/arrival dates");
+        }
+
+        if (errors.length == 0) {
+            this.shipmentService.CheckIfConnectedEntryOrRelease(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    var result: boolean = myResponse.Result;
+
+                    if (result) {
+                        errors.push("Cannot change shipment type when shipment is connected to cross docs entries / releases");
+                    }
+
+                    this.ShowNotesWindow(errors, type);
+                }
+            });
+        }
+
+        else {
+            this.ShowNotesWindow(errors, type);
+        }
     }
-    private ShowConfirmConvertShipmentType(type: string) {
-        var confirmWindow: ConfirmWindow = new ConfirmWindow();
-        confirmWindow.Title = "Convert Shipment Type";
-        confirmWindow.Width = 400;
-        confirmWindow.Show("Changing the shipment type will result in deleting all the shipment packages , are you sure you want to change ?");
-        confirmWindow.YesButtonText = "Yes";
-        confirmWindow.NoButtonText = "No";
+    private ShowNotesWindow(errors: string[], type: string) {
+        var args = new MenuButtonsTemplateArgs();
+        var windowTitle: string;
 
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                switch (type) {
-                    case "ToLCL":
-                        {
-                            this.EntityPM.ConvertShipmentToLCL = true;
-                            this.EntityPM.ConvertShipmentToFCL = false;
-                            break;
-                        }
+        args.ObjectTableName = "Shipment";
+        args.EntityPM = this.EntityPM;
+        args.EventNote = null;
+        args.IsConvertShipmentType = true;
+        args.ValidationErrorsList = errors;
+        args.EnabledOkButton = false;
 
-                    case "ToFCL":
-                        {
-                            this.EntityPM.ConvertShipmentToLCL = false;
-                            this.EntityPM.ConvertShipmentToFCL = true;
-                            break;
-                        }
+        if (errors.length == 0) {
+            args.IsNotesStackPanelVisible = true;
+            args.NotesHeader = "Notes";
+            args.EnabledOkButton = true;
+        }
+
+        switch (type) {
+            case "ToLCL":
+                {
+                    this.currentActionName = "ConvertShipmentToLCL";
+                    windowTitle = "Convert Shipment From FCL To LCL";
+                    break;
                 }
 
-                this.Reload = true;
-                this.OkButton();
-            }
+            case "ToFCL":
+                {
+                    this.currentActionName = "ConvertShipmentToFCL";
+                    windowTitle = "Convert Shipment From LCL To FCL";
+                    break;
+                }
+        }
 
-            this.ResetButtonClicked();
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = args;
+        logWindow.Width = 935;
+        logWindow.Height = 570;
+
+        logWindow.Title = windowTitle;
+        logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                var notes = s.EventNotes;
+                if (d == "confirm") {
+                    this.EntityPM.EventNote = notes;
+
+                    switch (type) {
+                        case "ToLCL":
+                            {
+                                this.EntityPM.ConvertShipmentToLCL = true;
+                                this.EntityPM.ConvertShipmentToFCL = false;
+                                break;
+                            }
+
+                        case "ToFCL":
+                            {
+                                this.EntityPM.ConvertShipmentToLCL = false;
+                                this.EntityPM.ConvertShipmentToFCL = true;
+                                break;
+                            }
+                    }
+
+                    this.Reload = true;
+                    this.OkButton();
+                    this.ResetButtonClicked();
+                }
+            });
+        });
+    }
+
+    private IsConvertDirectionClicked: boolean = false;
+    private ConvertShipmentDirectionClicked() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+        if (errors.length == 0) {
+            this.IsConvertDirectionClicked = true;
+            this.OkButton();
+        }
+    }
+    private DoConvertShipmentDirection() {
+        var errors: string[] = [];
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.QuoteId)) {
+            errors.push("Shipment is connected to a quote, can't change direction");
+        }
+        
+        else if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
+            errors.push("Shipment is connected to other shipment/s, can't change direction");
+        }
+
+        else if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+            errors.push("Shipment is connected to other shipment/s, can't change direction");
+        }
+
+        else if (this.EntityPM.IsOperationalClosed) {
+            errors.push("Shipment is closed operationally, can't change direction");
+        }
+
+        else if (this.EntityPM.MainCarriageATD != null || this.EntityPM.Transshipment1ATD != null || this.EntityPM.Transshipment2ATD != null
+            || this.EntityPM.Transshipment3ATD != null || this.EntityPM.MainCarriageATA != null || this.EntityPM.Transshipment1ATA != null
+            || this.EntityPM.Transshipment2ATA != null || this.EntityPM.Transshipment3ATA != null) {
+            errors.push("Shipment has departed/arrived, can't change direction");
+        }
+
+        if (errors.length == 0) {
+            this.shipmentService.CheckIfConnectedEntryOrRelease(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    var result: boolean = myResponse.Result;
+
+                    if (result) {
+                        errors.push("Shipment has connected Cross Docs Entries/Releases, can't change direction");
+                    }
+
+                    this.ShowConvertShipmentDirectionWindow(errors);
+                }
+            });
+        }
+
+        else {
+            this.ShowConvertShipmentDirectionWindow(errors);
+        }
+    }
+    private ShowConvertShipmentDirectionWindow(errors: string[]) {
+        this.currentActionName = "ConvertShipmentDirection";
+
+        var args = new ConvertDirectionArgs();        
+        args.ObjectTableName = "Shipment";
+        args.EntityPM = this.EntityPM;
+        args.ValidationErrorsList = errors;
+        args.EnabledOkButton = true;
+
+        if (errors.length > 0) {
+            args.EnabledOkButton = false;
+        }
+        
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = args;
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+
+        logWindow.Title = "Convert Shipment Direction";
+        logWindow.Show('./Shipment/Components/MenuButtons/ShipmenDirectionConvertComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if (d == "ok") {
+                    this.Reload = true;
+                    this.ResetButtonClicked();
+                }
+            });
         });
     }
 
