@@ -881,6 +881,10 @@
     <Compile Include="Migrations\201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.Designer.cs">
       <DependentUpon>201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.cs" />
+    <Compile Include="Migrations\201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.Designer.cs">
+      <DependentUpon>201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1483,6 +1487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.resx">
       <DependentUpon>201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.resx">
+      <DependentUpon>201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

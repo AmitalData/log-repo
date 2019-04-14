@@ -19,7 +19,9 @@ namespace WebFreight.Web.DataProviders
         public string VendorAddress { get; set; } // ??
         public string VendorVatNumber { get; set; }
         public string ShipperName { get; set; }
+        public string ShipperAddress { get; set; }
         public string ConsigneeName { get; set; }
+        public string ConsigneeAddress { get; set; }
         public string MainCarriageCarrierLabel { get; set; }
         public string MainCarriageCarrierName { get; set; }
         public string MainCarriageVesselLabel { get; set; }

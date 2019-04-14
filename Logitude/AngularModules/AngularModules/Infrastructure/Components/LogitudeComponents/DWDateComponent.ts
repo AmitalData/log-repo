@@ -1,4 +1,4 @@
-﻿
+
 
 declare var window: any;
 declare var System: any;
@@ -208,15 +208,19 @@ export class DWDateComponent extends BaseComponent {
         }
 
         else if (this.Operation == "Previous" || this.Operation == "Next") {
-            var values: string[] = this.SelectedValue.toString().split('^');
-            if (values.length > 1) this.IntervalValue = Number(values[1]);
-            if (values.length > 2) this.SelectedRange = values[2];
+            if (this.SelectedValue) {
+                var values: string[] = this.SelectedValue.toString().split('^');
+                if (values.length > 1) this.IntervalValue = Number(values[1]);
+                if (values.length > 2) this.SelectedRange = values[2];
+            }
             
         }
 
         else if (this.Operation == "Current") {
-            var values: string[] = this.SelectedValue.toString().split('^');
-            if (values.length > 1) this.SelectedRange = values[1];
+            if (this.SelectedValue) {
+                var values: string[] = this.SelectedValue.toString().split('^');
+                if (values.length > 1) this.SelectedRange = values[1];
+            }
         
         }
 

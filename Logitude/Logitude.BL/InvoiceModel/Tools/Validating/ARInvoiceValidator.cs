@@ -65,6 +65,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 throw new ApplicationException(msg);
             }
 
+            if (entityPM.IsInvoiceNumberFromStock && entityPM.InvoiceNumber == null)
+            {
+                string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldSetInvoiceNumber", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
+
             if (entityPM.InvoiceDate > TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant))
             {
                 string msg = TranslateTextsClass.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate", entityPM.Tenant);
