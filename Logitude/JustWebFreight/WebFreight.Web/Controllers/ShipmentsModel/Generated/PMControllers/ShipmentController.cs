@@ -1,10 +1,14 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using ICSharpCode.SharpZipLib.BZip2;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -18,14 +22,17 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using System.Xml;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -589,23 +596,84 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key,tenant); // Check the 0
+                ShipmentAdditionalCloudCustomData CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomData(key, tenant);//GetSingleShipmentPMBySecurityKeyTenant(key,tenant); // Check the 0
+                if (CustomData != null && !string.IsNullOrEmpty(CustomData.PaymentRequestXML))
+                {
+                    TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant);
+                    var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant);
+                    if (MyAdditionalData != null)
+                    {
+                        var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(CustomData.PaymentRequestXML);
+                        CustomData.RequestPaymentData = MyPaymentData;
+                        //var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
+                        var myId = Path.GetRandomFileName().Replace("&", "").Replace(".", "").Replace("=", "");
+                        var ShipmentNumber = CustomData.ShipmentNumber;
+                        //"sum=199.9&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable="
+                        var MyConString = MyAdditionalData.PaymentGatewayConnectionString;
+                        MyConString = MyConString.Replace("*sum*", MyPaymentData.TotalChargesInNIS);
+                        MyConString = MyConString.Replace("*DCdisable*", ShipmentNumber);
+                        MyConString = MyConString.Replace("*DclickTK*", myId);
+                        string myParams = MyConString;// "sum=" + MyPaymentData.TotalChargesInNIS + "&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable=" + myId + "&DclickTK=" + myId;
+                        Dictionary<string, string> dict = GetParamsAsDict(myParams);
+                        string result = "";
+                        var success = GetRequestToken(dict, out result);
+                        if (success)
+                        {
+                            CustomData.PaymentData = ForwardToPaymentLink(result, myParams);
+                        }
+                    }
 
-                //DateTime completionTime = DateTime.Now;
-                //int executionTime = (int)((completionTime.Ticks - callTime.Ticks) / TimeSpan.TicksPerMillisecond);
-                //HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "ServerTime, X-Custom");
-                //HttpContext.Current.Response.Headers.Add("ServerTime", executionTime.ToString());
-
-                //PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                }
+                 
 
 
-                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM); ;
+                return Request.CreateResponse(HttpStatusCode.OK, CustomData); ;
             }
 
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private PaymentData ForwardToPaymentLink(string thtk, string MyParams)
+        {
+            PaymentData MyPaymentData = new PaymentData();
+
+            string postbackUrl = @"https://direct.tranzila.com/amitaltest/";
+           
+            Dictionary<string, string> dict = GetParamsAsDict(MyParams + "&" + thtk);
+            MyPaymentData.currency = dict["currency"];
+            MyPaymentData.sum = dict["sum"];
+            MyPaymentData.op = dict["op"];
+            MyPaymentData.DCdisable = dict["DCdisable"];
+            MyPaymentData.DclickTK = dict["DclickTK"];
+            MyPaymentData.thtk = dict["thtk"];
+            return MyPaymentData;
+            
+        }
+
+        private Dictionary<string, string> GetParamsAsDict(string text)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var list = text.Split('&');
+            foreach (var item in list)
+            {
+                dict.Add(item.Split('=')[0], item.Split('=')[1]);
+            }
+            return (dict);
+        }
+
+        private static readonly HttpClient client = new HttpClient();
+
+        private bool GetRequestToken(Dictionary<string, string> myDict, out string result)
+        {
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var content = new FormUrlEncodedContent(myDict);
+            var response = client.PostAsync("https://secure5.tranzila.com/cgi-bin/tranzila71dt.cgi", content);
+            var httpResponse = response.Result.Content.ReadAsStringAsync();// .Content.ReadAsStringAsync();
+            result = httpResponse.Result;
+            return (result.Contains("thtk") ? true : false);
         }
 
         [HttpGet]
@@ -637,8 +705,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 entityComputedFields.IsRequestedDocuments = false;
                 entityComputedFields.RequestedDocumentsCount = 0;
                 entityComputedFields.IsDepositionRequired = false;
-                shipmentComputedFieldsRepository.Update(entityComputedFields);
-                shipmentComputedFieldsRepository.SubmitChanges();
+                ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(entityComputedFields);
+
+
+                //shipmentComputedFieldsRepository.Update(entityComputedFields);
+                //  shipmentComputedFieldsRepository.SubmitChanges();
                 //ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 //ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
                 //shipmentPM.IsOperationalClosed = true;

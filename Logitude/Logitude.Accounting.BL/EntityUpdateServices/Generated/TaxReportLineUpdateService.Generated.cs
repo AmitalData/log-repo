@@ -59,37 +59,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {     
   
 		
-			string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-							 
-
-			if (loggedContact != null)
-            {
-		        entityPM.UpdatedByUserId = loggedContact.Id;
-		    }
-                        
-					
 	    }
         
 		protected override void FillDefaultValuesOnUpdate(TaxReportLinePM entityPM)
         {       
-             
-            string email = "system@tenant" + entityPM.Tenant + ".com";
-            if (HttpContext.Current != null)
-            {
-                email = HttpContext.Current.User.Identity.Name; 
-            }
-             
-		    //string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-			if (loggedContact != null)
-            {
-		        entityPM.UpdatedByUserId = loggedContact.Id;
-		    }
-                        
-					
+           
         }
 		  
 		 

@@ -39,6 +39,69 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     ObjectTableName = "ARInvoiceStock",
                 });
             }
+
+            if(entityPM.Cancelled)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "CANC",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "ARInvoiceStock",
+                });
+            }
+
+            if (entityPM.Reactivated)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "REAC",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "ARInvoiceStock",
+                });
+            }
+
+            if (entityPM.NumbersAdded)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "INND",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "ARInvoiceStock",
+                    Notes = entityPM.EventNotes,
+                });
+            }
+
+            if (entityPM.NumberRemoved)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "INNR",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "ARInvoiceStock",
+                    Notes = entityPM.EventNotes,
+                });
+            }
+
+            if (entityPM.SeriesRemoved)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "INSR",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "ARInvoiceStock",
+                    Notes = entityPM.EventNotes,
+                });
+            }
         }
     }
 }

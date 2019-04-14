@@ -34,6 +34,8 @@ using Logitude.TimeManagement.Data.EntityMapping;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityMapping;
 using Simplog.Data.InvoiceModel;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.EntityMapping;
 
 namespace Logitude.DatabaseMigration.LogitudeModel
 {
@@ -890,7 +892,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
-
+        public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
 
 
 
@@ -3476,6 +3478,39 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         }
         #endregion
 
+
+        #region Tariff Module
+
+        public IDbSet<Tariff> Tariffs
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffType> TariffTypes
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffVersion> TariffVersions
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffLine> TariffLines
+        {
+            get;
+            set;
+
+        }    
+        #endregion
+
+
         #region Infrastructure Generated
         public IDbSet<Toggle> Toggles
         {
@@ -4254,6 +4289,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
             #endregion
 
+            #region Tariff Module
+            modelBuilder.Configurations.Add(new TariffMap());
+            modelBuilder.Configurations.Add(new TariffLineMap());
+            modelBuilder.Configurations.Add(new TariffTypeMap());
+            modelBuilder.Configurations.Add(new TariffVersionMap());
+            #endregion
+
             #region Infrastructure Generated
             modelBuilder.Configurations.Add(new ToggleMap());
             modelBuilder.Configurations.Add(new FeatureToggleMap());
@@ -4804,7 +4846,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             modelBuilder.Configurations.Add(new SchedulerLogsMap());
-
+            modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
 
 
             base.OnModelCreating(modelBuilder);

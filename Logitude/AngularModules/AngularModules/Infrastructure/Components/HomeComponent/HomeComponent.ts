@@ -24,7 +24,7 @@ import { DetectUserInActivity } from '../../Helpers/DetectUserInActivity';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BluesnapContractPMService } from '../../Services/StandardPMs/BluesnapContractPMService';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { UserPMService } from '../../../Common/Services/StandardPMs/UserPMService';
+import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -74,7 +74,7 @@ export class HomeComponent implements OnDestroy{
             tokenExpiration.Start(SessionInfo.WebTokenLifeTimeInMinutes, SessionInfo.WebTokenExpirationWarningInMinutes , "M");//(3, 1, "M")
         }
 
-        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ReleaseNotesURL) && SessionLocator.LoggedUserPM.ShowNewReleaseToolTip) {
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ReleaseNotesURL) && SessionLocator.ShowUserNewReleaseToolTip) {
             this.ShowNewReleaseToolTip = true;
         }
     }
@@ -323,7 +323,6 @@ export class HomeComponent implements OnDestroy{
             HeaderMessage = "Your company subscription will expire in " + SessionLocator.TenantManagementJS.SuspendDaysLeft + " days.";
             WindowMessage = "Your company subscription will expire in " + SessionLocator.TenantManagementJS.SuspendDaysLeft + " days due to credit \ncard failure. \nPlease contact your e-commerce vendor or " + email;
         }
-
         this.messageWindow.Title = HeaderMessage;
         this.messageWindow.Message = WindowMessage;
         this.messageWindow.Show(this.messageWindow.Message);
@@ -1651,14 +1650,13 @@ export class HomeComponent implements OnDestroy{
     }
 
     HideReleaseMessageClicked() {        
-        SessionLocator.LoggedUserPM.ShowNewReleaseToolTip = false;
+        this.ShowNewReleaseToolTip = false;
 
-        var service: UserPMService = new UserPMService();
-        service.update(SessionLocator.LoggedUserPM).subscribe((response: ServiceResponse) => {            
+        var service: UserExtendedPMService = new UserExtendedPMService();
+        service.AddUserToReleaseNotesUsers(SessionLocator.LoggedUserId).subscribe((response: ServiceResponse) => {            
             if (response) {
                 if (!response.HasError) {
-                    SessionLocator.LoggedUserPM = response.Result;
-                    this.ShowNewReleaseToolTip = false;
+
                 }
             }
         });

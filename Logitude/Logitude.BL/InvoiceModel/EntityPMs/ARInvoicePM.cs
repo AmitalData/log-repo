@@ -337,6 +337,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public Decimal? TotalVAT { get; set; }
 
         public bool IsFullAccounting { get; set; }
-
+        public string ARInvoiceStockId { get; set; }
     }
 }

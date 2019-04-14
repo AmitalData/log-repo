@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -86,9 +88,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                        
                         entityPM.Tenant = entity.Tenant;
                         entityPM.SetApproved = true;
-                        
-
-                          ARPaymentService service = new ARPaymentService(MyContext, entity.Tenant);
+                        entityPM.IsExternalEntity = true;
+                        mappingService.CheckARPaymentNumber(entityPM.PaymentNo,entityPM.Id, entityPM.Tenant);
+                       
+                        ARPaymentService service = new ARPaymentService(MyContext, entity.Tenant);
                         entityPM = mappingService.SetARPaymentPMFields(entityPM);
                         service.Create(entityPM);
 
@@ -120,7 +123,66 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
+        public HttpResponseMessage Put(ARPayment entity)
+        {
+            ARPayment oldEntity = entity;
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        if (entity != null)
+                        {
+                            oldEntity = LogitudeXmlSerializer.DeserializeObject<ARPayment>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
+                        }
+
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+                        ARPaymentQueryService mappingService = new ARPaymentQueryService(tenant);
+                        ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
+                        ARPaymentList payment = paymentQuery.GetPaymentByPaymentNumber(entity.PaymentNo, tenant);
+                        if(payment == null)
+                        {
+                            throw new ApplicationException("ARPayment with number " + entity.PaymentNo + " doesn't exist");
+                        }
+                        entity.Id = payment.Id;
+                       ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
+                        entityPM.IsExternalEntity = true;
+                        mappingService.CheckARPaymentNumber(entityPM.PaymentNo, entityPM.Id, entityPM.Tenant);
+
+                        ARPaymentService service = new ARPaymentService(MyContext, tenant);
+                        service.Update(entityPM, true);
+
+                        APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARPayment", entityPM.Id, "ARPayment API", authToken.Tenant);
+
+                        scope.Complete();
+
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entity);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "ARPayment", null, "ARPayment API");
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            }
+            else
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+                APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "ARPayment", null, "ARPayment API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
 
     }
 }

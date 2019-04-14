@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr>
         <td>
@@ -138,14 +138,14 @@
                                                                 <div></div>
                                                             </td>
 
-                                                            <td [style.text-align]="isRTL ? 'right' : 'left'"  style="width: 35px;" class="Label">{{'ARInvoice.S.Details.Rate' | TextCodeTranslationPipe}}:</td>
+                                                            <td [style.text-align]="isRTL ? 'right' : 'left'" style="width: 35px;" class="Label">{{'ARInvoice.S.Details.Rate' | TextCodeTranslationPipe}}:</td>
 
                                                             <td style="width: 65px;">
                                                                 <LogTextBox [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5"></LogTextBox>
                                                             </td>
 
                                                             <td style="width: 36px;">
-                                                                <div [style.float]="isRTL ? 'left' : 'right'"  style="display: block;" *ngIf="IsEditExchangeRateVisible">
+                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [IsEnabled]="RateIsEnabled"></IconButton>
                                                                 </div>
                                                             </td>
@@ -159,38 +159,35 @@
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-
-                                                <td *ngIf="!AllowManualInvoiceNumber">
+                                                <td *ngIf="!AllowManualInvoiceNumber && !IsInvoiceStocksManagementEnabled">
                                                     <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
-
-                                                <td *ngIf="AllowManualInvoiceNumber">
+                                                <td *ngIf="AllowManualInvoiceNumber || IsInvoiceStocksManagementEnabled">
                                                     <table>
                                                         <tr>
-                                                            <td>
+                                                            <td style="width: 100px;">
                                                                 <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                             </td>
 
-                                                            <td style="width: 20px;">
+                                                            <td style="width: 5px;">
                                                                 <div></div>
                                                             </td>
 
-
-                                                            <td style="width: 136px;">
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width: 16px;">
-                                                                            <CheckBox [IsChecked]="IsInvoiceNumberManuallySet" (Checked)="IsInvoiceNumberManuallySet = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
-                                                                        </td>
-
-                                                                        <td style="padding-left: 2px;padding-right: 2px; width: 1px;" class="Label">{{'ARInvoice.F.IsInvoiceNumberManuallySet' | TextCodeTranslationPipe}}</td>
-
-                                                                        <td>
-                                                                            <HelpIcon [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
+                                                            <td style="min-width: 100px;max-width: 100px;width:100px;">
+                                                                <ComboBox [IsDisabled]="!IsEditingEnabled || !IsInvoiceNumberComboBoxEnabled" [ItemsSource]="InvoiceNumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedInvoiceNumberFilter" (SelectedItemChanged)="SelectedInvoiceNumberFilter = $event"></ComboBox>
                                                             </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                            <td style="width: 18px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='MAS'">
+                                                                <HelpIcon [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
+                                                            </td>
+
+                                                            <td *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code !='MAS'" style="width: 18px;">
+                                                                <div></div>
+                                                            </td>
+
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -217,6 +214,12 @@
                                                     <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -227,11 +230,21 @@
                                                     <div></div>
                                                 </td>
 
-                                                <td  [style.text-align]="isRTL ? 'right' : 'left'"  style="font-size:10px; color:#1B90CB;">
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
                                                     {{RelativeRateDate}}
                                                 </td>
                                             </tr>
-
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="padding-left: 3px;padding-right: 3px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' && ARInvoiceStockId == null">
+                                                    <Hyperlink (click)=" GetInvoiceNumberFromStock()" [Text]="'Get from stock'" [IsEnabled]="IsEditingEnabled" ></Hyperlink>
+                                                </td>
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="padding-left: 3px;padding-right: 3px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' &&ARInvoiceStockId != null">
+                                                    <Hyperlink (click)=" ReturnInvoiceNumberToStock()" [Text]="'Return to stock'" [IsEnabled]="IsEditingEnabled" ></Hyperlink>
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <td>
                                                     <div></div>
@@ -293,7 +306,7 @@
                                     </td>
 
                                     <td style="width: 189px;">
-                                        <ul  [style.float]="isRTL ? 'left' : 'right'" class="FiltersMenu" [class.FiltersMenuDisabled]="!IsEditingEnabled">
+                                        <ul [style.float]="isRTL ? 'left' : 'right'" class="FiltersMenu" [class.FiltersMenuDisabled]="!IsEditingEnabled">
                                             <li (click)="PrepaidCollectId = 'B'" [class.SelectedFilter]="PrepaidCollectId === 'B'" style="width:55px;">
                                                 {{'ARInvoice.S.Details.All' | TextCodeTranslationPipe}}
                                             </li>
@@ -311,7 +324,7 @@
                                     </td>
 
                                     <td style="width: 143px;" *ngIf="IsCustomsInvoice">
-                                        <ul  [style.float]="isRTL ? 'left' : 'right'" class="FiltersMenu" [class.FiltersMenuDisabled]="!IsEditingEnabled" >
+                                        <ul [style.float]="isRTL ? 'left' : 'right'" class="FiltersMenu" [class.FiltersMenuDisabled]="!IsEditingEnabled">
                                             <li (click)="IsCustomsChargesOnly = false" [class.SelectedFilter]="IsCustomsChargesOnly === false" style="width:55px;">
                                                 {{'ARInvoice.S.Details.All' | TextCodeTranslationPipe}}
                                             </li>
@@ -394,12 +407,12 @@
                                                             </td>
 
                                                             <!-- Quantity -->
-                                                            <td  [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                                            <td [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 90px; min-width: 90px; max-width: 90px;">
                                                                 {{item.Quantity | NumbersPipe:'N3'}}
                                                             </td>
 
                                                             <!-- UnitPrice -->
-                                                            <td [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 90px; min-width: 90px; max-width: 90px;">                                                                
+                                                            <td [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 90px; min-width: 90px; max-width: 90px;">
                                                                 <table>
                                                                     <tr>
                                                                         <td>
@@ -561,7 +574,7 @@
                                     </log-column>
 
                                     <!-- UnitPrice -->
-                                    <log-column [header]="'ARInvoiceLine.CH.UnitPrice' | TextCodeTranslationPipe" [width]="'90'" [Editable]="false"  [Alignment]="isRTL ? 'left' : 'right'">
+                                    <log-column [header]="'ARInvoiceLine.CH.UnitPrice' | TextCodeTranslationPipe" [width]="'90'" [Editable]="false" [Alignment]="isRTL ? 'left' : 'right'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <table>
                                                 <tr>

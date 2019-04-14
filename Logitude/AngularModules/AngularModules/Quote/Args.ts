@@ -1,4 +1,4 @@
-﻿import {QuotePM} from './EntityPMs/QuotePM';
+import {QuotePM} from './EntityPMs/QuotePM';
 
 export class NewQuoteComponentArgs {
     public Quote: any = null;
@@ -11,4 +11,5 @@ export class QuoteEventNotesArgs {
     public EntityPM: any;
     public NotesHeader: string = "Notes";
     public ShowClosingReason: boolean = false;
+    public IsConvertQuoteType: boolean = false;
 }

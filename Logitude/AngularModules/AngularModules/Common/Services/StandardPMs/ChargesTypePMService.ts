@@ -20,6 +20,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ChargesTypePM} from '../../EntityPMs/ChargesTypePM';
 
 import {ChargeTypeAccountingPM} from '../../EntityPMs/ChargeTypeAccountingPM';
+import {ChargesTypeValidator} from '../../Validators/ChargesTypeValidator';
 
 @Injectable()
 
@@ -78,6 +79,12 @@ export class ChargesTypePMService {
                 validator = new ClassLevelValidator();
                  
                 var errorsArray = validator.Validate("ChargesType", entityPM);
+                var customValidator :ChargesTypeValidator = new ChargesTypeValidator();
+                var validationErrorsArr = customValidator.Validate(entityPM);
+				if(validationErrorsArr)
+				{
+					errorsArray = errorsArray.concat(validationErrorsArr);
+				}
                  
 
                 var serviceResponse: ServiceResponse;
@@ -133,6 +140,12 @@ export class ChargesTypePMService {
                 validator = new ClassLevelValidator();
                
                 var errorsArray = validator.Validate("ChargesType", entityPM);
+                var customValidator :ChargesTypeValidator = new ChargesTypeValidator();
+                var validationErrorsArr = customValidator.Validate(entityPM);
+				if(validationErrorsArr)
+				{
+					errorsArray = errorsArray.concat(validationErrorsArr);
+				}
                  
 
                 var serviceResponse: ServiceResponse;

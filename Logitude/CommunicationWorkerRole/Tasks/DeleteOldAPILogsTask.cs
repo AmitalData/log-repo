@@ -1,9 +1,11 @@
 ﻿
 using CommunicationWorkerRole.Tasks;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading;
 using System.Transactions;
 
 namespace CommunicationWorkerRole.Tasks
@@ -18,46 +20,53 @@ namespace CommunicationWorkerRole.Tasks
         public override void StartTask()
         {
             string strConnString = TenantServerConfigration.GetDbConnection(0);
-
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
             #region APILogsData
             int numberOfExecuteRows = 1000;
-            while (numberOfExecuteRows == 1000)
+            int numberOfRecords = 0;
+            while (numberOfExecuteRows == 1000 && numberOfRecords < 500000)
             {
-
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        SqlCommand cmd = new SqlCommand("delete top(1000) from [dbo].[APILogsData] where id in (select id from [dbo].[APILogs] where [CreateDate] < GETDATE() - 90 )", cn);
-                        cmd.CommandTimeout = 1000000;
+                        string sql = "delete top(1000) from APILogsData where id in (select id from APILogs where CreateDate < GETDATE() - 90 )";
+                        SqlCommand cmd = new SqlCommand(sql, cn);
+                        cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                         cn.Open();
                         numberOfExecuteRows = cmd.ExecuteNonQuery();
+                        numberOfRecords += numberOfExecuteRows;
                         cn.Close();
                         scope.Complete();
                     }
                 }
-
+                Thread.Sleep(1000);
             }
             #endregion
 
 
             #region APILogs
             numberOfExecuteRows = 1000;
-            while (numberOfExecuteRows == 1000)
+            numberOfRecords = 0;
+            while (numberOfExecuteRows == 1000 && numberOfRecords < 500000)
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        SqlCommand cmd = new SqlCommand("delete top(1000) from [dbo].[APILogs] where [CreateDate] < GETDATE() - 90", cn);
-                        cmd.CommandTimeout = 1000000;
+                        string sql = "delete top(1000) from APILogs where CreateDate < GETDATE() - 90";
+                        SqlCommand cmd = new SqlCommand(sql, cn);
+                        cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                         cn.Open();
                         numberOfExecuteRows = cmd.ExecuteNonQuery();
+                        numberOfRecords += numberOfExecuteRows;
                         cn.Close();
                         scope.Complete();
                     }
                 }
+
+                Thread.Sleep(1000);
             }
 
             #endregion

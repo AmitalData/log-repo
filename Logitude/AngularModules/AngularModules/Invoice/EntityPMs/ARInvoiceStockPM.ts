@@ -102,6 +102,46 @@ export class ARInvoiceStockPM {
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
+    private numbersAdded: boolean;
+    public get NumbersAdded() { return this.numbersAdded; }
+    public set NumbersAdded(newValue: boolean) { if (this.numbersAdded != newValue) { this.numbersAdded = newValue; this.MarkAsDirty("NumbersAdded"); } }
+       
+	 
+    private numberRemoved: boolean;
+    public get NumberRemoved() { return this.numberRemoved; }
+    public set NumberRemoved(newValue: boolean) { if (this.numberRemoved != newValue) { this.numberRemoved = newValue; this.MarkAsDirty("NumberRemoved"); } }
+       
+	 
+    private seriesRemoved: boolean;
+    public get SeriesRemoved() { return this.seriesRemoved; }
+    public set SeriesRemoved(newValue: boolean) { if (this.seriesRemoved != newValue) { this.seriesRemoved = newValue; this.MarkAsDirty("SeriesRemoved"); } }
+       
+	 
+    private cancelled: boolean;
+    public get Cancelled() { return this.cancelled; }
+    public set Cancelled(newValue: boolean) { if (this.cancelled != newValue) { this.cancelled = newValue; this.MarkAsDirty("Cancelled"); } }
+       
+	 
+    private reactivated: boolean;
+    public get Reactivated() { return this.reactivated; }
+    public set Reactivated(newValue: boolean) { if (this.reactivated != newValue) { this.reactivated = newValue; this.MarkAsDirty("Reactivated"); } }
+       
+	 
+    private linesCount: string;
+    public get LinesCount() { return this.linesCount; }
+    public set LinesCount(newValue: string) { if (this.linesCount != newValue) { this.linesCount = newValue; this.MarkAsDirty("LinesCount"); } }
+       
+	 
+    private eventNotes: string;
+    public get EventNotes() { return this.eventNotes; }
+    public set EventNotes(newValue: string) { if (this.eventNotes != newValue) { this.eventNotes = newValue; this.MarkAsDirty("EventNotes"); } }
+       
+	 
      
 	private aRInvoiceStockLines: ARInvoiceStockLinePM[];
     get  ARInvoiceStockLines() {

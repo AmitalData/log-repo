@@ -72,6 +72,24 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         }
 
 
+        public void CheckARPaymentNumber(string paymentNumber,string id, int tenant)
+        {
+
+            if(paymentNumber == null)
+            {
+                throw new ApplicationException("Payment number is null");
+            }
+           bool exist =  query.CheckARPaymentNumber(paymentNumber,id, tenant);
+            if(exist)
+            {
+                throw new ApplicationException("Payment with the same number already exist");
+            }
+           
+
+
+
+        }
+
         public ARPayment GetARPaymentByNumber(string number, int Tenant)
         {
             try

@@ -45,6 +45,7 @@ using System.ComponentModel.DataAnnotations;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.WebServices
 {
@@ -626,21 +627,24 @@ namespace WebFreight.Web.WebServices
             {
                 try
                 {
-                    using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())//TransactionFactory.GetNewTransaction())
-                    {
-                        BrokeredMessage message = new BrokeredMessage();
-                        message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.Add(new TimeSpan(0, 0, 3));
+					//using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())//TransactionFactory.GetNewTransaction())
+					//{
+					//    BrokeredMessage message = new BrokeredMessage();
+					//    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.Add(new TimeSpan(0, 0, 3));
 
-                        message.Properties["CommunicationLogId"] = myCommunicationLogId;
-                        message.Properties["Tenant"] = myTenant;
+					//    message.Properties["CommunicationLogId"] = myCommunicationLogId;
+					//    message.Properties["Tenant"] = myTenant;
 
-                        string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);//"emailqueue"
-                        QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
-                        client.Send(message);
+					//    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);//"emailqueue"
+					//    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
+					//    client.Send(message);
 
-                        scope.Complete();
-                    }
-                }
+					//    scope.Complete();
+					//}
+					//string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);//"emailqueue"
+					DbQueueService queueservice = new DbQueueService("EmailQueue", myTenant);
+					queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", myTenant.ToString() } });
+				}
 
                 catch (Exception ex)
                 {

@@ -63,7 +63,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Stimulsoft.Report">
-      <HintPath>..\General\Dlls\StimulSoft new\Stimulsoft.Report.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Stimulsoft Reports.Silverlight 2015.1 Trial\Bin\Stimulsoft.Report.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -177,6 +177,7 @@
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
     <Compile Include="CoreBL\Batch\BatchAccountingLoadTestTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchCreateTaxReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchIntegrityCheckService.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
     <Compile Include="CoreBL\CreateJournalReconcileService.cs" />
     <Compile Include="CoreBL\CashbookService.cs" />
+    <Compile Include="CoreBL\ISystem1000Service.cs" />
     <Compile Include="CoreBL\OpenFormatReportService.cs" />
     <Compile Include="CoreBL\Reconcile\AutoReconcileARPaymentService.cs" />
     <Compile Include="CoreBL\Reconcile\CreateReconciliationService.cs" />
@@ -237,7 +239,9 @@
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckGLAccount.cs" />
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckTotals.cs" />
+    <Compile Include="CoreBL\System1000Service.cs" />
     <Compile Include="CoreBL\TaxDeductionReportService.cs" />
+    <Compile Include="CoreBL\ARPaymentReconciliationService.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
     <Compile Include="DataContract\OpenFormatReportData.cs" />
@@ -726,6 +730,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="CoreBL\Reports\TrailReportBase - Spreadsheet4.xlsx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

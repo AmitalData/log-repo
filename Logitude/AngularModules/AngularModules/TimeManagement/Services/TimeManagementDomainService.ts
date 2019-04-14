@@ -71,6 +71,20 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    GetTMProjectsByBatchTask(employeeUserId: string, fromDate: Date, toDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetTMProjectsByBatchTask?employeeUserId=' + employeeUserId + "&fromDate=" + ServiceHelper.GetDateString(fromDate) + "&toDate=" + ServiceHelper.GetDateString(toDate);
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = listJason;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     GetNewTMProjectConnect(MainId: string, ConnectedId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -135,6 +149,7 @@ export class TimeManagementDomainService {
             });
         });
     }
+
     DeleteTimeSheetItem(Id: string, employeeUserId: string, locationCode: string, periodStartDate: Date, exitDate:Date) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -148,6 +163,21 @@ export class TimeManagementDomainService {
                 return myResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
+    }
+
+    GetCalculationCompleteWork() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetCalculationCompleteWork?';
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = myJsonResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+
     }
     private MapJsonToTimeManagementAPIHelper(jsonPM: any, getCallMap: boolean = true, entityPM: TimeManagementAPIHelper = null) {
         if (!entityPM) {

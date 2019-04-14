@@ -875,6 +875,12 @@ namespace Logitude.Server.Tools.Helpers
 
                 #endregion
 
+
+                if (automationCondition.OperatorCode == "<=" || automationCondition.OperatorCode == "<=F" || automationCondition.OperatorCode == ">" || automationCondition.OperatorCode == ">F" || automationCondition.OperatorCode == ">=" || automationCondition.OperatorCode == ">=F" || automationCondition.OperatorCode == "<" || automationCondition.OperatorCode == "<F")
+                {
+                    if (string.IsNullOrEmpty(automationConditionvalue) || string.IsNullOrEmpty(automationConditionFieldValue)) return false;
+                }
+
                 if (automationCondition.OperatorCode == "=" || automationCondition.OperatorCode == "=F")
                 {
                     if (automationConditionFieldValue != automationConditionvalue) isValid = false;
@@ -897,7 +903,7 @@ namespace Logitude.Server.Tools.Helpers
                     if (!string.IsNullOrEmpty(automationConditionFieldValue) && automationConditionFieldValue.Contains(automationConditionvalue)) isValid = false;
                     return isValid;
                 }
-
+               
                 else if (automationCondition.OperatorCode == ">" || automationCondition.OperatorCode == ">F")
                 {
                     int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
@@ -907,32 +913,23 @@ namespace Logitude.Server.Tools.Helpers
 
                 else if (automationCondition.OperatorCode == "<" || automationCondition.OperatorCode == "<F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue))
-                    {
-                        int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                        if (reslutCompare >= 0) isValid = false;
-                        return isValid;
-                    }
+                    int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
+                    if (reslutCompare >= 0) isValid = false;
+                    return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == ">=" || automationCondition.OperatorCode == ">=F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue))
-                    {
-                        int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                        if (reslutCompare == -1) isValid = false;
-                        return isValid;
-                    }
+                    int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
+                    if (reslutCompare == -1) isValid = false;
+                    return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "<=" || automationCondition.OperatorCode == "<=F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue))
-                    {
-                        int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                        if (reslutCompare == 1) isValid = false;
-                        return isValid;
-                    }
+                    int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
+                    if (reslutCompare == 1) isValid = false;
+                    return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "CHANGEDTO")
@@ -1158,6 +1155,9 @@ namespace Logitude.Server.Tools.Helpers
             if (automationFollowUp != null)
             {
                 #region Fill Data
+                ContactRepository contactRepository = new ContactRepository(0);
+                string userId = contactRepository.GetContactIdByUserTypeAndTenant("S", entityChange.Tenant);
+                if(string.IsNullOrEmpty(userId)) userId = entityChange.CreateByUserId;
 
                 string ownerId = automationFollowUp.OwnerValue;
                 string note = automationFollowUp.NoteValue;
@@ -1194,6 +1194,11 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (!string.IsNullOrEmpty(ownerId))
                 {
+
+                    EventTypeRepository eventTypeRepository = new EventTypeRepository(entityChange.Tenant);
+                    automationFollowUp.FollowUpEnglishName = eventTypeRepository.GetEventTypeNameById(automationFollowUp.EventTypeId, entityChange.Tenant);
+
+
                     FollowUpRepository followUpRepository = new FollowUpRepository(entityChange.Tenant);
                     bool isAddFollowUp = false;
                     if (automation.ResultCode == "DOCOUTFOLLOWUP" || automation.ResultCode == "DOCINFOLLOWUP")
@@ -1212,7 +1217,7 @@ namespace Logitude.Server.Tools.Helpers
                                 string documentTypeId = documentTypeIds.Where(d => d == documentTypeList.Id).FirstOrDefault();
                                 if (string.IsNullOrEmpty(documentTypeId))
                                 {
-                                    AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, documentTypeList.Name, eventTypeId, date, followUpRepository, followUpDateFieldName, documentTypeList.Id, documentTypeList.Area);
+                                    AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, documentTypeList.Name, eventTypeId, date, followUpRepository, followUpDateFieldName, userId, documentTypeList.Id, documentTypeList.Area);
                                     isAddFollowUp = true;
                                     documentTypeIds.Add(documentTypeList.Id);
                                 }
@@ -1224,7 +1229,7 @@ namespace Logitude.Server.Tools.Helpers
                         bool isFollowUpExist = followUpRepository.CheckIfFollowUpExist(entityChange.EntityId, automationFollowUp.ObjectTableName, automationFollowUp.EventTypeId, entityChange.Tenant);
                         if (!isFollowUpExist)
                         {
-                            AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, note, eventTypeId, date, followUpRepository, followUpDateFieldName);
+                            AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, note, eventTypeId, date, followUpRepository, followUpDateFieldName,userId);
                             isAddFollowUp = true;
                         }
                     }
@@ -1251,10 +1256,11 @@ namespace Logitude.Server.Tools.Helpers
             }
         }
 
-        private void AddFollowUp(string automationId, EntityChange entityChange, AutomationFollowUp automationFollowUp, string ownerId, string note, string eventTypeId, DateTime? date, FollowUpRepository followUpRepository, string followUpDateFieldName, string documentTypeId = null, string area = null)
+        private void AddFollowUp(string automationId, EntityChange entityChange, AutomationFollowUp automationFollowUp, string ownerId, string note, string eventTypeId, DateTime? date, FollowUpRepository followUpRepository, string followUpDateFieldName, string userId,string documentTypeId = null, string area = null)
         {
+            int tenant = entityChange.Tenant;
             FollowUp followUp = new FollowUp();
-            followUp.Id = IdCounter.GetNumber("FollowUp", entityChange.Tenant).ToString();
+            followUp.Id = IdCounter.GetNumber("FollowUp", tenant).ToString();
             followUp.EventTypeId = eventTypeId;
             if (automationFollowUp.ObjectTableName == "Shipment" || automationFollowUp.ObjectTableName == "Master") followUp.ShipmentId = entityChange.EntityId;
 
@@ -1271,8 +1277,20 @@ namespace Logitude.Server.Tools.Helpers
             if (!string.IsNullOrEmpty(documentTypeId)) followUp.DocumentTypeId = documentTypeId;
             if (!string.IsNullOrEmpty(area)) followUp.Area = area;
 
-            followUp.Tenant = entityChange.Tenant;
+            followUp.Tenant = tenant;
             followUpRepository.Add(followUp);
+    
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = tenant,
+                EventTypeCode = "SFCR",
+                UserId = userId,
+                EntityId = entityChange.EntityId,
+                ObjectTableName = "Shipment",
+                Notes = automationFollowUp.FollowUpEnglishName,
+            });
+
+
         }
 
         #endregion

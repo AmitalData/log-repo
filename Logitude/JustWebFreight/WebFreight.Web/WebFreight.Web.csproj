@@ -341,7 +341,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Profact3.3.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\..\packages\Profact3.3.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
@@ -1770,6 +1770,12 @@
     <Compile Include="Controllers\SystemLogsModel\ErrorLogViewsController.cs" />
     <Compile Include="Controllers\SystemLogsModel\Extended\FileLoggerController.cs" />
     <Compile Include="Controllers\SystemLogsModel\PerformanceLogsController.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffLineViewsController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionViewsController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffViewsController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\SprintViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMBudgetViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMEmployeeTimeViewsController.Generated.cs" />
@@ -2194,6 +2200,7 @@
     <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />
@@ -2543,6 +2550,10 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SplitOrMergeReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SprintUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxReportLineStatusUpdateClass.cs" />
@@ -2712,6 +2723,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\SpecialServicesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\ShipmentsModelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\TariffModuleUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\TarrifUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TimeManagementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
@@ -4721,6 +4734,7 @@
     <Compile Include="MetaDataUpdate\UpdateClasses\BookingUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\CRMUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\SocialUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\TariffModuleUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\TimeManagementUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\WarehouseUpdate.cs" />
     <Compile Include="Monitoring\AgentSharedManifestMonitoring.aspx.cs">
@@ -6212,6 +6226,14 @@
     <ProjectReference Include="..\..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
       <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
       <Name>Logitude.SystemLogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.TariffModule.BL\Logitude.TariffModule.BL.csproj">
+      <Project>{312a7909-04d0-49b5-8d73-77598451f22e}</Project>
+      <Name>Logitude.TariffModule.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
+      <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
+      <Name>Logitude.TariffModule.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.TimeManagement.BL\Logitude.TimeManagement.BL.csproj">
       <Project>{2b42c0df-9dd8-4ed1-8f6e-94746cfc1e63}</Project>

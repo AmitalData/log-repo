@@ -59,17 +59,11 @@ using Logitude.Server.Tools.Resolvers;
 namespace WebFreight.Web
 {
     public class Global : System.Web.HttpApplication
-    {
+    { 
         System.Timers.Timer aTimer = new System.Timers.Timer();
         protected void Application_Start(object sender, EventArgs e)
         {
-			//AppDomain.CurrentDomain.FirstChanceException += (mySender, eventArgs) =>
-			//{
-			//	//eventArgs.Exception.sou
-			//	FirstChanceExceptionEventArgsLogger.LogException(eventArgs);
-
-			//	//Debug.WriteLine(eventArgs.Exception.ToString());
-			//};
+			
 
 			if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
@@ -77,49 +71,52 @@ namespace WebFreight.Web
                 LogitudeSettings.DatabaseManagementSystem = dbms;
                 LogitudeSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
                 FillAppSettings();
-                //SessionContextConfiguration conf = new SessionContextConfiguration();
 
 
-                ////SettingRepository settingRepository = new SettingRepository();
-                ////Setting setting = settingRepository.GetSingleSetting("1");
-                ////LogitudeSettings.Id = setting.Id;
-                ////LogitudeSettings.ChampEnv = setting.ChampEnv;
-                ////LogitudeSettings.ChampURL = setting.ChampURL;
-                ////LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
-                ////LogitudeSettings.DeploymentStage = setting.DeploymentStage;
-                ////LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
-                ////LogitudeSettings.LogitudeURL = setting.LogitudeURL;
-                ////LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
-                ////LogitudeSettings.UsingAzure = setting.UsingAzure;
-                ////LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
-                ////LogitudeSettings.StorageAccountName = setting.StorageAccountName;
-                ////LogitudeSettings.StorageType = setting.StorageType;
-                ////LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
-                ////LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
-                ////LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
-                ////LogitudeSettings.ForceHttps = setting.ForceHttps;
-                ////LogitudeSettings.CheckConnectionURL = setting.CheckConnectionURL;
-                ////LogitudeSettings.AndroidSharedAppMinimumVersion = setting.AndroidSharedAppMinimumVersion;
-                ////LogitudeSettings.IOSSharedAppMinimumVersion = setting.IOSSharedAppMinimumVersion;
-                ////LogitudeSettings.WorkEnvironment = setting.WorkEnvironment;
-                ////LogitudeSettings.LogoCode = setting.LogoCode;
-                ////LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
-                ////LogitudeSettings.EmailAlertSignature = setting.EmailAlertSignature;
-                ////LogitudeSettings.IOSAppLink = setting.IOSAppLink;
-                ////LogitudeSettings.AndroidAppLink = setting.AndroidAppLink;
-                ////LogitudeSettings.AndroidPodAppMinimumVersion = setting.AndroidPodAppMinimumVersion;
-                ////LogitudeSettings.IOSPodAppMinimumVersion = setting.IOSPodAppMinimumVersion;
-                ////LogitudeSettings.MinimumOutlookVersion = setting.MinimumOutlookVersion;
-                ////LogitudeSettings.ABMProductId = setting.ABMProductId;
-                ////LogitudeSettings.AzureFolderName = setting.AzureFolderName;
-                ////LogitudeSettings.SignAppVersion = setting.SignAppVersion;
-                ////LogitudeSettings.ReportsRunUsingWR = setting.ReportsRunUsingWR;
-                ////LogitudeSettings.SMSServiceUserId = setting.SMSServiceUserId;
-                ////LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
-                ////LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
+				
+				//SessionContextConfiguration conf = new SessionContextConfiguration();
 
-                //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
-                Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
+
+				////SettingRepository settingRepository = new SettingRepository();
+				////Setting setting = settingRepository.GetSingleSetting("1");
+				////LogitudeSettings.Id = setting.Id;
+				////LogitudeSettings.ChampEnv = setting.ChampEnv;
+				////LogitudeSettings.ChampURL = setting.ChampURL;
+				////LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
+				////LogitudeSettings.DeploymentStage = setting.DeploymentStage;
+				////LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
+				////LogitudeSettings.LogitudeURL = setting.LogitudeURL;
+				////LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
+				////LogitudeSettings.UsingAzure = setting.UsingAzure;
+				////LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
+				////LogitudeSettings.StorageAccountName = setting.StorageAccountName;
+				////LogitudeSettings.StorageType = setting.StorageType;
+				////LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
+				////LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
+				////LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
+				////LogitudeSettings.ForceHttps = setting.ForceHttps;
+				////LogitudeSettings.CheckConnectionURL = setting.CheckConnectionURL;
+				////LogitudeSettings.AndroidSharedAppMinimumVersion = setting.AndroidSharedAppMinimumVersion;
+				////LogitudeSettings.IOSSharedAppMinimumVersion = setting.IOSSharedAppMinimumVersion;
+				////LogitudeSettings.WorkEnvironment = setting.WorkEnvironment;
+				////LogitudeSettings.LogoCode = setting.LogoCode;
+				////LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
+				////LogitudeSettings.EmailAlertSignature = setting.EmailAlertSignature;
+				////LogitudeSettings.IOSAppLink = setting.IOSAppLink;
+				////LogitudeSettings.AndroidAppLink = setting.AndroidAppLink;
+				////LogitudeSettings.AndroidPodAppMinimumVersion = setting.AndroidPodAppMinimumVersion;
+				////LogitudeSettings.IOSPodAppMinimumVersion = setting.IOSPodAppMinimumVersion;
+				////LogitudeSettings.MinimumOutlookVersion = setting.MinimumOutlookVersion;
+				////LogitudeSettings.ABMProductId = setting.ABMProductId;
+				////LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+				////LogitudeSettings.SignAppVersion = setting.SignAppVersion;
+				////LogitudeSettings.ReportsRunUsingWR = setting.ReportsRunUsingWR;
+				////LogitudeSettings.SMSServiceUserId = setting.SMSServiceUserId;
+				////LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
+				////LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
+
+				//LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
+				Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
                 
                 if (LogitudeSettings.IsCostomsDeploy)
                 {
@@ -339,9 +336,19 @@ namespace WebFreight.Web
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WebRole", "Global.asax : Application_Start Method", null);
 
             }
-        }
 
-        private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
+
+			AppDomain.CurrentDomain.FirstChanceException += (mySender, eventArgs) =>
+			{
+				//eventArgs.Exception.sou
+				//FirstChanceExceptionEventArgsLogger.LogException(eventArgs);
+
+				//Debug.WriteLine(eventArgs.Exception.ToString());
+			};
+
+		}
+		 
+		private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
         {
             FillAppSettings();
         }

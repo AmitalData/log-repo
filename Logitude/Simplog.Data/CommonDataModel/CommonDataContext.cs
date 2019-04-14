@@ -437,6 +437,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new PaymentGatewayPartnersMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
+            modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -997,6 +998,7 @@ namespace Simplog.Data.CommonDataModel
 
        public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
+        public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
 
         public DbConnection GetConnection()
         {

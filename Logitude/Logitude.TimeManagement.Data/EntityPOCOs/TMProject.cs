@@ -73,6 +73,8 @@ namespace Logitude.TimeManagement.Data.EntityPOCOs
 	    public bool IsProrated { get; set; }
         [Column("ExternalProjectNumber")]
 	    public string ExternalProjectNumber { get; set; }
+        [Column("ExcludeFromProrating")]
+	    public bool ExcludeFromProrating { get; set; }
     }
 }
 	 
