@@ -187,12 +187,6 @@
     <Reference Include="Logitude.Infrastructure.Data">
       <HintPath>..\..\Logitude.Infrastructure.Data\bin\Debug\Logitude.Infrastructure.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.TariffModule.BL">
-      <HintPath>..\..\Logitude.TariffModule.BL\bin\Debug\Logitude.TariffModule.BL.dll</HintPath>
-    </Reference>
-    <Reference Include="Logitude.TariffModule.Data">
-      <HintPath>..\..\Logitude.TariffModule.Data\bin\Debug\Logitude.TariffModule.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.SignalR.Client.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
@@ -6232,6 +6226,14 @@
     <ProjectReference Include="..\..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
       <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
       <Name>Logitude.SystemLogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.TariffModule.BL\Logitude.TariffModule.BL.csproj">
+      <Project>{312a7909-04d0-49b5-8d73-77598451f22e}</Project>
+      <Name>Logitude.TariffModule.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
+      <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
+      <Name>Logitude.TariffModule.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.TimeManagement.BL\Logitude.TimeManagement.BL.csproj">
       <Project>{2b42c0df-9dd8-4ed1-8f6e-94746cfc1e63}</Project>
