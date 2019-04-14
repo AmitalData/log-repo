@@ -159,10 +159,10 @@
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-                                                <td *ngIf="!AllowManualInvoiceNumber && !IsInvoiceNumberFromStock">
+                                                <td *ngIf="!AllowManualInvoiceNumber && !AllowStockInvoiceNumber">
                                                     <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
-                                                <td *ngIf="AllowManualInvoiceNumber || IsInvoiceNumberFromStock">
+                                                <td *ngIf="AllowManualInvoiceNumber || AllowStockInvoiceNumber">
                                                     <table>
                                                         <tr>
                                                             <td style="width: 100px;">
