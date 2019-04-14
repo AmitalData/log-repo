@@ -89,7 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CustomerTenantAccessCardsBatch", "NEW", authToken.Tenant);
-                
+                        entityPM.Tenant = authToken.Tenant;
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CustomerTenantAccessCardsBatchService service = new CustomerTenantAccessCardsBatchService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);

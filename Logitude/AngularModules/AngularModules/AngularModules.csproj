@@ -867,6 +867,7 @@
     <Content Include="InvoiceModules\InvoiceStocks\Components\ManageStocksComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockLinesComponent.html" />
+    <Content Include="InvoiceModules\InvoiceStocks\Components\StockSelection\ARInvoiceStockSelectionComponent.html" />
     <Content Include="Invoice\Components\AccountingTab\AccountingTab_AccountingPaymentMethod.html" />
     <Content Include="Report\Components\FilterReportComponent\VDKFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
@@ -1748,6 +1749,7 @@
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\ManageStocksComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockLinesComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\StockSelection\ARInvoiceStockSelectionComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\ModuleInvoiceStocks.ts" />
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleDeclarations.ts" />

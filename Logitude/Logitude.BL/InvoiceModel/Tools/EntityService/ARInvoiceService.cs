@@ -511,27 +511,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if(!this.isApprovingInvoice && !this.isVoidingInvoice)
             {
+                IInvoiceContext context = InvoiceContext.GetContext(tenant);
                 ARInvoiceStockLineRepository aRInvoiceStockLineRepository = new ARInvoiceStockLineRepository(aRInvoice.Tenant);
                 ARInvoiceStockQuery aRInvoiceStockQuery = new ARInvoiceStockQuery(aRInvoice.Tenant);
-                IInvoiceContext context = InvoiceContext.GetContext(tenant); ;
                 ARInvoiceStockService aRInvoiceStockService = new ARInvoiceStockService(context, aRInvoice.Tenant);
+                ARInvoiceStockPM stock = new ARInvoiceStockPM();
+                ARInvoiceStockLine stockLine = new ARInvoiceStockLine();
 
                 if (this.isNewEntity)
                 {
                     if(aRInvoice.ARInvoiceStockId != null)
                     {
-                        ARInvoiceStockLine line = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
-                        if(line != null)
+                        stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
+                        if(stockLine != null)
                         {
-                            line.IsUsed = true;
-                            line.ARInvoiceId = aRInvoice.Id;
-                            line.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            line.UpdatedByUserId = this.loggedContact.Id;
-                            line.ShipmentNumber = aRInvoice.MainEntityReference;
-                            aRInvoiceStockLineRepository.Update(line);
+                            stockLine.IsUsed = true;
+                            stockLine.ARInvoiceId = aRInvoice.Id;
+                            stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            stockLine.ShipmentNumber = aRInvoice.MainEntityReference;
+                            aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
-                            ARInvoiceStockPM stock = aRInvoiceStockQuery.GetSinglePM(line.ARInvoiceStockId, aRInvoice.Tenant);
+                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, aRInvoice.Tenant);
                             aRInvoiceStockService.Update(stock,false);
+                            this.CreateInvoiceStockEvent("NTFS", aRInvoice.Id, stockLine.Number + " added from " + stock.Name);
                         }
                     }
                 }
@@ -539,31 +542,32 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (aRInvoice.ARInvoiceStockId != this.invoice.ARInvoiceStockId)
                     {
-                        ARInvoiceStockLine line = new ARInvoiceStockLine();
-                        ARInvoiceStockPM stock = new ARInvoiceStockPM();
+                        stockLine = new ARInvoiceStockLine();
                         if (aRInvoice.ARInvoiceStockId == null)
                         {
-                            line = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine( this.invoice.ARInvoiceStockId, aRInvoice.Tenant);
-                            line.IsUsed = false;
-                            line.ARInvoiceId = null;
-                            line.ShipmentNumber = null;
-                            line.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            line.UpdatedByUserId = this.loggedContact.Id;
-                            aRInvoiceStockLineRepository.Update(line);
+                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine( this.invoice.ARInvoiceStockId, aRInvoice.Tenant);
+                            stockLine.IsUsed = false;
+                            stockLine.ARInvoiceId = null;
+                            stockLine.ShipmentNumber = null;
+                            stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
-                            stock = aRInvoiceStockQuery.GetSinglePM(line.ARInvoiceStockId, aRInvoice.Tenant);
+                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, aRInvoice.Tenant);
+                            this.CreateInvoiceStockEvent("NRTS", aRInvoice.Id, stockLine.Number + " returned to " + stock.Name);
                         }
                         else
                         {
-                            line = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
-                            line.IsUsed = true;
-                            line.ARInvoiceId = aRInvoice.Id;
-                            line.ShipmentNumber = aRInvoice.MainEntityReference;
-                            line.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            line.UpdatedByUserId = this.loggedContact.Id;
-                            aRInvoiceStockLineRepository.Update(line);
+                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
+                            stockLine.IsUsed = true;
+                            stockLine.ARInvoiceId = aRInvoice.Id;
+                            stockLine.ShipmentNumber = aRInvoice.MainEntityReference;
+                            stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
-                            stock = aRInvoiceStockQuery.GetSinglePM(line.ARInvoiceStockId, aRInvoice.Tenant);
+                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, aRInvoice.Tenant);
+                            this.CreateInvoiceStockEvent("NTFS", aRInvoice.Id, stockLine.Number + " added from "+ stock.Name);
                         }
                        
                         aRInvoiceStockService.Update(stock, false);
@@ -572,6 +576,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
        
+        private void CreateInvoiceStockEvent(String code, string entityId, string note)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = entityId,
+                ObjectTableName = "ARInvoice",
+                Tenant = tenant,
+                UserId = loggedContactId,
+                EventTypeCode = code,
+                Notes = note,
+            });
+        }
         private void BuildFlatfile(ARInvoicePM ARInvoice)
         {
 

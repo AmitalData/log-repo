@@ -370,9 +370,9 @@ namespace Logitude.Accounting.Data.Repositories
             DateTime date = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
 
             IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
-            List<ARInvoice> invoices = (from a in invoicecontext.ARInvoices
-                                        where a.InvoiceDate <= date
-                                        select a).ToList();
+            List<string> invoiceIds = (from a in invoicecontext.ARInvoices
+                                        where a.InvoiceDate <= date && a.TotalAmountForTaxReport != null
+                                        select a.Id).ToList();
 
             List< Journal> journals=(from a in context.Journals
                     join r in context.JournalLines on a.Id equals r.JournalId
@@ -383,13 +383,13 @@ namespace Logitude.Accounting.Data.Repositories
                     select a ).ToList();
 
             List<TaxReportData> data = (from a in journals
-                                        join n in invoices on a.AccountingEntityId equals n.Id
-                                        where n.TotalAmountForTaxReport != null
+                                       
+                                        where invoiceIds.Contains(a.AccountingEntityId)
                                         select new TaxReportData()
                                         {
                                             Id = a.Id,
                                             AccountingEntityId = a.AccountingEntityId,
-                                            TaxReportTotalAmount = n.TotalAmountForTaxReport,
+                                           
 
                                         }).ToList();
 

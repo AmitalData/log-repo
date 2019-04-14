@@ -7217,6 +7217,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ARInvoiceStockId",
+					  						OldFieldName =  "ARInvoiceStockId",
 					  						ObjectTableName =  "ARInvoice",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7236,6 +7237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ARInvoiceStockId",
 					  						ListPropertyPath =  "ARInvoiceStockId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8181,6 +8183,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
                 IsFollowUp =  true,
                 FollowUpEnglishName =  "Reminder",
                 FollowUpLocalName =  "Reminder",
+                ObjectTableId = ARInvoiceObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "NTFS",
+                EnglishName =  "Number Taken From Stock ",
+                LocalName =  "Number Taken From Stock ",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ARInvoiceObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "NRTS",
+                EnglishName =  "Number Returned To Stock ",
+                LocalName =  "Number Returned To Stock ",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ARInvoiceObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);

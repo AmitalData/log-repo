@@ -3648,17 +3648,17 @@ User/Pass",
             File.WriteAllBytes("ComparingFeatures.csv", sbByte); // Requires System.IO
         }
 
+        private void button41_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "TariffModule", lblUTariffModule));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+    }
 
 
 
-    
-
-
-}
-
-
-
-public class MyFeature
+    public class MyFeature
 {
 
     public string Id { get; set; }

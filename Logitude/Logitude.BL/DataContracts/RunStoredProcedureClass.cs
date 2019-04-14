@@ -1,6 +1,9 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.InfrastructureModel;
@@ -100,6 +103,29 @@ namespace Logitude.BL.DataContracts
                 cn.Close();
             }
         }
+        private static bool IsImportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareImportFile == true)
+            {
+                return (entityPM.DirectionId.ToUpper() == "I");
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private static bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
+            {
+                return (entityPM.DirectionId.ToUpper() == "E");
+            }
+            else
+            {
+                return false;
+            }
+        }
         public static void CreateShipmentQueue(string shipmentId, int tenant)
         {
              try
@@ -111,7 +137,7 @@ namespace Logitude.BL.DataContracts
                     var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
                     if (entityPM != null && tenantPM != null)
                     {
-                        if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.IsCustomerTenantShare && (tenantPM.CustomerTenantShareImportFile ? entityPM.DirectionId.ToUpper() == "I" || entityPM.DirectionId.ToUpper() == "C" : entityPM.DirectionId.ToUpper() == "C"))
+                        if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsExportShipmentsAllowedForLogBox(tenantPM, entityPM) || IsImportShipmentsAllowedForLogBox(tenantPM, entityPM)))
                         {
                             CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                             CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);

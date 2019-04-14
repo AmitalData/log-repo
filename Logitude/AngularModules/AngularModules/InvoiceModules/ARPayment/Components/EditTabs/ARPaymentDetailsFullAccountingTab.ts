@@ -141,6 +141,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     // IsEntityValid: boolean = true;
 
+    public get IsGridReadOnly(): boolean {
+
+        // return this.EntityPM.StatusCode == 'CL' || this.EntityPM.StatusCode == 'VD' || this.EntityPM.OpenAmount == 0;
+        return this.EntityPM.StatusCode == 'CL' || this.EntityPM.StatusCode == 'VD';
+    }
 
 
     public get IsEntityValid(): boolean {
@@ -290,13 +295,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.amount2reconcileTotal = _linesAmount2reco;
 
         if(this.EntityPM.InvoicesTransactions.length == 0){
-            this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
+            // this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
             this.EntityPM.IsDirty = false;
         }else{
             // Open Amount
             var _openAmount = this.paymentAmountTotal - _linesAmount2reco;
             if (this.EntityPM.OpenAmount != _openAmount) {
-                this.EntityPM.OpenAmount = _openAmount < 0 ? 0 : _openAmount;
+                // this.EntityPM.OpenAmount = _openAmount < 0 ? 0 : _openAmount;
             }
         }
 
@@ -347,6 +352,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                 cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
                                 cmpRef.instance.BackCompleted.subscribe(bk => {
                                     // this.CurrentSession.CloseCurrentWindow();
+                                    this.GetData();
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                 });
                             });
                     }
@@ -364,7 +371,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (trans != null) {
             var index = this.EntityPM.InvoicesTransactions.indexOf(trans);
             if (index == -1) {
-                // this.EntityPM.IsDirty = true;
+                 this.EntityPM.IsDirty = true;
                 this.EntityPM.InvoicesTransactions.push(trans);
             }
         }
@@ -399,7 +406,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.GetData();

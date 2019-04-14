@@ -11,11 +11,8 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.Azure;
-using WebFreight.Web.GlobalModel;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.InfrastructureModel;
-using WebFreight.Web.Security;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel;
@@ -23,16 +20,10 @@ using Logitude.SystemLogs;
 using Simplog.Global.Data.GlobalModel;
 using WebFreight.Web.MetaDataUpdate.UpdateClasses;
 using Logitude.Server.Tools.Counters;
-using JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate;
-using Logitude.CRM.Data.EntityPOCOs;
-using Logitude.CRM.Data;
-using Logitude.CRM.Data.Repsitories;
 using Simplog.Server.Infrastructure;
-using JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
-using System.Collections;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
@@ -52,14 +43,12 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
-using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
-using Logitude.Accounting.BL.CoreBL;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -398,7 +387,18 @@ namespace WebFreight.Web.MetaDataUpdate
                             //updateClass.loadScreens();
                             break;
                         }
-                        
+
+
+                    case "tariffmodule":
+                        {
+                            TariffModuleUpdateClass tariffModuleUpdateClass = new TariffModuleUpdateClass();
+                            tariffModuleUpdateClass.LoadObjectsTenantZero(context);
+
+                            TariffModuleUpdate updateClass = new TariffModuleUpdate();
+                            //updateClass.loadScreens();
+                            break;
+                        }
+
 
                     case "accounting":
                         {
@@ -631,6 +631,16 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             TimeManagementUpdate timeManagementUpdate = new TimeManagementUpdate();
                             timeManagementUpdate.loadScreens();
+
+
+
+                            //Tariff Module
+
+                            TariffModuleUpdateClass tariffModuleUpdateClass = new TariffModuleUpdateClass();
+                            tariffModuleUpdateClass.LoadObjectsTenantZero(context);
+
+                            TariffModuleUpdate tariffModuleUpdate = new TariffModuleUpdate();
+                            tariffModuleUpdate.loadScreens();
 
                             // New Infrastructure 
                             InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
