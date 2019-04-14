@@ -46,32 +46,29 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             }
             LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(StatusCode={courierOVSHAWBResponse.StatusCode},{courierOVSHAWBResponse.ErrorDescription})");
             var context = CustomContext.GetContext(settings.Tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            var myCourierMasterQueryService = new CourierMasterQueryService(context);
-            var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, false, false);
-            declarationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-
+            var myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(settings.DeclarationId, false, false);
+            declarationCourierStatusQueryServicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
             switch (courierOVSHAWBResponse.StatusCode)
             {
                 case "1"://45997
                     {
-                        declarationPM.MamanStatusCode = "1";
+                        declarationCourierStatusQueryServicePM.StorageSiteStatusCode = "1";
                     }
                     break;
                 default:
-                    declarationPM.MamanStatusCode = "2";//45997
+                    declarationCourierStatusQueryServicePM.StorageSiteStatusCode = "2";//45997
                     break;
             }
 
 
-            declarationPM.MamanErrorXml = courierOVSHAWBResponse.StatusCode + "," + courierOVSHAWBResponse.ErrorDescription;
+            declarationCourierStatusQueryServicePM.StorageSiteErrorText = courierOVSHAWBResponse.StatusCode + "," + courierOVSHAWBResponse.ErrorDescription;
 
             using (var scope = TransactionFactory.GetNewTransaction())
             {
-                var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
-                myDeclarationUpdateService.Update(declarationPM, true);
+                var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
+                myDeclarationCourierStatusUpdateService.Update(declarationCourierStatusQueryServicePM, true);
                 scope.Complete();
             }
         }
