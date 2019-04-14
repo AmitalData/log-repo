@@ -238,3 +238,13 @@ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_
          SET @SQLSpecialServicesType ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateSpecialServicesTypes ON SpecialServicesTypes AFTER UPDATE  AS  BEGIN UPDATE SpecialServicesTypes SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
          EXEC (@SQLSpecialServicesType);
  end
+
+
+ 
+  --ObjectFields
+ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_AutomaticLastUpdateDateObjectFields'))
+ Begin
+ declare @SQLObjectFields  as varchar(8000)
+         SET @SQLObjectFields ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateObjectFields ON ObjectFields AFTER UPDATE  AS  BEGIN UPDATE ObjectFields SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
+         EXEC (@SQLObjectFields);
+ end
