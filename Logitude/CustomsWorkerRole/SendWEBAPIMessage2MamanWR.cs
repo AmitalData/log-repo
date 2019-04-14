@@ -524,9 +524,10 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     {
                         client.UseDefaultCredentials = false;
                         client.Credentials = myCredentials;
-                        
+                        client.Encoding = System.Text.Encoding.UTF8;
 
                         var dataString = dataJson;
+                        //client.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=UTF-8");
                         client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
                         myResultString =
