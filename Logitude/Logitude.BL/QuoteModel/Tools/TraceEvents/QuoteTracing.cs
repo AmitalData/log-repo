@@ -347,9 +347,6 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
 
             if (entityPM.ConvertToLCL)
             {
-                entityPM.ConvertToLCL = false;
-                entityPM.ConvertToFCL = false;
-
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = tenant,
@@ -359,14 +356,10 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                     ObjectTableName = "Quote",
                     Notes = entityPM.EventNote,
                 });
-
             }
 
             if (entityPM.ConvertToFCL)
             {
-                entityPM.ConvertToLCL = false;
-                entityPM.ConvertToFCL = false;
-
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = tenant,

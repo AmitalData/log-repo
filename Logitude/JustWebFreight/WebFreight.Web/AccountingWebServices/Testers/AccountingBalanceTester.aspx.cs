@@ -1980,9 +1980,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         {
 
 
-            dynamic param = null;
-            var myBankAccountPagesExample = new BankAccountPagesExample();
-            var paramDefault = myBankAccountPagesExample.example1();
+
+            string param = "";
+            string paramDefault = "Please insert page U Can Add Header  //Tenant=1071";
             
             try
             {
@@ -2006,6 +2006,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var myBankAccountPageAnalyzer = new BankAccountPageAnalyzer();
                 myBankAccountPageAnalyzer.Analyze(null, FileBankPages);
 
+                _LabelResult.Text = JsonConvert.SerializeObject(myBankAccountPageAnalyzer.MyResultLoadBankPage); ;
 
             }
             catch (Exception)
@@ -2016,12 +2017,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             finally
             {
                 _MyLastAction.Value = MyLastAction._ButtonLoadBankPages_Click.ToString();
-                if (param == null)
+                if (string.IsNullOrWhiteSpace(param))
                 {
                     param = paramDefault;
                 }
-                var SerializeObjectByteParam = JsonConvert.SerializeObject(param);
-                _TextBoxParam.Text = SerializeObjectByteParam;
+                
+                _TextBoxParam.Text = param;
                 _LabelLog.Text = LogMessagingUtil.Instance.ToString();
             }
         }

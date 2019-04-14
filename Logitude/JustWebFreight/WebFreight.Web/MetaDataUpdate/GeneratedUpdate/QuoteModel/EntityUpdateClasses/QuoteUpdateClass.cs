@@ -14103,8 +14103,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	   
 			   MenuButton QuoteMenuButton46 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
+						EventCode = "QuoteConvertSeparator",
+						Index = 12, 
+						IsActive = false,
+						LabelTextCodeCode = "Quote.B.",
+						LabelTextCodeDefaultText = " ",
+						Tenant = 0,
+						MenuButtonGroupId = QuoteMenuButtonGroup.Id,
+						ParentMenuButtonId = QuoteMenuButton4.Id,
+						ObjectTableId = QuoteObjectTable.Id,
+						MenuButtonType = "separator",
+						
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton QuoteMenuButton47 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
 						EventCode = "ConvertQuotetoLCL",
-						Index = 0, 
+						Index = 13, 
 						IsActive = true,
 						LabelTextCodeCode = "Quote.B.ConverttoLCL",
 						LabelTextCodeDefaultText = "Convert to LCL",
@@ -14118,10 +14135,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						LocalDefaultText = "Convert to LCL",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton QuoteMenuButton47 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton QuoteMenuButton48 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ConvertQuotetoFCL",
-						Index = 0, 
+						Index = 14, 
 						IsActive = true,
 						LabelTextCodeCode = "Quote.B.ConverttoFCL",
 						LabelTextCodeDefaultText = "Convert to FCL",

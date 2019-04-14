@@ -623,8 +623,9 @@
       <MenuItem EventCode="&quot;QuoteCopySeparator&quot;" DefaultText="&quot;&quot;" MenuButtonType="&quot;separator&quot;" IndexOrder="9" TextCodeCode="&quot;Quote.B.QuoteCopySeparator&quot;" />
       <MenuItem EventCode="&quot;CancelQuote&quot;" DefaultText="&quot;Cancel Quote&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="10" FeatureCode="&quot;CANCEL&quot;" IsPackagable="false" TextCodeCode="&quot;Quote.B.CancelQuote&quot;" FeatureTextCodeCode="&quot;Quote.Features.Cancel&quot;" FeatureDefaultText="&quot;Cancel Quote&quot;" />
       <MenuItem EventCode="&quot;ReactivateQuote&quot;" DefaultText="&quot;Reactivate Quote&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="11" FeatureCode="&quot;REACTIVATE&quot;" IsPackagable="false" TextCodeCode="&quot;Quote.B.ReactivateQuote&quot;" FeatureTextCodeCode="&quot;Quote.Features.Reactivate&quot;" FeatureDefaultText="&quot;Reactivate Quote&quot;" />
-      <MenuItem EventCode="&quot;ConvertQuotetoLCL&quot;" DefaultText="&quot;Convert to LCL&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Convert to LCL&quot;" />
-      <MenuItem EventCode="&quot;ConvertQuotetoFCL&quot;" DefaultText="&quot;Convert to FCL&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Convert to FCL&quot;" />
+      <MenuItem EventCode="&quot;QuoteConvertSeparator&quot;" DefaultText="&quot; &quot;" MenuButtonType="&quot;separator&quot;" IndexOrder="12" />
+      <MenuItem EventCode="&quot;ConvertQuotetoLCL&quot;" DefaultText="&quot;Convert to LCL&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="13" LocalDefaultText="&quot;Convert to LCL&quot;" />
+      <MenuItem EventCode="&quot;ConvertQuotetoFCL&quot;" DefaultText="&quot;Convert to FCL&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="14" LocalDefaultText="&quot;Convert to FCL&quot;" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>
