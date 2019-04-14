@@ -25,6 +25,17 @@
         </td>
     </tr>
 
+    <tr *ngIf="IsConvertQuoteType" style="height:10px;"><td><div></div></td></tr>
+
+    <tr *ngIf="IsConvertQuoteType" style="height:1px;">
+        <td colspan="2" class="Value">
+            Changing the quote type will result in deleting all the quote packages & charges.
+        </td>
+    </tr>
+
+    <tr *ngIf="IsConvertQuoteType" style="height:10px;"><td><div></div></td></tr>
+
+
     <tr style="height: 1px;">
         <td class="Label">{{NotesHeader}}</td>
     </tr>
@@ -35,7 +46,7 @@
                 <tr>
                     <td style="width: 350px; height: 90px;">
                         <div style="height: 90px;">
-                            <LogTextBox [NoObjectField] ="true" [ObjectFieldName]="'EventNote'" [Text]="EventNote" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                            <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'EventNote'" [Text]="EventNote" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                         </div>
                     </td>
 

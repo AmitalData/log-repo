@@ -1841,6 +1841,45 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return table;
         }
+
+        public HttpResponseMessage GetIfConnectedEntryOrRelease(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
+                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);  
+                IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant);
+               
+                bool myResult = false;
+                if (warehouseEntries.Count() > 0)
+                {
+                    myResult = true;
+                }
+
+                if (!myResult)
+                {
+                    WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext);
+                    IQueryable<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant);
+
+                    if (warehouseReleases.Count() > 0)
+                    {
+                        myResult = true;
+                    }
+                }                
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 

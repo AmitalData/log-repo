@@ -75,6 +75,33 @@ export class TaxReportExtendedPMService {
 
     }
 
+    PostCreateTaxReportInBatch(taxReportPM: TaxReportPM) {
+
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            var mappedEntity: TaxReportPM;
+            mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
+
+            return this._http.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
+                .map((res) => {
+
+                    var result = res.json();
+                    serviceResponse.Result = result;
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+      }
+
     GetReportLinesCounter(taxReportId: string) {
 
             return Observable.defer(() => {

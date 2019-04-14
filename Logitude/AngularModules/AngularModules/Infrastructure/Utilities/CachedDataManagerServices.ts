@@ -1,3 +1,4 @@
+/// <reference path="../../tariffmodule/services/standardlists/tarifflistservice.ts" />
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {BluesnapContractListService} from '../Services/StandardLists/BluesnapContractListService';
 import {ChargesGroupListService} from '../Services/StandardLists/ChargesGroupListService';
@@ -79,6 +80,14 @@ import {SprintListService} from '../../TimeManagement/Services/StandardLists/Spr
 import { TenantManagmentPrivateLabelsListService } from '../../Infrastructure/Services/StandardLists/TenantManagmentPrivateLabelsListService';
 import { BIReportsTypeListService } from  '../Services/StandardLists/BIReportsTypeListService'; 
 import { FeatureToggleListService } from '../Services/StandardLists/FeatureToggleListService';
+
+
+// Tariff Module
+
+import { TariffListService } from '../../TariffModule/Services/StandardLists/TariffListService';
+import { TariffVersionListService } from '../../TariffModule/Services/StandardLists/TariffVersionListService';
+
+
 
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
@@ -177,7 +186,9 @@ export class CachedDataManagerServices {
             case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
             case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
             case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
-
+            case "TariffListService": { myResult = new TariffListService(); break; }
+            case "TariffVersionListService": { myResult = new TariffVersionListService(); break; }                
+                
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");
                 break;

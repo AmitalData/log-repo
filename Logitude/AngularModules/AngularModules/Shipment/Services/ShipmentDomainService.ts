@@ -62,8 +62,6 @@ export class ShipmentDomainService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
-
-
     }
     GetRecentShipments() {
         var authHeader = new Headers();
@@ -753,6 +751,23 @@ export class ShipmentDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    CheckIfConnectedEntryOrRelease(shipmentId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetIfConnectedEntryOrRelease?shipmentId=' + shipmentId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
     }

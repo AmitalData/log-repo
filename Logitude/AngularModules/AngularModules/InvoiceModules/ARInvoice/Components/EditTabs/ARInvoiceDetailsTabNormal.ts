@@ -109,6 +109,9 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
                 }
+                else {
+                    this.IsInvoiceNumberComboBoxEnabled = !this.IsInvoiceNumberComboBoxEnabled;
+                }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -1507,7 +1510,13 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
 
     //Invoice Number
-    IsInvoiceNumberComboBoxEnabled = true;
+    private isInvoiceNumberComboBoxEnabled = true;
+    get IsInvoiceNumberComboBoxEnabled() { return this.isInvoiceNumberComboBoxEnabled; }
+    set IsInvoiceNumberComboBoxEnabled(value: boolean) {
+        if (this.isInvoiceNumberComboBoxEnabled != value) {
+            this.isInvoiceNumberComboBoxEnabled = value;
+        }
+    }
 
     private selectedInvoiceNumberFilter: CodeNameClass;
     get SelectedInvoiceNumberFilter() { return this.selectedInvoiceNumberFilter; }
@@ -1554,7 +1563,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             logWindow.WindowClosed.subscribe(d => {
                 if ((d != null && d != "cancel")) {
                     this.InvoiceNumber = s.StockLineSelectedItem.Number;
-                    this.EntityPM.ARInvoiceStockId = s.StockLineSelectedItem.Id;
+                    this.ARInvoiceStockId = s.StockLineSelectedItem.Id;
                     this.IsInvoiceNumberComboBoxEnabled = false;
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                 }

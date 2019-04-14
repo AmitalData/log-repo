@@ -22,6 +22,7 @@ import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { error } from '../../../Customs/EntityPMs/Extended/AmendmentView';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -1030,54 +1031,6 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         }
     }
     private DoConvertShipmentType(type: string) {
-        var errors: string[] = this.VaidateConvertShipmentType();
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
-            var args = new MenuButtonsTemplateArgs();
-            args.ObjectTableName = "Shipment";
-            args.EntityPM = this.EntityPM;
-            args.EventNote = null;
-            args.IsNotesStackPanelVisible = true;
-            var windowTitle: string;
-
-            switch (type) {
-                case "ToLCL":
-                    {
-                        this.currentActionName = "ConvertShipmentToLCL";
-                        args.NotesHeader = "Convert Shipment From FCL To LCL...";
-                        windowTitle = "Convert Shipment From FCL To LCL";
-                        break;
-                    }
-
-                case "ToFCL":
-                    {
-                        this.currentActionName = "ConvertShipmentToFCL";
-                        args.NotesHeader = "Convert Shipment From LCL To FCL...";
-                        windowTitle = "Convert Shipment From LCL To FCL";
-                        break;
-                    }
-            }
-            
-            var logWindow = new LogitudeWindow();
-            logWindow.WindowArgs = args;
-            logWindow.Width = 935;
-            logWindow.Height = 570;
-
-            logWindow.Title = windowTitle;
-            logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
-            logWindow.ComponentLoaded.subscribe(s => {
-                logWindow.WindowClosed.subscribe(d => {
-                    var notes = s.EventNotes;
-                    if (d == "confirm") {
-                        this.EntityPM.EventNote = notes;
-                        this.ShowConfirmConvertShipmentType(type);                        
-                    }                   
-                });
-            });
-        }
-    }
-    private VaidateConvertShipmentType(): string[] {
         var errors: string[] = [];
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.QuoteId)) {
@@ -1096,43 +1049,105 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         else if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
             errors.push("Cannot change shipment type when connected to house shipments ");
         }
-        
-        return errors;
+
+        else if (this.EntityPM.IsOperationalClosed) {
+            errors.push("Cannot change shipment type when shipment is operationally closed");
+        }
+
+        else if (this.EntityPM.MainCarriageATD != null || this.EntityPM.Transshipment1ATD != null || this.EntityPM.Transshipment2ATD != null
+            || this.EntityPM.Transshipment3ATD != null || this.EntityPM.MainCarriageATA != null || this.EntityPM.Transshipment1ATA != null
+            || this.EntityPM.Transshipment2ATA != null || this.EntityPM.Transshipment3ATA != null) {
+            errors.push("Cannot change shipment type when shipment contains actual departure/arrival dates");
+        }
+
+        if (errors.length == 0) {
+            this.shipmentService.CheckIfConnectedEntryOrRelease(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    var result: boolean = myResponse.Result;
+
+                    if (result) {
+                        errors.push("Cannot change shipment type when shipment is connected to cross docs entries / releases");
+                    }
+
+                    this.ShowNotesWindow(errors, type);
+                }
+            });
+        }
+
+        else {
+            this.ShowNotesWindow(errors, type);
+        }
     }
-    private ShowConfirmConvertShipmentType(type: string) {
-        var confirmWindow: ConfirmWindow = new ConfirmWindow();
-        confirmWindow.Title = "Convert Shipment Type";
-        confirmWindow.Width = 400;
-        confirmWindow.Show("Changing the shipment type will result in deleting all the shipment packages , are you sure you want to change ?");
-        confirmWindow.YesButtonText = "Yes";
-        confirmWindow.NoButtonText = "No";
+    private ShowNotesWindow(errors: string[], type: string) {
+        var args = new MenuButtonsTemplateArgs();
+        var windowTitle: string;
 
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                switch (type) {
-                    case "ToLCL":
-                        {
-                            this.EntityPM.ConvertShipmentToLCL = true;
-                            this.EntityPM.ConvertShipmentToFCL = false;
-                            break;
-                        }
+        args.ObjectTableName = "Shipment";
+        args.EntityPM = this.EntityPM;
+        args.EventNote = null;
+        args.IsConvertShipmentType = true;
+        args.ValidationErrorsList = errors;
+        args.EnabledOkButton = false;
 
-                    case "ToFCL":
-                        {
-                            this.EntityPM.ConvertShipmentToLCL = false;
-                            this.EntityPM.ConvertShipmentToFCL = true;
-                            break;
-                        }
+        if (errors.length == 0) {
+            args.IsNotesStackPanelVisible = true;
+            args.NotesHeader = "Notes";
+            args.EnabledOkButton = true;
+        }
+
+        switch (type) {
+            case "ToLCL":
+                {
+                    this.currentActionName = "ConvertShipmentToLCL";
+                    windowTitle = "Convert Shipment From FCL To LCL";
+                    break;
                 }
 
-                this.Reload = true;
-                this.OkButton();
-            }
+            case "ToFCL":
+                {
+                    this.currentActionName = "ConvertShipmentToFCL";
+                    windowTitle = "Convert Shipment From LCL To FCL";
+                    break;
+                }
+        }
 
-            this.ResetButtonClicked();
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = args;
+        logWindow.Width = 935;
+        logWindow.Height = 570;
+
+        logWindow.Title = windowTitle;
+        logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                var notes = s.EventNotes;
+                if (d == "confirm") {
+                    this.EntityPM.EventNote = notes;
+
+                    switch (type) {
+                        case "ToLCL":
+                            {
+                                this.EntityPM.ConvertShipmentToLCL = true;
+                                this.EntityPM.ConvertShipmentToFCL = false;
+                                break;
+                            }
+
+                        case "ToFCL":
+                            {
+                                this.EntityPM.ConvertShipmentToLCL = false;
+                                this.EntityPM.ConvertShipmentToFCL = true;
+                                break;
+                            }
+                    }
+
+                    this.Reload = true;
+                    this.OkButton();
+                    this.ResetButtonClicked();
+                }
+            });
         });
     }
-
+   
     private myCloner: Cloner;
     private Clone(EntityPM: ShipmentPM) {
         this.myCloner.AddField('IsOperationalClosed');
