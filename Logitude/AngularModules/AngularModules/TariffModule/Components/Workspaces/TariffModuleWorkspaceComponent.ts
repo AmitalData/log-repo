@@ -75,7 +75,7 @@ export class TariffModuleWorkspaceComponent implements OnInit {
                 logWindow.Height = 500;
                 logWindow.Title = windowTitle;
                 logWindow.WindowClosed.subscribe(($event: any) => {
-
+                    this.LoadQueriesCounts();
                 });
                 logWindow.Show('./TariffModule/Components/NewEntity/NewAirFreightCostComponent');
             });
