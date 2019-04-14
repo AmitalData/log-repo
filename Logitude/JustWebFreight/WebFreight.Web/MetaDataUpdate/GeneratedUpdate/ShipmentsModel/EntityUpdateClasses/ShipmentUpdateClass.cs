@@ -41025,6 +41025,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "SDCV",
+                EnglishName =  "Shipment Direction Converted",
+                LocalName =  "Shipment Direction Converted",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -41039,13 +41057,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              			   Feature ShipmentFeature_MB05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTDIRECTTOHOUSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertDirectToHouse", NameTextCodeDefaultText = "Convert From Direct To House", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertShipmentToLCL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConverttoLCL", NameTextCodeDefaultText = "Convert to LCL", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertShipmentToFCL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConverttoFCL", NameTextCodeDefaultText = "Convert to FCL", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPY", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Copy", NameTextCodeDefaultText = "Copy Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDRESPONSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendResponse", NameTextCodeDefaultText = "Send Response", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCEL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Cancel", NameTextCodeDefaultText = "Cancel Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB011 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REACTIVATE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Reactivate", NameTextCodeDefaultText = "Reactivate Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB012 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTIONRESOLVED", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ExceptionResolved", NameTextCodeDefaultText = "Exception Resolved", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB013 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTTOCUSTOMFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertToCustomFile", NameTextCodeDefaultText = "Convert To Custom File", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB014 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitShipment", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SplitShipment", NameTextCodeDefaultText = "Split Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertShipmentDirection", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertShipmentDirection", NameTextCodeDefaultText = "Convert Shipment Direction", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPY", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Copy", NameTextCodeDefaultText = "Copy Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDRESPONSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendResponse", NameTextCodeDefaultText = "Send Response", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB011 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCEL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Cancel", NameTextCodeDefaultText = "Cancel Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB012 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REACTIVATE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Reactivate", NameTextCodeDefaultText = "Reactivate Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB013 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTIONRESOLVED", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ExceptionResolved", NameTextCodeDefaultText = "Exception Resolved", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB014 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTTOCUSTOMFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertToCustomFile", NameTextCodeDefaultText = "Convert To Custom File", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB015 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitShipment", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SplitShipment", NameTextCodeDefaultText = "Split Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -41229,8 +41248,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	   
 			   MenuButton ShipmentMenuButton09 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
+						EventCode = "ConvertShipmentDirection",
+						Index = 12, 
+						IsActive = true,
+						LabelTextCodeCode = "Shipment.B.ConvertShipmentDirection",
+						LabelTextCodeDefaultText = "Convert Shipment Direction",
+						Tenant = 0,
+						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
+						ParentMenuButtonId = ShipmentMenuButton0.Id,
+						ObjectTableId = ShipmentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ShipmentFeature_MB08.Id,
+						Style = null,
+						LocalDefaultText = "Convert Shipment Direction",
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ShipmentMenuButton010 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
 						EventCode = "CopyShipment",
-						Index = 13, 
+						Index = 14, 
 						IsActive = true,
 						LabelTextCodeCode = "Shipment.B.CopyShipment",
 						LabelTextCodeDefaultText = "Copy Shipment",
@@ -41239,15 +41275,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						ParentMenuButtonId = ShipmentMenuButton0.Id,
 						ObjectTableId = ShipmentObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  ShipmentFeature_MB08.Id,
+						FeatureId=  ShipmentFeature_MB09.Id,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ShipmentMenuButton010 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ShipmentMenuButton011 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ShipmentCopySeparator",
-						Index = 14, 
+						Index = 15, 
 						IsActive = false,
 						LabelTextCodeCode = "Shipment.B.ShipmentCopySeparator",
 						LabelTextCodeDefaultText = "",
@@ -41261,10 +41297,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ShipmentMenuButton011 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ShipmentMenuButton012 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "SendResponse",
-						Index = 15, 
+						Index = 16, 
 						IsActive = true,
 						LabelTextCodeCode = "Shipment.B.SendResponse",
 						LabelTextCodeDefaultText = " Send Response",
@@ -41273,15 +41309,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						ParentMenuButtonId = ShipmentMenuButton0.Id,
 						ObjectTableId = ShipmentObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  ShipmentFeature_MB09.Id,
+						FeatureId=  ShipmentFeature_MB010.Id,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ShipmentMenuButton012 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ShipmentMenuButton013 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ShipmentCommunicationsSeparator",
-						Index = 16, 
+						Index = 17, 
 						IsActive = false,
 						LabelTextCodeCode = "Shipment.B.ShipmentCommunicationsSeparator",
 						LabelTextCodeDefaultText = "",
@@ -41295,30 +41331,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ShipmentMenuButton013 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ShipmentMenuButton014 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CancelShipment",
-						Index = 17, 
+						Index = 18, 
 						IsActive = true,
 						LabelTextCodeCode = "Shipment.B.CancelShipment",
 						LabelTextCodeDefaultText = "Cancel Shipment",
-						Tenant = 0,
-						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
-						ParentMenuButtonId = ShipmentMenuButton0.Id,
-						ObjectTableId = ShipmentObjectTable.Id,
-						MenuButtonType = "menuitem",
-						FeatureId=  ShipmentFeature_MB010.Id,
-						Style = null,
-						LocalDefaultText = null,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
-			   MenuButton ShipmentMenuButton014 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
-						EventCode = "ReactivateShipment",
-						Index = 18, 
-						IsActive = true,
-						LabelTextCodeCode = "Shipment.B.ReactivateShipment",
-						LabelTextCodeDefaultText = "Reactivate Shipment",
 						Tenant = 0,
 						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
 						ParentMenuButtonId = ShipmentMenuButton0.Id,
@@ -41331,11 +41350,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	   
 			   MenuButton ShipmentMenuButton015 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "ExceptionResolved",
+						EventCode = "ReactivateShipment",
 						Index = 19, 
 						IsActive = true,
-						LabelTextCodeCode = "Shipment.B.ExceptionResolved",
-						LabelTextCodeDefaultText = "Exception Resolved",
+						LabelTextCodeCode = "Shipment.B.ReactivateShipment",
+						LabelTextCodeDefaultText = "Reactivate Shipment",
 						Tenant = 0,
 						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
 						ParentMenuButtonId = ShipmentMenuButton0.Id,
@@ -41348,11 +41367,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	   
 			   MenuButton ShipmentMenuButton016 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "ConvertToCustomFile",
+						EventCode = "ExceptionResolved",
 						Index = 21, 
 						IsActive = true,
-						LabelTextCodeCode = "Shipment.B.ConvertToCustomFile",
-						LabelTextCodeDefaultText = "Convert To Custom File",
+						LabelTextCodeCode = "Shipment.B.ExceptionResolved",
+						LabelTextCodeDefaultText = "Exception Resolved",
 						Tenant = 0,
 						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
 						ParentMenuButtonId = ShipmentMenuButton0.Id,
@@ -41365,8 +41384,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	   
 			   MenuButton ShipmentMenuButton017 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "SplitShipment",
+						EventCode = "ConvertToCustomFile",
 						Index = 22, 
+						IsActive = true,
+						LabelTextCodeCode = "Shipment.B.ConvertToCustomFile",
+						LabelTextCodeDefaultText = "Convert To Custom File",
+						Tenant = 0,
+						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
+						ParentMenuButtonId = ShipmentMenuButton0.Id,
+						ObjectTableId = ShipmentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ShipmentFeature_MB014.Id,
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ShipmentMenuButton018 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "SplitShipment",
+						Index = 0, 
 						IsActive = true,
 						LabelTextCodeCode = "Shipment.B.SplitShipment",
 						LabelTextCodeDefaultText = "Split Shipment",
@@ -41375,7 +41411,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						ParentMenuButtonId = ShipmentMenuButton0.Id,
 						ObjectTableId = ShipmentObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  ShipmentFeature_MB014.Id,
+						FeatureId=  ShipmentFeature_MB015.Id,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

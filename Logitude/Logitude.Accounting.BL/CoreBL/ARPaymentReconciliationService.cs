@@ -7,6 +7,9 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,6 +41,31 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
+        }
+
+        public void UpdateConnectedInvoices(ReconciliationPM entityPM)
+        {
+            ARInvoiceService invoiceService = new ARInvoiceService(_invoiceContext, entityPM.Tenant);
+            LedgerTransactionPM paymentTransaction = GetPaymentTransactionFromReconciliation(entityPM);
+            List<LedgerTransactionPM> recoTransactions  = GetReconciliationTransactions(entityPM);
+
+            if (paymentTransaction != null)
+            {
+                // get invoices
+                List<ARInvoicePM> paymentInvoices = GetPaymentInvoices(entityPM, paymentTransaction);
+
+                foreach (ARInvoicePM invoice in paymentInvoices)
+                {
+                    LedgerTransactionPM transaction = recoTransactions.Where(d => d.SourceId == invoice.Id).FirstOrDefault();
+                    decimal recoAmount = entityPM.ReconciliationLines.Where(d => d.TransactionId == transaction.Id).FirstOrDefault().ReconciliationAmount;
+
+                    CaclulateInvoiceAmount(invoice, entityPM, transaction, recoAmount);
+                    CaclulateInvoiceStatus(invoice, entityPM.AccountReconcileMethodCode);
+
+                    invoiceService.Update(invoice);
+                }
+
+            }
         }
 
 
@@ -102,7 +130,98 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
+        private List<ARInvoicePM> GetPaymentInvoices(ReconciliationPM entityPM, LedgerTransactionPM paymentTransaction)
+        {
+            ARInvoiceQuery invoicesQuery = new ARInvoiceQuery(entityPM.Tenant);
+            LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
+
+            // get invoices ids from reconciliation
+            List<string> invoicesTransactionIds = entityPM.ReconciliationLines
+                                                    .Where(d => d.TransactionId != paymentTransaction.Id)
+                                                    .Select(d => d.TransactionId).ToList();
+            List<LedgerTransactionPM> invoicesTransactions = transQuery.GetLedgerTransactionPMsByIdList(invoicesTransactionIds, entityPM.Tenant);
+            List<string> invoicesIds = invoicesTransactions.Select(d => d.SourceId).ToList();
+
+            // get invoices
+            List<ARInvoicePM> invoicesPM = invoicesQuery.GetARInvoicePMsByIdList(invoicesIds, entityPM.Tenant);
+
+            return invoicesPM;
+        }
+
+        private void CaclulateInvoiceStatus(ARInvoicePM invoice, string reconcileMethodCode)
+        {
+
+            var invoiceAmount = reconcileMethodCode == ReconcileMethodValues.LocalCurrency ? invoice.AmountDueInLocalCurrency : invoice.AmountInInvoiceCurrency;
+
+            if (invoice.AmountDue <= 0)
+            {
+                invoice.IsClosed = true;
+                invoice.StatusCode = ARInvoiceStatusValues.Paid;
+            }
+            else if (invoice.AmountDue < invoiceAmount)
+            {
+                invoice.IsClosed = false;
+                invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
+            }
+            else
+            {
+                invoice.IsClosed = false;
+                invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
+
+            }
+        }
+        private void CaclulateInvoiceAmount(ARInvoicePM invoice, ReconciliationPM entityPM, LedgerTransactionPM transaction, decimal recoAmount)
+        {
+
+            // get reco line
+            ReconciliationLinePM invoiceRecoLine = entityPM.ReconciliationLines.Where(d => d.TransactionId == transaction.Id).FirstOrDefault();
+            decimal originalAmount = GetOriginalAmountOfTransaction(transaction, entityPM.AccountReconcileMethodCode);
+            var reconciliationAmount = originalAmount - transaction.OpenAmount;
+
+            invoice.AmountDue -= (double)recoAmount;
+            invoice.AmountDueInLocalCurrency = MethodHelper.Round((invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate), 2);
+            invoice.AmountDueInProfitCurrency = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate), 2);
+
+        }
+        private decimal GetOriginalAmountOfTransaction(LedgerTransactionPM transaction, string reconcileMethodCode)
+        {
+            if (!string.IsNullOrEmpty(reconcileMethodCode))
+            {
+
+                if (reconcileMethodCode == "0")
+                { // 0-local currency
+
+                    if (transaction.LocalAmountCredit == 0)
+                    {
+                        return transaction.LocalAmountDebit;
+                    }
+                    else
+                    {
+                        return -1 * transaction.LocalAmountCredit;
+                    }
+
+                }
+                else if (reconcileMethodCode == "1")
+                { // 1-foreign currency
+
+                    if (transaction.ForeignAmountCredit == 0)
+                    {
+                        return transaction.ForeignAmountDebit;
+                    }
+                    else
+                    {
+                        return -1 * transaction.ForeignAmountCredit;
+                    }
+
+                }
+
+            }
+
+            return 0;
+        }
 
     }
+
+    
 
 }
