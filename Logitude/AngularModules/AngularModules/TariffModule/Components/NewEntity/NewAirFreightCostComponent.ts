@@ -25,7 +25,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.TypeCode = "AfC";
+        this.EntityPM.TypeCode = "AFC";
     }
 
     get Name() {
