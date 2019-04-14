@@ -338,5 +338,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsFullAccounting { get; set; }
         public string ARInvoiceStockId { get; set; }
+        public bool IsInvoiceNumberFromStock { get; set; }
     }
 }

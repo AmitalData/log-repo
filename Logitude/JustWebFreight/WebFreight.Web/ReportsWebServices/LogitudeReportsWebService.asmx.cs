@@ -1521,8 +1521,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             string[] currencyarray = currency.Split(',');
             dataProvider.Currency = currencyarray[0];
-            List<string> shipmentIds = (from a in invoicequery
-                                        select a.MainEntityId).ToList();
+            List<string> shipmentIds = (from a in invoicequery select a.MainEntityId).ToList();
 
             List<ShipmentPM> shipments = shipmentQuery.GetShipmentsForUnpaidInvoicesReport(shipmentIds);
             foreach (ARInvoiceList a in invoicequery)
@@ -1539,6 +1538,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.MasterNumber = a.MasterNumber;
                 invoicesRecored.HouseNumber = a.HouseNumber;
                 invoicesRecored.YourRefrence = a.CustomerRef;
+                invoicesRecored.BillToName = a.BillToName;
 
                 if (shipment != null)
                 {

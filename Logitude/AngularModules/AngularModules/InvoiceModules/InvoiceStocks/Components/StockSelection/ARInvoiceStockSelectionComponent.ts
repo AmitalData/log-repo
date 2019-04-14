@@ -86,7 +86,7 @@ export class ARInvoiceStockSelectionComponent {
 
     EditStockClicked(item: StockHeaderData) {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Edit ";
+        logWindow.Title = "Edit AR Invoice Stock";
         logWindow.IsFillScreen = true;
         logWindow.ShowEditComponent(item.StockHeader.Id, "ARInvoiceStock");
         logWindow.ComponentLoaded.subscribe(comp => {

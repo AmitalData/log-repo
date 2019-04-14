@@ -197,6 +197,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public virtual BankAccountLite BankAccountLite { get; set; }
 
         public string ARInvoiceStockId { get; set; }
+        public bool IsInvoiceNumberFromStock { get; set; }
 
     }
 }

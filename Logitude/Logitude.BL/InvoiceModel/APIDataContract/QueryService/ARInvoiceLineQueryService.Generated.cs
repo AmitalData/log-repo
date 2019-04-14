@@ -83,7 +83,14 @@ using Simplog.Data.InvoiceModel;
 				   temp.ExchangeRateDate = item.ExchangeRateDate;
 				   temp.Quantity = item.Quantity;
 				   temp.Tenant = item.Tenant;
-				   temp.GLAccountId = item.GLAccountId;					
+				   temp.GLAccountId = item.GLAccountId;			  
+				   if(item.LineActionCode != null)
+				   {
+					   ARInvoiceLineActionQueryService ARInvoiceLineActionService3 = new ARInvoiceLineActionQueryService(Tenant);
+					   					   temp.ARInvoiceLineAction = ARInvoiceLineActionService3.GetARInvoiceLineActionByCode(item.LineActionCode,Tenant); 
+			       
+					   				   }
+				   					
 					MyList.Add(temp);
 				}
 					
@@ -167,7 +174,18 @@ using Simplog.Data.InvoiceModel;
 					temp.ExchangeRateDate = item.ExchangeRateDate;
 					temp.Quantity = item.Quantity;
 					temp.Tenant = item.Tenant;
-					temp.GLAccountId = item.GLAccountId;					   
+					temp.GLAccountId = item.GLAccountId;					ARInvoiceLineActionQueryService ARInvoiceLineActionARInvoiceLineActionService = new ARInvoiceLineActionQueryService(Tenant);
+					if(item.ARInvoiceLineAction != null)
+					{
+						var myARInvoiceLineActionPM = ARInvoiceLineActionARInvoiceLineActionService.ARInvoiceLineActionDataMappingAndValidatin(item.ARInvoiceLineAction,Tenant,ComputingPartnerName);
+												if(myARInvoiceLineActionPM != null)
+						{
+							temp.LineActionCode = myARInvoiceLineActionPM.Code;
+						}
+						 
+					}
+			
+										   
 						MyList.Add(temp);
 					}
 						

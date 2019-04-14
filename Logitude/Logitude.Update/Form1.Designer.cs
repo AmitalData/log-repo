@@ -166,6 +166,8 @@
             this.HarmonizeCodesButton = new System.Windows.Forms.Button();
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
+            this.button41 = new System.Windows.Forms.Button();
+            this.lblUTariffModule = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1335,6 +1337,8 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.lblUTariffModule);
+            this.tabPage1.Controls.Add(this.button41);
             this.tabPage1.Controls.Add(this.btnUpdateTenantZeroNew);
             this.tabPage1.Controls.Add(this.lblTenantNew);
             this.tabPage1.Controls.Add(this.lblUGlobal);
@@ -1578,6 +1582,27 @@
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
+            // button41
+            // 
+            this.button41.Location = new System.Drawing.Point(16, 517);
+            this.button41.Name = "button41";
+            this.button41.Size = new System.Drawing.Size(184, 22);
+            this.button41.TabIndex = 93;
+            this.button41.Text = "Update Tariff Module";
+            this.button41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button41.UseVisualStyleBackColor = true;
+            this.button41.Click += new System.EventHandler(this.button41_Click);
+            // 
+            // lblUTariffModule
+            // 
+            this.lblUTariffModule.AutoSize = true;
+            this.lblUTariffModule.Location = new System.Drawing.Point(206, 522);
+            this.lblUTariffModule.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUTariffModule.Name = "lblUTariffModule";
+            this.lblUTariffModule.Size = new System.Drawing.Size(100, 13);
+            this.lblUTariffModule.TabIndex = 94;
+            this.lblUTariffModule.Text = "...";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1760,6 +1785,8 @@
         private System.Windows.Forms.Label HarmonizeCodesLabel;
         private System.Windows.Forms.Button button40;
 		private System.Windows.Forms.Button btnCompareData;
-	}
+        private System.Windows.Forms.Label lblUTariffModule;
+        private System.Windows.Forms.Button button41;
+    }
 }
 

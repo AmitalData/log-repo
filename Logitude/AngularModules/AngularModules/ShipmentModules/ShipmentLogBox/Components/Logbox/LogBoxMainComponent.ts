@@ -34,11 +34,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _ShipmentPMService: ShipmentPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ToggleIsExportShipments: boolean = false;
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
         this._ShipmentPMService = new ShipmentPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
+        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (FeatureToggle) {
+            this.ToggleIsExportShipments = true;
+        }
     }
     ngOnInit() {
         this.DontShowLogboxToolTip = SessionLocator.LoggedUserPM.ShowLogBoxToolTip;
@@ -178,17 +183,19 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     set SelectedTransportFilter(newValue: string) {
         if (this.mySelectedTransportFilter != newValue) {
             this.mySelectedTransportFilter = newValue;
-            //if (this.filterAgrs == null) {
-            //    this.filterAgrs = new ApiQueryFilters();
-            //}
-            //if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'TransportModeId').length > 0) {
-            //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'TransportModeId');
-            //}
-            //this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
-            //this.LoadQueriesCounts();
-            //this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: this.SelectedTransportFilter == "All" ? true : false });
+         
             this.LoadImporterShipments();
             ServiceLocator.SendTotangoUserActivity("LogBox", "Transportation type filter changed");
+        }
+    }
+    private mySelectedDirectionFilter: string = "All";
+    get SelectedDirectionFilter() { return this.mySelectedDirectionFilter; }
+    set SelectedDirectionFilter(newValue: string) {
+        if (this.mySelectedDirectionFilter != newValue) {
+            this.mySelectedDirectionFilter = newValue;
+
+            this.LoadImporterShipments();
+            ServiceLocator.SendTotangoUserActivity("LogBox", "Direction filter changed");
         }
     }
     private mySelectedArchiveFilter: string = "O";
@@ -220,7 +227,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public isPrivateLabel: boolean = false;
     @Output() SearchFieldchangeevent = new EventEmitter();
     LoadQueriesCounts() {
-        this.myShipmentDomainService.GetShipmentsQueriesCounts(SessionLocator.Tenant, this.SelectedTransportFilter == "All" ? "" : this.SelectedTransportFilter, this.SearchFilter == null ? "" : this.SearchFilter, SessionLocator.LoggedUserId, this.SelectedArchiveFilter == "All" ? "" : this.SelectedArchiveFilter).subscribe((myResult: ImporterQueriesDataCounts) => {
+        this.myShipmentDomainService.GetShipmentsQueriesCounts(SessionLocator.Tenant, this.SelectedTransportFilter == "All" ? "" : this.SelectedTransportFilter, this.SelectedDirectionFilter == "All" ? "" : this.SelectedDirectionFilter, this.SearchFilter == null ? "" : this.SearchFilter, SessionLocator.LoggedUserId, this.SelectedArchiveFilter == "All" ? "" : this.SelectedArchiveFilter).subscribe((myResult: ImporterQueriesDataCounts) => {
             if (myResult != null) {
                 this.AgentShipmentsCount = myResult.AgentShipmentsCount > 1000 ? "1000+" : myResult.AgentShipmentsCount.toString();
                 this.MyShipmentsCount = myResult.ImporterShipmentsCount > 1000 ? "1000+" : myResult.ImporterShipmentsCount.toString();
@@ -538,6 +545,14 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         else {
             if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'TransportModeId').length > 0) {
                 this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'TransportModeId');
+            }
+        }
+        if (this.SelectedDirectionFilter != "All") {
+            this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string", this.SelectedDirectionFilter == "All" ? true : false);
+        }
+        else {
+            if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'DirectionId').length > 0) {
+                this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'DirectionId');
             }
         }
         if (this.SelectedArchiveFilter != "All") {
