@@ -411,6 +411,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entityPoco.ConcurrencyGUID;
+
+            entityPM.ShipmentDirectionConverted = false;
         }
 
         private static void MapXSDMessagesFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, bool isNewEntity)

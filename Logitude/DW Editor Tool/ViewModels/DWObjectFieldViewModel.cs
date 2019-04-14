@@ -137,7 +137,7 @@ namespace DW_Editor_Tool.ViewModels
         }
         // is Measurement , Aggregation Type
 
-        public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension" }; } }
+        public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension", "SqlVariant" }; } }
         public List<string> AggregationTypesList { get { return new List<string>() { "SUM", "COUNT" }; } }
 
         Visibility errorsVisibility = Visibility.Collapsed;

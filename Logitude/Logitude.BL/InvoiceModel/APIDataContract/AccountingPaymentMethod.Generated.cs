@@ -24,7 +24,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     
     public int Tenant { get; set; }
     
-    public string LogitudeCode { get; set; }
+    public string Code { get; set; }
     
     public string Name { get; set; }
 

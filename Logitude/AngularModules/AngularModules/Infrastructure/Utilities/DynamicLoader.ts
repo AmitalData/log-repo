@@ -273,6 +273,10 @@ export class DynamicLoader {
             case "Social": { myResult = "Social/Module_SOCL#SocialModule"; break; }
             case "TimeManagement": { myResult = "TimeManagement/Module_TIME#TimeManagementModule"; break; }
             case "Warehouse": { myResult = "Warehouse/Module_WARH#WarehouseModule"; break; }
+            case "TariffModule": { myResult = "TariffModule/Module_Tariff#Tariff_Module"; break; }
+
+
+
         }
 
         return myResult;

@@ -93,6 +93,7 @@ import { AppComponent } from './AppComponent';
             { loadChildren: 'Social/Module_SOCL#SocialModule' },
             { loadChildren: 'TimeManagement/Module_TIME#TimeManagementModule' },
             { loadChildren: 'Warehouse/Module_WARH#WarehouseModule' },
+            { loadChildren: 'TariffModule/Module_Tariff#Tariff_Module' },
 
             // Customs Module
             // { loadChildren: 'Customs/Module_CUST#CustomsModule' }, //this should be only on customs.

@@ -52,13 +52,15 @@ export class MainMenuComponent {
         var myResult: MainMenuItem[] = [];
 
         window.MenusTables.filter(f => f.MenuTypeCode.toUpperCase() == "MAIN").forEach((item) => {
-
+         
        
             var isAddingItem = false;
 
             if (item.FeatureId == null) {
                 isAddingItem = true;
             }
+
+
 
             else {
                 if (FeatureLocator.IsFeatureGranted(item.FeatureId)) {
@@ -283,6 +285,11 @@ export class MainMenuComponent {
 
                     case "General.MH.TimeManagement": {
                         myComponentPath = "./TimeManagement/Components/Workspaces/TimeManagementWorkspaceComponent"; 
+                        break;
+                    }
+
+                    case "General.MH.TariffModule": {
+                        myComponentPath = "./TariffModule/Components/Workspaces/TariffModuleWorkspaceComponent";
                         break;
                     }
 
