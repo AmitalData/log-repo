@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.Helpers
 {
-   public class ShipmentComputedFieldsHelper
+    public class ShipmentComputedFieldsHelper
     {
 
         public void UpdateShipmentComputedFields(ShipmentComputedFields shipmentComputedFields)
@@ -28,11 +28,18 @@ namespace Logitude.BL.Helpers
                     ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentComputedFields.Id, shipmentComputedFields.Tenant);
                     if (shipmentPM != null)
                     {
-                        shipmentPM.ShipmentComputedFields = shipmentComputedFields;
                         shipmentPM.IsDepositionRequired = shipmentComputedFields.IsDepositionRequired;
                         shipmentPM.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
                         shipmentPM.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
+                        shipmentPM.IsMissingDocuments = shipmentComputedFields.IsMissingDocuments;
+                        shipmentPM.DocumentsSearchFields = shipmentComputedFields.DocumentsSearchFields;
+                        shipmentPM.MissingDocumentsCount = shipmentComputedFields.MissingDocumentsCount;
+                        shipmentPM.MissingDocumentsNames = shipmentComputedFields.MissingDocumentsNames;
+                        shipmentPM.RequestedDocumentsCount = shipmentComputedFields.RequestedDocumentsCount;
+                        shipmentPM.NumberOfHouses = shipmentComputedFields.NumberOfHouses;
+                        shipmentPM.ImporterDepositionRequestDetails = shipmentComputedFields.ImporterDepositionRequestDetails;
                         shipmentPM.IsShipmentComputedFieldChange = true;
+
 
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
                         ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
@@ -49,5 +56,6 @@ namespace Logitude.BL.Helpers
             }
 
         }
+
     }
 }

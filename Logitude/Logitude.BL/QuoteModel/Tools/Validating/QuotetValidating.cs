@@ -40,7 +40,6 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 ValidateToPort(entityPM);
             }
 
-
             if (isNewEntity)
             {
                 ValidateProductTypePermission(entityPM);
@@ -59,7 +58,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
             ValidateAirlineRestriction(entityPM);
             ValidateMultiVatPercentages(entityPM, myCommonContext);
             ValidateConvertQuote(entityPM);
-
+            ValidateFCLDuplicatedPackages(entityPM);
         }
 
         private static void ValidateConvertQuote(QuotePM entityPM)
@@ -75,7 +74,6 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
             }
         }
-
         private static void ValidateAirlineRestriction(QuotePM entityPM)
         {
             if (entityPM.TransportModeId == "A")
@@ -287,6 +285,72 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 }
             }
         }
+        private static void ValidateFCLDuplicatedPackages(QuotePM entityPM)
+        {
+            bool isFCLQuote = false;
 
+            if (entityPM.TransportModeId != null)
+            {
+                entityPM.TransportModeId = entityPM.TransportModeId.ToUpper();
+            }
+
+            if (entityPM.ShipmentTypeId != null)
+            {
+                entityPM.ShipmentTypeId = entityPM.ShipmentTypeId.ToUpper();
+            }
+
+            if (entityPM.TransportModeId == "O" && (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "MYGO"))
+            {
+                isFCLQuote = true;
+            }
+
+            else if (entityPM.TransportModeId == "I" && (entityPM.ShipmentTypeId == "FTL" || entityPM.ShipmentTypeId == "MYGI"))
+            {
+                isFCLQuote = true;
+            }
+
+            if (isFCLQuote)
+            {
+                List<string> list = new List<string>();
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType1Id))
+                {
+                    list.Add(entityPM.PackageType1Id);
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType2Id))
+                {
+                    list.Add(entityPM.PackageType2Id);
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType3Id))
+                {
+                    list.Add(entityPM.PackageType3Id);
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType4Id))
+                {
+                    list.Add(entityPM.PackageType4Id);
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType5Id))
+                {
+                    list.Add(entityPM.PackageType5Id);
+                }
+
+                var listGroup = (from d in list
+                                 group d by d into g
+                                 select new
+                                 {
+                                     PackageTypeId = g,
+                                     Count = g.Count(),
+                                 }).ToList();
+
+                if (listGroup.Where(d => d.Count > 1).Any())
+                {
+                    throw new ApplicationException("Cannot add the same container type twice. You can adjust the QTY for one of them");
+                }
+            }
+        }
     }
 }
