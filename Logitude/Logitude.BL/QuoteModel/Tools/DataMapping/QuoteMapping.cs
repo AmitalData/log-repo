@@ -180,6 +180,9 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.NumberOfFollowUps = entityPM.NumberOfFollowUps;
             entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
             BuildSearchField(entityPM, entityPoco);
+
+            entityPM.ConvertToLCL = false;
+            entityPM.ConvertToFCL = false;
         }
 
         private static void BuildSearchField(QuotePM entityPM, Quote entityPoco)

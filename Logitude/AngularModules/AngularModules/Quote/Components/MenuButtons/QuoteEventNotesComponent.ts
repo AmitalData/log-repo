@@ -17,6 +17,7 @@ export class QuoteEventNotesComponent extends BaseComponent {
     public NotesHeader: string = "Notes";
     public ShowClosingReason: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsConvertQuoteType: boolean = false;
     constructor() {
         super();
     }
@@ -25,6 +26,7 @@ export class QuoteEventNotesComponent extends BaseComponent {
         this.EntityPM = args.EntityPM;
         this.NotesHeader = args.NotesHeader;
         this.ShowClosingReason = args.ShowClosingReason;
+        this.IsConvertQuoteType = args.IsConvertQuoteType;
         this.EventNote = null;
         this.Clone();
     }
