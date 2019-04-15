@@ -29,9 +29,9 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 					
 					                          Tenant = a.Tenant,
 					
-					                          CreatedByUserId = a.CreatedByUserId,
+					                          CreateDate = a.CreateDate,
 					
-					                          UpdatedByUserId = a.UpdatedByUserId,
+					                          CreatedByUserName = a.CreatedByUser!=null?a.CreatedByUser.Contact!=null?a.CreatedByUser.Contact.EnglishName:"":"",
 					
 					                          SearchFields = a.SearchFields,
 					
@@ -45,20 +45,19 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 					
 					                          Description = a.Description,
 					
-					                          SellerId = a.SellerId,
-					
-					                          CurrencyId = a.CurrencyId,
-					
+					                          SellerName = a.Seller!=null?a.Seller.EnglishName:"",
+										
 					                          UpdateDate = a.UpdateDate,
-					
-		                    	            });
+                                              UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : "" : "",
+
+                                            });
             return query;
 		}
 
 		private IQueryable<Tariff> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Tariff> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 				private IQueryable<Tariff> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Tariff> iQueryable, int tenant)
         {
 			return iQueryable;

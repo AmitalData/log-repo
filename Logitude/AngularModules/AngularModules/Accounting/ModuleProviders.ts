@@ -108,7 +108,7 @@ import { ReconcileExternalPageExtendedListService } from './Services/ExtendedLis
 import { ExternalReconciliationExtendedListService } from './Services/ExtendedLists/ExternalReconciliationExtendedListService';
 import { AutomaticExternalRconcilMthodListService } from './Services/StandardLists/AutomaticExternalReconcileMethodListService';
 import { TaxReportExtendedPMService } from './Services/ExtendedPMs/TaxReportExtendedPMService';
-
+import { OpenFormatReportStatusListService } from './Services/StandardLists/OpenFormatReportStatusListService';
 
 import { JournalMenuButtonsHandler } from './Components/MenuButtons/JournalMenuButtonsHandler';
 import { GLAccountMenuButtonsHandler } from './Components/MenuButtons/GLAccountMenuButtonsHandler';
@@ -224,7 +224,7 @@ export class ModuleProviders {
             case "GLAccountMoreDataListService": { myResult = new GLAccountMoreDataListService(); break; }
             // case "OpenFormatDateTypeListService": { myResult = new OpenFormatDateTypeListService(); break; }
             case "TaxDeductionReportStatusListService": { myResult = new TaxDeductionReportStatusListService(); break; }
-        
+            case "OpenFormatReportStatusListService": { myResult = new OpenFormatReportStatusListService(); break; }
             //#endregion
 
             //Extend Services

@@ -66,7 +66,7 @@ using Simplog.Data.InvoiceModel;
 				   var temp = new AccountingPaymentMethod(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.Tenant = MyEntityPM.Tenant;
-				   temp.LogitudeCode = MyEntityPM.Code;
+				   temp.Code = MyEntityPM.Code;
 				   temp.Name = MyEntityPM.Name;					
 				   return temp;
 			}
@@ -98,7 +98,7 @@ using Simplog.Data.InvoiceModel;
 					temp.Tenant = MyEntity.Tenant;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
-						temp.Code = MyEntity.LogitudeCode;
+						temp.Code = MyEntity.Code;
 					}
 					temp.Name = MyEntity.Name;					   
 					   return temp;

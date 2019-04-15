@@ -72,11 +72,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                         //  invoice.InvoiceDate = DateTime.Today;
 
-                        invoice.SubTotalInInvoiceCurrency = invoice.SubTotalInInvoiceCurrency * -1;
-                        invoice.SubTotalInLocalCurrency = invoice.SubTotalInLocalCurrency * -1;
-                        invoice.AmountInInvoiceCurrency = invoice.AmountInInvoiceCurrency * -1;
-                        invoice.AmountInLocalCurrency = invoice.AmountInLocalCurrency * -1;
-                        invoice.AmountInProfitCurrency = invoice.AmountInProfitCurrency * -1;
+                        invoice.SubTotalInInvoiceCurrency = invoice.SubTotalInInvoiceCurrency;
+                        invoice.SubTotalInLocalCurrency = invoice.SubTotalInLocalCurrency;
+                        invoice.AmountInInvoiceCurrency = invoice.AmountInInvoiceCurrency;
+                        invoice.AmountInLocalCurrency = invoice.AmountInLocalCurrency;
+                        invoice.AmountInProfitCurrency = invoice.AmountInProfitCurrency;
                         invoice.AmountDue = 0;
                         invoice.AmountDueInLocalCurrency = 0;
                         invoice.AmountDueInProfitCurrency = 0;
@@ -87,11 +87,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         int i = 1;
                         foreach (ARInvoiceLinePM item in invoice.InvoiceLines)
                         {
-                            item.UnitPrice = item.UnitPrice * -1;
-                            item.ForiegnCurrencyAmount = item.ForiegnCurrencyAmount * -1;
-                            item.LocalCurrencyAmount = item.LocalCurrencyAmount * -1;
-                            item.ProfitCurrencyAmount = item.ProfitCurrencyAmount * -1;
-                            item.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1;
+                            item.UnitPrice = item.UnitPrice;
+                            item.ForiegnCurrencyAmount = item.ForiegnCurrencyAmount;
+                            item.LocalCurrencyAmount = item.LocalCurrencyAmount;
+                            item.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+                            item.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                         }
 
                         //  service.Update(invoicePM);
@@ -341,6 +341,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+     
 
         public ARInvoice ARInvoiceCustomDataMapping(string Id, int Tenant)
         {

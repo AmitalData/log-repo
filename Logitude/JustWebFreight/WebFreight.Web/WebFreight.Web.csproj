@@ -1827,6 +1827,7 @@
     <Compile Include="Controllers\WebDomainControllers\QuoteDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ReportsDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ClockTimeGeneralDomainController.cs" />
+    <Compile Include="Controllers\WebDomainControllers\TariffDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\TimeManagementDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\TimeOfficeHourDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\TraceEventsDomainController.cs" />

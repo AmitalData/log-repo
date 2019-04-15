@@ -87,6 +87,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 else
                 {
+                    if(entityPM.ShipmentDirectionConverted)
+                    {
+                        this.CreateTraceEvent("SDCV", entityPM.EventNote);
+                    }
+
                     if (entityPM.ConvertFromDirectToHouse)
                     {
                         entityPM.ConvertFromDirectToHouse = false;

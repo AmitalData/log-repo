@@ -1554,6 +1554,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             _reco.Number = "get";
             _reco.Tenant = paymentPM.Tenant;
             _reco.AccountId = paymentPM.GLAccountId;
+            _reco.AccountReconcileMethodCode = paymentPM.GLAccountRecoMethodCode;
             _reco.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
 
             // get payment line LT
@@ -1744,6 +1745,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // Validate sum of line's amount to reconcile
             decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            if (_payment.OpenAmount == null)
+            {
+                _payment.OpenAmount = 0;
+            }
+               
             if (amount2reconcile > (decimal)_payment.OpenAmount)
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
 
@@ -1766,20 +1772,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             //
             // update invoices amount
-            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
-            {
-                //get invoice
-                ARInvoice invoice = GetInvoice(invTrans.SourceId, tenant);
+            //foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
+            //{
+            //    //get invoice
+            //    ARInvoice invoice = GetInvoice(invTrans.SourceId, tenant);
 
-                //update
-                double? invoiceAmountDue = MethodHelper.Round((invoice.AmountDue - (double)invTrans.AmountToReconcile), 2);
+            //    //update
+            //    double? invoiceAmountDue = MethodHelper.Round((invoice.AmountDue - (double)invTrans.AmountToReconcile), 2);
 
-                invoice.AmountDue = invoiceAmountDue;
-                invoice.AmountDueInLocalCurrency = MethodHelper.Round(invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate, 2);
-                invoice.AmountDueInProfitCurrency = MethodHelper.Round(invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate, 2);
+            //    invoice.AmountDue = invoiceAmountDue;
+            //    invoice.AmountDueInLocalCurrency = MethodHelper.Round(invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate, 2);
+            //    invoice.AmountDueInProfitCurrency = MethodHelper.Round(invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate, 2);
 
-                invoiceRepository.Update(invoice);
-            }
+            //    invoiceRepository.Update(invoice);
+            //}
 
 
 

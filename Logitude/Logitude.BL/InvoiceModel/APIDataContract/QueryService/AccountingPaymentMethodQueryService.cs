@@ -29,7 +29,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 var temp = new AccountingPaymentMethod();
                 temp.Id = entity.Id;
                 temp.Tenant = entity.Tenant;
-                temp.LogitudeCode = entity.Code;
+                temp.Code = entity.Code;
                 temp.Name = entity.Name;
                 return temp;
             }
@@ -47,14 +47,14 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             try
             {
                 var temp = new AccountingPaymentMethodPM();
-                if (!string.IsNullOrEmpty(MyEntity.LogitudeCode))
+                if (!string.IsNullOrEmpty(MyEntity.Code))
                 {
-                    temp = query.GetSinglePaymentMethodPMByCode(MyEntity.LogitudeCode, tenant);
+                    temp = query.GetSinglePaymentMethodPMByCode(MyEntity.Code, tenant);
                 }
 
                 if (temp == null)
                 {
-                    throw new ApplicationException("AccountingPaymentMethod with code " + MyEntity.LogitudeCode + " doesn't exist");
+                    throw new ApplicationException("AccountingPaymentMethod with code " + MyEntity.Code + " doesn't exist");
                 }
                 if (string.IsNullOrEmpty(temp.Id))
                 {
@@ -63,7 +63,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 temp.Tenant = MyEntity.Tenant;
                 if (string.IsNullOrEmpty(temp.Code))
                 {
-                    temp.Code = MyEntity.LogitudeCode;
+                    temp.Code = MyEntity.Code;
                 }
                 temp.Name = MyEntity.Name;
                 return temp;

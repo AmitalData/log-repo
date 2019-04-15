@@ -129,5 +129,6 @@ export class ARInvoiceList {
 		SATApprovalDate: Date;
 		IsFullAccounting: boolean;
 		ARInvoiceStockId: string;
+		IsInvoiceNumberFromStock: boolean;
 	
 }

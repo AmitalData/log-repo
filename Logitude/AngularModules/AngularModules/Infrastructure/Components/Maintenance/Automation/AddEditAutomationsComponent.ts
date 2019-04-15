@@ -527,7 +527,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ResultCodeList.push(new ResultCode("F/U Creation", "FOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Docs Out F/U Creation", "DOCOUTFOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Docs In F/U Creation", "DOCINFOLLOWUP"));
-                this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
+
+                if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue")) {
+                    this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
+                }                
             }
 
             this.ResultCodeSelected = this.ResultCodeList.filter(d => d.Code == this.AutomatedBackupClass.ResultCode)[0];

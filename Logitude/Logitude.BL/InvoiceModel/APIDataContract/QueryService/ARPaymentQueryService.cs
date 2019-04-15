@@ -53,7 +53,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 var myAccountingPaymentMethodPM = AccountingPaymentMethodAccountingPaymentMethodService.GetAccountingPaymentMethodById(entity.AccountingPaymentMethodId, entity.Tenant);
                 if (myAccountingPaymentMethodPM != null)
                 {
-                    entity.AccountingPaymentMethodCode = myAccountingPaymentMethodPM.LogitudeCode;
+                    entity.AccountingPaymentMethodCode = myAccountingPaymentMethodPM.Code;
                 }
 
             }

@@ -2323,14 +2323,20 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool HasContainerException { get; set; }
 
+
+
+
+        //ShipmentComputedFields
+        public bool IsMissingDocuments { get; set; }
+        public DateTime? LastDocumentDateTime { get; set; }
+        public int MissingDocumentsCount { get; set; }
+        public string MissingDocumentsNames { get; set; }
         public bool IsRequestedDocuments { get; set; }
+        public int RequestedDocumentsCount { get; set; }
+        public int NumberOfHouses { get; set; }
         public bool IsDigitalSignRequired { get; set; }
         public bool IsDepositionRequired { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
-
-
-        public ShipmentComputedFields ShipmentComputedFields { get; set; }
-        
         public bool IsShipmentComputedFieldChange { get; set; }
 
         public string PackagesTypesNames { get; set; }
@@ -2339,5 +2345,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ARInvoices { get; set; }
         public bool ConvertShipmentToLCL { get; set; }
         public bool ConvertShipmentToFCL { get; set; }
+
+        public bool ShipmentDirectionConverted { get; set; }
     }
 }

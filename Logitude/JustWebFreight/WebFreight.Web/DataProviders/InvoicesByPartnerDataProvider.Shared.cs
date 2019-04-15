@@ -45,6 +45,7 @@ namespace WebFreight.Web.DataProviders
             public string Description { get; set; }
             public double? Amount { get; set; }
             public string YourRefrence { get; set; }
+            public string BillToName { get; set; }
         }
     }
 }

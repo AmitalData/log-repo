@@ -42,5 +42,21 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return query2;
         }
+
+        public ARInvoiceLineActionList GetEntityList(string code)
+        {
+            ARInvoiceLineActionList enntityList = (from entity in repository.context.ARInvoiceLineActions
+                                              where entity.Code == code
+                                                         select new ARInvoiceLineActionList()
+                                                         {
+                                                             Code = entity.Code,
+                                                             Name = entity.Name,
+                                                             LocalName = entity.LocalName,
+                                                             Inactive = entity.Inactive,
+                                                             SearchFields = entity.SearchFields,
+                                                         }).FirstOrDefault();
+
+            return enntityList;
+        }
     }
 }

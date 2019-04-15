@@ -1,0 +1,30 @@
+import { TariffModuleWorkspaceComponent } from './Components/Workspaces/TariffModuleWorkspaceComponent';
+import { NewAirFreightCostComponent } from './Components/NewEntity/NewAirFreightCostComponent';
+import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComponent';
+
+
+export const Components =
+    [
+        TariffModuleWorkspaceComponent,
+        NewAirFreightCostComponent,
+        FieldTemplateComponent
+    ];
+
+export const ControlsComponents =
+    [
+    ];
+
+export class ModuleDeclarations {
+    public static Get(name: string) {
+
+        var myResult: any = null;
+
+        switch (name) {
+            case "TariffModuleWorkspaceComponent": { myResult = TariffModuleWorkspaceComponent; break; }
+            case "NewAirFreightCostComponent": { myResult = NewAirFreightCostComponent; break; }
+            case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }                
+        }
+
+        return myResult;
+    }
+}

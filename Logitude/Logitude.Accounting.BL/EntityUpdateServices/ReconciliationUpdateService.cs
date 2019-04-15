@@ -369,15 +369,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void AfterUpdating(ReconciliationPM entityPM, EntityPM entityParentPM)
         {
             // Draft reconciliation
-            if (SuppressResetDraftOpenReconciliation)
-                return;
-            var repoLedger = new LedgerTransactionRepository(MainContext as IAccountingContext);
-            repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
-
+            if (!SuppressResetDraftOpenReconciliation)
+            {
+                var repoLedger = new LedgerTransactionRepository(MainContext as IAccountingContext);
+                repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
+            }
 
             // update connected ARPayment 
             ARPaymentReconciliationService arpRecoService = new ARPaymentReconciliationService(entityPM.Tenant);
             arpRecoService.UpdatePaymentOpenAmountAndStatusForReconciliaiton(entityPM);
+            arpRecoService.UpdateConnectedInvoices(entityPM);
 
         }
 

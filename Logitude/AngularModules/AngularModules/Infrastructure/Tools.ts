@@ -1034,6 +1034,11 @@ export class AppTool {
                 myResult = "Deposition";
                 break;
             }
+
+            case "General.MH.TariffModule": {
+                myResult = "Tariff";
+                break;
+            }
                 
 
             default: {

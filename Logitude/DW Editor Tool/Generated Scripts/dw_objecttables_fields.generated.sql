@@ -769,3 +769,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsMasterShipmentNumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsMasterShipmentNumberNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter) Values(@Fact_ShipmentsMasterShipmentNumberNewId,0,'Fact_Shipments','[Master Shipment Number]','Master Shipment Number','Text','false',0,20,'false','false','true','Operational ','false','false')  
+declare @Fact_ShipmentsField1NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter) Values(@Fact_ShipmentsField1NewId,0,'Fact_Shipments','[Field1]','Field1','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false')  
