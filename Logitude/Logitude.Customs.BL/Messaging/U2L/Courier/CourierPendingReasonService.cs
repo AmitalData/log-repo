@@ -109,6 +109,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
                     _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
                     LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To null");
+                    AppendLogLine("Set Courier Pending Reason Code To null" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 }
 
                 AppendLogLine("send request:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
