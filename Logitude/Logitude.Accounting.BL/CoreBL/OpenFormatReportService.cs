@@ -522,7 +522,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 counter++;
                 B110Count++;
-                if(item.DisplayNumber == "70012")
+                if(item.DisplayNumber == "70013")
                 {
 
                 }
@@ -984,7 +984,11 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (TotalDebitInForeignCurrency.Length > 14) { TotalDebitInForeignCurrency = TotalDebitInForeignCurrency.Substring(0, 14); }
                             myStringBuilder.Append( TotalDebitInForeignCurrency.PadLeft(14, '0'));
                         }
-
+                        else
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append('0', 15);
+                        }
                     }
                     else
                     {

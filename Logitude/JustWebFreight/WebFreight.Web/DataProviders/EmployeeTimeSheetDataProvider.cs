@@ -13,7 +13,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime ToDate { get; set; }
         public DateTime? Today_DateTime { get; set; }
         public List<EmployeeTimeSheetData> EmployeeTimeSheetList { get; set; }
-        public double? Total_RequiredWorkHours { get; set; }
+        public string Total_RequiredWorkHours { get; set; }
         public string Total_TimeFromClock { get; set; }
         public string Total_TimeFromOffice { get; set; }
         public string Total_DifferenceTime { get; set; }

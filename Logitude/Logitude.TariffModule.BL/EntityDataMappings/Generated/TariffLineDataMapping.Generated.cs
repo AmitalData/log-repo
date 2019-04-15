@@ -38,7 +38,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Step6Price, 
 	         Step7Price, 
 	         Step8Price, 
-	         OriginPortId,
+	         OriginPortId, 
+	         DestinationPortId,
 	      }
 
 
@@ -61,7 +62,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Step6Price, 
 	         Step7Price, 
 	         Step8Price, 
-	         OriginPortId,
+	         OriginPortId, 
+	         DestinationPortId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -148,6 +150,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginPortId))
             {
 				entityPOCO.OriginPortId = entityPM.OriginPortId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationPortId))
+            {
+				entityPOCO.DestinationPortId = entityPM.DestinationPortId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -241,6 +248,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.OriginPortId = entityPOCO.OriginPortId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DestinationPortId))
+            {
+					entityPM.DestinationPortId = entityPOCO.DestinationPortId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -325,6 +337,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginPortId))
             {
                 oldEntityPM.OriginPortId = entityPM.OriginPortId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationPortId))
+            {
+                oldEntityPM.DestinationPortId = entityPM.DestinationPortId;
             }
 			
 		}

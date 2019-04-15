@@ -56,6 +56,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Step8Price).HasColumnName("Step8Price");
 
             this.Property(t => t.OriginPortId).HasColumnName("OriginPortId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DestinationPortId).HasColumnName("DestinationPortId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
