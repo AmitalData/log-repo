@@ -1652,9 +1652,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (line.VatPercentage != null)
                     {
                        // string VatPercentage =  line.VatPercentage.ToString();
-                        string VatPercentage = Format((decimal)line.VatPercentage);
+                        string VatPercentage = Format((decimal)line.VatPercentage, false, true);
                         if (VatPercentage.Length > 4) { VatPercentage = VatPercentage.Substring(0, 4); }
-                        myStringBuilder.Append(a + VatPercentage.PadLeft(4, '0'));
+                        myStringBuilder.Append(a + VatPercentage.PadRight(4, '0'));
                     }
                     else
                     {
@@ -2350,9 +2350,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (line.VatPercentage != null)
                     {
-                        string VatPercentage = line.VatPercentage.ToString();
+                        string VatPercentage = Format((decimal)line.VatPercentage, false, true);
                         if (VatPercentage.Length > 4) { VatPercentage = VatPercentage.Substring(0, 4); }
-                        myStringBuilder.Append(a + VatPercentage.PadLeft(4, '0'));
+                        myStringBuilder.Append(a + VatPercentage.PadRight(4, '0'));
                     }
                     else
                     {
@@ -4472,7 +4472,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
         
-        public   string Format(decimal value, bool quantity =false)
+        public   string Format(decimal value, bool quantity =false, bool isVat =false)
         {
 
             string formated = Math.Abs(value).ToString().Replace(".", string.Empty);
@@ -4486,6 +4486,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 formated = formated + "00";
             }
+            else if ((sub.Count() >1) && isVat)
+            {
+                formated = "0"+ formated  ;
+            }
+          
             
            
             return formated;
