@@ -29,6 +29,7 @@ import {ShipmentPM} from '../../../Shipment/EntityPMs/ShipmentPM';
 import { BaseComponent } from '../LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMService';
+import { ServiceLocator } from '../../Locators/ServiceLocator';
 
 @Component({
     moduleId: module.id,
@@ -88,6 +89,8 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     }
 
     DownloadAllClick() {
+
+        ServiceLocator.SendTotangoUserActivity("Shipment", "Docs In Downloaded");
 
         var service: CardPMService = new CardPMService();
         service.get(SessionLocator.LoggedUserPM.Id).subscribe(res => {

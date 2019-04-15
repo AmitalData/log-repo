@@ -647,100 +647,50 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     get PackageType1Id() { return this.EntityPM.PackageType1Id; }
     set PackageType1Id(newValue: string) {
         if (this.EntityPM.PackageType1Id != newValue) {
-            if (newValue != null && (this.PackageType2Id == newValue || this.PackageType3Id == newValue || this.PackageType4Id == newValue || this.PackageType5Id == newValue)) {
-
-            }
-
-            else {
-                if (newValue == null) {
-                    this.EntityPM.PackageType1Quantity = null;
-                    this.SetUIProperties_Expected_Details();
-                }
-
-                this.EntityPM.PackageType1Id = newValue;
-                this.UpdateCharges();
-                this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
-            }
+            this.EntityPM.PackageType1Id = newValue;
+            this.UpdateCharges();
+            this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
+            this.SetUIProperties_Expected_Details();
         }
     }
 
     get PackageType2Id() { return this.EntityPM.PackageType2Id; }
     set PackageType2Id(newValue: string) {
         if (this.EntityPM.PackageType2Id != newValue) {
-            if (newValue != null && (this.PackageType1Id == newValue || this.PackageType3Id == newValue || this.PackageType4Id == newValue || this.PackageType5Id == newValue)) {
-
-            }
-
-            else {
-                if (newValue == null) {
-                    this.EntityPM.PackageType2Quantity = null;
-                    this.SetUIProperties_Expected_Details();
-                }
-
-                this.EntityPM.PackageType2Id = newValue;
-                this.UpdateCharges();
-                this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
-            }
+            this.EntityPM.PackageType2Id = newValue;
+            this.UpdateCharges();
+            this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
+            this.SetUIProperties_Expected_Details();
         }
     }
 
     get PackageType3Id() { return this.EntityPM.PackageType3Id; }
     set PackageType3Id(newValue: string) {
         if (this.EntityPM.PackageType3Id != newValue) {
-            if (newValue != null && (this.PackageType1Id == newValue || this.PackageType2Id == newValue || this.PackageType4Id == newValue || this.PackageType5Id == newValue)) {
-
-            }
-
-            else {
-                if (newValue == null) {
-                    this.EntityPM.PackageType3Quantity = null;
-                    this.SetUIProperties_Expected_Details();
-                }
-
-                this.EntityPM.PackageType3Id = newValue;
-                this.UpdateCharges();
-                this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
-            }
+            this.EntityPM.PackageType3Id = newValue;
+            this.UpdateCharges();
+            this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
+            this.SetUIProperties_Expected_Details();
         }
     }
 
     get PackageType4Id() { return this.EntityPM.PackageType4Id; }
     set PackageType4Id(newValue: string) {
         if (this.EntityPM.PackageType4Id != newValue) {
-            if (newValue != null && (this.PackageType1Id == newValue || this.PackageType2Id == newValue || this.PackageType3Id == newValue || this.PackageType5Id == newValue)) {
-
-            }
-
-            else {
-                if (newValue == null) {
-                    this.EntityPM.PackageType4Quantity = null;
-                    this.SetUIProperties_Expected_Details();
-                }
-
-                this.EntityPM.PackageType4Id = newValue;
-                this.UpdateCharges();
-                this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
-            }
+            this.EntityPM.PackageType4Id = newValue;
+            this.UpdateCharges();
+            this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
+            this.SetUIProperties_Expected_Details();
         }
     }
 
     get PackageType5Id() { return this.EntityPM.PackageType5Id; }
     set PackageType5Id(newValue: string) {
         if (this.EntityPM.PackageType5Id != newValue) {
-            if (newValue != null && (this.PackageType1Id == newValue || this.PackageType2Id == newValue || this.PackageType3Id == newValue || this.PackageType4Id == newValue)) {
-
-            }
-
-            else {
-                if (newValue == null) {
-                    this.EntityPM.PackageType5Quantity = null;
-                    this.SetUIProperties_Expected_Details();
-                }
-
-                this.EntityPM.PackageType5Id = newValue;
-                this.UpdateCharges();
-                this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
-            }
+            this.EntityPM.PackageType5Id = newValue;
+            this.UpdateCharges();
+            this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
+            this.SetUIProperties_Expected_Details();
         }
     }
 

@@ -114,6 +114,8 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
 
     DownloadAllClick() {
 
+        ServiceLocator.SendTotangoUserActivity("Shipment", "Docs Out Downloaded");
+
         var service: CardPMService = new CardPMService();
         service.get(SessionLocator.LoggedUserPM.Id).subscribe(res => {
             if (!res.HasError) {

@@ -1,0 +1,32 @@
+
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+
+                <!-- Tariff  -->
+                <table *ngIf="ObjectTableName == 'Tariff' &&  (FieldName == 'StartDate' || FieldName == 'ExpirationDate')">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                {{Entity[FieldName] | DateTimePipe:'D'}}
+
+                                <!-- FromDate -->
+                                <!--<div *ngIf="FieldName == 'FromDate'">
+        <div style="font-size:11px;">
+        </div>
+    </div>-->
+                                <!--<div *ngIf="FieldName == 'ToDate'">
+        <div style="font-size:11px;">
+        </div>
+    </div>-->
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+        </td>
+    </tr>
+</table>

@@ -39,6 +39,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        [DataMember]
        public string CurrencyId  { get; set; }
        [DataMember]
+       public DateTime CreateDate  { get; set; }
+       [DataMember]
        public DateTime UpdateDate  { get; set; }
        [DataMember]
        public string PriceSteps  { get; set; }
@@ -50,6 +52,12 @@ namespace Logitude.TariffModule.Data.EntityLists
        public int LastVersion  { get; set; }
        [DataMember]
        public int? ContractNumber  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public string SellerName  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
    }
 
 }
