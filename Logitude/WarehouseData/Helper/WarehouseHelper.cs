@@ -264,25 +264,25 @@ namespace WarehouseData.Helper
                     while (i <= customFieldsCount)
                     {
                         result += "   declare @Field"+ i + " as varchar(2000) \r\n";
-                        result += "   declare @Field" + i + "Value as varchar(2000) \r\n";
+                        result += "   declare @Field" + i + "DataTypeCode as varchar(100) \r\n";
                         i += 1;
                     }
-
+                    //DataTypeCode
                     sql = sql.Replace("--@[DeclareCustomFields]", result);
                 }
 
-                if (sql.Contains("--@[ResolveCustomFields]"))
+                if (sql.Contains("--@[ResolveCustomFieldDataTypeCode]"))
                 {
                     i = 1;
                     result = string.Empty;
                     while (i <= customFieldsCount)
                     {
-                        result += "     set @Field" + i + "Value =( select DataTypeCode from #TempObjectFields where FieldName = 'Field" + i + "' and Tenant =@SourceTenant )\r\n";
+                        result += "     set @Field" + i + "DataTypeCode =( select DataTypeCode from #TempObjectFields where FieldName = 'Field" + i + "' and Tenant =@SourceTenant )\r\n";
 
                         i += 1;
                     }
 
-                    sql = sql.Replace("--@[ResolveCustomFields]", result);
+                    sql = sql.Replace("--@[ResolveCustomFieldDataTypeCode]", result);
                 }
 
                 if (sql.Contains("[CustomFieldNames]"))
@@ -304,7 +304,7 @@ namespace WarehouseData.Helper
                     result = string.Empty;
                     while (i <= customFieldsCount)
                     {
-                        result += "dbo.ResolveCustomFieldValue(@Field" + i+ ",@Field"+ i +"Value)" + (i < customFieldsCount ? "," : ""); ;
+                        result += "dbo.ResolveCustomFieldValue(@Field" + i+ ",@Field"+ i + "DataTypeCode)" + (i < customFieldsCount ? "," : ""); ;
                         i += 1;
                     }
 

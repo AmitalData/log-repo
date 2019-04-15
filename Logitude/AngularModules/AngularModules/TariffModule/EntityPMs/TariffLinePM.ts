@@ -112,6 +112,11 @@ export class TariffLinePM {
     public set OriginPortId(newValue: string) { if (this.originPortId != newValue) { this.originPortId = newValue; this.MarkAsDirty("OriginPortId"); } }
        
 	 
+    private destinationPortId: string;
+    public get DestinationPortId() { return this.destinationPortId; }
+    public set DestinationPortId(newValue: string) { if (this.destinationPortId != newValue) { this.destinationPortId = newValue; this.MarkAsDirty("DestinationPortId"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

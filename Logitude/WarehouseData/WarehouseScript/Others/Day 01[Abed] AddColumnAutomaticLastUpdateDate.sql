@@ -243,7 +243,7 @@ IF not EXISTS(SELECT 1 FROM sys.columns
 		
 		  End
 
-
+--ObjectFields
 		    IF not EXISTS(SELECT 1 FROM sys.columns 
  WHERE Name = N'AutomaticLastUpdateDate'
           AND Object_ID = Object_ID(N'ObjectFields'))

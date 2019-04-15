@@ -51,8 +51,16 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public int? Step7Price { get; set; }
         [Column("Step8Price")]
 	    public int? Step8Price { get; set; }
+        [ForeignKey("OriginPort")]
         [Column("OriginPortId")]
 	    public string OriginPortId { get; set; }
+	      
+        public virtual Port OriginPort { get; set; }
+        [ForeignKey("DestinationPort")]
+        [Column("DestinationPortId")]
+	    public string DestinationPortId { get; set; }
+	      
+        public virtual Port DestinationPort { get; set; }
     }
 }
 	 
