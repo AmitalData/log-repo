@@ -1753,6 +1753,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // Validate sum of line's amount to reconcile
             decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            if (_payment.OpenAmount == null)
+            {
+                _payment.OpenAmount = 0;
+            }
+               
             if (amount2reconcile > (decimal)_payment.OpenAmount)
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
 

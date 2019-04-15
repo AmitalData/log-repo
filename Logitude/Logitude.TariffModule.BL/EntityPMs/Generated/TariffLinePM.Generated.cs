@@ -411,6 +411,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string destinationPortId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortId  
+	   {
+	    
+	     get
+		{
+		   return destinationPortId;
+		 }
+		 set
+		 {
+		   if(destinationPortId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortId",OldValue=destinationPortId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

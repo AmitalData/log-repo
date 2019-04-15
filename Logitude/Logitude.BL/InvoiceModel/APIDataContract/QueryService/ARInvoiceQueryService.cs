@@ -341,6 +341,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+     
 
         public ARInvoice ARInvoiceCustomDataMapping(string Id, int Tenant)
         {

@@ -251,6 +251,7 @@
                                                         <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
                                                         <hr />
                                                         <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
+                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('INT')">Buy INTTRA Stock</button>
 
                                                     </div>
                                                 </div>
