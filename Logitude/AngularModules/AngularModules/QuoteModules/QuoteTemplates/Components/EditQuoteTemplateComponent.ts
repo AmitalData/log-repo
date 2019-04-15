@@ -1,4 +1,4 @@
-﻿
+
 
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -67,12 +67,13 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     IsDisableEditButton: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
       
         if (!FeatureLocator.HasFeaturePermession("QuoteTemplate", "UPDATE")) this.IsDisableEditButton = true;
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
         this.quoteTemplateTextCodeExtendedPMService = new QuoteTemplateTextCodeExtendedPMService();
         this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
@@ -107,7 +108,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         this.froalaEditorSetting.Id = Guid.newGuid();
         this.froalaEditorSetting.IsDisableEdit = true;
         this.froalaEditorSetting.HtmlString = "";
-        this.froalaEditorSetting.Height = (SessionLocator.CurrentSession.CurrentWindow.Height - 100);
+        this.froalaEditorSetting.Height = (this.CurrentSession.CurrentWindow.Height - 100);
         this.IsShowFroalaEditor = true;
 
         this.IsNewEntityCall = args.IsNewEntityCall;
@@ -407,7 +408,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                 this.QuoteTemplateId = this.EntityPM.Id;
                 this.LoadData();
             }
-            else SessionLocator.CurrentSession.StopBusyIndicator();
+            else this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -489,7 +490,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                     this.selectQuoteTemplateSection.IsLoaded = true;
                     if (!this.IsLoadPreviewSectionRuning) {
                         this.IsLoadPreviewSectionRuning = true;
-                        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+                        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
                     }
                     var quoteId: string = this.QuotePM != null ? this.QuotePM.Id : "";
                     var sectionDocId: string = !AppTool.IsNullOrEmpty(this.selectQuoteTemplateSection.SectionDocId) ? this.selectQuoteTemplateSection.SectionDocId : "";
@@ -534,7 +535,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     LoadCompleted() {
         if (!this.IsLoadQuoteTemplateSectionRuning && !this.IsLoadQuoteTemplateTextCodeRuning && !this.IsLoadQuoteTemplateSettingsRuning && !this.IsLoadPreviewSectionRuning) {
           
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 
@@ -543,7 +544,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
    
     AddPageBreakSection() {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
         var order: number = 0;
 
@@ -594,7 +595,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
             });
 
@@ -642,13 +643,13 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             });
 
             this.quoteTemplateSectionExtendedPMService.updateSections(quoteTemplateSectionChangedLists).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (previewPdfAfterSave) this.PreviewPdf();
             });
         }
 
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (previewPdfAfterSave) this.PreviewPdf();
                 
@@ -693,7 +694,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
         if (this.IsSaveQuoteTemplateSectionRuning || this.IsSaveQuoteTemplateRuning) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
             this.SaveQuoteTemplateSection(quoteTemplateSectionChangedLists);
             this.SaveQuoteTemplate();
         }
@@ -741,9 +742,9 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     SaveCompleted(proess:string= null) {
         if (!this.IsSaveQuoteTemplateSectionRuning && !this.IsSaveQuoteTemplateRuning && !this.IsSaveQuoteTemplateSettingsRuning) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (this.QuotePM == null && this.RefreshQuoteTemplate) {
-                SessionLocator.CurrentSession.FireEvent("ReloadAllList");
+                this.CurrentSession.FireEvent("ReloadAllList");
             }
 
             if (proess == "RefreshPreviewData") {
@@ -751,7 +752,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                     item.IsLoaded = false;
                 });
                 this.LoadSectionPreviewData();
-            } else SessionLocator.CurrentSession.CurrentWindow.Close("SavedChanges");//this.CloseButtonClicked();
+            } else this.CurrentSession.CurrentWindow.Close("SavedChanges");//this.CloseButtonClicked();
             
         }
     }
@@ -759,7 +760,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

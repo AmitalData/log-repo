@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { DeclarationPM } from '../../EntityPMs/DeclarationPM';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -26,7 +26,7 @@ export class VehicleMenuButtonsHandler {
     MenuButtons: MenuButtonPM[];
     IdentityKey: string;
     //------------------------------------------------------//
-
+    private CurrentSession = SessionLocator.SelectedSession;
     IsDisplayOnly: boolean;
     IsDisplayOnlyCheckDone: boolean;
     MenuButtonsStateChangedEvent: any;
@@ -40,11 +40,11 @@ export class VehicleMenuButtonsHandler {
     }
 
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                     switch (this.MenuButtonCode) {
 
@@ -52,18 +52,18 @@ export class VehicleMenuButtonsHandler {
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
         }
 
-        SessionLocator.CurrentSession.SubscriptionAdd(
+        this.CurrentSession.SubscriptionAdd(
             this.MenuButtonsStateChangedEvent = MenuButtonsEvents.MenuButtonsStateChanged.subscribe((args: MenuButtonsStateChangedEventArgs) => {
                 if (!this.IsDisplayOnly) {
-                    if (!AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController)) {
-                        this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+                    if (!AppTool.IsNullOrEmpty(this.CurrentSession.CurrentEditComponent.EditComponentController)) {
+                        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
                     }
                     this.CheckButtonState(this.MenuButtons);
                 }
@@ -74,9 +74,9 @@ export class VehicleMenuButtonsHandler {
     
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         this.MenuButtons = menuButtons;
-        this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.EntityPM != null) {
-            if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.CurrentSession.CurrentEditComponent != null) {
 
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.Vehicle')[0];
 

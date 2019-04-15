@@ -1,4 +1,4 @@
-﻿
+
 import {Component, Output, EventEmitter} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -32,10 +32,11 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     @Output() ReloadUserQueries = new EventEmitter();
     public DataContext = this;
     public QuickSearchItems: ActivityList[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super(); 
-        this.ChartID = "ChartID_" + SessionLocator.CurrentSession.GetChartId();
-        this.InProgressBookingId = this.InProgressBookingId + SessionLocator.CurrentSession.GetChartId();
+        this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
+        this.InProgressBookingId = this.InProgressBookingId + this.CurrentSession.GetChartId();
         this.InitializeServices();
         this.SetQueriesVisibility();
         this.LoadNonFilteredQueries();
@@ -573,12 +574,12 @@ export class ActivityWorkspaceComponent extends BaseComponent {
         listArgs.DisplayTitle = displayName;
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
     }
     FillInProgressBookingDashboardData() {
@@ -814,12 +815,12 @@ export class ActivityWorkspaceComponent extends BaseComponent {
             listArgs.QueryCode = queryCode;
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = backButtonTitle;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });;
         }
     }
@@ -866,7 +867,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
         });
     }        
     EditActivity(entity: any) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Activity', BackButtonLabel: "Activities" });

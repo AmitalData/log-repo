@@ -1,4 +1,4 @@
-﻿import { Output, EventEmitter, Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Output, EventEmitter, Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -31,7 +31,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
     public GeneralAlerts: Array<EmailAlertSettingDataViewModel> = [];
     public AllAlerts: EmailAlertSettingPM[];
     @Output() OnCloseSendToContactsEvent: EventEmitter<any> = new EventEmitter();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService, private emailAlertSettingPMService: EmailAlertSettingPMService) {
         super();
         this.InitializeServices();
@@ -66,7 +66,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -83,15 +83,15 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
         if (this.ValidationErrorsList.length > 0)
             return;
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         this.emailAlertSettingPMService.updateAllAlerts(this.AllAlerts, SessionInfo.LoggedUserTenant).subscribe(response => {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (response.HasError)
             {
                 this.ValidationErrorsList = response.ErrorsArray;
             }
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
         });
         //if (this.EntityPM.IsDirty) {

@@ -32,6 +32,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     public ItemsSource1Hidden: boolean = false;
     public ItemsSource2Hidden: boolean = false;
     private myService: ShipmentListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -96,7 +97,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             });
         }
 
-        this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "ReloadHouses") {
                 this.UpdateFiltersFields();
                 this.LoadAllHouses();
@@ -230,7 +231,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     private isLoadHousesRequested: boolean = false;
     private isLoadMasterRequested: boolean = false;    
     private LoadAllHouses() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.ItemsSource1 = [];
         this.ItemsSource2 = [];
         this.LoadItemsSource1();
@@ -370,7 +371,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             }
 
             this.SetCellNotesWidth();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -466,7 +467,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         });
     }
     RunViewShipment() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.myRequestedHouseId, ObjectTableName: 'Shipment', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });

@@ -312,7 +312,7 @@ export class QuoteUtilities {
             newChargePM.ContainerType5MarkUpTypeCode = "F";
             newChargePM.IsChargeBySteps = item.IsChargeBySteps;                       
             newChargePM.ChargesGroupCode = item.ChargesGroupCode;
-
+            newChargePM.Notes = item.Notes;
             if (isCopyCost) {
                 newChargePM.CostUnitPrice = item.CostUnitPrice;
                 newChargePM.CostQuantity = item.CostQuantity;

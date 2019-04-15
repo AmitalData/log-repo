@@ -1,4 +1,4 @@
-﻿import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
+import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
 import { GLAccountPMService } from './../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {Component, OnDestroy, ViewContainerRef, ViewChild, OnInit} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -28,7 +28,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _GLAccountPMService: GLAccountPMService = new GLAccountPMService();
     ShowMessage: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { });
@@ -42,11 +42,11 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadCardList();
 
                     }
@@ -54,9 +54,9 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadCardList();
                     }
                 });
@@ -73,7 +73,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         if (this.GLAccountId) {
 
             // 1- Get the GLAccount
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this._GLAccountPMService.get(this.GLAccountId).subscribe(myResult => {
 
@@ -89,7 +89,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
                         });
                 }
                 else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
 
@@ -155,18 +155,18 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
 
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
         });
     }
     EditGLAccount() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef =>
             {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.GLAccountId, ObjectTableName: 'GLAccount' });
                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 });
             });
     }

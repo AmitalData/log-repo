@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -23,6 +23,7 @@ import {PostViewModelData} from '../Components/SocialPostsComponent';
 export class EditPostComponent implements OnInit {
     PostViewModelData: PostViewModelData;
     postPMService: PostPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.postPMService = new PostPMService();
     }
@@ -57,7 +58,7 @@ export class EditPostComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -69,19 +70,19 @@ export class EditPostComponent implements OnInit {
                     this.PostViewModelData.EntityPM.BodyText = this.BodyText;
                     this.PostViewModelData.BodyText = this.PostViewModelData.ViewMode.ConvertBodyText(this.BodyText);
                     
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.CurrentSession.StartBusyIndicatorSaving();
                     this.postPMService.update(this.PostViewModelData.EntityPM).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         if (!pmResponse.HasError && pmResponse.Result) {
 
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                         }
 
 
                     });
                 }
-                else SessionLocator.CurrentSession.CloseCurrentWindow();
+                else this.CurrentSession.CloseCurrentWindow();
             }
             else {
                 var messageWindow: MessageWindow = new MessageWindow();
@@ -94,7 +95,7 @@ export class EditPostComponent implements OnInit {
             messageWindow.Show("Post Body field is required");
         }
     
-       // SessionLocator.CurrentSession.CloseCurrentWindow();
+       // this.CurrentSession.CloseCurrentWindow();
     }
 
 

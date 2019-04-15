@@ -36,7 +36,7 @@ export class DeclarationPhysicalCheckTabComponent extends BaseComponent implemen
     private physicalCheckPMService: PhysicalCheckPMService = new PhysicalCheckPMService;
 
     IsLoaded: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.physicalCheckList = new ObservableCollection([]);
@@ -58,29 +58,29 @@ export class DeclarationPhysicalCheckTabComponent extends BaseComponent implemen
     
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadPhysicalChecks();
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCPC") {
                             //this.LoadPhysicalChecks();
                         }
@@ -93,7 +93,7 @@ export class DeclarationPhysicalCheckTabComponent extends BaseComponent implemen
     private LoadPhysicalChecks() {
         this.physicalCheckWebService.GetPhysicalCheckByDeclarationIdLists(this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.GetPhysicalCheckByDeclarationIdListsOp_Completed(myResponse, false);
             });
     }
@@ -108,12 +108,12 @@ export class DeclarationPhysicalCheckTabComponent extends BaseComponent implemen
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     EditButtonClicked(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
-            //SessionLocator.CurrentSession.StartBusyIndicator("");
+            //this.CurrentSession.StartBusyIndicator("");
 
 
             var miri = false;
@@ -131,11 +131,11 @@ export class DeclarationPhysicalCheckTabComponent extends BaseComponent implemen
                     logWindow.WindowArgs = windowArgs;
                     logWindow.WindowClosed.subscribe(($event: any) => {
                         this.RefreshEntity();
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     });
                     logWindow.Show('./CustomsModules/CustomsPhysicalCheck/Components/EditTabs/General/PhysicalCheckGeneralTabComponent');
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
                 
             }  
@@ -146,10 +146,10 @@ export class DeclarationPhysicalCheckTabComponent extends BaseComponent implemen
             ////logWindow.InjectEditComponent(item.id, "Customs.PhysicalCheck", logWindow);
             //logWindow.WindowClosed.subscribe(($event: any) => {
             //    this.RefreshEntity();
-            //    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+            //    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
             //});
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     //this.showAlert = false;
                     cmpRef.instance.ComponentRef = cmpRef;

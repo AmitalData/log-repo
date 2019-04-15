@@ -31,6 +31,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
     public QuickSearchItems: AirlineList[] = [];
     public IsResourcesReady: boolean = false;
     private myService: PartnersDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -226,7 +227,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
     private LoadAirlines() {
         this.ItemsSource = [];
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading Airlines...");
+        this.CurrentSession.StartBusyIndicator("Loading Airlines...");
         this.LoadZeroTenantAirlines();
     }
 
@@ -264,7 +265,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
 
                 else {
                     this.BuildItemsSource();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
@@ -280,7 +281,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
 
                 this.BuildItemsSource();
                 this.BuildAllowedAirlinesItemsSource();
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -360,6 +361,7 @@ export class TenantManagementAirlineItem extends BaseComponent {
     private tenantAirlineId: string = null;
     private partnersService: PartnersDomainService;
     public DataContext: TenantManagementAirlineItem = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(myTenantItem: AirlineList, tenantZeroItem: AirlineList, entityPM: TenantManagementPM) {
         super();
         this.currenctAirline = myTenantItem;
@@ -441,15 +443,15 @@ export class TenantManagementAirlineItem extends BaseComponent {
             var message: string = newValue ? "Registering Airline..." : "UnRegistering Airline...";
             var loggedContactName: string = SessionLocator.LoggedUserPM.EnglishName;
 
-            SessionLocator.CurrentSession.StartBusyIndicator(message);
+            this.CurrentSession.StartBusyIndicator(message);
 
             this.partnersService.RegisteringAirline(newValue, this.tenantAirlineId, this.zeroAirline.Id, this.entityPM.Id, this.entityPM.AWBMessagesCCSTypeCode, loggedContactName).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }
@@ -461,14 +463,14 @@ export class TenantManagementAirlineItem extends BaseComponent {
         if (this.isRequested != newValue) {
             this.isRequested = newValue;
 
-            SessionLocator.CurrentSession.StartBusyIndicator("Request Airline...");
+            this.CurrentSession.StartBusyIndicator("Request Airline...");
             this.partnersService.RegistrationRequested(newValue, this.tenantAirlineId, this.zeroAirline.Id, this.entityPM.Id, this.entityPM.AWBMessagesCCSTypeCode).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }
@@ -482,15 +484,15 @@ export class TenantManagementAirlineItem extends BaseComponent {
 
             this.SetUIProperties();
 
-            SessionLocator.CurrentSession.StartBusyIndicator("Decline Airline...");
+            this.CurrentSession.StartBusyIndicator("Decline Airline...");
             this.partnersService.SetIsDeclined(newValue, this.DeclineNotes, this.tenantAirlineId, this.zeroAirline.Id, this.entityPM.Id, this.entityPM.AWBMessagesCCSTypeCode).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     this.SetUIProperties();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }
@@ -513,14 +515,14 @@ export class TenantManagementAirlineItem extends BaseComponent {
         if (notes != myOriginNotes) {
             this.DeclineNotes = notes;
 
-            SessionLocator.CurrentSession.StartBusyIndicator("Decline Airline...");
+            this.CurrentSession.StartBusyIndicator("Decline Airline...");
             this.partnersService.SetIsDeclined(this.IsDeclined, this.DeclineNotes, this.tenantAirlineId, this.zeroAirline.Id, this.entityPM.Id, this.entityPM.AWBMessagesCCSTypeCode).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }
@@ -532,14 +534,14 @@ export class TenantManagementAirlineItem extends BaseComponent {
         if (this.isDirect != newValue) {
             this.isDirect = newValue;
 
-            SessionLocator.CurrentSession.StartBusyIndicator("Updating Participant...");
+            this.CurrentSession.StartBusyIndicator("Updating Participant...");
             this.partnersService.SetIsDirect(newValue, this.tenantAirlineId, this.zeroAirline.Id, this.entityPM.Id, this.entityPM.AWBMessagesCCSTypeCode).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }

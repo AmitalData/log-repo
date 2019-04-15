@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -19,7 +19,7 @@ export class NewBusinessUnitComponent extends BaseComponent {
     public EntityPM: BusinessUnitPM;
     public ObjectTableName: string = "BusinessUnit";
     public DataContext: NewBusinessUnitComponent = this;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.EntityPM = new BusinessUnitPM();
@@ -49,7 +49,7 @@ export class NewBusinessUnitComponent extends BaseComponent {
 
     // Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -65,11 +65,11 @@ export class NewBusinessUnitComponent extends BaseComponent {
             service.insert(this.EntityPM).subscribe((myResult: ServiceResponse) => {
                 if (myResult) {
                     if (!myResult.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
                     else {
                         this.ValidationErrorsList = myResult.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
             });

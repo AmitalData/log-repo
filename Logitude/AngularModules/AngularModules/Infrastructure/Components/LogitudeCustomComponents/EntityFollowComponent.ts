@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, Input, ViewContainerRef, OnInit, ChangeDetectorRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -25,6 +25,7 @@ export class EntityFollowComponent implements OnInit {
     ObjectTableName: string = "";
     FollowEntityLists: any[] = [];
     ObjectTableId: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myModulesService = new ModulesService();
 
@@ -43,10 +44,10 @@ export class EntityFollowComponent implements OnInit {
     LoadEntityFollowers() {
         this.FollowEntityLists = [];
         this.ToolTipMessage = "";
-       // SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+       // this.CurrentSession.StartBusyIndicatorSaving();
         this.myModulesService.GetUserFollowEntityLists(this.EntityId, this.ObjectTableId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
 
             if (!pmResponse.HasError && pmResponse.Result) {
                 pmResponse.Result.forEach((item) => {
@@ -69,10 +70,10 @@ export class EntityFollowComponent implements OnInit {
 
     AddFollowEntity(user: any) {
  
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.myModulesService.AddFollowEntity(this.EntityId, this.ObjectTableId, SessionLocator.LoggedUserId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!pmResponse.HasError) {
                 this.IsFollowed = true;
@@ -84,10 +85,10 @@ export class EntityFollowComponent implements OnInit {
     }
  
     DeleteFollowEntity(user: any) {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.myModulesService.DeleteFollowEntity(SessionLocator.LoggedUserId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!pmResponse.HasError) {
                 this.IsFollowed = false;

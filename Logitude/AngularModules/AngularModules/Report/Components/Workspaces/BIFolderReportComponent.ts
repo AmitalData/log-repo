@@ -23,7 +23,7 @@ export class BIFolderReportComponent {
     private folderListService: BIReportFolderListService;
     private reportListService: BIReportListService;
     public _InfrastructureDomainService: InfrastructureDomainService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.folderListService = new BIReportFolderListService();
         this.reportListService = new BIReportListService();
@@ -33,7 +33,7 @@ export class BIFolderReportComponent {
     }
 
     private Listen() {
-        SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "BIRefresh") {
                 this.LoadData();
             }
@@ -151,7 +151,7 @@ export class BIFolderReportComponent {
         listArgs.DisplayTitle = folder.Name; //listArgs.QueryCode;
         listArgs.BackButtonTitle = "Back";
         listArgs.BIReportFolderId = folder.FolderId;
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
@@ -172,12 +172,13 @@ export class BIFolderClass {
     public Title: string;
     public FolderId: string;
     public Name: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(myFolder: BIReportFolderList, myReports: BIReportList[]) {
         this.folder = myFolder;
         this.reportsList = myReports;
         this.FolderId = myFolder.Id;
         this.Name = myFolder.Name;
-        this.FolderIcon = this.FolderIcon + SessionLocator.CurrentSession.GetNewId(this.FolderIcon);
+        this.FolderIcon = this.FolderIcon + this.CurrentSession.GetNewId(this.FolderIcon);
 
         this.ComputeTitle();
     }

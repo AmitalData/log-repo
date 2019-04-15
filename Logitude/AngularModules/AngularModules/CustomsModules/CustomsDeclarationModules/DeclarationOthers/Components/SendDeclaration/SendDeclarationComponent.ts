@@ -64,7 +64,7 @@ export class SendDeclarationComponent implements OnDestroy {
     _SendDeclarationService: SendDeclarationService = new SendDeclarationService();
     _WorkWithService: boolean = true;
      //------------------------------------------------------//
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -84,21 +84,21 @@ export class SendDeclarationComponent implements OnDestroy {
     }
 
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+        if (this.CurrentSession.CurrentEditComponent) {
 
             if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                       
                     }
                 });
             }
 
             if (!this.LoadCompletedEvent) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
@@ -153,7 +153,7 @@ export class SendDeclarationService implements OnDestroy {
     SaveCompletedEvent: any;
     LoadCompletedEvent: any;
     //------------------------------------------------------//
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -174,21 +174,21 @@ export class SendDeclarationService implements OnDestroy {
         this.Listen();
     }
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+        if (this.CurrentSession.CurrentEditComponent) {
 
             if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                     }
                 });
             }
 
             if (!this.LoadCompletedEvent) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
@@ -200,7 +200,7 @@ export class SendDeclarationService implements OnDestroy {
     ButtonText: string;
     public CourierWorksheetmode: boolean = false;
     OnCustomSendOptionsButtonClick(event) {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this.RequestVIA = event.RequestVIA;
         this.Option = event.Option;
         this.ForcePersonalSign = event.ForcePersonalSign;
@@ -210,7 +210,7 @@ export class SendDeclarationService implements OnDestroy {
                 this.PostSendDeclarationChecksAndPrecalculationsThenCheckRequiredFields();
                 return;
             }
-            // SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges("");
+            // this.CurrentSession.CurrentEditComponent.SaveChanges("");
 
             //var firstInvoice: SupplierInvoicePM = this.EntityPM.SupplierInvoices.filter(d => d.SequenceNumeric == 1)[0];
 
@@ -231,28 +231,28 @@ export class SendDeclarationService implements OnDestroy {
 
                         this.ValidationErrors = myResponse.ErrorsArray;
                         this.FillValidationErrors(this.presendValidationsTitle);
-                        this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                        this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                     }
 
                     else {
                         this.EntityPM = myResponse.Result;
-                        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                            this.reloadEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                        if (this.CurrentSession.CurrentEditComponent) {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                                 this.reloadEvent.unsubscribe();
                                 if (isLoadSuccess) {
-                                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                                     let asREUSEService = true;
                                     if (asREUSEService) {
                                         this.PostSendDeclarationChecksAndPrecalculationsThenCheckRequiredFields();
                                     } else {
-                                        SessionLocator.CurrentSession.StartBusyIndicator("");
+                                        this.CurrentSession.StartBusyIndicator("");
                                         this.DeclarationService.PostSendDeclarationChecksAndPrecalculations(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
                                             if (!response.Result.HasError) {
                                                 this.CheckRequiredFields();
                                             }
                                             else {
-                                                this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                                                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                                                 this.ValidationErrors = response.Result.ErrorMessages;
                                                 this.FillValidationErrors(TextCodeTranslator.Translate(response.Result.ErrorsType));
                                             }
@@ -271,18 +271,18 @@ export class SendDeclarationService implements OnDestroy {
             }
         }
         else {
-            this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+            this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             this.FillValidationErrors(this.presendValidationsTitle);
         }
     }
     PostSendDeclarationChecksAndPrecalculationsThenCheckRequiredFields() {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this.DeclarationService.PostSendDeclarationChecksAndPrecalculations(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             if (!response.Result.HasError) {
                 this.CheckRequiredFields();
             }
             else {
-                this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 this.ValidationErrors = response.Result.ErrorMessages;
                 this.FillValidationErrors(TextCodeTranslator.Translate(response.Result.ErrorsType));
             }
@@ -309,7 +309,7 @@ export class SendDeclarationService implements OnDestroy {
 
     private InstructionSendToMehes() {
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)) {//if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-            this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+            this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
 
             var myUnifreightPrintStimulController = new UnifreightController(this.EntityPM,
                 "Logitude.Customs.MenuButtonHandlers.DeclarationMenuButtonsHandler.MyUnifreightPrintStimulController");
@@ -334,7 +334,7 @@ export class SendDeclarationService implements OnDestroy {
 
                     }
                     else {
-                        this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                        this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                     }
                 });
         } else {
@@ -343,7 +343,7 @@ export class SendDeclarationService implements OnDestroy {
     }
     UnifreightRequestExpenseFreight() {
         console.log("UnifreightRequestExpenseFreight .. ");
-        SessionLocator.CurrentSession.StartBusyIndicator("Check Insurance ...");
+        this.CurrentSession.StartBusyIndicator("Check Insurance ...");
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
             (unifreightMessageM: UnifreightMessageM) => {
@@ -356,7 +356,7 @@ export class SendDeclarationService implements OnDestroy {
                     let supplierInvoice: SupplierInvoicePM = null;
                     supplierInvoice = this.EntityPM.SupplierInvoices[0];
 
-                    SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                    this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                     this._SupplierInvoiceExtendedPMService
                         .GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, supplierInvoice.InvoiceCounterKey, 0, 0, "").subscribe(response => {
                             supplierInvoice = response.Result;
@@ -391,22 +391,22 @@ export class SendDeclarationService implements OnDestroy {
 
 
                     console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.1 update failed StopBusyIndicator");
-                    this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                    this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 }
 
                 else {
                     this.EntityPM = myResponse.Result;
                     console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.2.1 update Success");
-                    if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                    if (this.CurrentSession.CurrentEditComponent) {
                         //o	יש לבצע רענון לנתוני client
                         console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.2.2 Reload");
-                        this.reloadEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                        this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                             this.reloadEvent.unsubscribe();
                             console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.2.3 Continue to this.ConfirmB4TaxationDateTimeCheck();");
                             //o	לאחר מכן להמשיך בתהליך השליחה למכס
                             this.ConfirmB4TaxationDateTimeCheck();
                         });
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
                     }
                 }
@@ -444,7 +444,7 @@ export class SendDeclarationService implements OnDestroy {
             logWindow.WindowClosed.subscribe(($event: any) => this.TaxationWindowClosed($event));
 
             logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
-            this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+            this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             // this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.TaxationDateTimeCheck"));
         }
 
@@ -455,7 +455,7 @@ export class SendDeclarationService implements OnDestroy {
         this.ValidationErrors = [];
         switch (event) {
             case "ok": {
-                this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+                this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
                 this.EntityPM.TaxationDateTime = DateTool.GetCurrentDateAsUtc();
                 var declarationPMService: DeclarationPMService = new DeclarationPMService();
                 declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
@@ -472,7 +472,7 @@ export class SendDeclarationService implements OnDestroy {
                 break;
             }
             case "no": {
-                this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+                this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
                 this.CheckCertificateStatus();
                 break;
             }
@@ -483,7 +483,7 @@ export class SendDeclarationService implements OnDestroy {
     }
 
     CheckCertificateStatus() {
-        this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");// avoid resend
+        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");// avoid resend
         this.DeclarationService.CheckCertificateStatus(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             //List < CustomsRequiredFieldsErrorItem > items = requiredFieldsErrors.RequiredFields;
             var items: any[] = myResponse.Result.RequiredFields;
@@ -514,7 +514,7 @@ export class SendDeclarationService implements OnDestroy {
                 logWindow.WindowClosed.subscribe(($event: any) => this.CheckCertificateStatusClosed($event));
 
                 logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
-                this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             }
             else {
                 this.DeclarationSendChecks();
@@ -523,7 +523,7 @@ export class SendDeclarationService implements OnDestroy {
     }
 
     DeclarationSendChecks() {
-        this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
+        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
         var declarationValidator = new DeclarationValidator();
         declarationValidator.SetEntityPM(this.EntityPM);
         declarationValidator.PreDeclarationSendChecks();
@@ -544,7 +544,7 @@ export class SendDeclarationService implements OnDestroy {
                     }
 
                     var errorMessage = "";
-                    // this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                    // this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                     myCustomsDocumentPMList.forEach((customsDocumentPM) => {
                         if (AppTool.IsNullOrEmpty(customsDocumentPM.CustomsDocId)) {
                             errorMessage = TextCodeTranslator.Translate("Customs.General.O.DocumetsUploaded");
@@ -574,20 +574,20 @@ export class SendDeclarationService implements OnDestroy {
                         logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsUploadedCheckClosed($event));
 
                         logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
-                        this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                        this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                     }
                 }
             });
         }
         else {
-            this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+            this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             this.ValidationErrors = declarationValidator.ValidationErrorMessageCodes;
             this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.PreSendValidations"));
         }
     }
 
     CheckMandatoryTickets() {
-        //this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
+        //this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
 
         this.DeclarationService.GetDeclarationMandatoryTicketList(this.EntityPM.Id, "Declaration").subscribe((myResponse: ServiceResponse) => {
             var myCustomsDocumentPMList: any[] = myResponse.Result;
@@ -621,14 +621,14 @@ export class SendDeclarationService implements OnDestroy {
                     logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsTicketUploadedCheckClosed($event));
 
                     logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
-                    this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                    this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 }
             }
         });
     }
 
     CheckFreightByIncoterm() {
-        //this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
+        //this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
 
         this.DeclarationService.CheckFreightAmountsByIncoterm(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             var isFreightAmount: boolean = myResponse.Result;
@@ -660,14 +660,14 @@ export class SendDeclarationService implements OnDestroy {
                     logWindow.WindowClosed.subscribe(($event: any) => this.FreightByIncotermUploadedCheckClosed($event));
 
                     logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
-                    this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                    this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 }
             }
         });
     }
 
     DocumetsUploadedCheckClosed(event) {
-        this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
         this.ValidationErrors = [];
         switch (event) {
             case "ok": {
@@ -675,14 +675,14 @@ export class SendDeclarationService implements OnDestroy {
                 break;
             }
             case "cancel": {
-                this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 break;
             }
         }
     }
 
     DocumetsTicketUploadedCheckClosed(event) {
-        this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
         this.ValidationErrors = [];
         switch (event) {
             case "ok": {
@@ -690,14 +690,14 @@ export class SendDeclarationService implements OnDestroy {
                 break;
             }
             case "cancel": {
-                this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 break;
             }
         }
     }
 
     FreightByIncotermUploadedCheckClosed(event) {
-        this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
         this.ValidationErrors = [];
         switch (event) {
             case "ok": {
@@ -705,14 +705,14 @@ export class SendDeclarationService implements OnDestroy {
                 break;
             }
             case "cancel": {
-                this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 break;
             }
         }
     }
 
     CheckCertificateStatusClosed(event) {
-        this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
         this.ValidationErrors = [];
         switch (event) {
             case "ok": {
@@ -720,14 +720,14 @@ export class SendDeclarationService implements OnDestroy {
                 break;
             }
             case "cancel": {
-                this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 break;
             }
         }
     }
     public OnSuccessSendMethod: (response: any) => void;
     SendDeclaration() {
-        this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
+        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
         var searchParams: GenericRequestParams = new GenericRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.Id;
@@ -771,27 +771,27 @@ export class SendDeclarationService implements OnDestroy {
 
                 } else {
                     if (this.ResponseData && this.ResponseData.ContinueProcessInBackground) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
                     }
                     else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
-                        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
                     }
-                    var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+                    var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
                     myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
 
-                    SessionLocator.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
-                    SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTab();
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
+                    this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 }
             }
             ).catch((err) => {
-                this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 this.ValidationErrors.push(err);
                 this.FillValidationErrors("Errors");
             });
 
         this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
-            //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
 
@@ -843,7 +843,7 @@ export class SendDeclarationService implements OnDestroy {
     FillValidationErrors(title: string) {
 
 
-        this.StopMyBusyIndicator();///SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+        this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px'; // بدك تقيم 72 
@@ -861,17 +861,17 @@ export class SendDeclarationService implements OnDestroy {
     }
     StopMyBusyIndicator() {
         if (this.CourierWorksheetmode) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         } else {
-            SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+            this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
         }
     }
     StartMyBusyIndicator(mess) {
-        ///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+        ///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
         if (this.CourierWorksheetmode) {
-            SessionLocator.CurrentSession.StartBusyIndicator(mess);
+            this.CurrentSession.StartBusyIndicator(mess);
         } else {
-            SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator(mess);
+            this.CurrentSession.CurrentEditComponent.StartBusyIndicator(mess);
         }
     }
     ngOnDestroy() {

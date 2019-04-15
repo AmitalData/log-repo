@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FeatureList} from '../../../../Infrastructure/EntityLists/FeatureList';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,6 +12,7 @@ import {InfrastructureDomainService} from '../../../../Infrastructure/Services/I
 export class ShowNewFeaturesComponent implements OnInit {
     public ItemsSource: FeatureList[] = [];
     private myDomainService: InfrastructureDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myDomainService = new InfrastructureDomainService();
     }
@@ -21,18 +22,18 @@ export class ShowNewFeaturesComponent implements OnInit {
     }
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetNewFeaturesList().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.ItemsSource = myResponse.Result;
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

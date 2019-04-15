@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -637,8 +638,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 entityComputedFields.IsRequestedDocuments = false;
                 entityComputedFields.RequestedDocumentsCount = 0;
                 entityComputedFields.IsDepositionRequired = false;
-                shipmentComputedFieldsRepository.Update(entityComputedFields);
-                shipmentComputedFieldsRepository.SubmitChanges();
+                ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(entityComputedFields);
+
+
+                //shipmentComputedFieldsRepository.Update(entityComputedFields);
+                //  shipmentComputedFieldsRepository.SubmitChanges();
                 //ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 //ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
                 //shipmentPM.IsOperationalClosed = true;

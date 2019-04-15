@@ -46,7 +46,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     public QuoteSetting: QuoteSettingPM = null;
     public ValidationErrorsList: string[];
     public IsAddAgentVisible: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;  
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -2352,10 +2353,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.SetDataOnFinish();
 
@@ -2368,7 +2369,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }  
     }
     private SetDataOnFinish() {
@@ -2520,14 +2521,14 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     private SubmitCreatingNewQuote() {              
         var myService: QuotePMService = new QuotePMService();
         myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
 
                 if (this.IsCopyFromQuote) {
                     this.RunInEditMode();
@@ -2536,7 +2537,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         });
     }
     private RunInEditMode() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: "Quote", BackButtonLabel: "Quote: " + this.sourceEntityPM.QuoteNumber });
@@ -2544,7 +2545,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 let isEditComponentSaved = false;
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     if (isEditComponentSaved) {
-                        //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 });
 

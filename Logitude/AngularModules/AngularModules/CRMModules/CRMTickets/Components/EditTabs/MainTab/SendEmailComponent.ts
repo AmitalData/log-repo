@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {InfraSettings} from '../../../../../Infrastructure/Utilities/InfraSettings';
@@ -54,7 +54,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[];
 
     @Output() OnCloseAttachmentDocsInEvent: EventEmitter<any> = new EventEmitter();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeListService: DocumentTypeListService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -548,7 +548,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
         var myService: CRMDomainService = new CRMDomainService();
         myService.GetTicketOwnerPermission(this.Ticket.OwnerId, this.Ticket.OwnerName).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Sending");
+                this.CurrentSession.StartBusyIndicator("Sending");
                 var myService: CorrespondencePMService = new CorrespondencePMService();
                 myService.insert(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
                     if (myRespone != null) {
@@ -556,9 +556,9 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
                             this.UpdateTicket();
                         }
                         else {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             this.ValidationErrorsList = myRespone.ErrorsArray;
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
                     }
                 });
@@ -571,20 +571,20 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     UpdateTicket() {
         var myService: TicketPMService = new TicketPMService();
         myService.update(this.Ticket).subscribe((myRespone: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (myRespone != null) {
                 if (!myRespone.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
                 else {
                     this.ValidationErrorsList = myRespone.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     // Internal / External Email Process

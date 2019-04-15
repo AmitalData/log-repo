@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { BaseComponent } from  '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
 import { DeclarationPM } from  '../../../Customs/EntityPMs/DeclarationPM';
@@ -40,6 +40,7 @@ export class MorningMessageComponent
     _LastFetchDeclarationList: DeclarationList;
     public MorningMessageObservableList: ObservableCollection;
     ///public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.MorningMessageObservableList = new ObservableCollection([]);       
@@ -201,7 +202,7 @@ export class MorningMessageComponent
 
         this._IIGGeneralMessagesService.PostMorningMessages(currRequestParams)
             //.subscribe((myServiceResponse: ServiceResponse) => {
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
             //console.log(myServiceResponse);
             //this.ResponseData = myServiceResponse.Result;
             //this.OnMassageDisplayMethod();

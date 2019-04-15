@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -9,7 +9,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 
 export class SimplogInfoPopupComponent implements OnInit {
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
       
@@ -31,13 +31,13 @@ export class SimplogInfoPopupComponent implements OnInit {
 
     CancelButtonClicked() {
 
-        SessionLocator.CurrentSession.CurrentWindow.Close("Cancel");
+        this.CurrentSession.CurrentWindow.Close("Cancel");
     }
 
 
 
     SaveButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.Close("Regenerate");
+        this.CurrentSession.CurrentWindow.Close("Regenerate");
     }
 
 

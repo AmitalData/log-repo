@@ -1,4 +1,4 @@
-﻿
+
 
 
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -35,7 +35,7 @@ export class GetInternalBankComponent extends BaseComponent {
     
     public ValidationErrorsList: string[];
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
         
@@ -48,7 +48,7 @@ export class GetInternalBankComponent extends BaseComponent {
     
     ngOnInit() {
         this.LoadBanks()
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
 
@@ -98,11 +98,11 @@ export class GetInternalBankComponent extends BaseComponent {
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
-        SessionLocator.CurrentSession.CurrentWindow.Close(this._SelectedBank.Id);
+        this.CurrentSession.CurrentWindow.Close(this._SelectedBank.Id);
     }
     
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
 

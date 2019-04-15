@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 import {DocumentsFilingPM} from '../../../../Common/EntityPMs/DocumentsFilingPM';
 import {DocumentTypeList} from '../../../../Common/EntityLists/DocumentTypeList';
@@ -64,6 +64,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
     private myCommonDomainService: CommonDomainService;
     TopTypes: any[];
     public IFrameURI: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(Fb: FormBuilder) {
         this._documentExtendedService = new DocumentsFilingExtendedPMService();
         this._documentsFilingPMService = new DocumentsFilingPMService();
@@ -90,7 +91,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
         if (AppTool.IsNullOrEmpty(this.EntityPm.Description)) {
             this.UIProperties.SetRequired("Description", "DocumentsFiling", true);
         }
-        SessionLocator.CurrentSession.SessionEvent.subscribe(res => {
+        this.CurrentSession.SessionEvent.subscribe(res => {
             if (res.Name == "LogBoxUploader") {
                 this.IsUploadCanceled = res.IsUploadCanceled;
                 this.IsUploadDone = res.IsUploadDone;
@@ -369,7 +370,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
             this.DeleteDocumentWithFile();
         }
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 
@@ -388,14 +389,14 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     this.EntityPm.DocumentId = null;
                     this.EntityPm.IsDeleted = true;
                     this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                     });
                 });
             }
             else {
                 this.EntityPm.IsDeleted = true;
                 this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 });
             }
         });
@@ -494,8 +495,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            if (SessionLocator.CurrentSession.CurrentWindow != null) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            if (this.CurrentSession.CurrentWindow != null) {
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             }
             if (this.IsNewDocument) {
                 if (!this.IsEmptyDocumentCreated) {
@@ -503,8 +504,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
                 }
                 else {
                     if (this.IsUploadCanceled) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                     if (this.IsUploadDone) {
                         //if (!this.EntityPm.IsSharedWithForwarder) {
@@ -525,8 +526,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         //    this.EntityPm.DontAddToQueue = true;
                         //}
                         this._documentExtendedService.update(this.EntityPm, true).subscribe(myResult => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.CloseCurrentWindow();
                         });
                         //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                     }
@@ -534,8 +535,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
             }
             else {
                 if (this.IsUploadCanceled) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
                 if (this.IsUploadDone) {
                     //if (!this.EntityPm.IsSharedWithForwarder) {
@@ -555,8 +556,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //    this.EntityPm.DontAddToQueue = true;
                     //}
                     this._documentExtendedService.update(this.EntityPm, true).subscribe(myResult => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                     });
                     //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                 }
@@ -565,8 +566,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     this.EntityPm.DontAddToQueue = true;
                     //}
                     this._documentExtendedService.update(this.EntityPm, true).subscribe(myResult => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                     });
                 }
             }
@@ -592,7 +593,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     var temp = pmResponse.Result;
 
                     if (temp != null && !temp.HasFile) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         this.ValidationErrorsList.push("There already an empty document with this document type !");
 
 
@@ -604,8 +605,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         }
                         if (this.ValidationErrorsList.length == 0) {
 
-                            if (SessionLocator.CurrentSession.CurrentWindow != null) {
-                                // SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Creating...");
+                            if (this.CurrentSession.CurrentWindow != null) {
+                                // this.CurrentSession.CurrentWindow.StartBusyIndicator("Creating...");
                             }
                             this.IsEmptyDocumentCreated = true;
                             if (!this.EntityPm.IsSharedWithForwarder) {
@@ -618,10 +619,10 @@ export class AddEditImporterDocumentComponent implements OnInit {
                             this.EntityPm.OwnerId = "xxx";
 
                             this._documentExtendedService.insert(this.EntityPm, true).subscribe(myResult => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                                 if (!myResult.HasError) {
                                     if (this.IsOkButtonClicked) {
-                                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                                        this.CurrentSession.CloseCurrentWindow();
                                     }
                                     else {
                                         this.OpenUploadProgressWindow(file);
@@ -861,7 +862,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
             //    }
             //});
             ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
             if (this.EntityPm.IsSharedWithForwarder == true) {
                 this.EntityPm.IsSharedWithForwarder = false;
                 this.EntityPm.DontAddToQueue = true;
@@ -882,7 +883,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
             }
             this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.IssharedWithAgentButtonEnabled = false;
                 //this.ReloadDocuments();
                 //this.StopBusyIndicator();

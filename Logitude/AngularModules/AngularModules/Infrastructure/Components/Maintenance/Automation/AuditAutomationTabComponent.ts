@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {EntityChangePM} from '../../../../Common/EntityPMs/EntityChangePM';
 import {EntityChangeExtendedPMService} from '../../../../Common/Services/ExtendedPMs/EntityChangeExtendedPMService';
@@ -38,6 +38,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
     EntityAutomationList: EntityChangeAutomation[];
     SelectedEntityAutomationList: EntityChangeAutomation;
     IsCustomerCareUser: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityChangeExtendedPMService: EntityChangeExtendedPMService, private cd: ChangeDetectorRef) {
 
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -49,7 +50,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
 
     Listen() {
         if (!this.AutomationChangedEvent) {
-            this.AutomationChangedEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.AutomationChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == this.ObjectTableName) {
                     this.LoadData();
                 }
@@ -84,7 +85,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
 
         this._entityChangeExtendedPMService.getEntityChangePMsByEntityIdAndObjectTable(this.EntityId, this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.IsConditionAll = true;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -113,10 +114,10 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
     LoadAutomationAndChangeFelids() {
         this.AutomationList = [];
         this.ChangeFieldsList = [];
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this._entityChangeExtendedPMService.getEntityChangeAutomationsSummaryByEntityChangeId(this.EntityChangeListSelected.Id, this.ObjectTableName, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
 

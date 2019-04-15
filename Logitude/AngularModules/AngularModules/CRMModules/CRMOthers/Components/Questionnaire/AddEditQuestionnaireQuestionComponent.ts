@@ -1,4 +1,4 @@
-﻿
+
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { QuestionnairePM } from '../../../../CRM/EntityPMs/QuestionnairePM';
@@ -37,6 +37,7 @@ export class AddEditQuestionnaireQuestionComponent {
     public TenantCustomPickLists: CustomPickListList[] = [];
     public CustomPickLists: string[] = [];
     //public SelectedType: QuestionType;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
         
@@ -118,7 +119,7 @@ export class AddEditQuestionnaireQuestionComponent {
 
         if (args != null) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.DataContext = args.QuestionnaireQuestionViewModel;
             this.EntityPM = this.DataContext.EntityPM;
 
@@ -133,7 +134,7 @@ export class AddEditQuestionnaireQuestionComponent {
             filters.addAdditionalFilter("IsMultipleChoice", true, null, null, "Equals", false, false, false, null, false, true);
             this._customPickListListService.getByFilters(filters).subscribe(response => {
                 this.TenantCustomPickLists = response.Result;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (this.TenantCustomPickLists != null) {
                     this.TenantCustomPickLists.forEach(p => {
                         if (this.CustomPickLists.indexOf(p.Code) === - 1) {
@@ -257,12 +258,12 @@ export class AddEditQuestionnaireQuestionComponent {
                
             }
             
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -331,4 +332,3 @@ export class QuestionType {
     }
 }
 
- 

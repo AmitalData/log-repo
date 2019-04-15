@@ -38,7 +38,7 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
     _CustomsAirlineExtendedPMService: CustomsAirlineExtendedPMService = new CustomsAirlineExtendedPMService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     _CustomsAirlineList: CustomsAirlineList;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
@@ -67,7 +67,7 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
             this.isWindowMode = true;
         }
         this._CustomsAirlineList = WinArg.SelectedItem;
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Customs.CustomsAirline").subscribe(response => {
@@ -76,7 +76,7 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
                     (this._CustomsAirlineList.AirlineCode, this._CustomsAirlineList.AirlinePrefix)
                     .subscribe(rsp => {
                         this.EntityPM = rsp.Result;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
 
             });
@@ -134,19 +134,19 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var entity = mm.Result;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
 
                 }
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
 

@@ -1,7 +1,11 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
 using Logitude.TimeManagement.BL.EntityPMs;
 using Logitude.TimeManagement.BL.EntityQueryServices;
 using Logitude.TimeManagement.BL.EntityUpdateServices;
@@ -25,6 +29,7 @@ using System.Net.Http;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using System.Xml.Serialization;
 using WebFreight.Web.BookingModel.DomainServices;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -112,9 +117,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         foreach (TMEmployeeTimePM itemChanged in args.ItemsPM)
                         {
                             TMEmployeeTimePM itemPOCO = queryService.GetSingle(itemChanged.Id, true, false);
-                            if (itemPOCO != null && !(itemPOCO.ProjectId == itemChanged.ProjectId && itemPOCO.Description == itemChanged.Description && itemPOCO.WINumber == itemChanged.WINumber))
+                            if (itemPOCO != null && !(itemPOCO.SprintId == itemChanged.SprintId && itemPOCO.ProjectId == itemChanged.ProjectId && itemPOCO.Description == itemChanged.Description && itemPOCO.WINumber == itemChanged.WINumber))
                             {
                                 itemPOCO.ProjectId = itemChanged.ProjectId;
+                                itemPOCO.SprintId = itemChanged.SprintId;
                                 itemPOCO.Description = itemChanged.Description;
                                 itemPOCO.WINumber = itemChanged.WINumber;
                                 itemPOCO.LocationCode = itemChanged.LocationCode;
@@ -320,6 +326,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 List<TMLocation> allLocations = (from d in myContext.TMLocations select d).ToList();
                 List<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d).ToList();
+                List<Sprint> allSprints = (from d in myContext.Sprints where d.Tenant == tenant select d).ToList();
+
 
                 IQueryable<TMEmployeeTime> iQueryable_TMEmployeeTime = (from d in myContext.TMEmployeeTimes where d.Tenant == tenant && d.DateOfWork != null select d);
                 IQueryable<TMOfficeHour> iQueryable_TMOfficeHour = (from a in myContext.TMOfficeHours where a.Tenant == tenant && a.WorkDate != null && !a.Inactive select a);
@@ -334,7 +342,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     iQueryable_TMEmployeeTime = iQueryable_TMEmployeeTime.Where(d => d.LocationCode == locationCode);
                 }
-
 
                 List<TMOfficeHour> list_TMOfficeHour =
                     (from a in iQueryable_TMOfficeHour
@@ -351,17 +358,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                      &&
                      System.Data.Entity.DbFunctions.TruncateTime(a.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(myEndDate)
                      select a).ToList();
-
-
-                //int iDays = 1;
-
-                //if (myEndDate != null)
-                //{
-                //    iDays = (int)(myEndDate.Value - myStartDate.Value).TotalDays;
-
-
-                //}
-
 
                 myResult.ItemsPM = (from a in list_TMEmployeeTime
                                     select new TMEmployeeTimePM()
@@ -384,6 +380,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         ProjectId = a.ProjectId,
                                         ProjectId_db = a.ProjectId,
                                         SprintId = a.SprintId,
+                                        SprintName = (allSprints.Where(d => d.Id == a.SprintId).FirstOrDefault() != null ? allSprints.Where(d => d.Id == a.SprintId).FirstOrDefault().Name : null),
                                         ProjectName = (allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault() != null ? allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault().Name : null),
                                         LocationName = (allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault() != null ? allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault().Name : null),
                                     }).ToList();
@@ -438,8 +435,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
-
-
         private void FillOfficeHours(TimeSheetItemDay newItem, DateTime date,bool OneDay)
         {
             List<TMOfficeHour> officeDays = officeHours.Where(a => System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) == System.Data.Entity.DbFunctions.TruncateTime(date)).ToList();
@@ -484,27 +479,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
             return result;
         }
-        //public HttpResponseMessage GetTimeOfficeClock(string employeeUserId, string FromDate, string ToDate)
-        //{
-        //    try
-        //    {
-        //        string token = HttpContext.Current.Request.Headers["Token"];
-        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-        //        int tenant = authToken.Tenant;
-        //        string loggedUserEmail = authToken.Email;
-
-        //        SecurityUtility.AuthenticationOnTenant(tenant);
-        //        SecurityUtility.CheckContactFeature("TMOfficeHour", "READ", tenant);
-
-        //        List<TMOfficeHour> myResult = this.GetTimeOffice(employeeUserId, FromDate, ToDate, tenant);
-        //        return Request.CreateResponse(HttpStatusCode.OK, myResult);
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-        //    }
-        //}
         public HttpResponseMessage GetNewTMProjectConnect(string MainId,string id)
         {
             try
@@ -596,31 +570,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     where a.ProjectNumber.StartsWith(ProjectNumber) && a.Tenant == tenant && a.ProjectNumber != ProjectNumber
                     select a);
         }
-        //private List<TMOfficeHour> GetTimeOffice(string employeeUserId, string FromDate, string ToDate, int tenant)
-        //{
-
-        //    DateTime? myStartDate = DateHelper.GetDate(FromDate);
-
-        //    if (myStartDate == null)
-        //    {
-        //        throw new ApplicationException("Please select from date");
-        //    }
-
-        //    DateTime? myEndDate = DateHelper.GetDate(ToDate);
-
-        //    if (myEndDate == null)
-        //    {
-        //        throw new ApplicationException("Please select to date");
-        //    }
-
-        //    ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
-        //    IQueryable<TMOfficeHour> iQueryable = (from d in myContext.TMOfficeHours
-        //                                           where d.Tenant == tenant && d.UserId == employeeUserId && d.WorkDate >= myStartDate && d.WorkDate <= myEndDate
-        //                                           select d);
-
-        //    return iQueryable.ToList();
-
-        //}
         public HttpResponseMessage GetProjectsCounts(string loggedUserId)
         {
             try
@@ -740,6 +689,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
+                employeeUserId = FixFilter(employeeUserId);
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
@@ -780,7 +730,60 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetTMProjectsByBatchTask(string employeeUserId,  string fromDate , string toDate)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
 
+                DateTime? fromDate_ = fromDate == "null" ? null : DateHelper.GetDate(fromDate);
+                DateTime? toDate_ = toDate == "null" ? null : DateHelper.GetDate(toDate);
+
+                employeeUserId = FixFilter(employeeUserId);
+                
+                TMProjectDataArgs args = new TMProjectDataArgs() { EmployeeUserId = employeeUserId, FromDate = fromDate_, ToDate = toDate_, Tenant = tenant };
+                var stringwriter = new System.IO.StringWriter();
+                var serializer = new XmlSerializer(typeof(TMProjectDataArgs));
+                serializer.Serialize(stringwriter, args);
+                string xmlParameters = stringwriter.ToString();
+
+                BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
+                {
+                    Subject = "Get TM Projects",
+                    Tenant = tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ClassName = "WebFreight.Web.Helpers.APIHelpers.TMProjectsHelper,WebFreight.Web",
+                    CreateDate = DateTime.Now,
+                    PrametersXml = xmlParameters,
+                    StatusCode = "C",
+                };
+
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                bteUpdateService.Update(taskExe, true);
+
+                // 2- Send to queue
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", tenant.ToString() }
+                });
+
+                return Request.CreateResponse(HttpStatusCode.OK, taskExe);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         private string GetTimeFormatFromMinutes(double minutes)
         {
             string iResult = "";
@@ -799,7 +802,123 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return iResult;
         }
+        public HttpResponseMessage GetProrate(string EmployeeUserId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
+
+                ITimeManagementContext iContext = TimeManagementContext.GetContext(tenant);
+                TMEmployeeTimeRepository iRepository = new TMEmployeeTimeRepository(iContext);
+
+                var dataGroups = (from d in iContext.TMEmployeeTimes
+                                  where
+                                  d.NeedsProrating == true
+                                  && d.EmployeeUserId == EmployeeUserId
+                                  group d by new { d.EmployeeUserId, d.SprintId } into g
+                                  select new
+                                  {
+                                      SprintId = g.Key.SprintId,
+                                      EmployeeUserId = g.Key.EmployeeUserId,
+                                  }).ToList();
+
+                if (dataGroups.Count > 0)
+                {
+                    foreach (var itemGroup in dataGroups)
+                    {
+                        IQueryable<TMEmployeeTime> iQueryable = iRepository.GetAllWithoutTenant();
+                        iQueryable = iQueryable.Where(d => d.SprintId == itemGroup.SprintId && d.EmployeeUserId == itemGroup.EmployeeUserId);
+
+                        List<TMEmployeeTime> itemsProrated =
+                            (from EmployeeTimes in iQueryable
+                             join Projects in iContext.TMProjects on EmployeeTimes.ProjectId equals Projects.Id
+                             where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != "" && Projects.IsProrated == true
+                             select EmployeeTimes).ToList();
+
+                        if (itemsProrated.Count > 0)
+                        {
+                            double itemsProratedMinutes = itemsProrated.Sum(s => s.TimeInMinutes);
+
+                            if (itemsProratedMinutes > 0)
+                            {
+                                List<TMEmployeeTime> itemsNotProrated
+                                    = (
+                                    (from EmployeeTimes in iQueryable
+                                     join Projects in iContext.TMProjects on EmployeeTimes.ProjectId equals Projects.Id
+                                     where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != ""
+                                     && Projects.IsProrated == false
+                                     select EmployeeTimes)
+
+                                     .Union
+
+                                     (from EmployeeTimes in iQueryable
+                                      where EmployeeTimes.ProjectId == null || EmployeeTimes.ProjectId == ""
+                                      select EmployeeTimes)
+                                      ).ToList();
+
+                                double itemsNotProratedMinutes = itemsNotProrated.Sum(s => s.TimeInMinutes);
+
+                                foreach (TMEmployeeTime item in itemsNotProrated)
+                                {
+                                    double iProratedDuration = item.TimeInMinutes / itemsNotProratedMinutes * itemsProratedMinutes;
+                                    double iFullDuration = item.TimeInMinutes + iProratedDuration;
+
+                                    item.ProratedDuration = Math.Round(iProratedDuration, 2);
+                                    item.FullDuration = Math.Round(iFullDuration, 2);
+                                    item.NeedsProrating = false;
+
+                                    iRepository.Update(item);
+                                }
+
+                                foreach (TMEmployeeTime item in itemsProrated)
+                                {
+                                    item.ProratedDuration = 0;
+                                    item.FullDuration = item.TimeInMinutes;
+                                    item.NeedsProrating = false;
+                                    iRepository.Update(item);
+                                }
+
+                                iRepository.SubmitChanges();
+                            }
+                        }                        
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetCalculationCompleteWork()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
+
+                TFSParseWebhook myTFSParseWebhook = new TFSParseWebhook();
+                myTFSParseWebhook.CalculateCompletedWorkHours(tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     public class TimeManagementAPIHelper
@@ -849,14 +968,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public double? TotalFromClock { get; set; }
         public string TotalFromClockString { get; set; }
         public double MinutesFromClock { get; set; }
-
-        //public bool IsUpdated { get; set; }
-        //public string ProjectId { get; set; }
     }
     public class TMProjectSummary
     {
         public int Id { get; set; }
         public int MyProjectsCount { get; set; }
         public int AllProjectsCount { get; set; }
+    }
+
+    public class TMProjectDataArgs
+    {
+        public string EmployeeUserId { get; set; }
+        public int Tenant { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
     }
 }

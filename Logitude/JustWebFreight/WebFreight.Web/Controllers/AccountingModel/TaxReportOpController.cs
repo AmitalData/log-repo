@@ -90,7 +90,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 int tenant = authToken.Tenant;
                 if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                    tenant = tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {

@@ -22,6 +22,7 @@ export class NewAgentComponent {
     private PartnerTamplate: NewPartnerTamplate;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.EntityPM = new AgentPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -85,7 +86,7 @@ export class NewAgentComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -105,7 +106,7 @@ export class NewAgentComponent {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var args = new PartnerServicePM();
             args.Tenant = this.EntityPM.Tenant;
@@ -118,11 +119,11 @@ export class NewAgentComponent {
 
             this.DomainService.PostPartnerAddress(args).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     this.EntityPM = myResponse.Result.Agent;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                 }
 
                 else {

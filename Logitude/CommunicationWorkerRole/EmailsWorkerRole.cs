@@ -440,7 +440,28 @@ namespace CommunicationWorkerRole
 
                                                             foreach (string iTenantString in iTenantsList)
                                                             {
-                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim()){
+                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim())
+                                                                {
+                                                                    isUsingRestAPI = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    if (!isUsingRestAPI)
+                                                    {
+                                                        if (iAppSettings["ChampRestAPITenantKey"] != null)
+                                                        {
+                                                            int tenant = waitingCommLog.Tenant;
+                                                            string ConfigurationString = iAppSettings["ChampRestAPITenantKey"].ToString();
+
+                                                            int ConfigurationNumber = 0;
+                                                            if (int.TryParse(ConfigurationString, out ConfigurationNumber))
+                                                            {
+                                                                int TenanLastNumber = int.Parse(tenant.ToString().Substring(tenant.ToString().Length - 1));
+
+                                                                if (ConfigurationNumber >= TenanLastNumber)
+                                                                {
                                                                     isUsingRestAPI = true;
                                                                 }
                                                             }

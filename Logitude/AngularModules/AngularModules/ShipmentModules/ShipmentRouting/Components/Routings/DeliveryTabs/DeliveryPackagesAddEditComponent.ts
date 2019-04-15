@@ -19,6 +19,7 @@ export class DeliveryPackagesAddEditComponent extends BaseComponent {
     public DataContext: DeliveryPackageItem;
     public IsNewEntity: boolean = false;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -38,7 +39,7 @@ export class DeliveryPackagesAddEditComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -53,7 +54,7 @@ export class DeliveryPackagesAddEditComponent extends BaseComponent {
                 this.DataContext.fatherComponent.BuildItemsSource();
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

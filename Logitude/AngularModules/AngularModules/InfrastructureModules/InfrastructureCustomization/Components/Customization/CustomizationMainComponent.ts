@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {GeneralDomainService, FieldsTranslations} from '../../../../Infrastructure/Services/GeneralDomainService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -21,6 +21,7 @@ export class CustomizationMainComponent {
     public IsButtonEnabled: boolean = false;
     private myService: GeneralDomainService;
     private entityResourceService: EntityResourceService
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myService = new GeneralDomainService();
         this.entityResourceService = new EntityResourceService();
@@ -163,6 +164,6 @@ export class CustomizationMainComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

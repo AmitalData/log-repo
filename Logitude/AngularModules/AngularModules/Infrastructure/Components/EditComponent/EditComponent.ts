@@ -62,7 +62,6 @@ export class EditComponent implements OnDestroy {
 
     LayoutDirection: string = 'ltr';
     WorkEnvironment: string = 'logitude';
-
     public NavigationIds: string[];
     public CurrentNavigatedIndex: number;
     @ViewChild('Helper', { read: ViewContainerRef }) HelperViewContainerRef: ViewContainerRef;
@@ -72,12 +71,13 @@ export class EditComponent implements OnDestroy {
     @ViewChild('WindowLocation', { read: ViewContainerRef }) WindowLocationViewContainerRef: ViewContainerRef;
     @ViewChild('TabControlBody', { read: ViewContainerRef }) TabControlBodyViewContainerRef: ViewContainerRef;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-        this.ComponentIndex = SessionLocator.CurrentSession.GetNewEditComponentIndex();
-        this.HeaderId = "HeaderScreen_" + SessionLocator.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
-        this.ComponentId = "EditComponent_" + SessionLocator.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
-        this.EditComponentCellId = "EditComponentCellId_" + SessionLocator.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
+        this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();
+        this.HeaderId = "HeaderScreen_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
+        this.ComponentId = "EditComponent_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
+        this.EditComponentCellId = "EditComponentCellId_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
     }
@@ -197,7 +197,7 @@ export class EditComponent implements OnDestroy {
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
                 this.GetControllerByTableName(this.ObjectTableName).then(EditComponentController => {
                     //this.EditComponentController = EditComponentController as IEditComponentController;
-                    SessionLocator.CurrentSession.AddEditComponent(this);
+                    this.CurrentSession.AddEditComponent(this);
                     this.EditComponentController = EditComponentController as IEditComponentController;
                     this.EditComponentController.OnFirstTimeAfterSingleDataLoaded(this.EntityPM).then((isLock) => {
                         this.OnFirstTimeAfterSingleDataLoaded.emit(".EditComponentController.OnFirstTimeAfterSingleDataLoaded");
@@ -964,7 +964,7 @@ export class EditComponent implements OnDestroy {
     }
     Close() {
         if (this.IsInsideWindow) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
         if (this.EditComponentController) {
@@ -1260,7 +1260,7 @@ export class EditComponent implements OnDestroy {
         //Abed Code
         if (this.ObjectTableName == "Shipment" && this.EntityPM.IsRefreshFollowUp) {
             this.EntityPM.IsRefreshFollowUp = false;
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 
@@ -1274,7 +1274,7 @@ export class EditComponent implements OnDestroy {
     }
     DestroyEditControl() {
         if (this.ComponentRef != null) {
-            SessionLocator.CurrentSession.RemoveEditComponent(this);
+            this.CurrentSession.RemoveEditComponent(this);
             this.ComponentRef.destroy();
             this.ComponentRef = null;
         }
@@ -1291,7 +1291,7 @@ export class EditComponent implements OnDestroy {
         });
         this.LoadedTabsList = null;
 
-        SessionLocator.CurrentSession.UnsubscribeStaticEvent();
+        this.CurrentSession.UnsubscribeStaticEvent();
         this._Subscription.unsubscribe();//itzik
         if (this._SubEditComponentDefaultController) {
             this._SubEditComponentDefaultController.unsubscribe()
@@ -1437,12 +1437,12 @@ export class EditComponent implements OnDestroy {
         }
 
         //if (this.ComponentRef != null) {
-        //  SessionLocator.CurrentSession.RemoveEditComponent(this);
+        //  this.CurrentSession.RemoveEditComponent(this);
         //  this.ComponentRef.destroy();
         //  this.ComponentRef = null;
         //}
 
-        SessionLocator.CurrentSession.RemoveEditComponent(this);
+        this.CurrentSession.RemoveEditComponent(this);
         this.ngOnDestroy();
 
 

@@ -128,21 +128,21 @@ export class CompanyPerformanceComponent extends BaseComponent {
         }
     }
     private InitializeIds() {
-        this.OpportunitiesWonLostRatioId = "OpportunitiesWonLostRatioId_" + SessionLocator.CurrentSession.GetNewId("OpportunitiesWonLostRatioId");
-        this.OpportunitiesbyLeadSourcetypeId = "OpportunitiesbyLeadSourcetypeId_" + SessionLocator.CurrentSession.GetNewId("OpportunitiesbyLeadSourcetypeId");
-        this.OpportunitiesByTypeId = "OpportunitiesByTypeId_" + SessionLocator.CurrentSession.GetNewId("OpportunitiesByTypeId");
-        this.CompletedActivitiesId = "CompletedActivitiesId_" + SessionLocator.CurrentSession.GetNewId("CompletedActivitiesId");
-        this.AcceptedDeclinedQuotes = "AcceptedDeclinedQuotes_" + SessionLocator.CurrentSession.GetNewId("AcceptedDeclinedQuotes");
-        this.ZoomedChartId = "ZoomedChartId_" + SessionLocator.CurrentSession.GetNewId("ZoomedChartId");
-        this.legenddivId = "legenddiv_" + SessionLocator.CurrentSession.GetNewId("legenddiv");
-        this.OpportunityByWonLostLegendId = "OpportunityByWonLostLegendId_" + SessionLocator.CurrentSession.GetNewId("OpportunityByWonLostLegendId");
-        this.OpportunityByTypeLegendId = "OpportunityByTypeLegendId_" + SessionLocator.CurrentSession.GetNewId("OpportunityByTypeLegendId");
-        this.OpportunityByLeadSourceLegendId = "OpportunityByLeadSourceLegendId_" + SessionLocator.CurrentSession.GetNewId("OpportunityByLeadSourceLegendId");
-        this.ActivityChartLegendId = "ActivityChartLegendId_" + SessionLocator.CurrentSession.GetNewId("ActivityChartLegendId");
-        this.QuoteLegendId = "QuoteLegendId_" + SessionLocator.CurrentSession.GetNewId("QuoteLegendId");
+        this.OpportunitiesWonLostRatioId = "OpportunitiesWonLostRatioId_" + this.CurrentSession.GetNewId("OpportunitiesWonLostRatioId");
+        this.OpportunitiesbyLeadSourcetypeId = "OpportunitiesbyLeadSourcetypeId_" + this.CurrentSession.GetNewId("OpportunitiesbyLeadSourcetypeId");
+        this.OpportunitiesByTypeId = "OpportunitiesByTypeId_" + this.CurrentSession.GetNewId("OpportunitiesByTypeId");
+        this.CompletedActivitiesId = "CompletedActivitiesId_" + this.CurrentSession.GetNewId("CompletedActivitiesId");
+        this.AcceptedDeclinedQuotes = "AcceptedDeclinedQuotes_" + this.CurrentSession.GetNewId("AcceptedDeclinedQuotes");
+        this.ZoomedChartId = "ZoomedChartId_" + this.CurrentSession.GetNewId("ZoomedChartId");
+        this.legenddivId = "legenddiv_" + this.CurrentSession.GetNewId("legenddiv");
+        this.OpportunityByWonLostLegendId = "OpportunityByWonLostLegendId_" + this.CurrentSession.GetNewId("OpportunityByWonLostLegendId");
+        this.OpportunityByTypeLegendId = "OpportunityByTypeLegendId_" + this.CurrentSession.GetNewId("OpportunityByTypeLegendId");
+        this.OpportunityByLeadSourceLegendId = "OpportunityByLeadSourceLegendId_" + this.CurrentSession.GetNewId("OpportunityByLeadSourceLegendId");
+        this.ActivityChartLegendId = "ActivityChartLegendId_" + this.CurrentSession.GetNewId("ActivityChartLegendId");
+        this.QuoteLegendId = "QuoteLegendId_" + this.CurrentSession.GetNewId("QuoteLegendId");
     }
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.InitializeIds();
@@ -913,12 +913,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
         listArgs.DisplayTitle = "Opportunities";
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
 
@@ -956,12 +956,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
         listArgs.DisplayTitle = "Quotes";
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
     }
@@ -1001,12 +1001,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
         listArgs.DisplayTitle = typeName;
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
     }

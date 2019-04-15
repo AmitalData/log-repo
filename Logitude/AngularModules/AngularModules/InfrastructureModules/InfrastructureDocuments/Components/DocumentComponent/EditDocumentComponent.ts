@@ -114,6 +114,7 @@ export class EditDocumentComponent implements OnInit {
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     private entityPMService: EntityPMService;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _htmlEditorService: HtmlEditorService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, private cd: ChangeDetectorRef, public _documentOutPMService: DocumentOutPMService) {
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
@@ -262,7 +263,7 @@ export class EditDocumentComponent implements OnInit {
 
             if (this.IsManageHtml || this.IsEditHtml) {
                 if (this.XamlDocumentId) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
                     this._exportDocumentService.DownloadFileFromServer(this.XamlDocumentId, this.Tenant).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
@@ -310,7 +311,7 @@ export class EditDocumentComponent implements OnInit {
                         }
 
 
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     });
 
 
@@ -348,7 +349,7 @@ export class EditDocumentComponent implements OnInit {
         }
         else {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
             
             var docoutId = this.CurrentDocumentOutId;
             if (templateId) docoutId = "";
@@ -382,7 +383,7 @@ export class EditDocumentComponent implements OnInit {
                 }
 
 
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             });
 
         }
@@ -413,8 +414,8 @@ export class EditDocumentComponent implements OnInit {
 
                         this.DataViewModel.LoadDocumentCustomFields();
 
-                        if (SessionLocator.CurrentSession.CurrentWindow) {
-                            SessionLocator.CurrentSession.CurrentWindow.Close("");
+                        if (this.CurrentSession.CurrentWindow) {
+                            this.CurrentSession.CurrentWindow.Close("");
                         }
 
                     });
@@ -430,7 +431,7 @@ export class EditDocumentComponent implements OnInit {
 
 
         if (isClose) {
-            SessionLocator.CurrentSession.CurrentWindow.Close("");
+            this.CurrentSession.CurrentWindow.Close("");
         }
 
 
@@ -452,9 +453,9 @@ export class EditDocumentComponent implements OnInit {
         }
 
             if (messageIndicator) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(messageIndicator);
+                this.CurrentSession.CurrentWindow.StartBusyIndicator(messageIndicator);
             }
-            else SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            else this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
 
             if (!documenttypetemplateId) {
@@ -483,7 +484,7 @@ export class EditDocumentComponent implements OnInit {
 
 
             this._exportDocumentService.PostReportStimulsoftViewer(exportDocumentArgs).subscribe(res => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -656,7 +657,7 @@ export class EditDocumentComponent implements OnInit {
                 }
             }
             else {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
                 if (this.IsManageHtml) {
 
                     this._htmlEditorService.getEditorHtmlData("", this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, selectedItem.Id, "").subscribe(res => {
@@ -675,7 +676,7 @@ export class EditDocumentComponent implements OnInit {
                         }
 
 
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                     });
 
@@ -716,7 +717,7 @@ export class EditDocumentComponent implements OnInit {
                             }
 
                         }
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                     });
                 }
@@ -776,9 +777,9 @@ export class EditDocumentComponent implements OnInit {
        
             this.DataViewModel.IsRefreshPrintConrol = true;
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe(res => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CloseButtonClicked();
             });
          
@@ -795,9 +796,9 @@ export class EditDocumentComponent implements OnInit {
                 }
                 
 
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
                 this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe(res => {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (this.stimulsoftArg.StimulsoftViewerComponent.CheckIfChangeShift()) {
                         this.stimulsoftArg.StimulsoftViewerComponent.ApplayShift(true);
                     }
@@ -849,10 +850,10 @@ export class EditDocumentComponent implements OnInit {
 
         if (this.stimulsoftArg.IsReset) {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             this._exportDocumentService.GetResetEditableFields(this.CurrentDocumentOutId).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!pmResponse.HasError) {
                     this.stimulsoftArg.IsReset = false;
                     if (this.DataViewModel) {
@@ -896,7 +897,7 @@ export class EditDocumentComponent implements OnInit {
             });
             if (filter.EditableFieldLists && filter.EditableFieldLists.length > 0) {
 
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
                 this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
 
@@ -913,7 +914,7 @@ export class EditDocumentComponent implements OnInit {
 
                     if (this.stimulsoftArg.StimulsoftViewerComponent.CheckIfChangeShift()) this.stimulsoftArg.StimulsoftViewerComponent.ApplayShift(true);
                     else {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CloseButtonClicked();
                     }
                 });
@@ -1469,7 +1470,7 @@ export class EditDocumentComponent implements OnInit {
                 confirmWindow.NoButtonText = "Cancel";
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                        this.CurrentSession.StartBusyIndicatorSaving();
                         var documentTypeCopyId: string = "";
                         if (this.DataViewModel && this.DataViewModel.DocumentTypeload && this.DataViewModel.DocumentTypeload.DocumentTypeCopies[0]) {
                             documentTypeCopyId = this.DataViewModel.DocumentTypeload.DocumentTypeCopies[0].Id;
@@ -1485,7 +1486,7 @@ export class EditDocumentComponent implements OnInit {
                         filter.ChildEntityId = this.ChildEntityId;
                         filter.DocumentTypeId = this.DocumentTypePM ? this.DocumentTypePM.Id : "";
                         this._htmlEditorService.saveEditedReportToServer(filter).subscribe(res => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
 
                             this.IsOpenHeaderAndFooter = false;
                             this.OldHtml = this.froalaEditorSetting.froalaEditorComponent.getHtml();

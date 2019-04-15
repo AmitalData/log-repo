@@ -23,6 +23,7 @@ export class ExportBI2ExcelControl {
     Filters: ApiQueryFilters;
     url: string;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private http: Http) {
         ServiceHelper.Http = http;
     }
@@ -65,7 +66,7 @@ export class ExportBI2ExcelControl {
         {
             window.open(url);
         }
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveBtnCLicked() {
@@ -94,6 +95,6 @@ export class ExportBI2ExcelControl {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

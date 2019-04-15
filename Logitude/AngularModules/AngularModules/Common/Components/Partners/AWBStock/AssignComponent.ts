@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AWBStackDomainService, StockSeriesListClass, StockSeries} from '../../../Services/AWBStackDomainService';
@@ -16,6 +16,7 @@ export class AssignComponent {
     public ItemsCount: number = 0;
     public ItemsSource: StockSeries[] = [];
     private StackDomainService: AWBStackDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.StackDomainService = new AWBStackDomainService();
     }
@@ -31,7 +32,7 @@ export class AssignComponent {
         this.ItemsCount = 0;
         this.ItemsSource = [];
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.IsCustomerMode) {
             this.StackDomainService.GetAllAvailableStockSeries().subscribe((myResponse: ServiceResponse) => {
@@ -45,7 +46,7 @@ export class AssignComponent {
                     });
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
 
@@ -61,7 +62,7 @@ export class AssignComponent {
                     });
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -84,11 +85,11 @@ export class AssignComponent {
     private isReloadingData: boolean = false;
     CloseClicked() {
         if (this.isReloadingData) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
 
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 }

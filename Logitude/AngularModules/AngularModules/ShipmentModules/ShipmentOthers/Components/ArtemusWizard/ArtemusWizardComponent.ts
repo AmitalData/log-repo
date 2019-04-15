@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -20,7 +20,7 @@ export class ArtemusWizardComponent {
     public MessageText: string;
     public IsMessageValid: boolean;
     public IsVisible = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -28,7 +28,7 @@ export class ArtemusWizardComponent {
         this.myArtemusWebService = new ArtemusWebService();
         this.ShipmentId = windowArgs.ShipmentId;
         this.Type = windowArgs.Type;
-        SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
+        this.CurrentSession.StartBusyIndicator("Sending...");
         if (this.Type == "BOL") {
             this.SendToArtemus_Bill();
         }
@@ -39,7 +39,7 @@ export class ArtemusWizardComponent {
 
     private SendToArtemus_Voyage() {
         this.myArtemusWebService.SendAMS_Voyage(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.IsVisible = true;
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -55,7 +55,7 @@ export class ArtemusWizardComponent {
 
     private SendToArtemus_Bill() {
         this.myArtemusWebService.SendAMS_Bill(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.IsVisible = true;
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -70,6 +70,6 @@ export class ArtemusWizardComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

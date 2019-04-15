@@ -25,6 +25,7 @@ export class OverviewTabComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public AnswersList: BookingAnswerItem[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         
     }
@@ -493,7 +494,7 @@ export class OverviewTabComponent {
             }            
         }
             , error => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
     }
 

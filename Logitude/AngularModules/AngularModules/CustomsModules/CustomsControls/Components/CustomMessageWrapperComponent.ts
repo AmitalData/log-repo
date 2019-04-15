@@ -1,4 +1,4 @@
-﻿
+
 import { Component, EventEmitter, Output, Input, OnInit, ViewChild, AfterViewInit, AfterContentInit } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -75,7 +75,7 @@ export class CustomMessageWrapperComponent
 
     @ViewChild(CustomSendOptionsComponent)
     public MyCustomSendOptionsComponent: CustomSendOptionsComponent = new CustomSendOptionsComponent(null,null);
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -85,8 +85,8 @@ export class CustomMessageWrapperComponent
         this._AfterContentInit = true;
     }
     public get FormTitle() {
-        if (SessionLocator.CurrentSession.CurrentWindow) {
-            return SessionLocator.CurrentSession.CurrentWindow.Title;
+        if (this.CurrentSession.CurrentWindow) {
+            return this.CurrentSession.CurrentWindow.Title;
         } else {
             return "";
         }
@@ -164,7 +164,7 @@ export class CustomMessageWrapperComponent
     
 
     CancelButtonClickedBase() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
    
 

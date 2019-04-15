@@ -35,6 +35,7 @@ export class WizardComponent extends BaseComponent {
     private myService: INTRAWebService;
     private CardListService: CardListService;
     private entityArgs: EntityArgs;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myService = new INTRAWebService();
@@ -58,7 +59,7 @@ export class WizardComponent extends BaseComponent {
         if (!this.IsLimited) {
             this.myService.Validate(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
 
@@ -70,7 +71,7 @@ export class WizardComponent extends BaseComponent {
                     }
 
                     if (myResult.Errors.length > 0) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         this.ValidationErrorsList = myResult.Errors;
                     }
 
@@ -284,7 +285,7 @@ export class WizardComponent extends BaseComponent {
     private LoadCompletedEvent: any = null;
     CloseButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     SendButtonClicked() {
         this.ResultMessage = null;
@@ -321,12 +322,12 @@ export class WizardComponent extends BaseComponent {
         }
     }
     Send() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
+        this.CurrentSession.StartBusyIndicator("Sending...");
 
         this.myService.Validate(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
 
             if (myResponse.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();                
+                this.CurrentSession.StopBusyIndicator();                
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
@@ -338,19 +339,19 @@ export class WizardComponent extends BaseComponent {
                 }
 
                 if (myResult.Errors.length > 0) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.ValidationErrorsList = myResult.Errors;
                 }
 
                 else if (myResult.IsCarrierRegisteredToINTTRA == false) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     var messageWindow: MessageWindow = new MessageWindow();
                     messageWindow.Show("Shipping line is not Registered To INTTRA");
                 }
 
                 else if (myResult.IsCarrierRegisteredToBranch == false) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     var messageWindow: MessageWindow = new MessageWindow();
                     messageWindow.Show("Shipping line is not Registered To Branch");
@@ -358,7 +359,7 @@ export class WizardComponent extends BaseComponent {
 
                 else {
                     if (this.IsLimited) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         var messageWindow: MessageWindow = new MessageWindow();
                         messageWindow.Show("SI re-sending to INTTRA is not allowed");
@@ -368,7 +369,7 @@ export class WizardComponent extends BaseComponent {
                         this.myService.Send(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
                             if (myResponse.HasError) {
                                 this.ValidationErrorsList = myResponse.ErrorsArray;
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                             }
 
                             else {
@@ -376,11 +377,11 @@ export class WizardComponent extends BaseComponent {
 
                                 if (myResult.Errors.length > 0) {
                                     this.ValidationErrorsList = myResult.Errors;
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
                                 }
 
                                 else if (myResult.HasStockError == true) {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
 
                                     var messageWindow: MessageWindow = new MessageWindow();
                                     messageWindow.Show("No Stock");
@@ -393,7 +394,7 @@ export class WizardComponent extends BaseComponent {
                                     }
 
                                     this.ResultMessage = "Message has been sent Successfully";
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
 
                                     if (!this.LoadCompletedEvent) {
                                         this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {

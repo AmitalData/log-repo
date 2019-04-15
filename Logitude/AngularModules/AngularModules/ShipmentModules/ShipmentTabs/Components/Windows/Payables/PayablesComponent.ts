@@ -31,6 +31,7 @@ export class PayablesComponent extends BaseComponent {
     public DataContext: PayablesComponent = this;
     public LocalCurrencyCode: string;
     public IsResourcesReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
@@ -225,7 +226,7 @@ export class PayablesComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.ItemsSource.Collection.forEach(p => {
@@ -233,7 +234,7 @@ export class PayablesComponent extends BaseComponent {
         });
 
         this.BuildObsList();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     private myCloner: Cloner;

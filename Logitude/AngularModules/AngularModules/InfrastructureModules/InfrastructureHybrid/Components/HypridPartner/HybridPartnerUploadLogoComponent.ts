@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {Component, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
@@ -40,6 +40,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     _HybridPartnerPMService: HybridPartnerPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef) {
         this._HybridPartnerPMService = new HybridPartnerPMService();
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
@@ -66,7 +67,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
         }
 
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("loading...");
     }
 
     ngAfterViewInit() {
@@ -89,7 +90,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
     LoadLogo(isload: boolean) {
 
         if (isload) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("loading...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("loading...");
 
         }
         //var myService: WebFreightDomainService = new WebFreightDomainService();
@@ -112,13 +113,13 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
                     SetImage(this.logoHtmlId, result, false);
 
                 } else {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     HideImage(this.logoHtmlId);
                 }
             }
 
             else {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 HideImage(this.logoHtmlId);
 
             }
@@ -126,7 +127,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
 
             this._imageLibraryService.DownloadFile(this.EntityPM.SmallLogoId, "jpg", "images", SessionInfo.LoggedUserTenant,"Base64").subscribe((res: any) => {
                 var pmResponse: ServiceResponse = res;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 if (!pmResponse.HasError) {
                     var result = pmResponse.Result;
@@ -162,7 +163,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
     LoadMobileLogo(isload: boolean) {
 
         if (isload) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         }
         this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
 
@@ -175,7 +176,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
             } else HideImage(this.MobilelogoHtmlId);
 
             if (isload) {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
 
         });
@@ -187,7 +188,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
     LoadSharedLogtsitcsLogo(isload: boolean) {
 
         if (isload) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         }
         this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
 
@@ -200,7 +201,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
             } else HideImage(this.SharedLogisticsLogoHtmlId);
 
             if (isload) {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
 
         });
@@ -333,7 +334,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
                 }
             }
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
         });
 
@@ -377,7 +378,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

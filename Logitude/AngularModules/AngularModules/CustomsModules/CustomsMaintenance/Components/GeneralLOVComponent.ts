@@ -58,14 +58,14 @@ export class GeneralLOVComponent
     ValidationErrorsList: string[] = [];
     
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
     Loaded: boolean = false;
     EntityResource: boolean = false;
     ngOnInit() {
-        ///SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        ///this.CurrentSession.StartBusyIndicatorLoading();
         
 
     }
@@ -78,7 +78,7 @@ export class GeneralLOVComponent
         this.LOVText = arg.LOVText;
 
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.EntityResource = true;
             this.Loaded = true;
 
@@ -110,10 +110,10 @@ export class GeneralLOVComponent
 
    
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ShowGeneralLOVReturnSelectedCancel");
+        this.CurrentSession.CloseCurrentWindowEmit("ShowGeneralLOVReturnSelectedCancel");
     }
         
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.Code);
+        this.CurrentSession.CloseCurrentWindowEmit(this.Code);
     }
 }

@@ -2259,22 +2259,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
 
-
-            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-            {
-                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
-                ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
-                if (entityComputedFields != null)
-                {
-                    shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
-                    shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
-                    shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
-                    shipmentPM.ImporterDepositionRequestDetails = entityComputedFields.ImporterDepositionRequestDetails;
-                }
-            }
-
-
-
+            
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
@@ -3091,7 +3076,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return returnShipment;
         }
 
-        public ShipmentPM MapShipmentToShipmentPMForAutomation(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData , ShipmentComputedFields entityComputedFields)
+        public ShipmentPM MapShipmentToShipmentPMForAutomation(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData)
         {
             if (masterData == null)
             {
@@ -3104,16 +3089,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             #region ShipmentComputedFields
             if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
             {
-                if (entityComputedFields == null)
-                {
-                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
-                    entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
-                }
+                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
+                ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
 
                 if (entityComputedFields != null)
                 {
                     shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
-                    shipmentPM.ImporterDepositionRequestDetails = entityComputedFields.ImporterDepositionRequestDetails;
                     shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
                     shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
                 }
@@ -4744,7 +4725,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             List<DashBoardClass> resulList = null;
             int days = 0;
             int lastDays = (FromDate.Value - ToDate.Value).Days;
-            DateTime QueryFromDate = FromDate.Value.AddDays(-1);
+            DateTime QueryFromDate = new DateTime(FromDate.Value.Year, FromDate.Value.Month, FromDate.Value.Day, 0, 0, 0);
+
             DateTime QueryToDate = ToDate.Value.AddDays(1);
             lastDays = lastDays *= -1;
             int Perdio = lastDays <= 6 ? 1 : lastDays / 5;
@@ -4795,7 +4777,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (type == "CreateDate" || type == null)
             {
                 resulList = (from s in shipments
-                             where (s.CreateDateTime > QueryFromDate) && (s.CreateDateTime < QueryToDate)
+                             where (s.CreateDateTime >= QueryFromDate) && (s.CreateDateTime < QueryToDate)
                              orderby s.CreateDateTime
 
                              group s by new
@@ -4829,7 +4811,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             else
             {
                 resulList = (from s in shipments
-                             where s.OperationalDate > QueryFromDate && s.CreateDateTime < QueryToDate
+                             where s.OperationalDate >= QueryFromDate && s.CreateDateTime < QueryToDate
                              orderby s.OperationalDate
 
                              group s by new
@@ -6147,7 +6129,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 top = 0;
             }
 
-            FromDate = FromDate.Value.AddDays(-1);
+            FromDate = new DateTime(FromDate.Value.Year, FromDate.Value.Month, FromDate.Value.Day, 0, 0, 0);
             ToDate = ToDate.Value.AddDays(1);
 
 
@@ -6167,7 +6149,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        if(type == "CreateDate" || type == null)
                         {
                             resultList = (from s in shipments
-                                          where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate
+                                          where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6192,7 +6174,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
 
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate 
+                                                                           where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate 
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6237,7 +6219,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        else
                         {
                             resultList = (from s in shipments
-                                          where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                          where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6262,7 +6244,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
 
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                                                           where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6317,7 +6299,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if(type == "CreateDate" || type == null)
                         {
                             resultList = (from s in shipments
-                                          where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate 
+                                          where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate 
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6341,7 +6323,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate 
+                                                                           where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate 
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6385,7 +6367,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         else
                         {
                             resultList = (from s in shipments
-                                          where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                          where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6409,7 +6391,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                                                           where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6461,7 +6443,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if(type == "CreateDate" || type == null)
                         {
                             resultList = (from s in shipments
-                                          where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate
+                                          where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6485,7 +6467,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate 
+                                                                           where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate 
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6527,7 +6509,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         else
                         {
                             resultList = (from s in shipments
-                                          where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                          where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6551,7 +6533,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                                                           where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6600,7 +6582,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if(type == "CreateDate" || type == null)
                         {
                             resultList = (from s in shipments
-                                          where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate
+                                          where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6627,7 +6609,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate
+                                                                           where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6673,7 +6655,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         else
                         {
                             resultList = (from s in shipments
-                                          where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                          where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6700,7 +6682,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                                                           where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6754,7 +6736,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if(type == "CreateDate" || type == null)
                         {
                             resultList = (from s in shipments
-                                          where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate 
+                                          where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate 
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6781,7 +6763,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate 
+                                                                           where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate 
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6826,7 +6808,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         else
                         {
                             resultList = (from s in shipments
-                                          where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                          where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6853,7 +6835,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                                                           where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6906,7 +6888,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        if(type == "CreateDate" || type == null)
                         {
                             resultList = (from s in shipments
-                                          where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate 
+                                          where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate 
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -6934,7 +6916,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate
+                                                                           where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -6980,7 +6962,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        else
                         {
                             resultList = (from s in shipments
-                                          where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                          where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -7008,7 +6990,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                                                           where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -7062,7 +7044,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if(type == "CreateDate" || type == null)
                         {
                             resultList = (from s in shipments
-                                          where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate 
+                                          where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate 
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -7090,7 +7072,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.CreateDateTime > FromDate && s.CreateDateTime < ToDate
+                                                                           where s.CreateDateTime >= FromDate && s.CreateDateTime < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -7137,7 +7119,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         else
                         {
                             resultList = (from s in shipments
-                                          where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                          where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                           group s by new
                                           {
                                               s.CountryForStatisticsCode,
@@ -7165,7 +7147,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             if (includeOthers)
                             {
                                 List<DashBoardClass> allCountriesResult = (from s in shipments
-                                                                           where s.OperationalDate > FromDate && s.OperationalDate < ToDate
+                                                                           where s.OperationalDate >= FromDate && s.OperationalDate < ToDate
                                                                            group s by new
                                                                            {
                                                                                s.CountryForStatisticsCode,
@@ -8246,7 +8228,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 top = 0;
             }
-            FromDate = FromDate.Value.AddDays(-1);
+            FromDate = new DateTime(FromDate.Value.Year, FromDate.Value.Month, FromDate.Value.Day, 0, 0, 0);
             ToDate = ToDate.Value.AddDays(1);
 
             IQueryable<DashBoardClass> resulList = null;
@@ -11909,10 +11891,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
 
-        public string GetShipmentIdByForwarderShipmentNumber(string agentRef, int tenant)
+        public string GetShipmentIdByForwarderShipmentNumber(string forwarderShipmentNumber, int tenant)
         {
             string shipmentId = (from a in repository.context.Shipments
-                                 where a.Tenant == tenant && a.ForwarderShipmentNumber == agentRef && !a.IsCancelled
+                                 where a.Tenant == tenant && a.ForwarderShipmentNumber == forwarderShipmentNumber && !a.IsCancelled
                                  select a.Id).FirstOrDefault();
 
             return shipmentId;

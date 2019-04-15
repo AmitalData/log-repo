@@ -54,6 +54,7 @@ export class BIReportPreviewComponent implements OnInit {
     public context;
     public CountText: string;
     public IsFilterValueChanged: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
@@ -299,7 +300,7 @@ export class BIReportPreviewComponent implements OnInit {
         this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
             if (!myResult.HasError) {
                 var Id = myResult.Result;
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'Shipment', BackButtonLabel: "BI Report" });
@@ -433,7 +434,7 @@ export class BIReportPreviewComponent implements OnInit {
         else {
             if (this.ComponentRef) {
                 this.BackCompleted.emit(false);
-                SessionLocator.CurrentSession.FireEvent("BIRefresh");
+                this.CurrentSession.FireEvent("BIRefresh");
                 this.ComponentRef.destroy();
             }
         }
@@ -576,7 +577,7 @@ export class BIReportPreviewComponent implements OnInit {
     }
     EditBIReportClicked() {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'BIReport' });
@@ -652,7 +653,7 @@ export class BIReportPreviewComponent implements OnInit {
                     this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe(myResult => {
                         if (!myResult.HasError) {
                             if (this.ComponentRef) {
-                                SessionLocator.CurrentSession.FireEvent("BIRefresh");
+                                this.CurrentSession.FireEvent("BIRefresh");
                                 this.ComponentRef.destroy();
                             }
                         }

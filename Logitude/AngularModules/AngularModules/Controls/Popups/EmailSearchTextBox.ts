@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, AfterViewInit, Output, EventEmitter} from '@angular/core';
 import {AppTool, FormatTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ContactList} from '../../Common/EntityLists/ContactList';
@@ -43,8 +43,9 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
 
     private contactService: ContactListService;
     private userService: UserListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("EmailSearchTextBox");
+        var idIndex = this.CurrentSession.GetNewId("EmailSearchTextBox");
         this.ComponentId = "EmailSearchTextBox_" + idIndex;
         this.SeparatorId = "EmailSearchTextBox_Separator_" + idIndex;
         this.InputId = "EmailSearchTextBox_Input_" + idIndex;
