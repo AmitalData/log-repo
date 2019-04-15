@@ -2092,8 +2092,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
             var amountInNIS: number;
             var rate: CustomsExchangeRatePM;
             if (item.CurrencyTypeCode == "ILS") {
-                amountInNIS = item.Amount;
-                totalFreightInNIS = totalFreightInNIS + amountInNIS;
+                amountInNIS = AppTool.ToNumber(item.Amount);
+                totalFreightInNIS = +totalFreightInNIS + +amountInNIS;
                 //if (totalFreightInNIS != null) {
                 //    totalFreightInNIS = Math.round(totalFreightInNIS);
                 //}
@@ -2105,7 +2105,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                     rate = this.customsExchangeRates.filter(d => d.CurrencyTypeCode == item.CurrencyTypeCode)[0];
                     if (rate != null) {
 
-                        amountInNIS = item.Amount * rate.ExchangeRate;
+                        amountInNIS = AppTool.ToNumber(item.Amount) * rate.ExchangeRate;
                         totalFreightInNIS = totalFreightInNIS + amountInNIS;
                         //if (totalFreightInNIS != null) {
                         //    totalFreightInNIS = Math.round(totalFreightInNIS);

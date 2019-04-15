@@ -194,44 +194,32 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
             LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(ResponseStatusCode={responeGWMessageECTHRData.ResponseStatusCode},{responeGWMessageECTHRData.ResponseStatusMsg})");
             var context = CustomContext.GetContext(settings.Tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            var myCourierMasterQueryService = new CourierMasterQueryService(context);
-            var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, false, false);
-            declarationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-
+            var myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(settings.DeclarationId, false, false);
+            declarationCourierStatusQueryServicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
             switch (responeGWMessageECTHRData.ResponseStatusCode)
             {
                 case 1://45997
                     {
-                        declarationPM.MamanStatusCode = "1";
+                        //declarationPM.MamanStatusCode = "1";
+                        declarationCourierStatusQueryServicePM.StorageSiteStatusCode = "1";
                     }
                     break;
-/*                case 0:
-                    {
-                        declarationPM.MamanStatusCode = "1";
-                    }
-                    break;
-                case 1:
-                    {
-                        declarationPM.MamanStatusCode = "2";
-                    }
-                    break;
-                    */
                 default:
-                    declarationPM.MamanStatusCode = "2";//45997
+                    //declarationPM.MamanStatusCode = "2";//45997
+                    declarationCourierStatusQueryServicePM.StorageSiteStatusCode = "2";
                     //declarationPM.MamanStatusCode = responeGWMessageECTHRData.ResponseStatusCode.ToString();//???        //45997
                     break;
             }
 
 
-            declarationPM.MamanErrorXml = responeGWMessageECTHRData.ResponseStatusCode.ToString() + "," + responeGWMessageECTHRData.ResponseStatusMsg??"";
+            declarationCourierStatusQueryServicePM.StorageSiteErrorText = responeGWMessageECTHRData.ResponseStatusCode.ToString() + "," + responeGWMessageECTHRData.ResponseStatusMsg??"";
 
             using (var scope = TransactionFactory.GetNewTransaction())
             {
-                var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>() ,settings.Tenant);
-                myDeclarationUpdateService.Update(declarationPM, true);
+                var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>() ,settings.Tenant);
+                myDeclarationCourierStatusUpdateService.Update(declarationCourierStatusQueryServicePM, true);
                 scope.Complete();
             }
         }

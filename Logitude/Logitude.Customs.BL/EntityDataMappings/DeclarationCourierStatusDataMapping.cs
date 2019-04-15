@@ -36,6 +36,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO)
         {
+            this.CustomMappedPMProperties.Add(PMPropertyNames.StorageSiteStatusName);
 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false,false);
@@ -44,6 +45,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.CourierHawb = declarationPM.CourierHAWB;
                 entityPM.ProcedureCurrentCode = declarationPM.ProcedureCurrentCode;
                 entityPM.ImporterCode = declarationPM.ImporterCode;
+            }
+
+            if (entityPOCO.StorageSiteStatusCode != null)
+            {
+                MamanStatusQueryService mamanStatusQueryService = new MamanStatusQueryService(entityPOCO.Tenant);
+                MamanStatusPM mamanStatus = mamanStatusQueryService.GetSingle(entityPOCO.StorageSiteStatusCode, false, true);
+                if (mamanStatus != null)
+                {
+                    entityPM.StorageSiteStatusName = mamanStatus.LocalName;
+                }
             }
         }
     }

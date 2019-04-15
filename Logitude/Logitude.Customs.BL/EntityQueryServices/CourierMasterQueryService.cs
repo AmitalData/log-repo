@@ -106,16 +106,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             var repositoryCourierDeclarations = new CourierDeclarationRepository(MainContext as ICustomContext);
             var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(MainContext as ICustomContext);
-            var declarationRepository = new DeclarationRepository(MainContext as ICustomContext);
+            //var declarationRepository = new DeclarationRepository(MainContext as ICustomContext);
 
             var q =
                 (from cd in repositoryCourierDeclarations.GetAll(tenant).Where(r => r.CourierMasterId == courierMasterId)
                  join dStatus in declarationCourierStatusRepository.GetAll(tenant)
                  on cd.DeclarationId equals dStatus.DeclarationId
-                 join declaration in declarationRepository.GetAll(tenant)
-                 on dStatus.DeclarationId equals declaration.Id
-                 select new { dStatus, declaration ,tooltip="" }
-             );         
+                 select dStatus
+                 //join declaration in declarationRepository.GetAll(tenant)
+                 //on dStatus.DeclarationId equals declaration.Id
+                 //select new { dStatus, declaration ,tooltip="" }
+             );
 
             int HOLD = 0;
             int ALL = 0;
@@ -145,27 +146,27 @@ namespace Logitude.Customs.BL.EntityQueryServices
              select new
              {
                  aLL = g.Count(),
-                 dOC = g.Count(r => r.dStatus.DocumentStatusCode == "M" || r.dStatus.DocumentStatusCode == "X"),
-                 DOC_U = g.Count(r => r.dStatus.DocumentStatusCode == "X"),
-                 DOC_C = g.Count(r => r.dStatus.DocumentStatusCode == "M"),
-                 sVG = g.Count(r => (r.dStatus.IsCourierMissingClassification == true)),
-                 MNF = g.Count(r => (r.dStatus.CourierManifestStatusCode == "M" || r.dStatus.CourierManifestStatusCode == "X")),
-                 MNF_C = g.Count(r => (r.dStatus.CourierManifestStatusCode == "M")),
-                 MNF_W = g.Count(r => (r.dStatus.CourierManifestStatusCode == "X")),
-                 dEC = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "M" || r.dStatus.CourierDeclarationStatusCode == "X")),
-                 dEC_C = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "M")),
-                 dEC_W = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "X")),
-                 pAY = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R")),
+                 dOC = g.Count(r => r.DocumentStatusCode == "M" || r.DocumentStatusCode == "X"),
+                 DOC_U = g.Count(r => r.DocumentStatusCode == "X"),
+                 DOC_C = g.Count(r => r.DocumentStatusCode == "M"),
+                 sVG = g.Count(r => (r.IsCourierMissingClassification == true)),
+                 MNF = g.Count(r => (r.CourierManifestStatusCode == "M" || r.CourierManifestStatusCode == "X")),
+                 MNF_C = g.Count(r => (r.CourierManifestStatusCode == "M")),
+                 MNF_W = g.Count(r => (r.CourierManifestStatusCode == "X")),
+                 dEC = g.Count(r => (r.CourierDeclarationStatusCode == "M" || r.CourierDeclarationStatusCode == "X")),
+                 dEC_C = g.Count(r => (r.CourierDeclarationStatusCode == "M")),
+                 dEC_W = g.Count(r => (r.CourierDeclarationStatusCode == "X")),
+                 pAY = g.Count(r => (r.CourierPaymentStatusCode == "R")),
                  //PAY_RL = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.HighLowValue=="L")),
-                 PAYReadyNotFastindividual = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R" && r.dStatus.FastIndividualProcessCode == "F")),//Task 47220: שינוי לוגיקת תשלום מרוכז 
-                 MNFR = g.Count(r => (r.dStatus.CourierManifestStatusCode == "R" )),
-                 MNFR_RV = g.Count(r => (r.dStatus.CourierManifestStatusCode == "R" || r.dStatus.CourierManifestStatusCode == "V")),
-                 DECR = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "R" )),
-                 DECR_RV = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "R" || r.dStatus.CourierDeclarationStatusCode == "V")),
-                 HOLD = g.Count(r => (r.dStatus.CourierPendingReasonCode != null)),
-                 ACC = g.Count(r => (r.declaration.MamanStatusCode == "2" || r.dStatus.SpecialActionStatus == "X")),
-                 ACC_W = g.Count(r => (r.declaration.MamanStatusCode == "2")),
-                 ACC_WS = g.Count(r => (r.dStatus.SpecialActionStatus == "X")),
+                 PAYReadyNotFastindividual = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.FastIndividualProcessCode == "F")),//Task 47220: שינוי לוגיקת תשלום מרוכז 
+                 MNFR = g.Count(r => (r.CourierManifestStatusCode == "R" )),
+                 MNFR_RV = g.Count(r => (r.CourierManifestStatusCode == "R" || r.CourierManifestStatusCode == "V")),
+                 DECR = g.Count(r => (r.CourierDeclarationStatusCode == "R" )),
+                 DECR_RV = g.Count(r => (r.CourierDeclarationStatusCode == "R" || r.CourierDeclarationStatusCode == "V")),
+                 HOLD = g.Count(r => (r.CourierPendingReasonCode != null)),
+                 ACC = g.Count(r => (r.StorageSiteStatusCode == "2" || r.SpecialActionStatus == "X")),
+                 ACC_W = g.Count(r => (r.StorageSiteStatusCode == "2")),
+                 ACC_WS = g.Count(r => (r.SpecialActionStatus == "X")),
              });
 
             var tot =totQ.FirstOrDefault();

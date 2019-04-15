@@ -29,27 +29,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             var mess = new StringBuilder();
             var context = CustomContext.GetContext(requestParams.Tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            myDeclarationQueryService.LoadSupplierInvoicesWithItems = false;
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
-            var objectTableId =ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
             var qs = new DeclarationCourierStatusQueryService(context);
             List<string> lockedDeclarations = new List<string>();
-            List <DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
+            List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
             listPM = qs.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
             if (listPM.Count == 0)
             {
                 mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Manifest) send for master {requestParams.AppicationId} ");
             }
 
-            foreach (var itemPM in listPM)
+            foreach (DeclarationCourierStatusPM itemPM in listPM)
             {
                 try
                 {
+                    var myDeclarationQueryService = new DeclarationQueryService(context);
+                    myDeclarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
                     DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPM.DeclarationId, true, false);
                     if (declarationPM != null)
                     {
@@ -73,33 +73,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         if (isUpdateDeclaration)
                         {
-                            if (declarationPM.Consignments != null)
+                            if (declarationPM.Consignments != null && declarationPM.Consignments.Count > 0)
                             {
+                                LogMessagingUtil.Instance.AppendLine("DeclarationUpdateService.Update for declaration: " + declarationPM.CustomFileNo + " declarationPM.ImporterName: " + declarationPM.ImporterName + "\n");
                                 declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                                 declarationPM.Consignments.FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
                                 declarationPM.Consignments.FirstOrDefault().UnloadPortCode = customResponse.StorageSiteCode;
                                 declarationPM.Consignments.FirstOrDefault().StorageSiteCode = customResponse.StorageSiteCode;
                                 myDeclarationUpdateService.Update(declarationPM, true);
 
-                                var requestParams1170 = new MANIFESTRequestRequestParams()
+                                if (itemPM.CourierManifestStatusCode == "V")
                                 {
-                                    Tenant = requestParams.Tenant,
-                                    LoggingEnabled = true,
-                                    LoggingObjectTableId = objectTableId,
-                                    LoggingEntityId = itemPM.DeclarationId,
-                                    LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                                    LoggingEntityId2 = objectTableIdCourierMaster,
-                                    InterfaceTypeCode = "1170",
-                                    LoggingUserId = requestParams.LoggingUserId,
-                                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                                    DeclarationId = itemPM.DeclarationId,
-                                    LoggingEntityReference = itemPM.DeclarationId,
+                                    var requestParams1170 = new MANIFESTRequestRequestParams()
+                                    {
+                                        Tenant = requestParams.Tenant,
+                                        LoggingEnabled = true,
+                                        LoggingObjectTableId = objectTableId,
+                                        LoggingEntityId = itemPM.DeclarationId,
+                                        LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
+                                        LoggingEntityId2 = objectTableIdCourierMaster,
+                                        InterfaceTypeCode = "1170",
+                                        LoggingUserId = requestParams.LoggingUserId,
+                                        RequestVIA = SendRequestVIA.WebServiceBatch,
+                                        DeclarationId = itemPM.DeclarationId,
+                                        LoggingEntityReference = itemPM.DeclarationId,
 
-                                };
-                                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
-                                LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
-                                mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                                    };
+                                    SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false, DateTime.Now.AddMinutes(2));
+                                    LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage From UniCourierBatchSendUCBCMSS_MsgResponseService ({itemPM.DeclarationId})");
+                                    mess.AppendLine($" CreateSheetSBQMessage From UniCourierBatchSendUCBCMSS_MsgResponseService ({itemPM.DeclarationId})");
+
+                                }
                             }
+                        }
+                        else
+                        {
+                            LogMessagingUtil.Instance.AppendLine($"GetSingleGeneralLockNOWAIT({declarationPM.CustomFileNo}) ");
+                            //Task .....
                         }
                     }
                 }

@@ -120,6 +120,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 {
                     throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
                 }
+                else
+                {
+                    if (_MyDeclarationPM.DeclarationStatusTypeCode == "1")
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Status is 1 (canceled) " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                    if (_MyDeclarationPM.IsClose)
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Is Closed " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                }
             }
             else
             {
@@ -165,6 +178,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 if (_MyDeclarationPM == null)
                 {
                     throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+                else
+                {
+                    if (_MyDeclarationPM.DeclarationStatusTypeCode == "1")
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Status is 1 (canceled) " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                    if (_MyDeclarationPM.IsClose)
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Is Closed " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
                 }
             }
 

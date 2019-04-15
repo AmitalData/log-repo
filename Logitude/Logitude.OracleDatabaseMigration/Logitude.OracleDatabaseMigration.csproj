@@ -264,6 +264,18 @@
     <Compile Include="Migrations\201903101620062_AddMigrationTruckerIdCourier.Designer.cs">
       <DependentUpon>201903101620062_AddMigrationTruckerIdCourier.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904101034317_AddDeclarationCourierStatusesLastMileFields.cs" />
+    <Compile Include="Migrations\201904101034317_AddDeclarationCourierStatusesLastMileFields.Designer.cs">
+      <DependentUpon>201904101034317_AddDeclarationCourierStatusesLastMileFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904111219483_AddStorageSiteStatusCourier.cs" />
+    <Compile Include="Migrations\201904111219483_AddStorageSiteStatusCourier.Designer.cs">
+      <DependentUpon>201904111219483_AddStorageSiteStatusCourier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904140654179_AddMigrationDelMamanStatusCodeDec.cs" />
+    <Compile Include="Migrations\201904140654179_AddMigrationDelMamanStatusCodeDec.Designer.cs">
+      <DependentUpon>201904140654179_AddMigrationDelMamanStatusCodeDec.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -448,6 +460,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903101620062_AddMigrationTruckerIdCourier.resx">
       <DependentUpon>201903101620062_AddMigrationTruckerIdCourier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904101034317_AddDeclarationCourierStatusesLastMileFields.resx">
+      <DependentUpon>201904101034317_AddDeclarationCourierStatusesLastMileFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904111219483_AddStorageSiteStatusCourier.resx">
+      <DependentUpon>201904111219483_AddStorageSiteStatusCourier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904140654179_AddMigrationDelMamanStatusCodeDec.resx">
+      <DependentUpon>201904140654179_AddMigrationDelMamanStatusCodeDec.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

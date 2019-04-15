@@ -27,6 +27,7 @@ using UnifreightIIG.Common.MessageLib.Docs;
 using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.CustomsMessaging.MessagingServices;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -61,9 +62,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             string notificationDefinitionCode = "";
             string notificationDeclaration = "";
-            string notificationDescription = ""; 
-            string notificationStatusCode = ""; 
-            string assigneToNotificationTypeCode = "I"; 
+            string notificationDescription = "";
+            string notificationStatusCode = "";
+            string assigneToNotificationTypeCode = "I";
 
             switch (customResponse.MessageToAgent.msgCode)
             {
@@ -72,7 +73,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case 5:
                     notificationDefinitionCode = "5101N";
                     assigneToNotificationTypeCode = "I";
-                    notificationDescription = "הודעה לסוכן"; 
+                    notificationDescription = "הודעה לסוכן";
                     if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
                     {
                         notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
@@ -80,7 +81,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
                     {
-                        notificationDescription = notificationDescription + " בגין בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1; 
+                        notificationDescription = notificationDescription + " בגין בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     }
                     notificationStatusCode = "VAN";
                     break;
@@ -91,38 +92,63 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case 11:
                     /*notificationDefinitionCode = "5101I";
                     assigneToNotificationTypeCode = "I"; */
-                    notificationDefinitionCode = "";
-                    notificationDescription = "הודעה על תצהיר תקופתי העומד לפוג ";
+                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 1163) //Deposition
+                    {
+                        string importerVAT = null;
+                        string customsVendorId = null;
+                        string[] msgString = customResponse.MessageToAgent.msgString.Split(new[] { "היבואן: " }, StringSplitOptions.None);
+                        if (msgString != null)
+                        {
+                            string[] message = msgString[1].Split(" ".ToCharArray());
+                            importerVAT = message[0];
+                        }
+                        string[] messageSplit = customResponse.MessageToAgent.msgString.Split(new[] { "הספק: " }, StringSplitOptions.None);
+                        if (msgString != null)
+                        {
+                            string[] message = messageSplit[1].Split(" ".ToCharArray());
+                            string customsVendorCode = message[0];
+                            customsVendorId = CheckIfCustomsVendorCodeExist(customsVendorCode, requestParams.Tenant);
+                        }
+                        if (!string.IsNullOrWhiteSpace(customsVendorId))
+                        {
+                            SendImporterDeclarationRequest(requestParams, importerVAT, customsVendorId);
+                        }
+                    }
+                    else
+                    {
+                        notificationDefinitionCode = "";
+                        notificationDescription = "הודעה על תצהיר תקופתי העומד לפוג ";
+                    }
                     break;
                 case 7:
                     notificationDefinitionCode = "5101D";
                     notificationDescription = "הצהרה נותבה לתור בקרת מסמכים";
                     notificationStatusCode = "VCI"; // moran 1.8.16 - Task 21654 - change CDC to VCI
-                    assigneToNotificationTypeCode = "I"; 
+                    assigneToNotificationTypeCode = "I";
                     break;
                 case 8:
                     notificationDefinitionCode = "5101T";
                     notificationDescription = "הצהרה נותבה לתור בחינה";
                     notificationStatusCode = "VCC";
-                    assigneToNotificationTypeCode = "I"; 
+                    assigneToNotificationTypeCode = "I";
                     break;
                 case 9:
                     notificationDefinitionCode = "5101C";
                     notificationDescription = "הצהרה נותבה לתור רשות";
                     notificationStatusCode = "VCR";
-                    assigneToNotificationTypeCode = "I"; 
+                    assigneToNotificationTypeCode = "I";
                     break;
                 case 12:
                     notificationDefinitionCode = "5101G";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "ביטול אחסנה להצהרה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     break;
-                case 13: 
+                case 13:
                     notificationDefinitionCode = "5101U";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "עדכון אחסנה להצהרה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     break;
-                case 14: 
+                case 14:
                     notificationDefinitionCode = "5101S";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "נוצרה בקשת אחסנה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
@@ -138,6 +164,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "אישור פריקה/טעינה למצהר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     notificationStatusCode = "VCP";
+                    break;
+                case 22:
+                    notificationDescription = "ממתין ליסמ " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                    notificationStatusCode = "VCS";
+                    break;
+                case 23:
+                    notificationDescription = "ממתין ליסמ ולבקרת מסמכים " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                    notificationStatusCode = "VCD";
+                    break;
+                case 24:
+                    notificationDescription = "ממתין לביטחון " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                    notificationStatusCode = "VCE";
+                    break;
+                case 25:
+                    notificationDescription = "ממתין לביטחון ולבקרת מסמכים " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                    notificationStatusCode = "VCA";
+                    break;
+                case 26:
+                    notificationDescription = "ממתין לביטחון וליסמ " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                    notificationStatusCode = "VCG";
+                    break;
+                case 27:
+                    notificationDescription = "ממתין לבטחון, יסמ ולבקרת מסמכים " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                    notificationStatusCode = "VCT";
                     break;
                 default:
                     notificationDefinitionCode = "5101N";
@@ -155,7 +205,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString;
             }
 
-            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015) 
+            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015)
             {
                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                 LogMessagingUtil.Instance.AppendLine("NotificationDeclaration = " + notificationDeclaration);
@@ -182,7 +232,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
 
-                if(customResponse.MessageToAgent.msgCode == 14 || customResponse.MessageToAgent.msgCode == 13)
+                if (customResponse.MessageToAgent.msgCode == 14 || customResponse.MessageToAgent.msgCode == 13)
                 {
                     var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                     this._MyDeclarationPM.StorageStatusCode = "3";
@@ -196,13 +246,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (this._MyDeclarationPM.IsCourierDeclaration == true)
                 {
+                    DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                     switch (customResponse.MessageToAgent.msgCode)
                     {
                         case 7:
+                            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                            this._MyDeclarationPM.CourierCustomStatusCode = "2";
+                            this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
+                            this._MyDeclarationPM.CourierSuspentionCode = "25";
+                            declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            break;
                         case 8:
                         case 9:
                         case 16:
-                            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
@@ -214,6 +270,48 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             notificationDescription = "התקבל מסר שטר מטען מאסטר מחברת התעופה";
                             notificationStatusCode = "VCM";
                             assigneToNotificationTypeCode = "I";
+                            break;
+                        case 22:
+                            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                            this._MyDeclarationPM.CourierCustomStatusCode = "2";
+                            this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
+                            this._MyDeclarationPM.CourierSuspentionCode = "30";
+                            declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            break;
+                        case 23:
+                            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                            this._MyDeclarationPM.CourierCustomStatusCode = "2";
+                            this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
+                            this._MyDeclarationPM.CourierSuspentionCode = "31";
+                            declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            break;
+                        case 24:
+                            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                            this._MyDeclarationPM.CourierCustomStatusCode = "2";
+                            this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
+                            this._MyDeclarationPM.CourierSuspentionCode = "32";
+                            declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            break;
+                        case 25:
+                            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                            this._MyDeclarationPM.CourierCustomStatusCode = "2";
+                            this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
+                            this._MyDeclarationPM.CourierSuspentionCode = "33";
+                            declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            break;
+                        case 26:
+                            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                            this._MyDeclarationPM.CourierCustomStatusCode = "2";
+                            this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
+                            this._MyDeclarationPM.CourierSuspentionCode = "34";
+                            declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            break;
+                        case 27:
+                            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                            this._MyDeclarationPM.CourierCustomStatusCode = "2";
+                            this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
+                            this._MyDeclarationPM.CourierSuspentionCode = "35";
+                            declarationUpdateService.Update(this._MyDeclarationPM, true);
                             break;
                     }
                 }
@@ -243,7 +341,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             MyResponseData.ApplicationID = requestParams.AppicationId;
             MyResponseData.Succeeded = true;
             MyResponseData.UserMessage = notificationDescription;
-            
+
             if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(notificationStatusCode))
             {
                 LogMessagingUtil.Instance.AppendLine("Sent status " + notificationStatusCode + " to UNF");
@@ -268,7 +366,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var newNotificationPM = new NotificationPM();
             newNotificationPM.ChangeSetOp = ChangeSetOperation.Insert;
             newNotificationPM.Tenant = tenant;
-            newNotificationPM.NotificationDefinitionCode = notificationDefinitionCode;          
+            newNotificationPM.NotificationDefinitionCode = notificationDefinitionCode;
             newNotificationPM.CreateDate = DateTime.Now;
             newNotificationPM.Description = description;
             newNotificationPM.Reference2Number = responseToMessage;
@@ -287,7 +385,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customerId = this._MyDeclarationPM.CustomerId;
                 referentUserId = this._MyDeclarationPM.ReferentUserId;
             }
-            if(MyRequestSheetParam.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral"))
+            if (MyRequestSheetParam.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral"))
             {
                 newNotificationPM.EntityId = MyRequestSheetParam.EntityId1;
                 newNotificationPM.ObjectTableId = MyRequestSheetParam.ObjectTableId1;
@@ -304,7 +402,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             notificationUpdateService.Update(newNotificationPM, true);
         }
-
 
         private void RaiseEvent(DeclarationPM dirtyDeclarationPM, string code, string remarks)
         {
@@ -372,9 +469,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             try
             {
-                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
-                    , false
-                    );
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams, false, DateTime.Now.AddMinutes(2));
             }
             catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
             {
@@ -384,6 +479,56 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 throw;
             }
+        }
+
+        void SendImporterDeclarationRequest(GenericRequestParams requestParams, string importerNumber, string vendorCode)
+        {
+            DateTime today = DateTime.Today;
+            string loggingUserId = AuthenticationUtil.ResolveUserId(requestParams.Tenant);
+            var newImporterDeclarationRequestParams = new ImporterDeclarationRequestParams()
+            {
+                LoggingEnabled = true,
+                LoggingUserId = loggingUserId,
+                Tenant = requestParams.Tenant,
+                RequestName = "Importer Declaration Request",
+                ResponseName = "Importer Declaration Request",
+                IsByExpireDate = false,
+                IsByType = true,
+                ImporterNumber = importerNumber,
+                Code = vendorCode,
+                DeclarationConect = "2",
+                FromDate = today.AddDays(-1),
+                ToDate = today.AddDays(365),
+                RequestVIA = SendRequestVIA.WebServiceBatch
+            };
+
+            var service = new VE_8326_ImporterDeclarationMessagingService();
+            var responseData = service.Send(newImporterDeclarationRequestParams);
+            if (!responseData.Succeeded)
+            {
+                LogMessagingUtil.Instance.AppendLine("Request Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
+                return;
+            }
+            LogMessagingUtil.Instance.AppendLine("Request Succeeded " + responseData.CustomsRequestsSheetId);
+        }
+
+        string CheckIfCustomsVendorCodeExist(string vendorNumber, int tenant)
+        {
+
+            if (string.IsNullOrWhiteSpace(vendorNumber))
+            {
+                return null;
+            }
+
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            CustomsVendorQueryService query = new CustomsVendorQueryService(customContext);
+            string vendorId = query.GetIdByVendorNumber(vendorNumber, tenant);
+            if (!string.IsNullOrWhiteSpace(vendorId))
+            {
+                return vendorId;
+            }
+
+            return null;
         }
     }
 }

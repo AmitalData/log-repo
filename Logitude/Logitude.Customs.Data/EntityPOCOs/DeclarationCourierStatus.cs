@@ -57,6 +57,19 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ManualProcessCode { get; set; }
         [Column("TerminalSuspentionNumber")]
 	    public string TerminalSuspentionNumber { get; set; }
+        [Column("LastMileStatusCode")]
+	    public string LastMileStatusCode { get; set; }
+        [Column("LastMileStatusDate")]
+	    public DateTime? LastMileStatusDate { get; set; }
+        [Column("LastMileStatusRemarks")]
+	    public string LastMileStatusRemarks { get; set; }
+        [ForeignKey("MamanStatus")]
+        [Column("StorageSiteStatusCode")]
+	    public string StorageSiteStatusCode { get; set; }
+	      
+        public virtual MamanStatus MamanStatus { get; set; }
+        [Column("StorageSiteErrorText")]
+	    public string StorageSiteErrorText { get; set; }
     }
 }
 	 
