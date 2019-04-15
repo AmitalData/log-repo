@@ -13,7 +13,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers; 
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;  
-using WebFreight.Web.DataContracts;  
+using WebFreight.Web.DataContracts;   
 using WebFreight.Web.Helpers;  
 using WebFreight.Web.Security;     
 using WebFreight.Web.WebServices;
