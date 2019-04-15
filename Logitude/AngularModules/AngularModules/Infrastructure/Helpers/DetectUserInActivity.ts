@@ -80,7 +80,7 @@ export class DetectUserInActivity {
                 messageWindow.IsOverAll = true;
                 var message: string = this.IsTokenExpiration ? "Your session has expired, Please login again" :"Logged out due to inactivity, you can login again to enter the system";
                 messageWindow.Show(message);
-
+                SessionLocator.StopApplicationTimers();
                 messageWindow.WindowClosed.subscribe(s => {
                     if (s) {
                         SessionLocator.HomeComponent.SignoutClicked();
