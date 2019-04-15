@@ -87,6 +87,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPM;
         }
 
+      
+
+
         public ARInvoicePM GetReadyForTransferOrErrorInTransferInvoicePM(int tenant)
         {
             ARInvoicePM entityPM = null;

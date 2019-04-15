@@ -45,8 +45,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public bool InActive { get; set; }
         [Column("Description")]
 	    public string Description { get; set; }
+        [ForeignKey("Seller")]
         [Column("SellerId")]
 	    public string SellerId { get; set; }
+	      
+        public virtual Card Seller { get; set; }
         [Column("CurrencyId")]
 	    public string CurrencyId { get; set; }
         [Column("CreateDate")]

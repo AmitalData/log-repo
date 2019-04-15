@@ -6,6 +6,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { TariffDomainService, TariffSummery } from '../../Services/TariffDomainService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ListComponentArgs } from '../../../Infrastructure/Args';
 
 @Component({
     selector: 'TariffModuleWorkspaceComponent',
@@ -15,7 +16,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 })
 
 export class TariffModuleWorkspaceComponent implements OnInit {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
         this.RunComponent();
@@ -41,6 +42,8 @@ export class TariffModuleWorkspaceComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.CurrentSession == null)
+            this.CurrentSession = SessionLocator.SelectedSession;
         this.InitComponent();
     }
 
@@ -83,7 +86,22 @@ export class TariffModuleWorkspaceComponent implements OnInit {
     }
 
     public ViewTariffs(code: string) {
-
+        if (code = "A") {
+            var listArgs = new ListComponentArgs();
+            listArgs.QueryCode = "AFTA";
+            listArgs.ObjectTableName = "Tariff";
+            listArgs.DisplayTitle = "Air Freight Cost Tariffs";
+            listArgs.BackButtonTitle = "Tariff";
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run(listArgs);
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                        this.CurrentSession.AddMenuReference(cmpRef);
+                    });
+            });
+        }
     }
 
     private Retries: number = 0;

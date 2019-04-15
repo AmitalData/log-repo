@@ -20,12 +20,16 @@ export class TariffList {
 	Description: string;
 	SellerId: string;
 	CurrencyId: string;
+	CreateDate: Date;
 	UpdateDate: Date;
 	PriceSteps: string;
 	TypeCode: string;
 	TypeName: string;
 	LastVersion: number;
 	ContractNumber: number;
+	CreatedByUserName: string;
+	SellerName: string;
+	UpdatedByUserName: string;
 	
 }
  
