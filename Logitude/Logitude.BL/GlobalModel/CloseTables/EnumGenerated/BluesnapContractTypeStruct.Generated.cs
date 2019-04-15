@@ -15,6 +15,7 @@ namespace Logitude.BL.GlobalModel.CloseTables
        public const string eAWB = "EAWB";  
        public const string OneTime = "OT";  
        public const string eAWBstock = "EABS";  
+       public const string INTTRAstock = "INTS";  
     }
 }
 

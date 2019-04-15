@@ -162,6 +162,9 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BluesnapOneTimeContract { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string BluesnapInttraStockContractId { get; set; }
+
 
 
 
@@ -195,6 +198,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public int BluesnapEAWBContractQTY { get; set; }
         public int BluesnapEAWBSContractQTY { get; set; }
         public int BluesnapOneTimeContractQTY { get; set; }
+        public int BluesnapInttraStockContractQTY { get; set; }
         public bool IsDEXXConnectionEnabled { get; set; }
         public DateTime? LastFWBCargonautSentDate { get; set; }
         public DateTime? LastFHLCargonautSentDate { get; set; }

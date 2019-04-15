@@ -77,11 +77,13 @@ export class TenantManagementList {
 		BluesnapEAWBContractId: string;
 		BluesnapEAWBSContractId: string;
 		BluesnapOneTimeContract: string;
+		BluesnapInttraStockContractId: string;
 		BluesnapContractQTY: number;
 		BluesnapCRMContractQTY: number;
 		BluesnapEAWBContractQTY: number;
 		BluesnapEAWBSContractQTY: number;
 		BluesnapOneTimeContractQTY: number;
+		BluesnapInttraStockContractQTY: number;
 		AWBMessagesCCSTypeCode: string;
 		PIMA: string;
 		IsEAWBOnlyDemo: boolean;
