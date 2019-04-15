@@ -3,11 +3,16 @@ import { NewAirFreightCostComponent } from './Components/NewEntity/NewAirFreight
 import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComponent';
 
 
+// Tabs
+import { TariffGeneralTabComponent } from './Components/EditTabs/Tariff/TariffGeneralTabComponent';
+
+
 export const Components =
     [
         TariffModuleWorkspaceComponent,
         NewAirFreightCostComponent,
-        FieldTemplateComponent
+        FieldTemplateComponent,
+        TariffGeneralTabComponent
     ];
 
 export const ControlsComponents =
@@ -22,7 +27,8 @@ export class ModuleDeclarations {
         switch (name) {
             case "TariffModuleWorkspaceComponent": { myResult = TariffModuleWorkspaceComponent; break; }
             case "NewAirFreightCostComponent": { myResult = NewAirFreightCostComponent; break; }
-            case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }                
+            case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
+            case "TariffGeneralTabComponent": { myResult = TariffGeneralTabComponent; break; }
         }
 
         return myResult;

@@ -28,7 +28,14 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "TMEmployeeTime";
 
-    private dateOfWorkMinutes = 0;
+
+    constructor() {
+        super();
+        this.DateOfWorkMinutes = 540;
+    }
+
+
+    private dateOfWorkMinutes: number;;
     get DateOfWorkMinutes() {
         return this.dateOfWorkMinutes;
     }
@@ -63,15 +70,8 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
         }
     }
 
-
-    constructor() {
-        super();
-       
-    }
-
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.EmployeeUserId = SessionLocator.LoggedUserId;
-        this.TimeRequired = 9;
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
         var daysofmonth = this.daysInMonth(new Date());
