@@ -90,6 +90,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 this._GatepassRequestPM.GatepassRequestStatus = "2";
                                 myEventContextTagModel.EventCode = "VGE";
                                 myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
+                                this.MyResponseData.HasException = true;
                                 this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
                             }
                             else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
@@ -105,6 +106,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 this._GatepassRequestPM.GatepassRequestStatus = "6";
                                 myEventContextTagModel.EventCode = "VGE";
                                 myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
+                                this.MyResponseData.HasException = true;
                                 this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
                             }
                             else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
