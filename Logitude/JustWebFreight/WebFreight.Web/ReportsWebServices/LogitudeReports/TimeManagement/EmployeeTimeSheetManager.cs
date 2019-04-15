@@ -143,6 +143,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             if (itemRow.DayOfWork.ToLower() == "friday" || itemRow.DayOfWork.ToLower() == "saturday")
                             {
                                 itemRow.RequiredWorkHours = "0";
+                                itemRow.RequiredWorkMins = 0;
                             }
                         }
 
@@ -181,7 +182,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
             }
 
-            myDataProvider.Total_RequiredWorkHours = myDataProvider.EmployeeTimeSheetList.Sum(a => a.RequiredWorkMins / 60.00);
+            myDataProvider.Total_RequiredWorkHours = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.RequiredWorkMins));
             myDataProvider.Total_TimeFromClock = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromClock));
             myDataProvider.Total_TimeFromOffice = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromOffice));
             myDataProvider.Total_TimeFromHome = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromHome));

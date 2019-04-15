@@ -6,11 +6,13 @@ using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Logitude.BL.Helpers
 {
@@ -21,41 +23,72 @@ namespace Logitude.BL.Helpers
         {
             if (shipmentComputedFields != null)
             {
+                bool isSaveShipmentComputedFields = false;
                 if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
                 {
-
-                    ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentComputedFields.Tenant);
-                    ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentComputedFields.Id, shipmentComputedFields.Tenant);
-                    if (shipmentPM != null)
+                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentComputedFields.Tenant);
+                    ShipmentComputedFields oldShipmentCompField = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentComputedFields.Id, shipmentComputedFields.Tenant);
+                    if (CheckIfShipmentComputedFieldsChange(oldShipmentCompField, shipmentComputedFields))
                     {
-                        shipmentPM.IsDepositionRequired = shipmentComputedFields.IsDepositionRequired;
-                        shipmentPM.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
-                        shipmentPM.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
-                        shipmentPM.IsMissingDocuments = shipmentComputedFields.IsMissingDocuments;
-                        shipmentPM.DocumentsSearchFields = shipmentComputedFields.DocumentsSearchFields;
-                        shipmentPM.MissingDocumentsCount = shipmentComputedFields.MissingDocumentsCount;
-                        shipmentPM.MissingDocumentsNames = shipmentComputedFields.MissingDocumentsNames;
-                        shipmentPM.RequestedDocumentsCount = shipmentComputedFields.RequestedDocumentsCount;
-                        shipmentPM.NumberOfHouses = shipmentComputedFields.NumberOfHouses;
-                        shipmentPM.ImporterDepositionRequestDetails = shipmentComputedFields.ImporterDepositionRequestDetails;
-                        shipmentPM.IsShipmentComputedFieldChange = true;
+                        ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentComputedFields.Tenant);
+                        ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentComputedFields.Id, shipmentComputedFields.Tenant);
+                        if (shipmentPM != null)
+                        {
+                            shipmentPM.IsDepositionRequired = shipmentComputedFields.IsDepositionRequired;
+                            shipmentPM.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
+                            shipmentPM.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
+                            shipmentPM.IsMissingDocuments = shipmentComputedFields.IsMissingDocuments;
+                            shipmentPM.DocumentsSearchFields = shipmentComputedFields.DocumentsSearchFields;
+                            shipmentPM.MissingDocumentsCount = shipmentComputedFields.MissingDocumentsCount;
+                            shipmentPM.MissingDocumentsNames = shipmentComputedFields.MissingDocumentsNames;
+                            shipmentPM.RequestedDocumentsCount = shipmentComputedFields.RequestedDocumentsCount;
+                            shipmentPM.NumberOfHouses = shipmentComputedFields.NumberOfHouses;
+                            shipmentPM.ImporterDepositionRequestDetails = shipmentComputedFields.ImporterDepositionRequestDetails;
+                            shipmentPM.LastDocumentDateTime = shipmentComputedFields.LastDocumentDateTime;
 
-
-                        IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
-                        ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
-                        shipmentService.Update();
+                            shipmentPM.IsShipmentComputedFieldChange = true;
+                            IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
+                            ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
+                            shipmentService.entityComputedFields = shipmentComputedFields;
+                            shipmentService.Update();
+                            isSaveShipmentComputedFields = true;
+                        }
                     }
-
                 }
-                else
+
+                if (!isSaveShipmentComputedFields)
                 {
                     ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentComputedFields.Tenant);
                     shipmentComputedFieldsRepository.Update(shipmentComputedFields);
                     shipmentComputedFieldsRepository.SubmitChanges();
+                    isSaveShipmentComputedFields = true;
                 }
             }
-
         }
+
+
+        public bool CheckIfShipmentComputedFieldsChange(ShipmentComputedFields oldShipmentComputedFields, ShipmentComputedFields newShipmentComputedFields)
+        {
+            bool result = false;
+            if (oldShipmentComputedFields != null && newShipmentComputedFields != null)
+            {
+                if (oldShipmentComputedFields.IsMissingDocuments != newShipmentComputedFields.IsMissingDocuments) return true;
+                //if (oldShipmentComputedFields.DocumentsSearchFields != newShipmentComputedFields.DocumentsSearchFields) return true;
+                if (oldShipmentComputedFields.MissingDocumentsCount != newShipmentComputedFields.MissingDocumentsCount) return true;
+                if (oldShipmentComputedFields.MissingDocumentsNames != newShipmentComputedFields.MissingDocumentsNames) return true;
+                if (oldShipmentComputedFields.IsRequestedDocuments != newShipmentComputedFields.IsRequestedDocuments) return true;
+                if (oldShipmentComputedFields.RequestedDocumentsCount != newShipmentComputedFields.RequestedDocumentsCount) return true;
+                if (oldShipmentComputedFields.NumberOfHouses != newShipmentComputedFields.NumberOfHouses) return true;
+                if (oldShipmentComputedFields.IsDigitalSignRequired != newShipmentComputedFields.IsDigitalSignRequired) return true;
+                if (oldShipmentComputedFields.IsDepositionRequired != newShipmentComputedFields.IsDepositionRequired) return true;
+                if (oldShipmentComputedFields.ImporterDepositionRequestDetails != newShipmentComputedFields.ImporterDepositionRequestDetails) return true;
+                //if (oldShipmentComputedFields.LastDocumentDateTime != newShipmentComputedFields.LastDocumentDateTime) return true;
+            }
+            return result;
+        }
+
+
+
 
     }
 }
