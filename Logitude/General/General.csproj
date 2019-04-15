@@ -568,6 +568,7 @@
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Abed] updateTasksSchedulerFieldType.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman1] UpdateARInvoicesIsPrinted.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman2] UpdateShipmentARInvoices.sql" />
+    <Content Include="Main Branch\2019\04 - 2019\Day 15 [Khalid] delete Wrong QueryCode.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 15 [Khalid] Set Default Value for BluesnapIntraContract.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 07 [Rabaia] DeleteTaskSchedulerHistories SP.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
