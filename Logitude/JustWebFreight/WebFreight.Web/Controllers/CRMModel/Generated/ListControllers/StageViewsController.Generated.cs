@@ -108,8 +108,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("Stage", "READ", authToken.Tenant);
 	                
 				int tenant = authToken.Tenant;
-				if(filters.Tenant != null)
-					tenant = filters.Tenant.Value;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
