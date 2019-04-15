@@ -143,6 +143,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             if (itemRow.DayOfWork.ToLower() == "friday" || itemRow.DayOfWork.ToLower() == "saturday")
                             {
                                 itemRow.RequiredWorkHours = "0";
+                                itemRow.RequiredWorkMins = 0;
                             }
                         }
 
