@@ -194,6 +194,17 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entityPM.JournalNumber = journal.JournalNumber;
                 }
             }
+
+            if (isNewState)
+            {
+                if (entityPM.NewConcurrencyGUID == null)
+                {
+                    entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                }
+            }
+
+            entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)
