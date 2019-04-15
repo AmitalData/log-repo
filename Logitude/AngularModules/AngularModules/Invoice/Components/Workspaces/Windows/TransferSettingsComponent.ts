@@ -474,6 +474,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         var timer = setInterval(function () {
             if (new_window) {
                 if (new_window.closed) {
+                    if (this.CurrentSession == null)
+                        this.CurrentSession = SessionLocator.SelectedSession;
                     this.CurrentSession.SessionEvent.emit({ Name: "QBOWindowCLosed", Timer: timer });
                 }
             }
