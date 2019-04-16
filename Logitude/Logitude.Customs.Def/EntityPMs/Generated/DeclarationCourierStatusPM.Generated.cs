@@ -917,52 +917,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string mamanStatusCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MamanStatusCode  
-	   {
-	    
-	     get
-		{
-		   return mamanStatusCode;
-		 }
-		 set
-		 {
-		   if(mamanStatusCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanStatusCode",OldValue=mamanStatusCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   mamanStatusCode=value;
-		   }
-			
-		 }
-	   }
-	  private string mamanErrorXml ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MamanErrorXml  
-	   {
-	    
-	     get
-		{
-		   return mamanErrorXml;
-		 }
-		 set
-		 {
-		   if(mamanErrorXml != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanErrorXml",OldValue=mamanErrorXml,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   mamanErrorXml=value;
-		   }
-			
-		 }
-	   }
 	  private string courierSuspentionCode ;
 	  	  
        
@@ -1212,6 +1166,75 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastMileStatusRemarks",OldValue=lastMileStatusRemarks,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   lastMileStatusRemarks=value;
+		   }
+			
+		 }
+	   }
+	  private string storageSiteStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteStatusCode  
+	   {
+	    
+	     get
+		{
+		   return storageSiteStatusCode;
+		 }
+		 set
+		 {
+		   if(storageSiteStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteStatusCode",OldValue=storageSiteStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string storageSiteErrorText ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteErrorText  
+	   {
+	    
+	     get
+		{
+		   return storageSiteErrorText;
+		 }
+		 set
+		 {
+		   if(storageSiteErrorText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteErrorText",OldValue=storageSiteErrorText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteErrorText=value;
+		   }
+			
+		 }
+	   }
+	  private string storageSiteStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteStatusName  
+	   {
+	    
+	     get
+		{
+		   return storageSiteStatusName;
+		 }
+		 set
+		 {
+		   if(storageSiteStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteStatusName",OldValue=storageSiteStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteStatusName=value;
 		   }
 			
 		 }

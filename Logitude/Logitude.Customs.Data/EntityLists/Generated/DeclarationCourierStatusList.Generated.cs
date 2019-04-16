@@ -93,10 +93,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string AcceptanceStatusCode  { get; set; }
        [DataMember]
-       public string MamanStatusCode  { get; set; }
-       [DataMember]
-       public string MamanErrorXml  { get; set; }
-       [DataMember]
        public string CourierSuspentionCode  { get; set; }
        [DataMember]
        public string CourierSuspentionName  { get; set; }
@@ -118,6 +114,12 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? LastMileStatusDate  { get; set; }
        [DataMember]
        public string LastMileStatusRemarks  { get; set; }
+       [DataMember]
+       public string StorageSiteStatusCode  { get; set; }
+       [DataMember]
+       public string StorageSiteErrorText  { get; set; }
+       [DataMember]
+       public string StorageSiteStatusName  { get; set; }
    }
 
 }
