@@ -56,6 +56,7 @@ using Logitude.Server.Tools.Counters;
 using WebFreight.Web.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Resolvers;
+using WebFreight.Web.Helpers.APIHelpers;
 
 namespace WebFreight.Web
 {
@@ -257,23 +258,24 @@ namespace WebFreight.Web
 
 
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.UseXmlSerializer = true;
-            //GlobalConfiguration.Configuration.Formatters.Add(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
-            //var builder = new ContainerBuilder();
-            //var config = GlobalConfiguration.Configuration;
-            //builder.RegisterType<BranchesController>();
-            ////builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            //var container = builder.Build();
-            //config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+			GlobalConfiguration.Configuration.Filters.Add(new ApiExceptionFilter());
+			//GlobalConfiguration.Configuration.Formatters.Add(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+			//var builder = new ContainerBuilder();
+			//var config = GlobalConfiguration.Configuration;
+			//builder.RegisterType<BranchesController>();
+			////builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+			//var container = builder.Build();
+			//config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
 
-            //GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+			//GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
 
-            //GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+			//GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
 
-            // Make long polling connections wait a maximum of 110 seconds for a
-            // response. When that time expires, trigger a timeout command and
-            // make the client reconnect.
-            GlobalHost.Configuration.ConnectionTimeout = TimeSpan.FromSeconds(110);
+			// Make long polling connections wait a maximum of 110 seconds for a
+			// response. When that time expires, trigger a timeout command and
+			// make the client reconnect.
+			GlobalHost.Configuration.ConnectionTimeout = TimeSpan.FromSeconds(110);
 
             // Wait a maximum of 30 seconds after a transport connection is lost
             // before raising the Disconnected event to terminate the SignalR connection.
