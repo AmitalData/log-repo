@@ -35,6 +35,7 @@ using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.BLExt;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -321,18 +322,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.CreateARInvoiceMessage(setApproved);
 
 
+            paymentRepository.Update(payment);
+            paymentRepository.SubmitChanges();
+
             // Full Accounting => Reconciliation
             if (theEntityPm.IsFullAccounting == true)
             {
                 if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
-                if(theEntityPm.StatusCode != "VD")
+                if (theEntityPm.StatusCode != "VD")
                     CreateReconciliationForARPayment(theEntityPm);
             }
 
-            paymentRepository.Update(payment);
-            paymentRepository.SubmitChanges();
             this.TraceConnected();
             this.GetForeignFields();
             this.BuildEntitiesNumbers();
@@ -419,7 +421,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.Id = IdCounter.GetNumber("ARPayment", entityPM.Tenant).ToString();
             }
 
-            if (string.IsNullOrEmpty(entityPM.PaymentNo))
+            if (!entityPM.IsExternalEntity && string.IsNullOrEmpty(entityPM.PaymentNo))
             {
                 entityPM.PaymentNo = TableCounter.GetNumber(entityPM.Tenant, "ARPT", "DR", null).ToString();
             }
@@ -977,7 +979,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 arPaymentcheque.StatusCode = "1"; // In Cashbook  
                                 arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                                 arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
-
+                                
                                IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
                                 paymentUpdate.Update(arPaymentcheque);
 
@@ -1552,13 +1554,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             _reco.Number = "get";
             _reco.Tenant = paymentPM.Tenant;
             _reco.AccountId = paymentPM.GLAccountId;
+            _reco.AccountReconcileMethodCode = paymentPM.GLAccountRecoMethodCode;
             _reco.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
+
+            GLAccountListQueryService glaQuery = new GLAccountListQueryService(ctx);
+            GLAccountList gla = glaQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
+            if (gla != null)
+            {
+                _reco.AccountCurrencyId = gla.CurrencyId;
+                _reco.CurrencyCode = gla.CurrencyCode;
+            }
 
             // get payment line LT
             LedgerTransactionListQueryService ltListQuery = new LedgerTransactionListQueryService(ctx);
             List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
+
+            if (paymentPM.InvoicesTransactions.Count == 0)
+                return;
 
             // reco payment line
             var _recoPYLine = CreatePaymentRecoLine(paymentPM);
@@ -1726,7 +1740,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (!_payment.IsFullAccounting)
                 return;
 
-            bool showLocal = false;
+            ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
+            bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
 
             // Validate lines amount to reconcile
             if (_payment.InvoicesTransactions
@@ -1738,8 +1753,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // Validate sum of line's amount to reconcile
             decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
-            decimal payAmount = Convert.ToDecimal(_payment.GLAccountRecoMethodCode == "0" ? _payment.AmountInLocalCurrency : _payment.AmountInPaymentCurrency);
-            if (amount2reconcile > payAmount)
+            if (_payment.OpenAmount == null)
+            {
+                _payment.OpenAmount = 0;
+            }
+               
+            if (amount2reconcile > (decimal)_payment.OpenAmount)
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
 
 
@@ -1761,20 +1780,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             //
             // update invoices amount
-            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
-            {
-                //get invoice
-                ARInvoice invoice = GetInvoice(invTrans.SourceId, tenant);
+            //foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
+            //{
+            //    //get invoice
+            //    ARInvoice invoice = GetInvoice(invTrans.SourceId, tenant);
 
-                //update
-                double? invoiceAmountDue = MethodHelper.Round((invoice.AmountDue - (double)invTrans.AmountToReconcile), 2);
+            //    //update
+            //    double? invoiceAmountDue = MethodHelper.Round((invoice.AmountDue - (double)invTrans.AmountToReconcile), 2);
 
-                invoice.AmountDue = invoiceAmountDue;
-                invoice.AmountDueInLocalCurrency = MethodHelper.Round(invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate, 2);
-                invoice.AmountDueInProfitCurrency = MethodHelper.Round(invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate, 2);
+            //    invoice.AmountDue = invoiceAmountDue;
+            //    invoice.AmountDueInLocalCurrency = MethodHelper.Round(invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate, 2);
+            //    invoice.AmountDueInProfitCurrency = MethodHelper.Round(invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate, 2);
 
-                invoiceRepository.Update(invoice);
-            }
+            //    invoiceRepository.Update(invoice);
+            //}
 
 
 
@@ -1782,6 +1801,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        public ContactPM GetLoggedContactPM(int tenant)
+        {
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
         #endregion
     }
 }

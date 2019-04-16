@@ -283,6 +283,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool CustomerTenantShareImportFile { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool CustomerTenantShareExportFile { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool AllowAgentInCustomersLOV { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

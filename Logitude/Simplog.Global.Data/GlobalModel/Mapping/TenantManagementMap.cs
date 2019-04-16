@@ -28,6 +28,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapCRMContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BluesnapEAWBContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BluesnapEAWBSContractId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.BluesnapInttraStockContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BluesnapOneTimeContract).HasMaxLength(40).IsUnicode(false); 
            
             this.Property(t => t.AWBMessagesCCSTypeCode).HasMaxLength(10).IsUnicode(false);
@@ -52,6 +53,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapEAWBContractQTY).IsOptional();
             this.Property(t => t.BluesnapEAWBSContractQTY).IsOptional();
             this.Property(t => t.BluesnapOneTimeContractQTY).IsOptional();
+            this.Property(t => t.BluesnapInttraStockContractQTY).IsOptional();
 
             this.ToTable("TenantManagements");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -70,6 +72,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapEAWBContractQTY).HasColumnName("BluesnapEAWBContractQTY");
             this.Property(t => t.BluesnapEAWBSContractQTY).HasColumnName("BluesnapEAWBSContractQTY");
             this.Property(t => t.BluesnapOneTimeContractQTY).HasColumnName("BluesnapOneTimeContractQTY");
+            this.Property(t => t.BluesnapInttraStockContractQTY).HasColumnName("BluesnapInttraStockContractQTY");            
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.SuspendDate).HasColumnName("SuspendDate");
@@ -101,6 +104,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapCRMContractId).HasColumnName("BluesnapCRMContractId");
             this.Property(t => t.BluesnapEAWBContractId).HasColumnName("BluesnapEAWBContractId");
             this.Property(t => t.BluesnapEAWBSContractId).HasColumnName("BluesnapEAWBSContractId");
+            this.Property(t => t.BluesnapInttraStockContractId).HasColumnName("BluesnapInttraStockContractId");            
             this.Property(t => t.BluesnapOneTimeContract).HasColumnName("BluesnapOneTimeContract");
 
             this.Property(t => t.AWBMessagesCCSTypeCode).HasColumnName("AWBMessagesCCSTypeCode");
@@ -177,6 +181,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapCRMContractId);
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBContractId);
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBSContractId);
+            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapInttraStockContractId);
+
+            
             this.HasOptional(t => t.AWBMessagesCCSType).WithMany().HasForeignKey(d => d.AWBMessagesCCSTypeCode);
             this.HasOptional(t => t.TenantType).WithMany().HasForeignKey(d => d.TenantTypeCode);
 

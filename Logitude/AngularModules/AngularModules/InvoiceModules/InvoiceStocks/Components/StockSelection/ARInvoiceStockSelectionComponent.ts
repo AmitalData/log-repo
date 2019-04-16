@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { ARInvoiceStockList } from '../../../../Invoice/EntityLists/ARInvoiceStockList';
+import { ARInvoiceStockPM } from '../../../../Invoice/EntityPMs/ARInvoiceStockPM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { ARInvoiceStockListService } from '../../../../Invoice/Services/StandardLists/ARInvoiceStockListService';
 import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
-import { ARInvoiceStockPMService } from '../../../../Invoice/Services/StandardPMs/ARInvoiceStockPMService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
 
 @Component({
     moduleId: module.id,
@@ -14,11 +13,13 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 })
 
 export class ARInvoiceStockSelectionComponent {
+   
     public ObjectTableName: string = "ARInvoiceStock";
-    public StocksHeaderList: ARInvoiceStockList[] = [];
+    public StocksHeaderList: StockHeaderData [] = [];
     public StockLines: ARInvoiceStockLinePM[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    public StocksLineCount:number;
 
     constructor() {
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
@@ -29,29 +30,47 @@ export class ARInvoiceStockSelectionComponent {
         });
     }
 
-    private ARInvoiceStockListService: ARInvoiceStockListService;
+    private InvoiceDomainService: InvoiceDomainService;
     InitializeServices() {
-        this.ARInvoiceStockListService = new ARInvoiceStockListService();
+        this.InvoiceDomainService = new InvoiceDomainService();
     }
 
     private LoadData() {
         this.StocksHeaderList = [];
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.ARInvoiceStockListService.getAll().subscribe((myResponse: ServiceResponse) => {
+        this.InvoiceDomainService.GetListOfARInvoiceStockPM().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.StocksHeaderList = myResponse.Result;
+                var stockList = myResponse.Result;
+
+                stockList.forEach(item => {
+                    this.StocksHeaderList.push(new StockHeaderData(item))
+                });
+                
+                this.InvoiceStockSelectedItem = this.StocksHeaderList!= null? this.StocksHeaderList[0]: null;
             }
             this.CurrentSession.StopBusyIndicator();
         });
     }
 
-    private invoiceStockSelectedItem: ARInvoiceStockList = null;
+    private invoiceStockSelectedItem: StockHeaderData = null;
     public get InvoiceStockSelectedItem() {
         return this.invoiceStockSelectedItem;
     }
-    public set InvoiceStockSelectedItem(value: ARInvoiceStockList) {
+    public set InvoiceStockSelectedItem(value: StockHeaderData) {
         if (this.invoiceStockSelectedItem != value) {
             this.invoiceStockSelectedItem = value;
+            this.FillStockLines(value);
+        }
+    }
+
+    FillStockLines(stock: StockHeaderData): any {
+        if (stock != null) {
+            this.StockLines = [];
+            this.StockLineSelectedItem = null;
+            stock.StockHeader.ARInvoiceStockLines.forEach(item => {
+                this.StockLines.push(item);
+            });
+            this.StocksLineCount = this.StockLines.length;
         }
     }
 
@@ -65,11 +84,11 @@ export class ARInvoiceStockSelectionComponent {
         }
     }
 
-    EditStockClicked(item: ARInvoiceStockList) {
+    EditStockClicked(item: StockHeaderData) {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Edit ";
+        logWindow.Title = "Edit AR Invoice Stock";
         logWindow.IsFillScreen = true;
-        logWindow.ShowEditComponent(item.Id, "ARInvoiceStock");
+        logWindow.ShowEditComponent(item.StockHeader.Id, "ARInvoiceStock");
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 this.LoadData();
@@ -95,5 +114,41 @@ export class ARInvoiceStockSelectionComponent {
 
     OkClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }
+}
+export class StockHeaderData {
+
+    StockHeader: ARInvoiceStockPM;
+
+    constructor(entity: ARInvoiceStockPM) {
+        this.StockHeader = entity;
+    }
+
+    get LinesCount() { return this.StockHeader.LinesCount; }
+    set LinesCount(newValue: string) {
+        if (this.StockHeader.LinesCount != newValue) {
+            this.StockHeader.LinesCount = newValue;
+        }
+    }
+
+    get Name() { return this.StockHeader.Name; }
+    set Name(newValue: string) {
+        if (this.StockHeader.Name != newValue) {
+            this.StockHeader.Name = newValue;
+        }
+    }
+
+    get EndDate() { return this.StockHeader.EndDate; }
+    set EndDate(newValue: Date) {
+        if (this.StockHeader.EndDate != newValue) {
+            this.StockHeader.EndDate = newValue;
+        }
+    }
+
+    get Description() { return this.StockHeader.Description; }
+    set Description(newValue: string) {
+        if (this.StockHeader.Description != newValue) {
+            this.StockHeader.Description = newValue;
+        }
     }
 }

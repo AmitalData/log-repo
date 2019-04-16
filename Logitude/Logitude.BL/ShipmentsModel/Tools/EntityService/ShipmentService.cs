@@ -97,7 +97,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private AddressRepository myAddressRepository;
         private PortRepository myPortRepository;
         private ShipmentComputedFieldsRepository shipmentComputedFieldsRepository;
-        private ShipmentComputedFields entityComputedFields;
         private ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository;
         private ShipmentAdditionalCloudData shipmentAdditionalCloudData;
         private DocumentsFilingRepository documentsFilingRepository;
@@ -109,6 +108,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ContactPM loggedContact;
         private ShipmentAssemblyRepository shipmentAssemblyRepository;
         List<ShipmentPM> housesList = new List<ShipmentPM>();
+        public ShipmentComputedFields entityComputedFields;
         private bool IsLCLEntity;
         private bool IsFCLEntity;
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
@@ -418,7 +418,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentReceivablesCollection();
                     this.UpdateShipmentAWBPrintOnliesCollection();
                     this.UpdateShipmentConsoleShipmentsCollection();
-                    this.UpdateShipmentFollowUpsCollection();
+                    this.UpdateShipmentFollowUpsCollection("InSert");
                     this.UpdateShipmentCarrierStatusesCollection();
                     this.UpdateShipmentAWBOCIsCollection();
                     this.UpdateShipmentCommoditiesCollection();
@@ -452,7 +452,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     RunAutomation("OnUpdate");
 
+                    this.UpdateShipmentFollowUpsCollection();
+
                     UpdateShipmentComputedFields();
+
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
                     this.ComputeAgentComputed(entityPM, entityPoco);
@@ -531,26 +534,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void UpdateShipmentComputedFields()
         {
-
-            if (entityComputedFields == null)
-            {
-                entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
-            }
-
             if (entityComputedFields != null)
             {
-                if (entityPM.IsShipmentComputedFieldChange)
-                {
-                    if (entityComputedFields.IsDepositionRequired != entityPM.IsDepositionRequired || entityComputedFields.ImporterDepositionRequestDetails != entityPM.ImporterDepositionRequestDetails)
-                    {
-                        entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
-                        entityComputedFields.ImporterDepositionRequestDetails = entityPM.ImporterDepositionRequestDetails;
-                        shipmentComputedFieldsRepository.Update(entityComputedFields);
-                    }
-
-                }
-               
+                shipmentComputedFieldsRepository.Update(entityComputedFields);
             }
+
+            entityPM.IsShipmentComputedFieldChange = false;
 
         }
 
@@ -1024,7 +1013,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
 
                     //&& !entityPM.IsCancelled // for LogBox
-                    if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && !entityPM.IsCancelled && loggedTenant.IsCustomerTenantShare && (loggedTenant.CustomerTenantShareImportFile ? entityPM.DirectionId.ToUpper() == "I" || entityPM.DirectionId.ToUpper() == "C" : entityPM.DirectionId.ToUpper() == "C"))
+                    if (IsShipmentMatchLogBoxConditions(loggedTenant,entityPM))
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
@@ -1060,7 +1049,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
 
                     //&& !entityPM.IsCancelled // for LogBox
-                    if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && loggedTenant.IsCustomerTenantShare && (loggedTenant.CustomerTenantShareImportFile ? entityPM.DirectionId.ToUpper() == "I" || entityPM.DirectionId.ToUpper() == "C" : entityPM.DirectionId.ToUpper() == "C"))
+                    if (IsShipmentMatchLogBoxConditions(loggedTenant, entityPM))
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
@@ -1110,6 +1099,43 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+
+        private bool IsShipmentMatchLogBoxConditions(Tenant loggedTenant,ShipmentPM entityPM)
+        {
+            if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && !entityPM.IsCancelled && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant,entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsImportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareImportFile == true)
+            {
+                return (entityPM.DirectionId.ToUpper() == "I");
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsExportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
+            {
+                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void RunStoredProcedures()
         {
             RunStoredProcedureClass.UpdateForeignPartnerCountryCode(entityPM.Id, entityPM.Tenant);
@@ -1676,90 +1702,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-        private void UpdateShipmentFollowUpsCollection()
+
+
+        private void UpdateShipmentFollowUpsCollection(string changeSet = "Update")
         {
             if (shipmentFollowUpsChangeSet != null)
             {
-                List<FollowUp> doneFollowUps = new List<FollowUp>();
+                bool isChange = false;
 
-                foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet)
+                if (changeSet == "InSert")
                 {
-                    switch (itemPM.ChangeSetOp)
+                    #region Insert FollowUp
+                    List<FollowUp> doneFollowUps = new List<FollowUp>();
+                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert))
                     {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateShipmentFollowUp(itemPM);
-                                followUpRepository.SubmitChanges();
-
-                                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                {
-                                    Tenant = tenant,
-                                    EventTypeCode = "SFCR",
-                                    UserId = this.loggedContact.Id,
-                                    EntityId = this.entityPM.Id,
-                                    ObjectTableName = "Shipment",
-                                    Notes = itemPM.EventTypeFollowUpName,
-                                });
-
-                                if (itemPM.Done)
-                                {
-                                    itemPM.Deleted = true;
-                                    FollowUp follow = followUpRepository.GetSingleFollowUp(itemPM.Id, tenant);
-                                    doneFollowUps.Add(follow);
-
-                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                    {
-                                        Tenant = tenant,
-                                        EventTypeCode = "SFCM",
-                                        UserId = this.loggedContact.Id,
-                                        EntityId = this.entityPM.Id,
-                                        ObjectTableName = "Shipment",
-                                        Notes = itemPM.EventTypeFollowUpName,
-                                    });
-                                }
-
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteShipmentFollowUp(itemPM);
-                                followUpRepository.SubmitChanges();
-                                break;
-                            }
-
-                        default: { break; }
-                    }
-                }
-
-                if (doneFollowUps.Count > 0)
-                {
-                    foreach (FollowUp itemPoco in doneFollowUps)
-                    {
-                        if (!entityPM.IsHybrid)
+                        isChange = true;
+                        if (itemPM.Done) itemPM.Deleted = true;
+                        this.CreateShipmentFollowUp(itemPM);
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
                         {
-                            shipmentTracing.TraceShipmentOnCreateDoneFollowUp(itemPoco);
-                        }
+                            Tenant = tenant,
+                            EventTypeCode = "SFCR",
+                            UserId = this.loggedContact.Id,
+                            EntityId = this.entityPM.Id,
+                            ObjectTableName = "Shipment",
+                            Notes = itemPM.EventTypeFollowUpName,
+                        });
 
-                        followUpRepository.Remove(itemPoco);
-                        followUpRepository.SubmitChanges();
                     }
-                }
+                    if (isChange) followUpRepository.SubmitChanges();
+                    #endregion
 
-                foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
-                {
-                    if (itemPM.Done)
+                    #region Done FollowUp
+                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert && d.Done))
                     {
-                        itemPM.Deleted = true;
-                        entityPM.MarkFollowUpsAsDone = true;
-
-                        if (!entityPM.IsHybrid)
-                        {
-                            shipmentTracing.TraceShipmentOnUpdateDoneFollowUp(itemPM);
-                        }
-
-                        this.DeleteShipmentFollowUp(itemPM);
-                        followUpRepository.SubmitChanges();
+                        FollowUp follow = followUpRepository.GetSingleFollowUp(itemPM.Id, tenant);
+                        doneFollowUps.Add(follow);
 
                         EventTracer.CreateTraceEvent(new EventTracerArgs()
                         {
@@ -1770,17 +1748,79 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             ObjectTableName = "Shipment",
                             Notes = itemPM.EventTypeFollowUpName,
                         });
+
+                    }
+                    if (doneFollowUps.Count > 0)
+                    {
+                        foreach (FollowUp itemPoco in doneFollowUps)
+                        {
+                            if (!entityPM.IsHybrid)
+                            {
+                                shipmentTracing.TraceShipmentOnCreateDoneFollowUp(itemPoco);
+                            }
+
+                            followUpRepository.Remove(itemPoco);
+
+                        }
+
+                        followUpRepository.SubmitChanges();
                     }
 
-                    else
+                    #endregion
+                }
+                else
+                {
+                    #region Delete & Update FollowUp
+                    isChange = false;
+                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete))
                     {
-                        this.UpdateShipmentFollowUp(itemPM);
+                        this.DeleteShipmentFollowUp(itemPM);
+                        isChange = true;
                     }
+
+                    foreach (ShipmentFollowUpPM itemPM in shipmentFollowUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
+                    {
+                        if (itemPM.Done)
+                        {
+                            itemPM.Deleted = true;
+                            entityPM.MarkFollowUpsAsDone = true;
+
+                            if (!entityPM.IsHybrid)
+                            {
+                                shipmentTracing.TraceShipmentOnUpdateDoneFollowUp(itemPM);
+                            }
+
+                            this.DeleteShipmentFollowUp(itemPM);
+                            followUpRepository.SubmitChanges();
+
+                            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                            {
+                                Tenant = tenant,
+                                EventTypeCode = "SFCM",
+                                UserId = this.loggedContact.Id,
+                                EntityId = this.entityPM.Id,
+                                ObjectTableName = "Shipment",
+                                Notes = itemPM.EventTypeFollowUpName,
+                            });
+                        }
+
+                        else
+                        {
+                            this.UpdateShipmentFollowUp(itemPM);
+                        }
+
+                        isChange = true;
+                    }
+
+                    if (isChange) followUpRepository.SubmitChanges();
+                    #endregion
+
+                    this.ComputeNumerOfFollowUps();
                 }
 
-                this.ComputeNumerOfFollowUps();
             }
         }
+
         private void UpdateShipmentCarrierStatusesCollection()
         {
             if (shipmentCarrierStatusesChangeSet != null)
@@ -2339,7 +2379,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     ShipmentPM changeTrackingPM = new ShipmentPM();
                     ShipmentQuery query = new ShipmentQuery(tenant);
-                    query.MapShipmentToShipmentPMForAutomation(changeTrackingPM, this.entityPoco, null, this.entityMasterData ,  entityComputedFields);
+                    query.MapShipmentToShipmentPMForAutomation(changeTrackingPM, this.entityPoco, null, this.entityMasterData);
                     changeTrackingPM.StatusId = entityPM.OldStatusValue;
 
                     if (entityPM.ShipmentLevelCode == "H")
@@ -2518,8 +2558,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     entityComputedFields.IsMissingDocuments = false;
                     entityComputedFields.IsRequestedDocuments = false;
-
-
                 }
 
                 else
@@ -2533,15 +2571,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     entityComputedFields.IsDigitalSignRequired = false;
                 }
 
-
                 if (entityPM.IsShipmentComputedFieldChange)
                 {
                     entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
                 }
 
-
                 entityComputedFields.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
                 shipmentComputedFieldsRepository.Add(entityComputedFields);
+
+
+                entityPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+                entityPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
+                entityPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
 
                 shipmentAdditionalCloudData = new ShipmentAdditionalCloudData();
                 shipmentAdditionalCloudData.Id = entityPM.Id;
@@ -2803,11 +2844,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
-                entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
 
-
+                if (entityComputedFields == null) entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
                 if (entityComputedFields != null)
                 {
+                    if (entityPM.IsShipmentComputedFieldChange)
+                    {
+                        entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
+                        entityComputedFields.IsRequestedDocuments = entityPM.IsRequestedDocuments;
+                        entityComputedFields.IsDigitalSignRequired = entityPM.IsDigitalSignRequired;
+                        entityComputedFields.IsMissingDocuments = entityPM.IsMissingDocuments;
+                        entityComputedFields.DocumentsSearchFields = entityPM.DocumentsSearchFields;
+                        entityComputedFields.MissingDocumentsCount = entityPM.MissingDocumentsCount;
+                        entityComputedFields.MissingDocumentsNames = entityPM.MissingDocumentsNames;
+                        entityComputedFields.RequestedDocumentsCount = entityPM.RequestedDocumentsCount;
+                        entityComputedFields.NumberOfHouses = entityPM.NumberOfHouses;
+                        entityComputedFields.ImporterDepositionRequestDetails = entityPM.ImporterDepositionRequestDetails;
+                    }
+
+
                     if (entityPM.IsOperationalClosed)
                     {
                         entityComputedFields.IsMissingDocuments = false;
@@ -2815,8 +2870,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityComputedFields.IsDigitalSignRequired = false;
                         entityComputedFields.MissingDocumentsCount = 0;
                         entityComputedFields.MissingDocumentsNames = "";
-
-                        entityPM.IsShipmentComputedFieldChange = true;
+   
                     }
 
                     else
@@ -2841,10 +2895,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityComputedFields.IsDigitalSignRequired = false;
                     }
 
-                    shipmentComputedFieldsRepository.Update(entityComputedFields);
+
+                    entityPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+                    entityPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
+                    entityPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
+
                 }
 
-           
 
                 if (entityPM.IsHybrid || loggedTenant.IsDocumentsArchive)
                 {
@@ -2954,37 +3011,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 //this.InitializeBookingData();
             }
 
-            //try
-            //{
-            //    if (tenantPM == null)
-            //    {
-            //        tenantQuery = new TenantQuery(entityPM.Tenant);
-            //        tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-            //    }
-            //    //&& !entityPM.IsCancelled // for LogBox
-            //    if (!entityPM.DontAddToImportersQueue && tenantPM.IsCustomerTenantShare &&(tenantPM.CustomerTenantShareImportFile ? entityPM.DirectionId.ToUpper() == "I" || entityPM.DirectionId.ToUpper() == "C" : entityPM.DirectionId.ToUpper() == "C"))
-            //    {
-            //        CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-            //        CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
-
-            //        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess)
-            //        {
-            //            var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
-            //            IQueueService queueservice = new DbQueueService();
-            //            queueservice.InitializeQueue("ImportersShipmentQueue", 0);
-            //            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", entityPM.CustomerId } }, null, entityPM.CustomerId);
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    string ip = "";
-            //    if (HttpContext.Current != null && HttpContext.Current.Request != null)
-            //    {
-            //        ip = HttpContext.Current.Request.UserHostAddress;
-            //    }
-            //    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
-            //}
+          
         }
 
         private void AddPaymentReceivedToQueue()
@@ -4628,7 +4655,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (entityComputedFields != null && shipmentConsoleShipmentsChangeSet != null)
                     {
                         entityComputedFields.NumberOfHouses = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
-                        shipmentComputedFieldsRepository.Update(entityComputedFields);
                     }
                 }
             }

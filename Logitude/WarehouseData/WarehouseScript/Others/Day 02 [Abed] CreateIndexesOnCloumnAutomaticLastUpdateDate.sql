@@ -183,3 +183,11 @@ ON [dbo].[Vessels]([AutomaticLastUpdateDate])
 ON [dbo].[SpecialServicesTypes]([AutomaticLastUpdateDate])
   end  
   
+
+      IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_ObjectFields_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[ObjectFields]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_ObjectFields_AutomaticLastUpdateDate]
+ON [dbo].[ObjectFields]([AutomaticLastUpdateDate])
+  end  
+  

@@ -774,7 +774,8 @@ img {
                             <div style="margin-left: 8px;">
                                 <div style="height:30px;">
                                   <span class="BlueTextStyle" style="display: inline-block; font-size:16px; white-space: nowrap;">${FromPortCode}</span>
-                                  <span class="ValueTextStyle" style="display: inline-block; margin-left:5px; white-space: nowrap;">${FromPortName}</span>
+                                  <span style="width:5px; visibility: #= PortNameMarginVisibility #;"></span>
+                                  <span class="ValueTextStyle" style="display: inline-block; white-space: nowrap;">${FromPortName}</span>
                                 </div>
 
                                 <div style="height:22px;">
@@ -795,7 +796,8 @@ img {
                            <div style="margin-left: 8px">
                                <div style="height:30px;">
                                   <span class="BlueTextStyle" style="display: inline-block; font-size:16px; white-space: nowrap;">${ToPortCode}</span>
-                                  <span class="ValueTextStyle" style="display: inline-block; margin-left: 5px; white-space: nowrap;">${ToPortName}</span>
+                                  <span style="width:5px; visibility: #= PortNameMarginVisibility #"></span>
+                                  <span class="ValueTextStyle" style="display: inline-block; white-space: nowrap;">${ToPortName}</span>
                                </div>
 
                                <div style="height:22px;">

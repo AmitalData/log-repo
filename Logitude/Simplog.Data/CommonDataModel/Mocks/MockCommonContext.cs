@@ -2577,5 +2577,19 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+        public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        //public IDbSet<UsersReleaseNotesDisplay>  { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

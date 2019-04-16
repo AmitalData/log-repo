@@ -57,6 +57,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Logitude.TariffModule.Data">
+      <HintPath>..\Logitude.TariffModule.Data\bin\Debug\Logitude.TariffModule.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Logitude.TimeManagement.Data">
       <HintPath>..\Logitude.TimeManagement.Data\obj\Debug\Logitude.TimeManagement.Data.dll</HintPath>
     </Reference>
@@ -838,6 +841,14 @@
     <Compile Include="Migrations\201904070545303_SetInvoiceIdNotRequiredOnStockLineLevel_Samar.Designer.cs">
       <DependentUpon>201904070545303_SetInvoiceIdNotRequiredOnStockLineLevel_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904071048425_DropShowNewReleaseToolTipFromUser_Samar.cs" />
+    <Compile Include="Migrations\201904071048425_DropShowNewReleaseToolTipFromUser_Samar.Designer.cs">
+      <DependentUpon>201904071048425_DropShowNewReleaseToolTipFromUser_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904080540535_AddUserReleaseNotesTable_Samar.cs" />
+    <Compile Include="Migrations\201904080540535_AddUserReleaseNotesTable_Samar.Designer.cs">
+      <DependentUpon>201904080540535_AddUserReleaseNotesTable_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.cs" />
     <Compile Include="Migrations\201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.Designer.cs">
       <DependentUpon>201904070817330_AddARInvoiceStockIdToARInvoice_Maheera.cs</DependentUpon>
@@ -845,6 +856,42 @@
     <Compile Include="Migrations\201904071001330_NullableRepeateInMunites_Rabaia.cs" />
     <Compile Include="Migrations\201904071001330_NullableRepeateInMunites_Rabaia.Designer.cs">
       <DependentUpon>201904071001330_NullableRepeateInMunites_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.cs" />
+    <Compile Include="Migrations\201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.Designer.cs">
+      <DependentUpon>201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.cs" />
+    <Compile Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.Designer.cs">
+      <DependentUpon>201904081010543_ARPaymentIsExternalEntityMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs" />
+    <Compile Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.Designer.cs">
+      <DependentUpon>201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.cs" />
+    <Compile Include="Migrations\201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.Designer.cs">
+      <DependentUpon>201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.cs" />
+    <Compile Include="Migrations\201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.Designer.cs">
+      <DependentUpon>201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.cs" />
+    <Compile Include="Migrations\201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.Designer.cs">
+      <DependentUpon>201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.cs" />
+    <Compile Include="Migrations\201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.Designer.cs">
+      <DependentUpon>201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904150852309_Add_Field_TariffLine_DestinationPortId.cs" />
+    <Compile Include="Migrations\201904150852309_Add_Field_TariffLine_DestinationPortId.Designer.cs">
+      <DependentUpon>201904150852309_Add_Field_TariffLine_DestinationPortId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.cs" />
+    <Compile Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.Designer.cs">
+      <DependentUpon>201904151029006_Add_Field_TariffLine_DestinationPortId2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -1413,6 +1460,9 @@
     <EmbeddedResource Include="Migrations\201903310906076_AddNotesFieldToARInvoiceStock_Samar.resx">
       <DependentUpon>201903310906076_AddNotesFieldToARInvoiceStock_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011322001_QBOTransactionLocationCode_Field_State_Khalid.resx">
+      <DependentUpon>201904011322001_QBOTransactionLocationCode_Field_State_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904020925182_AddExcludeFromProratingToTMProject_Maheera.resx">
       <DependentUpon>201904020925182_AddExcludeFromProratingToTMProject_Maheera.cs</DependentUpon>
     </EmbeddedResource>
@@ -1424,6 +1474,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904071001330_NullableRepeateInMunites_Rabaia.resx">
       <DependentUpon>201904071001330_NullableRepeateInMunites_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904071048425_DropShowNewReleaseToolTipFromUser_Samar.resx">
+      <DependentUpon>201904071048425_DropShowNewReleaseToolTipFromUser_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904080540535_AddUserReleaseNotesTable_Samar.resx">
+      <DependentUpon>201904080540535_AddUserReleaseNotesTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.resx">
+      <DependentUpon>201904080645172_AddShipmentNumberToInvoiceStockLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904081010543_ARPaymentIsExternalEntityMigration.resx">
+      <DependentUpon>201904081010543_ARPaymentIsExternalEntityMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.resx">
+      <DependentUpon>201904100541262_AddCustomerTenantShareExportFileToTenant_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.resx">
+      <DependentUpon>201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.resx">
+      <DependentUpon>201904111241208_New_Module_Tariff_DB_4_Tables_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.resx">
+      <DependentUpon>201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904150852309_Add_Field_TariffLine_DestinationPortId.resx">
+      <DependentUpon>201904150852309_Add_Field_TariffLine_DestinationPortId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.resx">
+      <DependentUpon>201904151029006_Add_Field_TariffLine_DestinationPortId2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

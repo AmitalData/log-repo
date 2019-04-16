@@ -21,6 +21,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string UpdatedByUserId { get; set; }
         public bool IsUsed { get; set; }
         public string ARInvoiceId { get; set; }
+        public string ShipmentNumber { get; set; }
 
         public virtual ARInvoiceStock ARInvoiceStock { get; set; }
         public virtual ARInvoice ARInvoice { get; set; }

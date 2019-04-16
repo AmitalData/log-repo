@@ -116,7 +116,9 @@ export class AddEditDocumentTypeCustomFieldComponent extends BaseComponent imple
         this.ValidationErrorsList = [];
 
         if (this.EntityPM.Name) {
-            this.EntityPM.FieldCode = this.EntityPM.Name.replace(" ", "");
+            if (!this.EntityPM.FieldCode) {
+                this.EntityPM.FieldCode = this.EntityPM.Name.replace(" ", "");
+            }
         }
 
 

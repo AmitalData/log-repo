@@ -125,6 +125,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual Card CustomerCard { get; set; }
         public bool IsCustomerTenantShare { get; set; }
         public bool CustomerTenantShareImportFile { get; set; }
+        public bool CustomerTenantShareExportFile { get; set; }
+
 
         public bool IsPotentialTelRequired { get; set; }
         public bool IsPotentialFaxRequired { get; set; }

@@ -2,8 +2,9 @@ import {Component, ViewChildren, QueryList} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {TMProjectListService} from '../../../Services/StandardLists/TMProjectListService';
-import { TimeManagementDomainService, TimeManagementAPIHelper } from '../../../Services/TimeManagementDomainService';
+import { TMProjectListService } from '../../../Services/StandardLists/TMProjectListService';
+import { SprintListService } from '../../../Services/StandardLists/SprintListService';
+import {TimeManagementDomainService, TimeManagementAPIHelper } from '../../../Services/TimeManagementDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
@@ -285,10 +286,26 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var items: ItemSourceItem[] = this.ItemSource.Collection;
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
         if (itemsChanges.length > 0) {
-            //if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
-            //    this.IsValid = false;
-            //    this.ShowMessage("Time and Description fields are required for each line");
-            //}
+            var msg = "";
+            var requiredSprints = items.filter(f => f.SprintId == null).length;
+            var requiredDescriptions = items.filter(f => AppTool.IsNullOrEmpty(f.Description)).length;
+            if (requiredSprints > 0 && requiredDescriptions) {
+                msg = "Sprint and Description fields are required for each line.";
+            }
+            else {
+                if (requiredSprints > 0 ) {
+                    msg = "Sprint field is required for each line.";
+                }
+                if (requiredDescriptions > 0) {
+                    msg = "Description field is required for each line.";
+                }
+            }
+           
+            if (!AppTool.IsNullOrEmpty(msg)) {
+                this.IsValid = false;
+                this.ShowMessage(msg);
+            }
+           
             if (this.IsValid) {
                 this.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
@@ -319,11 +336,6 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var items: ItemSourceItem[] = this.ItemSource.Collection;
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
         if (itemsChanges.length > 0) {
-
-            //if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
-            //    this.IsValid = false;
-            //    this.ShowMessage("Time and Description fields are required for each line");
-            //}
             if (this.IsValid) {
                 this.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
@@ -422,6 +434,18 @@ export class DailyTimeSheetComponent extends BaseComponent {
             }
         });
     }
+
+    CalculationButtonClicked() {
+        if (this.myDomainService == null) {
+            this.myDomainService = new TimeManagementDomainService();
+        }
+
+        this.myDomainService.GetCalculationCompleteWork().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
 }
 
 export class ItemSourceItem extends BaseComponent {
@@ -430,11 +454,12 @@ export class ItemSourceItem extends BaseComponent {
     public entityPM: TMEmployeeTimePM;
     public IsCopy: boolean = false;
     private TMProjectListService: TMProjectListService;
-
+    private SprintListService: SprintListService;
     constructor(public entity: TMEmployeeTimePM, private father: DailyTimeSheetComponent, index: number) {
         super();
         this.entityPM = entity;
         this.TMProjectListService = new TMProjectListService();
+        this.SprintListService = new SprintListService();
         this.Index = index;
         this.DayDateFormat = this.ApplyTimeFormat(this.TimeInMinutes);
     }
@@ -470,13 +495,6 @@ export class ItemSourceItem extends BaseComponent {
         }
     }
 
-    get SprintId() { return this.entity.SprintId; }
-    set SprintId(value: string) {
-        if (this.entity.SprintId != value) {
-            this.entity.SprintId = value;
-        }
-    }
-
     get ProjectId() { return this.entity.ProjectId; }
     set ProjectId(value: string) {
         if (this.entity.ProjectId != value) {
@@ -509,6 +527,37 @@ export class ItemSourceItem extends BaseComponent {
         }
     }
 
+    get SprintId() { return this.entity.SprintId; }
+    set SprintId(value: string) {
+        if (this.entity.SprintId != value) {
+            this.entity.SprintId = value;
+            this.HasChanges = true;
+            this.getSprintName(value);
+        }
+    }
+
+    private getSprintName(value: string) {
+        if (this.SprintListService == null) {
+            this.SprintListService = new SprintListService();
+        }
+        this.SprintListService.getSingle(value).subscribe((myResult: ServiceResponse) => {
+            var sprint = myResult.Result;
+            if (sprint != null) {
+                this.SprintName = sprint.Name;
+            } else {
+                this.SprintName = null;
+            }
+        });
+    }
+
+    get SprintName() { return this.entity.SprintName; }
+    set SprintName(value: string) {
+        if (this.entity.SprintName != value) {
+            this.entity.SprintName = value;
+            this.HasChanges = true;
+        }
+    }
+    
     get LocationName() { return this.entity.LocationName; }
 
     get Description() { return this.entity.Description; }

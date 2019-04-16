@@ -19,7 +19,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private DateTime? fromDate = null;
         private DateTime? toDate = null;
         private string employeeUserId = null;
-        private double? timeRequired = 9;
+        private int timeRequired = 9;
         public EmployeeTimeSheetManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -61,7 +61,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             {
                 if (filterItem_TimeRequired.FieldValue != null)
                 {
-                    timeRequired = Convert.ToDouble(filterItem_TimeRequired.FieldValue);
+                    timeRequired = Convert.ToInt32(filterItem_TimeRequired.FieldValue);
                 }
             }
         }
@@ -134,14 +134,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             EmployeeName = myDataProvider.EmployeeUserName,
                             DayOfWork = dateItem.ToString("dddd"),
                             DateOfWork = dateItem,
-                            RequiredWorkHours = timeRequired
+                            RequiredWorkHours = this.GetTimeFormatFromMinutes(timeRequired),
+                            RequiredWorkMins = timeRequired,
                         };
 
                         if (itemRow.DayOfWork != null)
                         {
                             if (itemRow.DayOfWork.ToLower() == "friday" || itemRow.DayOfWork.ToLower() == "saturday")
                             {
-                                itemRow.RequiredWorkHours = 0;
+                                itemRow.RequiredWorkHours = "0";
+                                itemRow.RequiredWorkMins = 0;
                             }
                         }
 
@@ -165,7 +167,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         itemRow.MinutesFromClient = item_TMEmployeeTime.Where(d => d.LocationCode == "C").Sum(s => s.TimeInMinutes);
                         itemRow.MinutesDifference = itemRow.MinutesFromOffice - itemRow.MinutesFromClock;
                         itemRow.MinutesTotalWork = itemRow.MinutesFromClock + itemRow.MinutesFromHome + itemRow.MinutesFromClient;
-                        itemRow.MinutesOverTime = itemRow.MinutesTotalWork - (itemRow.RequiredWorkHours.Value * 60);
+                        itemRow.MinutesOverTime = itemRow.MinutesTotalWork - (itemRow.RequiredWorkMins);
 
                         itemRow.TimeFromClock = this.GetTimeFormatFromMinutes(itemRow.MinutesFromClock);
                         itemRow.TimeFromOffice = this.GetTimeFormatFromMinutes(itemRow.MinutesFromOffice);
@@ -180,7 +182,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
             }
 
-            myDataProvider.Total_RequiredWorkHours = myDataProvider.EmployeeTimeSheetList.Sum(a => a.RequiredWorkHours);
+            myDataProvider.Total_RequiredWorkHours = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.RequiredWorkMins));
             myDataProvider.Total_TimeFromClock = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromClock));
             myDataProvider.Total_TimeFromOffice = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromOffice));
             myDataProvider.Total_TimeFromHome = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromHome));

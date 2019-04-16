@@ -13,7 +13,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime ToDate { get; set; }
         public DateTime? Today_DateTime { get; set; }
         public List<EmployeeTimeSheetData> EmployeeTimeSheetList { get; set; }
-        public double? Total_RequiredWorkHours { get; set; }
+        public string Total_RequiredWorkHours { get; set; }
         public string Total_TimeFromClock { get; set; }
         public string Total_TimeFromOffice { get; set; }
         public string Total_DifferenceTime { get; set; }
@@ -28,8 +28,8 @@ namespace WebFreight.Web.DataProviders
         public string EmployeeName { get; set; }
         public string DayOfWork { get; set; }
         public DateTime? DateOfWork { get; set; }
-        public double? RequiredWorkHours { get; set; }
-
+        public int RequiredWorkMins { get; set; }
+        public string RequiredWorkHours { get; set; }
         public double MinutesFromClock { get; set; }
         public double MinutesFromOffice { get; set; }
         public double MinutesFromHome { get; set; }

@@ -155,14 +155,17 @@
                                             </tr>
 
                                             <!-- InvoiceNumber -->
-                                            <tr  class="FormFieldRow">
+                                            <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-                                                <td >
+                                                <td *ngIf="!AllowManualInvoiceNumber && !AllowStockInvoiceNumber">
+                                                    <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                                <td *ngIf="AllowManualInvoiceNumber || AllowStockInvoiceNumber">
                                                     <table>
                                                         <tr>
-                                                            <td style="min-width: 100px;max-width: 100px;width: 100px;">
+                                                            <td style="width: 100px;">
                                                                 <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                             </td>
 
@@ -170,29 +173,21 @@
                                                                 <div></div>
                                                             </td>
 
-                                                            <td *ngIf="!AllowManualInvoiceNumber && !IsInvoiceStocksManagementEnabled">
+                                                            <td style="min-width: 100px;max-width: 100px;width:100px;">
+                                                                <ComboBox [IsDisabled]="!IsEditingEnabled || !IsInvoiceNumberComboBoxEnabled" [ItemsSource]="InvoiceNumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedInvoiceNumberFilter" (SelectedItemChanged)="SelectedInvoiceNumberFilter = $event"></ComboBox>
+                                                            </td>
+
+                                                            <td>
                                                                 <div></div>
                                                             </td>
-                                                            <td *ngIf="AllowManualInvoiceNumber || IsInvoiceStocksManagementEnabled">
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="min-width: 100px;max-width: 100px;">
-                                                                             <ComboBox [ItemsSource]="InvoiceNumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedInvoiceNumberFilter" (SelectedItemChanged)="SelectedInvoiceNumberFilter = $event"></ComboBox>
-                                                                        </td>
-
-                                                                        <td style="width: 18px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='MAS'">
-                                                                            <HelpIcon [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
-                                                                        </td>
-
-                                                                       <td *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code !='MAS'" style="width: 18px;" >
-                                                                           <div></div>
-                                                                       </td>
-                                                                      <td>
-                                                                          <div></div>
-                                                                      </td>
-                                                                    </tr>
-                                                                </table>
+                                                            <td style="width: 18px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='MAS'">
+                                                                <HelpIcon [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
                                                             </td>
+
+                                                            <td *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code !='MAS'" style="width: 18px;">
+                                                                <div></div>
+                                                            </td>
+
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -225,7 +220,7 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
-                                        </table>
+                                        </table> 
                                     </td>
 
                                     <td [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'">
@@ -243,8 +238,11 @@
                                                 <td style="width: 5px;">
                                                     <div></div>
                                                 </td>
-                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="padding-left: 3px;padding-right: 3px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK'">
-                                                    <Hyperlink (click)=" GetInvoiceNumberFromStock()" [Text]="'Get from stock'"></Hyperlink>
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="padding-left: 3px;padding-right: 3px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' && ARInvoiceStockId == null">
+                                                    <Hyperlink (click)=" GetInvoiceNumberFromStock()" [Text]="'Get from stock'" [IsEnabled]="IsEditingEnabled" ></Hyperlink>
+                                                </td>
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="padding-left: 3px;padding-right: 3px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' &&ARInvoiceStockId != null">
+                                                    <Hyperlink (click)=" ReturnInvoiceNumberToStock()" [Text]="'Return to stock'" [IsEnabled]="IsEditingEnabled" ></Hyperlink>
                                                 </td>
                                             </tr>
                                             <tr>

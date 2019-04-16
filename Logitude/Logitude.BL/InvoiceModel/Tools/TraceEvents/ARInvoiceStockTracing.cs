@@ -73,6 +73,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     UserId = loggedContactId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "ARInvoiceStock",
+                    Notes = entityPM.EventNotes,
                 });
             }
 
@@ -85,6 +86,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     UserId = loggedContactId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "ARInvoiceStock",
+                    Notes = entityPM.EventNotes,
                 });
             }
 
@@ -97,6 +99,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     UserId = loggedContactId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "ARInvoiceStock",
+                    Notes = entityPM.EventNotes,
                 });
             }
         }

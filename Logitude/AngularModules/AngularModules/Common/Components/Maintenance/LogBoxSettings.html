@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SystemDefaultsBox {
         width: 100%;
@@ -60,7 +60,7 @@
                                         </tr>
                                     </table>
                                 </td>
-                                
+
                             </tr>
 
                             <tr class="FormFieldRow">
@@ -102,42 +102,58 @@
                                 </td>
                             </tr>
 
-                            
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 224px;">
+                                                <label style="margin-left: 10px;color: rgb(110, 113, 114);">Auto Archive On Invoice</label>
+                                            </td>
+                                            <td style="width:10px;"></td>
+                                            <td>
+                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'AutoArchiveOnInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+
 
                             <!-- IsCustomerTenantShare -->
                             <!--<tr class="FormFieldRow" *ngIf="IsCustomerTenantShareVisible">
-                                <td colspan="2">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 200px;">
-                                                <LogLabel [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
+        <td colspan="2">
+            <table>
+                <tr>
+                    <td style="width: 200px;">
+                        <LogLabel [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
 
-                                            <td>
-                                                <LogCheckBox [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                            </td>
-                                        </tr>
-                                    </table>
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+                </tr>
+            </table>
 
-                                </td>
-                            </tr>-->
-
+        </td>
+    </tr>-->
                             <!-- CustomerTenantShareImportFile -->
                             <!--<tr class="FormFieldRow" *ngIf="CustomerTenantShareImportFileVisible">
-                                <td colspan="2">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 200px;">
-                                                <LogLabel [ObjectFieldName]="'CustomerTenantShareImportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
+        <td colspan="2">
+            <table>
+                <tr>
+                    <td style="width: 200px;">
+                        <LogLabel [ObjectFieldName]="'CustomerTenantShareImportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
 
-                                            <td>
-                                                <LogCheckBox [ObjectFieldName]="'CustomerTenantShareImportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>-->
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'CustomerTenantShareImportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>-->
                         </table>
                     </div>
                 </div>

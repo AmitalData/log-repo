@@ -12,6 +12,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
@@ -74,6 +75,29 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
         string Token;
+        private bool IsImportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareImportFile == true)
+            {
+                return (entityPM.DirectionId.ToUpper() == "I");
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
+            {
+                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
+            }
+            else
+            {
+                return false;
+            }
+        }
         public override async void AsyncRun()
         {
             try
@@ -250,7 +274,7 @@ namespace CommunicationWorkerRole
                                             var tenantQuery = new TenantQuery(tenant);
                                             var tenantPM = tenantQuery.GetSinglePM(tenant);
                                             var Shipment = shipmentQuery.GetSinglePMWithoutComposition(item, tenant);
-                                            if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.IsCustomerTenantShare && !Shipment.IsCancelled && (tenantPM.CustomerTenantShareImportFile ? Shipment.DirectionId.ToUpper() == "I" || Shipment.DirectionId.ToUpper() == "C" : Shipment.DirectionId.ToUpper() == "C"))
+                                            if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.IsCustomerTenantShare && !Shipment.IsCancelled && (Shipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM,Shipment) || IsExportShipmentsAllowedForLogBox(tenantPM,Shipment)))
                                             {
                                                 CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                                 CustomerTenantAccessInfo customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, Shipment.CustomerId);

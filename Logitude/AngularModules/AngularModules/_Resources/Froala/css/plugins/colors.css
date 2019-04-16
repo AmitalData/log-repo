@@ -90,6 +90,8 @@
   background-clip: padding-box;
   font-size: 13px;
   height: 32px;
+  width:40px;
+  display:inline
 }
 .fr-popup .fr-color-hex-layer .fr-action-buttons button.fr-command:hover {
   background-color: #166dba;

@@ -25,5 +25,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return EntityPM;
         }
+
+        public BankCodePM GetSingleByCode(string code, int tenant)
+        {
+            BankCode bankCode = this.repository.GetSingleByCode(code, tenant);
+
+            if (bankCode != null)
+            {
+                EntityPM = new BankCodePM();
+                mapping.CustomPOCOToPM(EntityPM, bankCode);
+                mapping.POCOToPM(EntityPM, bankCode);
+            }
+
+            return EntityPM;
+        }
     }
 }

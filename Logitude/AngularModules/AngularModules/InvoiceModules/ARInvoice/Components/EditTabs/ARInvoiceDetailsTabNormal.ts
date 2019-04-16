@@ -60,10 +60,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-
     public InvoiceNumberFilterList: CodeNameClass[];
-    public IsInvoiceStocksManagementEnabled: boolean = false;
-
 
     constructor(private entityArgs: EntityArgs) {
         super();      
@@ -90,11 +87,13 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
 
         if (SessionLocator.AccountingSettingPM.EnableInvoiceStocksManagement) {
-            this.IsInvoiceStocksManagementEnabled = true;
-        
+            this.AllowStockInvoiceNumber = true;
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.ARInvoiceStockId)) {
+            this.IsInvoiceNumberComboBoxEnabled = false;
         }
         this.BuildInvoiceNumberFilters();
-
     }
 
     private SaveCompletedEvent: any = null;
@@ -108,6 +107,14 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
                 }
+                else {
+                    if (this.IsgetFromStockAfterSaving) {
+                        this.InvoiceNumber = null;
+                        this.ARInvoiceStockId = null;
+                        this.IsInvoiceNumberComboBoxEnabled = true;
+                    }
+                }
+          
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -220,6 +227,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public RateIsEnabled: boolean = false;
     public VatTypeFilterIsEnabled: boolean = false;
     public AllowManualInvoiceNumber: boolean = false;
+    public AllowStockInvoiceNumber: boolean = false;
     public PaymentTermDisplayInLOV: boolean = true;
     SetUIProperties() {
         var isEditingEnabled = InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
@@ -624,11 +632,19 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         if (this.EntityPM.IsInvoiceNumberManuallySet != value) {
 
             if (!value) {
+               
                 this.InvoiceNumber = null;
             }
 
             this.EntityPM.IsInvoiceNumberManuallySet = value;
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, value);
+        }
+    }
+
+    get IsInvoiceNumberFromStock() { return this.EntityPM.IsInvoiceNumberFromStock; }
+    set IsInvoiceNumberFromStock(value: boolean) {
+        if (this.EntityPM.IsInvoiceNumberFromStock != value) {
+            this.EntityPM.IsInvoiceNumberFromStock = value;
         }
     }
 
@@ -647,7 +663,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
     set InvoiceNumber(value: string) {
         if (this.EntityPM.InvoiceNumber != value) {
-            if (this.IsInvoiceNumberManuallySet) {
+            if (this.IsInvoiceNumberManuallySet || (this.SelectedInvoiceNumberFilter != null && this.SelectedInvoiceNumberFilter.Code == "STK")) {
                 this.EntityPM.InvoiceNumber = value;
             }
         }
@@ -664,6 +680,13 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     set PrintNotes(newValue: string) {
         if (this.EntityPM.PrintNotes != newValue) {
             this.EntityPM.PrintNotes = newValue;
+        }
+    }
+
+    get ARInvoiceStockId() { return this.EntityPM.ARInvoiceStockId; }
+    set ARInvoiceStockId(newValue: string) {
+        if (this.EntityPM.ARInvoiceStockId != newValue) {
+            this.EntityPM.ARInvoiceStockId = newValue;
         }
     }
 
@@ -1471,23 +1494,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         return result;
     }
 
-
-    //LoadJournal() {
-    //    var journalExtendedPMService = new JournalExtendedPMService();
-    //    journalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id).subscribe(myResult => {
-    //        if (myResult != null) {
-    //            var myResponse: ServiceResponse = myResult;
-    //            if (!myResponse.HasError) {
-    //                this.JournalPM= myResponse.Result;
-    //                if (this.JournalPM != null) {
-    //                    this.JournalNumber = this.JournalPM.JournalNumber;
-    //                    this.IsLoadingJournalDone = true;
-    //                }
-    //            }
-    //        }
-    //    });
-    //}
-
     EditJournal() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
@@ -1498,6 +1504,14 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
 
     //Invoice Number
+    private isInvoiceNumberComboBoxEnabled = true;
+    get IsInvoiceNumberComboBoxEnabled() { return this.isInvoiceNumberComboBoxEnabled; }
+    set IsInvoiceNumberComboBoxEnabled(value: boolean) {
+        if (this.isInvoiceNumberComboBoxEnabled != value) {
+            this.isInvoiceNumberComboBoxEnabled = value;
+        }
+    }
+
     private selectedInvoiceNumberFilter: CodeNameClass;
     get SelectedInvoiceNumberFilter() { return this.selectedInvoiceNumberFilter; }
     set SelectedInvoiceNumberFilter(value: CodeNameClass) {
@@ -1506,8 +1520,12 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             if (value.Code == "MAS") {
                 this.IsInvoiceNumberManuallySet = true;
             }
-            if (value.Code != "MAS") {
+            if (value.Code == "STK") {
+                this.IsInvoiceNumberFromStock = true;
+            }
+            else {
                 this.IsInvoiceNumberManuallySet = false;
+                this.IsInvoiceNumberFromStock = false;
             }
         }
     }
@@ -1515,7 +1533,8 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private BuildInvoiceNumberFilters() {
         this.InvoiceNumberFilterList = [];
         this.InvoiceNumberFilterList.push(new CodeNameClass("CNR", "Counter"));
-        if (this.IsInvoiceStocksManagementEnabled) {
+
+        if (SessionLocator.AccountingSettingPM.EnableInvoiceStocksManagement) {
             this.InvoiceNumberFilterList.push(new CodeNameClass("STK", "Stock"));
         }
         if (this.AllowManualInvoiceNumber) {
@@ -1533,6 +1552,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
     }
 
+    private IsgetFromStockAfterSaving = false;
     GetInvoiceNumberFromStock() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Select Invoice Number From Stock";
@@ -1542,10 +1562,21 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if ((d != null && d != "cancel")) {
+                    this.IsgetFromStockAfterSaving = true;
                     this.InvoiceNumber = s.StockLineSelectedItem.Number;
+                    this.ARInvoiceStockId = s.StockLineSelectedItem.Id;
+                    this.IsInvoiceNumberComboBoxEnabled = false;
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                 }
             });
         });
+    }
+
+    ReturnInvoiceNumberToStock() {
+        this.ARInvoiceStockId = null;
+        this.InvoiceNumber = null;
+        this.IsInvoiceNumberComboBoxEnabled = true;
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
 }
 export class ARInvoiceLineItem extends BaseComponent {

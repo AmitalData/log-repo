@@ -62,8 +62,6 @@ export class ShipmentDomainService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
-
-
     }
     GetRecentShipments() {
         var authHeader = new Headers();
@@ -295,12 +293,12 @@ export class ShipmentDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetShipmentsQueriesCounts(tenant: number, transportModeId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
+    GetShipmentsQueriesCounts(tenant: number, transportModeId: string, directionId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, {
+            return this._http.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&directionId=' + directionId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, {
                 headers: authHeader
             }).map(response => {
 
@@ -753,6 +751,23 @@ export class ShipmentDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    CheckIfConnectedEntryOrRelease(shipmentId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetIfConnectedEntryOrRelease?shipmentId=' + shipmentId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
     }

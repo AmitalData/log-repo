@@ -32,6 +32,12 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.CloseTables;
+using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Simplog.Data.InvoiceModel;
+using Logitude.BL.InvoiceModel.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -186,6 +192,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     entityPM.Number = CodeCounter.GetNumber("Reconciliation.Number", entityPM.Tenant).ToString();
                     entityPM.SearchFields = entityPM.AccountId + "," + entityPM.Number;
                 }
+
 
             }
 
@@ -361,47 +368,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public bool SuppressResetDraftOpenReconciliation { get; set; }
         protected override void AfterUpdating(ReconciliationPM entityPM, EntityPM entityParentPM)
         {
-            if (SuppressResetDraftOpenReconciliation)
+            // Draft reconciliation
+            if (!SuppressResetDraftOpenReconciliation)
             {
-                return;
+                var repoLedger = new LedgerTransactionRepository(MainContext as IAccountingContext);
+                repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
             }
-            var repoLedger = new LedgerTransactionRepository(MainContext as IAccountingContext);
-            repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
 
-
-            //IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            //ReconciliationUpdateService recoUpdateService = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            //entityPM.ChangeSetOp = ChangeSetOperation.Update;
-            //recoUpdateService.Update(entityPM, false);
-
+            // update connected ARPayment 
+            ARPaymentReconciliationService arpRecoService = new ARPaymentReconciliationService(entityPM.Tenant);
+            arpRecoService.UpdatePaymentOpenAmountAndStatusForReconciliaiton(entityPM);
+            arpRecoService.UpdateConnectedInvoices(entityPM);
 
         }
 
-        //protected override void Trace(ReconciliationPM entityPM, Reconciliation entityPOCO, string changesXml)
-        //{
-        //    if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-        //    {
-        //        //create trace event with created type.
-        //    }
-        //    else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-        //    {
-
-
-        //    }
-        //    base.Trace(entityPM, entityPOCO, changesXml);
-        //}
-
-
-
-        //private ContactPM LoggedContact(int tenant)
-        //{
-        //    ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), tenant);
-        //    if (loggedContact == null)
-        //    {
-        //        loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-        //    }
-        //    return loggedContact;
-        //}
 
         protected override void Validate(ReconciliationPM entityPM)
         {
@@ -469,6 +449,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
-
+        
     }
 }

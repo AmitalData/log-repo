@@ -132,6 +132,16 @@ export class ARInvoiceStockPM {
     public set Reactivated(newValue: boolean) { if (this.reactivated != newValue) { this.reactivated = newValue; this.MarkAsDirty("Reactivated"); } }
        
 	 
+    private linesCount: string;
+    public get LinesCount() { return this.linesCount; }
+    public set LinesCount(newValue: string) { if (this.linesCount != newValue) { this.linesCount = newValue; this.MarkAsDirty("LinesCount"); } }
+       
+	 
+    private eventNotes: string;
+    public get EventNotes() { return this.eventNotes; }
+    public set EventNotes(newValue: string) { if (this.eventNotes != newValue) { this.eventNotes = newValue; this.MarkAsDirty("EventNotes"); } }
+       
+	 
      
 	private aRInvoiceStockLines: ARInvoiceStockLinePM[];
     get  ARInvoiceStockLines() {

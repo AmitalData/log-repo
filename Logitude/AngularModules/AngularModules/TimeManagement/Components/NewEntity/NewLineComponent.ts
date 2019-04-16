@@ -7,6 +7,7 @@ import {DateTool, AppTool} from '../../../Infrastructure/Tools';
 import {TimeManagementDomainService, TimeManagementAPIHelper, TimeSheetItem, TimeSheetItemDay} from '../../Services/TimeManagementDomainService';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {DailyTimeSheetComponent, ItemSourceItem} from '../Workspaces/TimeSheet/DailyTimeSheetComponent';
+import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'NewLineComponent',
@@ -34,7 +35,6 @@ export class NewLineComponent extends BaseComponent {
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.UpdateDate = todayDate;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-       
         this.EntityPM.NeedsProrating = true;
         this.SetUIProperties();
     }
@@ -46,6 +46,7 @@ export class NewLineComponent extends BaseComponent {
 
             if (!args.IsNew) {
                 this.EntityPM = args.EntityPM;
+                this.Clone();
                 this.EntityId = this.EntityPM.Id;
                 this.DateOfWorkDate.Date = this.EntityPM.DateOfWork;
                 this.DateOfWorkMinutes = this.EntityPM.TimeInMinutes;
@@ -76,8 +77,6 @@ export class NewLineComponent extends BaseComponent {
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("LocationCode", this.ObjectTableName,true);
-        this.UIProperties.SetRequired("Description", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WINumber) && AppTool.IsNullOrEmpty(this.Description));
-        this.UIProperties.SetRequired("WINumber", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WINumber) && AppTool.IsNullOrEmpty(this.Description));
         this.UIProperties.SetRequired("DateOfWorkDateFormat", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DateOfWorkDateFormat));
         this.UIProperties.SetRequired("SprintId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.SprintId));
         this.UIProperties.SetRequired("DateOfWork", this.ObjectTableName, this.DateOfWork == null ? true : false);
@@ -201,13 +200,18 @@ export class NewLineComponent extends BaseComponent {
     // Commands
     public ValidationErrorsList: string[];
     CancelButtonClicked() {
+        if (!this.IsNew) {
+            this.RejectChanges();
+        }
+     
         this.CurrentSession.CloseCurrentWindow();
     }
+
     OkButtonClicked() {
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-        if (this.DateOfWorkMinutes == null || this.DateOfWorkMinutes == 0) {
+        if (this.DateOfWorkMinutes == null || this.DateOfWorkMinutes == 0 || Number.isNaN(this.DateOfWorkMinutes)) {
             errors.push("Please fill the Time");
         }
 
@@ -219,9 +223,6 @@ export class NewLineComponent extends BaseComponent {
             errors.push("Sprint is required");
         }
 
-        if (AppTool.IsNullOrEmpty(this.WINumber) && AppTool.IsNullOrEmpty(this.Description)) {
-            errors.push("You must fill either WI Number or Description");
-        }
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             this.InsertTMEmployeeTime();
@@ -274,5 +275,23 @@ export class NewLineComponent extends BaseComponent {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
         });
+    }
+
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddField('Description');
+        this.myCloner.AddField('ProjectId');
+        this.myCloner.AddField('EmployeeUserId');
+        this.myCloner.AddField('WINumber');
+        this.myCloner.AddField('SprintId');
+        this.myCloner.AddField('DateOfWork');
+        this.myCloner.AddField('LocationCode');
+        this.myCloner.AddEntity(this.EntityPM);
+    }
+    private RejectChanges() {
+       
+        this.myCloner.RejectChanges();
     }
 }

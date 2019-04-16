@@ -53,7 +53,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 var myAccountingPaymentMethodPM = AccountingPaymentMethodAccountingPaymentMethodService.GetAccountingPaymentMethodById(entity.AccountingPaymentMethodId, entity.Tenant);
                 if (myAccountingPaymentMethodPM != null)
                 {
-                    entity.AccountingPaymentMethodCode = myAccountingPaymentMethodPM.LogitudeCode;
+                    entity.AccountingPaymentMethodCode = myAccountingPaymentMethodPM.Code;
                 }
 
             }
@@ -72,10 +72,14 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         }
 
 
-        public void CheckARPaymentNumber(string paymentNumber, int tenant)
+        public void CheckARPaymentNumber(string paymentNumber,string id, int tenant)
         {
 
-           bool exist =  query.CheckARPaymentNumber(paymentNumber, tenant);
+            if(paymentNumber == null)
+            {
+                throw new ApplicationException("Payment number is null");
+            }
+           bool exist =  query.CheckARPaymentNumber(paymentNumber,id, tenant);
             if(exist)
             {
                 throw new ApplicationException("Payment with the same number already exist");

@@ -65,6 +65,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 throw new ApplicationException(msg);
             }
 
+            if (entityPM.IsInvoiceNumberFromStock && entityPM.InvoiceNumber == null)
+            {
+                string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldSetInvoiceNumber", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
+
             if (entityPM.InvoiceDate > TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant))
             {
                 string msg = TranslateTextsClass.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate", entityPM.Tenant);
@@ -820,7 +826,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                    
                     if (isValidatingChronological)
                     {
-                        if (loggedTenant.AccountingSetting.IsARInvoiceChronologicalDates)
+                        if (loggedTenant.AccountingSetting.IsARInvoiceChronologicalDates && !entityPM.IsExternalEntity)
                         {
                             ARInvoice lastApprovedInvoice = (from a in myContext.ARInvoices
                                                                where a.Tenant == entityPM.Tenant

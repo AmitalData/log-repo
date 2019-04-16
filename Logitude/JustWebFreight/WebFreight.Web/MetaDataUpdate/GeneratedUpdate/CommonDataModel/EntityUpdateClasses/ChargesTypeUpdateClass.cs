@@ -2691,6 +2691,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsExport",
+					  						OldFieldName =  "IsExport",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2710,6 +2711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsExport",
 					  						ListPropertyPath =  "IsExport",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2745,6 +2747,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsImport",
+					  						OldFieldName =  "IsImport",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2764,6 +2767,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsImport",
 					  						ListPropertyPath =  "IsImport",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2799,6 +2803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsDomestic",
+					  						OldFieldName =  "IsDomestic",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2818,6 +2823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsDomestic",
 					  						ListPropertyPath =  "IsDomestic",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2853,6 +2859,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsDrop",
+					  						OldFieldName =  "IsDrop",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2872,6 +2879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsDrop",
 					  						ListPropertyPath =  "IsDrop",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

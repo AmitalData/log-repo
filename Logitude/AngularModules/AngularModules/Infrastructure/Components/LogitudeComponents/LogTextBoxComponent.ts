@@ -1137,7 +1137,28 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                     case 'decimal':
                     case 'unsdecimal':
                         {
+                            var ReadedText = false;
+                            if (this.firstDigit == ".") {
+                                if (this.TextValue.includes(',') && this.TextValue.includes('.')) {
+                                    ReadedText = true;
+                                }
+                            }
+                            if (this.firstDigit == "." && !ReadedText) {
+                                var NewText = "";
+                                for (var i = 0; i < this.TextValue.length; i++) {
+                                    if (this.TextValue[i] == ",") {
+                                        NewText += ".";
+                                    }
 
+                                    else if (this.TextValue[i] == ".") {
+                                        NewText += ",";
+                                    }
+                                    else {
+                                        NewText += this.TextValue[i];
+                                    }
+                                }
+                                this.TextValue = NewText;
+                            }
 
                             var isSignOk: boolean = true;
                             if (this.InputType == 'unsdecimal' || this.InputType == 'double') {
@@ -1167,9 +1188,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                     val = Number(this.TextValue);
                                 }
                                 if (this.AddCommasToNumbers) {
-                                    if ((this.TextValue + "").indexOf(',') > -1) {
-                                        var txtval = this.TextValue.replace(/,/g, "");
-                                        val = Number(txtval);
+                                    if (((this.TextValue + "").indexOf(',') > -1)) {
+                                        if (this.firstDigit != ".") {
+                                            var txtval = this.TextValue.replace(/,/g, "");
+                                            val = Number(txtval);
+                                        }
+                                        else {
+                                            var txtval = this.TextValue.replace('.', "");
+                                            txtval = txtval.replace(',',".")
+                                            val = Number(txtval);
+
+                                        }
                                     }
                                 }
 
@@ -1191,7 +1220,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                             if (this.AddCommasToNumbers) {
                                 var txtNum: number;
 
-                                if ((this.TextValue + "").indexOf(',') > -1) {
+                                if (((this.TextValue + "").indexOf(',') > -1 )) {
                                     var txtval = this.TextValue.replace(/,/g,"" );
                                     txtNum = Number(txtval);
                                 }
@@ -1202,8 +1231,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 if (this.DataContext[this.ObjectFieldName] != txtNum) {
                                     this.TextValueChanges(this.TextValue);
                                 }
+                                var isDot: boolean = false;
+                                if (this.firstDigit == "." && !ReadedText) {
+                                    this.TextValue = this.TextValue.replace(this.firstDigit, ",")
+                                    isDot = true;
+                                }
                                 var textWithCommas: string = this.numberWithCommas(this.TextValue, this.firstDigit);
-                                if (textWithCommas.indexOf(this.firstDigit) > -1) {
+                                if ((textWithCommas.indexOf(this.firstDigit) > -1) && !isDot) {
                                     var textWithCommasArr: string[] = textWithCommas.split(this.firstDigit);
                                     var beforeDot;
                                     var afterDot;
@@ -1214,6 +1248,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
                                         if (arr.length > 1) {
                                             if (arr[arr.length - 1].match(zero)) {
+                                                afterDot = arr[arr.length - 1];
                                                 arr = arr.slice(0, arr.length - 1);
                                                 beforeDot = arr.join('');
                                                 beforeDot = this.numberWithCommas(beforeDot, this.firstDigit)
@@ -1230,7 +1265,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                                 if (firstRound)
                                                     beforeDot = p;
                                                 else
-                                                    beforeDot += "." + p;
+                                                    beforeDot += this.secondDigit + p;
                                                 firstRound = false;
                                             });
                                         }
@@ -1241,12 +1276,12 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                     else {
                                         if (textWithCommas.toString().toLowerCase().includes(",") && this.firstDigit == ".") {
                                             beforeDot = textWithCommas.split(',')[0];
-                                            beforeDot = beforeDot.replace(this.firstDigit, "");
+                                          //  beforeDot = beforeDot.replace(this.firstDigit, "");
                                             afterDot = textWithCommas.split(',')[1];
                                         }
                                         else {
                                             beforeDot = textWithCommas.split('.')[0];
-                                            beforeDot = beforeDot.replace(this.firstDigit, "");
+                                           // beforeDot = beforeDot.replace(this.firstDigit, "");
                                             afterDot = textWithCommas.split('.')[1];
                                         }
                                     }
@@ -1259,6 +1294,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                         }
                                     !AppTool.IsNullOrEmpty(afterDot) ? textWithCommas = beforeDot + this.secondDigit + afterDot : textWithCommas = beforeDot;
                                 }
+
 
                                 textWithCommas.includes(this.secondDigit) ? this.TextValue = textWithCommas : this.TextValue = this.TextValue;
                             }
@@ -1542,6 +1578,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.add("TextAreaDisabled");
+                inputDiv.classList.add("InputDivDisabled");
             }
         }
     }
@@ -1555,6 +1592,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.remove("TextAreaDisabled");
+                inputDiv.classList.remove("InputDivDisabled");
             }
         }
     }

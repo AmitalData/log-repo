@@ -25,25 +25,27 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<ARInvoiceStockLinePM> GetARInvoiceStockLinePMsByStockId(string stockId, int tenant)
         {
-            List<ARInvoiceStockLinePM> list = (from a in repository.context.ARInvoiceStockLines.Include("CreatedByUser").Include("UpdatedByUser")
-                                          where a.Tenant == tenant && a.ARInvoiceStockId == stockId
-                                          select new ARInvoiceStockLinePM()
-                                          {
-                                              Id = a.Id,                                              
-                                              Tenant = a.Tenant,
-                                              ARInvoiceStockId = a.ARInvoiceStockId,
-                                              Number = a.Number,
-                                              CreateDate = a.CreateDate,
-                                              CreatedByUserId = a.CreatedByUserId,
-                                              CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
-                                              UpdateDate = a.UpdateDate,
-                                              UpdatedByUserId = a.UpdatedByUserId,
-                                              UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
-                                              IsUsed = a.IsUsed,
-                                              ARInvoiceId = a.ARInvoiceId,                                             
-                                          }).ToList();
-            
+            List<ARInvoiceStockLinePM> list = new List<ARInvoiceStockLinePM>();
 
+            list = (from a in repository.context.ARInvoiceStockLines.Include("CreatedByUser").Include("UpdatedByUser")
+                    where a.Tenant == tenant && a.ARInvoiceStockId == stockId
+                    select new ARInvoiceStockLinePM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        ARInvoiceStockId = a.ARInvoiceStockId,
+                        Number = a.Number,
+                        CreateDate = a.CreateDate,
+                        CreatedByUserId = a.CreatedByUserId,
+                        CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                        UpdateDate = a.UpdateDate,
+                        UpdatedByUserId = a.UpdatedByUserId,
+                        UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
+                        IsUsed = a.IsUsed,
+                        ARInvoiceId = a.ARInvoiceId,
+                        ShipmentNumber = a.ShipmentNumber,
+                    }).ToList();
+            
             return list.ToList();
         }
 
@@ -65,6 +67,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
                                             IsUsed = a.IsUsed,
                                             ARInvoiceId = a.ARInvoiceId,
+                                            ShipmentNumber = a.ShipmentNumber,
                                         }).FirstOrDefault();          
 
             return myResult;

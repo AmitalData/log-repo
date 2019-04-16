@@ -12,6 +12,8 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { AppTool } from '../../../Infrastructure/Tools';
 import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { error } from 'util';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+declare var window: any;
 
 
 
@@ -32,10 +34,13 @@ export class NewOpenFormatReportComponent extends BaseComponent {
     OpenFormatReportPMService: OpenFormatReportPMService = new OpenFormatReportPMService();
     public TenantPM: TenantPM;
     private CurrentSession = SessionLocator.SelectedSession;
+    testingMode:any;
     constructor() {
         super();
         this.entityPM.Tenant = SessionLocator.Tenant;
-
+        var table = window.ObjectTables.filter(d => d.Name === 'OpenFormatReport')[0];
+        this.testingMode = FeatureLocator.Features.filter(f => (f.Code == "TestingMode") && f.ObjectTableId == table.Id)[0];
+        
       
     }
 

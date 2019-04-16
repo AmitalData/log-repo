@@ -530,7 +530,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId,
                         BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId,
                         BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract,
-
+                        BluesnapInttraStockContractId=entityPM.BluesnapInttraStockContractId,
+                        BluesnapInttraStockContractQTY=entityPM.BluesnapInttraStockContractQTY,
                     };
 
                     if (entityPM.PaymentFailure)
@@ -681,11 +682,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string BluesnapEAWBContractId { get; set; }
         public string BluesnapEAWBSContractId { get; set; }
         public string BluesnapOneTimeContract { get; set; }
+        public string BluesnapInttraStockContractId { get; set; }
         public int BluesnapContractQTY { get; set; }
         public int BluesnapCRMContractQTY { get; set; }
         public int BluesnapEAWBContractQTY { get; set; }
         public int BluesnapEAWBSContractQTY { get; set; }
         public int BluesnapOneTimeContractQTY { get; set; }
+        public int BluesnapInttraStockContractQTY { get; set; }
+
         public bool ManagesRegisteredAgent { get; set; }
         public bool IsMultiPackage { get; set; }
         public bool IsINTTRAOnlyDemo { get; set; }

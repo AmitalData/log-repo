@@ -1,3 +1,4 @@
+
 <style>
     .ItemBox {
         height: 70px;
@@ -8,11 +9,21 @@
         margin-bottom: 3px;
         padding: 2px;
     }
+
         .ItemBox:hover {
             cursor: pointer;
             background: #DEEBEF;
             transition: 0.3s;
         }
+
+    .SelectedStockItem {
+        background: #DEEBEF;
+    }
+
+    .Disable {
+        pointer-events: none;
+        opacity: 0.5;
+    }
 </style>
 <table>
     <tr style="height: 10px;">
@@ -23,7 +34,7 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:30%">
+                    <td style="width:400px">
                         <div class="MediaFill">
                             <SectionBox [Scrolling]="true">
                                 <SectionHead>
@@ -42,7 +53,7 @@
                                     <ScrollViewer>
                                         <ul>
                                             <li class="ItemBox" style="position: relative;height:80px;padding:3px;" *ngFor="let item of StocksHeaderList">
-                                                <table (mousedown)="InvoiceStockSelectedItem = item" [class.SelectedFilingItem]="item === InvoiceStockSelectedItem">
+                                                <table (mousedown)="InvoiceStockSelectedItem = item" [class.SelectedStockItem]="item === InvoiceStockSelectedItem">
                                                     <tr style="height:2px;">
                                                         <td>
                                                             <div></div>
@@ -53,12 +64,14 @@
                                                             <table>
                                                                 <tr>
                                                                     <td style="float:left;">
-                                                                        <div class="TextTrimming" style="text-align:left;width:250px;">
+                                                                        <div class="TextTrimming" style="text-align:left;width:350px;font-weight:bold;">
                                                                             {{item.Name}}
                                                                         </div>
                                                                     </td>
-                                                                    <td style="float:right;padding-right:2px;width:17px;height:17px;"></td>
-                                                                    <td style="width:2px;">
+                                                                    <td style="float:right;padding-right:2px;">
+                                                                        {{item.LinesCount}}
+                                                                    </td>
+                                                                    <td style="width:3px;">
                                                                         <div></div>
                                                                     </td>
                                                                 </tr>
@@ -70,7 +83,7 @@
                                                             <table>
                                                                 <tr>
                                                                     <td>
-                                                                        <div class="TextTrimming Label" style="text-align:left;width:100px;">
+                                                                        <div class="TextTrimming Label" style="text-align:left;width:350px;">
                                                                             {{item.Description}}
                                                                         </div>
                                                                     </td>
@@ -83,14 +96,14 @@
                                                             <table>
                                                                 <tr>
                                                                     <td style="height:12px;">
-                                                                        <div style="text-align:left;float:left;font-style:italic;">
+                                                                        <div *ngIf="item.EndDate != null" class="SmallLabel" style="text-align:left;float:left;font-style:italic;">
                                                                             Expires on:{{item.EndDate | DateTimePipe:'D'}}
                                                                         </div>
                                                                     </td>
-                                                                    <td style="float:right;padding-right:3px; width:18px;height:18px;">
+                                                                    <td style="float:right;padding-right:2px; width:18px;height:18px;">
                                                                         <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditStockClicked(item)"></IconButton>
                                                                     </td>
-                                                                    <td style="width:2px;">
+                                                                    <td style="width:5px;">
                                                                         <div></div>
                                                                     </td>
                                                                 </tr>
@@ -107,7 +120,7 @@
                                         </ul>
                                     </ScrollViewer>
 
-                                    <div *ngIf="StocksHeaderList == null || StocksHeaderList.length == 0" class="NoDataText" style="top:5px;">No Invoice Stocks</div>
+                                    <div *ngIf="StocksHeaderList == null || StocksHeaderList.length == 0" class="NoDataText" style="top:25px;">No Invoice Stocks</div>
 
                                 </SectionBody>
                             </SectionBox>
@@ -123,7 +136,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                Available Invoice numbers ()
+                                                Available Invoice numbers ({{StocksLineCount}})
                                             </td>
                                         </tr>
                                     </table>
@@ -133,9 +146,10 @@
                                         <div class="SimpleGridViewHeader">
                                             <table>
                                                 <tr>
-                                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">Invoice Number</td>
-                                                    <td style="width: 150px; min-width: 150px; max-width: 150px;">Created by</td>
-                                                    <td>CreateDate</td>
+                                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">Create Date</td>
+                                                    <td style="width: 150px; min-width: 150px; max-width: 150px;">Invoice Number</td>
+                                                    <td>Created by </td>
+
                                                 </tr>
                                             </table>
                                         </div>
@@ -145,19 +159,19 @@
                                                 <tr class="SimpleGridViewRow RowHover" *ngFor="let item of StockLines" (click)="StockLineSelectedItem = item" [class.RowSelected]="item === StockLineSelectedItem">
 
                                                     <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
-                                                        {{item.Number}}
+                                                        <span class="Value">{{item.CreateDate | DateTimeToDatePipe}}</span>
+                                                        <span class="Label">{{item.CreateDate | DateTimeToTimePipe}}</span>
                                                     </td>
 
                                                     <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                        {{item.Number}}
+                                                    </td>
+
+                                                    <td class="LastChild">
                                                         <div class="TextTrimming">
                                                             {{item.CreatedByUserName}}
                                                         </div>
                                                     </td>
-
-                                                    <td class="LastChild">
-                                                        {{item.CreateDate | DateTimePipe:'D'}}
-                                                    </td>
-                                                  
                                                 </tr>
 
                                                 <tr>
@@ -168,6 +182,9 @@
                                             </table>
                                         </div>
                                     </div>
+
+                                    <div *ngIf="StockLines == null || StockLines.length == 0" class="NoDataText" style="top:50px;vertical-align:central">No Invoice Stocks Lines</div>
+
                                 </SectionBody>
                             </SectionBox>
                         </div>
@@ -182,7 +199,7 @@
             <table style="height: 22px;">
                 <tr>
                     <td style="float:left;">
-                        <div class="NoDataText">
+                        <div class="NoDataTextStyle">
                             Selected numbers will be moved out of this list
                         </div>
                     </td>
@@ -196,7 +213,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkClicked()">Ok</button>
+                        <button [disabled]="StockLineSelectedItem == null" class="RedButton" (click)="OkClicked()">Ok</button>
                     </td>
                 </tr>
             </table>
