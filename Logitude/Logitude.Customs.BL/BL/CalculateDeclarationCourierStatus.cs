@@ -219,7 +219,7 @@ namespace Logitude.Customs.BL.BL
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
-            else if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 100 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
+            else if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
