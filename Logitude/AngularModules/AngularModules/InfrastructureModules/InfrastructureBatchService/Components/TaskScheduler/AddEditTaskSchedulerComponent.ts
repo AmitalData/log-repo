@@ -250,7 +250,7 @@ export class AddEditTaskSchedulerComponent  {
 
 
         if (this.DataContext.Type == "FTP") {
-            this.DataContext.ServiceClassName = "FTPClassName";
+            this.DataContext.ServiceClassName = "FTPSchedulerTask";
 
 
             if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
