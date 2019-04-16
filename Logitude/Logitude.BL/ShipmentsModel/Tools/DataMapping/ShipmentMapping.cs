@@ -97,7 +97,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
                 entityPM.ConvertShipmentToLCL = false;
                 entityPM.ConvertShipmentToFCL = false;
-            }            
+            }
 
             entityPoco.NoFreightFile = entityPM.NoFreightFile;
 
@@ -323,7 +323,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.NumberOfInsidePackagesDetails = entityPM.NumberOfInsidePackagesDetails;
             entityPoco.ViaColoader = entityPM.ViaColoader;
             entityPoco.IssuingCarrierReference1 = entityPM.IssuingCarrierReference1;
-            if(entityPoco.OperationalCloseDate==null && entityPM.OperationalCloseDate != null)
+            if (entityPoco.OperationalCloseDate == null && entityPM.OperationalCloseDate != null)
             {
                 entityPoco.OperationalClosedByUserId = entityPM.OperationalClosedByUserId;
             }
@@ -332,7 +332,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.OperationalClosedByUserId = entityPM.OperationalClosedByUserId;
             }
 
-            entityPoco.OperationalCloseDate = entityPM.OperationalCloseDate;            
+            entityPoco.OperationalCloseDate = entityPM.OperationalCloseDate;
             entityPoco.AccountingCloseDate = entityPM.AccountingCloseDate;
             entityPoco.ForwarderPartnerId = entityPM.ForwarderPartnerId;
             entityPoco.ForwardingPartnerId = entityPM.ForwardingPartnerId;
@@ -412,7 +412,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entityPoco.ConcurrencyGUID;
 
-            entityPM.ShipmentDirectionConverted = false;
+            if (entityPM.ShipmentDirectionConverted)
+            {
+                entityPoco.DirectionId = entityPM.DirectionId;
+                entityPM.ShipmentDirectionConverted = false;
+            }
         }
 
         private static void MapXSDMessagesFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, bool isNewEntity)
