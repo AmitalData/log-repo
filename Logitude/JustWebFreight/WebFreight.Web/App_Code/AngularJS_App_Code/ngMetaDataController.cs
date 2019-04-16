@@ -46,9 +46,11 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
+using WebFreight.Web.Helpers.APIHelpers;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
+	//[ApiExceptionFilter]
     public class ngMetaDataController : ApiController
     {
 
