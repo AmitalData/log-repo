@@ -1557,6 +1557,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             _reco.AccountReconcileMethodCode = paymentPM.GLAccountRecoMethodCode;
             _reco.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
 
+            GLAccountListQueryService glaQuery = new GLAccountListQueryService(ctx);
+            GLAccountList gla = glaQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
+            if (gla != null)
+            {
+                _reco.AccountCurrencyId = gla.CurrencyId;
+                _reco.CurrencyCode = gla.CurrencyCode;
+            }
+
             // get payment line LT
             LedgerTransactionListQueryService ltListQuery = new LedgerTransactionListQueryService(ctx);
             List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
@@ -1745,6 +1753,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // Validate sum of line's amount to reconcile
             decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            if (_payment.OpenAmount == null)
+            {
+                _payment.OpenAmount = 0;
+            }
+               
             if (amount2reconcile > (decimal)_payment.OpenAmount)
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
 

@@ -282,9 +282,9 @@
      if(@CustomsClearenceDate is null) begin set @IsCustomsCleared= 0 end
 	 -------------------------------------------------
 
-	 --------------Resolve Custom Field-------------------
+	 --------------Resolve Custom Field Data Type Code-------------------
             
-			    --@[ResolveCustomFields]
+			    --@[ResolveCustomFieldDataTypeCode]
 
 	 ------------------------------------------------------
 

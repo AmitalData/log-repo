@@ -885,6 +885,14 @@
     <Compile Include="Migrations\201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.Designer.cs">
       <DependentUpon>201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904150852309_Add_Field_TariffLine_DestinationPortId.cs" />
+    <Compile Include="Migrations\201904150852309_Add_Field_TariffLine_DestinationPortId.Designer.cs">
+      <DependentUpon>201904150852309_Add_Field_TariffLine_DestinationPortId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.cs" />
+    <Compile Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.Designer.cs">
+      <DependentUpon>201904151029006_Add_Field_TariffLine_DestinationPortId2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1490,6 +1498,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.resx">
       <DependentUpon>201904111148304_AddIsInvoiceNumberFromStockToARInvoice_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904150852309_Add_Field_TariffLine_DestinationPortId.resx">
+      <DependentUpon>201904150852309_Add_Field_TariffLine_DestinationPortId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.resx">
+      <DependentUpon>201904151029006_Add_Field_TariffLine_DestinationPortId2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,15 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.CloseTables;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -57,9 +61,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 foreach (ARInvoicePM invoice in paymentInvoices)
                 {
                     LedgerTransactionPM transaction = recoTransactions.Where(d => d.SourceId == invoice.Id).FirstOrDefault();
-                    decimal recoAmount = entityPM.ReconciliationLines.Where(d => d.TransactionId == transaction.Id).FirstOrDefault().ReconciliationAmount;
+                    //decimal recoAmount = entityPM.ReconciliationLines.Where(d => d.TransactionId == transaction.Id).FirstOrDefault().ReconciliationAmount;
 
-                    CaclulateInvoiceAmount(invoice, entityPM, transaction, recoAmount);
+                    CaclulateInvoiceAmount(invoice, transaction, entityPM);
                     CaclulateInvoiceStatus(invoice, entityPM.AccountReconcileMethodCode);
 
                     invoiceService.Update(invoice);
@@ -150,8 +154,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void CaclulateInvoiceStatus(ARInvoicePM invoice, string reconcileMethodCode)
         {
-
-            var invoiceAmount = reconcileMethodCode == ReconcileMethodValues.LocalCurrency ? invoice.AmountDueInLocalCurrency : invoice.AmountInInvoiceCurrency;
+            
+            var invoiceAmount = invoice.AmountInInvoiceCurrency;
 
             if (invoice.AmountDue <= 0)
             {
@@ -170,18 +174,44 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
         }
-        private void CaclulateInvoiceAmount(ARInvoicePM invoice, ReconciliationPM entityPM, LedgerTransactionPM transaction, decimal recoAmount)
+        private void CaclulateInvoiceAmount(ARInvoicePM invoice, LedgerTransactionPM transaction, ReconciliationPM recoPM)
         {
+            string tenantCurrencyId = GetTenantCurrencyId(transaction.Tenant);
 
-            // get reco line
-            ReconciliationLinePM invoiceRecoLine = entityPM.ReconciliationLines.Where(d => d.TransactionId == transaction.Id).FirstOrDefault();
-            decimal originalAmount = GetOriginalAmountOfTransaction(transaction, entityPM.AccountReconcileMethodCode);
-            var reconciliationAmount = originalAmount - transaction.OpenAmount;
+            if (recoPM.AccountReconcileMethodCode == ReconcileMethodValues.LocalCurrency)
+            {
+                invoice.AmountDueInLocalCurrency = (double)transaction.OpenAmount;
+                invoice.AmountDue = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.InvoiceCurrencyExchangeRate), 2);
+            }
+            else
+            {
+                double glaCurrencyRate = GetGLAccountCurrencyRate(recoPM.AccountCurrencyId, tenantCurrencyId, transaction.Tenant);
 
-            invoice.AmountDue -= (double)recoAmount;
-            invoice.AmountDueInLocalCurrency = MethodHelper.Round((invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate), 2);
-            invoice.AmountDueInProfitCurrency = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate), 2);
+                invoice.AmountDueInLocalCurrency = GetLocal((double)transaction.OpenAmount, glaCurrencyRate);
+                invoice.AmountDue = GetForeign(invoice.AmountDueInLocalCurrency, invoice.InvoiceCurrencyExchangeRate);
+            }
 
+            invoice.AmountDueInProfitCurrency = GetForeign(invoice.AmountDueInLocalCurrency, invoice.ProfitCurrencyExchangeRate);
+
+        }
+
+        private double GetGLAccountCurrencyRate(string accountCurrencyId, string tenantCurrencyId, int tenant)
+        {
+            RatesTableQuery rateQuery = new RatesTableQuery(tenant);
+            LastRate glaToLocalRate = rateQuery.GetLastRecord(tenant, accountCurrencyId, tenantCurrencyId);
+
+            if (glaToLocalRate == null) throw new ApplicationException("Account currency exchange rate does not exist");
+
+            return (double)glaToLocalRate.Rate;
+
+        }
+
+        private string GetTenantCurrencyId(int tenant)
+        {
+            TenantRepository tRepo = new TenantRepository(tenant);
+            Tenant t = tRepo.GetSingleByTenant(tenant);
+            string tenantCurrency = (t == null ? null : t.CurrencyId);
+            return tenantCurrency;
         }
         private decimal GetOriginalAmountOfTransaction(LedgerTransactionPM transaction, string reconcileMethodCode)
         {
@@ -219,7 +249,22 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return 0;
         }
+        private double GetLocal(double? foreignAmount, double? currencyRate)
+        {
+            double result = 0;
 
+            result = (double)foreignAmount * (double)currencyRate;
+
+            return (double)MethodHelper.Round(result,2);
+        }
+        private double GetForeign(double? localAmount, double? currencyRate)
+        {
+            double result = 0;
+
+            result = (double)localAmount / (double)currencyRate;
+
+            return (double)MethodHelper.Round(result, 2);
+        }
     }
 
     

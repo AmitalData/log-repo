@@ -106,7 +106,7 @@ void SaveEntityServiceOutput(string outputFileName)
 	
 	         string[] namespacearr = pmnamespacestring.ToString().Split('.');
 		     string projectname = namespacearr[1].Replace("Lib","");
-        if (projectname != "Accounting" && projectname != "Booking"&& projectname != "Warehouse" && projectname != "TimeManagement")
+        if (projectname != "Accounting" && projectname != "Booking"&& projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule")
         {
 		 iswrongname = true;
         }

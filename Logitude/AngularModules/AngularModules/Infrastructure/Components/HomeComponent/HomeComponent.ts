@@ -1249,6 +1249,49 @@ export class HomeComponent implements OnDestroy{
         win.focus();
     }
 
+
+    private SubscribeToInttra(EmptyOrError: boolean, contractId: string, temp) {
+        var storeId: string = "543002";
+        var isSandbox = false;
+        if (!AppTool.IsNullOrEmpty(temp.ContractId) && (EmptyOrError || AppTool.IsNullOrEmpty(contractId))) {
+            contractId = temp.ContractId;
+            storeId = temp.Storeid;
+            temp = temp.Token;
+            isSandbox = true;
+        }
+        else if (EmptyOrError || AppTool.IsNullOrEmpty(contractId)) {
+            temp = temp.Token;
+                contractId = "3542118";            
+        }
+        else {
+            temp = temp.Token;
+        }
+
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapInttraStockContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapInttraStockContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://checkout.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+
+        }
+        if (AppTool.IsNullOrEmpty(temp)) {
+            if (isSandbox) {
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+            else {
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+        }
+
+        var win = window.open(link, '_blank');
+        win.focus();
+    }
+
+
+
+
     SubscribeClicked(code: string) {
         var link: string = "";
         var EmptyOrError: boolean = true;
@@ -1429,6 +1472,45 @@ export class HomeComponent implements OnDestroy{
                                 this.OneTimeBuy(EmptyOrError, contractId, temp);
                             }
                          
+                        });
+                        break;
+                    }
+
+
+                case "INT":
+                    {
+                        this.CurrentSession.StartBusyIndicatorLoading();
+
+                        var myService: CommonDomainService = new CommonDomainService();
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                            var temp: BluesnapParameters = myResult.Result;
+                            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapInttraStockContractId;
+                            if (!AppTool.IsNullOrEmpty(contractId)) {
+                                this.BluesnapContractService.get(contractId).subscribe((res: ServiceResponse) => {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    if (res) {
+                                        if (!res.HasError) {
+                                            contractId = res.Result.ContractId;
+                                            EmptyOrError = false;
+                                            this.SubscribeToInttra(EmptyOrError, contractId, temp);
+                                        }
+                                        else {
+                                            this.SubscribeToInttra(EmptyOrError, null, temp);
+
+                                        }
+                                    }
+                                    else {
+                                        this.SubscribeToInttra(EmptyOrError, null, temp);
+                                    }
+
+                                });
+                            }
+                            else {
+                                this.CurrentSession.StopBusyIndicator();
+                                this.SubscribeToInttra(EmptyOrError, contractId, temp);
+
+                            }
                         });
                         break;
                     }
