@@ -74,6 +74,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var context1 = CustomContext.GetContext(requestParams.Tenant);
                 foreach (DeclarationCourierStatusPM itemPM in listPM)
                 {
+                    LogMessagingUtil.Instance.AppendLine("ChangeStorgeSite for declaration: " + itemPM.DeclarationId + "\n");
                     var changeStorgeSiteService = new ChangeStorgeSiteService(context1);
                     changeStorgeSiteService.ChangeStorgeSite(customResponse.StorageSiteCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM);
                 }
@@ -82,11 +83,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if(lockedDeclarations != null && lockedDeclarations.Count() > 0)
             {
+                LogMessagingUtil.Instance.AppendLine("RaiseEvent FSE for declarations: " + "\n");
                 List<string> declarationsList = new List<string>();
                 string message = string.Concat("אתר אחסון בטיסה השתנה ל ", customResponse.StorageSiteCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
                 foreach (DeclarationPM itemDeclaration in lockedDeclarations)
                 {
                     declarationsList.Add(itemDeclaration.CustomFileNo);
+                    LogMessagingUtil.Instance.AppendLine("RaiseEvent FSE for declaration: " + itemDeclaration.CustomFileNo + "\n");
                 }
                 RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "FSE", message);
             }
@@ -162,6 +165,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPM.DeclarationId, true, false);
                 if (declarationPM != null)
                 {
+                    LogMessagingUtil.Instance.AppendLine("GetSingle declaration: " + itemPM.DeclarationId + "\n");
                     bool isUpdateDeclaration = true;
                     var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);
                     try
