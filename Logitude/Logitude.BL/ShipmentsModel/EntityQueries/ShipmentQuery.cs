@@ -3095,7 +3095,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (entityComputedFields != null)
                 {
                     shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
-                    shipmentPM.ImporterDepositionRequestDetails = entityComputedFields.ImporterDepositionRequestDetails;
                     shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
                     shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
                 }

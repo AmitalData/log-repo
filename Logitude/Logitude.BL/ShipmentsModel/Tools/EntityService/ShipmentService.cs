@@ -108,6 +108,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ContactPM loggedContact;
         private ShipmentAssemblyRepository shipmentAssemblyRepository;
         List<ShipmentPM> housesList = new List<ShipmentPM>();
+        public ShipmentComputedFields entityComputedFields;
         private bool IsLCLEntity;
         private bool IsFCLEntity;
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
@@ -448,7 +449,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
+
                     RunAutomation("OnUpdate");
+
                     UpdateShipmentComputedFields();
 
 
@@ -532,22 +535,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void UpdateShipmentComputedFields()
         {
-            if (entityPM.IsShipmentComputedFieldChange)
+            if (entityComputedFields != null)
             {
-                if (entityPM.ShipmentComputedFields == null)
-                {
-                    entityPM.ShipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
-                }
-
-
-                if (entityPM.ShipmentComputedFields != null)
-                {
-                    shipmentComputedFieldsRepository.Update(entityPM.ShipmentComputedFields);
-                }
-
-                entityPM.ShipmentComputedFields = null;
-                entityPM.IsShipmentComputedFieldChange = false;
+                shipmentComputedFieldsRepository.Update(entityComputedFields);
             }
+
+            entityPM.IsShipmentComputedFieldChange = false;
 
         }
 
@@ -2510,7 +2503,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                ShipmentComputedFields entityComputedFields = new ShipmentComputedFields();
+                entityComputedFields = new ShipmentComputedFields();
                 entityComputedFields.Id = entityPM.Id;
                 entityComputedFields.Tenant = entityPM.Tenant;
 
@@ -2773,57 +2766,64 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
-              
-                if(entityPM.ShipmentComputedFields == null)
-                {
-                    entityPM.ShipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
-                }
 
-                if (entityPM.ShipmentComputedFields != null)
+                if (entityComputedFields == null) entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
+                if (entityComputedFields != null)
                 {
-            
+                    if (entityPM.IsShipmentComputedFieldChange)
+                    {
+                        entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
+                        entityComputedFields.IsRequestedDocuments = entityPM.IsRequestedDocuments;
+                        entityComputedFields.IsDigitalSignRequired = entityPM.IsDigitalSignRequired;
+                        entityComputedFields.IsMissingDocuments = entityPM.IsMissingDocuments;
+                        entityComputedFields.DocumentsSearchFields = entityPM.DocumentsSearchFields;
+                        entityComputedFields.MissingDocumentsCount = entityPM.MissingDocumentsCount;
+                        entityComputedFields.MissingDocumentsNames = entityPM.MissingDocumentsNames;
+                        entityComputedFields.RequestedDocumentsCount = entityPM.RequestedDocumentsCount;
+                        entityComputedFields.NumberOfHouses = entityPM.NumberOfHouses;
+                        entityComputedFields.ImporterDepositionRequestDetails = entityPM.ImporterDepositionRequestDetails;
+                    }
+
 
                     if (entityPM.IsOperationalClosed)
                     {
-                        entityPM.ShipmentComputedFields.IsMissingDocuments = false;
-                        entityPM.ShipmentComputedFields.IsRequestedDocuments = false;
-                        entityPM.ShipmentComputedFields.IsDigitalSignRequired = false;
-                        entityPM.ShipmentComputedFields.MissingDocumentsCount = 0;
-                        entityPM.ShipmentComputedFields.MissingDocumentsNames = "";
-
-               
+                        entityComputedFields.IsMissingDocuments = false;
+                        entityComputedFields.IsRequestedDocuments = false;
+                        entityComputedFields.IsDigitalSignRequired = false;
+                        entityComputedFields.MissingDocumentsCount = 0;
+                        entityComputedFields.MissingDocumentsNames = "";
+   
                     }
+
                     else
                     {
                         var OTId = objectTableRepository.GetObjectTableIdByName("Shipment");
-                        entityPM.ShipmentComputedFields.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
-                        entityPM.ShipmentComputedFields.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
-                        if (entityPM.ShipmentComputedFields.MissingDocumentsCount == 0)
+                        entityComputedFields.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
+                        entityComputedFields.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
+                        if (entityComputedFields.MissingDocumentsCount == 0)
                         {
-                            entityPM.ShipmentComputedFields.IsMissingDocuments = false;
+                            entityComputedFields.IsMissingDocuments = false;
                         }
 
                         else
                         {
-                            entityPM.ShipmentComputedFields.IsMissingDocuments = true;
+                            entityComputedFields.IsMissingDocuments = true;
                         }
                     }
                     if (entityPM.CustomsClearanceDate != null)
                     {
-                        entityPM.ShipmentComputedFields.IsMissingDocuments = false;
-                        entityPM.ShipmentComputedFields.IsRequestedDocuments = false;
-                        entityPM.ShipmentComputedFields.IsDigitalSignRequired = false;
-                        entityPM.ShipmentComputedFields.IsDepositionRequired = false;
+                        entityComputedFields.IsMissingDocuments = false;
+                        entityComputedFields.IsRequestedDocuments = false;
+                        entityComputedFields.IsDigitalSignRequired = false;
                     }
 
-                    entityPM.IsDepositionRequired = entityPM.ShipmentComputedFields.IsDepositionRequired;
-                    entityPM.IsRequestedDocuments = entityPM.ShipmentComputedFields.IsRequestedDocuments;
-                    entityPM.IsDigitalSignRequired = entityPM.ShipmentComputedFields.IsDigitalSignRequired;
-                    entityPM.IsShipmentComputedFieldChange = true;
+
+                    entityPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+                    entityPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
+                    entityPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
 
                 }
 
-           
 
                 if (entityPM.IsHybrid || loggedTenant.IsDocumentsArchive)
                 {
@@ -4604,9 +4604,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         isUpdatingHouses = true;
                     }
 
-                    if (entityPM.ShipmentComputedFields != null && shipmentConsoleShipmentsChangeSet != null)
+                    if (entityComputedFields != null && shipmentConsoleShipmentsChangeSet != null)
                     {
-                        entityPM.ShipmentComputedFields.NumberOfHouses = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+                        entityComputedFields.NumberOfHouses = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
                     }
                 }
             }

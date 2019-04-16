@@ -1155,7 +1155,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field, this);
             if (field.FilterItems.length == 0) {
-                if (field.DWObjectTableCode.indexOf("DIM_") != -1) {
+                if (field.DWObjectTableCode && field.DWObjectTableCode.indexOf("DIM_") != -1) {
 
                     if (view.Code == '[Full Date]') {
                         view.ParentDataTypeCode = "DateTime";

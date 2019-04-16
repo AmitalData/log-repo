@@ -211,7 +211,7 @@ export class NewLineComponent extends BaseComponent {
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-        if (this.DateOfWorkMinutes == null || this.DateOfWorkMinutes == 0) {
+        if (this.DateOfWorkMinutes == null || this.DateOfWorkMinutes == 0 || Number.isNaN(this.DateOfWorkMinutes)) {
             errors.push("Please fill the Time");
         }
 
