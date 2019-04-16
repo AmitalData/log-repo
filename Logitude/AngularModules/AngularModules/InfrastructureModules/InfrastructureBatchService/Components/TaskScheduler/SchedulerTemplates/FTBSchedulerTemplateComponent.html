@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .FormFieldRow {
         height: 30px;
@@ -97,6 +97,19 @@
             <td style="width:250px;">
                 <div style="height: 100%; width: 100%;">
                     <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="DataContext.Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'Suffix'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'Suffix'" [Text]="DataContext.Suffix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                 </div>
             </td>
 

@@ -94,7 +94,7 @@ export class AddEditTaskSchedulerComponent  {
 
     BuildSchedulerDetailsData() {
         if (this.DataContext.Type == "FTP") {
-            this.GeneralAreaHeight = "275px";
+            this.GeneralAreaHeight = "310px";
             if (this.EntityPM.SchedulerDetailsData) {
                 this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
             }
