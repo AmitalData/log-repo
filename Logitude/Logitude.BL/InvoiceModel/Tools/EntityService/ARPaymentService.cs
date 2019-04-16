@@ -1557,6 +1557,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             _reco.AccountReconcileMethodCode = paymentPM.GLAccountRecoMethodCode;
             _reco.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
 
+            GLAccountListQueryService glaQuery = new GLAccountListQueryService(ctx);
+            GLAccountList gla = glaQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
+            if (gla != null)
+            {
+                _reco.AccountCurrencyId = gla.CurrencyId;
+                _reco.CurrencyCode = gla.CurrencyCode;
+            }
+
             // get payment line LT
             LedgerTransactionListQueryService ltListQuery = new LedgerTransactionListQueryService(ctx);
             List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
