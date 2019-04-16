@@ -108,7 +108,7 @@ namespace CommunicationWorkerRole.Tasks
 
 		private void AddToAnalyzeQueu(string fileName, byte[] fileData, SchedulerDetails schedulerDetails, int tenant)
 		{
-			if (fileName == "faildelete")
+			if (fileName == "fail.txt")
 			{
 				throw new Exception("failure testing!");
 			}
