@@ -1460,6 +1460,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public set TextValue(newValue: any) {
         if (this.textValue != newValue) {
             this.textValue = newValue;
+            if (this.ParentDataTypeCode == "DateTime" || this.ParentDataTypeCode == "Date") {
+                var timerToken = setTimeout(() => {
+                    this.ShowSampleDateCommand.emit(this);
+                }, 1000);
+            }
             this.MyParentClass.ClearData();
             //if ((newValue == true || newValue == false) && this.textValue) {
             //    this.textValue = newValue;
