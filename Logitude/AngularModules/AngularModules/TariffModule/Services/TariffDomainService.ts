@@ -7,6 +7,8 @@ import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilter
 import {TariffPM} from '../EntityPMs/TariffPM';
 import {TariffPMService} from './StandardPMs/TariffPMService';
 import {TariffList} from '../EntityLists/TariffList';
+import { TariffSettingPM } from '../EntityPMs/TariffSettingPM';
+import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
 
 @Injectable()
 
@@ -45,6 +47,96 @@ export class TariffDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    
+    GetTenantTariffSetting() {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTenantTariffSetting', { headers: authHeader }).map(response => {
+                var pm = response.json();
+
+                var entity: TariffSettingPM;
+                if (pm) {
+                    entity = this.MapJsonToEntityPM(pm);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TariffSettingPM = null) {
+
+
+        if (!entityPM) {
+
+            entityPM = new TariffSettingPM();
+        }
+
+        var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+
+                continue;
+            }
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
+                entityPM[property] = jsonPM[property];
+            }
+
+        }
+
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
+        }
+        else {
+
+            entityPM.OldEntityPM = null;
+        }
+        entityPM.IsDirty = false;
+        return entityPM;
+    }
+    clone(jsonPM: any) {
+        var entityPM: any;
+        entityPM = {};
+
+        var jsonPMKeys = Object.keys(jsonPM);
+        for (var key in jsonPMKeys) {
+
+            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+                continue;
+            }
+
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+
+        }
+        return entityPM;
+    }
+
 }
 
 
