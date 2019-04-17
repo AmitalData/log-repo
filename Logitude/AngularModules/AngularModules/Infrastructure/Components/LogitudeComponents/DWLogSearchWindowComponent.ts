@@ -452,7 +452,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (multiSelectedValueLists) {
             multiSelectedValueLists.forEach((field) => {
                 if (field["Value"]) {
-                    if (textValue) textValue += ";";
+                    if (textValue) textValue += ";;";
                     var rowValues: any = field["Value"];
 
                     if (rowValues) textValue += rowValues.Row;
