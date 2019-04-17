@@ -116,6 +116,13 @@ export class LogBoxSettings extends BaseComponent implements OnInit, AfterViewIn
         }
     }
 
+    get AutoArchiveOnInvoice() { return this.TenantPm.AutoArchiveOnInvoice; }
+    set AutoArchiveOnInvoice(newValue: boolean) {
+        if (this.TenantPm.AutoArchiveOnInvoice != newValue) {
+            this.TenantPm.AutoArchiveOnInvoice = newValue;
+        }
+    }
+    
 
 
     get IsCustomerTenantShare() { return this.TenantPm.IsCustomerTenantShare; }

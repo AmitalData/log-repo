@@ -359,6 +359,7 @@
     <Compile Include="INTTRAAnalyzerWorkerRole.cs" />
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
     <Compile Include="Tasks\DeleteTaskSchedulerHistoriesTask.cs" />
+    <Compile Include="Tasks\FTPSchedulerTask.cs" />
     <Compile Include="Tasks\TestLoggingWarningTask.cs" />
     <Compile Include="Tasks\TestLoggingInfoTask.cs" />
     <Compile Include="TMQueueMessageBuilderWorkerRole.cs" />

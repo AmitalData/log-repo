@@ -354,6 +354,11 @@ export class TenantManagementPM {
     public set BluesnapOneTimeContract(newValue: string) { if (this.bluesnapOneTimeContract != newValue) { this.bluesnapOneTimeContract = newValue; this.MarkAsDirty("BluesnapOneTimeContract"); } }
        
 	 
+    private bluesnapInttraStockContractId: string;
+    public get BluesnapInttraStockContractId() { return this.bluesnapInttraStockContractId; }
+    public set BluesnapInttraStockContractId(newValue: string) { if (this.bluesnapInttraStockContractId != newValue) { this.bluesnapInttraStockContractId = newValue; this.MarkAsDirty("BluesnapInttraStockContractId"); } }
+       
+	 
     private aWBMessagesCCSTypeCode: string;
     public get AWBMessagesCCSTypeCode() { return this.aWBMessagesCCSTypeCode; }
     public set AWBMessagesCCSTypeCode(newValue: string) { if (this.aWBMessagesCCSTypeCode != newValue) { this.aWBMessagesCCSTypeCode = newValue; this.MarkAsDirty("AWBMessagesCCSTypeCode"); } }
@@ -462,6 +467,11 @@ export class TenantManagementPM {
     private bluesnapOneTimeContractQTY: number;
     public get BluesnapOneTimeContractQTY() { return this.bluesnapOneTimeContractQTY; }
     public set BluesnapOneTimeContractQTY(newValue: number) { if (this.bluesnapOneTimeContractQTY != newValue) { this.bluesnapOneTimeContractQTY = newValue; this.MarkAsDirty("BluesnapOneTimeContractQTY"); } }
+       
+	 
+    private bluesnapInttraStockContractQTY: number;
+    public get BluesnapInttraStockContractQTY() { return this.bluesnapInttraStockContractQTY; }
+    public set BluesnapInttraStockContractQTY(newValue: number) { if (this.bluesnapInttraStockContractQTY != newValue) { this.bluesnapInttraStockContractQTY = newValue; this.MarkAsDirty("BluesnapInttraStockContractQTY"); } }
        
 	 
     private isDEXXConnectionEnabled: boolean;
