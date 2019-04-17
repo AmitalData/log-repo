@@ -66652,8 +66652,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APInvoiceFeature_Q08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DRAFTGENERALAPINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.DraftGeneralAPInvoice", NameTextCodeDefaultText = "Draft General APInvoices", FullLocalDefaultText = "חשבוניות בסטטוס טיוטה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_Q09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVALGENERALAPINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.ApprovalGeneralAPInvoice", NameTextCodeDefaultText = "Approval General APInvoices", FullLocalDefaultText = "חשבוניות מאושרות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
-            Feature APInvoiceFeature_Q10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FullLocalDefaultText = "Error In Transfer" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
             #endregion
 
                 #region (AR) Payment
