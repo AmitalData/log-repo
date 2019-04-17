@@ -267,6 +267,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\Others\Day 14 [Abed]AddFunctionResolveCustomFieldValue.sql" />
+    <Content Include="WarehouseScript\Others\Day 17[AbedAddFuncationResolveCustomFieldDateValue].sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

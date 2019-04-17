@@ -1,10 +1,8 @@
 
 -- Shared DB
 
-
-IF object_id(N'GetDateFormateAsNumber', N'FN') IS NOT NULL
-  BEGIN DROP FUNCTION GetDateFormateAsNumber   end
-
+--IF object_id(N'GetDateFormateAsNumber', N'FN') IS NOT NULL
+--  BEGIN DROP FUNCTION GetDateFormateAsNumber   end
 
 IF object_id('GetDateFormateAsNumber') IS  NULL
 BEGIN
