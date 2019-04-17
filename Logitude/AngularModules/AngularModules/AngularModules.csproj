@@ -1979,6 +1979,7 @@
     <Content Include="Social\Components\SocialMessagesComponent.html" />
     <Content Include="styles.css" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
+    <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.html" />
     <Content Include="TimeManagement\Components\Connections\ConnectToParentComponent.html" />
     <Content Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.html" />
@@ -6330,6 +6331,7 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />

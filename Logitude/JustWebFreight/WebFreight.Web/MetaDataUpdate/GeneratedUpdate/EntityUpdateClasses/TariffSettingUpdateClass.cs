@@ -70,7 +70,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class TariffTypeUpdateClass
+   public class TariffSettingUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -78,33 +78,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "TariffType",
-			      				    IsNew =  false,
-			      				    DBTableName =  "TariffTypes",
-			      				    OldDBTableName =  "TariffTypes",
-			      				    ObjectTableSingular =  "TariffType",
-			      				    ObjectTablePlural =  "TariffTypes",
+	             				    ObjectTableName =  "TariffSetting",
+			      				    IsNew =  true,
+			      				    DBTableName =  "TariffSettings",
+			      				    OldDBTableName =  "TariffSettings",
+			      				    ObjectTableSingular =  "Tariff Setting",
+			      				    ObjectTablePlural =  "Tariff Settings",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Code",
-			      				    LookUp2 =  "Name",
-			      				    KeyPropertyPath =  "Code",
+			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
-			      				    CacheOnClient =  true,
+			      				    IsClosed =  false,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
-			      				    IsAutoComplete =  true,
+			      				    IsMain =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Name",
+			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -113,11 +111,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Tariff Types",
-			      				    Code =  "3095",
-			      				    Name =  "TariffType Query Group",
-			      				    CloseTableCode =  "Code",
-			      				    CloseTableName =  "Name",
+			      				    DefaultText =  "Tariff Setting",
+			      				    Code =  "264b",
+			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "TariffModule",
 			      				    ServerModuleName =  "TariffModule",
@@ -138,74 +134,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
-					  						ObjectTableName =  "TariffType",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  3,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  3,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "Code",
-					  						ListPropertyPath =  "Code",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TarrifType",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
-					  						ObjectTableName =  "TariffType",
+					 						FieldName =  "DefaultPriceSteps",
+					  						OldFieldName =  "DefaultPriceSteps",
+					  						ObjectTableName =  "TariffSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -215,68 +152,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "Name",
-					  						ListPropertyPath =  "Name",
-					  						DisplayInLookUpIndex =  1,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TarrifType",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
-					  						ObjectTableName =  "TariffType",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  1000,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  1000,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SearchFields",
-					  						ListPropertyPath =  "SearchFields",
+					  						PMPropertyPath =  "DefaultPriceSteps",
+					  						ListPropertyPath =  "DefaultPriceSteps",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -285,7 +163,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TarrifType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -294,10 +171,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search ...",
-					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search ...",
+					  						FullFieldLable =  "DefaultPriceSteps",
+					  						DefaultText =  "Default Price Steps",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -307,7 +182,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -327,13 +201,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable TariffSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TariffSetting" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature TariffSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TariffSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TariffSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TariffSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.PackageFeature", NameTextCodeDefaultText = "TariffSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable TariffTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TariffType" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable TariffSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TariffSetting" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -341,14 +221,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  true,
-                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = TariffTypeObjectTable.Id,
+                ObjectTableId = TariffSettingObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -360,14 +239,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 LocalName =  "Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
-                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = TariffTypeObjectTable.Id,
+                ObjectTableId = TariffSettingObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -383,18 +261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 }
 
-
-	    public void FillTariffType()
-        { 
-            var repo = new TariffTypeRepository(0);
-            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
-            new FillCloseTables().FillCloseTable<
-                                TariffType,
-                                TariffTypeDetails,
-                                TariffTypeRepository>(repo, dic);
-        }
-
-	    
+    
 
    }
     
