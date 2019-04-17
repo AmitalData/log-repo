@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -59,20 +60,38 @@ export class TariffSettingComponent extends BaseComponent {
 
     BuildItemsSource() {
         var Steps: string[] = [];
-
         if (this.DefaultPriceSteps) {
             Steps = this.DefaultPriceSteps.split(',');
         }
 
+        var index: number = 0;
         Steps.forEach(item => {
-            this.ItemsSource.push(new TariffSettingStep(item, this));
+            this.ItemsSource.push(new TariffSettingStep(item, index, this));
+            index++;
         });
 
         if (Steps.length < 8) {
             for (var i = Steps.length; i < 8; i++) {
-                this.ItemsSource.push(new TariffSettingStep(null, this));
+                this.ItemsSource.push(new TariffSettingStep(null, index, this));
+                index++;
             }
         }
+    }
+    BuildDefaultPriceSteps() {
+
+        var iDefaultPriceSteps: string = null;
+
+        this.ItemsSource.filter(f => f.Step != null).sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
+            if (AppTool.IsNullOrEmpty(iDefaultPriceSteps)) {
+                iDefaultPriceSteps = "" + item.Step;
+            }
+
+            else {
+                iDefaultPriceSteps += "," + item.Step;
+            }
+        });
+
+        this.DefaultPriceSteps = iDefaultPriceSteps;
     }
 
     CancelButtonClicked() {
@@ -87,7 +106,28 @@ export class TariffSettingComponent extends BaseComponent {
             var errors: string[] = [];
             Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-            //
+            var isValidSort: boolean = true;
+            var SortedItemStep: number = 0;
+
+            this.ItemsSource.filter(f => f.Step != null).sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
+                if (SortedItemStep == 0) {
+                    SortedItemStep = item.Step;
+                }
+
+                else {
+                    if (item.Step <= SortedItemStep) {
+                        isValidSort = false;
+                    }
+
+                    else {
+                        SortedItemStep = item.Step;
+                    }
+                }
+            });
+
+            if (!isValidSort) {
+                errors.push("Price steps must be sorted");
+            }
 
             this.ValidationErrorsList = errors;
 
@@ -129,9 +169,17 @@ export class TariffSettingComponent extends BaseComponent {
     }
 }
 
-class TariffSettingStep {
-    constructor(iStep: string, private father: TariffSettingComponent) {
-        this.step = +iStep;
+class TariffSettingStep extends BaseComponent {
+    public Index: number;
+    public DataContext = this;
+    constructor(iStep: string, index: number, private father: TariffSettingComponent) {
+        super();
+
+        this.Index = index;
+
+        if (iStep) {
+            this.step = +iStep;
+        }
     }
 
     private step: number = null;
@@ -139,6 +187,7 @@ class TariffSettingStep {
     set Step(value: number) {
         if (this.step != value) {
             this.step = value;
+            this.father.BuildDefaultPriceSteps();
         }
     }
 
