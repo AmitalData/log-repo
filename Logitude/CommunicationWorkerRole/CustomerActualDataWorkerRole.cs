@@ -1,6 +1,7 @@
 ﻿using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
@@ -69,6 +70,83 @@ namespace CommunicationWorkerRole
                 }
             }
         }
+
+        public void Run_New()
+        {
+            while (IsRunning)
+            {
+                if (!General.IsUpdating())
+                {
+                    LastActivity = DateTime.UtcNow;
+                    DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 30, 0);
+                    DateTime date2 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 40, 0);
+
+                    if (DateTime.Now >= date1 && DateTime.Now <= date2)
+                    {
+                        LastActivity = DateTime.UtcNow;
+                        ICommonDataContext iContext = CommonDataContext.GetContext(0);
+                        List<int> AllTenants = (from d in iContext.Tenants select d.Id).ToList();
+                        if (AllTenants != null)
+                        {
+                            DateTime? StartDateTime = null;
+                            DateTime? EndDateTime = null;
+
+                            foreach (int iTenant in AllTenants)
+                            {
+                                try
+                                {
+                                    using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
+                                    {
+                                        bool isExists = CommonModelProcedureClass.IsExistsCustomerActualDataHistory(iTenant, StartDateTime);
+                                        if (!isExists)
+                                        {
+                                            StartDateTime = DateTime.Now;
+                                            CommonModelProcedureClass.ExecuteSingleCustomerActualData(null, iTenant);
+                                            scope.Complete();
+                                            EndDateTime = DateTime.Now;
+                                        }
+                                    }
+                                }
+
+                                catch (Exception ex)
+                                {
+                                    EndDateTime = DateTime.Now;
+                                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Customer actual data worker role start, Tenant: " + iTenant, null, null);
+                                    Thread.Sleep(10000);
+                                }
+
+                                finally
+                                {
+                                    if (StartDateTime != null && EndDateTime != null)
+                                    {
+                                        CommonModelProcedureClass.InsertCustomerActualDataHistory(iTenant, StartDateTime, EndDateTime);
+                                    }
+                                }
+                            }
+
+                            LogDoneItemInMemory();
+                            Thread.Sleep(3600000);
+                        }
+
+                        else
+                        {
+                            Thread.Sleep(60000);
+                        }
+                    }
+
+                    else
+                    {
+                        Thread.Sleep(60000);
+                    }
+                }
+
+                else
+                {
+                    Thread.Sleep(60000);
+                }
+            }
+        }
+
 
         public override bool OnStart()
         {
