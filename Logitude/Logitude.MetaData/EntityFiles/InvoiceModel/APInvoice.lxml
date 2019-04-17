@@ -344,6 +344,5 @@
     <Feature Code="&quot;RecalculateExternals&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;APInvoice.Features.RecalculateExternals&quot;" FeatureDefaultText="&quot;Recalculate External IDs&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;EnableMultiRate&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;APInvoice.Features.EnableMultiRate&quot;" FeatureDefaultText="&quot;Enable multi-rate&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;APInvoiceEditExchangeRate&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;APInvoice.Features.EditExchangeRate&quot;" FeatureDefaultText="&quot;Edit Exchange Rate&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
-    <Feature Code="&quot;ErrorInTransfer&quot;" FeatureTypeCode="&quot;QUER&quot;" FeatureTextCodeCode="&quot;APInvoice.Features.ERRORINTRANSFER&quot;" FeatureDefaultText="&quot;Error In Transfer&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
