@@ -248,7 +248,7 @@ namespace CommunicationWorkerRole
                                                     }
 
                                                 }
-                                                else if (ForwarderShipment.DirectionId.ToUpper() == "C" || (IsExportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment) && (ForwarderShipment.DirectionId.ToUpper() == "E" || ForwarderShipment.DirectionId.ToUpper() == "R")))//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
+                                                else if (ForwarderShipment.DirectionId.ToUpper() == "C" || (IsExportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment)))//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
                                                 {
                                                     //ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ForwarderShipment.CustomerShipmentNumber, importerTenant);
                                                     msg = "Getting Custom shipment number" + DateTime.Now;
