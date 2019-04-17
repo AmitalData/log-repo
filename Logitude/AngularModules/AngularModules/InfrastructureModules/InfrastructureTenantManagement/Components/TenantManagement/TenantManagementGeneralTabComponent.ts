@@ -35,6 +35,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public BluesnapEAWBContractIdFilterItems: ApiQueryFilters;
     public BluesnapEAWBSContractIdFilterItems: ApiQueryFilters;
     public BluesnapCRMContractIdFilterItems: ApiQueryFilters;
+    public BluesnapInttraStockContractIdFilterItems: ApiQueryFilters;
 
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
@@ -55,6 +56,9 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
         this.BluesnapEAWBSContractIdFilterItems = new ApiQueryFilters();
         this.BluesnapEAWBSContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "EABS", null, null, "Equals", false, false, false, "string", false, true);
+
+        this.BluesnapInttraStockContractIdFilterItems = new ApiQueryFilters();
+        this.BluesnapInttraStockContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "INTS", null, null, "Equals", false, false, false, "string", false, true);
 
 
     }
@@ -679,6 +683,17 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     }
 
 
+    get BluesnapInttraStockContractQTYs() { return this.EntityPM.BluesnapInttraStockContractQTY; }
+    set BluesnapInttraStockContractQTYs(newValue: number) {
+        if (this.EntityPM.BluesnapInttraStockContractQTY != newValue) {
+            if (newValue == null)
+                newValue = 0;
+            this.EntityPM.BluesnapInttraStockContractQTY = newValue;
+        }
+
+    }
+
+
     get BluesnapCRMContractQTYs() { return this.EntityPM.BluesnapCRMContractQTY; }
     set BluesnapCRMContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapCRMContractQTY != newValue) {
@@ -1041,6 +1056,18 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapOneTimeContract = newValue;
         }
     }
+
+
+    get BluesnapInttraStockContractId() {
+        return this.EntityPM.BluesnapInttraStockContractId;
+    }
+    set BluesnapInttraStockContractId(newValue: string) {
+        if (this.EntityPM.BluesnapInttraStockContractId != newValue) {
+            this.EntityPM.BluesnapInttraStockContractId = newValue;
+        }
+    }
+
+    
 
     get BillingByLogitude() { return this.EntityPM.BillingByLogitude; }
     set BillingByLogitude(newValue: boolean) {

@@ -32,7 +32,9 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         public string Subject { get; set; }
         [DataMember]
         public string Prefix { get; set; }
-        [DataMember]
+		[DataMember]
+		public string Suffix { get; set; }
+		[DataMember]
         public string Extension { get; set; }
 
 

@@ -24,7 +24,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                 entityPOCO.BluesnapEAWBContractQTY = 1;
                 entityPOCO.BluesnapEAWBSContractQTY = 1;
                 entityPOCO.BluesnapOneTimeContractQTY = 1;
-
+                entityPOCO.BluesnapInttraStockContractQTY = 1;
             }
 
             else
@@ -34,6 +34,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                 entityPOCO.BluesnapEAWBContractQTY = entityPM.BluesnapEAWBContractQTY;
                 entityPOCO.BluesnapEAWBSContractQTY = entityPM.BluesnapEAWBSContractQTY;
                 entityPOCO.BluesnapOneTimeContractQTY = entityPM.BluesnapOneTimeContractQTY;
+                entityPOCO.BluesnapInttraStockContractQTY = entityPM.BluesnapInttraStockContractQTY;
             }
 
             entityPOCO.Name = entityPM.Name;
@@ -76,7 +77,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId;
             entityPOCO.BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId;
             entityPOCO.BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract;
-                     
+            entityPOCO.BluesnapInttraStockContractId = entityPM.BluesnapInttraStockContractId;
+
             entityPOCO.GlobalTenant.TTY = entityPM.TTY;
             entityPOCO.GlobalTenant.IsActive = entityPM.IsActive;
             entityPOCO.GlobalTenant.CompanyName = entityPM.Name;

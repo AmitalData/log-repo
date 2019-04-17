@@ -45,7 +45,7 @@ namespace Logitude.Accounting.BL.CoreBL
             int count = 0;
             foreach (var obj in listOfAccounts)
             {
-                string line = "B" + obj.InternalNumber.PadLeft(15, '0').Substring(0, 15)
+                string line = "B" + obj.DisplayNumber.PadLeft(15, '0').Substring(0, 15)
                     + obj.DeductionFileNumber.PadLeft(9, '0').Substring(0,9) 
                     + obj.VatNumber.PadLeft(9, '0').Substring(0, 9);
                 flatFile.AppendLine(line);
