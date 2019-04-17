@@ -1,5 +1,5 @@
 
--- Shared DB
+---- Shared DB
 --IF object_id(N'ResolveCustomFieldValue', N'FN') IS NOT NULL
 --  BEGIN DROP FUNCTION ResolveCustomFieldValue   end
 
@@ -18,7 +18,7 @@ begin
 set @MyValueOut = dbo.ResolveCustomFieldDateValue(@FieldValue,@DataTypeCode);
 end
 
-ELSE if(@DataTypeCode = ''Boolen'' and  LEN(@FieldValue) = 4) begin SET @MyValueOut =  CAST(@FieldValue AS bit); end
+ELSE if(@DataTypeCode = ''Boolean'' and  LEN(@FieldValue) = 4) begin SET @MyValueOut =  CAST(@FieldValue AS bit); end
 ELSE if(@DataTypeCode = ''Integer'' or @DataTypeCode = ''UnsInteger'') begin SET @MyValueOut =  CAST(@FieldValue AS int); end
 
 ELSE if(@DataTypeCode = ''Decimal'' or @DataTypeCode = ''UnsDecimal'') 
