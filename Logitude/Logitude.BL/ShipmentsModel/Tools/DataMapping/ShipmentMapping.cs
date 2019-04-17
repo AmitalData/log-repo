@@ -395,6 +395,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.From = entityPM.From;
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
+            entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
 
             // No need to map these fields
             // they are computed via PROCEDURE
