@@ -1,6 +1,7 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.BL.EntityPMs;
+using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
 using Simplog.Data.CommonDataModel;
@@ -22,9 +23,19 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-                entityPM.Id = IdCounter.GetNumber("TMOfficeHour", entityPM.Tenant);
+                entityPM.Id = IdCounter.GetNumber("Tariff", entityPM.Tenant);
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
+                if (entityPM.PriceSteps == null)
+                {
+                    ITariffModuleContext iContext= TariffModuleContext.GetContext(entityPM.Tenant);
+                    TariffSetting iTariffSetting = (from d in iContext.TariffSettings where d.Tenant == entityPM.Tenant select d).FirstOrDefault();
+                    if (iTariffSetting != null)
+                    {
+                        entityPM.PriceSteps = iTariffSetting.DefaultPriceSteps;
+                    }
+                }
             }
         }
 
@@ -35,7 +46,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             }
 
-            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            //DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
