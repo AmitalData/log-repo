@@ -136,8 +136,8 @@ namespace WarehouseData
 
                             #endregion
 
+                            warehouseHelper.RunSqlFunctions(destinationConnectionString);
 
-                            warehouseHelper.ExecuteScript("Others", destinationConnectionString, "Day 06 [Abed]Add Function Date");
 
                             #region Update Dimensions Table
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
