@@ -51,7 +51,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _ShipmentPMService: ShipmentPMService;
-
+    RefreshTimer: any;
     _ImageLibraryService: ImageLibraryService;
     constructor(private cd: ChangeDetectorRef) {
         super();
@@ -78,19 +78,20 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     }
     ShowFinalMessage: boolean = false;
+    SecurityKey:string = "";
+    Tenant : number = null;
     RunComponent() {
-        var SecurityKey = "";
-        var Tenant = null;
+        
         if (SessionLocator.IsExternalParams) {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq") {
 
                     let me: any = SessionLocator.ExternalParams;
                     if (me.SecurityKey) {
-                        SecurityKey = me.SecurityKey;
+                        this.SecurityKey = me.SecurityKey;
                     }
                     if (me.Tenant) {
-                        Tenant = me.Tenant;
+                        this.Tenant = me.Tenant;
                     }
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
@@ -102,7 +103,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 }
             }
         }
-        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(SecurityKey, Tenant).subscribe(MyResult => {
+        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
             if (MyResult.Result) {
                 //this.EntityPm = MyResult.Result;
                 //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe(AdditionalResult => {
@@ -128,11 +129,16 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
                 //});
                 var service = new CommonDomainService();
-                service.GetTenantLogoUri(Tenant).subscribe((myLogoResult: any) => {
+                service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
 
                     this.CompanyLogo = myLogoResult.Result;
 
                 });
+                if (this.RefreshTimer) {
+                    clearTimeout(this.RefreshTimer);
+                }
+                
+                this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
                 this.FinalMessage = "התיק לא קיים בסביבה הזו";
@@ -140,6 +146,44 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             }
         });
 
+    }
+    ReloadPage() {
+        var ConfirmResult = confirm("The page has expired. Do you want to refresh it ?");
+        if (ConfirmResult == true || ConfirmResult == false) {
+            if (this.RefreshTimer) {
+                clearTimeout(this.RefreshTimer);
+            }
+            this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
+                if (MyResult.Result) {
+                    //this.EntityPm = MyResult.Result;
+                    //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe(AdditionalResult => {
+
+                    this.AdditionalData = MyResult.Result;//AdditionalResult.Result
+                    if (this.AdditionalData.IsPaymentRequired) {
+                        if (this.EntityPm) {
+
+                            var ammount = 0;
+
+                            this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
+                                ammount += +(item.AmountInNIS);
+                            });
+
+                            this.TotalAmount = ammount;
+                        }
+                    }
+                    else {
+                        this.FinalMessage = "קובץ זה אינו נדרש לתשלום";
+                        this.ShowFinalMessage = true;
+                    }
+
+                    this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
+                }
+                else {
+                    this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                    this.ShowFinalMessage = true;
+                }
+            });
+        } 
     }
     private companyLogo: string = "";
     public get CompanyLogo() { return this.companyLogo }

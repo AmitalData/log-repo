@@ -19,6 +19,7 @@ namespace Logitude.TariffModule.Data
    
        	 IDbSet<Tariff> Tariffs { get; }
 		 IDbSet<TariffLine> TariffLines { get; }
+		 IDbSet<TariffSetting> TariffSettings { get; }
 		 IDbSet<TariffType> TariffTypes { get; }
 		 IDbSet<TariffVersion> TariffVersions { get; }
 	 

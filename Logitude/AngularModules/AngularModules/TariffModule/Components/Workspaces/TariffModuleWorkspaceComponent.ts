@@ -88,7 +88,7 @@ export class TariffModuleWorkspaceComponent implements OnInit {
     public ViewTariffs(code: string) {
         if (code = "A") {
             var listArgs = new ListComponentArgs();
-            listArgs.QueryCode = "AFTA";
+            listArgs.QueryCode = "Air Freight Cost Tariffs";
             listArgs.ObjectTableName = "Tariff";
             listArgs.DisplayTitle = "Air Freight Cost Tariffs";
             listArgs.BackButtonTitle = "Tariff";

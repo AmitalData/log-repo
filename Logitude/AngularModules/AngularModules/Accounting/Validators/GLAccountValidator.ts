@@ -14,7 +14,7 @@ export class GLAccountValidator {
 
     public static ValidateIsMultiCurrency(entityPM: GLAccountPM) {
 
-   
+
         //
         // [!] THE VALIDATION MOVED TO SERVER
         //
@@ -26,7 +26,7 @@ export class GLAccountValidator {
 
         //    ////if (entityPM.AccountTypeCode == "2") { // Customer
 
-        //    //    // Customer: LedgerTransactions check 
+        //    //    // Customer: LedgerTransactions check
         //    //    _GLAccountExtendedListService.CheckIfHasLedgerTransactions(entityPM.Id).subscribe((exist) => {
         //    //        if (!AppTool.IsNullOrEmpty(exist)) {
         //    //            if (exist) {
@@ -92,7 +92,7 @@ export class GLAccountValidator {
 
 
     }
-   
+
     public static ValidateWithHoldingTaxLines(entityPM: GLAccountPM) {
         var FIELD_IS_REQUIERD: string = null;
         FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -112,9 +112,9 @@ export class GLAccountValidator {
             }
         }
 
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            // this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             return errors;
-        
+
     }
     public static ValidateCurrency(entityPM: GLAccountPM, oldCurrency: string) {
 
@@ -131,7 +131,7 @@ export class GLAccountValidator {
 
         //    if (oldCurrency != entityPM.CurrencyId) {
 
-        //        // Customer: LedgerTransactions check 
+        //        // Customer: LedgerTransactions check
         //        _GLAccountExtendedListService.CheckIfHasLedgerTransactions(entityPM.Id).subscribe((exist) => {
         //            if (!AppTool.IsNullOrEmpty(exist)) {
         //                if (exist) {
@@ -155,7 +155,7 @@ export class GLAccountValidator {
         //    this.CurrentSession.CurrentEditComponent.IsEditValid = true;
         //    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //}
-        
+
     }
 
 
