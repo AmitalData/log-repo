@@ -186,11 +186,11 @@ namespace WebFreight.Web.Helpers
                             if (filter.Operation.Code == "IsNull")
                             {
                                
-                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ?PDim : OTBL) + "." + filter.Code + " = '' " + " " + AndOr + " ";
+                                WhereStmt += "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ?PDim : OTBL) + "." + filter.Code + " = '' " + " ) " + AndOr + " ";
                             }
                             else if (filter.Operation.Code == "IsNotNull")
                             {
-                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
+                                WhereStmt += "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " <> '' " + " ) " + AndOr + " ";
                             }
                             else
                             {
@@ -237,7 +237,8 @@ namespace WebFreight.Web.Helpers
             var result = operationSimpol;
             if (!string.IsNullOrEmpty(textValue))
             {
-                var values = textValue.Split(';');
+                string[] stringSeparators = new string[] { ";;" };
+                var values = textValue.Replace("'","''").Split(stringSeparators,StringSplitOptions.None);
                 if (values.Length > 0)
                 {
                     foreach (var item in values)
