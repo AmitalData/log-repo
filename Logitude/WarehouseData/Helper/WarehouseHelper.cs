@@ -720,7 +720,7 @@ namespace WarehouseData.Helper
                 if (table.TableName == "ObjectField")
                 {
                     condition += !isPrivateDB ? " where " : " and";
-                    condition += " IsCustom = 1 and ObjectTableId = '1-4'";
+                    condition += " IsCustom = 1 and ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
 
                 }
 
