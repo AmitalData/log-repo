@@ -72,6 +72,8 @@ namespace Logitude.TariffModule.Data
 	
             modelBuilder.Configurations.Add(new TariffLineMap());
 	
+            modelBuilder.Configurations.Add(new TariffSettingMap());
+	
             modelBuilder.Configurations.Add(new TariffTypeMap());
 	
             modelBuilder.Configurations.Add(new TariffVersionMap());
@@ -362,6 +364,12 @@ namespace Logitude.TariffModule.Data
 	 }
 	
 	 public IDbSet<TariffLine> TariffLines 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TariffSetting> TariffSettings 
 	 {
 	      get; set;
 	 

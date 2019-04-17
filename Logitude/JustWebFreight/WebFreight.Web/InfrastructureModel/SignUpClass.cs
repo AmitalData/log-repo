@@ -38,6 +38,9 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.Helpers;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -46,6 +49,7 @@ namespace WebFreight.Web.InfrastructureModel
         static int tenant;
 
         #region Repository and Query Definitions
+        static TariffSettingRepository tariffSettingRepository;
         static AccountingSettingRepository accountingSettingsRepository;
         static SATInterfaceSettingRepository sATInterfaceSettingRepository;
         static CustomsInterfaceSettingRepository customsInterfaceSettingRepository;
@@ -189,6 +193,7 @@ namespace WebFreight.Web.InfrastructureModel
         public static void InitializeRepositories(int theTenant)
         {
             #region Repositories and Queries
+            tariffSettingRepository = new TariffSettingRepository(theTenant);
             sATInterfaceSettingRepository = new SATInterfaceSettingRepository(theTenant);
             accountingSettingsRepository = new AccountingSettingRepository(theTenant);
             customsInterfaceSettingRepository = new CustomsInterfaceSettingRepository(theTenant);
@@ -300,6 +305,7 @@ namespace WebFreight.Web.InfrastructureModel
                 //using (TransactionScope scope = TransactionFactory.GetTransaction())
                 //{
                 // globalTenantRepository = new GlobalTenantRepository();
+                TariffSetting zeroTariffSetting;
                 AccountingSetting zeroAccountingSettings;
                 SATInterfaceSetting tenantZeroSATInterfaceSetting;
                 CustomsInterfaceSetting zeroCustomsInterfaceSetting;
@@ -385,6 +391,10 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroPackageTypes = packageTypeQuery.GetPackageTypePMsByTenant(0).ToList();
                     tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
                     tenantZeroAccounts = accountRepository.GetAccountsByTenant(0).ToList();
+
+                    ITariffModuleContext iTariffContext= TariffModuleContext.GetContext(0);
+                    zeroTariffSetting = (from d in iTariffContext.TariffSettings where d.Tenant == 0 select d).FirstOrDefault();
+
                     zeroAccountingSettings = accountingSettingsRepository.GetSingleAccountSetting(0);
                     zeroCustomsInterfaceSetting = customsInterfaceSettingRepository.GetSingleCustomsInterfaceSetting(0, 0);
                     zeroSharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle("0", 0);
@@ -423,7 +433,8 @@ namespace WebFreight.Web.InfrastructureModel
 
                 tenant = CreateTenant(signUpInfo, tenantRepository, globalTenantRepository);
                 InitializeRepositories(tenant);
-                AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it
+                AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
+                AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
@@ -941,6 +952,22 @@ namespace WebFreight.Web.InfrastructureModel
             }
 
             bankCodeRepository.SubmitChanges();
+        }
+
+        private static void AddDefaultTariffSettings(int theTenant, TariffSettingRepository iRepository, TariffSetting zeroEntity)
+        {
+            if (zeroEntity != null)
+            {
+                TariffSetting settings = new TariffSetting()
+                {
+                    Id = IdCounter.GetNumber("TariffSetting", theTenant).ToString(),
+                    Tenant = theTenant,
+                    DefaultPriceSteps = zeroEntity.DefaultPriceSteps,
+                };
+
+                iRepository.Add(settings);
+                iRepository.SubmitChanges();
+            }
         }
 
         private static void AddDefaultAccountingSettings(int theTenant, AccountingSettingRepository theAccountingSettingsRepository, AccountingSetting tenantZeroAccoutingSettings)

@@ -593,6 +593,15 @@ export class TaskSchedulerItemClass extends BaseComponent {
         }
     }
 
+    get Suffix() {
+        return this.FTPDetails ? this.FTPDetails.Suffix : "";
+    }
+    set Suffix(newValue: string) {
+        if (this.FTPDetails && this.FTPDetails.Suffix != newValue) {
+            this.FTPDetails.Suffix = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
 
     get Extension() {
         return this.FTPDetails ? this.FTPDetails.Extension : "";
