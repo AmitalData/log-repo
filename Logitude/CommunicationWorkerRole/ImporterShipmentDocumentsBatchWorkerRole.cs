@@ -79,6 +79,17 @@ namespace CommunicationWorkerRole
         }
         string Token;
         Contact User;
+        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
+            {
+                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
+            }
+            else
+            {
+                return false;
+            }
+        }
         public override async void AsyncRun()
         {
             try
@@ -231,7 +242,7 @@ namespace CommunicationWorkerRole
                                                     }
 
                                                 }
-                                                else if (ForwarderShipment.DirectionId.ToUpper() == "C")//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
+                                                else if (ForwarderShipment.DirectionId.ToUpper() == "C" || (IsExportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment)))//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
                                                 {
                                                     ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ForwarderShipment.CustomerShipmentNumber, importerTenant);
                                                     msg = "Getting Custom shipment number" + DateTime.Now;
