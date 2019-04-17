@@ -3,7 +3,7 @@
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
 
@@ -37,7 +37,7 @@
 
                 <!-- BillToId -->
                 <tr class="FormFieldRow">
-                    <td style="width:110px;">
+                    <td style="width:150px;">
                         <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
