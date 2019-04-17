@@ -1,8 +1,8 @@
 -- Shared DB
 
 
---IF object_id(N'ResolveCustomFieldDateValue', N'FN') IS NOT NULL
---BEGIN DROP FUNCTION dbo.ResolveCustomFieldDateValue   end
+IF object_id(N'ResolveCustomFieldDateValue', N'FN') IS NOT NULL
+BEGIN DROP FUNCTION dbo.ResolveCustomFieldDateValue   end
 
 
 IF object_id(N'dbo.ResolveCustomFieldDateValue', N'FN') IS  NULL
