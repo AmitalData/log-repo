@@ -893,6 +893,10 @@
     <Compile Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.Designer.cs">
       <DependentUpon>201904151029006_Add_Field_TariffLine_DestinationPortId2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs" />
+    <Compile Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.Designer.cs">
+      <DependentUpon>201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1504,6 +1508,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.resx">
       <DependentUpon>201904151029006_Add_Field_TariffLine_DestinationPortId2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.resx">
+      <DependentUpon>201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
