@@ -893,6 +893,10 @@
     <Compile Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.Designer.cs">
       <DependentUpon>201904151029006_Add_Field_TariffLine_DestinationPortId2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904170850421_AddTariffSettingTable.cs" />
+    <Compile Include="Migrations\201904170850421_AddTariffSettingTable.Designer.cs">
+      <DependentUpon>201904170850421_AddTariffSettingTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs" />
     <Compile Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.Designer.cs">
       <DependentUpon>201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs</DependentUpon>
@@ -1508,6 +1512,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904151029006_Add_Field_TariffLine_DestinationPortId2.resx">
       <DependentUpon>201904151029006_Add_Field_TariffLine_DestinationPortId2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904170850421_AddTariffSettingTable.resx">
+      <DependentUpon>201904170850421_AddTariffSettingTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.resx">
       <DependentUpon>201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs</DependentUpon>

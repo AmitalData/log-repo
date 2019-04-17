@@ -1,3 +1,4 @@
+
 <style type="text/css">
     .TariffsSectionHead {
         height: 20px;
@@ -17,38 +18,62 @@
             <div class="TariffsSectionHead">Tariffs</div>
         </td>
     </tr>
+
     <tr style="height:20px">
         <td>
-
+            <div></div>
         </td>
     </tr>
+
     <tr style="height:10px;">
         <td>
             <table>
                 <tr>
                     <td style="width:150px">
                         <div>
-                            <HyperlinkQuery (click)="ViewTariffs('A')">Air Freight Costs ({{AirFreightCount}})</HyperlinkQuery>
-
+                            <HyperlinkQuery (click)="TariffSettingsClicked()">Tariff Settings</HyperlinkQuery>
                         </div>
                     </td>
-                    <td style="width:20px"></td>
-                    <td style="width:20px">
-                        <button class="Button" (click)="NewTariff('A')">New</button>
-                    </td>
-                    <td>
 
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div></div>
                     </td>
                 </tr>
 
-               
+                <tr>
+                    <td style="width:150px">
+                        <div>
+                            <HyperlinkQuery (click)="ViewTariffs('A')">Air Freight Costs ({{AirFreightCount}})</HyperlinkQuery>
+                        </div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px">
+                        <button class="Button" (click)="NewTariff('A')">New</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
             </table>
         </td>
-       
     </tr>
 
     <tr>
-        <td class="CellStretch">           
+        <td class="CellStretch">
+            <div></div>
         </td>
     </tr>
 </table>
