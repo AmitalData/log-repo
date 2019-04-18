@@ -248,6 +248,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                if(string.IsNullOrEmpty(entityPM.ChangeInSupplierInvoice)) // Task 49995
+                {
+                    entityPM.ChangeInSupplierInvoice = "1";
+                }
+            }
 
             //calculate frieghts total
             //this.CalculateFrieghtTotals(entityPM, declarationPM);

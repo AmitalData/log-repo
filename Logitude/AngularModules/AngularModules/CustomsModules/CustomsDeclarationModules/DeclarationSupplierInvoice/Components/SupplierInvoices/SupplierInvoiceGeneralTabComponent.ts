@@ -1061,6 +1061,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
     //#endregion
 
+    RefreshChangeInSupplierInvoice() {
+        this.ChangeInSupplierInvoice = "1";
+    }
+
     OnInvoiceNumberLostFocus(invoiceNumberTextBox: any) {
 
         if (this.declarationPM != null && this.declarationPM.SupplierInvoices.length >= 0) {
