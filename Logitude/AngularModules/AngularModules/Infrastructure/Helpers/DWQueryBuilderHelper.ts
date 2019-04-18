@@ -324,6 +324,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
         if (this.textValue != newValue) {
             //if (this.textValue != null && this.textValue != undefined) {
             this.textValue = newValue;
+            if (this.ParentDataTypeCode == "DateTime" || this.ParentDataTypeCode == "Date") {
+                var timerToken = setTimeout(() => {
+                    this.ShowSampleDateCommand.emit(this);
+                }, 1000);
+                
+            }
             if (this.FilterChanged) {
                 this.FilterChanged.emit("FilterValueChanged");
             }
