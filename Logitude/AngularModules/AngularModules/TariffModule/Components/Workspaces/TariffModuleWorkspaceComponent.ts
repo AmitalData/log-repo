@@ -88,7 +88,7 @@ export class TariffModuleWorkspaceComponent implements OnInit {
     public ViewTariffs(code: string) {
         if (code = "A") {
             var listArgs = new ListComponentArgs();
-            listArgs.QueryCode = "AFTA";
+            listArgs.QueryCode = "Air Freight Cost Tariffs";
             listArgs.ObjectTableName = "Tariff";
             listArgs.DisplayTitle = "Air Freight Cost Tariffs";
             listArgs.BackButtonTitle = "Tariff";
@@ -130,6 +130,13 @@ export class TariffModuleWorkspaceComponent implements OnInit {
         }
     }
 
-  
+
+    TariffSettingsClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = "Tariff Settings";
+        logWindow.Show('./TariffModule/Components/Workspaces/TariffSettingComponent');
+    }
 }
 

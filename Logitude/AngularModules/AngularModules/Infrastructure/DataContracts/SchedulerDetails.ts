@@ -1,4 +1,4 @@
-﻿
+
 
 import {Injectable} from '@angular/core';
 
@@ -20,6 +20,7 @@ export class FTPSchedulerDetails {
     public Subject: string;
     public Prefix: string;
     public Extension: string;
+    public Suffix: string;
 
 }
 

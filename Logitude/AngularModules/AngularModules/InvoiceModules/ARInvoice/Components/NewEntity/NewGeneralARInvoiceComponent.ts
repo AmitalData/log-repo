@@ -34,6 +34,7 @@ import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GL
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {AccountingPeriodExtendedListService} from '../../../../Accounting/Services/ExtendedLists/AccountingPeriodExtendedListService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { reject } from 'q';
 
 @Component({
     selector: 'NewGeneralARInvoiceComponent',
@@ -55,10 +56,10 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.InitializeServices();
-           
+
         });
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
@@ -74,6 +75,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.TypeCode = args["InvoiceTypeCode"];
         this.CreateNewEntity();
+
     }
 
     private myCardListService: CardListService;
@@ -95,18 +97,22 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.myAccountingPeriodListService = new AccountingPeriodExtendedListService();
     }
 
-    private accountingPeriod:any;
+    private accountingPeriod: any;
     private GetClosedMonth() {
-        var periodTypeCode = "1" // 1-Regular
-        this.myAccountingPeriodListService.getByYear(this.InvoiceDate.getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.accountingPeriod = myResponse.Result;
+        return new Promise(resolve => {
+            var periodTypeCode = "1" // 1-Regular
+            this.myAccountingPeriodListService.getByYear(this.InvoiceDate.getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.accountingPeriod = myResponse.Result;
+                        resolve(myResponse.Result);
+                    }
                 }
-            }
+            });
+
         });
     }
-     
+
     CreateNewEntity() {
         var todayDate = DateTool.GetCurrentDateAsUtc();
         this.EntityPM = new ARInvoicePM();
@@ -146,7 +152,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
 
         this.SetUIProperties();
         this.BuildPartnersTypes();
-        this.LoadData();
+        this.LoadCurrencyRates();
         this.IsResourcesReady = true;
     }
 
@@ -244,7 +250,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     }
 
     public SelectedPartnerType: InvoicePartnerType = null;
- 
+
     private billToPartnerTypeId: string;
     get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
     set BillToPartnerTypeId(newValue: string) {
@@ -486,8 +492,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
 
             InvoiceTool.ComputeARInvoiceDueDate(this.EntityPM);
             this.ComputeRelativeRateDate();
-            this.LoadData();
-            this.GetClosedMonth();
+            this.LoadCurrencyRates();
         }
     }
 
@@ -521,40 +526,30 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
 
-    // Load Date 
+    // Load Date
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
-    private myCurrencyRatesService: CurrencyRatesService;
-    LoadData() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        if (this.myCurrencyRatesService == null) {
-            this.myCurrencyRatesService = new CurrencyRatesService();
-        }
+    private myCurrencyRatesService: CurrencyRatesService = new CurrencyRatesService();
+    LoadCurrencyRates() {
 
-        var loadingDate = this.EntityPM.InvoiceDate;
-        if (loadingDate == null) {
-            loadingDate = DateTool.GetCurrentDateAsUtc();
-        }
+        return new Promise(resolve => {
 
-        this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
+            var loadingDate = this.EntityPM.InvoiceDate || DateTool.GetCurrentDateAsUtc();
 
-            if (!myResponse.HasError) {
-                this.LastRatesList = myResponse.Result;
-                this.SetCurrencyRateData();
+            this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
 
-                this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
-                    if (!myResponse2.HasError) {
-                        this.VatTypePercentagesList = myResponse2.Result;
-                    }
+                if (!myResponse.HasError) {
+                    this.LastRatesList = myResponse.Result;
+                    this.SetCurrencyRateData();
 
-                    this.CurrentSession.StopBusyIndicator();
-                });
-            }
-
-            else {
-                this.CurrentSession.StopBusyIndicator();
-            }
+                    resolve(myResponse.Result);
+                }
+                else {
+                    reject();
+                }
+            });
         });
+
     }
     SetCurrencyRateData() {
         var myRate: number = null;
@@ -647,19 +642,34 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         logWindow.Show('./CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent');
     }
 
-    //Commands 
+    //Commands
     private isOkClicked = false;
     private errors: string[] = [];
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        this.isOkClicked = true;
-        this.ValidateEntity();
-      
-        if (this.ValidationErrorsList.length == 0) {
-            this.OnEntityValid();
-        }
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.GetClosedMonth().then(res => {
+
+            this.CurrentSession.StopBusyIndicator();
+
+            this.isOkClicked = true;
+
+            var isEntityValid = this.ValidateEntity();
+            if (isEntityValid) {
+
+                this.CurrentSession.StartBusyIndicatorLoading();
+                this.LoadCurrencyRates().then(res => {
+                    this.SubmitChanges();
+                });
+
+            }
+
+        });
+
     }
     ValidateEntity() {
         this.errors = [];
@@ -717,11 +727,14 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             }
         }
 
-        if (this.DueDate.valueOf() < this.InvoiceDate.valueOf()) {
-            this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.DueDateLowerThanInvoiceDate"));
+        if(this.DueDate && this.InvoiceDate){
+            if (this.DueDate.valueOf() < this.InvoiceDate.valueOf()) {
+                this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.DueDateLowerThanInvoiceDate"));
+            }
         }
 
         this.ValidationErrorsList = this.errors;
+        return this.errors.length == 0;
     }
     IsMonthOpenForAccountingDate() {
         var valid = true;
@@ -737,7 +750,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             }
             else {
                 //Not Valid ... AccountingDateMonth must be greater than close Mounth
-                //not valid  8>=8 
+                //not valid  8>=8
                 //not valid  0>=1 - Must Open mounth before work on year !!
                 valid = false;
                 //errorsList.Add(transText); //ClosedMonth Must B
@@ -755,7 +768,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
         return valid;
     }
-    OnEntityValid() {
+    SubmitChanges() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.InitializeComponent();
     }

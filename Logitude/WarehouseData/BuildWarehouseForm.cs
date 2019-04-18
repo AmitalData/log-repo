@@ -238,9 +238,12 @@ namespace WarehouseData
                             #endregion
 
                             #region Create and Build Dimensions Table
+
             
+
                             warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
-                            warehouseHelper.ExecuteScript("Others", destinationConnectionString, "Day 06 [Abed]Add Function Date");
+                            warehouseHelper.RunSqlFunctions(destinationConnectionString);
+
 
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
