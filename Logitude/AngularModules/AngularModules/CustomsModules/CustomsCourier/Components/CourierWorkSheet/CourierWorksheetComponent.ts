@@ -814,6 +814,17 @@ implements OnDestroy
         });
 
         this.columns.push({
+            FieldName: 'LastMileStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.LastMileStatusCode"),
+            Styles: { width: '50px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        });
+
+        this.columns.push({
             FieldName: 'IsClosedForFollowUp',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
