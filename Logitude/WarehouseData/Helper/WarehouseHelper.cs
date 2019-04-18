@@ -1078,7 +1078,7 @@ namespace WarehouseData.Helper
 
 
         #endregion
-
+         
         #region Incremental Data Base
 
         public void UpdateWarehouseData(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
@@ -1118,7 +1118,7 @@ namespace WarehouseData.Helper
         {
             string fieldName = !string.IsNullOrEmpty(table.FieldsDBName) ? table.FieldsDBName : "*";
             bool isPrivateDB = privateTenant != null ? true : false;
-            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + table.TableName + "');";
+            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + table.TableName + "')";
 
             if (isPrivateDB)
             {
@@ -1127,6 +1127,11 @@ namespace WarehouseData.Helper
                 else if (table.DBTableName == "Tenants") condition += " and Id in " + relatedTenants;
             }
 
+            if (table.TableName == "ObjectField")
+            {
+                condition += "and IsCustom = 1 and ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
+
+            }
 
             using (SqlConnection sourceConnection =
                        new SqlConnection(sourceConnectionString))
