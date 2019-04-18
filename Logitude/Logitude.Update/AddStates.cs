@@ -313,8 +313,40 @@ namespace Logitude.Update
         private void RunAddingStates(List<StatesPorts> allDataLines, string v)
         {
 
+            if (checkBox1.Checked)
+            {
+
+
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+                List<Tenant> tenants = myCommonContext.Tenants.ToList();
+                if (tenants.Count > 0)
+                {
+                    foreach (Tenant tenantOBJ in tenants)
+                    {
+                        SetControlPropertyValue(InsertStatesTenantZeroLbl, "Text", "Inserting States Tenant : "+tenantOBJ.Id);
+
+                        InsertStates(allDataLines, v, tenantOBJ.Id);
+                    }
+
+                    SetControlPropertyValue(InsertStatesTenantZeroLbl, "Text", "Done All");
+
+
+                }
+
+
+            }
+
+            else
+            {
+                int tenant = int.Parse(this.textBox1.Text);
+                InsertStates(allDataLines, v, tenant);
+            }    
+            }
+
+        private void InsertStates(List<StatesPorts> allDataLines, string v,int tenant)
+        {
+
             allDataLines = allDataLines.Where(d => !string.IsNullOrEmpty(d.State)).ToList();
-            int tenant = int.Parse(this.textBox1.Text);
             if (allDataLines.Count > 0)
             {
                 Stopwatch stopWatch = new Stopwatch();
@@ -327,7 +359,7 @@ namespace Logitude.Update
                     var myCount = 0;
                     foreach (StatesPorts item in allDataLines)
                     {
-                        State stateDB = myCommonContext.States.Where(p => p.Code == item.Port && p.Tenant == tenant && p.CountryId==country.Id).FirstOrDefault();
+                        State stateDB = myCommonContext.States.Where(p => p.Code == item.Port && p.Tenant == tenant && p.CountryId == country.Id).FirstOrDefault();
                         if (stateDB == null)
                         {
                             State state = new State();
@@ -351,10 +383,10 @@ namespace Logitude.Update
                 myCommonContext.SaveChanges();
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
-                    SetControlPropertyValue(InsertStatesTenantZeroLbl, "Text", "Done in " + ts.ToString());
+                SetControlPropertyValue(InsertStatesTenantZeroLbl, "Text", "Done in " + ts.ToString());
             }
 
-            }
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {

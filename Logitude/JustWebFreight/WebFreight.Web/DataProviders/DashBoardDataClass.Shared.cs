@@ -11,7 +11,9 @@ namespace WebFreight.Web.DataProviders
         public string Id { get; set; }
 
         public List<GeneralDataClass> GeneralList { get; set; }
-
+        public string TimeRange { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
         public List<CustomersDataClass> CustomersList { get; set; }
         public List<CountriesDataClass> CountriesList { get; set; }
         public List<DirectionTransportModeDataClass> DirectionTransportModeList { get; set; }

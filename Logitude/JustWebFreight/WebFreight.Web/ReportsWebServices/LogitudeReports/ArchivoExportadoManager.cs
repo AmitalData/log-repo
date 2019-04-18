@@ -196,7 +196,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                               select d.ARInvoice);
 
                 iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA");
-                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsCancelled == false);
+                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL");
 
                 if (!this.IncludeDraftInvoices)
                 {
@@ -455,7 +455,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
 
                 iQueryable_APInvoices = iQueryable_APInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA");
-                iQueryable_ARInvoices = iQueryable_ARInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsCancelled == false);
+                iQueryable_ARInvoices = iQueryable_ARInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL");
 
                 if (!this.IncludeDraftInvoices)
                 {

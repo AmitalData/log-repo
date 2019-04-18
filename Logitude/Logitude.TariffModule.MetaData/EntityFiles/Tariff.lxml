@@ -51,7 +51,7 @@
       <ScreenField Column="2" Row="1" ObjectFieldName="&quot;ContractNumber&quot;" ScreenName="TariffHeaderScreen" />
     </ScreenFields>
   </Screen>
-  <Tab TabName="&quot;General&quot;" TabLocalName="&quot;General&quot;" ObjectTableName="&quot;Tariff&quot;" Code="&quot;TFGT&quot;" ControlPath="&quot;./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent&quot;" TextCode="&quot;Tariff.TH.General&quot;" IsPackagable="false" IndexOrder="0" HtmlComponentURL="&quot;./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
+  <Tab TabName="&quot;General&quot;" TabLocalName="&quot;General&quot;" ObjectTableName="&quot;Tariff&quot;" Code="&quot;TFGT&quot;" ControlPath="&quot;./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent&quot;" TextCode="&quot;Tariff.TH.General&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />

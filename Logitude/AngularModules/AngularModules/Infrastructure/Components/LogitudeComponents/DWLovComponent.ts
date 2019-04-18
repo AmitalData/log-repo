@@ -144,7 +144,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
             this.searchTextNgModel = newValue;
             this.DisplayTextNgModel = "";
             if (this.searchTextNgModel) {
-                this.searchTextNgModel.split(";").forEach((item) => {
+                this.searchTextNgModel.split(";;").forEach((item) => {
                     this.DisplayTextNgModel += (item + "; ");
                 });
 
