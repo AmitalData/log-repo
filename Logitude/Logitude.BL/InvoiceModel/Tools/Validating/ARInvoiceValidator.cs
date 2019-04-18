@@ -30,6 +30,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.BL.DataContracts;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Data.Entity.Core;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -37,6 +38,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
     {
         public static void Validate(ARInvoicePM entityPM, ARInvoice entityPOCO, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
         {
+            if (!isNew)
+            {
+                ValidateConcurrencyGUID(entityPM, entityPOCO);
+            }
+
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
 
             ValidateRequiredFields(entityPM, msgRequired);
@@ -238,6 +244,22 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+
+        private static void ValidateConcurrencyGUID(ARInvoicePM entityPM, ARInvoice entityPOCO)
+        {
+            if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
+            {
+                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+
+                //if (entityPOCO.UpdatedByPartner != null)
+                //{
+                //    msg = msg.Replace("another user", entityPOCO.UpdatedByPartner);
+                //}
+
+                throw new OptimisticConcurrencyException(msg);
+            }
+        }
+
         private static void ValidateRequiredFields(ARInvoicePM entityPM, string msgRequired)
         {
             if (string.IsNullOrEmpty(entityPM.StatusCode))

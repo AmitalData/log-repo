@@ -52,10 +52,10 @@ namespace WebFreight.Web
                 if (LogitudeSettings.WorkEnvironment == "logbox")
                 {
 
-                    if (url.Contains("system.dsv.co.il"))
-                    {
-                        enableHttps = false;
-                    }
+                    //if (url.Contains("system.dsv.co.il"))
+                    //{
+                    //    //enableHttps = false;
+                    //}
                 }
             }
             else
