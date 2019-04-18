@@ -1078,7 +1078,7 @@ namespace WarehouseData.Helper
 
 
         #endregion
-
+         
         #region Incremental Data Base
 
         public void UpdateWarehouseData(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
