@@ -4016,7 +4016,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.DepartmentId = shipment.DepartmentId;
                     shipmentPM.AgentId = shipment.AgentId;
                     shipmentPM.AgentComputed = shipment.AgentComputed;
-                    shipmentPM.ComputedShipmentNumber = shipment.ComputedShipmentNumber,
+                    shipmentPM.ComputedShipmentNumber = shipment.ComputedShipmentNumber;
                     shipmentPM.IsAccountingClosed = shipment.IsAccountingClosed;
                     shipmentPM.IsOperationalClosed = shipment.IsOperationalClosed;
                     shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
@@ -11081,7 +11081,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierNumber = f.CarrierNumber,
                                AgentId = f.AgentId,
                                AgentComputed = f.AgentComputed,
-                               ComputedShipmentNumber = f.ComputedShipmentNumber,
+                              // ComputedShipmentNumber = f.ComputedShipmentNumber,
                                ARInvoiceIssued = f.ARInvoiceIssued,
                                CreditNoteIssued = f.CreditNoteIssued,
                                CustomFileNumber = f.CustomFileNumber,
