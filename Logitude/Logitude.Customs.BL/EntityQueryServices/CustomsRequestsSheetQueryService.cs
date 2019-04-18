@@ -221,6 +221,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 2750 per CourierMasterId
+"UCBCMSS",//,Batch Send change StorageSite per CourierMasterId
 "1170", // - מסר מצהר
 "1171", // - מסר תשובה מצהר
 "1172" // - מסר תשובה מצהר - נדחף
