@@ -323,10 +323,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
-                    if (button.EventCode == "Declaration Customs Requests") {
-                        button.IsHidden = false;
-                    }
-
                 }
                 this.IsDisplayOnlyCheckDone = true;
                 return menuButtons;
