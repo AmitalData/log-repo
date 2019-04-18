@@ -7,6 +7,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,12 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     entityPM.CreatedByUserId = myLoggedUserId;
                 }
             }
+        }
+
+        protected override void UpdateComposition(TariffPM entityPM)
+        {
+            TariffLineUpdateService tariffLineUpdateService = new TariffLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            tariffLineUpdateService.UpdateMulti(entityPM.TariffLines, entityPM.DeletedTariffLines, entityPM, false);
         }
 
         protected override void Trace(TariffPM entityPM, Tariff entityPOCO, string changesXml)
