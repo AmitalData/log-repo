@@ -901,10 +901,6 @@
     <Compile Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.Designer.cs">
       <DependentUpon>201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.cs" />
-    <Compile Include="Migrations\201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.Designer.cs">
-      <DependentUpon>201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201903171440525_AddARInvoiceConcurrency.cs" />
     <Compile Include="Migrations\201903171440525_AddARInvoiceConcurrency.Designer.cs">
       <DependentUpon>201903171440525_AddARInvoiceConcurrency.cs</DependentUpon>
@@ -1530,9 +1526,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.resx">
       <DependentUpon>201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.resx">
-      <DependentUpon>201904091332473_SetDescriptionFieldIsRequiredTMEmployee_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903171440525_AddARInvoiceConcurrency.resx">
       <DependentUpon>201903171440525_AddARInvoiceConcurrency.cs</DependentUpon>

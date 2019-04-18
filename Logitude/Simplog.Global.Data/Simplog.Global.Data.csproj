@@ -333,10 +333,6 @@
     <Compile Include="Migrations\201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.Designer.cs">
       <DependentUpon>201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.cs" />
-    <Compile Include="Migrations\201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.Designer.cs">
-      <DependentUpon>201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -439,9 +435,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904151200342_add_Field_BluesnapIntraContractIdAndQTY_Khalid.resx">
       <DependentUpon>201904151200342_add_Field_BluesnapIntraContractIdAndQTY_Khalid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.resx">
-      <DependentUpon>201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.resx">
       <DependentUpon>201904171930337_AbedAddSecondaryAzureDBConnectionOnGlobalDBs.cs</DependentUpon>
