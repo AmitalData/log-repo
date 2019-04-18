@@ -291,8 +291,8 @@
                     <!--overflow:auto;-->
                     <table>
                         <tr>
-                            <td style="width: 390px;height:100%;">
-                                <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px;overflow:auto;">
+                            <td style="width: 390px;height:691px;">
+                                <div style="height:691px;width:100%;border:solid 1px #BABABA;border-radius:5px;overflow:auto;">
                                     <table>
                                         <tr>
                                             <td style="height:25px;width:100%;">
@@ -335,7 +335,7 @@
                                                                                 </tr>
                                                                                 <tr *ngIf="Group.IsDetailesOpened">
                                                                                     <td>
-                                                                                        <table *ngFor="let item of Group.FieldsList" style="margin-left:5px;">
+                                                                                        <table *ngFor="let item of Group.FieldsList" style="margin-left:5px;height:20px;">
                                                                                             <tr>
                                                                                                 <td>
                                                                                                     <div [attr.id]="item.TooltipId" class="Tooltip" (mouseover)="mouseover(item)">
@@ -522,8 +522,8 @@
                             <td style="width: 1%; vertical-align: middle;">
                                
                             </td>
-                            <td style="height:100%;">
-                                <div style="height:100%;overflow:auto;">
+                            <td style="height:691px;">
+                                <div style="height:691px;overflow:auto;">
                                     <table>
                                         <tr style="height:120px;">
                                             <td>
@@ -563,7 +563,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>
+                                                            <td style="height:95px;">
                                                                 <div class="EmailBoxMultiLinesText" style="height:100%;white-space: normal;max-width: 812px;overflow-y: auto;background:linear-gradient(#F2F8FF, #E6EBF0);">
                                                                     <div class="ItemBox" *ngFor="let item of SelectedFieldsDataSource" [class.SelectedItemBox]="FieldSelectedItem == item" (mouseover)="ShowOrderArrows(item)" (click)="SetFieldSelectedItem(item)">
                                                                         <div class="SelectedItemBoxContent">
@@ -623,7 +623,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>
+                                                            <td style="height:195px;">
                                                                 <table class="BodyBackground" style="height:300px;">
                                                                     <tr>
                                                                         <td>
@@ -693,8 +693,8 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>
-                                                                <div class="LocationDirective" style="height:150px;">
+                                                            <td style="height:195px;">
+                                                                <div class="LocationDirective" style="height:195px;">
                                                                     <div *ngIf="IsPreview == false" class="BodyBackground MediaFill">
                                                                         <LogTextBox [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'Notes'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="Notes" [InputType]="'Text'"></LogTextBox>
                                                                     </div>
