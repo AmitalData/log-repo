@@ -288,7 +288,7 @@
 
                                             <div style="width:162px;">
 
-                                                <DateSampleComponent [ShowSampleDateCommand]="item.ShowSampleDateCommand">
+                                                <DateSampleComponent *ngIf="item.TextValue" [ShowSampleDateCommand]="item.ShowSampleDateCommand">
                                                 </DateSampleComponent>
 
                                             </div>
