@@ -1454,6 +1454,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              LocalName = a.Contact.LocalName,
                              DocumentFilingInbox = a.DocumentFilingInbox,
                          }).ToList();
+
+
+                #region SetInActiveUsers
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                List<string> contactId = users.Select(d => d.Id).ToList();
+                List<ContactList> contactLists = contactQuery.GetContactListsByListIds(contactId, tenant).Where(d=>d.InActive).ToList();
+                foreach(ContactList contact in contactLists)
+                {
+                    var user = users.Where(d => d.Id == contact.Id).FirstOrDefault();
+                    user.InActive = contact.InActive;
+                }
+                #endregion
             }
 
             return users;
