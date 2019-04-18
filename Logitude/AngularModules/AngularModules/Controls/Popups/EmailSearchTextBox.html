@@ -181,7 +181,7 @@
                 <!-- Selected Items -->
                 <div [attr.id]="ContainerId" class="LogitudeEmailSearchTextBoxItem" *ngFor="let item of SelectedItems">
 
-                    <div style="float: left; line-height: 16px;">{{item.EnglishName}}</div>
+                    <div [style.color]="item.InActive && DontInCludeInactive ?'red':'black'" style="float: left; line-height: 16px;">{{item.EnglishName}}</div>
 
                     <div style="float: left; line-height: 16px; margin-left: 5px; margin-top: 1px;" class="LogitudeEmailSearchXButton" (mousedown)="RemoveItem(item)">
                         <div class="InnerControl CenterCenter">

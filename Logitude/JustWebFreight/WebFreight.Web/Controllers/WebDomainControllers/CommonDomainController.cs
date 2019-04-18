@@ -1188,6 +1188,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         Email = d.Email,
                                         EnglishName = d.EnglishName,
                                         SearchFields = d.SearchFields,
+                                       InActive = d.InActive,
                                     }).ToList();
                     }
                 }
