@@ -13,12 +13,20 @@ AS
 BEGIN  
  DECLARE @MyValueOut sql_variant
 
-if(@DataTypeCode = ''Date'' and  @DataTypeCode = ''DateTime'')
+
+if(@DataTypeCode = ''Date'' or  @DataTypeCode = ''DateTime'')
 begin
 set @MyValueOut = dbo.ResolveCustomFieldDateValue(@FieldValue,@DataTypeCode);
 end
 
-ELSE if(@DataTypeCode = ''Boolean'' and  LEN(@FieldValue) = 4) begin SET @MyValueOut =  CAST(@FieldValue AS bit); end
+ELSE if(@DataTypeCode = ''Boolean'') 
+begin
+Set @MyValueOut = 0;
+if(@FieldValue is not null)
+begin SET @MyValueOut =  CAST(@FieldValue AS bit);   end
+end
+
+
 ELSE if(@DataTypeCode = ''Integer'' or @DataTypeCode = ''UnsInteger'') begin SET @MyValueOut =  CAST(@FieldValue AS int); end
 
 ELSE if(@DataTypeCode = ''Decimal'' or @DataTypeCode = ''UnsDecimal'') 
@@ -33,14 +41,12 @@ if(len(@FieldValue)>=15)begin  set @FieldValue = STUFF(@FieldValue, len(@FieldVa
 SET @MyValueOut = CONVERT(NUMERIC(16,3), @FieldValue)
 end
 
-ELSE if(@MyValueOut is null)begin set @MyValueOut = @FieldValue; end
+
+ELSE if(@MyValueOut is null) begin set @MyValueOut = @FieldValue; end
 
   RETURN(@MyValueOut); 
 
 END;  
- 
-
-
 
 ';
 
