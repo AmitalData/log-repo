@@ -88,6 +88,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? VendorComissionPercentage  { get; set; }
        [DataMember]
        public decimal? InvoiceAmountInUSD  { get; set; }
+       [DataMember]
+       public string ChangeInSupplierInvoice  { get; set; }
    }
 
 }

@@ -1093,6 +1093,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string changeInSupplierInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChangeInSupplierInvoice  
+	   {
+	    
+	     get
+		{
+		   return changeInSupplierInvoice;
+		 }
+		 set
+		 {
+		   if(changeInSupplierInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeInSupplierInvoice",OldValue=changeInSupplierInvoice,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   changeInSupplierInvoice=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
