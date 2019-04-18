@@ -41,6 +41,16 @@
       <QueryFilter QueryCode="&quot;Air Freight Cost Tariffs&quot;" PredefinedValue="&quot;AFC&quot;" ObjectFieldName="&quot;TypeCode&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
+  <Screen Name="&quot;TariffHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" NumberOfColumns="3" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true">
+    <ScreenFields>
+      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Name&quot;" ScreenName="TariffHeaderScreen" />
+      <ScreenField Column="0" Row="1" ObjectFieldName="&quot;StartDate&quot;" ScreenName="TariffHeaderScreen" />
+      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;SellerId&quot;" ScreenName="TariffHeaderScreen" />
+      <ScreenField Column="1" Row="1" ObjectFieldName="&quot;ExpirationDate&quot;" ScreenName="TariffHeaderScreen" />
+      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;CurrencyId&quot;" ScreenName="TariffHeaderScreen" />
+      <ScreenField Column="2" Row="1" ObjectFieldName="&quot;ContractNumber&quot;" ScreenName="TariffHeaderScreen" />
+    </ScreenFields>
+  </Screen>
   <Tab TabName="&quot;General&quot;" TabLocalName="&quot;General&quot;" ObjectTableName="&quot;Tariff&quot;" Code="&quot;TFGT&quot;" ControlPath="&quot;./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent&quot;" TextCode="&quot;Tariff.TH.General&quot;" IsPackagable="false" IndexOrder="0" HtmlComponentURL="&quot;./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />

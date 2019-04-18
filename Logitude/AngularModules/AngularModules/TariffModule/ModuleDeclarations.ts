@@ -6,6 +6,7 @@ import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComp
 
 // Tabs
 import { TariffGeneralTabComponent } from './Components/EditTabs/Tariff/TariffGeneralTabComponent';
+import { AddEditTariffLineComponent } from './Components/EditTabs/Tariff/AddEditTariffLineComponent';
 
 
 export const Components =
@@ -14,7 +15,8 @@ export const Components =
         TariffSettingComponent,
         NewAirFreightCostComponent,
         FieldTemplateComponent,
-        TariffGeneralTabComponent
+        TariffGeneralTabComponent,
+        AddEditTariffLineComponent
     ];
 
 export const ControlsComponents =
@@ -32,6 +34,7 @@ export class ModuleDeclarations {
             case "NewAirFreightCostComponent": { myResult = NewAirFreightCostComponent; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "TariffGeneralTabComponent": { myResult = TariffGeneralTabComponent; break; }
+            case "AddEditTariffLineComponent": { myResult = AddEditTariffLineComponent; break; }
         }
 
         return myResult;
