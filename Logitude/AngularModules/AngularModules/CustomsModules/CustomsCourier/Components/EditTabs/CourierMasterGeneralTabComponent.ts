@@ -9,6 +9,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
+
 @Component({
     moduleId: module.id,
     templateUrl: './CourierMasterGeneralTabComponent.html',
@@ -26,12 +27,16 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     public WeightValueFilterItems: ApiQueryFilters;
 
+    public IsDisplayOnly: boolean = false;
+    public DisplayOnlyMessage: string = "";
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
         this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
+        this.DisplayOnlyCheck();
         this.Listen();
     }
 
@@ -199,6 +204,23 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     }
 
     HAWBLostFocus(value: any) {
+    }
+
+    DisplayOnlyCheck() {
+        this.IsDisplayOnly = false;
+        this.CourierMasterValidator.SetEntityPM(this.EntityPM);
+        this.CourierMasterValidator.CheckStorageSiteCodeRequestInProgress().subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                this.IsDisplayOnly = true;
+                this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+            }
+        });
+    }
+
+    RefreshEntity() {
+        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.DisplayOnlyCheck();
     }
 
 }

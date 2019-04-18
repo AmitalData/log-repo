@@ -453,6 +453,14 @@ export class DeclarationValidator {
         }
     }
 
+    CheckIsStorageSiteCodeRequestInProgress() {
+
+        if (this._DeclarationPM != null && this._DeclarationPM.IsCourierDeclaration) {
+
+        }
+
+    }
+
     //<--- Yuval Chalup 18.11.2014 TASK-4240
     //Checks for opening Declaration view as 'Display Only'
     public DeclarationViewDisplayOnlyChecks() {
@@ -461,7 +469,8 @@ export class DeclarationValidator {
         this.FuturePaymentDoneCheck();
         //SubmitDeclarationAgainDoneCheck(); // Mirit 25/06/15 Task 14330 + Remarked by Yuval Chalup 02.08.2015 TASK-15145
         this.CheckIsCoverteedDeclaration(); // Mirit 02/12/15 Task 18508
-        this.CheckIsCloseDeclaration(); 
+        this.CheckIsCloseDeclaration();
+        this.CheckIsStorageSiteCodeRequestInProgress();
     }
     //Yuval Chalup 18.11.2014 TASK-4240 --->
 
