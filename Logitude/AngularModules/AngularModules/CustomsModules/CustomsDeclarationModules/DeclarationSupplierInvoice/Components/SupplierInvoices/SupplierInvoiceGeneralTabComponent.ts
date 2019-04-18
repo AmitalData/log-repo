@@ -692,6 +692,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     public get IssueDate() { return this.EntityPM.IssueDate; }
     public set IssueDate(newValue: Date) { this.EntityPM.IssueDate = newValue; }
 
+    public get ChangeInSupplierInvoice() { return this.EntityPM.ChangeInSupplierInvoice; }
+    public set ChangeInSupplierInvoice(newValue: string) { this.EntityPM.ChangeInSupplierInvoice = newValue; }
+
     public get VendorId() { return this.EntityPM.VendorId; }
     public set VendorId(newValue: string) {
 

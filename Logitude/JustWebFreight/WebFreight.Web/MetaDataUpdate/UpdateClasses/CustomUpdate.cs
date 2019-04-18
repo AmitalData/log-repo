@@ -675,6 +675,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             FeaturePM declarationFeature_SendManifest = features.Where(d => d.Code == "SENDMANIFEST" && d.ObjectTableId == declarationTableId).FirstOrDefault();
             FeaturePM declarationFeature_CourierPendingReason = features.Where(d => d.Code == "CourierPendingReason" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             FeaturePM declarationFeature_DeclarationClosure = features.Where(d => d.Code == "DeclarationClosure" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            FeaturePM declarationFeature_DeclarationCustomsRequests = features.Where(d => d.Code == "DeclarationCustomsRequests" && d.ObjectTableId == declarationTableId).FirstOrDefault();
 
             string paymentOrderTableId = ObjectContext.ObjectTables.Where(f => f.Name == "Customs.PaymentOrder" && f.Tenant == tenant).FirstOrDefault().Id;
 
@@ -1099,6 +1100,25 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 FeatureId = declarationFeature_DeclarationClosure.Id,
                 MenuButtonType = "menuitem",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
+
+            #region DeclarationCustomsRequests
+            MenuButton DeclarationCustomsRequestsButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "Declaration Customs Requests",
+                Index = 12,
+                IsActive = true,
+                LabelTextCodeCode = "Customs.Declaration.B.DeclarationCustomsRequests",
+                LabelTextCodeDefaultText = "Declaration Customs Requests",
+                LocalDefaultText = "בקשות מכס",
+                ObjectTableId = declarationTableId,
+                Tenant = tenant,
+                MenuButtonGroupId = declarationMenuButtonGroup.Id,
+                ParentMenuButtonId = actionButton.Id,
+                FeatureId = declarationFeature_DeclarationCustomsRequests.Id,
+                MenuButtonType = "menuitem",
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
             #endregion
 
             #endregion

@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .disabled {
         pointer-events: none;
@@ -179,6 +179,16 @@
     /*end remark tooltip styles*/
 </style>
 <table>
+    <tr style="height:30px" *ngIf="ChangeInSupplierInvoice == 2">
+        <td>
+            <div style="width:100%;text-align:center">
+                <div class="DisbleBox">
+                    <span style="padding: 0px 16px;">בוצע שינוי בחשבון ספק ע”י מסווג- </span>
+                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">טופל</span>
+                </div>
+            </div>
+        </td>
+    </tr>
     <tr style="height:200px">
 
         <td>
@@ -308,9 +318,9 @@
 
                                     <td style="width: 160px;">
                                         <LogTextBoxV2 [ObjectFieldName]="'InvoiceAmount'" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true" [DataContext]="DataContext" [AddCommasToNumbers]="true"
-                                                    [Text]="InvoiceAmount" [IsAccumulative]="true"
-                                                    (LostFocus)="InvoiceAmountBlur($event)"></LogTextBoxV2>
+                                                      [HideColumns]="true" [DataContext]="DataContext" [AddCommasToNumbers]="true"
+                                                      [Text]="InvoiceAmount" [IsAccumulative]="true"
+                                                      (LostFocus)="InvoiceAmountBlur($event)"></LogTextBoxV2>
 
                                     </td>
 
@@ -736,8 +746,8 @@
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'integertext'"
-                                                        [Text]="item.ClassificationCode" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true"
-                                                        (LostFocus)="item.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="item.ClassificationKeyUp($event,logcelltemplate,ClassificationTextBox)"></LogTextBoxV2>
+                                                          [Text]="item.ClassificationCode" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true"
+                                                          (LostFocus)="item.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="item.ClassificationKeyUp($event,logcelltemplate,ClassificationTextBox)"></LogTextBoxV2>
 
 
                                         </div>
@@ -810,7 +820,7 @@
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogTextBoxV2 [ObjectFieldName]="'ItemPrice'" [InputType]="'decimal'" [DataContext]="item" [FocusOnMe]="true" [IsAccumulative]="true"
-                                                        [Text]="item.ItemPrice" [ObjectTableName]="ObjectTableName" [HideColumns]="true" (LostFocus)="item.OnItemPriceLostFocus($event)" [DebounceTime]="0"></LogTextBoxV2>
+                                                          [Text]="item.ItemPrice" [ObjectTableName]="ObjectTableName" [HideColumns]="true" (LostFocus)="item.OnItemPriceLostFocus($event)" [DebounceTime]="0"></LogTextBoxV2>
 
 
                                         </div>
