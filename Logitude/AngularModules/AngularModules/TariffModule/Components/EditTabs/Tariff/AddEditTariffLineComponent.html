@@ -20,6 +20,7 @@
                                 [ObjectTableName]="ObjectTableName"
                                 [LookUpTableName]="'Port'"
                                 [DataContext]="DataContext"
+                                (SelectedItemChanged)="DataContext.OriginPort = $event"
                                 [DisplayMemberPath]="'Code'"
                                 [SelectedValue]="DataContext.OriginPortId">
                         </LogLov>
@@ -40,6 +41,7 @@
                                 [LookUpTableName]="'Port'"
                                 [DisplayMemberPath]="'Code'"
                                 [DataContext]="DataContext"
+                                (SelectedItemChanged)="DataContext.DestinationPort = $event"
                                 [SelectedValue]="DataContext.DestinationPortId">
                         </LogLov>
                     </td>

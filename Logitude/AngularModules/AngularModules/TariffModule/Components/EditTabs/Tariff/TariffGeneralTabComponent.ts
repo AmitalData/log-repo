@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -16,7 +16,7 @@ import { PortPM } from '../../../../Common/EntityPMs/PortPM';
     templateUrl: './TariffGeneralTabComponent.html',
 })
 
-export class TariffGeneralTabComponent extends BaseComponent implements OnInit {
+export class TariffGeneralTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: TariffPM = new TariffPM();
     public ObjectTableName: string = "Tariff";
     public DataContext = this;
@@ -26,20 +26,44 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit {
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityArgs = entityArgs;
+        this.Listen();
     }
 
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.LoadTariffLines();
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.LoadTariffLines();
+                }
+            });
+        }
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
     ngOnInit() {
         this.Intialize();  
     }
 
     Intialize() {
-        //this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             this.IsResourcesReady = true;
             this.TariffsLinesSource = new ObservableCollection([]);
             this.EntityPM = this.EntityArgs.EntityPM;
             this.SetStepsLabelsAndVisibility();
             this.LoadTariffLines();
-        //});
+        });
     }
 
     LoadTariffLines() {
@@ -143,95 +167,101 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit {
 
     SetStepsLabelsAndVisibility() {
         if (!AppTool.IsNullOrEmpty(this.PriceSteps)) {
-            var steps: string[] = [] = this.PriceSteps.split(",");
-            var count = steps.length; 
-            if (count == 1) {
-                this.Step1PriceLabel = steps[0];
-                this.Step1PriceVisibility = true;
+            if (this.PriceSteps.indexOf(',') > -1) {
+                var steps: string[] = [] = this.PriceSteps.split(",");
+                var count = steps.length;
+                if (count == 1) {
+                    this.Step1PriceLabel = steps[0];
+                    this.Step1PriceVisibility = true;
+                }
+                else if (count == 2) {
+                    this.Step1PriceLabel = steps[0];
+                    this.Step2PriceLabel = steps[1];
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                }
+                else if (count == 3) {
+                    this.Step1PriceLabel = steps[0];
+                    this.Step2PriceLabel = steps[1];
+                    this.Step3PriceLabel = steps[2];
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                }
+                else if (count == 4) {
+                    this.Step1PriceLabel = steps[0];
+                    this.Step2PriceLabel = steps[1];
+                    this.Step3PriceLabel = steps[2];
+                    this.Step4PriceLabel = steps[3];
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                }
+                else if (count == 5) {
+                    this.Step1PriceLabel = steps[0];
+                    this.Step2PriceLabel = steps[1];
+                    this.Step3PriceLabel = steps[2];
+                    this.Step4PriceLabel = steps[3];
+                    this.Step5PriceLabel = steps[4];
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                    this.Step5PriceVisibility = true;
+                }
+                else if (count == 6) {
+                    this.Step1PriceLabel = steps[0];
+                    this.Step2PriceLabel = steps[1];
+                    this.Step3PriceLabel = steps[2];
+                    this.Step4PriceLabel = steps[3];
+                    this.Step5PriceLabel = steps[4];
+                    this.Step6PriceLabel = steps[5];
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                    this.Step5PriceVisibility = true;
+                    this.Step6PriceVisibility = true;
+                }
+                else if (count == 7) {
+                    this.Step1PriceLabel = steps[0];
+                    this.Step2PriceLabel = steps[1];
+                    this.Step3PriceLabel = steps[2];
+                    this.Step4PriceLabel = steps[3];
+                    this.Step5PriceLabel = steps[4];
+                    this.Step6PriceLabel = steps[5];
+                    this.Step7PriceLabel = steps[6];
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                    this.Step5PriceVisibility = true;
+                    this.Step6PriceVisibility = true;
+                    this.Step7PriceVisibility = true;
+                }
+                else if (count == 8) {
+                    this.Step1PriceLabel = steps[0];
+                    this.Step2PriceLabel = steps[1];
+                    this.Step3PriceLabel = steps[2];
+                    this.Step4PriceLabel = steps[3];
+                    this.Step5PriceLabel = steps[4];
+                    this.Step6PriceLabel = steps[5];
+                    this.Step7PriceLabel = steps[6];
+                    this.Step8PriceLabel = steps[7];
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                    this.Step5PriceVisibility = true;
+                    this.Step6PriceVisibility = true;
+                    this.Step7PriceVisibility = true;
+                    this.Step8PriceVisibility = true;
+                }
             }
-            else if (count == 2) {
-                this.Step1PriceLabel = steps[0];
-                this.Step2PriceLabel = steps[1];
+            else {
+                this.Step1PriceLabel = this.PriceSteps;
                 this.Step1PriceVisibility = true;
-                this.Step2PriceVisibility = true;
-            }
-            else if (count == 3) {
-                this.Step1PriceLabel = steps[0];
-                this.Step2PriceLabel = steps[1];
-                this.Step3PriceLabel = steps[2];
-                this.Step1PriceVisibility = true;
-                this.Step2PriceVisibility = true;
-                this.Step3PriceVisibility = true;
-            }
-            else if (count == 4) {
-                this.Step1PriceLabel = steps[0];
-                this.Step2PriceLabel = steps[1];
-                this.Step3PriceLabel = steps[2];
-                this.Step4PriceLabel = steps[3];
-                this.Step1PriceVisibility = true;
-                this.Step2PriceVisibility = true;
-                this.Step3PriceVisibility = true;
-                this.Step4PriceVisibility = true;
-            }
-            else if (count == 5) {
-                this.Step1PriceLabel = steps[0];
-                this.Step2PriceLabel = steps[1];
-                this.Step3PriceLabel = steps[2];
-                this.Step4PriceLabel = steps[3];
-                this.Step5PriceLabel = steps[4];
-                this.Step1PriceVisibility = true;
-                this.Step2PriceVisibility = true;
-                this.Step3PriceVisibility = true;
-                this.Step4PriceVisibility = true;
-                this.Step5PriceVisibility = true;
-            }
-            else if (count == 6) {
-                this.Step1PriceLabel = steps[0];
-                this.Step2PriceLabel = steps[1];
-                this.Step3PriceLabel = steps[2];
-                this.Step4PriceLabel = steps[3];
-                this.Step5PriceLabel = steps[4];
-                this.Step6PriceLabel = steps[5];
-                this.Step1PriceVisibility = true;
-                this.Step2PriceVisibility = true;
-                this.Step3PriceVisibility = true;
-                this.Step4PriceVisibility = true;
-                this.Step5PriceVisibility = true;
-                this.Step6PriceVisibility = true;
-            }
-            else if (count == 7) {
-                this.Step1PriceLabel = steps[0];
-                this.Step2PriceLabel = steps[1];
-                this.Step3PriceLabel = steps[2];
-                this.Step4PriceLabel = steps[3];
-                this.Step5PriceLabel = steps[4];
-                this.Step6PriceLabel = steps[5];
-                this.Step7PriceLabel = steps[6];
-                this.Step1PriceVisibility = true;
-                this.Step2PriceVisibility = true;
-                this.Step3PriceVisibility = true;
-                this.Step4PriceVisibility = true;
-                this.Step5PriceVisibility = true;
-                this.Step6PriceVisibility = true;
-                this.Step7PriceVisibility = true;
-            }
-            else if (count == 8) {
-                this.Step1PriceLabel = steps[0];
-                this.Step2PriceLabel = steps[1];
-                this.Step3PriceLabel = steps[2];
-                this.Step4PriceLabel = steps[3];
-                this.Step5PriceLabel = steps[4];
-                this.Step6PriceLabel = steps[5];
-                this.Step7PriceLabel = steps[6];
-                this.Step8PriceLabel = steps[7];
-                this.Step1PriceVisibility = true;
-                this.Step2PriceVisibility = true;
-                this.Step3PriceVisibility = true;
-                this.Step4PriceVisibility = true;
-                this.Step5PriceVisibility = true;
-                this.Step6PriceVisibility = true;
-                this.Step7PriceVisibility = true;              
-                this.Step8PriceVisibility = true;
             }
         }
     }
@@ -257,7 +287,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit {
 
     DeleteTariffButtonClicked(item: TariffLineData) {
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Delete this ");
+        confirmWindow.Show("Delete this Tariff Line?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.EntityPM.RemoveTariffLine(item.EntityPM);
@@ -345,11 +375,11 @@ export class TariffLineData extends BaseComponent {
         }
     }
 
-    originPortPort: PortPM;
-    get OriginPortPort() { return this.originPortPort; }
-    set OriginPortPort(value: PortPM) {
-        if (this.originPortPort != value) {
-            this.originPortPort = value;
+    originPort: PortPM;
+    get OriginPort() { return this.originPort; }
+    set OriginPort(value: PortPM) {
+        if (this.originPort != value) {
+            this.originPort = value;
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginPortCode = value.Code;

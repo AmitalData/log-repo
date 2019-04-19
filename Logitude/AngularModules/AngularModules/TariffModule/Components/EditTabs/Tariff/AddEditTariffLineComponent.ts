@@ -64,7 +64,11 @@ export class AddEditTariffLineComponent  {
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('OriginPortId');
+        this.myCloner.AddField('OriginPortCode');
+        this.myCloner.AddField('OriginPortName');
         this.myCloner.AddField('DestinationPortId');
+        this.myCloner.AddField('DestinationPortCode');
+        this.myCloner.AddField('DestinationPortName');
         this.myCloner.AddField('MinPrice');
         this.myCloner.AddField('Step1Price');
         this.myCloner.AddField('Step2Price');
@@ -75,6 +79,7 @@ export class AddEditTariffLineComponent  {
         this.myCloner.AddField('Step7Price');
         this.myCloner.AddField('Step8Price');
         this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.DataContext.FatherComponent.EntityPM);
     }
 
     private RejectChanges() {

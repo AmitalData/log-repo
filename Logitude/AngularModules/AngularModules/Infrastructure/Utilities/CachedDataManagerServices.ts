@@ -86,7 +86,7 @@ import { FeatureToggleListService } from '../Services/StandardLists/FeatureToggl
 
 import { TariffListService } from '../../TariffModule/Services/StandardLists/TariffListService';
 import { TariffVersionListService } from '../../TariffModule/Services/StandardLists/TariffVersionListService';
-
+import { TariffTypeListService } from '../../TariffModule/Services/StandardLists/TariffTypeListService';
 
 
 export class CachedDataManagerServices {
@@ -188,6 +188,7 @@ export class CachedDataManagerServices {
             case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
             case "TariffListService": { myResult = new TariffListService(); break; }
             case "TariffVersionListService": { myResult = new TariffVersionListService(); break; }                
+            case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
                 
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");
