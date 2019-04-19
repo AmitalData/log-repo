@@ -7,6 +7,9 @@ import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { PortPM } from '../../../../Common/EntityPMs/PortPM';
 
 @Component({
     moduleId: module.id,
@@ -22,22 +25,21 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit {
     public IsResourcesReady: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
-
         this.EntityArgs = entityArgs;
-        this.Intialize();  
     }
 
     ngOnInit() {
+        this.Intialize();  
     }
 
     Intialize() {
-        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+        //this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             this.IsResourcesReady = true;
             this.TariffsLinesSource = new ObservableCollection([]);
             this.EntityPM = this.EntityArgs.EntityPM;
             this.SetStepsLabelsAndVisibility();
             this.LoadTariffLines();
-        });
+        //});
     }
 
     LoadTariffLines() {
@@ -237,10 +239,32 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit {
     AddTariffLine() {
         var logWindow = new LogitudeWindow();
         var itemPM = new TariffLinePM(null);
+        itemPM.StartDate = this.StartDate;
+        itemPM.ExpirationDate = this.ExpirationDate;
+        itemPM.Tenant = SessionLocator.Tenant;
         var itemComponent = new TariffLineData(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Title = "New Tariff Line"; 
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
+    }
+
+    EditTariffButtonClicked(item: TariffLineData) {
+        var logWindow = new LogitudeWindow();
+        logWindow.DataContext = item;
+        logWindow.Title = "Edit Tariff Line";
+        logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
+    }
+
+    DeleteTariffButtonClicked(item: TariffLineData) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Delete this ");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.RemoveTariffLine(item.EntityPM);
+                this.TariffsLinesSource.Remove(item);
+                this.LoadTariffLines();
+            }
+        });
     }
 
     UploadExcel() {
@@ -257,10 +281,12 @@ export class TariffLineData extends BaseComponent {
     public EntityPM: TariffLinePM;
     public DataContext: TariffLineData = this;
     private ObjectTableName = "TariffLine";
+    public IsNewEntity: boolean = false;
 
     constructor(entity: TariffLinePM, public FatherComponent: TariffGeneralTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
+        this.IsNewEntity = isNew;
         this.SetUIProperties();
     }
 
@@ -285,6 +311,50 @@ export class TariffLineData extends BaseComponent {
         if (this.EntityPM.DestinationPortId != value) {
             this.EntityPM.DestinationPortId = value;
             this.SetUIProperties();
+        }
+    }
+
+    get DestinationPortCode() {
+        return this.EntityPM.DestinationPortCode;
+    }
+    set DestinationPortCode(value: string) {
+        if (this.EntityPM.DestinationPortCode != value) {
+            this.EntityPM.DestinationPortCode = value;
+        }
+    }
+
+    destinationPort: PortPM;
+    get DestinationPort() { return this.destinationPort; }
+    set DestinationPort(value: PortPM) {
+        if (this.destinationPort != value) {
+            this.destinationPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.DestinationPortCode = value.Code;
+        } else {
+            this.DestinationPortCode = null;
+        }
+    }
+
+    get OriginPortCode() {
+        return this.EntityPM.OriginPortCode;
+    }
+    set OriginPortCode(value: string) {
+        if (this.EntityPM.OriginPortCode != value) {
+            this.EntityPM.OriginPortCode = value;
+        }
+    }
+
+    originPortPort: PortPM;
+    get OriginPortPort() { return this.originPortPort; }
+    set OriginPortPort(value: PortPM) {
+        if (this.originPortPort != value) {
+            this.originPortPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.OriginPortCode = value.Code;
+        } else {
+            this.OriginPortCode = null;
         }
     }
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TariffLineData } from './TariffGeneralTabComponent';
-import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
+import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { AppTool } from '../../../../Infrastructure/Tools';
@@ -12,7 +12,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 })
 
 export class AddEditTariffLineComponent  {
-    public EntityPM: TariffPM;
+    public EntityPM: TariffLinePM;
     public DataContext: TariffLineData;
     public ObjectTableName: string = "TariffLine";
     private CurrentSession = SessionLocator.SelectedSession;
@@ -24,7 +24,7 @@ export class AddEditTariffLineComponent  {
 
     SetDataContext(dataContext: TariffLineData) {
         this.DataContext = dataContext;
-        this.EntityPM = dataContext.FatherComponent.EntityPM;
+        this.EntityPM = dataContext.EntityPM;
         this.Clone();
     }
 
@@ -46,17 +46,17 @@ export class AddEditTariffLineComponent  {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
 
-            this.DataContext.FatherComponent.TariffsLinesSource.Collection.forEach(item => {
-                if (item != null) {
-                    if (item.IsNewEntity) {
-                        if (this.EntityPM.TariffLines.indexOf(item.EntityPM) == -1) {
-                            item.IsNewEntity = false;
-                            this.EntityPM.AddTariffLine(item.EntityPM);
-                        }
-                    }
+            if (this.DataContext.IsNewEntity) {
+
+                this.DataContext.IsNewEntity = false;
+
+                if (this.DataContext.FatherComponent.EntityPM.TariffLines.indexOf(this.EntityPM) == -1) {
+                    this.DataContext.FatherComponent.EntityPM.AddTariffLine(this.EntityPM);
                 }
-            });
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+
+            this.DataContext.FatherComponent.LoadTariffLines();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 

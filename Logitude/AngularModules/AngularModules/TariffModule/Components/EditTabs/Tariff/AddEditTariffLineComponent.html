@@ -20,6 +20,7 @@
                                 [ObjectTableName]="ObjectTableName"
                                 [LookUpTableName]="'Port'"
                                 [DataContext]="DataContext"
+                                [DisplayMemberPath]="'Code'"
                                 [SelectedValue]="DataContext.OriginPortId">
                         </LogLov>
 
@@ -36,7 +37,8 @@
                     <td>
                         <LogLov [ObjectFieldName]="'DestinationPortId'"
                                 [ObjectTableName]="ObjectTableName"
-                                [LookUpTableName]="'Port'"  
+                                [LookUpTableName]="'Port'"
+                                [DisplayMemberPath]="'Code'"
                                 [DataContext]="DataContext"
                                 [SelectedValue]="DataContext.DestinationPortId">
                         </LogLov>
