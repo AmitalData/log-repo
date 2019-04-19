@@ -10,6 +10,9 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { PortPM } from '../../../../Common/EntityPMs/PortPM';
+import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     moduleId: module.id,
@@ -23,6 +26,8 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
     public TariffsLinesSource: ObservableCollection;
     private EntityArgs: EntityArgs;
     public IsResourcesReady: boolean = false;
+    private TariffDomainService: TariffDomainService;
+
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityArgs = entityArgs;
@@ -61,6 +66,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
             this.IsResourcesReady = true;
             this.TariffsLinesSource = new ObservableCollection([]);
             this.EntityPM = this.EntityArgs.EntityPM;
+            this.TariffDomainService = new TariffDomainService();
             this.SetStepsLabelsAndVisibility();
             this.LoadTariffLines();
         });
@@ -171,39 +177,39 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
                 var steps: string[] = [] = this.PriceSteps.split(",");
                 var count = steps.length;
                 if (count == 1) {
-                    this.Step1PriceLabel = steps[0];
+                    this.Step1PriceLabel = steps[0] + " KG";
                     this.Step1PriceVisibility = true;
                 }
                 else if (count == 2) {
-                    this.Step1PriceLabel = steps[0];
-                    this.Step2PriceLabel = steps[1];
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
                     this.Step1PriceVisibility = true;
                     this.Step2PriceVisibility = true;
                 }
                 else if (count == 3) {
-                    this.Step1PriceLabel = steps[0];
-                    this.Step2PriceLabel = steps[1];
-                    this.Step3PriceLabel = steps[2];
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
                     this.Step1PriceVisibility = true;
                     this.Step2PriceVisibility = true;
                     this.Step3PriceVisibility = true;
                 }
                 else if (count == 4) {
-                    this.Step1PriceLabel = steps[0];
-                    this.Step2PriceLabel = steps[1];
-                    this.Step3PriceLabel = steps[2];
-                    this.Step4PriceLabel = steps[3];
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
                     this.Step1PriceVisibility = true;
                     this.Step2PriceVisibility = true;
                     this.Step3PriceVisibility = true;
                     this.Step4PriceVisibility = true;
                 }
                 else if (count == 5) {
-                    this.Step1PriceLabel = steps[0];
-                    this.Step2PriceLabel = steps[1];
-                    this.Step3PriceLabel = steps[2];
-                    this.Step4PriceLabel = steps[3];
-                    this.Step5PriceLabel = steps[4];
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
+                    this.Step5PriceLabel = steps[4] + " KG";
                     this.Step1PriceVisibility = true;
                     this.Step2PriceVisibility = true;
                     this.Step3PriceVisibility = true;
@@ -211,12 +217,12 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
                     this.Step5PriceVisibility = true;
                 }
                 else if (count == 6) {
-                    this.Step1PriceLabel = steps[0];
-                    this.Step2PriceLabel = steps[1];
-                    this.Step3PriceLabel = steps[2];
-                    this.Step4PriceLabel = steps[3];
-                    this.Step5PriceLabel = steps[4];
-                    this.Step6PriceLabel = steps[5];
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
+                    this.Step5PriceLabel = steps[4] + " KG";
+                    this.Step6PriceLabel = steps[5] + " KG";
                     this.Step1PriceVisibility = true;
                     this.Step2PriceVisibility = true;
                     this.Step3PriceVisibility = true;
@@ -225,13 +231,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
                     this.Step6PriceVisibility = true;
                 }
                 else if (count == 7) {
-                    this.Step1PriceLabel = steps[0];
-                    this.Step2PriceLabel = steps[1];
-                    this.Step3PriceLabel = steps[2];
-                    this.Step4PriceLabel = steps[3];
-                    this.Step5PriceLabel = steps[4];
-                    this.Step6PriceLabel = steps[5];
-                    this.Step7PriceLabel = steps[6];
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
+                    this.Step5PriceLabel = steps[4] + " KG";
+                    this.Step6PriceLabel = steps[5] + " KG";
+                    this.Step7PriceLabel = steps[6] + " KG";
                     this.Step1PriceVisibility = true;
                     this.Step2PriceVisibility = true;
                     this.Step3PriceVisibility = true;
@@ -241,14 +247,14 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
                     this.Step7PriceVisibility = true;
                 }
                 else if (count == 8) {
-                    this.Step1PriceLabel = steps[0];
-                    this.Step2PriceLabel = steps[1];
-                    this.Step3PriceLabel = steps[2];
-                    this.Step4PriceLabel = steps[3];
-                    this.Step5PriceLabel = steps[4];
-                    this.Step6PriceLabel = steps[5];
-                    this.Step7PriceLabel = steps[6];
-                    this.Step8PriceLabel = steps[7];
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
+                    this.Step5PriceLabel = steps[4] + " KG";
+                    this.Step6PriceLabel = steps[5] + " KG";
+                    this.Step7PriceLabel = steps[6] + " KG";
+                    this.Step8PriceLabel = steps[7] + " KG";
                     this.Step1PriceVisibility = true;
                     this.Step2PriceVisibility = true;
                     this.Step3PriceVisibility = true;
@@ -302,8 +308,17 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
     }
 
     DownloadExcel() {
-        
-
+        this.TariffDomainService.DownloadTariffLines(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {           
+            if (!myResponse.HasError) {
+                var fileName = myResponse.Result;
+                var tempDate = new Date();
+                var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "Tariffs" + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007";
+                {
+                    window.open(url);
+                }
+            }
+        });
     }
 }
 

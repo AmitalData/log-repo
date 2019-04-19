@@ -604,13 +604,8 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
-            //sheet Format -Data Type
-            // int cellRow = 2;
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-            // for (var i = 1; i < dataTable.Rows.Count; i++)
-            // {
-            //int cellCol = 1;
             var rows = dataTable.Rows.Count;
             for (int j = 1; j <= dataTable.Columns.Count; j++)
             {
@@ -648,13 +643,9 @@ namespace WebFreight.Web.Helpers
                             break;
                     }
                 }
-               //cellCol++;
             }
-            //cellRow++;
-            // }
             workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);
-            //workbook.Close();
             return memory.ToArray();
         }
 
