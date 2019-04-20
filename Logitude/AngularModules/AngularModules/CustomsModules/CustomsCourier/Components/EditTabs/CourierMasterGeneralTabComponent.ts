@@ -23,6 +23,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     CourierMasterService: CourierMasterService = new CourierMasterService();
 
     public CurrentEditComponentId: string;
+    public CarrierDependencyProperty1: string;
 
     public WeightValueFilterItems: ApiQueryFilters;
 
@@ -32,6 +33,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         this.WeightValueFilterItems = new ApiQueryFilters();
         this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
+        this.CarrierDependencyProperty1 = "TR";
         this.Listen();
     }
 

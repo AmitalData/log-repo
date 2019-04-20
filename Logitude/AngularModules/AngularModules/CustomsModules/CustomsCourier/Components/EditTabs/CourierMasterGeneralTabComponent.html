@@ -301,19 +301,26 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:150px">
-                        <LogLov [ObjectFieldName]="'TruckerId'"
-                                [ObjectTableName]="ObjectTableName"
+                        <!--<LogLov [ObjectFieldName]="'TruckerId'"
+                                [ObjectTableName]="'Customs.Card'"
                                 [DataContext]="DataContext"
                                 [HideColumns]="true"
                                 [SelectedValue]="TruckerId"
                                 [LookUpTableName]="'Trucker'">
+                        </LogLov>-->
+                        <LogLov [ObjectFieldName]="'TruckerId'"
+                                [SelectedValue]="TruckerId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Carrier'"
+                                [DependencyFilter1Value]="CarrierDependencyProperty1">
                         </LogLov>
                     </td>
                     <td style="width:30px"></td>
                 </tr>
             </table>
         </td>
-
         <td><div></div></td>
     </tr>
 
