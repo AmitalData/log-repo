@@ -24,10 +24,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 myQueryOperations.PageIndex = PageIndex;
                 myQueryOperations.PageSize = PageSize;
 
-                if (!string.IsNullOrEmpty(SearchFields))
-                {
-                    myQueryOperations.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
-                }
+                //if (!string.IsNullOrEmpty(SearchFields))
+                //{
+                //    myQueryOperations.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
+                //}
                 FilterSerializer serializer = new FilterSerializer();
                 byte[] arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
 
