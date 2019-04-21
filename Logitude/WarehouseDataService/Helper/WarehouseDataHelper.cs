@@ -29,14 +29,14 @@ namespace WarehouseDataService.Helper
 
                     #region DWNextRunTime
                     WarehouseServiceHelper warehouseServiceHelper = new WarehouseServiceHelper();
-               
+
                     string[] sourceConnectionArray = ApplicationInfo.SourceConnection.Split(',');
                     string sourceConnectionString = warehouseServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
                     bool IsBuildNow = false;
 
                     DateTime? DWNextRunTime = warehouseServiceHelper.GetDWNextRunTime(sourceConnectionString);
 
-                    if (DWNextRunTime == null || ( DWNextRunTime > warehouseDate))
+                    if (DWNextRunTime == null || (DWNextRunTime > warehouseDate))
                     {
                         DWNextRunTime = warehouseDate;
                         warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, DWNextRunTime);
@@ -45,7 +45,7 @@ namespace WarehouseDataService.Helper
 
                     if (DWNextRunTime != null)
                     {
-                       if(warehouseDate!= DWNextRunTime)
+                        if (warehouseDate != DWNextRunTime)
                         {
                             if (DWNextRunTime.Value.AddHours(ApplicationInfo.RetryBuildWithinHours) > DateTime.Now) IsBuildNow = true;
                         }
@@ -60,7 +60,7 @@ namespace WarehouseDataService.Helper
                             int sleepTime = (int)span.TotalMilliseconds;
                             Thread.Sleep(sleepTime);
                         }
-                       
+
                         StartBuildWarehouseData();
 
                         DWNextRunTime = GetWarehouseRunDate(DateTime.Now);
@@ -195,7 +195,7 @@ namespace WarehouseDataService.Helper
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Wednesday, 3));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Tuesday, 4));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Friday, 5));
-            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Saturday,6));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Saturday, 6));
         }
         #endregion
 

@@ -12,7 +12,8 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-
+import { AccountingEntegrityCheckExtendedPMService } from '../../../Services/ExtendedPMs/AccountingEntegrityCheckExtendedPMService';
+import { AccountingIntegrityCheckPMService } from '../../../Services/StandardPMs/AccountingIntegrityCheckPMService';
 import { builder } from "xmlbuilder";
 
 @Component({
@@ -27,16 +28,19 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
     public DataContext = this;
     public isRTL: boolean = false;
     public showLocals: boolean = false;
-
+    AccountingEntegrityCheckExtendedPMService: AccountingEntegrityCheckExtendedPMService = new AccountingEntegrityCheckExtendedPMService();
     public _parameters: IntegrityCheckParameters = new IntegrityCheckParameters();
-
+    AccountingIntegrityCheckPMService: AccountingIntegrityCheckPMService = new AccountingIntegrityCheckPMService();
+    private CurrentSession = SessionLocator.SelectedSession;
+    HasException: boolean = false;
+    Fixing: boolean = false;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
         this.entityPM = entityArgs.EntityPM;
-
+        this.HasException = this.entityPM.HasException;
         // this.encodeParameters();
         // this.decodeParameters();
         this.SetUIProperty();
@@ -128,7 +132,37 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
     ReloadData() {
     }
 
+    RunService() {
+        this.Fixing = true;
+        this.entityPM.StatusCode = "2";
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
+        this.AccountingIntegrityCheckPMService.update(this.entityPM).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
 
+                   
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                 
+                    this.AccountingEntegrityCheckExtendedPMService.PostFixEntegrityCheckErrorInBatch(this.entityPM).subscribe(myResult => {
+                   
+                        this.CurrentSession.StopBusyIndicator();
+                        
+                        var mm: ServiceResponse = myResult;
+                        var entity = mm.Result;
+
+
+                    });
+                }
+
+                else {
+
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            }
+        });
+     
+
+}
 }
 
 export class IntegrityCheckParameters {
