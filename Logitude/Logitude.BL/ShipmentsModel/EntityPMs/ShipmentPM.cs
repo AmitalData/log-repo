@@ -151,7 +151,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public int ConnectedShipments { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string MasterShipmentNumber { get; set; }
+        public string ComputedShipmentNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? ChargeableWeightInKG { get; set; }
@@ -1252,6 +1252,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? CustomsClearanceDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string MasterShipmentNumber { get; set; }
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ProductCode { get; set; }
