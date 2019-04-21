@@ -74,6 +74,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var context1 = CustomContext.GetContext(requestParams.Tenant);
                 foreach (DeclarationCourierStatusPM itemPM in listPM)
                 {
+                    LogMessagingUtil.Instance.AppendLine("ChangeStorgeSite for declaration: " + itemPM.DeclarationId + "\n");
                     var changeStorgeSiteService = new ChangeStorgeSiteService(context1);
                     changeStorgeSiteService.ChangeStorgeSite(customResponse.StorageSiteCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM);
                 }
@@ -88,7 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     declarationsList.Add(itemDeclaration.CustomFileNo);
                 }
-                RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "FSE", message);
+                RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "U-FSE", message);
             }
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();

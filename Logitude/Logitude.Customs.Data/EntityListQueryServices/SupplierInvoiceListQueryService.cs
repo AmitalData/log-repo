@@ -51,6 +51,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          IssueCountryName = a.IssueCountry != null? a.IssueCountry.LocalName : null,
                                                          PreferenceDocumentTypeName = a.TradeAgreement.LocalName,
                                                          InsruancePercentage = a.InsruancePercentage,
+                                                         ChangeInSupplierInvoice = a.ChangeInSupplierInvoice,
                                                      });
             return query;
 		}

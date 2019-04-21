@@ -1,12 +1,17 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.AmitalMessaging.Customs.CustomFile.CourierStatus;
+using Logitude.AmitalMessaging.Infrastructure;
+using Logitude.AmitalMessaging.Utils;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +20,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
 {
     public class CourierPendingReasonService : UnifreightGenericService
     {
+        private LogitudeCourierStatus _LogitudeCourierXML;
+        private DeclarationCourierStatusPM _MyDeclarationCourierStatusPM;
+        private ICustomContext _context;
+        private Stopwatch _Stopwatch;
 
         public CourierPendingReasonService()
             : base(
@@ -61,48 +70,51 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
             MessageOut = "";
             try
             {
-                AppendLogLine("CustomsRequestsSheetInProgressService.ProccessRequest");
-                AppendLogLine("Deserialize(DataIn1) ..");
+                _Stopwatch = Stopwatch.StartNew();
+                MyCommunicationsParams.Subject = "CourierPendingReason ";
 
-                var hDataIn1 = UnifreightListsUtil.Deserialize(DataIn);
-                AppendLogLine("DataIn=" + hDataIn1.Count.ToString());
-                AppendLogLine("Deserialize(DataIn2) ..");
+                DeserilazeObject(DataIn);
+                AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
-                string stenant = UnifreightListsUtil.GetValue(ref hDataIn1, "Tenant");
-                if (String.IsNullOrWhiteSpace(stenant))
+                MyGenericResponseObj.Stage = "GetContext";
+                _context = CustomContext.GetContext(ResolvedTenant());
+                AppendLogLine("GetContext:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+                if (!String.IsNullOrWhiteSpace(_LogitudeCourierXML.DeclarationId))
                 {
-                    throw new Exception("Tenant is missing !!!");
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                    _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_LogitudeCourierXML.DeclarationId, false, false);
+                    if (_MyDeclarationCourierStatusPM == null)
+                    {
+                        throw new BusinessErrorException("Declaration with ID " + _LogitudeCourierXML.DeclarationId + " Doesn't exist");
+                    }
                 }
-                int tenant;
-                if (!int.TryParse(stenant, out tenant))
+                else if (!String.IsNullOrWhiteSpace(_LogitudeCourierXML.CustomFileNo))
                 {
-                    throw new Exception("Tenant is not int  !!!");
+                    GetDeclarationPMByCustomsFile(_LogitudeCourierXML.CustomFileNo);
+                    if (_MyDeclarationCourierStatusPM == null)
+                    {
+                        throw new BusinessErrorException("Declaration with Custom File No. " + _LogitudeCourierXML.CustomFileNo + " Doesn't exist");
+                    }
+                }
+                else
+                {
+                    throw new BusinessErrorException("Declaration ID and Custom File No. is missing");
                 }
 
-                string CustomFileNo = UnifreightListsUtil.GetValue(ref hDataIn1, "CustomFileNo");
-                if (String.IsNullOrWhiteSpace(CustomFileNo))
+                if (_MyDeclarationCourierStatusPM != null && _MyDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
                 {
-                    throw new Exception("CustomFileNo  is must  !");
-                }
-
-                string DeclarationId = UnifreightListsUtil.GetValue(ref hDataIn1, "DeclarationId");
-                if (String.IsNullOrWhiteSpace(DeclarationId))
-                {
-                    throw new Exception("DeclarationId  is must  !");
-                }
-
-                ICustomContext context = CustomContext.GetContext(ResolvedTenant());
-                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(DeclarationId, false, false);
-                if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
-                {
-                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), tenant);
-                    currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
-                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationCourierStatusPM.Tenant);
+                    _MyDeclarationCourierStatusPM.CourierPendingReasonCode = null;
+                    _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
                     LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To null");
+                    AppendLogLine("Set Courier Pending Reason Code To null" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 }
-                //SUCCESS = true.ToString();
+
+                AppendLogLine("send request:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                MyGenericResponseObj.Stage = "Done All ";
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
             }
             catch (Exception eeee)
             {
@@ -114,6 +126,66 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
         public override void ProccessRequest(string DataIn1, string DataIn2, out string DataOut1, out string DataOut2, out string SUCCESS, ref string MoreParams, out string MessageOut)
         {
             throw new NotImplementedException();
+        }
+
+        void DeserilazeObject(string xmlLOGICOURIERSTATUS)
+        {
+
+            MyGenericResponseObj.Stage = "Initalize ProccessRequest";
+            AppendLogLine("CourierStatusService.ProccessRequest");
+
+            AppendLogLine("Deserialize(DataIn1) ..");
+
+
+            if (string.IsNullOrWhiteSpace(xmlLOGICOURIERSTATUS))
+            {
+                throw new BusinessErrorException("DataIn1 is missing");
+            }
+            if (xmlLOGICOURIERSTATUS.Length > 1000)
+            {
+                AppendLogLine("XmlIn=" + xmlLOGICOURIERSTATUS.Substring(0, 1000));
+                AppendLogLine(".Substring(0, 1000)");
+            }
+            else
+            {
+                AppendLogLine("XmlIn=" + xmlLOGICOURIERSTATUS);
+            }
+
+
+            AppendLogLine("Tring DeserilazeObject");
+            MyGenericResponseObj.Stage = "Trying DeserilazeObject";
+            LOGICOURIERSTATUS myLOGICOURIERSTATUS = XmlGenericUtil<LOGICOURIERSTATUS>.DeSerializeObject(xmlLOGICOURIERSTATUS);
+
+            if (myLOGICOURIERSTATUS.LogitudeCourierStatus == null || myLOGICOURIERSTATUS.LogitudeCourierStatus.Length != 1)
+            {
+                throw new BusinessErrorException("_LOGICOURIERSTATUS.CourierStatus.Length != 1");
+            }
+            this._LogitudeCourierXML = myLOGICOURIERSTATUS.LogitudeCourierStatus[0];
+        }
+
+        private void GetDeclarationPMByCustomsFile(string customFileNo)
+        {
+            if (String.IsNullOrWhiteSpace(customFileNo))
+            {
+                throw new BusinessErrorException("Custom File No is missing");
+            }
+            var myQueryService = new DeclarationQueryService(_context);
+            string existId = myQueryService.GetIdByCustomFileNo(customFileNo, ResolvedTenant());
+
+            if (String.IsNullOrWhiteSpace(existId))
+            {
+                throw new BusinessErrorException("LOGITUDE FILE is missing");
+            }
+
+            MyGenericResponseObj.Stage = "GetSingle";
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+            _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(existId, false, false);
+            if (this._MyDeclarationCourierStatusPM == null)
+            {
+                throw new BusinessErrorException("LOGITUDE FILE is " + existId + " but not found");
+            }
+            AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
         }
     }
 }

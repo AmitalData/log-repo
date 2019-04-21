@@ -119,6 +119,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? VendorComissionPercentage { get; set; }
         [Column("InvoiceAmountInUSD")]
 	    public decimal? InvoiceAmountInUSD { get; set; }
+        [Column("ChangeInSupplierInvoice")]
+	    public string ChangeInSupplierInvoice { get; set; }
     }
 }
 	 

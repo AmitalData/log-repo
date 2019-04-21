@@ -9,6 +9,8 @@ import {CourierMasterPM} from '../../../../Customs/EntityPMs/CourierMasterPM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
+
 
 @Component({
     moduleId: module.id,
@@ -32,6 +34,10 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     private _ConnectedSearch: string;
     private _NotConnectedSearch: string;
 
+    _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
+    public IsDisplayOnly: boolean = false;
+    public DisplayOnlyMessage: string = "";
+
     private EntityResourceService: EntityResourceService;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -42,11 +48,12 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
              
-            this.IsVisibile = true;
-            this.BuildColumns();
-            this.BuildColumns1();
-            this.LoadConnectedItems();
-            this.Listen();
+                this.IsVisibile = true;
+                this.BuildColumns();
+                this.BuildColumns1();
+                this.LoadConnectedItems();
+                this.DisplayOnlyCheck();
+                this.Listen();
             });
         });
     }
@@ -364,6 +371,23 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
                 this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace($event.rowData.Id+",", "");
             }
         }
+    }
+
+    DisplayOnlyCheck() {
+        this.IsDisplayOnly = false;
+        this._CourierMasterValidator.SetEntityPM(this.entityPM);
+        this._CourierMasterValidator.CheckStorageSiteCodeRequestInProgress().subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                this.IsDisplayOnly = true;
+                this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+            }
+        });
+    }
+
+    RefreshEntity() {
+        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.DisplayOnlyCheck();
     }
 
 }

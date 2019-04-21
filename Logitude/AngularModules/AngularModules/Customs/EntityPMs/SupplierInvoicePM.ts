@@ -339,6 +339,11 @@ export class SupplierInvoicePM {
     public set InvoiceAmountInUSD(newValue: number) { if (this.invoiceAmountInUSD != newValue) { this.invoiceAmountInUSD = newValue; this.MarkAsDirty("InvoiceAmountInUSD"); } }
        
 	 
+    private changeInSupplierInvoice: string;
+    public get ChangeInSupplierInvoice() { return this.changeInSupplierInvoice; }
+    public set ChangeInSupplierInvoice(newValue: string) { if (this.changeInSupplierInvoice != newValue) { this.changeInSupplierInvoice = newValue; this.MarkAsDirty("ChangeInSupplierInvoice"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoicePM;
 		
