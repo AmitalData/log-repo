@@ -19,6 +19,7 @@ namespace WarehouseDataService
         public static bool UpdatingServiceWorking { get; set; }
         public static bool BliudingServiceWorking { get; set; }
         public static List<DayOfWeekClass> Days { get; set; }
+        public static string GlobalSourceConnection { get; set; }
 
     }
 }
