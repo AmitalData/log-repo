@@ -957,6 +957,16 @@ export class ARInvoicePM {
     public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
        
 	 
+    private concurrencyGUID: string;
+    public get ConcurrencyGUID() { return this.concurrencyGUID; }
+    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
+       
+	 
+    private newConcurrencyGUID: string;
+    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
+    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
+       
+	 
     private aRInvoiceStockId: string;
     public get ARInvoiceStockId() { return this.aRInvoiceStockId; }
     public set ARInvoiceStockId(newValue: string) { if (this.aRInvoiceStockId != newValue) { this.aRInvoiceStockId = newValue; this.MarkAsDirty("ARInvoiceStockId"); } }

@@ -55,7 +55,7 @@
     <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -2203,6 +2203,7 @@
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
     <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
+    <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
@@ -2735,6 +2736,7 @@
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
+    <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
     <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
     <Content Include="Monitoring\FailedTokenLog.aspx" />
@@ -4755,6 +4757,13 @@
     </Compile>
     <Compile Include="Monitoring\AnalyzeQueue.aspx.designer.cs">
       <DependentUpon>AnalyzeQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\AzureDevOpsQueue.aspx.cs">
+      <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\AzureDevOpsQueue.aspx.designer.cs">
+      <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.cs">
       <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>

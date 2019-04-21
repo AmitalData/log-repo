@@ -434,6 +434,98 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string originPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginPortName  
+	   {
+	    
+	     get
+		{
+		   return originPortName;
+		 }
+		 set
+		 {
+		   if(originPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortName",OldValue=originPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string originPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginPortCode  
+	   {
+	    
+	     get
+		{
+		   return originPortCode;
+		 }
+		 set
+		 {
+		   if(originPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortCode",OldValue=originPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortName  
+	   {
+	    
+	     get
+		{
+		   return destinationPortName;
+		 }
+		 set
+		 {
+		   if(destinationPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortName",OldValue=destinationPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortCode  
+	   {
+	    
+	     get
+		{
+		   return destinationPortCode;
+		 }
+		 set
+		 {
+		   if(destinationPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortCode",OldValue=destinationPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

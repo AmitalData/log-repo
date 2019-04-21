@@ -20,9 +20,17 @@ using Logitude.TariffModule.BL.DataContracts;
 namespace Logitude.TariffModule.BL.EntityQueryServices
 { 
    public partial class TariffQueryService
-   {   
-		 
-		public TariffsSummary GetCount(int tenant)
+   {
+        public override void GetComposition(EntityKeyFields entityKeys, TariffPM entityPM)
+        {
+            ITariffModuleContext context = MainContext as ITariffModuleContext; 
+            TariffKeys tariffKeys = entityKeys as TariffKeys;
+
+            TariffLineQueryService queryService = new TariffLineQueryService(context);
+            entityPM.TariffLines = queryService.GetMulti(tariffKeys, true);
+        }
+
+        public TariffsSummary GetCount(int tenant)
         {
             TariffsSummary tariffsSummary = new TariffsSummary() { Id = tenant };
 

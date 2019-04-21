@@ -289,6 +289,7 @@
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DateSampleComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWAskUserFiltersComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.html" />
@@ -714,6 +715,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\AGGridCustomHeader.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\EditShipmentLinkRendererComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DateSampleComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWAskUserFiltersComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleInfrastructureBIReport.ts" />
@@ -1981,6 +1983,7 @@
     <Content Include="Social\Components\SocialPostsComponent.html" />
     <Content Include="Social\Components\SocialMessagesComponent.html" />
     <Content Include="styles.css" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
@@ -6335,6 +6338,7 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBSpecialHandlingCodePMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />

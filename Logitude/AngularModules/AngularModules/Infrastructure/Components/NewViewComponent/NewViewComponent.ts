@@ -916,13 +916,13 @@ export class NewViewComponent {
 
             if (this.ObjectFields) {
 
-                this.allFilterFields = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
+                this.allFilterFields = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true)));
 
-                this.constantFilterFieldsList = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
+                this.constantFilterFieldsList = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true)));
 
                 this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection)), this.currentQuery.Id, myResult);
 
-                this.NEWallFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true)), this.currentQuery.Id, myResult);
+                this.NEWallFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true))), this.currentQuery.Id, myResult);
 
             }
             else {
@@ -1516,10 +1516,11 @@ export class NewViewComponent {
                     }
 
                     if (item.Operation.Code == "Between") {
-                        var myDate: Date = new Date(item.TextValue1.toString());
-                        var temp = DateTool.GetDateParts(myDate);
-                        var dt = temp.Year + "-" + temp.Month + "-" + temp.Day;
-                        item.AdvancedQueryFilterPM.PredefinedValue2 = dt;
+                        //var myDate: Date = new Date(item.TextValue1.toString());
+                        //var temp = DateTool.GetDateParts(myDate);
+                        //var dt = temp.Year + "-" + temp.Month + "-" + temp.Day;
+                        //item.AdvancedQueryFilterPM.PredefinedValue2 = dt;
+                        item.AdvancedQueryFilterPM.PredefinedValue2 = item.TextValue1;
                     }
                     else {
                         item.AdvancedQueryFilterPM.PredefinedValue2 = null;
@@ -1564,10 +1565,11 @@ export class NewViewComponent {
                         advanceFilter.PredefinedValue = date;
                     }
                     if (item.Operation.Code == "Between") {
-                        var myDate: Date = new Date(item.TextValue1.toString());
-                        var temp = DateTool.GetDateParts(myDate);
-                        var dt = temp.Year + "-" + temp.Month + "-" + temp.Day;//myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getFullYear();
-                        advanceFilter.PredefinedValue2 = dt;
+                        //var myDate: Date = new Date(item.TextValue1.toString());
+                        //var temp = DateTool.GetDateParts(myDate);
+                        //var dt = temp.Year + "-" + temp.Month + "-" + temp.Day;//myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getFullYear();
+                        //advanceFilter.PredefinedValue2 = dt;
+                        advanceFilter.PredefinedValue2 = item.TextValue1;
                     }
                 }
 

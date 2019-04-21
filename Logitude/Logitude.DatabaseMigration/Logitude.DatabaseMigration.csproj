@@ -901,6 +901,14 @@
     <Compile Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.Designer.cs">
       <DependentUpon>201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903171440525_AddARInvoiceConcurrency.cs" />
+    <Compile Include="Migrations\201903171440525_AddARInvoiceConcurrency.Designer.cs">
+      <DependentUpon>201903171440525_AddARInvoiceConcurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903171457321_AddARInvoiceConcurrencyModification.cs" />
+    <Compile Include="Migrations\201903171457321_AddARInvoiceConcurrencyModification.Designer.cs">
+      <DependentUpon>201903171457321_AddARInvoiceConcurrencyModification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1518,6 +1526,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.resx">
       <DependentUpon>201904171136541_RemoveAccoountingMaintenanceMeuTablesMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903171440525_AddARInvoiceConcurrency.resx">
+      <DependentUpon>201903171440525_AddARInvoiceConcurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903171457321_AddARInvoiceConcurrencyModification.resx">
+      <DependentUpon>201903171457321_AddARInvoiceConcurrencyModification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

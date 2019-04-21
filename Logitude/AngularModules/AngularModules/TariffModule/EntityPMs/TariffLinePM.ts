@@ -117,6 +117,26 @@ export class TariffLinePM {
     public set DestinationPortId(newValue: string) { if (this.destinationPortId != newValue) { this.destinationPortId = newValue; this.MarkAsDirty("DestinationPortId"); } }
        
 	 
+    private originPortName: string;
+    public get OriginPortName() { return this.originPortName; }
+    public set OriginPortName(newValue: string) { if (this.originPortName != newValue) { this.originPortName = newValue; this.MarkAsDirty("OriginPortName"); } }
+       
+	 
+    private originPortCode: string;
+    public get OriginPortCode() { return this.originPortCode; }
+    public set OriginPortCode(newValue: string) { if (this.originPortCode != newValue) { this.originPortCode = newValue; this.MarkAsDirty("OriginPortCode"); } }
+       
+	 
+    private destinationPortName: string;
+    public get DestinationPortName() { return this.destinationPortName; }
+    public set DestinationPortName(newValue: string) { if (this.destinationPortName != newValue) { this.destinationPortName = newValue; this.MarkAsDirty("DestinationPortName"); } }
+       
+	 
+    private destinationPortCode: string;
+    public get DestinationPortCode() { return this.destinationPortCode; }
+    public set DestinationPortCode(newValue: string) { if (this.destinationPortCode != newValue) { this.destinationPortCode = newValue; this.MarkAsDirty("DestinationPortCode"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	
