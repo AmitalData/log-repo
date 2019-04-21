@@ -148,7 +148,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                     CardQuery cardQuery = new CardQuery(tenant);
                     ContactQuery contactQuery = new ContactQuery(tenant);
                     List<CardList> cards = cardQuery.GetCardListsByCardIds(cardIds, tenant);
-                    List<ContactList> contacts = contactQuery.GetContactListsByListIds(contactIds, tenant);
+                    List<ContactList> contacts = contactQuery.GetContactListsByListIds(contactIds, tenant).ToList();
                     int i = 0;
                     foreach (LastLoginPartners item in temp)
                     {
@@ -271,7 +271,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 if (contactIds.Count > 0)
                 {
                     ContactQuery contactQuery = new ContactQuery(tenant);
-                    contactLists = contactQuery.GetContactListsByListIds(contactIds, tenant);
+                    contactLists = contactQuery.GetContactListsByListIds(contactIds, tenant).ToList();
                 }
 
 

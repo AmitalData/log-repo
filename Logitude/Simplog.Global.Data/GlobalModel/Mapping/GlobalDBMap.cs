@@ -27,6 +27,14 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
                 .HasMaxLength(512)
                 .IsUnicode(true);
 
+            this.Property(t => t.SecondaryAzureDBConnection)
+                .IsRequired()
+                .HasMaxLength(512)
+                .IsUnicode(true);
+
+
+
+
             // Table & Column Mappings
             this.ToTable("GlobalDBs");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -34,6 +42,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsUpgrading).HasColumnName("IsUpgrading");
             this.Property(t => t.IsActive).HasColumnName("IsActive");
             this.Property(t => t.SharedDWConnection).HasColumnName("SharedDWConnection");
+            this.Property(t => t.SecondaryAzureDBConnection).HasColumnName("SecondaryAzureDBConnection");
+            
         }
     }
 }

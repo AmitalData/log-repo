@@ -10,6 +10,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WarehouseData.Helper;
 using WarehouseDataService.Helper;
 
 namespace WarehouseDataService
@@ -31,7 +32,7 @@ namespace WarehouseDataService
         {
             try
             {
-                ApplicationInfo.SourceConnection = ConfigurationSettings.AppSettings["SourceConnection"];
+                ApplicationInfo.GlobalSourceConnection = ConfigurationSettings.AppSettings["SourceConnection"];
                 ApplicationInfo.DestinationConnection = ConfigurationSettings.AppSettings["DestinationConnection"];
 
                 string updateWarehouseSleepTime = ConfigurationSettings.AppSettings["UpdateWarehouseSleepTime"];
@@ -62,7 +63,10 @@ namespace WarehouseDataService
                 ApplicationInfo.WarehouseBuildDays = ApplicationInfo.Days.Where(d => buildDays.Contains(d.NumberOfDay)).ToList();
                 ApplicationInfo.WarehouseBuildHours = !string.IsNullOrEmpty(warehouseBuildHoures) ? warehouseBuildHoures.ToString() : null;
 
-
+                WarehouseServiceHelper warehouseServiceHelper = new WarehouseServiceHelper();
+                string[] sourceConnectionArray = ApplicationInfo.GlobalSourceConnection.Split(',');
+                string connectionString = warehouseServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                ApplicationInfo.SourceConnection = warehouseServiceHelper.GetMainDBConnectionString(connectionString);
 
                 Thread buildWarehouseDatThread = new Thread(() => warehouseDataHelper.BuildWarehouseData());
                 buildWarehouseDatThread.IsBackground = true;

@@ -1193,21 +1193,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-        public List<ContactList> GetContactListsByListIds(List<string>contactIds, int tenant)
+        public IQueryable<ContactList> GetContactListsByListIds(List<string>contactIds, int tenant)
         {
-            List<ContactList> contactLists = (from a in repository.context.Contacts
-                                    where contactIds.Contains(a.Id) && a.Tenant == tenant
-                                  select new ContactList()
-                                    {
-                                        Id = a.Id,
-                                        Tenant = a.Tenant,
-                                        EnglishName = a.EnglishName,
-                                        LocalName = a.LocalName,
-                                        Mobile = a.Mobile,
-                                        Fax = a.Fax,
-                                        BusinessPhone =a.BusinessPhone,
-
-                                    }).ToList();
+            IQueryable<ContactList> contactLists = (from a in repository.context.Contacts
+                                                    where contactIds.Contains(a.Id) && a.Tenant == tenant
+                                                    select new ContactList()
+                                                    {
+                                                        Id = a.Id,
+                                                        Tenant = a.Tenant,
+                                                        EnglishName = a.EnglishName,
+                                                        LocalName = a.LocalName,
+                                                        Mobile = a.Mobile,
+                                                        Fax = a.Fax,
+                                                        BusinessPhone = a.BusinessPhone,
+                                                        InActive =a.InActive,
+                                                    });
             return contactLists;
         }
 
@@ -1506,6 +1506,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return contact;
         }
+
+
+
 
 
     }

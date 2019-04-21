@@ -7,7 +7,7 @@ import {ErrorsLogPMService} from '../../Infrastructure/Services/ExtendedPMs/Erro
 import {LogitudeApplicationService} from '../../Infrastructure/Services/WebServices/LogitudeApplicationService';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import {Observable}     from 'rxjs/Rx';
+import { Observable}     from 'rxjs/Rx';
 import {SessionLocator} from '../Utilities/SessionLocator';
 import {CachedDataManager} from '../Utilities/CachedDataManager';
 import {SessionInfo} from '../Utilities/SessionInfo';
@@ -21,6 +21,7 @@ import { PerformanceLog } from '../Others/PerformanceLog';
 import { LogitudeHubChannelEvent } from '../Services/SignalRServices/SignalRChannelService';
 import { SignalRChannelService } from '../Services/SignalRServices/SignalRChannelService';
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Injectable()
@@ -52,62 +53,56 @@ export class ApplicationTimersManager {
 
         //this.signalRChannelService = new SignalRChannelService();
         //SessionLocator.SignalRChannelService = this.signalRChannelService;
-
-        var errorLogsSub = this.initializeErrorLogsTimer().subscribe(res => {
-            this.AddErrorLogs();
-            //console.log('The response is received.');
-        });
-        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting!=null &&  ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+        SessionLocator.TimersSubscribtions.push(
+            this.getTimer(30000).subscribe(res => {
+                this.AddErrorLogs();
+                //console.log('The response is received.');
+            })
+        );
+        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
             console.log("WorkEnvironment is customs! Suppress this.AddPeformanceLogs();");
         } else {
-            var performanceLogsSub = this.initializeErrorLogsTimer().subscribe(res => {
+            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
                 this.AddPeformanceLogs();
-            });
+            }));
         }
 
 
-        var upgradingSystemsub = this.initializeErrorLogsTimer().subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
             this.CheckIsupgradingSystem();
+        }));
 
-
-        });
-
-        var loginSub = this.initializeLoginTimer().subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
             this.CheckApplicationLocalStorage();
-        });
+        }));
 
-        loginSub = this.initializeLoginTimer().subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
             this.CheckUserLastLogin();
-        });
+        }));
 
 
-        var userValiditysub = this.initializeUserValidityTimer().subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
             this.CheckUserValidity();
-        });
+        }));
 
-        var systemMetadataSub = this.initializeSystemMetatadatCheckTimer().subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(60000).subscribe(res => {
             CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(reponse => {
                 console.log("------------- SystemMetadataLastUpdate has been checked by timer! ---------------");
             });
 
-        });
+        }));
 
         if (SessionLocator.UseCachedData) {
-            var cachedTablesSub = this.initializeCachedTablesLastUpdateCheckTimer().subscribe(res => {
+            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
                 CachedDataManager.CheckCachedTableLastUpdateDate().subscribe(reponse => {
 
                     console.log("cached tables checked by timer!");
                 });
 
-            });
+            }));
 
-            //    });
 
-            //    SessionLocator.TimersSubscribtions.push(cachedTablesSub);
-            //} 
 
-            SessionLocator.TimersSubscribtions.push(errorLogsSub);
-            //SessionLocator.TimersSubscribtions.push(systemMetadataSub);
 
 
             //Observable.Interval(TimeSpan.FromSeconds(1.0));
@@ -131,30 +126,16 @@ export class ApplicationTimersManager {
             //    (error: any) => {
             //        console.warn("Attempt to join channel failed!", error);
             //    }
-              
+
             //)
         }
     }
 
-    initializeCachedTablesLastUpdateCheckTimer() {
-        return Observable.interval(30000).timeInterval();
+    getTimer(period?: number) {
+        return Observable.interval(period).timeInterval();
     }
 
-    initializeSystemMetatadatCheckTimer() {
-        return Observable.interval(60000).timeInterval();
-    }
-
-    initializeErrorLogsTimer() {
-        return Observable.interval(30000).timeInterval();
-    }
-
-    initializeUserValidityTimer() {
-        return Observable.interval(30000).timeInterval();
-    }
-
-    initializeLoginTimer() {
-        return Observable.interval(30000).timeInterval();
-    }
+    
 
 
 
@@ -416,12 +397,17 @@ export class ApplicationTimersManager {
 //        .subscribe(tick -> System.out.println("tick = " + tick));
 //}
 
- stop() {
-    //if (subscription != null && !subscription.isUnsubscribed()) {
-    //    System.out.println("stopped");
-    //    subscription.unsubscribe();
-    //}
-}
+// StopAllTimers() {
+//     forEach(var timerObs in SessionLocator.TimersSubscribtions.values) {
+//         timerObs.un
+//     }
+
+         
+//    //if (subscription != null && !subscription.isUnsubscribed()) {
+//    //    System.out.println("stopped");
+//    //    subscription.unsubscribe();
+//    //}
+//}
 
 
 

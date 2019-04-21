@@ -5,6 +5,7 @@ import { TariffListService } from './Services/StandardLists/TariffListService';
 import { TariffPMService } from './Services/StandardPMs/TariffPMService';
 import { TariffVersionPMService } from './Services/StandardPMs/TariffVersionPMService';
 import { TariffDomainService } from './Services/TariffDomainService';
+import { TariffMenuButtonsHandler } from './Components/MenuButtons/TariffMenuButtonsHandler';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -24,6 +25,12 @@ export class ModuleProviders {
 
            // DomainService
             case "TariffDomainService": { myResult = new TariffDomainService(); break; }
+
+
+            // MenuButtons
+            case "TariffMenuButtonsHandler": { myResult = new TariffMenuButtonsHandler(); break; }   
+
+                
      
         }
 

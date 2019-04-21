@@ -705,6 +705,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? FirstAccountingCloseDate { get; set; }
         public DateTime? AMSClosingDate { get; set; }
         public string UpdatedByPartner { get; set; }
+        public string ComputedShipmentNumber { get; set; }
 
         #region INTTRA
         public DateTime? INTTRASIStatusDate { get; set; }

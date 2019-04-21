@@ -55,7 +55,7 @@ export class DWQueryBuilderHelper   {
                 view.DimensionTableDisplayName = field.ParentCode;
             }
             if (field.FilterItems.length == 0) {
-                if (field.DWObjectTableCode.indexOf("DIM_") != -1) {
+                if (field.DWObjectTableCode && field.DWObjectTableCode.indexOf("DIM_") != -1) {
                     if (view.Code == '[Full Date]') {
                         view.ParentDataTypeCode = "DateTime";
                         view.DataTypeCode = "DateTime";
@@ -324,6 +324,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
         if (this.textValue != newValue) {
             //if (this.textValue != null && this.textValue != undefined) {
             this.textValue = newValue;
+            if (this.ParentDataTypeCode == "DateTime" || this.ParentDataTypeCode == "Date") {
+                var timerToken = setTimeout(() => {
+                    this.ShowSampleDateCommand.emit(this);
+                }, 1000);
+                
+            }
             if (this.FilterChanged) {
                 this.FilterChanged.emit("FilterValueChanged");
             }
