@@ -579,12 +579,9 @@ namespace Logitude.BL.Helpers
 
             if (quotePM == null) quotePM = BuildingQuotePM();
 
+            ViewFixedPrice = IsShowFixedPriceContainer(setting, quotePM);
 
-            if (setting.ShowFixedPriceContainers)
-            {
-                ViewFixedPrice = IsShowFixedPriceContainer(quotePM.QuoteSaleCharges);
-            }
-
+    
             IsShowlanguage = setting.ShowLocalLanguage;
 
             bool isHaveMaxMinValue = quotePM.QuoteSaleCharges.Where(d=>d.SaleMaxAmount!=null || d.SaleMinAmount!=null).Any();
@@ -2842,9 +2839,9 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowFixedPriceContainers)
                     {
-
                         if (ViewFixedPrice)
                         {
+
                             string AA = " ";
                             if (chargePM.SaleAmountInSaleCurrency != null)
                             {
@@ -2854,7 +2851,7 @@ namespace Logitude.BL.Helpers
                             HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                             row += 1;
                         }
-                      
+         
                     }
 
                     if (setting.ShowPriceByContainerColumn)
@@ -3003,6 +3000,9 @@ namespace Logitude.BL.Helpers
             }
         }
 
+
+    
+
         private  string  GetSaleMaxMinAmountValue(QuoteSaleChargePM chargePM)
         {
             var saleMinAmount = string.Empty;
@@ -3108,17 +3108,29 @@ namespace Logitude.BL.Helpers
 
         #endregion
 
-        private bool IsShowFixedPriceContainer(List<QuoteSaleChargePM> quoteSaleCharges)
+ 
+        private bool IsShowFixedPriceContainer(QuoteTemplateSettingPM setting, QuotePM quotePM)
         {
             bool viewFixedPriceContainer = false;
 
-            foreach (QuoteSaleChargePM chargePM in quoteSaleCharges)
+            if (setting.ShowFixedPriceContainers)
             {
-                if (chargePM.SaleMeasurementCode == "FIXD")
+                foreach (QuoteSaleChargePM chargePM in quotePM.QuoteSaleCharges)
                 {
-                    viewFixedPriceContainer = true;
+                    if (chargePM.SaleMeasurementCode == "FIXD") viewFixedPriceContainer = true;
                 }
-            };
+
+                if (viewFixedPriceContainer)
+                {
+                    if (setting.ShowPriceByContainerColumn)
+                    {
+                        if (quotePM.PackageType1Id != null || quotePM.PackageType2Id != null || quotePM.PackageType3Id != null || quotePM.PackageType4Id != null || quotePM.PackageType5Id != null)
+                        {
+                            viewFixedPriceContainer = false;
+                        }
+                    }
+                }
+            }
 
             return viewFixedPriceContainer;
         }
