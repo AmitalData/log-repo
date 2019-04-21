@@ -489,6 +489,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             this.DeclarationCustomsRequestsMethod();
                             break;
                         }
+                    case "Declaration Customs Requests":
+                        {
+                            this.DeclarationCustomsRequestsMethod();
+                            break;
+                        }
                 }
             }
     }
