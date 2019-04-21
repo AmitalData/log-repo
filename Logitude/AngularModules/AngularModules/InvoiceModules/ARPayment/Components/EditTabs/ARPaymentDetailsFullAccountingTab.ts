@@ -131,6 +131,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         this.GetData();
 
+        // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 
     }
 
@@ -142,6 +143,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     originalPaymentOpenAmount: number;
     paymentAmountTotal: number = 0;
     amount2reconcileTotal: number = 0;
+    paymentReconciledAmountTotal: number = 0;
 
     // IsEntityValid: boolean = true;
 
@@ -291,12 +293,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         // Reconciliation amount
         var _linesAmount2reco = 0;
+        var _linespaymentReconciledAmount = 0;
         this.TransactionsList.Collection.forEach((line: TransactionLineModel) => {
             if (line && line.AmountToReconcile >= 0) {
-                _linesAmount2reco += line.PaymentReconciledAmount + line.AmountToReconcile;
+                _linesAmount2reco += line.AmountToReconcile;
+                _linespaymentReconciledAmount += line.PaymentReconciledAmount;
             }
         });
         this.amount2reconcileTotal = _linesAmount2reco;
+        this.paymentReconciledAmountTotal = _linespaymentReconciledAmount;
 
         if(this.EntityPM.InvoicesTransactions.length == 0){
             // this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
@@ -1749,6 +1754,9 @@ export class TransactionLineModel extends BaseComponent {
         this.originalOpenAmount = this.OpenAmount;
 
         this.CalculateFields();
+
+        this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",this.Status != TextStore.Closed && !this.parent.IsGridReadOnly);
+
     }
 
     CalculateFields() {
