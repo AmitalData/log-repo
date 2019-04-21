@@ -27,6 +27,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.html" />
@@ -362,6 +363,7 @@
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\AddEditPrivateLabelsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.ts" />
@@ -384,6 +386,7 @@
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalAdditionalDataPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatReportPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\AccountingEntegrityCheckExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\AccountingIntegrityCheckListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\IntegrityCheckStatusListService.ts" />
