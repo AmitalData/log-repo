@@ -20,6 +20,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {TariffPM} from '../../EntityPMs/TariffPM';
 
 import {TariffLinePM} from '../../EntityPMs/TariffLinePM';
+import {TariffPMInitService} from '../../EntityPMInitServices/TariffPMInitService';
 
 @Injectable()
 
@@ -49,6 +50,8 @@ export class TariffPMService {
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
+                      TariffPMInitService.InitValues(entity, false);
+                      TariffPMInitService.ApplyUIPoperties(entity, false);
                     }
 
                 var serviceResponse: ServiceResponse;
@@ -348,6 +351,10 @@ export class TariffPMService {
 		    var entityPM: TariffPM;
 			entityPM = new TariffPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			TariffPMInitService.InitValues(entityPM, true);
+			TariffPMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 

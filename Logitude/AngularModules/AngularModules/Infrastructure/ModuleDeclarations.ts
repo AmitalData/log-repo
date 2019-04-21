@@ -37,6 +37,7 @@ import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
 // Controls Components
 import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
 import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
+import {LogToolTipComponent} from './Components/LogitudeComponents/LogToolTip/LogToolTipComponent';
 import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
 import {MultilineTextBoxWindow} from './Components/LogitudeComponents/MultilineTextBoxWindow';
 import {LogTextBoxV2Component} from './Components/LogitudeComponents/LogTextBoxV2Component';
@@ -207,6 +208,7 @@ export const ControlsComponents =
     [
         GeneralSendComponent,
         LogLabelComponent,
+        LogToolTipComponent,
         LogTextBoxComponent,
         MultilineTextBoxWindow,
         LogTextBoxV2Component,

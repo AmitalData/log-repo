@@ -91,6 +91,46 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
+            if(entityPM.TariffLines.Where(p=>p.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert).Count() > 0)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "TLAD",
+                    UserId = contact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = changesXml
+                });
+            }
+            if (entityPM.SetAsInActive)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "SAIN",
+                    UserId = contact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = changesXml
+                });
+            }
+
+
+
+            if (entityPM.SetAsReActive)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "REAC",
+                    UserId = contact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = changesXml
+                });
+            }
+
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
