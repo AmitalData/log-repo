@@ -285,7 +285,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 this.ComputeIsAssemblyField();
                 this.ComputeFinalDestination();
-
+                this.ShipmentComputedCompute(entityPM, entityPoco);
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 entityRepository.Add(entityPoco);
@@ -456,7 +456,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     UpdateShipmentComputedFields();
 
-
+                    this.ShipmentComputedCompute(entityPM, entityPoco);
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
                     this.ComputeAgentComputed(entityPM, entityPoco);
                     entityRepository.Update(entityPoco);
@@ -570,6 +570,50 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+
+
+        private void ShipmentComputedCompute(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            
+             if (entityPM.ShipmentLevelCode == "H")
+            {                
+                    if (!string.IsNullOrEmpty(entityPM.MasterShipmentDataId))
+                    {
+                    var connectedlHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.MasterShipmentDataId, tenant);
+
+                    ShipmentRepository shipmentrepo = new ShipmentRepository(entityPM.Tenant);
+                    Shipment parent = shipmentrepo.GetSingleShipment(entityPM.MasterShipmentDataId, entityPM.Tenant);
+                    if (parent != null)
+                    {
+                        parent.ComputedShipmentNumber = "";
+                        connectedlHouses.ForEach(item =>
+                        {
+                            parent.ComputedShipmentNumber += item.ShipmentNumber + ",";
+                        });
+                        parent.ComputedShipmentNumber += entityPM.ShipmentNumber;
+
+                   
+
+                        using (TransactionScope scope = TransactionFactory.GetTransaction())
+
+                        {
+                            shipmentrepo.Update(parent);
+                            shipmentrepo.SubmitChanges();
+                            scope.Complete();
+                        }
+
+                    }
+                    else
+                    {
+                        entityPM.ComputedShipmentNumber = entityPM.ShipmentNumber;
+                    }
+
+                    }
+                         
+            }
+
+        }
+
 
         private void UpdateWareHouseEntry()
         {
@@ -2758,6 +2802,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         #region
                         entityPM.ShipmentLevelCode = "H";
                         entityPM.MasterShipmentDataId = null;
+                        entityPoco.ComputedShipmentNumber = entityPM.ShipmentNumber ;
+                        entityPM.ComputedShipmentNumber = entityPM.ShipmentNumber;
                         entityPoco.MasterShipmentDataId = null;
 
                         if (entityMasterData == null)
@@ -2799,8 +2845,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             entityMasterData = new ShipmentMasterData() { Id = entityPM.Id, Tenant = tenant, MasterShipmentNumber = entityPM.ShipmentNumber, };
                             entityPM.MasterShipmentDataId = entityPM.Id;
+                            entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
+                            entityPM.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
                             entityPoco.MasterShipmentDataId = entityPM.Id;
+
                             shipmentMasterDataRepository.Add(entityMasterData);
+
                         }
 
                         if (!string.IsNullOrEmpty(entityPM.House))
@@ -4622,6 +4672,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityMasterComputedFields.NumberOfHouses += 1;
                         shipmentComputedFieldsRepository.Update(entityMasterComputedFields);
                     }
+
                 }
             }
 
@@ -4656,6 +4707,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         entityComputedFields.NumberOfHouses = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
                     }
+                    entityPM.ComputedShipmentNumber = null;
+                    this.allHouses.ForEach(item =>
+                    {
+                        entityPM.ComputedShipmentNumber += item.ShipmentNumber + ",";
+                    });
+                    if (!string.IsNullOrEmpty(entityPM.ComputedShipmentNumber))
+                    {
+                        if (entityPM.ComputedShipmentNumber.Length > 0)
+                        {
+                            entityPM.ComputedShipmentNumber = entityPM.ComputedShipmentNumber.Remove(entityPM.ComputedShipmentNumber.Length - 1);
+                        }
+                    }
+
                 }
             }
         }
@@ -6031,6 +6095,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (houseShipment != null)
             {
                 houseShipment.MasterShipmentDataId = itemPM.MasterShipmentDataId;
+                houseShipment.ComputedShipmentNumber = itemPM.ShipmentNumber;
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
 
@@ -6048,6 +6113,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (houseShipment != null)
             {
                 houseShipment.MasterShipmentDataId = null;
+                houseShipment.ComputedShipmentNumber = null;
                 houseShipment.OperationalDate = houseShipment.CreateDateTime;
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
