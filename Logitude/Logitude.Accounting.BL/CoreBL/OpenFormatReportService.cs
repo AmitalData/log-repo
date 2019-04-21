@@ -3986,8 +3986,9 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append(a + random.PadLeft(15, '0'));
             stringBuilder.Append("&OF1.31&");
             stringBuilder.Append("00074406");
-            stringBuilder.Append("Unifreight Acc");
             stringBuilder.Append(' ', 6);
+            stringBuilder.Append("Unifreight Acc");
+            
 
             if (setting != null)
             {
