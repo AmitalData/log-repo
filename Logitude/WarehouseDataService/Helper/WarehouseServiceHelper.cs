@@ -138,6 +138,19 @@ namespace WarehouseDataService.Helper
             return result;
         }
 
+        public string BuildConnectionString(string dbSourceConnection)
+        {
+            string result = string.Empty;
+
+            string[] sourceConnectionArray = dbSourceConnection.Split(',');
+            if (sourceConnectionArray.Length == 4)
+            {
+                result = BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+            }
+
+            return result;
+
+        }
 
         public string GetMainDBConnectionString(string connectionString)
         {
@@ -167,7 +180,7 @@ namespace WarehouseDataService.Helper
                 con.Close();
             }
 
-            return result;
+            return BuildConnectionString(result) ;
         }
 
     }
