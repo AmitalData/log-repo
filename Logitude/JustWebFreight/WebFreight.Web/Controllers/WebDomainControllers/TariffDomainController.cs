@@ -24,6 +24,13 @@ using Microsoft.Practices.Unity;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.ComponentModel;
+using System.IO;
+using System.Xml.Serialization;
+using Stimulsoft.Base.Excel;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Data.SqlClient;
+using System.Runtime.Serialization;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -133,7 +140,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
 
-            
+
             // Build excel headers 
             DataTable table = new DataTable();
             string[] steps = tariff.PriceSteps.Split(',');
@@ -201,6 +208,114 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             workbook.SaveAs(memory);
             return memory.ToArray();
         }
+       
+        [ActionName("PostUploadExcelFile")]
+        public HttpResponseMessage PostUploadExcelFile(TariffFilterParameter filter)
+        {
+            try
+            {
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                byte[] fileData = Convert.FromBase64String(filter.FileData);
+
+                System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
+                IWorksheet sheet = workbook.Worksheets[0];
+
+                List<ExcelTariffLines> tariffLinesResult = new List<ExcelTariffLines>();
+                foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+                {
+                    String[] rowData = new String[sheet.Columns.Count()];
+                    var tariffLine = new ExcelTariffLines();
+                    for (int i = 0; i < sheet.Columns.Count(); i++)
+                    {
+                        rowData[i] = row.Cells[i].Value2.ToString();
+                    }
+                    var fromPort = this.GetPortDetails(rowData[0], authToken.Tenant);
+                    tariffLine.FromPortId = fromPort.Id;
+                    tariffLine.FromPortCode = fromPort.Code;
+                    tariffLine.FromPortName = fromPort.EnglishName;
+
+                    var toPort = this.GetPortDetails(rowData[1], authToken.Tenant);
+                    tariffLine.ToPortId = toPort.Id;
+                    tariffLine.ToPortCode = toPort.Code;
+                    tariffLine.ToPortName = toPort.EnglishName;
+
+                    tariffLine.MinPrice = Convert.ToInt32(rowData[2]);
+                    tariffLine.Step1Price =  Convert.ToInt32(rowData[3]);
+                    if (rowData.Length > 4)
+                    {
+                        tariffLine.Step2Price = Convert.ToInt32(rowData[4]);
+                    }
+                    if (rowData.Length > 5)
+                    {
+                        tariffLine.Step3Price = Convert.ToInt32(rowData[4]);
+                    }
+                    if (rowData.Length > 6)
+                    {
+                        tariffLine.Step4Price = Convert.ToInt32(rowData[5]);
+                    }
+                    if (rowData.Length > 7)
+                    {
+                        tariffLine.Step5Price = Convert.ToInt32(rowData[6]);
+                    }
+                    if (rowData.Length > 8)
+                    {
+                        tariffLine.Step6Price = Convert.ToInt32(rowData[7]);
+                    }
+                    if (rowData.Length > 9)
+                    {
+                        tariffLine.Step7Price = Convert.ToInt32(rowData[8]);
+                    }
+                    if (rowData.Length >= 10)
+                    {
+                        tariffLine.Step8Price = Convert.ToInt32(rowData[9]);
+                    }
+                    tariffLinesResult.Add(tariffLine);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private Port GetPortDetails(string code, int tenant)
+        {
+            PortRepository portRepository = new PortRepository();
+            return portRepository.GetSinglePortByCode(tenant, code,false);
+        }
+    }
+
+    public class TariffFilterParameter
+    {
+        public int Tenant { get; set; }
+        public string FileData { get; set; }
+        public string PriceSteps { get; set; }
+    }
+    public class ExcelTariffLines
+    {
+        public string FromPortId { get; set; }
+        public string FromPortCode { get; set; }
+        public string FromPortName { get; set; }
+        public string ToPortId { get; set; }
+        public string ToPortCode { get; set; }
+        public string ToPortName { get; set; }
+        public int? MinPrice { get; set; }
+        public int? Step1Price { get; set; }
+        public int? Step2Price { get; set; }
+        public int? Step3Price { get; set; }
+        public int? Step4Price { get; set; }
+        public int? Step5Price { get; set; }
+        public int? Step6Price { get; set; }
+        public int? Step7Price { get; set; }
+        public int? Step8Price { get; set; }
     }
 }
 
