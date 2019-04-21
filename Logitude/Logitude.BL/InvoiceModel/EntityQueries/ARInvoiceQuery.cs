@@ -1720,6 +1720,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsInvoiceNumberFromStock = entityPOCO.IsInvoiceNumberFromStock,
                 };
 
+                entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
+                entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+
                 ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
 
                 // Include Bill To is not enough to get customer data

@@ -450,6 +450,27 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         if (this.CustomerReference2 && this.CustomerReference2.length > 30) {
             this.ValidationErrorsList.push("My Reference can't be more than 30 characters");
         }
+        if (!AppTool.IsNullOrEmpty(this.PackagesQuantity) && this.isInt(this.PackagesQuantity) == false) {
+            this.ValidationErrorsList.push("Quantity Must be integer.");
+        }
+       
+        if ((typeof this.PackagesQuantity != 'number' || this.PackagesQuantity.toString() == "NaN") && this.PackagesQuantity != null) {
+            this.ValidationErrorsList.push("Quantity must be numaric value");
+        }
+        if ((typeof this.GrossWeight != 'number' || this.GrossWeight.toString() == "NaN") && this.GrossWeight != null) {
+            this.ValidationErrorsList.push("Weight must be numaric value");
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber) && (AppTool.IsNullOrEmpty(this.PackagesQuantity) || AppTool.IsNullOrEmpty(this.GrossWeight))) {
+            this.ValidationErrorsList.push("Weight and Quantity are required");
+        }
+        else {
+            if (this.EntityPM.ShipmentPackages.length > 0) {
+                //this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
+                this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
+                this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
+                this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;
+            }
+        }
         if (this.ValidationErrorsList.length == 0) {
             this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe(myResult => {
                 if (myResult.Result) {

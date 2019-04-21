@@ -30,7 +30,7 @@
 	
 	set @Key = (select Id from DIM_MoveTypes where Id = @Id)
 	
-	if(@Key is  null) begin     insert into #DIM_MoveTypes (Id, Code ,[English Name] ,[Local Name],[Transport Mode], [Source Tenant],[Parent Tenant]) values(@Id ,@Code, @EnglishName, @LocalName,@TransportModeId , @SourceTenant , @ParentTenant) end
+	if(@Key is  null) begin     insert into DIM_MoveTypes (Id, Code ,[English Name] ,[Local Name],[Transport Mode], [Source Tenant],[Parent Tenant]) values(@Id ,@Code, @EnglishName, @LocalName,@TransportModeId , @SourceTenant , @ParentTenant) end
 	else begin update   DIM_MoveTypes set [English Name] =@EnglishName,[Code] =@Code, [Local Name] =@LocalName , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant Where Id = @Id end
 
 
