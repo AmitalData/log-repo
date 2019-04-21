@@ -20,7 +20,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 })
 
 export class TariffGeneralTabComponent extends BaseComponent implements OnInit, OnDestroy {
-    public EntityPM: TariffPM = new TariffPM();
+    public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public DataContext = this;
     public TariffsLinesSource: ObservableCollection;
