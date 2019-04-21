@@ -3987,8 +3987,9 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append("&OF1.31&");
             stringBuilder.Append("00074406");
             stringBuilder.Append("Unifreight Acc");
+            stringBuilder.Append(' ', 6);
 
-            if(setting != null)
+            if (setting != null)
             {
                 if (setting.SoftwareVersion != null)
                 {
