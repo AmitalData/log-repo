@@ -35,10 +35,12 @@ namespace WarehouseDataService
 
                 WarehouseServiceHelper warehouseServiceHelper = new WarehouseServiceHelper();
 
+  
 
                 string sourceConnection = warehouseServiceHelper.BuildConnectionString(ConfigurationSettings.AppSettings["SourceConnection"]);
                 ApplicationInfo.SourceConnection = warehouseServiceHelper.GetMainDBConnectionString(sourceConnection);
-                ApplicationInfo.DestinationConnection = warehouseServiceHelper.BuildConnectionString(ConfigurationSettings.AppSettings["DestinationConnection"]);
+                ApplicationInfo.DestinationConnection = ConfigurationSettings.AppSettings["DestinationConnection"];
+
 
 
                 string updateWarehouseSleepTime = ConfigurationSettings.AppSettings["UpdateWarehouseSleepTime"];
