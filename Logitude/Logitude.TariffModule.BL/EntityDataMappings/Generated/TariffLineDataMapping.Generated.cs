@@ -63,7 +63,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Step7Price, 
 	         Step8Price, 
 	         OriginPortId, 
-	         DestinationPortId,
+	         DestinationPortId, 
+	         OriginPortName, 
+	         OriginPortCode, 
+	         DestinationPortName, 
+	         DestinationPortCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

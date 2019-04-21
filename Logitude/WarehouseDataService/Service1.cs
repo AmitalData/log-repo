@@ -63,9 +63,10 @@ namespace WarehouseDataService
                 ApplicationInfo.WarehouseBuildDays = ApplicationInfo.Days.Where(d => buildDays.Contains(d.NumberOfDay)).ToList();
                 ApplicationInfo.WarehouseBuildHours = !string.IsNullOrEmpty(warehouseBuildHoures) ? warehouseBuildHoures.ToString() : null;
 
-
                 WarehouseServiceHelper warehouseServiceHelper = new WarehouseServiceHelper();
-                ApplicationInfo.SourceConnection = warehouseServiceHelper.GetMainDBConnectionString(ApplicationInfo.GlobalSourceConnection);
+                string[] sourceConnectionArray = ApplicationInfo.GlobalSourceConnection.Split(',');
+                string connectionString = warehouseServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                ApplicationInfo.SourceConnection = warehouseServiceHelper.GetMainDBConnectionString(connectionString);
 
                 Thread buildWarehouseDatThread = new Thread(() => warehouseDataHelper.BuildWarehouseData());
                 buildWarehouseDatThread.IsBackground = true;

@@ -164,8 +164,6 @@
     <Content Include="InfrastructureModel\DeleteCustomerRecords.sql" />
     <Content Include="InfrastructureModel\DeleteTicketsRecords.sql" />
     <Content Include="ShipmentsModel\GetShipmentsCounts.sql" />
-    <Content Include="ShipmentsModel\UpdateShipmentARInvoices.sql" />
-    <Content Include="ShipmentsModel\UpdateShipmentRegistryDate.sql" />
     <None Include="CommonDataModel\CommonDataContext.Views.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.Views.mssql.cs" />
     <Compile Include="CommonDataModel\CustomersDataViewContext.cs" />
@@ -1412,7 +1410,6 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageItemRepository.cs" />
     <Compile Include="ShipmentsModel\ShipmentsContext.cs" />
     <None Include="ShipmentsModel\ShipmentsContext.Views.cs" />
-    <Content Include="CommonDataModel\CustomersDataView.sql" />
     <Content Include="CommonDataModel\ProductTypeModificationViewScript.sql" />
     <Content Include="CommonDataModel\UpdateAllTenantsCustomersActualData.sql" />
     <Content Include="CommonDataModel\UpdateCustomerActualData.sql" />
@@ -1439,7 +1436,6 @@
     <Content Include="DbSchema\IdCounterNew.sql" />
     <Content Include="DbSchema\UpdateXapFileData.sql" />
     <Content Include="DbSchema\usp_UpdateAPILog.sql" />
-    <Content Include="QuoteModel\QuoteFollowUpDataViewScript.sql" />
     <Compile Include="QuoteModel\EntityPOCOs\MarkUpType.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\QuoteCharge.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\QuoteCustomerType.cs" />
@@ -1560,10 +1556,6 @@
     <Content Include="ShipmentsModel\ComputeHouseShipmentStatusFunction.sql" />
     <Content Include="ShipmentsModel\ComputeShipmentStatus.sql" />
     <Content Include="ShipmentsModel\UpdateCustomConnectToShipment.sql" />
-    <Content Include="ShipmentsModel\UpdateReceivablesData.sql" />
-    <Content Include="ShipmentsModel\UpdateShipmentFinalArrivalDate.sql" />
-    <Content Include="ShipmentsModel\UpdateShipmentOperationalDate.sql" />
-    <Content Include="ShipmentsModel\UpdateShipmentProfitFunction.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DbSchema\CodeCounter.sql" />
@@ -1578,18 +1570,12 @@
     <Content Include="DbSchema\Indexes.sql" />
     <Content Include="DbSchema\TableCounter.sql" />
     <Content Include="DbSchema\UpdateCustomers.sql" />
-    <Content Include="InvoiceModel\AgingReportInvoiceDataViewScript.sql" />
-    <Content Include="InvoiceModel\APInvoiceAgingReportScript.sql" />
     <Content Include="QuoteModel\QuotesAutomaticallyClosingDailyJob.sql" />
     <Content Include="ShipmentsModel\MessagingStockDataView.sql" />
     <Content Include="ShipmentsModel\PickUpDeliverySql.sql" />
     <Content Include="ShipmentsModel\ShipmentCountryDashboardViewScript.sql" />
-    <Content Include="ShipmentsModel\ShipmentDataViewScipt.sql" />
     <Content Include="ShipmentsModel\ShipmentDirectionTransmodeViewScript.sql" />
-    <Content Include="ShipmentsModel\ShipmentFollowUpDataViewScript.sql" />
     <Content Include="ShipmentsModel\ShipmentsCustomersDashboardViewScript.sql" />
-    <Content Include="ShipmentsModel\UpdatePayablesData.sql" />
-    <Content Include="ShipmentsModel\UpdateShipmentProfit.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

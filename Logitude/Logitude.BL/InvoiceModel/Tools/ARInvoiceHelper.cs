@@ -205,8 +205,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                         {
                             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                             {
-                                Address address2 = commonContext.Addresses.Where(p => p.CardId == entityPM.BillToId && p.Tenant == tenant).FirstOrDefault();
-                                if (address2 != null)
+                                Address address2 = commonContext.Addresses.Include("Country").Where(p => p.CardId == entityPM.BillToId && p.Id == entityPM.BillToAddressId && p.Country.Code == "IN" ).FirstOrDefault();
+                                if (address2!=null)
                                 {
                                     State state = commonContext.States.Include("Country").Where(p => p.Id == address2.StateId && p.Tenant == tenant).FirstOrDefault();
                                     if (state != null)

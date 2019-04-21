@@ -8,44 +8,187 @@
 
     <tr>
         <td>
-            <table>
+            <table class="FixedTable">
 
-                <!-- Name -->
+                <!-- From  -->
                 <tr class="FormFieldRow">
-                    <td style="width:120px;">
-                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    <td style="width:100px;">
+                        <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:220px;">
-                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        <LogLov [ObjectFieldName]="'OriginPortId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [LookUpTableName]="'Port'"
+                                [DataContext]="DataContext"
+                                (SelectedItemChanged)="DataContext.OriginPort = $event"
+                                [DisplayMemberPath]="'Code'"
+                                [SelectedValue]="DataContext.OriginPortId">
+                        </LogLov>
+
                     </td>
                     <td>
                         <div></div>
                     </td>
                 </tr>
-
-
-                <!-- ContractNumber -->
+                <!-- To -->
                 <tr class="FormFieldRow">
-                    <td style="width:120px;">
-                        <LogLabel [ObjectFieldName]="'ContractNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="width:220px;">
-                        <LogTextBox [ObjectFieldName]="'ContractNumber'" [InputType]="'integer'" [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableName"></LogTextBox>
+                    <td>
+                        <LogLov [ObjectFieldName]="'DestinationPortId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [LookUpTableName]="'Port'"
+                                [DisplayMemberPath]="'Code'"
+                                [DataContext]="DataContext"
+                                (SelectedItemChanged)="DataContext.DestinationPort = $event"
+                                [SelectedValue]="DataContext.DestinationPortId">
+                        </LogLov>
                     </td>
                     <td>
                         <div></div>
                     </td>
                 </tr>
+                <!-- Min -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
 
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'MinPrice'" [Text]="DataContext.MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
 
-              
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step1Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step1PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step1Price'" [Text]="DataContext.Step1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step2Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step2PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step2PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step2Price'" [Text]="DataContext.Step2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step3Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step3PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step3PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step3Price'" [Text]="DataContext.Step3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step4Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step4PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step4PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step4Price'" [Text]="DataContext.Step4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step5Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step5PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step5PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step5Price'" [Text]="DataContext.Step5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step6Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step6PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step6PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step6Price'" [Text]="DataContext.Step6Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step7Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step7PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step7PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step7Price'" [Text]="DataContext.Step7Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step8Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step8PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step8PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step8Price'" [Text]="DataContext.Step8Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
                 <tr>
                     <td colspan="3">
                         <div></div>
                     </td>
                 </tr>
-
             </table>
         </td>
     </tr>
