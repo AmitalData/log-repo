@@ -645,13 +645,14 @@
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                         [header]="'LedgerTransaction.F.AmountToReconcile' | TextCodeTranslationPipe"
                                         [width]="'135'" [binding]="'AmountToReconcile'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming"
+                                        <log-cell-template template="let item" [IsEditMode]="true" #logcelltemplate>
+                                            <!-- <div class="TextTrimming"
                                                 style="text-align: right;padding-right: 5px;direction: ltr;"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                            </div> -->
+                                            <!-- <div *ngIf="logcelltemplate.IsEditMode"> -->
+                                            <div>
                                                 <LogTextBox #AmountToReconcileTextBox
                                                     *ngIf="!item.IsReconciled" [FocusOnMe]="'true'"
                                                     [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"  [DebounceTime]="1"
