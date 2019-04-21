@@ -668,11 +668,119 @@
                                                     <div class="TabSummaryLabel">{{'Shipment.S.Payables.Difference' | TextCodeTranslationPipe}} ({{SelectedCurrencyCode}})</div>
                                                 </td>
 
+
+
+
                                                 <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
                                         </table>
+                                    </td>
+
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width:100%"><div></div></td>
+
+                                                <!-- Payables -->
+                                                <td>
+                                                    <div style="display:block; float: left; margin-left: 25px;">
+                                                        <div style="font-size: 26px; line-height: 26px; text-align: center;">{{PayableList.length}}</div>
+
+                                                        <div>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><div></div></td>
+                                                                    <td>
+                                                                        <div class="Label" style="text-align: center;">{{'Shipment.O.Receivables.Invoices' | TextCodeTranslationPipe}}</div>
+                                                                    </td>
+
+                                                                    <td style="width: 5px; min-width: 5px;" *ngIf="PayableList.length > 0">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td *ngIf="PayableList.length > 0">
+                                                                        <div tabindex="0" class="ToggleButton IconToggleButton" style="width:16px; height: 16px; border:none; background:none;float:right">
+                                                                            <img src="./Images/CellIcons/Info_Gray.png" />
+                                                                            <div class="ToggleButtonMenu" style="position:fixed; top: unset; bottom: 45px; right: 150px; width: 300px; min-height: 100px; max-height: 400px;" [style.height.px]="(PayableList.length * 40) + (PayableList.length * 5) + 28">
+                                                                                <div class="MediaFixedPadding5" style="top:3px; bottom:0;">
+                                                                                    <table>
+                                                                                        <tr style="height: 1px;">
+                                                                                            <td>
+                                                                                                <div style="color: #1B90CB; font-size: 13px; text-align: left;">{{'Shipment.O.Receivables.Invoices' | TextCodeTranslationPipe}}</div>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="ScrollViewer">
+                                                                                                    <div class="ScrollContent">
+                                                                                                        <div *ngFor="let item of PayableList">
+                                                                                                            <div class="InvoiceListItem" [ngStyle]="{background: item.DueDate | DateTimeToBackgroundPipe}">
+                                                                                                                <table>
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <table>
+                                                                                                                                <tr>
+                                                                                                                                    <td style="width: 1px;">
+                                                                                                                                        <Hyperlink (click)="ViewInvoiceClicked(item.Id)" [attr.title]="item.IsConstituentInvoice ? 'Constituent invoice' : ''">{{item.InvoiceNumber}}</Hyperlink>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 1px; padding-left: 5px;">
+                                                                                                                                        <span [ngStyle]="{color: item.StatusName | StringToColorPipe}">{{item.StatusName}}</span>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 1px; padding-left: 5px;">
+                                                                                                                                        <Hyperlink (click)="ViewInvoiceClicked(item.ConsolidationInvoiceId)" title="Consolidation Invoice" *ngIf="item.IsConstituentInvoice && item.ConsolidationInvoiceId">{{item.ConsolidationInvoiceNumber}}</Hyperlink>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td>
+                                                                                                                                        <div></div>
+                                                                                                                                    </td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+                                                                                                                        </td>
+
+                                                                                                                        <td style="width: 80px; text-align: right;">
+                                                                                                                            <span class="Value">{{item.GrandTotalInLocalCurrency}}</span>
+                                                                                                                            <span class="Label">({{LocalCurrencyCode}})</span>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <span class="Label">{{'Shipment.O.Receivables.DueDate' | TextCodeTranslationPipe}}</span>
+                                                                                                                            <span class="Value" style="margin-left: 3px;">{{item.DueDate | DateTimeToDatePipe}}</span>
+                                                                                                                        </td>
+
+                                                                                                                        <td style="text-align: right;">
+                                                                                                                            <span class="Value" [hidden]="LocalCurrencyId == item.InvoiceCurrencyId">{{item.GrandTotalInInvoiceCurrency}}</span>
+                                                                                                                            <span class="Label" [hidden]="LocalCurrencyId == item.InvoiceCurrencyId"> ({{ProfitCurrencyCode}})</span>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </div>
+
+                                                                                                            <div style="height: 5px; width: 100%;"></div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                      
                                     </td>
                                 </tr>
                             </table>
