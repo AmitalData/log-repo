@@ -85,7 +85,7 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:100px">
-                        <CheckBox (Checked)="IsOpen = $event" [IsChecked]="IsOpen"></CheckBox>
+                        <CheckBox (Checked)="IsOpen = $event" [IsChecked]="IsOpen" [IsEnabled]="!IsDisplayOnly"></CheckBox>
                     </td>
                 </tr>
             </table>
@@ -207,7 +207,7 @@
                     </td>
                     <td style="width: 150px;">
                         <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'EstimatedArrivalDateOnly'" [ObjectTableName]="ObjectTableName"
-                                       [InputType]="'date'" [DataContext]="DataContext"
+                                       [InputType]="'date'" [DataContext]="DataContext" [IsEnabled]="!IsDisplayOnly"
                                        [HideColumns]="true"></LogDatePicker>
                     </td>
                     <td style="width:30px"></td>
