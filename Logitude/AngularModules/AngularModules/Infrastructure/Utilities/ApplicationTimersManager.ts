@@ -93,7 +93,7 @@ export class ApplicationTimersManager {
         }));
 
         if (SessionLocator.UseCachedData) {
-            SessionLocator.TimersSubscribtions.push(this.getTimer(3000).subscribe(res => {
+            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
                 CachedDataManager.CheckCachedTableLastUpdateDate().subscribe(reponse => {
 
                     console.log("cached tables checked by timer!");
