@@ -1,0 +1,305 @@
+﻿
+<style type="text/css">
+    .SquareIcon {
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+</style>
+
+<table>
+    <!-- SearchBar -->
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 21px; vertical-align:middle;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+
+                    <td style="width: 15px; vertical-align:middle;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
+
+                    <td style="width: 300px;">
+                        <!-- ObjectTableName = CardGLAccount to filter items by accountTypeCode in CommonDomainController.cs -->
+                        <SearchBox [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [ObjectTableName]="'CardGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 8px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table *ngIf="isScreenLoaded">
+                <tr>
+                    <td style="width:265px;">
+                        <table>
+                            <tr class="SectionHeader">
+                                <td>
+                                    <label  float-start style="margin-right: 10px;" >{{'Accounting.General.O.MainQueries' | TextCodeTranslationPipe}}</label>
+                                </td>
+                            </tr>
+
+                            <tr style="height:5px;">
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="ScrollViewer">
+                                        <div class="ScrollContent">
+
+                                            <!-- GL Accounts -->
+                                            <!-- <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>{{'Accounting.General.O.GLAccount' | TextCodeTranslationPipe}}</div>
+                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                    <button class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                </div>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="ActiveGLAccountsVisibility" (click)="ViewAccountingQuery('ActiveGLAccounts')"> {{'GLAccounts.Q.ActiveGLAccounts' | TextCodeTranslationPipe}} ({{glAccountSummary.ActiveGLAccountCount}}) </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="InactiveGLAccountsVisibility" (click)="ViewAccountingQuery('InactiveGLAccounts')"> {{'GLAccounts.Q.InActiveGLAccounts' | TextCodeTranslationPipe}} ({{glAccountSummary.InactiveGLAccountCount}}) </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="AllGLAccountsVisibility" (click)="ViewAccountingQuery('All GLAccounts')"> {{'GLAccounts.Q.AllGLAccounts' | TextCodeTranslationPipe}}</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenFiles')"> {{'GLAccounts.Q.OpenFiles' | TextCodeTranslationPipe}} ({{glAccountSummary.OpenFilesCount}})</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="ClosedFilesVisibility" (click)="ViewAccountingQuery('ClosedFiles')"> {{'GLAccounts.Q.ClosedFiles' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="AllFilesVisibility" (click)="ViewAccountingQuery('AllFiles')"> {{'GLAccounts.Q.AllFiles' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="AllJobsVisibility" (click)="ViewAccountingQuery('AllJobs')"> {{'GLAccounts.Q.AllJobs' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr><td><div></div></td>
+                                                                    </tr>
+                                                                </table>
+
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
+                                                <div>My Views</div>
+                                                <div style="height:80px;">
+                                                    <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'GLAccount'" [BackButtonTitle]="'Full Accounting'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                                </div>
+                                            </div>
+
+                                            <div style="height: 15px;"></div> -->
+
+                                            <!-- Manual Journals -->
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>{{'Accounting.General.O.Journals' | TextCodeTranslationPipe}}</div>
+                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                    <button class="Button" (click)="RunNewJournalWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                </div>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="Draft_JournalsVisibility" (click)="ViewJournalQuery('Draft_Journals')"> {{'Journal.Q.DraftJournal' | TextCodeTranslationPipe}} ({{journalSummary.DraftJournalsCount}})</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="Non_Approved_JournalsVisibility" (click)="ViewJournalQuery('Non_Approved_Journals')"> {{'Journal.Q.SavedJournal' | TextCodeTranslationPipe}} ({{journalSummary.WaitingJournalsCount}})</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="Approved_JournalsVisibility" (click)="ViewJournalQuery('Approved_Journals')"> {{'Journal.Q.ApprovedJournal' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="All_journalsVisibility" (click)="ViewJournalQuery('All_journals')"> {{'Journal.Q.Journal' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="Auto_Created_JournalsVisibility" (click)="ViewJournalQuery('Auto_Created_Journals')"> {{'Journal.Q.AutoCreatedJournals' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="ExternalJournalsVisibility" (click)="ViewJournalQuery('External Journals')"> {{'Journal.Q.ExternalJournals' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td><div></div></td>
+                                                                    </tr>
+                                                                </table>
+
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr style="">
+                                <td>
+                                    <table>
+                                        <tr class="SectionHeader">
+                                            <td>
+                                                <label  float-start style="margin-right: 10px;" >{{ RecentGLAccountsCount }} {{'Accounting.General.O.RecentGLAccounts' | TextCodeTranslationPipe}}</label>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:5px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="ScrollViewer">
+                                                    <div class="ScrollContent">
+                                                        <ul>
+                                                            <li class="RecentEntityItem" *ngFor="let item of RecentGLAccountsList" (click)="EditGLAccount(item)">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:110px; position: relative;" rowspan="2">
+                                                                            <div [style.left]="isRTL ? 'initial' : '3px'" [style.right]="isRTL ? '3px' : 'initial'"  style="position: absolute; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
+                                                                                <div *ngIf="item.LastActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
+                                                                                <div *ngIf="item.LastActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
+                                                                                <div *ngIf="item.LastActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
+                                                                            </div>
+
+                                                                            <div [style.left]="isRTL ? 'initial' : '3px'" [style.right]="isRTL ? '3px' : 'initial'" style="position: absolute; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
+                                                                        </td>
+
+                                                                        <td rowspan="1" style="width:300px; font-size: 14px;color: #1B90CB;">{{item.GLAccountLocalName}}</td>
+
+                                                                        <!--<td style="width:7px; height: 100%;" rowspan="2">
+                <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
+            </td>-->
+
+                                                                        <td style="width: 120px;">
+                                                                            <div style="color: #6b6b6b;">{{'Accounting.General.O.User' | TextCodeTranslationPipe}}: </div>
+                                                                        </td>
+
+                                                                        <td style="color: black;">{{item.LastActivityByUserName}}</td>
+
+                                                                        <td style="width: 3px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td rowspan="1" style="width:300px;">{{item.DisplayNumber}}</td>
+
+                                                                        <td style="width: 120px;">
+                                                                            <div style="color: #6b6b6b;">{{'Accounting.General.O.AccountManager' | TextCodeTranslationPipe}}: </div>
+                                                                        </td>
+
+                                                                        <td></td>
+
+                                                                        <td style="width: 3px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:5px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
