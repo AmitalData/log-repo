@@ -1778,6 +1778,7 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStockListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStocksStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\ARInvoiceStockPMService.ts" />
+    <TypeScriptCompile Include="Invoice\Validators\ARInvoiceStockValidator.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditFCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditLCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditPriceStepComponent.ts" />

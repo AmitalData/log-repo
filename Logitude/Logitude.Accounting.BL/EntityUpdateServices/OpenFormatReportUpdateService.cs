@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.Id = IdCounter.GetNumber("OpenFormatReport", entityPM.Tenant);
             entityPM.CreateDate = DateTime.Now;
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-           
+           entityPM.ToDate = new DateTime(entityPM.ToDate.Year, entityPM.ToDate.Month,  entityPM.ToDate.Day, 23, 59, 59);
             entityPM.ReportNumber= CodeCounter.GetNumber("OpenFormatReport", entityPM.Tenant).ToString(); ;
 
             entityPM.StatusTypeCode = "1";
