@@ -26,11 +26,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                       {
 
                                                           VendorId = a.VendorId,
-
                                                           CustomerId = a.CustomerId,
-
+                                                          ModificationsTypeCode = a.ModificationsTypeCode,
+                                                          ModificationsTypeName = a.ModificationAndDiscountType != null ? a.ModificationAndDiscountType.LocalName : null,
                                                           CommisionPercentage = a.CommisionPercentage,
-
+                                                          Tenant = a.Tenant,
                                                       });
             return query;
         }
@@ -49,9 +49,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     {
 
                         VendorId = a.VendorId,
-
+                        ModificationsTypeCode = a.ModificationsTypeCode,
                         CustomerId = a.CustomerId,
-
                         CommisionPercentage = a.CommisionPercentage,
 
                     }).ToList();

@@ -280,6 +280,10 @@
     <Compile Include="Migrations\201904181133174_AddMigrationChangeInSupplierInvoice.Designer.cs">
       <DependentUpon>201904181133174_AddMigrationChangeInSupplierInvoice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904221018347_AddMigrationModificationsTypeCode.cs" />
+    <Compile Include="Migrations\201904221018347_AddMigrationModificationsTypeCode.Designer.cs">
+      <DependentUpon>201904221018347_AddMigrationModificationsTypeCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -476,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904181133174_AddMigrationChangeInSupplierInvoice.resx">
       <DependentUpon>201904181133174_AddMigrationChangeInSupplierInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904221018347_AddMigrationModificationsTypeCode.resx">
+      <DependentUpon>201904221018347_AddMigrationModificationsTypeCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
