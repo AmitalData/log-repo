@@ -97,10 +97,11 @@ namespace CommunicationWorkerRole
                                 {
                                     using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
                                     {
+                                        StartDateTime = DateTime.Now;
+
                                         bool isExists = CommonModelProcedureClass.IsExistsCustomerActualDataHistory(iTenant, StartDateTime);
                                         if (!isExists)
                                         {
-                                            StartDateTime = DateTime.Now;
                                             CommonModelProcedureClass.ExecuteSingleCustomerActualData(null, iTenant);
                                             scope.Complete();
                                             EndDateTime = DateTime.Now;

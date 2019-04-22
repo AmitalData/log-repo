@@ -35,6 +35,8 @@ namespace WebFreight.Web.CommonDataModel
                 param2.Value = tenant;
                 cmd.Parameters.Add(param2);
 
+                cmd.CommandTimeout = 10800; //3 Hours
+
                 cn.Open();
                 cmd.ExecuteNonQuery();
                 cn.Close();
