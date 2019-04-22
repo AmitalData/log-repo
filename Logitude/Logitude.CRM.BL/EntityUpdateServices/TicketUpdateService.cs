@@ -266,8 +266,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                         }
                     }
                 }
-
-
                 if (!string.IsNullOrEmpty(entityPM.OwnerId))
                 {
 
@@ -631,7 +629,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     businessHour = businessHourRep.GetSingleBusinessHours(slaLine.BusinessHoursId, slaLine.Tenant);
                     BusinessHourCalcualtions businessCalculation = new BusinessHourCalcualtions(businessHour);
 
-                    if (entityPM.FirstResponseTime == null && slaLine.FirstResponseEscalate)
+                    if (entityPM.FirstResponseTime == null)
                     {
                         if (slaLine.FirstResponseTimeInMinute != null)
                         {
@@ -656,12 +654,10 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                             {
                                 entityPM.FirstResponseDue = businessCalculation.addResolveMinutes(entityPM.CreateDate.Value, (int)slaLine.FirstResponseTimeInMinute);
                             }
-
-                            //TicketEscalationAnalyzer ticketEscalationAnalyzer = new TicketEscalationAnalyzer(entityPM, true);
                         }
                     }
 
-                    if (entityPM.FullResolvedTime == null && slaLine.ResolveWithinEscalate)
+                    if (entityPM.FullResolvedTime == null)
                     {
                         if (slaLine.ResolveWithinTimeInMinute != null)
                         {
@@ -670,7 +666,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                             // Calender
                             if (businessHour.Is247)
                             {
-                               // entityPM.ResolveWithinDue = ticketCreateDate;
                                 bool isHolidayDay = businessCalculation.isHolidayDay(ticketCreateDate);
                                 if (isHolidayDay)
                                 {
@@ -688,57 +683,11 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                             {
                                 entityPM.ResolveWithinDue = businessCalculation.addResolveMinutes(entityPM.CreateDate.Value, (int)slaLine.ResolveWithinTimeInMinute);
                             }
-
-                          //  TicketEscalationAnalyzer ticketEscalationAnalyzer = new TicketEscalationAnalyzer(entityPM, true);
                         }
                     }
-
                 }
             }
         }
-
-        //public void CheckOwnerFeature(int tenant, string ownerId, string ownerName)
-        //{
-        //    string msg = "Can't set " + ownerName + " as owner. The user is not licensed for tickets";
-
-        //    ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-        //    ContactTenantRoleRepository contactTenantRole = new ContactTenantRoleRepository(commonContext);
-        //    ContactTenantRepository contactTenantRepository = new ContactTenantRepository(commonContext);
-        //    RoleRepository roleRepository = new RoleRepository(commonContext);
-        //    FeatureRepository featureRepository = new FeatureRepository(commonContext);
-        //    ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
-        //    RoleFeatureRepository roleFeatureRepository = new RoleFeatureRepository(commonContext);
-
-        //    ContactTenant contacttenant = contactTenantRepository.GetContactTenantForContactId(ownerId,tenant);
-        //    if(contacttenant != null)
-        //    {
-        //        var contacttenantId = contacttenant.Id;
-        //        IQueryable<ContactTenantRole> queryableRoles = contactTenantRole.GetContactTenantRolesListByContactAndTenant(contacttenantId, tenant);
-        //        List<string> allRolesIds = queryableRoles.Select(s => s.RoleId).ToList();
-        //        var ticketObjectTable = objectTableRepository.GetObjectTableByName("Ticket",tenant,false);
-        //        Feature ticketUpdateFeature = featureRepository.GetSingleFeatureByCode(ticketObjectTable.Id, "UPDATE", tenant);
-
-        //        if (ticketUpdateFeature != null)
-        //        {
-        //            var featureId = ticketUpdateFeature.Id;
-        //            List<RoleFeature> allRolesFeatures = roleFeatureRepository.GetRoleFeatureByRoleIds(allRolesIds, tenant);
-        //            RoleFeature updateRoleFeature = allRolesFeatures.Where(a => a.FeatureId == featureId).FirstOrDefault();
-
-        //            if(updateRoleFeature == null)
-        //            {
-        //                throw new ApplicationException(msg);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new ApplicationException(msg);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new ApplicationException(msg);
-        //    }
-        //}
         public void CheckOwnerFeature(int tenant, string ownerId, string ownerName)
         {
             ICommonDataContext myContext = CommonDataContext.GetContext(tenant);

@@ -8,6 +8,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,11 +80,57 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             }
         }
 
+        protected override void UpdateComposition(TariffPM entityPM)
+        {
+            TariffLineUpdateService tariffLineUpdateService = new TariffLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            tariffLineUpdateService.UpdateMulti(entityPM.TariffLines, entityPM.DeletedTariffLines, entityPM, false);
+        }
+
         protected override void Trace(TariffPM entityPM, Tariff entityPOCO, string changesXml)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
+            if(entityPM.TariffLines.Where(p=>p.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert).Count() > 0)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "TLAD",
+                    UserId = contact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = changesXml
+                });
+            }
+            if (entityPM.SetAsInActive)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "SAIN",
+                    UserId = contact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = changesXml
+                });
+            }
+
+
+
+            if (entityPM.SetAsReActive)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "REAC",
+                    UserId = contact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = changesXml
+                });
+            }
+
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {

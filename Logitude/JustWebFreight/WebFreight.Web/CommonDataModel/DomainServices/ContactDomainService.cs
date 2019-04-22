@@ -531,7 +531,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             contactRepository = new ContactRepository(tenant);
-            IQueryable<Contact> dataSource = contactRepository.GetActiveContacts(tenant);
+            IQueryable<Contact> dataSource = contactRepository.GetContacts(tenant);
             DateTime? todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             int currentDayOfYear = todayDate.Value.DayOfYear;
             int day1 = currentDayOfYear -5;

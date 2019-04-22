@@ -1078,7 +1078,7 @@ namespace WarehouseData.Helper
 
 
         #endregion
-
+         
         #region Incremental Data Base
 
         public void UpdateWarehouseData(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
@@ -1118,7 +1118,7 @@ namespace WarehouseData.Helper
         {
             string fieldName = !string.IsNullOrEmpty(table.FieldsDBName) ? table.FieldsDBName : "*";
             bool isPrivateDB = privateTenant != null ? true : false;
-            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + table.TableName + "');";
+            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + table.TableName + "')";
 
             if (isPrivateDB)
             {
@@ -1127,6 +1127,11 @@ namespace WarehouseData.Helper
                 else if (table.DBTableName == "Tenants") condition += " and Id in " + relatedTenants;
             }
 
+            if (table.TableName == "ObjectField")
+            {
+                condition += "and IsCustom = 1 and ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
+
+            }
 
             using (SqlConnection sourceConnection =
                        new SqlConnection(sourceConnectionString))
@@ -1370,11 +1375,11 @@ namespace WarehouseData.Helper
                     }
                     return;
                 }
-                WarehouseHelper warehouseHelper = new WarehouseHelper();
-                string sourceConnectionString = warehouseHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+
+                string sourceConnectionString = BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
 
 
-                var dWHSettingsTable = warehouseHelper.GetPrivateTenant(sourceConnectionString);
+                var dWHSettingsTable = GetPrivateTenant(sourceConnectionString);
 
                 if (type == "Build") CreatePrivateWaterMarksTable(sourceConnectionString);
 
@@ -1382,14 +1387,14 @@ namespace WarehouseData.Helper
                 {
                     int tenant = Int32.Parse(row["Tenant"].ToString());
                     string catalog = row["Catalog"].ToString();
-                    string destinationConnectionString = warehouseHelper.BuildConnectionString(catalog, destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
-                    List<int> relatedTenants = warehouseHelper.GetPrivateRelatedTenants(sourceConnectionString, tenant);
+                    string destinationConnectionString = BuildConnectionString(catalog, destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+                    List<int> relatedTenants = GetPrivateRelatedTenants(sourceConnectionString, tenant);
 
                     if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
 
-                    string tenants = warehouseHelper.ConvertIntgerListToString(relatedTenants);
+                    string tenants = ConvertIntgerListToString(relatedTenants);
                     if (type == "Build") BuildDataBase(sourceConnectionString, destinationConnectionString, tenant, tenants);
-                    else warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                    else UpdateWarehouseData(sourceConnectionString, destinationConnectionString, tenant, tenants);
                 }
             }
             else if (AppName != "Service")

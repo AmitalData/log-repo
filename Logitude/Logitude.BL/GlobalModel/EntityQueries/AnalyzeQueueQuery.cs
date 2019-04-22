@@ -54,6 +54,7 @@ namespace Logitude.BL.GlobalModel
                                                        ConnectedToTenant = a.ConnectedToTenant,
                                                        CreateDate = a.CreateDate,
                                                        ErrorMessage = a.ErrorMessage,
+                                                       Log=a.Log,
                                                        MessageBody = a.MessageBody,
                                                        Retries = a.Retries,
                                                        Status = a.AnalyzeQueueStatus.Name,
@@ -122,6 +123,7 @@ namespace Logitude.BL.GlobalModel
                                                      DoneDate = a.DoneDate,
                                                      EntityReference = a.EntityReference,
                                                      FileName = a.FileName,
+                                                     Log = a.Log,
                                                  }).FirstOrDefault();
 
                 double Byte = 1024;
@@ -170,6 +172,7 @@ namespace Logitude.BL.GlobalModel
                                                            AckReason = a.AckReason,
                                                            DoneDate = a.DoneDate,
                                                            FileName = a.FileName,
+                                                           Log = a.Log,
                                                        };
             return analyzeQueues;
         }
@@ -199,6 +202,7 @@ namespace Logitude.BL.GlobalModel
                                                       DoneDate = analyzeQueue.DoneDate,
                                                       EntityReference = analyzeQueue.EntityReference,
                                                       ObjectTableName = analyzeQueue.ObjectTableName
+                                                      
                                                   };
             return result;
         }

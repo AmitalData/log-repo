@@ -358,7 +358,7 @@ namespace WebFreight.Web.Helpers
                     //The first worksheet object in the worksheets collection is accessed.
                     IWorksheet sheet = workbook.Worksheets[0];
                     //****************************** Creating excel from xml string *****************************
-
+          
                     //sheet.Range["A2:H2"].Merge();
                     //sheet.Range["A1:P1"].Merge();
                     //sheet.Range["A1:H2"].Merge();
@@ -604,13 +604,8 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
-            //sheet Format -Data Type
-            // int cellRow = 2;
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-            // for (var i = 1; i < dataTable.Rows.Count; i++)
-            // {
-            //int cellCol = 1;
             var rows = dataTable.Rows.Count;
             for (int j = 1; j <= dataTable.Columns.Count; j++)
             {
@@ -648,13 +643,9 @@ namespace WebFreight.Web.Helpers
                             break;
                     }
                 }
-               //cellCol++;
             }
-            //cellRow++;
-            // }
             workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);
-            //workbook.Close();
             return memory.ToArray();
         }
 

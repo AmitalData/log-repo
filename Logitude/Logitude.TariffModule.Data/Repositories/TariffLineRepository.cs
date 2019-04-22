@@ -14,14 +14,16 @@ namespace Logitude.TariffModule.Data.Repositories
 {
    public partial class TariffLineRepository:IRepository<TariffLine>
    {
-        
 		public List<TariffLine> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            TariffKeys myEntityKeys = entityKeys as TariffKeys;
+            return (from a in context.TariffLines where a.TariffId == myEntityKeys.Id select a).ToList();
         }
 
-   }
-
+        public List<TariffLine> GetTariffLinesByTariff(string tariffId, int tenant)
+        {
+            return (from a in context.TariffLines where a.TariffId == tariffId && a.Tenant == tenant select a).ToList();
+        }
+    }
 }
    

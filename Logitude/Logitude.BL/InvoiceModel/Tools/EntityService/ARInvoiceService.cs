@@ -391,7 +391,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (entityPM.SetCancelDraft)
             {
                 this.CancelDraftInvoice();
+
+                ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
                 ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
+
+                if (isNewEntity)
+                {
+                    if (entityPM.NewConcurrencyGUID == null)
+                    {
+                        entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                    }
+                }
+
+                invoice.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+                entityPM.ConcurrencyGUID = invoice.ConcurrencyGUID;
             }
 
             else
@@ -487,16 +500,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
-            if(!String.IsNullOrEmpty(QBOARPaymentId))
+            if (!String.IsNullOrEmpty(QBOARPaymentId))
             {
                 ARPaymentHelper service = new ARPaymentHelper();
                 ARPaymentQuery PaymentQuery = new ARPaymentQuery(paymentRepository);
                 ARPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOARPaymentId, tenant);
                 if (paymentPM.TransferStatusCode == "TR")
-                {              
-                ARPaymentRepository repository = new ARPaymentRepository(tenant);
-                ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
-                service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
+                {
+                    ARPaymentRepository repository = new ARPaymentRepository(tenant);
+                    ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
+                    service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
                 }
             }
 
