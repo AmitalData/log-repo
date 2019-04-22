@@ -180,7 +180,7 @@ namespace WarehouseDataService.Helper
                 con.Close();
             }
 
-            return BuildConnectionString(result) ;
+            return result;
         }
 
     }

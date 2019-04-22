@@ -103,7 +103,7 @@ namespace WebFreight.Web.Helpers
 
                                             Operation = Operation.Replace,
                                             Path = "/fields/Custom.TasksEffort",
-                                            Value = EffotSum
+                                            Value = EffotSum.ToString("0.##")
                                         });
                                         witClient.UpdateWorkItemAsync(patchDocument, int.Parse((parentItem.Id + "")));
                                     }
@@ -116,7 +116,7 @@ namespace WebFreight.Web.Helpers
 
                                             Operation = Operation.Replace,
                                             Path = "/fields/Microsoft.VSTS.Scheduling.CompletedWork",
-                                            Value = completedworkSum
+                                            Value = completedworkSum.ToString("0.##")
                                         });
                                         witClient.UpdateWorkItemAsync(patchDocument, int.Parse((parentItem.Id + "")));
                                     }
