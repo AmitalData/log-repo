@@ -2843,8 +2843,8 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowFixedPriceContainers)
                     {
-                        //if (ViewFixedPrice && chargePM.SaleMeasurementCode!="")
-                        //{
+                        if (ViewFixedPrice && chargePM.SaleMeasurementCode != "BCNT")
+                        {
                             string AA = " ";
                             if (chargePM.SaleAmountInSaleCurrency != null)
                             {
@@ -2853,7 +2853,7 @@ namespace Logitude.BL.Helpers
                             }
                             HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                             row += 1;
-                      //  }
+                        }
 
                     }
 
