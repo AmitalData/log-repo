@@ -11,21 +11,23 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
     public class ARInvoiceStockMapping
     {
-        public static void MapEntity(ARInvoiceStockPM entityPM, ARInvoiceStock poco, bool isNewEntity)
+        public static void MapEntity(ARInvoiceStockPM entityPM, ARInvoiceStock poco, bool isNewEntity, string loggedContactId)
         {
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
             if (isNewEntity)
             {
                 poco.Id = entityPM.Id;
                 poco.Tenant = entityPM.Tenant;
+                poco.CreateDate = todayDateTime;
+                poco.CreatedByUserId = loggedContactId;
             }
 
             poco.Name = entityPM.Name;
             poco.Description = entityPM.Description;
-            poco.Inactive = entityPM.Inactive;
-            poco.CreateDate = entityPM.CreateDate;
-            poco.CreatedByUserId = entityPM.CreatedByUserId;
-            poco.UpdateDate = entityPM.UpdateDate;
-            poco.UpdatedByUserId = entityPM.UpdatedByUserId;
+            poco.Inactive = entityPM.Inactive;           
+            poco.UpdateDate = todayDateTime;
+            poco.UpdatedByUserId = loggedContactId;
             poco.StatusCode = entityPM.StatusCode;
             poco.StartDate = entityPM.StartDate;
             poco.EndDate = entityPM.EndDate;
@@ -42,17 +44,19 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
         internal static void MapARInvoiceStockLine(ARInvoiceStockLinePM itemPM, ARInvoiceStockLine itemPoco, bool isNewEntity, string loggedContactId)
         {
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
+
             if (isNewEntity)
             {
                 itemPoco.Id = itemPM.Id;
                 itemPoco.Tenant = itemPM.Tenant;
                 itemPoco.ARInvoiceStockId = itemPM.ARInvoiceStockId;
-                itemPoco.CreateDate = itemPM.CreateDate;
+                itemPoco.CreateDate = todayDateTime;
                 itemPoco.CreatedByUserId = loggedContactId;
             }
 
             itemPoco.Number = itemPM.Number;
-            itemPoco.UpdateDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
+            itemPoco.UpdateDate = todayDateTime;
             itemPoco.UpdatedByUserId = loggedContactId;
             itemPoco.IsUsed = itemPM.IsUsed;
             itemPoco.ARInvoiceId = itemPM.ARInvoiceId;

@@ -68,7 +68,6 @@
     }
 
     .popup-arrow {
-        background: url('./Images/LOV/popup-arrow.png') no-repeat center;
         height: 10px;
         display: block;
         position: absolute;
