@@ -253,22 +253,25 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        FirstApproveDate = a.FirstApproveDate,
                                        IsFullAccounting = a.IsFullAccounting,
                                    }).FirstOrDefault();
+            if (payment != null)
+            {
 
-            Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
-            payment.PaymentCurrencyCode = currency != null ? currency.Code : null;
+                Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
+                payment.PaymentCurrencyCode = currency != null ? currency.Code : null;
 
-            ARPaymentStatus status = arpaymentStatusRep.GetSingleARPaymentStatus(payment.StatusCode);
-            payment.StatusName = status != null ? status.Name : null;
+                ARPaymentStatus status = arpaymentStatusRep.GetSingleARPaymentStatus(payment.StatusCode);
+                payment.StatusName = status != null ? status.Name : null;
 
-            Contact createdByuser = ContactRepository.GetSingleContact(payment.CreatedByUserId, payment.Tenant, true);
-            payment.CreatedByUserName = createdByuser != null ? createdByuser.EnglishName : null;
+                Contact createdByuser = ContactRepository.GetSingleContact(payment.CreatedByUserId, payment.Tenant, true);
+                payment.CreatedByUserName = createdByuser != null ? createdByuser.EnglishName : null;
 
-            Card billto = CardRepository.GetSingleCard(payment.BillToId, payment.Tenant, true);
-            payment.BillToName = billto != null ? billto.EnglishName : null;
+                Card billto = CardRepository.GetSingleCard(payment.BillToId, payment.Tenant, true);
+                payment.BillToName = billto != null ? billto.EnglishName : null;
 
-            AccountingPaymentMethod method = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
-            payment.AccountingPaymentMethodName = method != null ? method.Name : null;
-            payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
+                AccountingPaymentMethod method = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
+                payment.AccountingPaymentMethodName = method != null ? method.Name : null;
+                payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
+            }
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;
         }

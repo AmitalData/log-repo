@@ -1,6 +1,7 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -15,6 +16,23 @@ export class ShipmentShortTitleComponent {
         if (this.EntityPM != null) {
             this.BuildComponent();
         }
+
+        this.Listen();
+    }
+    
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent) {
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.BuildComponent();
+                }
+            });            
+        }
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
     public Background: string;

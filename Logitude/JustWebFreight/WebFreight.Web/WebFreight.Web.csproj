@@ -2190,6 +2190,7 @@
     <Compile Include="ExternalAPIs\QuoteDocumentController.cs" />
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARPaymentCancellationController.cs" />
     <Compile Include="ExternalAPIs\V1\ARPaymentController.cs" />
     <Compile Include="ExternalAPIs\V1\BlobInfoController.cs" />
     <Compile Include="ExternalAPIs\V1\CustomerController.cs" />

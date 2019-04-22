@@ -77,7 +77,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             entityPM.Amount = entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
 
             ARInvoiceStockTracing.Trace(entityPM, Poco, isNewEntity, loggedContact.Id);
-            ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity);
+            ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity, loggedContact.Id);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
@@ -122,7 +122,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             entityPM.Remaining = entityPM.ARInvoiceStockLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && !d.IsUsed).Count();
 
             ARInvoiceStockTracing.Trace(entityPM, Poco, isNewEntity, loggedContact.Id);
-            ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity);
+            ARInvoiceStockMapping.MapEntity(entityPM, Poco, isNewEntity, loggedContact.Id);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
@@ -200,17 +200,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void RecalculateStatusAfterReactivate()
         {
-            if (entityPm.Amount > 0 && entityPm.Remaining != 0 && entityPm.Remaining <= entityPm.Amount && entityPm.EndDate <= TenantServerConfigration.GetCurrentDateTime(tenant))
+            if (entityPm.Amount > 0 && entityPm.Remaining != 0 && entityPm.Remaining <= entityPm.Amount && entityPm.EndDate != null && entityPm.EndDate <= TenantServerConfigration.GetCurrentDateTime(tenant))
             {
                 entityPm.StatusCode = "E";
             }
 
-            else if(entityPm.Amount > 0 && entityPm.Remaining == 0 && entityPm.EndDate >= TenantServerConfigration.GetCurrentDateTime(tenant))
+            else if(entityPm.Amount > 0 && entityPm.Remaining == 0 && (entityPm.EndDate == null || entityPm.EndDate >= TenantServerConfigration.GetCurrentDateTime(tenant)))
             {
                 entityPm.StatusCode = "U";
             }
 
-            else if (entityPm.Amount > 0 && entityPm.Remaining <= (entityPm.Amount - 1) && entityPm.EndDate >= TenantServerConfigration.GetCurrentDateTime(tenant))
+            else if (entityPm.Amount > 0 && entityPm.Remaining <= (entityPm.Amount - 1) && (entityPm.EndDate == null || entityPm.EndDate >= TenantServerConfigration.GetCurrentDateTime(tenant)))
             {
                 entityPm.StatusCode = "A";
             }

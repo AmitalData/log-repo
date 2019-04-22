@@ -659,6 +659,7 @@
                                                     [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"  [DebounceTime]="1"
                                                     [InputType]="'decimal'" [DigitsAfterPoint]="2" [DataContext]="item"
                                                     [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"
+                                                    [Text]="item.AmountToReconcile"
                                                     (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)"
                                                     >
                                                 </LogTextBox>
@@ -817,7 +818,7 @@
 
 
                                         <div float-start class="amount-div">
-                                            <div class="amount">{{paymentAmountTotal - amount2reconcileTotal | NumbersPipe:'N2'}}</div>
+                                            <div class="amount">{{paymentAmountTotal - paymentReconciledAmountTotal - amount2reconcileTotal | NumbersPipe:'N2'}}</div>
                                             <div class="label">{{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}
                                                 ({{PaymentCurrencyCode}})
                                             </div>
