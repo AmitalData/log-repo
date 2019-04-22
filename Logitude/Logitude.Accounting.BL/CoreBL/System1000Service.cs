@@ -12,6 +12,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebFreight.Web.Helpers;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.Counters;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -28,7 +35,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        public string GetSystem1000FlatFile(IAccountingContext accountingContext, int tenant)
+        public List<string> GetSystem1000FlatFile(IAccountingContext accountingContext, int tenant)
         {
             StringBuilder flatFile = new StringBuilder();
             _sb.AppendLine($"GetDeductionFileNumberFromAccSetting({tenant})");
@@ -40,25 +47,108 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return null;
             }
-            string header = "A" + _FullAccountingSettingPM.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9);
-            flatFile.AppendLine(header);
-            int count = 0;
-            foreach (var obj in listOfAccounts)
-            {
-                string line = "B" + obj.DisplayNumber.PadLeft(15, '0').Substring(0, 15)
-                    + obj.DeductionFileNumber.PadLeft(9, '0').Substring(0,9) 
-                    + obj.VatNumber.PadLeft(9, '0').Substring(0, 9);
-                flatFile.AppendLine(line);
-                count++;
-            }
-            string footer = "C" + _FullAccountingSettingPM.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9)
-                + count.ToString().PadLeft(4, '0');
-            flatFile.AppendLine(footer);
+            int chunkSize = 1000;
+            var listOf1000 = listOfAccounts.Select((x, i) => new { Index = i, Value = x })
+            .GroupBy(x => x.Index / chunkSize)
+            .Select(x => x.Select(v => v.Value).ToList())
+            .ToList();
 
-            return flatFile.ToString();
+            var res = new List<string>();
+            foreach (List<CardGLAccountDataView> listOfAccountsMax1000 in listOf1000)
+            {
+                string header = "A" + _FullAccountingSettingPM.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9);
+                flatFile.AppendLine(header);
+                int count = 0;
+                foreach (var obj in listOfAccountsMax1000)
+                {
+                    string line = "B" + obj.InternalNumber.PadLeft(15, '0').Substring(0, 15)
+                        + obj.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9)
+                        + obj.VatNumber.PadLeft(9, '0').Substring(0, 9);
+                    flatFile.AppendLine(line);
+                    count++;
+                }
+                string footer = "C" + _FullAccountingSettingPM.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9)
+                    + count.ToString().PadLeft(4, '0');
+                flatFile.AppendLine(footer);
+
+                res.Add(flatFile.ToString());
+
+            }
+            return res;
         }
 
+        public string EmailIt(string Email, List<string> flatFiles, int tenant)
+        {
 
+            using (var scope = TransactionFactory.GetTransaction())
+            {
+
+
+                System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+                HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
+                //string htmlstring = "<html>Attach flowing ...</html>";
+
+
+                //htmlstring = filter.Htmlstring;
+                //htmlstring = htmlEditorHelper.GetLogoHtmlString(htmlstring);
+                //htmlstring = encodedHtmlHelper.EncodedHtmlScript(htmlstring);
+
+
+                var context = CommonDataContext.GetContext(tenant);
+                var documentRep = new DocumentRepository(context);
+                var attList = new List<string>();
+                foreach (var flatFile in flatFiles)
+                {
+
+
+                    Simplog.Data.CommonDataModel.EntityPOCOs.Document document = new Simplog.Data.CommonDataModel.EntityPOCOs.Document()
+                    {
+                        CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                        Extension = "txt",
+                        FileSize = Convert.ToInt32(flatFile.Length),
+                        Tenant = Convert.ToInt32(tenant),
+                        Id = IdCounter.GetNumber("Document", tenant).ToString(),
+                        Folder = "docsout",
+                        HasFile = true,
+                        FileName = "1000system_Part1_1"
+
+                    };
+
+                    documentRep.Add(document);
+                    attList.Add(document.Id);
+                }
+                context.SaveChanges();
+
+
+                string htmlPlainString = "Attach System 1000 List ...";
+
+                byte[] bytePlainTextdata = enc.GetBytes(htmlPlainString);
+
+
+                string userId = AuthenticationUtil.ResolveUserId(tenant);
+                string objectTableId = ObjectTableRepository.GetObjectTableByName("GLAccount");
+                //string res = htmlEditorHelper
+                //    .SendEmailOutActivityForEntity(null, bytePlainTextdata, tenant,
+                //   Email, "Subject", "", "",
+                //   userId
+                //   , "", "", objectTableId, "", "", "", "");
+
+                string internalDocumentId = null;
+                string externalDocumentId = null;
+
+                string entityId = null;
+                string attachments = String.Join(",", attList.ToArray()); ;
+                string entityReference = null;
+                string from = "no-reply@LogitudeWorld.com";
+                string replyTo = "";
+                string res = htmlEditorHelper.SendHtmlDocument(
+                    bytePlainTextdata/*htmlData*/, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,
+                    entityReference, from, replyTo);
+                scope.Complete();
+                return res;
+            }
+        }
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
         {
             return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);

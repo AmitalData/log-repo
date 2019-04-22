@@ -10,9 +10,14 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { PortPM } from '../../../../Common/EntityPMs/PortPM';
-import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+
+
+declare var ResultAsArray: any;
+
 
 @Component({
     moduleId: module.id,
@@ -27,6 +32,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
     private EntityArgs: EntityArgs;
     public IsResourcesReady: boolean = false;
     private TariffDomainService: TariffDomainService;
+    private DocumentExtendedService: DocumentsFilingExtendedPMService;
 
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
@@ -66,6 +72,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
             this.IsResourcesReady = true;
             this.TariffsLinesSource = new ObservableCollection([]);
             this.EntityPM = this.EntityArgs.EntityPM;
+            this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
             this.TariffDomainService = new TariffDomainService();
             this.SetStepsLabelsAndVisibility();
             this.LoadTariffLines();
@@ -303,10 +310,86 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
         });
     }
 
-    UploadExcel() {
+    // Upload Excel File 
+    OnFileChanged(event) {
+        var file = event.target.files[0];
+        this.UploadExcel(file);
+    }
+    UploadExcel(file: any) {
+        if (file && file.size > 0) {
+            this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response : ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingExcelFile(file);
+                    }
+                }
+            });
+        }
+    }
+    StartUploadingExcelFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64(filebuffer, this);
+        }
+    }
+    ConvertArrayBufferToBase64(file: any, context: any) {
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(ResultAsArray(e));
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            var filter = new TariffFilterParameter();
+            filter.FileData = window.btoa(binary);
+            filter.PriceSteps = context.PriceSteps;
+            context.SendExcelToServer(filter);
+        };
 
+        reader.onerror = function (e) {
+            console.log(e);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    SendExcelToServer(filter: any) {
+        this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var tariffLines: ExcelTariffLines[] = response.Result;
+                if (tariffLines) {
+                    // draw lines
+                    tariffLines.forEach(item => {
+                        var tariff = new TariffLinePM(null);
+                        tariff.StartDate = this.StartDate;
+                        tariff.ExpirationDate = this.ExpirationDate;
+                        tariff.Tenant = SessionLocator.Tenant;
+                        tariff.OriginPortId = item.FromPortId;
+                        tariff.OriginPortCode = item.FromPortCode;
+                        tariff.OriginPortName = item.FromPortName;
+                        tariff.DestinationPortId = item.ToPortId;
+                        tariff.DestinationPortCode = item.ToPortCode;
+                        tariff.DestinationPortName = item.ToPortName;
+                        tariff.MinPrice = item.MinPrice;
+                        tariff.Step1Price = item.Step1Price;
+                        tariff.Step2Price = item.Step2Price;
+                        tariff.Step3Price = item.Step3Price;
+                        tariff.Step4Price = item.Step4Price;
+                        tariff.Step5Price = item.Step5Price;
+                        tariff.Step6Price = item.Step6Price;
+                        tariff.Step7Price = item.Step7Price;
+                        tariff.Step8Price = item.Step8Price; 
+                        
+                        this.EntityPM.AddTariffLine(tariff); 
+                    });
+                    this.LoadTariffLines();
+                }
+            }
+        });
     }
 
+    // Download Excel 
     DownloadExcel() {
         this.TariffDomainService.DownloadTariffLines(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {           
             if (!myResponse.HasError) {

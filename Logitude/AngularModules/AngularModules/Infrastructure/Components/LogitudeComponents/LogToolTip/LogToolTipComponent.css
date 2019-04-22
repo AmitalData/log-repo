@@ -67,21 +67,21 @@
         padding: 3px;
     }
 
-    .popup-arrow {
-        background: url('./Images/LOV/popup-arrow.png') no-repeat center;
-        height: 10px;
-        display: block;
-        position: absolute;
-        width: 12px;
-        bottom: -10px;
-        left: 2px;
-        z-index: 9999;
-        -ms-transform: rotate(180deg);
-        /* IE 9 */
-        -webkit-transform: rotate(180deg);
-        /* Chrome, Safari, Opera */
-        transform: rotate(180deg);
-    }
+.popup-arrow {
+    /*background: url('./Images/LOV/popup-arrow.png') no-repeat center;*/
+    height: 10px;
+    display: block;
+    position: absolute;
+    width: 12px;
+    bottom: -10px;
+    left: 2px;
+    z-index: 9999;
+    -ms-transform: rotate(180deg);
+    /* IE 9 */
+    -webkit-transform: rotate(180deg);
+    /* Chrome, Safari, Opera */
+    transform: rotate(180deg);
+}
 
     .tooltip-text {
         width: auto;
