@@ -267,7 +267,12 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public OpenPayables: number = 0;
     public DifferencePayablesText: string = "N/A";
     public DifferencePayablesColor: string;
+    public PayableList: any[] = [];
+
     BuildSummaryData() {
+
+        this.PayableList = this.EntityPM.ShipmentAPInvoices;
+
         if (this.IsByLocalCurrency) {
             this.AccrualsPayables = ArrayTool.Sum(this.EntityPM.ShipmentPayables, "ExpectedAmountLocal");
             this.AccountedPayables = ArrayTool.Sum(this.EntityPM.ShipmentPayables, "AccountedAmountInLocalCurrency");

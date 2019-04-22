@@ -156,6 +156,7 @@ namespace WebFreight.Web
                 Tenant = Tenant,
                 //Subject = "Work Item Updated",
                 AWBNumber = arg.WorkItemId,
+                Log = arg.WorkItemId!=null? ("Task " + arg.WorkItemId+" Updated"):"",
             };
 
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;

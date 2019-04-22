@@ -16,7 +16,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
-using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.Helpers; 
 using WebFreight.Web.Azure;
 using WebFreight.Web.CommonDataModel;
 using WebFreight.Web.CommonDataModel.DomainServices;

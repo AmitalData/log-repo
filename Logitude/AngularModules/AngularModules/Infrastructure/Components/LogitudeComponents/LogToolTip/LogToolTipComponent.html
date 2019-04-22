@@ -1,0 +1,23 @@
+﻿<!-- info icon -->
+<span float-start [attr.id]="'tooltip'+this.name" id="t"
+    class="small-tooltip" (mouseover)="OnMouseOver()" (mouseleave)="OnMouseLeave()">
+
+    <!--<img src="./Images/Info.png" width="18" height="18" />-->
+    <div class="ConfirmIcon">!</div>
+
+    <div [attr.id]="'tooltip-body'+this.name" class="small-tooltip-body">
+        <!-- <div class="popup-arrow"></div> -->
+        <div *ngIf="title" class="tooltip-header">
+            {{title}}
+        </div>
+        <div class="tooltip-text" [style.padding]="isRTL?'0 3px 0 20px' : '0 20px 0 3px'">
+
+            <div [attr.id]="'tooltip-arrow'+this.name" [className]="GetArrowClassName()"></div>
+            <div [attr.id]="'tooltip-arrow2'+this.name" [className]="GetArrowClassName()+'2'"></div>
+
+            <ng-content></ng-content>
+
+        </div>
+    </div>
+
+</span>
