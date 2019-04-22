@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                 {
                     throw new Exception("unable to find tenantFromPage4Tester ");
                 }
-
+                FixSignOfOpenCloseBalance();
             }
             catch (Exception e)
             {
@@ -73,6 +73,71 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
 
                 }
             }
+
+        }
+
+        private void FixSignOfOpenCloseBalance()
+        {
+            /*
+s             b                   a 
+1(+        3749.39)(+       55828.03) == a>0 >> 1=-1* B
+
+0(+        3749.39)(+       55828.03) ===a>0 >> 0=+1*B
+
+1(+        3749.39)(-       55828.03) == a<0 >> 1=+1*b
+
+
+0(+        3749.39)(-       55828.03) == a<0 >> 0 = -1*b
+
+             */
+
+
+
+            _BankPagesDTO.ForEach(BankPagesDTO => {
+
+                var bankPageLineLast = BankPagesDTO.MyBankPageLines.Last();
+                if (Math.Abs(bankPageLineLast.BalanceAfter) != Math.Abs(BankPagesDTO.MyBankAccountM.CloseBalance))
+                {
+                    throw new Exception($"FixSignOfOpenCloseBalance():Exception:Close:Abs({bankPageLineLast.BalanceAfter})!={BankPagesDTO.MyBankAccountM.CloseBalance}");
+
+                }
+
+                
+
+                var bankPageLine1st = BankPagesDTO.MyBankPageLines.First();
+                decimal realOpenBalance = +1*BankPagesDTO.MyBankAccountM.OpenBalance;
+                if (realOpenBalance - bankPageLine1st.Amount== bankPageLine1st.BalanceAfter)
+                {
+                    realOpenBalance = -1 * realOpenBalance;
+                }
+                else
+                {
+                    realOpenBalance = -1 * BankPagesDTO.MyBankAccountM.OpenBalance;
+                    if (realOpenBalance - bankPageLine1st.Amount == bankPageLine1st.BalanceAfter)
+                    {
+                        realOpenBalance = -1 * BankPagesDTO.MyBankAccountM.OpenBalance;
+                    }
+                    else
+                    {
+                        throw new Exception("unable to resolve sign open balance of rawline ");
+                    }
+                }
+
+                
+
+                BankPagesDTO.MyBankAccountM.OpenBalance = realOpenBalance;
+                BankPagesDTO.MyBankAccountM.CloseBalance = bankPageLineLast.BalanceAfter;
+                
+
+                var sumAmount= BankPagesDTO.MyBankPageLines.Sum(bankPageLine => bankPageLine.Amount);
+                if (BankPagesDTO.MyBankAccountM.CloseBalance !=
+                BankPagesDTO.MyBankAccountM.OpenBalance + sumAmount)
+                {
+                    throw new Exception($"FixSignOfOpenCloseBalance():Exception:OpenBalance + sumAmount!=Close:Abs({BankPagesDTO.MyBankAccountM.OpenBalance + sumAmount})!={BankPagesDTO.MyBankAccountM.CloseBalance }");
+                }
+            
+
+            });
 
         }
 
@@ -446,9 +511,9 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
         public string AccountNumber { get; private set; }
         public int PageNo { get; private set; }
 
-        public decimal OpenBalance { get; private set; }
+        public decimal OpenBalance { get; set; }
 
-        public decimal CloseBalance { get; private set; }
+        public decimal CloseBalance { get; set; }
 
         //public DateTime FromDate { get; private set; }
         //public DateTime ToDate { get; private set; }
