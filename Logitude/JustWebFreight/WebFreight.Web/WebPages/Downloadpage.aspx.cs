@@ -212,9 +212,15 @@ namespace WebFreight.Web.WebPages
                     if (entityName == "analyzeQueue")
                     {
                         AnalyzeQueueRepository analyzeQueueRep = new AnalyzeQueueRepository();
+						
                         AnalyzeQueue analyzeQueue = analyzeQueueRep.GetSingleAnalyzeQueue(filename, (int)tenant);
                         _DatainByte = analyzeQueue.MessageBody;
-                        documentExtension = "xml";
+						if (!string.IsNullOrEmpty(analyzeQueue.FileName))
+						{
+							documentExtension = Path.GetExtension(analyzeQueue.FileName).TrimStart('.');
+						}
+						if (string.IsNullOrEmpty(documentExtension))
+							documentExtension = "xml";
 
                     }
                     else
