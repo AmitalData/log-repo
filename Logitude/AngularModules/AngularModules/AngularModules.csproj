@@ -27,6 +27,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.html" />
@@ -288,6 +289,7 @@
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DateSampleComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWAskUserFiltersComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.html" />
@@ -362,6 +364,7 @@
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\AddEditPrivateLabelsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.ts" />
@@ -384,6 +387,7 @@
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalAdditionalDataPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatReportPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\AccountingEntegrityCheckExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\AccountingIntegrityCheckListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\IntegrityCheckStatusListService.ts" />
@@ -711,6 +715,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\AGGridCustomHeader.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\EditShipmentLinkRendererComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DateSampleComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWAskUserFiltersComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleInfrastructureBIReport.ts" />
@@ -1979,9 +1984,12 @@
     <Content Include="Social\Components\SocialPostsComponent.html" />
     <Content Include="Social\Components\SocialMessagesComponent.html" />
     <Content Include="styles.css" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.html" />
+    <Content Include="TariffModule\Components\Workspaces\TariffSettingComponent.html" />
     <Content Include="TimeManagement\Components\Connections\ConnectToParentComponent.html" />
     <Content Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewGetProjectComponent.html" />
@@ -6332,19 +6340,27 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBSpecialHandlingCodePMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSettingComponent.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffList.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityLists\TariffSettingList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffPM.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffSettingPM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffTypePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionPM.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleProviders.ts" />
     <TypeScriptCompile Include="TariffModule\Module_Tariff.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSettingListService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffSettingPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\TariffDomainService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffTypeListService.ts" />

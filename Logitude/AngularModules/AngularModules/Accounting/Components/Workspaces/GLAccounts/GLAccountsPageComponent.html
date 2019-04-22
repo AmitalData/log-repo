@@ -69,7 +69,7 @@
 
                                             <!-- GL Accounts -->
                                             <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Accounting.General.O.GLAccount' | TextCodeTranslationPipe}}</div>
+                                                <div>{{'Accounting.O.GLAccounts' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
                                                     <button class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
@@ -80,37 +80,19 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="ActiveGLAccountsVisibility" (click)="ViewAccountingQuery('ActiveGLAccounts')"> {{'GLAccounts.Q.ActiveGLAccounts' | TextCodeTranslationPipe}} ({{glAccountSummary.ActiveGLAccountCount}}) </p>
+                                                                            <!-- ({{glAccountSummary.ActiveGLAccountCount}}) -->
+                                                                            <p class="QueryLink" *ngIf="ActiveGLAccountsVisibility" (click)="ViewAccountingQuery('ActiveGLAccounts')"> {{'GLAccounts.Q.ActiveGLAccounts' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="InactiveGLAccountsVisibility" (click)="ViewAccountingQuery('InactiveGLAccounts')"> {{'GLAccounts.Q.InActiveGLAccounts' | TextCodeTranslationPipe}} ({{glAccountSummary.InactiveGLAccountCount}}) </p>
+                                                                            <!-- ({{glAccountSummary.InactiveGLAccountCount}})  -->
+                                                                            <p class="QueryLink" *ngIf="InactiveGLAccountsVisibility" (click)="ViewAccountingQuery('InactiveGLAccounts')"> {{'GLAccounts.Q.InActiveGLAccounts' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" *ngIf="AllGLAccountsVisibility" (click)="ViewAccountingQuery('All GLAccounts')"> {{'GLAccounts.Q.AllGLAccounts' | TextCodeTranslationPipe}}</p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenFiles')"> {{'GLAccounts.Q.OpenFiles' | TextCodeTranslationPipe}} ({{glAccountSummary.OpenFilesCount}})</p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="ClosedFilesVisibility" (click)="ViewAccountingQuery('ClosedFiles')"> {{'GLAccounts.Q.ClosedFiles' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="AllFilesVisibility" (click)="ViewAccountingQuery('AllFiles')"> {{'GLAccounts.Q.AllFiles' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="AllJobsVisibility" (click)="ViewAccountingQuery('AllJobs')"> {{'GLAccounts.Q.AllJobs' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr><td><div></div></td>
@@ -125,6 +107,52 @@
                                                 </div>
                                             </div>
 
+                                            <div style="height: 15px;"></div>
+
+                                            <!-- ShipmentsAndMasters -->
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                    <div>{{'Accounting.O.ShipmentsAndMasters' | TextCodeTranslationPipe}}</div>
+                                                    <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                        <!-- <button class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button> -->
+                                                    </div>
+                                                    <div>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:190px;">
+                                                                                    <!-- ({{glAccountSummary.OpenFilesCount}}) -->
+                                                                                <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenFiles')"> {{'GLAccounts.Q.OpenFiles' | TextCodeTranslationPipe}} </p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width:190px;">
+                                                                                <p class="QueryLink" *ngIf="ClosedFilesVisibility" (click)="ViewAccountingQuery('ClosedFiles')"> {{'GLAccounts.Q.ClosedFiles' | TextCodeTranslationPipe}} </p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width:190px;">
+                                                                                <p class="QueryLink" *ngIf="AllFilesVisibility" (click)="ViewAccountingQuery('AllFiles')"> {{'GLAccounts.Q.AllFiles' | TextCodeTranslationPipe}} </p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width:190px;">
+                                                                                <p class="QueryLink" *ngIf="AllJobsVisibility" (click)="ViewAccountingQuery('AllJobs')"> {{'GLAccounts.Q.AllJobs' | TextCodeTranslationPipe}} </p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr><td><div></div></td>
+                                                                        </tr>
+                                                                    </table>
+
+
+                                                                </td>
+                                                            </tr>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+
                                             <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
                                                 <div>My Views</div>
                                                 <div style="height:80px;">
@@ -133,63 +161,6 @@
                                             </div>
 
                                             <div style="height: 15px;"></div>
-
-                                            <!-- Manual Journals -->
-                                            <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Accounting.General.O.Journals' | TextCodeTranslationPipe}}</div>
-                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="RunNewJournalWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
-                                                </div>
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="Draft_JournalsVisibility" (click)="ViewJournalQuery('Draft_Journals')"> {{'Journal.Q.DraftJournal' | TextCodeTranslationPipe}} ({{journalSummary.DraftJournalsCount}})</p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="Non_Approved_JournalsVisibility" (click)="ViewJournalQuery('Non_Approved_Journals')"> {{'Journal.Q.SavedJournal' | TextCodeTranslationPipe}} ({{journalSummary.WaitingJournalsCount}})</p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="Approved_JournalsVisibility" (click)="ViewJournalQuery('Approved_Journals')"> {{'Journal.Q.ApprovedJournal' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="All_journalsVisibility" (click)="ViewJournalQuery('All_journals')"> {{'Journal.Q.Journal' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="Auto_Created_JournalsVisibility" (click)="ViewJournalQuery('Auto_Created_Journals')"> {{'Journal.Q.AutoCreatedJournals' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="ExternalJournalsVisibility" (click)="ViewJournalQuery('External Journals')"> {{'Journal.Q.ExternalJournals' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr>
-                                                                        <td><div></div></td>
-                                                                    </tr>
-                                                                </table>
-
-
-                                                            </td>
-                                                        </tr>
-
-                                                    </table>
-                                                </div>
-                                            </div>
-
 
 
 

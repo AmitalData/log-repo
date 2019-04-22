@@ -68,7 +68,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         TypeName, 
 	         LastStartDate, 
 	         LastVersion, 
-	         ContractNumber,
+	         ContractNumber, 
+	         SetAsInActive, 
+	         SetAsReActive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

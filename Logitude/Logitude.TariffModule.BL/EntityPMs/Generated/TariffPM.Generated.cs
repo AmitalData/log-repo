@@ -538,7 +538,53 @@ namespace Logitude.TariffModule.BL.EntityPMs
               }
              set {  deletedTariffLines = value; }
 	    }
-	     }
+	  	  private bool setAsInActive ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool SetAsInActive  
+	   {
+	    
+	     get
+		{
+		   return setAsInActive;
+		 }
+		 set
+		 {
+		   if(setAsInActive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SetAsInActive",OldValue=setAsInActive,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   setAsInActive=value;
+		   }
+			
+		 }
+	   }
+	  private bool setAsReActive ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool SetAsReActive  
+	   {
+	    
+	     get
+		{
+		   return setAsReActive;
+		 }
+		 set
+		 {
+		   if(setAsReActive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SetAsReActive",OldValue=setAsReActive,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   setAsReActive=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

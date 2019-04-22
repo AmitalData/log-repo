@@ -154,7 +154,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (contactIds.Count > 0)
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                contactLists = contactQuery.GetContactListsByListIds(contactIds, tenant);
+                contactLists = contactQuery.GetContactListsByListIds(contactIds, tenant).ToList();
             }
 
         

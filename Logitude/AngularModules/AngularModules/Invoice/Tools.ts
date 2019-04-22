@@ -1,4 +1,4 @@
-﻿import {AppTool, DateTool, FormatTool} from '../Infrastructure/Tools';
+import {AppTool, DateTool, FormatTool} from '../Infrastructure/Tools';
 import {ShipmentPM} from '../Shipment/EntityPMs/ShipmentPM';
 import {ARInvoicePM} from './EntityPMs/ARInvoicePM';
 import {APInvoicePM} from './EntityPMs/APInvoicePM';
@@ -208,6 +208,33 @@ export class InvoiceTool {
                                 entityPM.DueDate = null;
                             }
 
+                            else if (AppTool.IsNullOrZero(list.Days)) {
+
+                                var myComparativeDate: Date = null;
+
+                                if (entityPM.IsConsolidationInvoice) {
+                                    myComparativeDate = entityPM.InvoiceDate;
+                                }
+
+                                else {
+                                    if (list.FromDateTypeCode == "SHI") {
+                                        myComparativeDate = entityPM.OperationalDate;
+
+                                        if (myComparativeDate == null) {
+                                            myComparativeDate = entityPM.InvoiceDate;
+                                        }
+                                    }
+
+                                    else {
+                                        myComparativeDate = entityPM.InvoiceDate;
+                                    }
+                                }
+
+                                if (entityPM.DueDate != myComparativeDate) {
+                                    entityPM.DueDate = myComparativeDate;
+                                }
+                            }
+
                             else {
                                 var myComparativeDate: Date = null;
 
@@ -276,6 +303,33 @@ export class InvoiceTool {
                         if (list != null) {
                             if (list.IsManuallySet) {
                                 entityPM.DueDate = null;
+                            }
+
+                            else if (AppTool.IsNullOrZero(list.Days)) {
+
+                                var myComparativeDate: Date = null;
+
+                                if (entityPM.IsMultipleEntities) {
+                                    myComparativeDate = entityPM.InvoiceDate;
+                                }
+
+                                else {
+                                    if (list.FromDateTypeCode == "SHI") {
+                                        myComparativeDate = entityPM.OperationalDate;
+
+                                        if (myComparativeDate == null) {
+                                            myComparativeDate = entityPM.InvoiceDate;
+                                        }
+                                    }
+
+                                    else {
+                                        myComparativeDate = entityPM.InvoiceDate;
+                                    }
+                                }
+
+                                if (entityPM.DueDate != myComparativeDate) {
+                                    entityPM.DueDate = myComparativeDate;
+                                }
                             }
 
                             else {

@@ -43,7 +43,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Branch", DBTableName = "Branches", Dw_TableName = "dw_Branches", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Branches", BuildScriptName = "BuildBrancheDimensionTable", IncrementalScriptName = "UpdateBrancheDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "EntityStatus", DBTableName = "EntityStatus", Dw_TableName = "dw_ShipmentStatuses", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentStatuses", BuildScriptName = "BuildEntityStatusDimensionTable", IncrementalScriptName = "UpdateEntityStatusDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "Rank", DBTableName = "Ranks", Dw_TableName = "dw_Ranks", KeyName = "Id", });
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId,Field1", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId,Field1,Field2,Field3,Field4,Field5,Field6", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "ShipmentMasterData", FieldsDBName = "MasterShipmentNumber", DBTableName = "ShipmentMasterDatas", Dw_TableName = "dw_ShipmentMasterDatas", KeyName = "Id", HasNotSpecifiedValue = true, HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Card", DBTableName = "Cards", Dw_TableName = "dw_Partners", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Partners", BuildScriptName = "BuildCardsDimensionTable", IncrementalScriptName = "UpdateCardDimensionTable", HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Port", DBTableName = "Ports", Dw_TableName = "dw_Ports", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Ports", BuildScriptName = "BuildPortsDimensionTable", IncrementalScriptName = "UpdatePortsDimensionTable", HasConstraint = true, DispayInScreen = true });
@@ -125,6 +125,13 @@ namespace WarehouseData.Helper
                 }
             }
 
+        }
+
+        public void RunSqlFunctions(string connectionString)
+        {
+            ExecuteScript("Others", connectionString, "Day 06 [Abed]Add Function Date");
+            ExecuteScript("Others", connectionString, "Day 17[AbedAddFuncationResolveCustomFieldDateValue]");
+            ExecuteScript("Others", connectionString, "Day 14 [Abed]AddFunctionResolveCustomFieldValue");
         }
 
         public void BuildWarehouseObjectField(List<TableClass> tableNameLists, string connectionString)
@@ -257,7 +264,7 @@ namespace WarehouseData.Helper
             if (!string.IsNullOrEmpty(sql))
             {
                 int i = 1;
-                int customFieldsCount = 1;
+                int customFieldsCount = 6;
                 string result = string.Empty;
                 if (sql.Contains("--@[DeclareCustomFields]"))
                 {
@@ -668,7 +675,7 @@ namespace WarehouseData.Helper
             }
 
             ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
-            ExecuteScript("Others", destinationConnectionString, "Day 06 [Abed]Add Function Date");
+            RunSqlFunctions(destinationConnectionString);
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
             {
@@ -713,7 +720,7 @@ namespace WarehouseData.Helper
                 if (table.TableName == "ObjectField")
                 {
                     condition += !isPrivateDB ? " where " : " and";
-                    condition += " IsCustom = 1 and ObjectTableId = '1-4'";
+                    condition += " IsCustom = 1 and ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
 
                 }
 
@@ -1071,7 +1078,7 @@ namespace WarehouseData.Helper
 
 
         #endregion
-
+         
         #region Incremental Data Base
 
         public void UpdateWarehouseData(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
@@ -1111,7 +1118,7 @@ namespace WarehouseData.Helper
         {
             string fieldName = !string.IsNullOrEmpty(table.FieldsDBName) ? table.FieldsDBName : "*";
             bool isPrivateDB = privateTenant != null ? true : false;
-            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + table.TableName + "');";
+            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + table.TableName + "')";
 
             if (isPrivateDB)
             {
@@ -1120,6 +1127,11 @@ namespace WarehouseData.Helper
                 else if (table.DBTableName == "Tenants") condition += " and Id in " + relatedTenants;
             }
 
+            if (table.TableName == "ObjectField")
+            {
+                condition += "and IsCustom = 1 and ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
+
+            }
 
             using (SqlConnection sourceConnection =
                        new SqlConnection(sourceConnectionString))
@@ -1363,11 +1375,11 @@ namespace WarehouseData.Helper
                     }
                     return;
                 }
-                WarehouseHelper warehouseHelper = new WarehouseHelper();
-                string sourceConnectionString = warehouseHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+
+                string sourceConnectionString = BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
 
 
-                var dWHSettingsTable = warehouseHelper.GetPrivateTenant(sourceConnectionString);
+                var dWHSettingsTable = GetPrivateTenant(sourceConnectionString);
 
                 if (type == "Build") CreatePrivateWaterMarksTable(sourceConnectionString);
 
@@ -1375,14 +1387,14 @@ namespace WarehouseData.Helper
                 {
                     int tenant = Int32.Parse(row["Tenant"].ToString());
                     string catalog = row["Catalog"].ToString();
-                    string destinationConnectionString = warehouseHelper.BuildConnectionString(catalog, destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
-                    List<int> relatedTenants = warehouseHelper.GetPrivateRelatedTenants(sourceConnectionString, tenant);
+                    string destinationConnectionString = BuildConnectionString(catalog, destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+                    List<int> relatedTenants = GetPrivateRelatedTenants(sourceConnectionString, tenant);
 
                     if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
 
-                    string tenants = warehouseHelper.ConvertIntgerListToString(relatedTenants);
+                    string tenants = ConvertIntgerListToString(relatedTenants);
                     if (type == "Build") BuildDataBase(sourceConnectionString, destinationConnectionString, tenant, tenants);
-                    else warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                    else UpdateWarehouseData(sourceConnectionString, destinationConnectionString, tenant, tenants);
                 }
             }
             else if (AppName != "Service")

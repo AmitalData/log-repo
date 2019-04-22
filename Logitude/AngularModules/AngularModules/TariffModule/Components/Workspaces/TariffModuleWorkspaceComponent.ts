@@ -130,6 +130,13 @@ export class TariffModuleWorkspaceComponent implements OnInit {
         }
     }
 
-  
+
+    TariffSettingsClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = "Tariff Settings";
+        logWindow.Show('./TariffModule/Components/Workspaces/TariffSettingComponent');
+    }
 }
 

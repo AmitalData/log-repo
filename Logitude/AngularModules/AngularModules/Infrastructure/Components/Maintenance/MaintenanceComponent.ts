@@ -487,16 +487,16 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Year Transfer";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-            if (FeatureLocator.HasFeaturePermession("General", "General.Features.AccountingPeriods")) {
-                var item = new MenusTablePM();
-                item.CategoryTypeCode = "ACC";
-                item.Icon = "Settings"
-                item.Code = "ACPD";
-                item.ObjectTableName = "AccountingPeriod";
-                var ObjectTable = window.ObjectTables.filter(d => d.Name == "AccountingPeriod")[0];
-                item.ObjectTableId = ObjectTable.Id;
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-            }
+            //if (FeatureLocator.HasFeaturePermession("General", "General.Features.AccountingPeriods")) {
+            //    var item = new MenusTablePM();
+            //    item.CategoryTypeCode = "ACC";
+            //    item.Icon = "Settings"
+            //    item.Code = "ACPD";
+            //    item.ObjectTableName = "AccountingPeriod";
+            //    var ObjectTable = window.ObjectTables.filter(d => d.Name == "AccountingPeriod")[0];
+            //    item.ObjectTableId = ObjectTable.Id;
+            //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            //}
 
             
 

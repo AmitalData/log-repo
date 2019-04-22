@@ -309,6 +309,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.To).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.Origin).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.ComputedShipmentNumber).HasMaxLength(100).IsUnicode(false);
 
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
@@ -325,6 +326,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.CustomerTenantNumber).HasColumnName("CustomerTenantNumber");
             this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber");
+            this.Property(t => t.ComputedShipmentNumber).HasColumnName("ComputedShipmentNumber");            
             this.Property(t => t.ShipperReference1).HasColumnName("ShipperReference1");
             this.Property(t => t.ShipperReference2).HasColumnName("ShipperReference2");
             this.Property(t => t.ConsigneeReference1).HasColumnName("ConsigneeReference1");

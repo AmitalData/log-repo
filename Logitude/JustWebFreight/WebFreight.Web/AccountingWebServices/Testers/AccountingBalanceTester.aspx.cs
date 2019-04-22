@@ -307,8 +307,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
         }
 
-        
-              protected void _AccountingIntegrityService_Click(object sender, EventArgs e)
+
+        protected void _AccountingIntegrityService_Click(object sender, EventArgs e)
         {
             AccountingIntegrityInParam param = null;
             var paramDefault = new AccountingIntegrityInParam()
@@ -333,18 +333,18 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 param = JsonConvert.DeserializeObject<AccountingIntegrityInParam>(_TextBoxParam.Text);
 
-                
+
                 var accountingIntegrityService = new AccountingIntegrityService();
-                
+
                 string errorMessage = accountingIntegrityService.CheckParams(param);
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
                     throw new Exception(errorMessage);
                 }
-                var res= accountingIntegrityService.CheckIntegrity(param);
+                var res = accountingIntegrityService.CheckIntegrity(param);
 
                 serializeObjectstring = JsonConvert.SerializeObject(res);
-                
+
 
 
             }
@@ -365,7 +365,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     _TextBoxParam.Text = JsonConvert.SerializeObject(param);
                 }
 
-                _LabelLog.Text = serializeObjectstring?? LogMessagingUtil.Instance.ToString();
+                _LabelLog.Text = serializeObjectstring ?? LogMessagingUtil.Instance.ToString();
             }
         }
 
@@ -419,7 +419,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 {
                     _TextBoxParam.Text = JsonConvert.SerializeObject(param);
                 }
-                
+
                 _LabelLog.Text = LogMessagingUtil.Instance.ToString();
             }
         }
@@ -666,19 +666,19 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
         }
 
-        
-#if true        
-                 protected void _ButtonBalanceByCollector_Click(object sender, EventArgs e)
+
+#if true
+        protected void _ButtonBalanceByCollector_Click(object sender, EventArgs e)
         {
             BalanceGroupByCollectorReportParam myCollectorReportParam = null;
             var myAgingReportParamDefault = new BalanceGroupByCollectorReportParam()
             {
-                
+
                 //ChartOfAccountIdV1NotInUse = "",
                 VendorCustomerId = "",
                 Tenant = 1064,
                 //CurrenciesDetailedV1NotInUse = null,
-                CollectorId="1-81443",
+                CollectorId = "1-81443",
                 GroupByDate = AgingReportParam.DateEnum.DueDate,
                 GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
 
@@ -701,7 +701,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 var collectorReport = new BalanceGroupByCollectorService(myCollectorReportParam);
                 var res = collectorReport.RunReport();
-                
+
                 var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToXmlString(res);
                 _LabelResult.Text = xmlMyPeriodList;
 
@@ -1002,7 +1002,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 From = DateTime.Now.AddMonths(-1),
                 To = DateTime.Now,
                 CurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(1),
-                DateTypeCode="1",
+                DateTypeCode = "1",
                 GLAccountId = "1-1",
 
                 SearchFields = "",
@@ -1214,7 +1214,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             var paramDefault = new
             {
                 MyTenant = 1064,
-                
+
 
             };
             try
@@ -1291,8 +1291,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var tenant = (int)param.MyTenant;
                 string AccountId = param.AccountId;
                 Response.Clear();
-                    var myDueLocalBalanceService = new DueLocalBalanceService();
-                    var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant, AccountId);
+                var myDueLocalBalanceService = new DueLocalBalanceService();
+                var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant, AccountId);
 
                 //var myAllCardServiceDS = new GLAccountDashboard();
                 //var dic = myAllCardServiceDS.GetCardsLocalBalanceGByChartOfAccountsTypeCode(tenant);
@@ -1411,6 +1411,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             var paramDefault = new
             {
                 Tenant = 989,
+                Email = "itzik@amital.co.il"
             };
             try
             {
@@ -1426,12 +1427,17 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
                 int tenant = param.Tenant;
+                string Email = param.Email;
                 string flatFile = "";
-       //         using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
-       //         {
-                    var accountingContext = AccountingContext.GetContext(tenant);
-                    ISystem1000Service System1000Service = new System1000Service();
-                    flatFile = System1000Service.GetSystem1000FlatFile(accountingContext, tenant);
+                //         using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+                //         {
+                var accountingContext = AccountingContext.GetContext(tenant);
+                ISystem1000Service System1000Service = new System1000Service();
+                var flatFiles = System1000Service.GetSystem1000FlatFile(accountingContext, tenant);
+                if (flatFiles.Count > 0)
+                {
+                    System1000Service.EmailIt(Email, flatFiles, tenant);
+                }
                 //    if (!String.IsNullOrWhiteSpace(flatFile))
                 //    {
                 //        bool toComplete = false;
@@ -1444,10 +1450,13 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
 
                 //}
+                flatFile = string.Join(",", flatFiles);
                 if (!String.IsNullOrWhiteSpace(flatFile))
                 {
                     // var flatFileJson = JsonConvert.SerializeObject(flatFile);
                     _LabelResult.Text = flatFile; // flatFileJson;
+
+
                 }
                 else
                 {
@@ -1508,7 +1517,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var accountingContext = AccountingContext.GetContext(tenant);
                 var systemCheckTotals = new SystemCheckTotals();
                 systemCheckTotals.TotalSumMustBeZero(tenant);
-                var json =systemCheckTotals.TotalSumPerAccountGroupByDateTypeDiff(tenant);
+                var json = systemCheckTotals.TotalSumPerAccountGroupByDateTypeDiff(tenant);
 
                 _LabelResult.Text = json;
                 //var journalJson = JsonConvert.SerializeObject(journal);
@@ -1892,7 +1901,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 int YYYY = param.YYYY;
                 bool BuildFullAccountingSetting = param.BuildFullAccountingSetting;
                 bool BuildFullAccountingSettingVAT = param.BuildFullAccountingSettingVAT;
-                
+
                 int BuildGLAccountEachType = param.BuildGLAccountEachType;
                 int BuildJournalEachMonth = param.BuildJournalEachMonth;
 
@@ -1914,14 +1923,14 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     {
                         var repo = new FullAccountingSettingRepository(tenant);
                         fullSetting = repo.GetSingleFullAccountingSetting(tenant);
-                        if (fullSetting==null)
+                        if (fullSetting == null)
                         {
                             throw new Exception("BuildFullAccountingSettingVAT - but not BuildFullAccountingSetting");
                         }
                     }
                     var BTFullAccountingService = new FullAccountingProvider(chartOfAccountProvider, displayNumberProvider);
 
-                    BTFullAccountingService.CreateVatGLAccount(tenant, accountingContext,fullSetting);
+                    BTFullAccountingService.CreateVatGLAccount(tenant, accountingContext, fullSetting);
                 }
                 CacheManager.ClearCacheItems();
 
@@ -1932,10 +1941,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 {
                     var dummyTenantProviderArg = new DummyTenantProviderArg()
                     {
-                         CreateJobs = BuildGLAccountEachType,
-                        CreateCustomers= BuildGLAccountEachType,
-                        CreateExpanse= BuildGLAccountEachType,
-                        CreateFiles= BuildGLAccountEachType,
+                        CreateJobs = BuildGLAccountEachType,
+                        CreateCustomers = BuildGLAccountEachType,
+                        CreateExpanse = BuildGLAccountEachType,
+                        CreateFiles = BuildGLAccountEachType,
                         CreateRevenue = BuildGLAccountEachType,
                         CreateVendors = BuildGLAccountEachType,
 
@@ -1983,7 +1992,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
             string param = "";
             string paramDefault = "Please insert page U Can Add Header  //Tenant=1071";
-            
+
             try
             {
 
@@ -2001,8 +2010,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 //bool CheckControlAccountMode = param.CheckControlAccountMode;
                 //int tenant = param.Tenant;
                 string FileBankPages = _TextBoxParam.Text;// param.FileBankPages;
-                //SetHttpAuth(tenant);
-                
+                                                          //SetHttpAuth(tenant);
+
                 var myBankAccountPageAnalyzer = new BankAccountPageAnalyzer();
                 myBankAccountPageAnalyzer.Analyze(null, FileBankPages);
 
@@ -2021,7 +2030,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 {
                     param = paramDefault;
                 }
-                
+
                 _TextBoxParam.Text = param;
                 _LabelLog.Text = LogMessagingUtil.Instance.ToString();
             }

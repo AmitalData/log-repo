@@ -55,7 +55,7 @@
     <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -924,6 +924,7 @@
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomsInterface.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.RegistryDateType.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.TemperatureUnit.cs" />
+    <Compile Include="Controllers\AccountingModel\AccountingEntegrityCheckController.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingNoteController.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingNoteViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\BankDepositController.cs" />
@@ -1771,10 +1772,12 @@
     <Compile Include="Controllers\SystemLogsModel\Extended\FileLoggerController.cs" />
     <Compile Include="Controllers\SystemLogsModel\PerformanceLogsController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffLineViewsController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffSettingController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\SprintViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMBudgetViewsController.Generated.cs" />
@@ -2187,6 +2190,7 @@
     <Compile Include="ExternalAPIs\QuoteDocumentController.cs" />
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARPaymentCancellationController.cs" />
     <Compile Include="ExternalAPIs\V1\ARPaymentController.cs" />
     <Compile Include="ExternalAPIs\V1\BlobInfoController.cs" />
     <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
@@ -2200,6 +2204,7 @@
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
     <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
+    <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
@@ -2552,6 +2557,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SplitOrMergeReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SprintUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionUpdateClass.cs" />
@@ -2731,6 +2737,7 @@
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
+    <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
     <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
     <Content Include="Monitoring\FailedTokenLog.aspx" />
@@ -4751,6 +4758,13 @@
     </Compile>
     <Compile Include="Monitoring\AnalyzeQueue.aspx.designer.cs">
       <DependentUpon>AnalyzeQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\AzureDevOpsQueue.aspx.cs">
+      <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\AzureDevOpsQueue.aspx.designer.cs">
+      <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.cs">
       <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
