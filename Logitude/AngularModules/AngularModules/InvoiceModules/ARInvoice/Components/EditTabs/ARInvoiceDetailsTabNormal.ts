@@ -632,10 +632,12 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         if (this.EntityPM.IsInvoiceNumberManuallySet != value) {
 
             if (!value) {
-               
+
                 this.InvoiceNumber = null;
             }
-
+            else if(this.EntityPM.InvoiceNumber == this.EntityPM.Id) {
+                this.InvoiceNumber = null;
+            }
             this.EntityPM.IsInvoiceNumberManuallySet = value;
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, value);
         }
@@ -663,7 +665,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
     set InvoiceNumber(value: string) {
         if (this.EntityPM.InvoiceNumber != value) {
-            if (this.IsInvoiceNumberManuallySet || (this.SelectedInvoiceNumberFilter != null && this.SelectedInvoiceNumberFilter.Code == "STK")) {
+            if (this.IsInvoiceNumberManuallySet || (this.IsInvoiceNumberFromStock)) {
                 this.EntityPM.InvoiceNumber = value;
             }
         }
@@ -1574,10 +1576,10 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
 
     ReturnInvoiceNumberToStock() {
-        this.IsgetFromStockAfterSaving = true;
         this.ARInvoiceStockId = null;
         this.InvoiceNumber = null;
         this.IsInvoiceNumberComboBoxEnabled = true;
+        this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "CNR")[0];
         this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
 }
