@@ -2030,7 +2030,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append(' ', 15);
+                    myStringBuilder.Append('0', 15);
                 }
 
                 myStringBuilder.Append(' ', 15);
@@ -2069,7 +2069,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append(' ', 15);
+                    myStringBuilder.Append('0', 15);
                 }
 
 
@@ -2729,12 +2729,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (DocumentAmountAndVATAmount != null)
                 {
                     if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
-                    myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(15, ' '));
+                    myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(15, '0'));
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append(' ', 15);
+                    myStringBuilder.Append('0', 15);
                 }
 
                 myStringBuilder.Append(' ', 15);
@@ -3143,12 +3143,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (DocumentAmountAndVATAmount != null)
                 {
                     if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
-                    myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(15, ' '));
+                    myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(15, '0'));
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append(' ', 15);
+                    myStringBuilder.Append('0', 15);
                 }
 
                 myStringBuilder.Append('0', 15);
