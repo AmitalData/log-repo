@@ -659,6 +659,7 @@
                                                     [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"  [DebounceTime]="1"
                                                     [InputType]="'decimal'" [DigitsAfterPoint]="2" [DataContext]="item"
                                                     [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"
+                                                    [Text]="item.AmountToReconcile"
                                                     (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)"
                                                     >
                                                 </LogTextBox>
