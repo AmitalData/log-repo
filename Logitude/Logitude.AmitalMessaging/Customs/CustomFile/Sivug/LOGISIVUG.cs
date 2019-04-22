@@ -151,6 +151,8 @@
 
         private EXPENSES[] eXPENSESField;
 
+        private string changeInSupplierInvoiceField;
+
         /// <remarks/>
         public string INVOICELINENO
         {
@@ -306,6 +308,19 @@
             set
             {
                 this.eXPENSESField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string ChangeInSupplierInvoice
+        {
+            get
+            {
+                return this.changeInSupplierInvoiceField;
+            }
+            set
+            {
+                this.changeInSupplierInvoiceField = value;
             }
         }
     }

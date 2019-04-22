@@ -117,7 +117,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
                 mode = UnifreightListsUtil.GetValue(ref unifreightListsParams, "MODE");
                 AppendLogLine("mode: " + mode);
-                if (mode == "UMS2L") mode = "INSERT_ONLY";
+                if (mode == "UMS2L") mode = "INSERT_UPDATE_DELETE";
             }
 
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -147,7 +147,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 this.RequestParams.DeclarationId = this._MyDeclarationPM.Id;
             }
 
-            if (mode != "UPDATE_ONLY" && mode != "INSERT_ONLY")
+            if (mode != "UPDATE_ONLY" && mode != "INSERT_UPDATE_DELETE")
             {
                 var fast = true;
                 //if (minute % 2 == 0)
@@ -180,7 +180,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             {
                 if (this._SIVUG.INVOICE.Count() > 0) //Yuval Chalup 07.10.2015 AMI-54402 (ADD the IF only)
                 {
-                    if ((mode != "UPDATE_ONLY" && mode != "INSERT_ONLY") || this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() < 1)
+                    if ((mode != "UPDATE_ONLY" && mode != "INSERT_UPDATE_DELETE") || this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() < 1)
                     {
                         this._MyDeclarationPM.SupplierInvoices = new List<SupplierInvoicePM>(); // moran 18.3.15 - Task 11540
                     }
@@ -210,6 +210,16 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         InvoiceInsert();
 
                         MyGenericResponseObj.Stage = "Done " + this._INVOICE.INVOICENUMBER;
+                    }
+                    if (mode == "INSERT_UPDATE_DELETE")
+                    {
+                        foreach (var supplierInvoice in this._MyDeclarationPM.SupplierInvoices)
+                        {
+                            if(supplierInvoice.ChangeSetOp != ChangeSetOperation.Insert && supplierInvoice.ChangeSetOp != ChangeSetOperation.Update && String.IsNullOrWhiteSpace(supplierInvoice.ChangeInSupplierInvoice))
+                            {
+                                supplierInvoice.ChangeSetOp = ChangeSetOperation.Delete;
+                            }
+                        }
                     }
                     AppendLogLine("InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0) // moran 8.10.15 - Task 16452
@@ -283,7 +293,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                         {
                                             customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
                                             customsDocumentPointerPM.Child1EntityId = customsDocument.SerialNum;
-                                            if (mode == "INSERT_ONLY")
+                                            if (mode == "INSERT_UPDATE_DELETE")
                                             {
                                                 int int1,int2;
                                                 if (int.TryParse(customsDocument.SerialNum, out int1))
@@ -311,7 +321,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             }
                             else
                             {
-                                if (mode == "INSERT_ONLY")
+                                if (mode == "INSERT_UPDATE_DELETE")
                                 {
                                     if (customsDocument.Entname == "SI")
                                     {
@@ -495,7 +505,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             AppendLogLine("Insert Invoice..");
 
             MyGenericResponseObj.Stage = "GetContext";
-            if (mode != "UPDATE_ONLY" && mode != "INSERT_ONLY")
+            if (mode != "UPDATE_ONLY" && mode != "INSERT_UPDATE_DELETE")
             {
                 this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
                 this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -507,7 +517,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
                     this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
-                else if (mode == "INSERT_ONLY")
+                else if (mode == "INSERT_UPDATE_DELETE" && !String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.ChangeInSupplierInvoice))
                 {
                     if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
                     {
@@ -538,7 +548,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
             */
             if (String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.DeclarationId)) this._MySupplierInvoicePM.DeclarationId = this._MyDeclarationPM.Id;
-            if ((mode != "UPDATE_ONLY" && mode != "INSERT_ONLY") || lastSequenceNumeric < 1)
+            if ((mode != "UPDATE_ONLY" && mode != "INSERT_UPDATE_DELETE") || lastSequenceNumeric < 1)
             {
                 if (!this._MySupplierInvoicePM.SequenceNumeric.HasValue)
                 {
@@ -562,7 +572,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     this._MySupplierInvoicePM.SequenceNumeric = lastSequenceNumeric;
                 }
             }
-            if (mode == "INSERT_ONLY")
+            if (mode == "INSERT_UPDATE_DELETE")
             {
                 if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
                 {
@@ -622,6 +632,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             VendorCommissionQueryService vendorCommissionQuery = new VendorCommissionQueryService(CustomContext.GetContext(ResolvedTenant()));
             VendorCommissionPM commisionPM = vendorCommissionQuery.GetSingleCommisionByVendorAndCustomer(this._MySupplierInvoicePM.VendorId, this._MyDeclarationPM.CustomerId, ResolvedTenant());
             if (commisionPM != null) this._MySupplierInvoicePM.VendorComissionPercentage = commisionPM.CommisionPercentage;
+            if (this._INVOICE.ChangeInSupplierInvoice == "2" && !String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.ChangeInSupplierInvoice)) this._MySupplierInvoicePM.ChangeInSupplierInvoice = "2";
             if (this._INVOICE.INVOICEITEMS != null && this._INVOICE.INVOICEITEMS.Count() > 0)
             {
                 this._MySupplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItemPM(this._INVOICE);
