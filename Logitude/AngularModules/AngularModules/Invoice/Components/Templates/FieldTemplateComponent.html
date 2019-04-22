@@ -1,4 +1,4 @@
-﻿
+
 <table *ngIf="Entity">
     <tr>
         <td>
@@ -10,7 +10,7 @@
                         <td>
                             <div class="MediaFill">
 
-                                <div *ngIf="FieldName == 'SATTransferStatusName'"  [attr.title]="Entity.SATTransferStatusName">{{FieldValue}}</div>
+                                <div *ngIf="FieldName == 'SATTransferStatusName'" [attr.title]="Entity.SATTransferStatusName">{{FieldValue}}</div>
 
                                 <!-- StatusName -->
                                 <div *ngIf="FieldName == 'StatusName'" class="TemplateTrimming">
@@ -540,6 +540,104 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div *ngIf="IsSpotLightTemplate && ObjectTableName == 'ARInvoice'" style="position:absolute;top:0;bottom:0;left:0;right:0; background-color:#E8F7FF; border-color:#6A8299; border-width:1px; border-style: Solid;">
+                    <div style="height:100%;width:100%;" class="TabHolder">
+                        <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width:145px;">Expected Payment Date:</td>
+
+                                                <td style="width:120px;">
+                                                    <LogDatePicker [ObjectFieldName]="'ExpectedPaymentDate'" [SelectedDateValue]="ExpectedPaymentDate" [ObjectTableName]="'ARInvoice'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:50px;">Notes:</td>
+
+                                                <td style="width:120px; height: 70px; vertical-align: top;">
+                                                    <div style="height: 100%; width: 100%;">
+                                                        <LogTextBox [ObjectFieldName]="'InternalNotes'" [Text]="InternalNotes" [ObjectTableName]="'ARInvoice'" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:32px;">
+                                    <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:11px;">
+                                        <table>
+                                            <tr>
+                                                <td style="width:50px;">
+                                                    <button class="Button" (click)="SaveInvoiceChanges()" style="height:26px;">
+                                                        <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
+                                                        <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                                                    </button>
+                                                </td>
+
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:80px;">
+                                                    <button class="Button" (click)="NewPaymentClicked()" style="height:26px;">
+                                                        <span style="line-height: 19px;">New Payment</span>
+                                                    </button>
+                                                </td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:80px;">Shipment #:</td>
+
+                                                <td style="width:120px;">
+                                                    <span class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity['MainEntityReference']}}</span>
+                                                </td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:110px;">Shipment Status:</td>
+
+                                                <td style="width:120px;">{{MainEntityStatus}}</td>
+
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td>
+                                                    <span style="font-size:14px;" class="hyperlink" (click)="ViewEntityClicked('INV')">Full Details</span>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="margin:5px;">
+                            <BusyIndicator [Width]="180" [Height]="100" [ImageWidth]="45" [ImageHeight]="45" [Text]="BusyIndicatorMessage" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </td>
     </tr>

@@ -209,6 +209,10 @@ export class NewViewComponent {
                         this.SpotlightFeatureEnabled = true;
                     }
 
+                    if (FeatureLocator.HasFeaturePermession("ARInvoice", "SSPV") && this.EntityPM.ObjectTableName == "ARInvoice" ) {
+                        this.SpotlightFeatureEnabled = true;
+                    }
+
                     this.ShowInSpotLight = this.EntityPM.SpotlightModeActivated;
                 }
 
@@ -306,6 +310,10 @@ export class NewViewComponent {
         if (currentQuery) {
             if (this.IsNew) {
                 if (FeatureLocator.HasFeaturePermession("Shipment", "CSPV") && (currentQuery.ObjectTableName == "Shipment" || currentQuery.ObjectTableName == "Master")) {
+                    this.SpotlightFeatureEnabled = true;
+                }
+
+                if (FeatureLocator.HasFeaturePermession("ARInvoice", "SSPV") && currentQuery.ObjectTableName == "ARInvoice") {
                     this.SpotlightFeatureEnabled = true;
                 }
 
