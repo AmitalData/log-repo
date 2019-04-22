@@ -1949,6 +1949,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     APInvoiceRepository apInvoiceReps = new APInvoiceRepository(shipment.Tenant);
                     List<APInvoice> invoices = apInvoiceReps.GetInvoicesByShipmentId(shipmentPM.Id, shipmentPM.Tenant);
 
+                    if (shipmentPM.ShipmentLevelCode == "H" && shipmentPM.MasterShipmentDataId != null)
+                    {
+                        List<APInvoice> invoices_Childs = apInvoiceReps.GetInvoicesByShipmentId(shipmentPM.MasterShipmentDataId, shipmentPM.Tenant);
+                        foreach (APInvoice item in invoices_Childs)
+                        {
+                            if (!invoices.Where(d => d.Id == item.Id).Any())
+                            {
+                                invoices.Add(item);
+                            }
+                        }
+                    }
+
                     foreach (APInvoice invoice in invoices)
                     {
                         ShipmentAPInvoicePM entityPM = new ShipmentAPInvoicePM()

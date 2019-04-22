@@ -288,7 +288,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         private Port GetPortDetails(string code, int tenant)
         {
-            PortRepository portRepository = new PortRepository();
+            PortRepository portRepository = new PortRepository(tenant);
             return portRepository.GetSinglePortByCode(tenant, code,false);
         }
     }

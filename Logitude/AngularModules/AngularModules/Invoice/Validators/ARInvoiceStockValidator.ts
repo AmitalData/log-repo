@@ -8,10 +8,12 @@ export class ARInvoiceStockValidator {
 
         Validator.TryValidateObject(entityPM, "ARInvoiceStock", errors);
 
-        if (DateTool.GetDateParts(entityPM.StartDate).DateTicks > DateTool.GetDateParts(entityPM.EndDate).DateTicks) {
-            errors.push("Start Date cannot be greater than End Date");
+        if (entityPM.StartDate != null  && entityPM.EndDate != null) {
+            if (DateTool.GetDateParts(entityPM.StartDate).DateTicks > DateTool.GetDateParts(entityPM.EndDate).DateTicks) {
+                errors.push("Start Date cannot be greater than End Date");
+            }
         }
-        
+
         return errors;
     }
 }
