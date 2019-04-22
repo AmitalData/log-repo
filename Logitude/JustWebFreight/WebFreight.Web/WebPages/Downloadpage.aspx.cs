@@ -296,7 +296,7 @@ namespace WebFreight.Web.WebPages
                         string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + "." + documentExtension;
 
                         if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", "");
-                        documentName = "test" + "." + documentExtension;
+                      
                         // _DatainByte = sender as byte[];
                         HttpContext.Current.Response.Clear();
                         HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
