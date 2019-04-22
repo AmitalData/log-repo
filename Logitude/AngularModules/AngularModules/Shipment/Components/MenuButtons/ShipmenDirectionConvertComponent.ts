@@ -1085,16 +1085,19 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
         this.myCloner = new Cloner(this.EntityPM);
         this.myCloner.AddField('DirectionId');
         this.myCloner.AddField('ShipperId');
+        this.myCloner.AddField('ShipperName');
         this.myCloner.AddField('ShipperAddressId');
         this.myCloner.AddField('ShipperContactId');
         this.myCloner.AddField('ShipperReference1');
         this.myCloner.AddField('ShipperReference2');
         this.myCloner.AddField('ConsigneeId');
+        this.myCloner.AddField('ConsigneeName');
         this.myCloner.AddField('ConsigneeAddressId');
         this.myCloner.AddField('ConsigneeContactId');
         this.myCloner.AddField('ConsigneeReference1');
         this.myCloner.AddField('ConsigneeReference2');
         this.myCloner.AddField('CustomerId');
+        this.myCloner.AddField('CustomerName');
         this.myCloner.AddField('ShipmentCustomerTypeCode');
         this.myCloner.AddField('MainCarriageFromPortId');
         this.myCloner.AddField('MainCarriageFromToId');
@@ -1232,6 +1235,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                 }
 
                 else {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
             }

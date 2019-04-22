@@ -1259,7 +1259,6 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (d == "ok") {
-                    this.Reload = true;
                     this.ResetButtonClicked();
                 }
             });
