@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+﻿using Logitude.BL.InvoiceModel.APIDataContract;
+using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
@@ -16,6 +17,7 @@ using System.Net.Http;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
@@ -183,6 +185,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-
+       
     }
 }
