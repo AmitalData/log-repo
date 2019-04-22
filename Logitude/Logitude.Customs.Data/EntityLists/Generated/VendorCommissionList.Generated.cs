@@ -24,6 +24,12 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? CommisionPercentage  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string ModificationsTypeCode  { get; set; }
+       [DataMember]
+       public string ModificationsTypeName  { get; set; }
    }
 
 }

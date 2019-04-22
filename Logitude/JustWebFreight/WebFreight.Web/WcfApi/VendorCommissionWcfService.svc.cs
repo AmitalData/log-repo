@@ -189,6 +189,8 @@ namespace WebFreight.Web.WcfApi
                     CustomerRepository customerRepository = new CustomerRepository(commonContext);
                     Customer customer = customerRepository.GetSingleCustomerByCode(entityPM.CustomerId, entityPM.Tenant, false);
 
+
+
                     if (vendor != null && customer != null)
                     {
                         VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id, false, false);
