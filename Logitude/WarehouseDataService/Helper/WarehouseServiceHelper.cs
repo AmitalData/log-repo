@@ -138,5 +138,50 @@ namespace WarehouseDataService.Helper
             return result;
         }
 
+        public string BuildConnectionString(string dbSourceConnection)
+        {
+            string result = string.Empty;
+
+            string[] sourceConnectionArray = dbSourceConnection.Split(',');
+            if (sourceConnectionArray.Length == 4)
+            {
+                result = BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+            }
+
+            return result;
+
+        }
+
+        public string GetMainDBConnectionString(string connectionString)
+        {
+            string result = null;
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand com = new SqlCommand("select DBConnection,SecondaryAzureDBConnection from dbo.GlobalDBs where Id =0;", con);
+            try
+            {
+                con.Open();
+
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    reader.Read();
+
+                    var dbConnectionString = reader["SecondaryAzureDBConnection"];
+                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
+                    else
+                    {
+                        dbConnectionString = reader["DBConnection"];
+                        if (dbConnectionString != null) result = dbConnectionString.ToString();
+                    }
+
+                }
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return result;
+        }
+
     }
 }
