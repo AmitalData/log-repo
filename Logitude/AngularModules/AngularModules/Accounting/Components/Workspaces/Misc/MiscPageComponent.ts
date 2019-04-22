@@ -95,6 +95,19 @@ export class MiscPageComponent implements AfterViewInit {
                     });
                     break;
                 }
+
+           case "ACYT":{
+                        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 500;
+                        logitudeWindow.Height = 300;
+                        logitudeWindow.Title = "Year Transfer";
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/YearTransferComponent');
+                    });
+                   
+                       break;
+
+                       }
                 default: { break; }
             }
 

@@ -188,7 +188,9 @@ export class GeneralPrintHelper {
             logitudeWindow.Title = "Print " + this.documentTypePM.Name;
             logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/PrintDocumentComponent');
             logitudeWindow.WindowClosed.subscribe(($event: any) => {
-
+                if (this.CurrentSession.CurrentEditComponent) {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                }
             });
        
     }
