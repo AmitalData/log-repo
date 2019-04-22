@@ -201,8 +201,9 @@ namespace Logitude.BL.GlobalModel
                                                       AckReason = analyzeQueue.AckReason,
                                                       DoneDate = analyzeQueue.DoneDate,
                                                       EntityReference = analyzeQueue.EntityReference,
-                                                      ObjectTableName = analyzeQueue.ObjectTableName
-                                                      
+                                                      ObjectTableName = analyzeQueue.ObjectTableName,
+                                                      Log= analyzeQueue.Log,
+
                                                   };
             return result;
         }
