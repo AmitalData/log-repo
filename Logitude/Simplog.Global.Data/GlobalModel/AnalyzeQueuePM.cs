@@ -35,6 +35,8 @@ namespace Simplog.Global.Data.GlobalModel
         public string AckReason { get; set; }
         public DateTime? DoneDate { get; set; }
         public string FileName { get; set; }
+        public string Log { get; set; }
+
         public virtual AnalyzeQueueStatus AnalyzeQueueStatus { get; set; }
         public virtual TenantManagement TenantManagement { get; set; }
     }

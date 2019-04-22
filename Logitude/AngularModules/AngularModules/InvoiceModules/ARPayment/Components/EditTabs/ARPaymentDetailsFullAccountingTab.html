@@ -645,15 +645,17 @@
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                         [header]="'LedgerTransaction.F.AmountToReconcile' | TextCodeTranslationPipe"
                                         [width]="'135'" [binding]="'AmountToReconcile'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming"
+                                        <log-cell-template template="let item" [IsEditMode]="true" #logcelltemplate>
+                                            <!-- <div class="TextTrimming"
                                                 style="text-align: right;padding-right: 5px;direction: ltr;"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                            </div> -->
+                                            <!-- <div *ngIf="logcelltemplate.IsEditMode"> -->
+                                            <div>
+                                                <!-- *ngIf="!item.IsReconciled"  -->
                                                 <LogTextBox #AmountToReconcileTextBox
-                                                    *ngIf="!item.IsReconciled" [FocusOnMe]="'true'"
+                                                    [FocusOnMe]="'true'"
                                                     [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"  [DebounceTime]="1"
                                                     [InputType]="'decimal'" [DigitsAfterPoint]="2" [DataContext]="item"
                                                     [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"
@@ -661,24 +663,24 @@
                                                     >
                                                 </LogTextBox>
 
-                                                <div class="TextTrimming"
+                                                <!-- <div class="TextTrimming"
                                                     style="text-align: right;padding-right: 5px;direction: ltr;"
                                                     *ngIf="item.IsReconciled">
                                                     <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- ReconciledAmount -->
-                                    <log-column [width]="'130'"
+                                    <!-- <log-column [width]="'130'"
                                         [header]="'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe"
                                         [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"
                                             [Alignment]="'right'">
                                             {{item.ReconciledAmount | NumbersPipe:'N2'}}
                                         </log-cell-template>
-                                    </log-column>
+                                    </log-column> -->
 
                                     <!-- PaymentReconciledAmount -->
                                     <!-- <log-column [width]="'130'"
@@ -706,7 +708,17 @@
                                         [header]="'Accounting.O.ARP.Status' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div class="TextTrimming" text-start [style.color]="item.GetStatusColor()">
-                                                {{item.Status}}
+
+                                                <span float-start>
+                                                    {{item.Status}}
+                                                </span>
+
+                                                <LogToolTip float-start [direction]="isRTL?'bottomleft':'bottomright'" [name]="item.Id" *ngIf="item.Status == TextStore.partiallyOpened">
+                                                    <span style="font-size: bold;">
+                                                        {{ 'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe }}: {{ item.ReconciledAmount }}
+                                                    </span>
+                                                </LogToolTip>
+
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -775,9 +787,18 @@
 
                                         <div float-start class="amount-div">
                                             <div class="amount">{{paymentAmountTotal | NumbersPipe:'N2'}}</div>
-                                            <div class="label">
-                                                {{'ARPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe}}
-                                            </div>
+                                            <div class="label">{{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}</div>
+
+                                        </div>
+
+                                        <div float-start class="seperator">
+                                            <div>-</div>
+                                        </div>
+
+                                        <div float-start class="amount-div">
+                                            <div class="amount">{{paymentReconciledAmountTotal | NumbersPipe:'N2'}}</div>
+                                            <div class="label">{{'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe}}</div>
+
                                         </div>
 
                                         <div float-start class="seperator">
@@ -786,8 +807,7 @@
 
                                         <div float-start class="amount-div">
                                             <div class="amount">{{amount2reconcileTotal | NumbersPipe:'N2'}}</div>
-                                            <div class="label">
-                                                {{'ARPayment.S.Details.AmountToPay' | TextCodeTranslationPipe}}</div>
+                                            <div class="label">{{'Accounting.O.ARP.Amount2Reconcile' | TextCodeTranslationPipe}}</div>
                                         </div>
 
 
@@ -799,7 +819,7 @@
                                         <div float-start class="amount-div">
                                             <div class="amount">{{paymentAmountTotal - amount2reconcileTotal | NumbersPipe:'N2'}}</div>
                                             <div class="label">{{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}
-                                                {{PaymentCurrencyCode}}
+                                                ({{PaymentCurrencyCode}})
                                             </div>
                                         </div>
 

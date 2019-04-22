@@ -31,5 +31,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string TenantName { get; set; }
         public string AWBNumber { get; set; }
         public string AckReason { get; set; }
+        public string Log { get; set; }
+
     }
 }

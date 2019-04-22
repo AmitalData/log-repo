@@ -164,7 +164,17 @@ export class TariffPM {
         }
     }
     //public TariffLines: Array<TariffLinePM>= [];
- 
+     private setAsInActive: boolean;
+    public get SetAsInActive() { return this.setAsInActive; }
+    public set SetAsInActive(newValue: boolean) { if (this.setAsInActive != newValue) { this.setAsInActive = newValue; this.MarkAsDirty("SetAsInActive"); } }
+       
+	 
+    private setAsReActive: boolean;
+    public get SetAsReActive() { return this.setAsReActive; }
+    public set SetAsReActive(newValue: boolean) { if (this.setAsReActive != newValue) { this.setAsReActive = newValue; this.MarkAsDirty("SetAsReActive"); } }
+       
+	 
+
     public OldEntityPM: TariffPM;
 		
     public IsDirty: boolean;
