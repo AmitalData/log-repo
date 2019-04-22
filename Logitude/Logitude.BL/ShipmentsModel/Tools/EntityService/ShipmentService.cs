@@ -2734,6 +2734,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             this.DeleteShipmentOrderPackage(pm);
                         }
 
+                        entityPM.BookingVolume = null;
+                        entityPM.BookingNumberOfPackages = null;
+                        entityPM.OrderChargeableWeight = null;
+                        entityPM.OrderGrossWeight = null;
+                        entityPM.OrderVolumetricWeight = null;
                         entityPM.TEU = null;
                         entityPM.NumberOfPackages = null;
                         entityPM.NumberOfContainers = null;

@@ -232,12 +232,19 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToLCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.ShipmentTypeId == "FCLD") {
-                                button.IsHidden = false;
+                            if (this.EntityPM.IsCancelled) {
+                                button.IsDisabled = true;
                             }
+
                             else {
-                                button.IsHidden = true;
-                            }
+                                if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                    button.IsHidden = false;
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                            }                            
                         }
                         else {
                             button.IsHidden = true;
@@ -246,11 +253,18 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToFCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.ShipmentTypeId == "LCLD") {
-                                button.IsHidden = false;
+                            if (this.EntityPM.IsCancelled) {
+                                button.IsDisabled = true;
                             }
+
                             else {
-                                button.IsHidden = true;
+                                if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                    button.IsHidden = false;
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
                             }
                         }
                         else {
