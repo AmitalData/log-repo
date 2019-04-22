@@ -296,7 +296,7 @@ namespace WebFreight.Web.WebPages
                         string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + "." + documentExtension;
 
                         if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", "");
-
+                        documentName = "test" + "." + documentExtension;
                         // _DatainByte = sender as byte[];
                         HttpContext.Current.Response.Clear();
                         HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
@@ -378,11 +378,11 @@ namespace WebFreight.Web.WebPages
                         if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
                         {
 
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename*=UTF-8''" + HttpUtility.UrlPathEncode(documentName) + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename*=UTF-8''" + documentName + "\"");
                         }
                         else
                         {
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" +documentName + "\"");
                         }
 
                         if (!string.IsNullOrEmpty(documentOutCopyId))
