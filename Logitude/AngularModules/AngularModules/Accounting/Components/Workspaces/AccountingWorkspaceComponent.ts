@@ -12,7 +12,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 export class AccountingWorkspaceComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    
+
     public isRTL: boolean = false;
 
 
@@ -45,7 +45,7 @@ export class AccountingWorkspaceComponent {
 
             else {
                 this.isLoaderReady = true;
-                this.SelectedItem = "GLAC";
+                this.SelectedItem = "Main";
             }
         }
 
@@ -78,6 +78,7 @@ export class AccountingWorkspaceComponent {
     }
 
     private Page_GLAccounts: any = null;
+    private Page_Main: any = null;
     private Page_Journals: any = null;
     private Page_Receivable: any = null;
     private Page_Payable: any = null;
@@ -92,13 +93,13 @@ export class AccountingWorkspaceComponent {
 
                     switch (this.SelectedItem) {
 
-                        case "GLAC": {
-                            if (this.Page_GLAccounts == null) {
+                        case "Main": {
+                            if (this.Page_Main == null) {
                                 this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
-                                    SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Main/GLAccountPageComponent", myLocation.viewContainerRef)
+                                    SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Main/MainPageComponent", myLocation.viewContainerRef)
                                         .then(cmpRef => {
-                                            this.Page_GLAccounts = cmpRef.instance;
-                                            this.Page_GLAccounts.InitComponent();
+                                            this.Page_Main = cmpRef.instance;
+                                            this.Page_Main.InitComponent();
                                         });
                                 });
                             }
@@ -158,6 +159,18 @@ export class AccountingWorkspaceComponent {
                                         this.Page_Misc = cmpRef.instance;
                                         this.Page_Misc.InitComponent();
                                     });
+                            }
+                            break;
+                        }
+                        case "GLAccounts": {
+                            if (this.Page_GLAccounts == null) {
+                                this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
+                                    SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/GLAccounts/GLAccountsPageComponent", myLocation.viewContainerRef)
+                                        .then(cmpRef => {
+                                            this.Page_GLAccounts = cmpRef.instance;
+                                            this.Page_GLAccounts.InitComponent();
+                                        });
+                                });
                             }
                             break;
                         }

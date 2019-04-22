@@ -107,6 +107,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildSummaryData();
@@ -267,7 +270,12 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public OpenPayables: number = 0;
     public DifferencePayablesText: string = "N/A";
     public DifferencePayablesColor: string;
+    public PayableList: any[] = [];
+
     BuildSummaryData() {
+
+        this.PayableList = this.EntityPM.ShipmentAPInvoices;
+
         if (this.IsByLocalCurrency) {
             this.AccrualsPayables = ArrayTool.Sum(this.EntityPM.ShipmentPayables, "ExpectedAmountLocal");
             this.AccountedPayables = ArrayTool.Sum(this.EntityPM.ShipmentPayables, "AccountedAmountInLocalCurrency");

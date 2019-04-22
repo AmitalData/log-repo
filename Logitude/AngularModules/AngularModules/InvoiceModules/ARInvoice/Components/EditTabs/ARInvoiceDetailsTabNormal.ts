@@ -1520,7 +1520,8 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             if (value.Code == "MAS") {
                 this.IsInvoiceNumberManuallySet = true;
             }
-            if (value.Code == "STK") {
+            else if (value.Code == "STK") {
+                this.IsInvoiceNumberManuallySet = false;
                 this.IsInvoiceNumberFromStock = true;
             }
             else {
@@ -1573,6 +1574,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
 
     ReturnInvoiceNumberToStock() {
+        this.IsgetFromStockAfterSaving = true;
         this.ARInvoiceStockId = null;
         this.InvoiceNumber = null;
         this.IsInvoiceNumberComboBoxEnabled = true;
