@@ -542,7 +542,7 @@
                 </div>
 
 
-                <div *ngIf="IsSpotLightTemplate && ObjectTableName == 'ARInvoice'" style="position:absolute;top:0;bottom:0;left:0;right:0; background-color:#E8F7FF; border-color:#6A8299; border-width:1px; border-style: Solid;">
+                <div *ngIf="IsSpotLightTemplate && ObjectTableName == 'ARInvoice' && Entity['StatusCode'] != 'DR'" style="position:absolute;top:0;bottom:0;left:0;right:0; background-color:#E8F7FF; border-color:#6A8299; border-width:1px; border-style: Solid;">
                     <div style="height:100%;width:100%;" class="TabHolder">
                         <div>
                             <table>
