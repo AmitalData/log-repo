@@ -12,7 +12,7 @@ import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelVal
 import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
 import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
-
+import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
 import { PackageTypeListService } from '../../Common/Services/StandardLists/PackageTypeListService';
 
 
