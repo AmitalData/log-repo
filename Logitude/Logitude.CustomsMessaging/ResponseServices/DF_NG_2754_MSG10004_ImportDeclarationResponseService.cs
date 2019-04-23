@@ -396,6 +396,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this._MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateIIGExcptionConst;
                 myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
+                if (currentDeclarationCourierStatusPM != null)
+                {
+
+                    currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+
+                }
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.UserMessage = userMessage;
