@@ -24,6 +24,29 @@ export class AutomationExtendedPMService {
     }
 
 
+    GetDoesAutomationCodeExist(code: string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetDoesAutomationCodeExist" + '?code=' + code , { headers: authHeader }).map(response => {
+
+            var result = response.json();
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = result;
+
+            return pmresponse;
+
+
+
+
+        }).catch(ServiceHelper.HandleServiceError);
+
+    }
+
+
+
     getAutomationesByObjectTableId(objectTableId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

@@ -195,23 +195,153 @@
 
                     <td style="width: 300px;">
                         <table>
-                            <tr class="FormFieldRow">
-                                <td style="vertical-align: middle;">
-                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+
+                            <tr style="height: 100px;">
+                                <td>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="vertical-align: middle;">
+                                                <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow" style="height: 100px;">
+                                            <td style="height: 100px;">
+                                                <div style="height: 100px;">
+                                                    <LogTextBox [ObjectFieldName]="'Description'" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
-
-                            <tr class="FormFieldRow" style="height: 100px;">
-                                <td style="height: 100px;">
-                                    <div style="height: 100px;">
-                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
+                           
+                            <tr style="height:5px;">
                                 <td>
                                     <div></div>
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="DataContext.IsVehicleDetails" style="vertical-align:top;">
+                                <td>
+                                    <table>
+                                        <tr style="height:32px;">
+                                            <td colspan="2" style="color:#1B90CB;font-size:14px;">
+                                                Vehicle Details
+                                            </td>
+                                        </tr>
+
+                                        <!-- Make -->
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 160px;">
+                                                <LogLabel [ObjectFieldName]="'Make'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 180px;">
+                                                <LogTextBox [ObjectFieldName]="'Make'" [Text]="DataContext.Make" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Model -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'Model'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'Model'" [Text]="DataContext.Model" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Year  -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'Year'" [Text]="DataContext.Year" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Color  -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'Color'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'Color'" [Text]="DataContext.Color" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Chassis Number  -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'ChassisNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'ChassisNumber'" [Text]="DataContext.ChassisNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Registration Number  -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'RegistrationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'RegistrationNumber'" [Text]="DataContext.RegistrationNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- CountryId -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'CountryId'"
+                                                        [SelectedValue]="DataContext.CountryId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Country'">
+                                                </LogLov>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                    </table>
                                 </td>
                             </tr>
                         </table>

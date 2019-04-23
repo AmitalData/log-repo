@@ -717,6 +717,22 @@
     <Compile Include="Migrations\201902202034350_add_AgentComputed_Shipments.Designer.cs">
       <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903030807448_AddIsVeichleToPackageType_Samar.cs" />
+    <Compile Include="Migrations\201903030807448_AddIsVeichleToPackageType_Samar.Designer.cs">
+      <DependentUpon>201903030807448_AddIsVeichleToPackageType_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.cs" />
+    <Compile Include="Migrations\201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.Designer.cs">
+      <DependentUpon>201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903060826104_AddCardDetailsInsidePackageAndWarehousesTables_Maheera.cs" />
+    <Compile Include="Migrations\201903060826104_AddCardDetailsInsidePackageAndWarehousesTables_Maheera.Designer.cs">
+      <DependentUpon>201903060826104_AddCardDetailsInsidePackageAndWarehousesTables_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903060836090_AddCardDetailsIToShipmentPickUpDeliveryPackageTable_Maheera.cs" />
+    <Compile Include="Migrations\201903060836090_AddCardDetailsIToShipmentPickUpDeliveryPackageTable_Maheera.Designer.cs">
+      <DependentUpon>201903060836090_AddCardDetailsIToShipmentPickUpDeliveryPackageTable_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.cs" />
     <Compile Include="Migrations\201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.Designer.cs">
       <DependentUpon>201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.cs</DependentUpon>
@@ -916,6 +932,10 @@
     <Compile Include="Migrations\201904230522415_AbedAddFieldCodeToAutomation.cs" />
     <Compile Include="Migrations\201904230522415_AbedAddFieldCodeToAutomation.Designer.cs">
       <DependentUpon>201904230522415_AbedAddFieldCodeToAutomation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904230815042_UpdateTableFields_JournalMoreData.cs" />
+    <Compile Include="Migrations\201904230815042_UpdateTableFields_JournalMoreData.Designer.cs">
+      <DependentUpon>201904230815042_UpdateTableFields_JournalMoreData.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -1397,6 +1417,18 @@
     <EmbeddedResource Include="Migrations\201902202034350_add_AgentComputed_Shipments.resx">
       <DependentUpon>201902202034350_add_AgentComputed_Shipments.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903030807448_AddIsVeichleToPackageType_Samar.resx">
+      <DependentUpon>201903030807448_AddIsVeichleToPackageType_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.resx">
+      <DependentUpon>201903041342248_AddCarsDBToShipmentPackagesDB_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903060826104_AddCardDetailsInsidePackageAndWarehousesTables_Maheera.resx">
+      <DependentUpon>201903060826104_AddCardDetailsInsidePackageAndWarehousesTables_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903060836090_AddCardDetailsIToShipmentPickUpDeliveryPackageTable_Maheera.resx">
+      <DependentUpon>201903060836090_AddCardDetailsIToShipmentPickUpDeliveryPackageTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.resx">
       <DependentUpon>201902280724589_AbedEditLenghtAndIsRequiredFieldPrintAsOnPackageType.cs</DependentUpon>
     </EmbeddedResource>
@@ -1546,6 +1578,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904230522415_AbedAddFieldCodeToAutomation.resx">
       <DependentUpon>201904230522415_AbedAddFieldCodeToAutomation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904230815042_UpdateTableFields_JournalMoreData.resx">
+      <DependentUpon>201904230815042_UpdateTableFields_JournalMoreData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
