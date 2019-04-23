@@ -86,7 +86,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
 
                 var JournalLineToLedgerStepList = MyAccountingIntegrityStep.Where(r => r.Name == "JournalLineToLedgerCheck");
-                var JournalLineToLedgerStep = JournalLineToLedgerStepList.First(r => r.BadRows > 0);
+                var JournalLineToLedgerStep = JournalLineToLedgerStepList.Where(r => r.BadRows > 0).FirstOrDefault();
                 if (JournalLineToLedgerStepList != null)
                 {
                     throw new Exception("no abilty to fix JournalLineToLedger !!!");

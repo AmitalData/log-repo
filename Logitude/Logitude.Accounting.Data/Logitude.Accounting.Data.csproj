@@ -108,6 +108,7 @@
     <Compile Include="EntityListQueryServices\Generated\BankPageEntryTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\IntegrityCheckStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalAdditionalDataListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\JournalMoreDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RevaluationStatusListQueryService.Generated.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="EntityListQueryServices\Generated\VatReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\IntegrityCheckStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\JournalAdditionalDataListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\JournalMoreDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OpenFormatReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OpenFormatReportStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RevaluationStatusListQueryService.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="EntityLists\Generated\BankPageEntryTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\IntegrityCheckStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalAdditionalDataList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\JournalMoreDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RevaluationStatusList.Generated.cs" />

@@ -1412,8 +1412,26 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DocumentAmountAndVATAmount != null)
                 {
-                    if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
-                    myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(15, '0'));
+                    if (item.DocumentAmountAndVATAmount > 0)
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append("+");
+                        if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
+                        myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
+                    }
+
+                    if (item.DocumentAmountAndVATAmount < 0)
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append("-");
+                        if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
+                        myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append('0', 15);
+                    }
                 }
                 else
                 {
@@ -2144,8 +2162,26 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DocumentAmountAndVATAmount != null)
                 {
-                    if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
-                    myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(15, '0'));
+                    if (item.DocumentAmountAndVATAmount > 0)
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append("+");
+                        if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
+                        myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
+                    }
+
+                    if (item.DocumentAmountAndVATAmount < 0)
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append("-");
+                        if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
+                        myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append('0', 15);
+                    }
                 }
                 else
                 {
@@ -2751,8 +2787,27 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DocumentAmountAndVATAmount != null)
                 {
-                    if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
-                    myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(15, '0'));
+                    if(item.DocumentAmountAndVATAmount > 0)
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append("+");
+                        if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
+                        myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
+                    }
+
+                    if (item.DocumentAmountAndVATAmount < 0)
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append("-");
+                        if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
+                        myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append('0', 15);
+                    }
+
                 }
                 else
                 {
@@ -3165,8 +3220,26 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DocumentAmountAndVATAmount != null)
                 {
-                    if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
-                    myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(15, '0'));
+                    if (item.DocumentAmountAndVATAmount > 0)
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append("+");
+                        if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
+                        myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
+                    }
+
+                    if (item.DocumentAmountAndVATAmount < 0)
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append("-");
+                        if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
+                        myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append('0', 15);
+                    }
                 }
                 else
                 {
