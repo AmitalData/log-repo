@@ -42,9 +42,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.GeneralData).HasColumnName("GeneralData").IsRequired().IsUnicode(true);
 
-            this.Property(t => t.TaxReportId).HasColumnName("TaxReportId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.TaxReportStatusCode).HasColumnName("TaxReportStatusCode").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.IsLedgerCreated).HasColumnName("IsLedgerCreated");
         }
     }
 }

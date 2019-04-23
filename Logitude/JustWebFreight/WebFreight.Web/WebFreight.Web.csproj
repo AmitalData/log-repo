@@ -940,6 +940,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountWithholdingTaxViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\IntegrityCheckStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\PaymentChequeLineViewsController.Generated.cs" />
