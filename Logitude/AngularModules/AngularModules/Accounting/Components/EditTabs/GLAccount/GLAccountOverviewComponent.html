@@ -548,9 +548,9 @@
                                             <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{GLAccountMoreData.BalanceInLocalCurrency | NumbersPipe:'N2'}}
                                             </div>
-                                            <div class="link"  (click)="CardIndexClicked()" float-start [style.text-align]="isRTL ? 'left' : 'right'" >
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;"  (click)="CardIndexClicked()" float-start [style.text-align]="isRTL ? 'left' : 'right'" >
                                                 {{ 'GLAccounts.O.CardIndex' | TextCodeTranslationPipe }}
-                                            </div>
+                                            </a>
                                         </div>
 
                                         <!-- 3 -->
@@ -561,9 +561,9 @@
                                             <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{GLAccountMoreData.TotalOpenChequesInLocalCur | NumbersPipe:'N2'}}
                                             </div>
-                                            <div class="link" (click)="DisplayChequelistClicked()" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked()" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
-                                            </div>
+                                            </a>
                                         </div>
 
                                         <!-- 4 -->
@@ -574,9 +574,9 @@
                                             <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{GLAccountMoreData.TotFutureOpenChequesInLocalCur | NumbersPipe:'N2'}}
                                             </div>
-                                            <div class="link" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 <!-- {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }} -->
-                                            </div>
+                                            </a>
                                         </div>
 
                                         <!-- 5 -->
@@ -587,9 +587,9 @@
                                             <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 <!-- 132,538 -->
                                             </div>
-                                            <!-- <div class="link" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
-                                            </div> -->
+                                            </div> a-->
                                         </div>
 
 
@@ -601,9 +601,9 @@
                                             <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{accountCardlist.CreditLimitAmount | NumbersPipe:'N2'}}
                                             </div>
-                                            <!-- <div class="link" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
-                                            </div> -->
+                                            </div> a-->
                                         </div>
 
                                     </div>
