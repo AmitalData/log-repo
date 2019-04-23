@@ -687,6 +687,167 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string make ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Make  
+	   {
+	    
+	     get
+		{
+		   return make;
+		 }
+		 set
+		 {
+		   if(make != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Make",OldValue=make,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   make=value;
+		   }
+			
+		 }
+	   }
+	  private string model ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Model  
+	   {
+	    
+	     get
+		{
+		   return model;
+		 }
+		 set
+		 {
+		   if(model != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Model",OldValue=model,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   model=value;
+		   }
+			
+		 }
+	   }
+	  private string year ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Year  
+	   {
+	    
+	     get
+		{
+		   return year;
+		 }
+		 set
+		 {
+		   if(year != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Year",OldValue=year,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   year=value;
+		   }
+			
+		 }
+	   }
+	  private string color ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Color  
+	   {
+	    
+	     get
+		{
+		   return color;
+		 }
+		 set
+		 {
+		   if(color != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Color",OldValue=color,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   color=value;
+		   }
+			
+		 }
+	   }
+	  private string chassisNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChassisNumber  
+	   {
+	    
+	     get
+		{
+		   return chassisNumber;
+		 }
+		 set
+		 {
+		   if(chassisNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChassisNumber",OldValue=chassisNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chassisNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string registrationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RegistrationNumber  
+	   {
+	    
+	     get
+		{
+		   return registrationNumber;
+		 }
+		 set
+		 {
+		   if(registrationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RegistrationNumber",OldValue=registrationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   registrationNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string countryId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CountryId  
+	   {
+	    
+	     get
+		{
+		   return countryId;
+		 }
+		 set
+		 {
+		   if(countryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryId",OldValue=countryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   countryId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

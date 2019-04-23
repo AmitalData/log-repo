@@ -28,5 +28,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SearchFields { get; set; }
         public string PrintAs { get; set; }
         public bool IsRefrigerated { get; set; }
+        public bool IsVehicle { get; set; }
     }
 }

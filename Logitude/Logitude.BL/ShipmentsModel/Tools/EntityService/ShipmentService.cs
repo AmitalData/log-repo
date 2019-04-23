@@ -4477,6 +4477,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
+                if(list1!= null &&  list1.Count > 0)
+                {
+                    foreach (InsideShipmentPackagePM item in list1)
+                    {
+                        var itemVehicleDetails = "";
+                        itemVehicleDetails += string.IsNullOrEmpty(item.Make)? "" : item.Make ;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.Model) ? "" : "/ " +item.Model ;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.Year)? "" : "/ " + item.Year ;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.Color) ? "" : "/ " + item.Color ;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.ChassisNumber)  ? "" : "/ " + item.ChassisNumber ;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.RegistrationNumber) ? "" : "/ " + item.RegistrationNumber ;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.CountryCode) ? "" : "/ " + item.CountryCode;
+                        myNumberOfInsidePackagesDetails = string.IsNullOrEmpty(myNumberOfInsidePackagesDetails) ? itemVehicleDetails : myNumberOfInsidePackagesDetails + "\n " + itemVehicleDetails;
+                    }
+                }
+
                 if (myNumberOfInsidePackagesDetails.Length > 500)
                 {
                     myNumberOfInsidePackagesDetails = myNumberOfInsidePackagesDetails.Substring(0, 500);
