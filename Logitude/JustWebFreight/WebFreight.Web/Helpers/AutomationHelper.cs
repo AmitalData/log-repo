@@ -263,33 +263,33 @@ namespace WebFreight.Web.Helpers
 
         public void CopyAutomationFromTenantZeroToMyTenant(int tenant)
         {
-            AutomationQuery automationQuery = new AutomationQuery(tenant);
-            AutomationRepository automationRepository = new AutomationRepository(tenant);
-            List<string> automationListsCodes =  automationQuery.GetAutomationCodeLists(tenant);
-            List<Automation> automationLists = automationRepository.GetAutomations(0).Where(d =>d.ResultCode == "EMAIL" && !automationListsCodes.Contains(d.Code)).ToList();
+            //AutomationQuery automationQuery = new AutomationQuery(tenant);
+            //AutomationRepository automationRepository = new AutomationRepository(tenant);
+            //List<string> automationListsCodes =  automationQuery.GetAutomationCodeLists(tenant);
+            //List<Automation> automationLists = automationRepository.GetAutomations(0).Where(d =>d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code)&& !automationListsCodes.Contains(d.Code)).ToList();
 
-            foreach (Automation automation in automationLists)
-            {
-                var newautomation = new AutomationPM()
-                {
-                    Tenant = tenant,
-                    Code = automation.Code,
-                    Description = automation.Description,
-                    From = automation.From,
-                    FromEmail = automation.FromEmail,
-                    Inactive = automation.Inactive,
-                    Version = 1,
-                    Type = automation.Type,
-                    ResultCode = automation.ResultCode,
-                    Order = automation.Order,
-                    AutomationXML = automation.AutomationXML,
-                    ObjectTableId = automation.ObjectTableId,
-                };
+            //foreach (Automation automation in automationLists)
+            //{
+            //    var newautomation = new AutomationPM()
+            //    {
+            //        Tenant = tenant,
+            //        Code = automation.Code,
+            //        Description = automation.Description,
+            //        From = automation.From,
+            //        FromEmail = automation.FromEmail,
+            //        Inactive = automation.Inactive,
+            //        Version = 1,
+            //        Type = automation.Type,
+            //        ResultCode = automation.ResultCode,
+            //        Order = automation.Order,
+            //        AutomationXML = automation.AutomationXML,
+            //        ObjectTableId = automation.ObjectTableId,
+            //    };
 
-                ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
-                AutomationService service = new AutomationService(MyContext, tenant);
-                service.Create(newautomation);
-            }
+            //    ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
+            //    AutomationService service = new AutomationService(MyContext, tenant);
+            //    service.Create(newautomation);
+            //}
 
         }
     }
