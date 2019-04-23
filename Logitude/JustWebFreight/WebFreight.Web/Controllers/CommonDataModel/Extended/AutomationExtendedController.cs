@@ -284,7 +284,25 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         }
 
 
-      
+        public HttpResponseMessage GetDoesAutomationCodeExist(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                AutomationRepository automationRepository = new AutomationRepository(authToken.Tenant);
+                bool a = (automationRepository.GetAutomations(authToken.Tenant).Where(d => d.Code == code && d.Tenant == authToken.Tenant)).Any();
+                return Request.CreateResponse(HttpStatusCode.OK, a);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

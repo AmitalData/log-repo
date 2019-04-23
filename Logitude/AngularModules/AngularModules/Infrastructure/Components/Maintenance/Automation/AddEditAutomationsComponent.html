@@ -72,21 +72,33 @@
 
                                             <table>
 
-                                                <tr style="height:70px">
+                                                <tr style="min-height:1px">
                                                     <td>
                                                         <table>
                                                             <tr>
-                                                                <td>
+                                                                <td style="vertical-align:top">
                                                                     <table>
-                                                                        <tr style="height:35px">
+
+                                                                        <tr *ngIf="IsShowAutomationCodeField" style="height:30px">
                                                                             <td style="width:80px;vertical-align:top">
-                                                                                <div style="width:80px">Name</div>
+                                                                                <div style="width:80px">Code</div>
                                                                             </td>
-                                                                            <td style="width:200px;height:35px;vertical-align:top">
-                                                                                <input type="text" style="height:22px;width:200px;" [(ngModel)]="Name" value="" />
+                                                                            <td style="width:200px;height:30px;vertical-align:top">
+                                                                                <input type="text" style="height:22px;width:200px;" (blur)="AutomationCodeValueChange()" [(ngModel)]="Code" value="" />
                                                                             </td>
                                                                         </tr>
 
+                                                                        <tr style="height:30px">
+                                                                            <td style="width:80px;vertical-align:top">
+                                                                                <div style="width:80px">Name</div>
+                                                                            </td>
+                                                                            <td style="width:200px;height:30px;vertical-align:top">
+                                                                                <input type="text" style="height:22px;width:200px;" [(ngModel)]="Name" value="" />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr  *ngIf="!IsShowAutomationCodeField" style="height:5px">
+                                                                            <td colspan="2"></td>
+                                                                        </tr>
                                                                         <tr style="height:20px;">
                                                                             <td style="width:100px;vertical-align:top">inactive</td>
 
@@ -96,7 +108,7 @@
                                                                         </tr>
 
                                                                         <tr>
-                                                                            <td></td>
+                                                                            <td colspan="2"></td>
                                                                         </tr>
                                                                     </table>
                                                                 </td>
@@ -105,13 +117,13 @@
                                                                     <div></div>
                                                                 </td>
                                                                 
-                                                                <td>
+                                                                <td style="vertical-align:top">
                                                                     <table>
                                                                         <tr>
                                                                             <td style="width:80px;vertical-align:top">
                                                                                 <div style="width:80px;vertical-align:top">Description</div>
                                                                             </td>
-                                                                            <td style="width:200px">
+                                                                            <td style="width:200px;vertical-align:top">
                                                                                 <textarea [(ngModel)]="Description" type="text" style="float:left;opacity:1;width:200px;height:60px;max-height:60px;background-color:white;border:1px solid #a8a8a8;font-size:12px;border-radius:2px;color:gray;resize:none;overflow:auto"></textarea>
 
                                                                             </td>
@@ -126,9 +138,9 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr style="height:5px">
+                                                <tr style="height:10px">
                                                     <td>
-                                                        <div style="height:5px"></div>
+                                                        <div style="height:10px"></div>
                                                     </td>
                                                 </tr>
 
