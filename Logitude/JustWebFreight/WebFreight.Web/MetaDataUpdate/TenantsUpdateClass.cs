@@ -716,6 +716,8 @@ namespace WebFreight.Web.MetaDataUpdate
                     ReportHelper reportHelper = new ReportHelper();
                     reportHelper.UpdateReports(tenant);
 
+                    AutomationHelper automationHelper = new AutomationHelper();
+                    automationHelper.CopyAutomationFromTenantZeroToMyTenant(tenant);
                     if (!LogitudeSettings.IsCostomsDeploy)
                     // what do u think ?? ok i suppose
                     // but ihab yesterday said : if we can ..we shold do it ?!?!?
@@ -1524,10 +1526,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
                                 if (a.IsEnabledForCustomers && a.IsCopiedAtSignup)
                                 {
-
-
-
-
                                     DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
                                     {
                                         Id = IdCounter.GetNumber("DocumentTypeTemplate", tenant).ToString(),

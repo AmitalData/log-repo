@@ -1,12 +1,14 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -259,5 +261,36 @@ namespace WebFreight.Web.Helpers
             return log.Id;
         }
 
+        public void CopyAutomationFromTenantZeroToMyTenant(int tenant)
+        {
+            AutomationQuery automationQuery = new AutomationQuery(tenant);
+            AutomationRepository automationRepository = new AutomationRepository(tenant);
+            List<string> automationListsCodes =  automationQuery.GetAutomationCodeLists(tenant);
+            List<Automation> automationLists = automationRepository.GetAutomations(0).Where(d =>d.ResultCode == "EMAIL" && !automationListsCodes.Contains(d.Code)).ToList();
+
+            foreach (Automation automation in automationLists)
+            {
+                var newautomation = new AutomationPM()
+                {
+                    Tenant = tenant,
+                    Code = automation.Code,
+                    Description = automation.Description,
+                    From = automation.From,
+                    FromEmail = automation.FromEmail,
+                    Inactive = automation.Inactive,
+                    Version = 1,
+                    Type = automation.Type,
+                    ResultCode = automation.ResultCode,
+                    Order = automation.Order,
+                    AutomationXML = automation.AutomationXML,
+                    ObjectTableId = automation.ObjectTableId,
+                };
+
+                ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
+                AutomationService service = new AutomationService(MyContext, tenant);
+                service.Create(newautomation);
+            }
+
+        }
     }
 }
