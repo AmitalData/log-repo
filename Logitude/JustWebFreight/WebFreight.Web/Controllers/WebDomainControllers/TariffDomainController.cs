@@ -252,27 +252,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                     if (rowData.Length > 5)
                     {
-                        tariffLine.Step3Price = Convert.ToInt32(rowData[4]);
+                        tariffLine.Step3Price = Convert.ToInt32(rowData[5]);
                     }
                     if (rowData.Length > 6)
                     {
-                        tariffLine.Step4Price = Convert.ToInt32(rowData[5]);
+                        tariffLine.Step4Price = Convert.ToInt32(rowData[6]);
                     }
                     if (rowData.Length > 7)
                     {
-                        tariffLine.Step5Price = Convert.ToInt32(rowData[6]);
+                        tariffLine.Step5Price = Convert.ToInt32(rowData[7]);
                     }
                     if (rowData.Length > 8)
                     {
-                        tariffLine.Step6Price = Convert.ToInt32(rowData[7]);
+                        tariffLine.Step6Price = Convert.ToInt32(rowData[8]);
                     }
                     if (rowData.Length > 9)
                     {
-                        tariffLine.Step7Price = Convert.ToInt32(rowData[8]);
+                        tariffLine.Step7Price = Convert.ToInt32(rowData[9]);
                     }
                     if (rowData.Length >= 10)
                     {
-                        tariffLine.Step8Price = Convert.ToInt32(rowData[9]);
+                        tariffLine.Step8Price = Convert.ToInt32(rowData[10]);
                     }
                     tariffLinesResult.Add(tariffLine);
                 }
