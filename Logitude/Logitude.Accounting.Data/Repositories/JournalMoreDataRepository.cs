@@ -27,7 +27,7 @@ namespace Logitude.Accounting.Data.Repositories
 
                     where a.JournalId == journalId && a.Tenant == tenant
 
-
+                    
                     select a).FirstOrDefault();
         }
 
