@@ -44,14 +44,14 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         Instock, 
 	         Location, 
 	         IsConnectedToShipment, 
+	         VolumetricWeight, 
 	         Make, 
 	         Model, 
 	         Year, 
 	         Color, 
 	         ChassisNumber, 
 	         RegistrationNumber, 
-	         CountryId,
-	         VolumetricWeight, 
+	         CountryId, 
 	         CommodityNumber,
 	      }
 
@@ -105,8 +105,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         Color, 
 	         ChassisNumber, 
 	         RegistrationNumber, 
-	         CountryId,
-	         ChargeableWeightUnitCode, 
+	         CountryId, 
 	         CommodityNumber,
 	      }
 
@@ -409,10 +408,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             {
 					entityPM.ChassisNumber = entityPOCO.ChassisNumber;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommodityNumber))
-            {
-					entityPM.CommodityNumber = entityPOCO.CommodityNumber;
-            }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RegistrationNumber))
             {
@@ -424,7 +419,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.CountryId = entityPOCO.CountryId;
             }
 
-		}
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommodityNumber))
+            {
+					entityPM.CommodityNumber = entityPOCO.CommodityNumber;
+            }
 
 		}
 
@@ -577,8 +575,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 oldEntityPM.CountryId = entityPM.CountryId;
             }
 			
-		}
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommodityNumber))
             {
                 oldEntityPM.CommodityNumber = entityPM.CommodityNumber;

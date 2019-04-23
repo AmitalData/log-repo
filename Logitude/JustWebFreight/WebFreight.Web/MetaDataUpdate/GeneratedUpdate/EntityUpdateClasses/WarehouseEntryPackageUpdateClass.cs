@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseEntryPackageUpdateClass
@@ -112,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Warehouse Entry Packages",
-			      				    Code =  "7825",
+			      				    Code =  "cf28",
 			      				    Name =  "WarehouseEntryPackage Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Warehouse",
@@ -2662,7 +2666,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CountryId",
 					  						DefaultText =  "Country of Manufacture",
-					  						DefaultText =  "Volumetric Weight Unit Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
