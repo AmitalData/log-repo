@@ -44,6 +44,13 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         Instock, 
 	         Location, 
 	         IsConnectedToShipment, 
+	         Make, 
+	         Model, 
+	         Year, 
+	         Color, 
+	         ChassisNumber, 
+	         RegistrationNumber, 
+	         CountryId,
 	         VolumetricWeight, 
 	         CommodityNumber,
 	      }
@@ -91,6 +98,14 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromPortId, 
 	         ToPortId, 
 	         VolumetricWeight, 
+	         ChargeableWeightUnitCode, 
+	         Make, 
+	         Model, 
+	         Year, 
+	         Color, 
+	         ChassisNumber, 
+	         RegistrationNumber, 
+	         CountryId,
 	         ChargeableWeightUnitCode, 
 	         CommodityNumber,
 	      }
@@ -209,6 +224,41 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VolumetricWeight))
             {
 				entityPOCO.VolumetricWeight = entityPM.VolumetricWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Make))
+            {
+				entityPOCO.Make = entityPM.Make;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Model))
+            {
+				entityPOCO.Model = entityPM.Model;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Year))
+            {
+				entityPOCO.Year = entityPM.Year;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Color))
+            {
+				entityPOCO.Color = entityPM.Color;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisNumber))
+            {
+				entityPOCO.ChassisNumber = entityPM.ChassisNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RegistrationNumber))
+            {
+				entityPOCO.RegistrationNumber = entityPM.RegistrationNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryId))
+            {
+				entityPOCO.CountryId = entityPM.CountryId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommodityNumber))
@@ -335,10 +385,46 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.VolumetricWeight = entityPOCO.VolumetricWeight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Make))
+            {
+					entityPM.Make = entityPOCO.Make;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Model))
+            {
+					entityPM.Model = entityPOCO.Model;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Year))
+            {
+					entityPM.Year = entityPOCO.Year;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Color))
+            {
+					entityPM.Color = entityPOCO.Color;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChassisNumber))
+            {
+					entityPM.ChassisNumber = entityPOCO.ChassisNumber;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommodityNumber))
             {
 					entityPM.CommodityNumber = entityPOCO.CommodityNumber;
             }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RegistrationNumber))
+            {
+					entityPM.RegistrationNumber = entityPOCO.RegistrationNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CountryId))
+            {
+					entityPM.CountryId = entityPOCO.CountryId;
+            }
+
+		}
 
 		}
 
@@ -456,6 +542,43 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 oldEntityPM.VolumetricWeight = entityPM.VolumetricWeight;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Make))
+            {
+                oldEntityPM.Make = entityPM.Make;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Model))
+            {
+                oldEntityPM.Model = entityPM.Model;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Year))
+            {
+                oldEntityPM.Year = entityPM.Year;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Color))
+            {
+                oldEntityPM.Color = entityPM.Color;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisNumber))
+            {
+                oldEntityPM.ChassisNumber = entityPM.ChassisNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RegistrationNumber))
+            {
+                oldEntityPM.RegistrationNumber = entityPM.RegistrationNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryId))
+            {
+                oldEntityPM.CountryId = entityPM.CountryId;
+            }
+			
+		}
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommodityNumber))
             {
                 oldEntityPM.CommodityNumber = entityPM.CommodityNumber;
@@ -469,6 +592,30 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Make)) //T4 find type == nText 
+            {
+                entityPM.Make = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Make));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Model)) //T4 find type == nText 
+            {
+                entityPM.Model = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Model));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Year)) //T4 find type == nText 
+            {
+                entityPM.Year = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Year));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Color)) //T4 find type == nText 
+            {
+                entityPM.Color = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Color));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ChassisNumber)) //T4 find type == nText 
+            {
+                entityPM.ChassisNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ChassisNumber));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.RegistrationNumber)) //T4 find type == nText 
+            {
+                entityPM.RegistrationNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.RegistrationNumber));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
