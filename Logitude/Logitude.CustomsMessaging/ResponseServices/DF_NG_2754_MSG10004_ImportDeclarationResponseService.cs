@@ -396,17 +396,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this._MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateIIGExcptionConst;
                 myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
-                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
-                if (currentDeclarationCourierStatusPM != null)
+                if (this._MyDeclarationPM.IsCourierDeclaration)// due (customResponse.ResponseContentHeader.Exception != null)>> X
                 {
+                    //override DeclarationUpdateService.AfterUpdating/CalculateDeclarationCourierStatus
+                    /// 	Logitude.Customs.BL.dll!Logitude.Customs.BL.EntityUpdateServices.DeclarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(Logitude.Customs.Def.EntityPMs.DeclarationPM declarationPM) Line 67	C#
+                    ///> Logitude.Customs.BL.dll!Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.AfterUpdating(Logitude.Customs.Def.EntityPMs.DeclarationPM entityPM, Logitude.Server.Tools.EntityPM entityParentPM) Line 859  C#
 
-                    currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
-                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-
+                    var calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(this._MyDeclarationPM);
+                    calculateDeclarationCourierStatus.Update(
+                        (currentDeclarationCourierStatusPM) =>
+                        {
+                            
+                            currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
+                        });
                 }
+
+
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.UserMessage = userMessage;
