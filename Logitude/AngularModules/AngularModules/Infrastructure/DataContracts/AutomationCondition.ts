@@ -6,10 +6,10 @@ import {Injectable} from '@angular/core';
 
 export class AutomationCondition {
 
-    public Id: string;
+
     public CreateDate: Date;
     public UpdateDate: Date;
-    public AutomationsId: string;
+
     public Tenant: number;
 
     public ObjectFieldId: string;
