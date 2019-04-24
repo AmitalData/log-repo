@@ -1138,6 +1138,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OrderChargeableWeight = shipment.OrderChargeableWeight;
             shipmentPM.BookingNumberOfPackages = shipment.BookingNumberOfPackages;
             shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
+            shipmentPM.OrderGrossWeightEdited = shipment.OrderGrossWeightEdited;
+            shipmentPM.OrderChargeableWeightEdited = shipment.OrderChargeableWeightEdited;
             shipmentPM.CutoffDate = shipment.CutoffDate;
             shipmentPM.AsAgreedFreight = shipment.AsAgreedFreight;
             shipmentPM.AsAgreedOtherCharges = shipment.AsAgreedOtherCharges;

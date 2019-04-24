@@ -38063,6 +38063,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OrderGrossWeightEdited",
+					  						OldFieldName =  "OrderGrossWeightEdited",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -38083,6 +38084,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OrderGrossWeightEdited",
 					  						ListPropertyPath =  "OrderGrossWeightEdited",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -38118,6 +38120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OrderChargeableWeightEdited",
+					  						OldFieldName =  "OrderChargeableWeightEdited",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -38138,6 +38141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OrderChargeableWeightEdited",
 					  						ListPropertyPath =  "OrderChargeableWeightEdited",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -42556,6 +42560,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentMDeleteThisReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisReceivable", DefaultText = "Delete this receivable?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentSNewShipmentCustomAgentExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.CustomAgentExport", DefaultText = "Customs Agent Export",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMValueEditedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ValueEditedByUser", DefaultText = "Value Edited by User, Double Click to Reset Calculated value",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

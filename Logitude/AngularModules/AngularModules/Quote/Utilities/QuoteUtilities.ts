@@ -556,6 +556,8 @@ export class QuoteUtilities {
         shipmentPM.OrderVolumetricWeight = entityPM.VolumetricWeight;
         shipmentPM.OrderGrossWeight = entityPM.GrossWeight;
         shipmentPM.OrderChargeableWeight = entityPM.ChargeableWeight;
+        shipmentPM.OrderGrossWeightEdited = entityPM.GrossWeightEdited;
+        shipmentPM.OrderChargeableWeightEdited = entityPM.ChargeableWeightEdited;
         shipmentPM.Ratio = entityPM.Ratio;
         shipmentPM.DimFactor = entityPM.DimFactor;
         shipmentPM.BookingNumberOfPackages = entityPM.NumberOfPackages;

@@ -290,8 +290,9 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         }
 
         this.UIProperties.SetEnabled("BookingNumberOfPackages", this.ObjectTableName, isTotalsFieldEnabled);
-        this.UIProperties.SetEnabled("OrderGrossWeight", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("BookingVolume", this.ObjectTableName, isTotalsFieldEnabled);
+
+        this.UIProperties.SetEnabled("OrderGrossWeight", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("OrderChargeableWeight", this.ObjectTableName, isTotalsFieldEnabled);
     }
 
@@ -436,32 +437,127 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
             this.ItemsSource.push(new ShipmentOrderPackageItem(item, this, false));
         })
     }
+
+    GrossWeightLostFocus(input: any) {
+
+        var valueComputed: number = 0;
+        var valueInserted: number = 0;
+
+        this.EntityPM.ShipmentOrderPackages.forEach((item) => {
+            if (!AppTool.IsNullOrEmpty(item.GrossWeight)) {
+                valueComputed += item.GrossWeight;
+            }
+        });
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
+            valueInserted = Number(input);
+        }
+
+        valueComputed = valueComputed == 0 ? null : valueComputed;
+        valueInserted = valueInserted == 0 ? null : valueInserted;
+        this.OrderGrossWeightEdited = !(valueComputed == valueInserted);
+        this.OrderGrossWeight = valueInserted;
+        this.ComputeTotals();
+    }
+    ChargeableWeightLostFocus(input: any) {
+
+        var valueComputed: number = 0;
+        var valueInserted: number = 0;
+
+        valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.OrderGrossWeight, this.EntityPM.OrderVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
+            valueInserted = Number(input);
+        }
+
+        valueComputed = valueComputed == 0 ? null : valueComputed;
+        valueInserted = valueInserted == 0 ? null : valueInserted;
+        this.OrderChargeableWeightEdited = !(valueComputed == valueInserted);
+        this.OrderChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+        this.ComputeTotals();
+    }
+    ResetGrossWeightEdited() {
+        this.OrderGrossWeightEdited = false;
+        this.ComputeTotals();
+    }
+    ResetChargeableWeightEdited() {
+        this.OrderChargeableWeightEdited = false;
+        this.ComputeTotals();
+    }
+    ResetTotalEditedValues() {
+        this.OrderGrossWeightEdited = false;
+        this.OrderChargeableWeightEdited = false;
+    }
+
     ComputeTotals() {
-        var quantitySum = 0;
-        var weightSum = 0;
-        var volumeSum = 0;
 
-        if (this.EntityPM.ShipmentOrderPackages.length > 0) {
+        if (this.EntityPM.ShipmentOrderPackages.length == 0) {
+            this.BookingNumberOfPackages = null;
+            this.OrderGrossWeight = null;
+            this.BookingVolume = null;
+            this.OrderVolumetricWeight = null;
+            this.OrderChargeableWeight = null;
+            this.OrderGrossWeightEdited = false;
+            this.OrderChargeableWeightEdited = false;
+        }
+
+        else {
+            var myQuantity: number = 0;
+            var myVolume: number = 0;
+            var myGrossWeight: number = 0;
+            var myVolumetricWeight: number = 0;
+
             this.EntityPM.ShipmentOrderPackages.forEach(item => {
-                if (item.Quantity != null) {
-                    quantitySum += item.Quantity;
-                }
 
-                if (item.GrossWeight != null) {
-                    weightSum += item.GrossWeight;
+                if (item.Quantity != null) {
+                    myQuantity += item.Quantity;
                 }
 
                 if (item.Volume != null) {
-                    volumeSum += item.Volume;
+                    myVolume += item.Volume;
+                }
+
+                if (item.VolumetricWeight != null) {
+                    myVolumetricWeight += item.VolumetricWeight;
+                }
+
+                if (item.GrossWeight != null) {
+                    myGrossWeight += item.GrossWeight;
                 }
             });
+
+            this.BookingNumberOfPackages = myQuantity;
+            this.BookingVolume = AppTool.Round(myVolume, 3);
+            this.OrderVolumetricWeight = AppTool.Round(myVolumetricWeight, 3);
+
+            if (!this.OrderGrossWeightEdited) {
+                this.OrderGrossWeight = AppTool.Round(myGrossWeight, 3);
+            }
+
+            if (!this.OrderChargeableWeightEdited) {
+                this.OrderChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.OrderGrossWeight, this.EntityPM.OrderVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            }
         }
 
-        this.BookingNumberOfPackages = quantitySum == 0 ? null : quantitySum;
-        this.OrderGrossWeight = weightSum == 0 ? null : weightSum;
-        this.BookingVolume = volumeSum == 0 ? null : volumeSum;
         this.SetUIProperties_Totals();
     }
+
+    get OrderGrossWeightEdited() { return this.EntityPM.OrderGrossWeightEdited; }
+    set OrderGrossWeightEdited(value: boolean) {
+        if (this.EntityPM.OrderGrossWeightEdited != value) {
+            this.EntityPM.OrderGrossWeightEdited = value;
+        }
+    }
+
+    get OrderChargeableWeightEdited() { return this.EntityPM.OrderChargeableWeightEdited; }
+    set OrderChargeableWeightEdited(value: boolean) {
+        if (this.EntityPM.OrderChargeableWeightEdited != value) {
+            this.EntityPM.OrderChargeableWeightEdited = value;
+        }
+    }
+
     public AddPackage() {
         var itemPM = new ShipmentOrderPackagePM(null);
         itemPM.ShipmentId = this.EntityPM.Id;
@@ -808,7 +904,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     set BookingVolume(newValue: number) {
         if (this.EntityPM.BookingVolume != newValue) {
             this.EntityPM.BookingVolume = AppTool.Round(newValue, 3);
-            this.ComputeOrderVolumetricWeight();
         }
     }
 
@@ -816,7 +911,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     set OrderGrossWeight(newValue: number) {
         if (this.EntityPM.OrderGrossWeight != newValue) {
             this.EntityPM.OrderGrossWeight = AppTool.Round(newValue, 3);
-            this.ComputeChargeableWeight();
         }
     }
 
@@ -824,7 +918,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     set OrderVolumetricWeight(newValue: number) {
         if (this.EntityPM.OrderVolumetricWeight != newValue) {
             this.EntityPM.OrderVolumetricWeight = AppTool.Round(newValue, 3);
-            this.ComputeChargeableWeight();
         }
     }
 
@@ -833,12 +926,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         var myResult: number = AppTool.Round(newValue, 3);
         if (this.EntityPM.OrderChargeableWeight != myResult) {
             this.EntityPM.OrderChargeableWeight = myResult;
-
-            if (this.OrderGrossWeight == null && this.OrderVolumetricWeight == null) {
-                this.EntityPM.OrderVolumetricWeight = myResult;
-                this.EntityPM.OrderGrossWeight = AppTool.GetWeightFromWeight(this.ChargeableWeightUnitCode, this.GrossWeightUnitCode, myResult);
-                this.EntityPM.BookingVolume = AppTool.GetVolumeFromWeight(this.ChargeableWeightUnitCode, this.VolumeUnitCode, myResult, this.EntityPM.Ratio);
-            }
         }
     }
 

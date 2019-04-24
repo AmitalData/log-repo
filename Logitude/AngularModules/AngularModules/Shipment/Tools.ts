@@ -481,6 +481,7 @@ export class ShipmentTool {
             shipmentPM.AWBChargeAmount = oldShipment.AWBChargeAmount;
             shipmentPM.AWBChargeRate = oldShipment.AWBChargeRate;
             shipmentPM.RateClassCode = oldShipment.RateClassCode;
+
         }
 
         oldShipment.ShipmentOrderPackages.forEach(item => {

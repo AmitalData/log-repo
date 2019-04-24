@@ -31,16 +31,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsResourcesReady: boolean = false;
     public ItemsSource: ObservableCollection;
     public TransportModeId: string;
+    public QuoteIsFCL: boolean = true;    
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
-
         this.Listen();
     }
 
-    public QuoteIsFCL: boolean = true;    
     ngOnInit() {
         if (this.EntityPM != null) {
             this.TransportModeId = this.EntityPM.TransportModeId;
@@ -100,9 +99,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsAddButtonEnabled: boolean = false;
     public IsDimFactorVisible: boolean = false
     public IsQuantitiesVisible: boolean = false;
-    public ScreenIsEnabled: boolean = true;
     SetUIProperties() {
-        this.SetScreenIsEnabled();
+        this.IsAddButtonEnabled = false;
+
         this.IsEditingEnabled = QuoteUtilities.IsQuoteEditEnabled(this.EntityPM);
 
         if (this.IsEditingEnabled) {
@@ -139,17 +138,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("IsDangerous", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("DescriptionOfGoods", this.ObjectTableName, this.IsEditingEnabled);
     }
-    SetScreenIsEnabled() {
-        var myResult = true;
 
-        if (this.EntityPM.IsClosed) {
-            myResult = false;
-        }
-        else if (this.EntityPM.IsCancelled) {
-            myResult = false;
-        }
-        this.ScreenIsEnabled =  myResult;
-    }
 
     public Delete1IsVisible: boolean = false;
     public Delete2IsVisible: boolean = false;
@@ -274,25 +263,26 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.Delete5IsVisible = false;
         }
     }
+
+    public IsTotalsFieldEnabled: boolean = true;
     private SetUIProperties_Totals() {
         var myResult = true;
 
-        if (!this.ScreenIsEnabled) {
+        if (!this.IsEditingEnabled) {
             myResult = false;
         }
 
-        else if (this.ItemsSource.Length > 0) {
-            myResult = false;
+        var isTotalsFieldEnabled = false;
+        if (myResult) {
+            if (this.EntityPM.QuotePackages.length > 0) {
+                isTotalsFieldEnabled = true;
+            }
         }
 
-        else if (this.EntityPM.QuoteTypeCode != "A") {
-            myResult = false;
-        }
-
-        this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, myResult);
-        this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, myResult);
-        this.UIProperties.SetEnabled("Volume", this.ObjectTableName, myResult);
-        this.UIProperties.SetEnabled("NumberOfPackages", this.ObjectTableName, myResult);
+        this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, isTotalsFieldEnabled);
+        this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, isTotalsFieldEnabled);
+        this.UIProperties.SetEnabled("Volume", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("NumberOfPackages", this.ObjectTableName, false);
     }
     private SetUIProperties_DimFactor() {
         var isDimFactorVisibile = false;
@@ -329,13 +319,70 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
 
+
+
+    GrossWeightLostFocus(input: any) {
+
+        var valueComputed: number = 0;
+        var valueInserted: number = 0;
+
+        this.EntityPM.QuotePackages.forEach((item) => {
+            if (!AppTool.IsNullOrEmpty(item.GrossWeight)) {
+                valueComputed += item.GrossWeight;
+            }
+        });
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
+            valueInserted = Number(input);
+        }
+
+        valueComputed = valueComputed == 0 ? null : valueComputed;
+        valueInserted = valueInserted == 0 ? null : valueInserted;
+        this.GrossWeightEdited = !(valueComputed == valueInserted);
+        this.GrossWeight = valueInserted;
+        this.ComputeTotals();
+    }
+    ChargeableWeightLostFocus(input: any) {
+
+        var valueComputed: number = 0;
+        var valueInserted: number = 0;
+
+        valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
+            valueInserted = Number(input);
+        }
+
+        valueComputed = valueComputed == 0 ? null : valueComputed;
+        valueInserted = valueInserted == 0 ? null : valueInserted;
+        this.ChargeableWeightEdited = !(valueComputed == valueInserted);
+        this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+        this.ComputeTotals();
+    }
+    ResetGrossWeightEdited() {
+        this.GrossWeightEdited = false;
+        this.ComputeTotals();
+    }
+    ResetChargeableWeightEdited() {
+        this.ChargeableWeightEdited = false;
+        this.ComputeTotals();
+    }
+    ResetTotalEditedValues() {
+        this.GrossWeightEdited = false;
+        this.ChargeableWeightEdited = false;
+    }
+
     public ComputeTotals() {
         if (this.EntityPM.QuotePackages.length == 0) {
             this.Volume = null;
             this.GrossWeight = null;
             this.ChargeableWeight = null;
-            this.EntityPM.VolumetricWeight = null;
+            this.VolumetricWeight = null;
             this.NumberOfPackages = null;
+            this.GrossWeightEdited = false;
+            this.ChargeableWeightEdited = false;
         }
 
         else {
@@ -365,9 +412,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.NumberOfPackages = myNumberOfPackages;
             this.Volume = myVolume;
-            this.EntityPM.VolumetricWeight = myVolumetricWeight;
-            this.GrossWeight = myGrossWeight;
-            this.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
+            this.VolumetricWeight = AppTool.Round(myVolumetricWeight, 3);
+
+            if (!this.GrossWeightEdited) {
+                this.GrossWeight = AppTool.Round(myGrossWeight, 3);
+            }
+
+            if (!this.ChargeableWeightEdited) {
+                this.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
+            }
         }
 
         this.ComputeGrossWeigh_Kg_Ton();
@@ -940,45 +993,32 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    get GrossWeight() { return this.EntityPM.GrossWeight; }
+    get GrossWeight() { return this.EntityPM.GrossWeight == null ? 0 : this.EntityPM.GrossWeight; }
     set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
-            this.EntityPM.GrossWeight = AppTool.Round(newValue, 2);
-
-            this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
+            this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
             this.ComputeGrossWeigh_Kg_Ton();
         }
     }
 
-    get Volume() { return this.EntityPM.Volume; }
+    get Volume() { return this.EntityPM.Volume == null ? 0 : this.EntityPM.Volume; }
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
-            this.EntityPM.Volume = AppTool.Round(newValue, 2);
-
-            this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
+            this.EntityPM.Volume = AppTool.Round(newValue, 3);
         }
     }
 
-    get ChargeableWeight() { return this.EntityPM.ChargeableWeight; }
+    get VolumetricWeight() { return this.EntityPM.VolumetricWeight == null ? 0 : this.EntityPM.VolumetricWeight; }
+    set VolumetricWeight(newValue: number) {
+        if (this.EntityPM.VolumetricWeight != newValue) {
+            this.EntityPM.VolumetricWeight = AppTool.Round(newValue, 3);
+        }
+    }
+
+    get ChargeableWeight() { return this.EntityPM.ChargeableWeight == null ? 0 : this.EntityPM.ChargeableWeight; }
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
-            var result = AppTool.Round(newValue, 2);
-            this.EntityPM.ChargeableWeight = result;
-
-            if (this.GrossWeight == null && this.EntityPM.VolumetricWeight == null) {
-                this.EntityPM.VolumetricWeight = result;
-                this.EntityPM.GrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, result);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.Ratio);
-            }
-
-            if (this.EntityPM.QuoteTypeCode == "A") {
-                //if (quoteViewModel.CurrentLCLChargesTrigger.ObsList.Where(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).Any()) {
-
-                //}
-                //else {
-                //    UpdateChargesQuantities();
-                //}
-            }
+            this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
         }
     }
 
@@ -1001,7 +1041,22 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.EntityPM.DescriptionOfGoods != newValue) {
             this.EntityPM.DescriptionOfGoods = newValue;
         }
-    }    
+    }
+
+    get GrossWeightEdited() { return this.EntityPM.GrossWeightEdited; }
+    set GrossWeightEdited(value: boolean) {
+        if (this.EntityPM.GrossWeightEdited != value) {
+            this.EntityPM.GrossWeightEdited = value;
+        }
+    }
+
+    get ChargeableWeightEdited() { return this.EntityPM.ChargeableWeightEdited; }
+    set ChargeableWeightEdited(value: boolean) {
+        if (this.EntityPM.ChargeableWeightEdited != value) {
+            this.EntityPM.ChargeableWeightEdited = value;
+        }
+    }
+
 }
 export class QuotePackageItem extends BaseComponent {
     public EntityPM: QuotePackagePM;

@@ -24,8 +24,6 @@ import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/Sh
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
 import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-
 
 @Component({
     moduleId: module.id,
@@ -637,8 +635,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.ComputeTotals();
     }
     ResetTotalEditedValues() {
-        this.GrossWeightEdited = false;
-        this.ChargeableWeightEdited = false;
+        //this.GrossWeightEdited = false;
+        //this.ChargeableWeightEdited = false;
     }
     ComputeTotals() {
 
@@ -687,20 +685,20 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         }
                     }
                 }
-            })
-        }
+            });
 
-        this.TEU = myTEU;
-        this.NumberOfPackages = myQuantity;
-        this.Volume = AppTool.Round(myVolume, 3);
-        this.VolumetricWeight = AppTool.Round(myVolumetricWeight, 3);
+            this.TEU = myTEU;
+            this.NumberOfPackages = myQuantity;
+            this.Volume = AppTool.Round(myVolume, 3);
+            this.VolumetricWeight = AppTool.Round(myVolumetricWeight, 3);
 
-        if (!this.GrossWeightEdited) {
-            this.GrossWeight = AppTool.Round(myGrossWeight, 3);
-        }
+            if (!this.GrossWeightEdited) {
+                this.GrossWeight = AppTool.Round(myGrossWeight, 3);
+            }
 
-        if (!this.ChargeableWeightEdited) {
-            this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            if (!this.ChargeableWeightEdited) {
+                this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            }
         }
 
         this.SetUIProperties();
