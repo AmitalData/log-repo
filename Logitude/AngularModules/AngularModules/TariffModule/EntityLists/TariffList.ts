@@ -30,6 +30,7 @@ export class TariffList {
 	CreatedByUserName: string;
 	SellerName: string;
 	UpdatedByUserName: string;
+	TariffNumber: string;
 	
 }
  
