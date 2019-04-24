@@ -1551,6 +1551,16 @@ namespace WebFreight.Web.MetaDataUpdate
                                         VerticalShift = a.VerticalShift,
                                         InternalRemarks = a.InternalRemarks,
                                         IsEnabledForCustomers = true,
+                                        TemplateBodyHtml = a.TemplateBodyHtml,
+                                        TemplateFooterHtml = a.TemplateFooterHtml,
+                                        TemplateHeaderHtml = a.TemplateHeaderHtml,
+                                       TemplateFooterHeight = a.TemplateFooterHeight,
+                                       TemplateHeaderHeight = a.TemplateHeaderHeight,
+                                       CC  = a.CC,
+                                       From = a.From,
+                                       ReplyTo = a.ReplyTo,
+                                       
+                                       
 
                                     };
                                     if (isDefault)

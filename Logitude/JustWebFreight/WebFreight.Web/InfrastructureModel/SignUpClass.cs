@@ -2419,6 +2419,9 @@ namespace WebFreight.Web.InfrastructureModel
                         OriginalTemplateId = a.Id,
                         InternalRemarks = a.InternalRemarks,
                         Subject = a.Subject,
+                        From = a.From,
+                        CC = a.CC,
+                        ReplyTo =a.ReplyTo,
 
                     };
 

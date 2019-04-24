@@ -188,7 +188,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void GetLoggedContact()
         {
 
-            if (HttpContext.Current != null && HttpContext.Current.User!=null && HttpContext.Current.User.Identity!=null)
+            if (HttpContext.Current != null && HttpContext.Current.User!=null && HttpContext.Current.User.Identity!=null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 string email = HttpContext.Current.User.Identity.Name;
                 this.loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
