@@ -41,7 +41,7 @@
 
                                 <td class="CellTools">
                                     <span class="CellSeparator"></span>
-                                    <IconButton [ExternalId]="'Package_'+i" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="item.DeleteClicked()" [IsEnabled]="item.Step"></IconButton>
+                                    <IconButton [ExternalId]="'Package_'+i" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="item.DeleteClicked()" [IsEnabled]="item.Step != null"></IconButton>
                                 </td>
                             </tr>
 

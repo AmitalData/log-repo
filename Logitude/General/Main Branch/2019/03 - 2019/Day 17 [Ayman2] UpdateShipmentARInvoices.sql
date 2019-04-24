@@ -1,5 +1,5 @@
 
-
+-- Run DataViews And Procedures\Stored Procedures\UpdateShipmentARInvoices.sql File First
 
 declare @EntityId as varchar(15)
 

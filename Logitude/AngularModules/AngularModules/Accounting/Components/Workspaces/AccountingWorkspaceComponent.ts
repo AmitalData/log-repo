@@ -1,8 +1,10 @@
-﻿import {Component, ViewChildren, QueryList} from '@angular/core';
+import {Component, ViewChildren, QueryList} from '@angular/core';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+declare var window: any;
 
 @Component({
     selector: 'FullAccountingComponent',
@@ -12,9 +14,14 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 export class AccountingWorkspaceComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    
-    public isRTL: boolean = false;
 
+    public isRTL: boolean = false;
+    public IsMainTabVisibile: boolean = false;
+    public IsReceivablesTabVisibile: boolean = false;
+    public IsPayablesTabVisibile: boolean = false;
+    public IsBanksTabVisibile: boolean = false;
+    public IsGLAccountsTabVisibile: boolean = false;
+    public IsMiscTabVisibile: boolean = false;
 
     constructor(private _entityResourceService: EntityResourceService) {
         this.RunComponent();
@@ -32,7 +39,31 @@ export class AccountingWorkspaceComponent {
         this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => { });
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+        var table = window.ObjectTables.filter(d => d.Name === 'General')[0];
+        var mainTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMAIN") && f.ObjectTableId == table.Id)[0];
+        if (mainTabFeature) {
+            this.IsMainTabVisibile = true;
+        }
+        var ReceivablesTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCReceivables") && f.ObjectTableId == table.Id)[0];
+        if (ReceivablesTabFeature) {
+            this.IsReceivablesTabVisibile = true;
+        }
+        var PayablesTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCPayables") && f.ObjectTableId == table.Id)[0];
+        if (PayablesTabFeature) {
+            this.IsPayablesTabVisibile = true;
+        }
+        var BanksTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCBanks") && f.ObjectTableId == table.Id)[0];
+        if (BanksTabFeature) {
+            this.IsBanksTabVisibile = true;
+        }
+        var GLAccountsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCGLAccounts") && f.ObjectTableId == table.Id)[0];
+        if (GLAccountsTabFeature) {
+            this.IsGLAccountsTabVisibile = true;
+        }
+        var MiscTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMisc") && f.ObjectTableId == table.Id)[0];
+        if (MiscTabFeature) {
+            this.IsMiscTabVisibile = true;
+        }
     }
 
     private isLoaderReady: boolean = false;
@@ -45,7 +76,29 @@ export class AccountingWorkspaceComponent {
 
             else {
                 this.isLoaderReady = true;
-                this.SelectedItem = "GLAC";
+                if (this.IsMainTabVisibile) {
+                    this.SelectedItem = "Main";
+                }
+                else if (this.IsReceivablesTabVisibile) {
+                    this.SelectedItem = "RCV";
+
+                }
+                else if (this.IsPayablesTabVisibile) {
+                    this.SelectedItem = "PAY";
+
+                }
+                else if (this.IsBanksTabVisibile) {
+                    this.SelectedItem = "BNKS";
+
+                }
+                else if (this.IsGLAccountsTabVisibile) {
+                    this.SelectedItem = "GLAccounts";
+
+                }
+                else if (this.IsMiscTabVisibile) {
+                    this.SelectedItem = "MISC";
+
+                }
             }
         }
 
@@ -78,6 +131,7 @@ export class AccountingWorkspaceComponent {
     }
 
     private Page_GLAccounts: any = null;
+    private Page_Main: any = null;
     private Page_Journals: any = null;
     private Page_Receivable: any = null;
     private Page_Payable: any = null;
@@ -92,13 +146,13 @@ export class AccountingWorkspaceComponent {
 
                     switch (this.SelectedItem) {
 
-                        case "GLAC": {
-                            if (this.Page_GLAccounts == null) {
+                        case "Main": {
+                            if (this.Page_Main == null) {
                                 this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
-                                    SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Main/GLAccountPageComponent", myLocation.viewContainerRef)
+                                    SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Main/MainPageComponent", myLocation.viewContainerRef)
                                         .then(cmpRef => {
-                                            this.Page_GLAccounts = cmpRef.instance;
-                                            this.Page_GLAccounts.InitComponent();
+                                            this.Page_Main = cmpRef.instance;
+                                            this.Page_Main.InitComponent();
                                         });
                                 });
                             }
@@ -158,6 +212,18 @@ export class AccountingWorkspaceComponent {
                                         this.Page_Misc = cmpRef.instance;
                                         this.Page_Misc.InitComponent();
                                     });
+                            }
+                            break;
+                        }
+                        case "GLAccounts": {
+                            if (this.Page_GLAccounts == null) {
+                                this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
+                                    SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/GLAccounts/GLAccountsPageComponent", myLocation.viewContainerRef)
+                                        .then(cmpRef => {
+                                            this.Page_GLAccounts = cmpRef.instance;
+                                            this.Page_GLAccounts.InitComponent();
+                                        });
+                                });
                             }
                             break;
                         }

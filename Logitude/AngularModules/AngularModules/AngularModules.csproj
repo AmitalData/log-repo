@@ -882,6 +882,7 @@
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.html" />
     <Content Include="Report\Components\Workspaces\BIFolderReportComponent.html" />
     <Content Include="Report\Components\Workspaces\BIReportComponent.html" />
     <Content Include="Report\Components\Workspaces\MainReportsWorkspace.html" />
@@ -1778,6 +1779,7 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStockListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStocksStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\ARInvoiceStockPMService.ts" />
+    <TypeScriptCompile Include="Invoice\Validators\ARInvoiceStockValidator.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditFCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditLCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditPriceStepComponent.ts" />
@@ -1966,6 +1968,7 @@
     <Content Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.html" />
     <Content Include="Shipment\Components\MenuButtons\MasterActionConfirmationComponent.html" />
     <Content Include="Images\ShipmentArrow.png" />
+    <Content Include="Shipment\Components\MenuButtons\ShipmenDirectionConvertComponent.html" />
     <Content Include="Shipment\Components\SplitShipment\SplitPartialPackageComponent.html" />
     <Content Include="Shipment\Components\SplitShipment\SplitShipmentComponent.html" />
     <Content Include="Shipment\Components\Spotlight\ShipmentSpotlightComponent.html" />
@@ -3308,6 +3311,7 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIFolderReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\MainReportsWorkspace.ts" />
@@ -6231,6 +6235,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelShipmentComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\TaskCellDisplayListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\MasterActionConfirmationComponent.ts" />
+    <TypeScriptCompile Include="Shipment\Components\MenuButtons\ShipmenDirectionConvertComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitPartialPackageComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitShipmentComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Spotlight\SpotLightDateComponent.ts" />

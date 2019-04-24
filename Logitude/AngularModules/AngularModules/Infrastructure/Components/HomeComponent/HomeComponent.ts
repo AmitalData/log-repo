@@ -1228,7 +1228,7 @@ export class HomeComponent implements OnDestroy{
         }
 
         var link = "";
-        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapCRMContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapCRMContractQTY;
         if (isSandbox) {
             var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
         }

@@ -36,9 +36,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.From = entityPM.From;
             entityPOCO.FromEmail = entityPM.FromEmail;
             entityPOCO.Order = entityPM.Order;
-                                   
-           
-           
+            entityPOCO.Code = entityPM.Code;
+
+
         }
     }
 }

@@ -203,8 +203,12 @@ namespace Logitude.Accounting.BL.CoreBL
                             InputVatAmount =  (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVATAmount);
                             InputInvoiceAmount =  aPInvoice.AmountInLocalCurrency !=  null? (decimal?)aPInvoice.AmountInLocalCurrency :0;
                         }
-                    }
-                    else
+
+                    
+
+
+                }
+                else
                     {
                         InputVatAmount = a.LocalAmountDebit;
 
@@ -221,12 +225,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         InputInvoiceAmount = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
                     }
 
-                    //if(VatNumber == null)
-                    //{
-                    //    VatNumber = "999999999";
-                    //}
+                if (VatNumber == null)
+                {
+                    VatNumber = "999999999";
+                }
 
-                    GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
+                GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
                     if (gLAccountPM != null)
                     {
                         if (gLAccountPM.IsEquipmentVendor)

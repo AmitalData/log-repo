@@ -444,9 +444,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             ChartOfAccountProvider chartOfAccountProvider,
             DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int times)
         {
-
-
-            var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
+            GLAccountUpdateService us = GetGLAccountUpdateService(accountingContext, fullAccountingSetting);
             //for (int i =
             //    displayNumberProvider
             //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
@@ -461,7 +459,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
 
-                    int iClient = (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
+                    int iClient = (new CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
                     us.Update(new Def.EntityPMs.GLAccountPM()
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -484,9 +482,20 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     }, true);
                     scope.Complete();
                 }
-                
+
             }
-            
+
+        }
+        int _CountGLAccountUpdateService = 0;
+        private GLAccountUpdateService GetGLAccountUpdateService(IAccountingContext accountingContext, FullAccountingSetting fullAccountingSetting)
+        {
+            if (_CountGLAccountUpdateService > 100)
+            {
+                accountingContext = AccountingContext.GetContext(fullAccountingSetting.Tenant);
+                _CountGLAccountUpdateService = 0;
+            }
+            _CountGLAccountUpdateService++;
+            return new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
         }
 
         bool amount2addMore = false;
@@ -507,7 +516,8 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             ChartOfAccountProvider chartOfAccountProvider,
             DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int amount)
         {
-            var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
+            var us = //new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), 
+                GetGLAccountUpdateService(accountingContext, fullAccountingSetting);
             //for (int i = displayNumberProvider
             //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
             //    ; i < times; i++)

@@ -25,6 +25,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 entityPM.Id = IdCounter.GetNumber("Tariff", entityPM.Tenant);
+                entityPM.TariffNumber = CodeCounter.GetNumber("Tariff", entityPM.Tenant).ToString();
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 

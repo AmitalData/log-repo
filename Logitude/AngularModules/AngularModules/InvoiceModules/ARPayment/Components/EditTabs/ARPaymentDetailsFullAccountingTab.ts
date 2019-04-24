@@ -70,6 +70,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
 
+    get TextStore(){
+        return TextStore;
+    }
+
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
     private _glaService: GLAccountListService = new GLAccountListService();
@@ -127,6 +131,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         this.GetData();
 
+        // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 
     }
 
@@ -138,6 +143,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     originalPaymentOpenAmount: number;
     paymentAmountTotal: number = 0;
     amount2reconcileTotal: number = 0;
+    paymentReconciledAmountTotal: number = 0;
 
     // IsEntityValid: boolean = true;
 
@@ -287,12 +293,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         // Reconciliation amount
         var _linesAmount2reco = 0;
+        var _linespaymentReconciledAmount = 0;
         this.TransactionsList.Collection.forEach((line: TransactionLineModel) => {
             if (line && line.AmountToReconcile >= 0) {
-                _linesAmount2reco += line.PaymentReconciledAmount + line.AmountToReconcile;
+                _linesAmount2reco += line.AmountToReconcile;
+                _linespaymentReconciledAmount += line.PaymentReconciledAmount;
             }
         });
         this.amount2reconcileTotal = _linesAmount2reco;
+        this.paymentReconciledAmountTotal = _linespaymentReconciledAmount;
 
         if(this.EntityPM.InvoicesTransactions.length == 0){
             // this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
@@ -1745,6 +1754,9 @@ export class TransactionLineModel extends BaseComponent {
         this.originalOpenAmount = this.OpenAmount;
 
         this.CalculateFields();
+
+        this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",this.Status != TextStore.Closed && !this.parent.IsGridReadOnly);
+
     }
 
     CalculateFields() {
@@ -1828,31 +1840,11 @@ export class TransactionLineModel extends BaseComponent {
             else
                 this.IsChecked = true;
 
-            // this.IsChecked = !!value;
+            this.setAmounts();
 
+            if(this.IsChecked)
+                this.validateLine();
 
-
-            //set amount
-            if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
-                this.OpenAmount = this.originalOpenAmount - this.AmountToReconcile;
-            } else {
-                this.OpenAmount = this.originalOpenAmount;
-            }
-
-            //validate line
-            if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
-                this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, true, "valid");
-                this.isLineValid = true;
-                this.parent.SetEntityValidity();
-
-            } else {
-                this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, TextStore.invoiceAmount2reconcileMSG);
-                this.isLineValid = false;
-                this.parent.SetEntityValidity();
-
-            }
-
-            //update parent totals
             this.parent.CalculateTotals();
         }
 
@@ -1860,24 +1852,8 @@ export class TransactionLineModel extends BaseComponent {
 
     OnAmountToReconcileLostFocus(logCellTemplate: any, classificationTextBox: any) {
 
-        //validate line
-        if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
-            this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, true, "valid");
-            this.isLineValid = true;
-            this.parent.SetEntityValidity();
-
-            SessionLocator.SustainFocusOnCell = false;
-
-
-        } else {
-            this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, TextStore.invoiceAmount2reconcileMSG);
-            this.isLineValid = false;
-            this.parent.SetEntityValidity();
-
-            SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.SelectedSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
-
-        }
+        if(this.IsChecked)
+            this.validateLine();
 
     }
 
@@ -1911,6 +1887,35 @@ export class TransactionLineModel extends BaseComponent {
 
 
     //#endregion
+
+    validateLine(){
+         //validate line
+         if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
+            this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, true, "valid");
+            this.isLineValid = true;
+            this.parent.SetEntityValidity();
+
+            // SessionLocator.SustainFocusOnCell = false;
+
+        } else {
+            this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, TextStore.invoiceAmount2reconcileMSG);
+            this.isLineValid = false;
+            this.parent.SetEntityValidity();
+
+
+            // SessionLocator.SustainFocusOnCell = true;
+            // SessionLocator.SelectedSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
+        }
+    }
+
+    setAmounts(){
+        //set amount
+        if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= this.originalOpenAmount) {
+            this.OpenAmount = this.originalOpenAmount - this.AmountToReconcile;
+        } else {
+            this.OpenAmount = this.originalOpenAmount;
+        }
+    }
 
     //#region Other Properties
     get Id() { return this.LedgerTransactionPM.Id; }

@@ -93,8 +93,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(false);
 
                  this.Property(t => t.Order);
-         
 
+            this.Property(t => t.Code)
+                .HasMaxLength(7)
+                .IsUnicode(false);
 
 
 
@@ -117,6 +119,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Version).HasColumnName("Version");
             this.Property(t => t.AutomationXML).HasColumnName("AutomationXML");
             this.Property(t => t.FromEmail).HasColumnName("FromEmail");
+            this.Property(t => t.Code).HasColumnName("Code");
 
             this.Property(t => t.IsAutomationDone).HasColumnName("IsAutomationDone");
               string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

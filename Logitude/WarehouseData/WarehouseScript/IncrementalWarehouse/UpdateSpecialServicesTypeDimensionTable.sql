@@ -31,7 +31,7 @@
 	
 	set @Key = (select Id from DIM_SpecialServicesTypes where Id = @Id)
 	
-	if(@Key is  null) begin     insert into #DIM_SpecialServicesTypes (Id, Code ,[English Name] ,[Local Name], [Source Tenant],[Parent Tenant]) values(@Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant) end
+	if(@Key is  null) begin     insert into DIM_SpecialServicesTypes (Id, Code ,[English Name] ,[Local Name], [Source Tenant],[Parent Tenant]) values(@Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant) end
 	else begin update   DIM_SpecialServicesTypes set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant Where Id = @Id end
 
 

@@ -65,13 +65,61 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new Automation();
             this.Poco.Id = this.entityPm.Id;
 
+
+
             AutomationMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
+            SaveAutomationResultEmailRecipientLists();
+
             List<string> eventCodeLists = new List<string>();
             eventCodeLists.Add("AUCR");
             AddTraceEvent(eventCodeLists);
+        }
+
+        private void SaveAutomationResultEmailRecipientLists()
+        {
+            if (this.entityPm.AutomationResultEmailRecipientLists != null && this.entityPm.AutomationResultEmailRecipientLists.Count() > 0)
+            {
+                AutomationResultEmailRecipientRepository entityRepository = new AutomationResultEmailRecipientRepository(this.entityPm.Tenant);
+                foreach (AutomationResultEmailRecipientPM item in this.entityPm.AutomationResultEmailRecipientLists)
+                {
+                    AutomationResultEmailRecipient Poco = new AutomationResultEmailRecipient();
+                    if (string.IsNullOrEmpty(item.Id))
+                    {
+                        item.Id = item.Id = IdCounter.GetNumber("AutomationResultEmailRecipient", item.Tenant).ToString();
+                        item.AutomationsId = this.entityPm.Id;
+                        MapAutomationResultEmailRecipientEntity(item, Poco, true);
+                        entityRepository.Add(Poco);
+    
+                    }
+                    else
+                    {
+                        MapAutomationResultEmailRecipientEntity(item, Poco, true);
+                        entityRepository.Remove(Poco);
+
+                    }
+                }
+
+                entityRepository.SubmitChanges();
+                TableLastUpdateClass.UpdateTableHistory(this.entityPm.Tenant, "AutomationResultEmailRecipient");
+            }
+        }
+
+        private static void MapAutomationResultEmailRecipientEntity(AutomationResultEmailRecipientPM entityPM, AutomationResultEmailRecipient entityPOCO, bool isNewState)
+        {
+            if (isNewState)
+            {
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
+
+
+            entityPOCO.AutomationsId = entityPM.AutomationsId;
+            entityPOCO.RecipientType = entityPM.RecipientType;
+            entityPOCO.RecipientValue = entityPM.RecipientValue;
+
         }
 
 
@@ -130,16 +178,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = entityRepository.GetSingleAutomation(entityPM.Id, entityPm.Tenant);
 
 
+
             bool inactiveFieldChange = false;
             List<string> eventCodeLists = new List<string>();
             if (this.Poco.Inactive != this.entityPm.Inactive) inactiveFieldChange = true;
-            if (!string.IsNullOrEmpty(this.Poco.AutomationXML)) eventCodeLists.Add("AUUP");
 
+       
             AutomationMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            SaveAutomationResultEmailRecipientLists();
 
-       
+
+            eventCodeLists.Add("AUUP");
             if (inactiveFieldChange)
             {
                 if (entityPM.Inactive) eventCodeLists.Add("AUSI");

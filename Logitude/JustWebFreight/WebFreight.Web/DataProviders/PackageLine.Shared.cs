@@ -131,6 +131,14 @@ namespace WebFreight.Web.DataProviders
         public string InsidePackagesDetails { get; set; }
         public string Notes { get; set; }
         public string MarksAndNumbersOnly { get; set; }
+
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
+        public string ChassisNumber { get; set; }
+        public string RegistrationNumber { get; set; }
+        public string CountryName { get; set; }
     }
 
     public class InsidePackageLine
@@ -147,6 +155,14 @@ namespace WebFreight.Web.DataProviders
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public string CommodityNumber { get; set; }
+
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
+        public string ChassisNumber { get; set; }
+        public string RegistrationNumber { get; set; }
+        public string CountryName { get; set; }
     }
 
     public class InsidePackageGroup

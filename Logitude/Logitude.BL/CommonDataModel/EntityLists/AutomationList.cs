@@ -29,8 +29,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
         public int Order { get; set; }
+        public string Code { get; set; }
 
-       
-      
+
+
     }
 }

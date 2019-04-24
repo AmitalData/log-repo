@@ -484,14 +484,14 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true
         });
         this.columns.push({
-            FieldName: 'Buttons',
+            FieldName: 'Buttons;' + this.EntityPM.StatusCode,
             DataTypeCode: 'String',
             Display: '',
             Styles: { width: '30px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
             ServerSideSortable: true,
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
         });
 
         //this.CustomColumnsReady.emit(this.columns);

@@ -133,6 +133,11 @@ export class AutomationPM {
     public set AutomationResultEmailRecipientLists(newValue: any) { this.automationResultEmailRecipientLists = newValue; this.MarkAsDirty("AutomationResultEmailRecipientLists"); }
 
 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+
+
     public OldEntityPM: AutomationPM;
 
     public IsDirty: boolean;

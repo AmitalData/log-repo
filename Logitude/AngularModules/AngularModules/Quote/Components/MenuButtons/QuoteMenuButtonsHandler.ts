@@ -198,14 +198,22 @@ export class QuoteMenuButtonsHandler {
                     }
 
                     if (button.EventCode == "ConvertQuotetoLCL") {
-                        if (this.EntityPM.IsClosed) {
-                            button.IsDisabled = true;
+                        if (this.EntityPM.IsClosed || this.EntityPM.IsCancelled) {
+                            if (this.EntityPM.TransportModeId == "O") {
+                                if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                            }
                         }
 
                         else {
                             if (this.EntityPM.TransportModeId == "O") {
                                 if (this.EntityPM.ShipmentTypeId == "FCLD") {
                                     button.IsHidden = false;
+                                    button.IsDisabled = false;
                                 }
                                 else {
                                     button.IsHidden = true;
@@ -219,14 +227,22 @@ export class QuoteMenuButtonsHandler {
                     }
 
                     if (button.EventCode == "ConvertQuotetoFCL") {
-                        if (this.EntityPM.IsClosed) {
-                            button.IsDisabled = true;
+                        if (this.EntityPM.IsClosed || this.EntityPM.IsCancelled) {
+                            if (this.EntityPM.TransportModeId == "O") {
+                                if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                            }
                         }
 
                         else {
                             if (this.EntityPM.TransportModeId == "O") {
                                 if (this.EntityPM.ShipmentTypeId == "LCLD") {
                                     button.IsHidden = false;
+                                    button.IsDisabled = false;
                                 }
                                 else {
                                     button.IsHidden = true;
