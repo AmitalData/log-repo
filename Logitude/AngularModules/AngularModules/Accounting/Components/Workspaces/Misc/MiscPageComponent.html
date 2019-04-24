@@ -54,8 +54,8 @@
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <!--{{ 'Accounting.General.O.MiscQueries' | TextCodeTranslationPipe }}-->
-                                    <label float-start style="margin-right: 10px;"> {{ 'Accounting.General.O.AuthoritiesReports' | TextCodeTranslationPipe }}</label>
+                               
+                                    <label float-start style="margin-right: 10px;"> {{ 'Accounting.General.O.Misc' | TextCodeTranslationPipe }}</label>
                                 </td>
                             </tr>
 
@@ -63,7 +63,7 @@
                                 <td></td>
                             </tr>
 
-                            <tr style="height:250px">
+                            <tr style="height:120px">
                                 <td>
                                     <div class="ScrollViewer">
                                         <div class="ScrollContent">
@@ -73,10 +73,8 @@
 
 
                                             <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{ 'TaxReport' | TextCodeTranslationPipe }}</div>
-                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="RunNewTaxReport()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
-                                                </div>
+                                                <div>{{ 'Accounting.General.O.AuthoritiesReports' | TextCodeTranslationPipe }}</div>
+
                                                 <div>
                                                     <table>
                                                         <tr>
@@ -84,14 +82,25 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ALLTAXREPORTS')">{{ 'TaxReport' | TextCodeTranslationPipe }}</p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ALLTAXREPORTS')"> {{'TaxReport' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ALLTaxDeductionReports')"> {{'TaxDeductionReport' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('AllOpenFormats')"> {{'OpenFormatReport' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="AllBankDepositsVisibility" (click)="ViewDepositQuery('AllBankDeposits')"> {{'Accounting.General.Q.AllDeposits' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
 
-
-                                                                    <tr>
-                                                                        <td><div></div></td>
-                                                                    </tr>
                                                                 </table>
 
 
@@ -100,86 +109,21 @@
 
                                                     </table>
                                                 </div>
+
+
+
+                                 
+
                                             </div>
-
-                                            <div style="height: 15px;"></div>
-
-                                            <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Accounting.General.O.856Report' | TextCodeTranslationPipe}}</div>
-                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="RunNewTaxDeduction()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
-                                                </div>
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ALLTaxDeductionReports')">{{'TaxDeductionReport' | TextCodeTranslationPipe}}</p>
-                                                                        </td>
-                                                                    </tr>
-
-
-                                                                    <tr>
-                                                                        <td><div></div></td>
-                                                                    </tr>
-                                                                </table>
-
-
-                                                            </td>
-                                                        </tr>
-
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                                            <div style="height: 15px;"></div>
-
-                                            <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{ 'Accounting.General.O.OpenFormat' |TextCodeTranslationPipe }}</div>
-                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="RunNewOpenFormatReportWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
-                                                </div>
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('AllOpenFormats')">{{ 'OpenFormatReport' |TextCodeTranslationPipe }} </p>
-                                                                        </td>
-                                                                    </tr>
-
-
-                                                                    <tr>
-                                                                        <td><div></div></td>
-                                                                    </tr>
-                                                                </table>
-
-
-                                                            </td>
-                                                        </tr>
-
-                                                    </table>
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </td>
                             </tr>
 
 
-                            <tr class="SectionHeader">
-                                <td>
-                                  
-                                    <label float-start style="margin-right: 10px;"> {{ 'Accounting.General.O.AccountingPeriods' | TextCodeTranslationPipe }}</label>
-                                </td>
-                            </tr>
+                           
 
-                            <tr style="height:5px;">
+                            <tr style="height:15px;">
                                 <td></td>
                             </tr>
 
@@ -190,13 +134,11 @@
 
 
 
-
-
                                             <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div> {{ 'Accounting.General.O.AccountingPeriodsDefinition' | TextCodeTranslationPipe }}</div>
-                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-
+                                                <div>
+                                                    {{ 'Accounting.General.O.AccountingPeriods' | TextCodeTranslationPipe }}
                                                 </div>
+
                                                 <div>
                                                     <table>
                                                         <tr>
@@ -204,14 +146,16 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ACPD')">{{ 'Accounting.General.O.AccountingPeriodsDefinition' | TextCodeTranslationPipe }}</p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ACPD')"> {{'Accounting.General.O.AccountingPeriodsDefinition' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
-
-
                                                                     <tr>
-                                                                        <td><div></div></td>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ACYT')"> {{'Accounting.O.YearTransfer' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
                                                                     </tr>
+                                                                   
+
                                                                 </table>
 
 
@@ -220,39 +164,13 @@
 
                                                     </table>
                                                 </div>
+
                                             </div>
 
-                                            <div style="height: 15px;"></div>
+                                           
+                             
 
-                                            <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div> {{ 'Accounting.O.YearTransfer' | TextCodeTranslationPipe }}</div>
-                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-
-                                                </div>
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ACYT')"> {{ 'Accounting.O.YearTransfer' | TextCodeTranslationPipe }} </p>
-                                                                        </td>
-                                                                    </tr>
-
-
-                                                                    <tr>
-                                                                        <td><div></div></td>
-                                                                    </tr>
-                                                                </table>
-
-
-                                                            </td>
-                                                        </tr>
-
-                                                    </table>
-                                                </div>
-                                            </div>
+                                            <div></div>
 
                                         </div>
                                     </div>
