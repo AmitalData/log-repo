@@ -34,6 +34,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? CommisionPercentage { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+     [Key]
+        [ForeignKey("ModificationAndDiscountType")]
+        [Column("ModificationsTypeCode")]
+	    public string ModificationsTypeCode { get; set; }
+	      
+        public virtual ModificationAndDiscountType ModificationAndDiscountType { get; set; }
     }
 }
 	 
