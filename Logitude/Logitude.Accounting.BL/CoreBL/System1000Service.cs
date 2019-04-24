@@ -60,18 +60,18 @@ namespace Logitude.Accounting.BL.CoreBL
             var res = new List<string>();
             foreach (List<CardGLAccountDataView> listOfAccountsMax1000 in listOf1000)
             {
-                string header = "A" + _FullAccountingSettingPM.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9);
+                string header = "A" + _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
                 flatFile.AppendLine(header);
                 int count = 0;
                 foreach (var obj in listOfAccountsMax1000)
                 {
-                    string line = "B" + obj.InternalNumber.PadLeft(15, '0').Substring(0, 15)
-                        + obj.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9)
-                        + obj.VatNumber.PadLeft(9, '0').Substring(0, 9);
+                    string line = "B" + obj.InternalNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15)
+                        + obj.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
+                        + obj.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
                     flatFile.AppendLine(line);
                     count++;
                 }
-                string footer = "C" + _FullAccountingSettingPM.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9)
+                string footer = "Z" + _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
                     + count.ToString().PadLeft(4, '0');
                 flatFile.AppendLine(footer);
 

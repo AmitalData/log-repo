@@ -6169,6 +6169,7 @@
     <ProjectReference Include="..\..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
       <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
       <Name>Logitude.Accounting.BL</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
       <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
