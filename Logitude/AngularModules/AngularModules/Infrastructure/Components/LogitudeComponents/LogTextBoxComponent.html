@@ -168,7 +168,10 @@
                                   bottom: 0;
                                   left: 0;
                                   right: 0;
-                                  opacity:1 !important; font-size:12px;"
+                                  opacity:1 !important; font-size:12px;
+                                  direction: ltr;
+                                  padding: 0 2px;"
+                            [style.text-align]="isRTL?'right':'left'"
                            [spellcheck]="AllowSpellCheck"
                            [(ngModel)]="TextValue"
                            (focus)="onFocus()"
