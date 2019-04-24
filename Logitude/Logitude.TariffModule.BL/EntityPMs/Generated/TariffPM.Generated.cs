@@ -584,6 +584,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string tariffNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TariffNumber  
+	   {
+	    
+	     get
+		{
+		   return tariffNumber;
+		 }
+		 set
+		 {
+		   if(tariffNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffNumber",OldValue=tariffNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tariffNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
