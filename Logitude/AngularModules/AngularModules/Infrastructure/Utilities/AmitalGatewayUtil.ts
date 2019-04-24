@@ -86,6 +86,24 @@ export class AmitalGatewayUtil {
             " אישורים נדרשים");
     }
 
+    public ShowDocumentsSharing(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string,
+        CustomerId: string) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+        unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "ScriptableGatewayUtil.ShowDocumentsSharingUnifreightCallBack",
+            "CFIHMAIN.LogitudeTask",
+            "ShowDocumentsSharingUnifreightCallBack",
+            unifreightMessageM,
+            " שיתוף מסמכים");
+    }
+
     public GetRihbitFromTransmissions(
         UnifreightEntityNumber: string,
         LogitudeEntityNumber: string,
@@ -836,6 +854,19 @@ export class AmitalGatewayUtil {
                 "ShowDeclarationCertificatesByGroupsUnifreightCallBack",
                 unifreightMessageM,
                 " אישורים נדרשים");
+        }
+
+        public ShowDocumentsSharingUnifreightCallBack(
+            UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, CustomerId) {
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+            unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowDocumentsSharingUnifreightCallBack",
+                "CFIHMAIN.LogitudeTask",
+                "ShowDocumentsSharingUnifreightCallBack",
+                unifreightMessageM,
+                " שיתוף מסמכים");
         }
     }
 }
