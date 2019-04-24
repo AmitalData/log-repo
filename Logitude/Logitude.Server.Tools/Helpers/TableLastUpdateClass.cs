@@ -15,7 +15,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.SignalRHubs;
+//using Logitude.Server.Tools.SignalRHubs;
 
 namespace Logitude.BL.Helpers
 {
@@ -121,7 +121,7 @@ namespace Logitude.BL.Helpers
             }
 
             tableLastUpdateRepository.SubmitChanges();
-            SignalRHubMessageSender.SendTenantChannelMessage("CachedTableUpdate", entityObjectTable.Name, tenant);
+            //SignalRHubMessageSender.SendTenantChannelMessage("CachedTableUpdate", entityObjectTable.Name, tenant);
             //HubEventPublisher.PublishChannelEvent(new HubChannelEvent() { ChannelName = "Tenant" + tenant, EventName = "CachedTableUpdate", Data = entityObjectTable.Name });
         }
     
