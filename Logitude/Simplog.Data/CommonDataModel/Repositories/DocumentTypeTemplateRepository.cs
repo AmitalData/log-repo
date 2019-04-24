@@ -130,5 +130,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+
+        public IQueryable<DocumentTypeTemplate> GetDocumentTypeTemplatesBydocumentTypeTemplateIds(List<string>documentTypeTemplateIds,int tenant)
+        {
+            return from a in context.DocumentTypeTemplates
+                   where a.Tenant == tenant && documentTypeTemplateIds.Contains(a.Id)
+                   select a;
+        }
     }
 }

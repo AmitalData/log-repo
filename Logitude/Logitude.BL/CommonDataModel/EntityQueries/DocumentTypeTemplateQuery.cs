@@ -823,6 +823,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
         }
-   
+
+
+        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIds(List<string> documentTypeIds, int tenant)
+        {
+            List<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates
+                                                                  where documentTypeIds.Contains(a.DocumentTypeId) && a.Tenant == tenant
+                                                                  select new DocumentTypeTemplatePM()
+                                                                  {
+                                                                      Description = a.Description,
+                                                                      DocumentTypeId = a.DocumentTypeId,
+                                                                      Id = a.Id,
+                                                                     OriginalTemplateId = a.OriginalTemplateId
+                                                                  }).ToList();
+            return documentTypeTemplates;
+
+        }
+
     }
 }

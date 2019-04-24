@@ -75,8 +75,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             SaveAutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
             SaveAutomationHistory();
 
-            List<string> eventCodeLists = new List<string>();
-            eventCodeLists.Add("AUCR");
+            List<string> eventCodeLists = new List<string>(new string[] { "AUCR" });
             AddTraceEvent(eventCodeLists);
 
      
@@ -94,6 +93,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     {
                         item.Id = item.Id = IdCounter.GetNumber("AutomationResultEmailRecipient", item.Tenant).ToString();
                         item.AutomationsId = this.entityPm.Id;
+                        item.Tenant = this.entityPm.Tenant;
                         MapAutomationResultEmailRecipientEntity(item, Poco, true);
                         entityRepository.Add(Poco);
     
@@ -125,8 +125,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPOCO.RecipientValue = entityPM.RecipientValue;
 
         }
-
-
 
         private void SaveAutomationHistory()
         {
@@ -194,7 +192,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void GetLoggedContact()
         {
 
-            if (HttpContext.Current != null)
+            if (HttpContext.Current != null && HttpContext.Current.User!=null && HttpContext.Current.User.Identity!=null)
             {
                 string email = HttpContext.Current.User.Identity.Name;
                 this.loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
@@ -226,7 +224,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
 
             bool inactiveFieldChange = false;
-            List<string> eventCodeLists = new List<string>();
+  
             if (this.Poco.Inactive != this.entityPm.Inactive) inactiveFieldChange = true;
 
        
@@ -239,7 +237,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             SaveAutomationHistory();
 
 
-            eventCodeLists.Add("AUUP");
+            List<string> eventCodeLists = new List<string>(new string[] { "AUUP" });
             if (inactiveFieldChange)
             {
                 if (entityPM.Inactive) eventCodeLists.Add("AUSI");
