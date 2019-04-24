@@ -247,25 +247,6 @@
       <QueryFilter QueryCode="&quot;Error In Transfer Invoices&quot;" PredefinedValue="&quot;true&quot;" ObjectFieldName="&quot;ErrorInTransferInvoices&quot;" IsPredefined="true" IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Query Code="&quot;ErrorInTransfer&quot;" TextCode="&quot;Error In Transfer&quot;" LocalTextCode="&quot;Error In Transfer&quot;" QueryGroupCode="&quot;APIN&quot;" IndexOrder="9" ObjectTableName="&quot;APInvoice&quot;" QuerySection="&quot;APInvoice&quot;" SystemLevel="true" IsAddNewEntity="false" IsPackagable="true" DefaultSortName="&quot;InvoiceDate&quot;" DefaultSortDirection="&quot;Ascending&quot;" EditWizardName="&quot;&quot;" EditWizardComponentPath="&quot;&quot;" QueryGroupName="&quot;AP Invoices&quot;" TextCodeCode="&quot;APInvoice.Q.ErrorInTransfer&quot;" FeatureCode="&quot;ERRORINTRANSFER&quot;" FeatureTextCodeCode="&quot;APInvoice.Features.ErrorInTransfer&quot;" FeatureDefaultText="&quot;Error In Transfer&quot;" IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="0" ObjectFieldName="&quot;TransferError&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="1" ObjectFieldName="&quot;InvoiceNumber&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="2" ObjectFieldName="&quot;VendorName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="3" ObjectFieldName="&quot;InvoiceDate&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="4" ObjectFieldName="&quot;InvoiceCurrencyCode&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="5" ObjectFieldName="&quot;CreateDate&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="6" ObjectFieldName="&quot;CreatedByUserName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="7" ObjectFieldName="&quot;StatusName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="8" ObjectFieldName="&quot;UpdateDate&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="9" ObjectFieldName="&quot;UpdatedByUserName&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="10" ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;" ColumnWidth="130" />
-      <QueryColumn QueryCode="&quot;ErrorInTransfer&quot;" IndexOrder="11" ObjectFieldName="&quot;AmountDue&quot;" ColumnWidth="130" />
-    </QueryColumns>
-    <QueryFilters>
-      <QueryFilter QueryCode="&quot;ErrorInTransfer&quot;" PredefinedValue="&quot;ET&quot;" ObjectFieldName="&quot;TransferStatusCode&quot;" IsPredefined="true" IndexOrder="0" />
-    </QueryFilters>
-  </Query>
   <Screen Name="&quot;General Tab Screen&quot;" ObjectTableName="&quot;APInvoice&quot;" NumberOfColumns="1" NumberOfRows="6" IsReadOnly="false" IsHeaderScreen="false" Code="&quot;APInvoice.GeneralTabScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;UpdatedByUserId&quot;" ScreenName="General Tab Screen" />
