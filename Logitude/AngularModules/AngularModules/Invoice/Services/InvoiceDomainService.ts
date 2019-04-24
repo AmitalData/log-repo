@@ -310,9 +310,17 @@ export class InvoiceDomainService {
     CheckVendor_NumberDuplication(vendorId: string, invoiceNumber: string, entityId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetCheckVendor_NumberDuplication?vendorId=' + vendorId + "&invoiceNumber=" + invoiceNumber + "&entityId=" + entityId;
+        authHeader.append('Content-Type', 'application/json');
+
+        var args = new APInvoiceNumberDuplicationCheckArgs();
+        args.VendorId = vendorId;
+        args.EntityId = entityId;
+        args.InvoiceNumber = invoiceNumber;
+
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+
+            return this._http.post(this._apiUrl, JSON.stringify(args), { headers: authHeader }).map((response) => {
+
                 var newInvoiceId: string = response.json();
 
                 var serviceResponse: ServiceResponse;
@@ -1385,4 +1393,9 @@ export class ARInvoiceSATStatus {
     public SATStatusCode: string;
     public SATStatusName: string;
     public SATError: string;
+}
+class APInvoiceNumberDuplicationCheckArgs {
+    public VendorId: string;
+    public EntityId: string;
+    public InvoiceNumber: string;
 }

@@ -337,6 +337,10 @@
     <Compile Include="Migrations\201904210904056_add_Log_AnalyzeQueue_Khalid.Designer.cs">
       <DependentUpon>201904210904056_add_Log_AnalyzeQueue_Khalid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904240914504_AddIsBlockingLoginFlag.cs" />
+    <Compile Include="Migrations\201904240914504_AddIsBlockingLoginFlag.Designer.cs">
+      <DependentUpon>201904240914504_AddIsBlockingLoginFlag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -445,6 +449,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904210904056_add_Log_AnalyzeQueue_Khalid.resx">
       <DependentUpon>201904210904056_add_Log_AnalyzeQueue_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904240914504_AddIsBlockingLoginFlag.resx">
+      <DependentUpon>201904240914504_AddIsBlockingLoginFlag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

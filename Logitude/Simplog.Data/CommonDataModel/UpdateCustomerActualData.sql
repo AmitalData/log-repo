@@ -6,7 +6,7 @@ GO
 
 Create PROCEDURE [dbo].[usp_UpdateCustomerActualData]
 (
-	@CustomerId_PARAM varchar(15),
+	@CustomerId_PARAM varchar(15) = null,
 	@Tenant int
 )
 AS
