@@ -49,5 +49,6 @@ namespace WebFreight.Web.DataProviders
         public string IMOClass { get; set; }
         public string Master { get; set; }
         public string House { get; set; }
+        public string ReleasingAgentName { get; set; }
     }
 }
