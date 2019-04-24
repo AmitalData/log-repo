@@ -43,6 +43,7 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
         this.HasException = this.entityPM.HasException;
         // this.encodeParameters();
         // this.decodeParameters();
+        if(this.entityPM.StatusCode =="2") this.Fixing =true;
         this.SetUIProperty();
 
     }
