@@ -73,8 +73,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             SaveAutomationResultEmailRecipientLists();
 
-            List<string> eventCodeLists = new List<string>();
-            eventCodeLists.Add("AUCR");
+            List<string> eventCodeLists = new List<string>(new string[] { "AUCR" });
             AddTraceEvent(eventCodeLists);
         }
 
@@ -90,6 +89,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     {
                         item.Id = item.Id = IdCounter.GetNumber("AutomationResultEmailRecipient", item.Tenant).ToString();
                         item.AutomationsId = this.entityPm.Id;
+                        item.Tenant = this.entityPm.Tenant;
                         MapAutomationResultEmailRecipientEntity(item, Poco, true);
                         entityRepository.Add(Poco);
     
@@ -122,6 +122,46 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         }
 
+        private void SaveAutomationHistory()
+        {
+
+            AutomationHistoryService automationHistoryService = new AutomationHistoryService(this.ObjectContext, entityPm.Tenant);
+            AutomationHistoryPM automationHistoryPM = new AutomationHistoryPM()
+            {
+                AutomationsId = entityPm.Id,
+                Version = entityPm.Version,
+                Tenant = entityPm.Tenant,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPm.Tenant),
+                AutomationXML = entityPm.AutomationXML,
+            };
+
+            automationHistoryService.Create(automationHistoryPM);
+        }
+
+        public void SaveAutomationLastUpdate(string objectTableId, int tenant)
+        {
+            AutomationLastUpdateRepository automationLastUpdateRepository = new AutomationLastUpdateRepository(tenant);
+            AutomationLastUpdate automationLastUpdate = automationLastUpdateRepository.GetSingleAutomationLastUpdate(objectTableId, tenant);
+
+            if (automationLastUpdate != null)
+            {
+                automationLastUpdate.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                automationLastUpdateRepository.Update(automationLastUpdate);
+            }
+            else
+            {
+                automationLastUpdate = new AutomationLastUpdate()
+                {
+                    Tenant = tenant,
+                    HasAutomation = true,
+                    ObjectTableId = objectTableId,
+                    LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                };
+
+                automationLastUpdateRepository.Add(automationLastUpdate);
+            }
+            automationLastUpdateRepository.SubmitChanges();
+        }
 
         private void AddTraceEvent(List<string> eventCodeList)
         {
@@ -148,7 +188,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void GetLoggedContact()
         {
 
-            if (HttpContext.Current != null)
+            if (HttpContext.Current != null && HttpContext.Current.User!=null && HttpContext.Current.User.Identity!=null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 string email = HttpContext.Current.User.Identity.Name;
                 this.loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
@@ -180,7 +220,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
 
             bool inactiveFieldChange = false;
-            List<string> eventCodeLists = new List<string>();
+  
             if (this.Poco.Inactive != this.entityPm.Inactive) inactiveFieldChange = true;
 
        
@@ -190,7 +230,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             SaveAutomationResultEmailRecipientLists();
 
 
-            eventCodeLists.Add("AUUP");
+            List<string> eventCodeLists = new List<string>(new string[] { "AUUP" });
             if (inactiveFieldChange)
             {
                 if (entityPM.Inactive) eventCodeLists.Add("AUSI");
