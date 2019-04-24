@@ -273,6 +273,8 @@ namespace WebFreight.Web.Helpers
                 List<AutomationResultEmailRecipientPM> automationResultEmailRecipientPMList = GetAutomationResultEmailRecipientPMList(automationLists);
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 AutomationService service = new AutomationService(MyContext, tenant);
+                int OnCreateAutomationOrder = GetLastAutomationOrder(tenant, "OnCreate");
+                int OnUpdateAutomationOrder = GetLastAutomationOrder(tenant, "OnUpdate");
 
                 foreach (Automation automation in automationLists)
                 {
@@ -285,10 +287,30 @@ namespace WebFreight.Web.Helpers
                         newAutomationPM.DocumentTypeId = automationDocumentType.DocumentTypeId;
                         newAutomationPM.TemplateId = automationDocumentType.DocumentTypeTemplateId;
                     }
+
+                   if(automation.Type == "OnCreate")
+                    {
+                        OnCreateAutomationOrder += 1;
+                        automation.Order = OnCreateAutomationOrder;
+                    }
+                   else if (automation.Type == "OnUpdate")
+                    {
+                        OnUpdateAutomationOrder += 1;
+                        automation.Order = OnUpdateAutomationOrder;
+                    }
+
                     service.Create(newAutomationPM);
 
                 }
             }
+
+        }
+
+        private int GetLastAutomationOrder(int tenant , string type)
+        {
+            AutomationRepository automationRepository = new AutomationRepository(tenant);
+            int order = automationRepository.GetAutomations(tenant).Where(d => d.Type == type).Count();
+            return order;
 
         }
 
@@ -430,6 +452,14 @@ namespace WebFreight.Web.Helpers
                 VerticalShift = tenantZeroDocumentTypeTemplate.VerticalShift,
                 InternalRemarks = tenantZeroDocumentTypeTemplate.InternalRemarks,
                 IsEnabledForCustomers = true,
+                TemplateBodyHtml = tenantZeroDocumentTypeTemplate.TemplateBodyHtml,
+                TemplateFooterHtml = tenantZeroDocumentTypeTemplate.TemplateFooterHtml,
+                TemplateHeaderHtml = tenantZeroDocumentTypeTemplate.TemplateHeaderHtml,
+                TemplateFooterHeight = tenantZeroDocumentTypeTemplate.TemplateFooterHeight,
+                TemplateHeaderHeight = tenantZeroDocumentTypeTemplate.TemplateHeaderHeight,
+                CC = tenantZeroDocumentTypeTemplate.CC,
+                From = tenantZeroDocumentTypeTemplate.From,
+                ReplyTo = tenantZeroDocumentTypeTemplate.ReplyTo,
             };
 
             documentTypeTemplateRepository.Add(newtemplate);
