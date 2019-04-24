@@ -89,6 +89,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool IsOperationalClosed { get; set; }
         public DateTime LastUpdate { get; set; }
 
+        public string ComputedShipmentNumber { get; set; }
+
         public string Field1Id { get; set; }     
         public string Field1 { get; set; }
         public string Field2 { get; set; }

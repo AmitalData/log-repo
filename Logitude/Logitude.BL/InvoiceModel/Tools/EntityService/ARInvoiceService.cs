@@ -234,6 +234,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
+            this.ARInvoiceStockNumber();
+
+
             ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
             ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
 
@@ -265,8 +268,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 shipmentReceivableRepository.SubmitChanges();
             }
 
-            this.ARInvoiceStockNumber(entityPM);
-
+         
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.OnApprovingInvoice();
@@ -391,7 +393,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (entityPM.SetCancelDraft)
             {
                 this.CancelDraftInvoice();
+
+                ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
                 ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
+
+                if (isNewEntity)
+                {
+                    if (entityPM.NewConcurrencyGUID == null)
+                    {
+                        entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                    }
+                }
+
+                invoice.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+                entityPM.ConcurrencyGUID = invoice.ConcurrencyGUID;
             }
 
             else
@@ -419,6 +434,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.InitializeComponent();
+
+                this.ARInvoiceStockNumber();
 
                 ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
                 ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
@@ -451,7 +468,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
-                this.ARInvoiceStockNumber(entityPM);
+               
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);
@@ -487,16 +504,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
-            if(!String.IsNullOrEmpty(QBOARPaymentId))
+            if (!String.IsNullOrEmpty(QBOARPaymentId))
             {
                 ARPaymentHelper service = new ARPaymentHelper();
                 ARPaymentQuery PaymentQuery = new ARPaymentQuery(paymentRepository);
                 ARPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOARPaymentId, tenant);
                 if (paymentPM.TransferStatusCode == "TR")
-                {              
-                ARPaymentRepository repository = new ARPaymentRepository(tenant);
-                ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
-                service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
+                {
+                    ARPaymentRepository repository = new ARPaymentRepository(tenant);
+                    ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
+                    service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
                 }
             }
 
@@ -507,45 +524,45 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.OnApprovingInvoice();
         }
 
-        private void ARInvoiceStockNumber(ARInvoicePM aRInvoice)
+        private void ARInvoiceStockNumber()
         {
             if(!this.isApprovingInvoice && !this.isVoidingInvoice)
             {
                 IInvoiceContext context = InvoiceContext.GetContext(tenant);
-                ARInvoiceStockLineRepository aRInvoiceStockLineRepository = new ARInvoiceStockLineRepository(aRInvoice.Tenant);
-                ARInvoiceStockQuery aRInvoiceStockQuery = new ARInvoiceStockQuery(aRInvoice.Tenant);
-                ARInvoiceStockService aRInvoiceStockService = new ARInvoiceStockService(context, aRInvoice.Tenant);
+                ARInvoiceStockLineRepository aRInvoiceStockLineRepository = new ARInvoiceStockLineRepository(tenant);
+                ARInvoiceStockQuery aRInvoiceStockQuery = new ARInvoiceStockQuery(tenant);
+                ARInvoiceStockService aRInvoiceStockService = new ARInvoiceStockService(context, tenant);
                 ARInvoiceStockPM stock = new ARInvoiceStockPM();
                 ARInvoiceStockLine stockLine = new ARInvoiceStockLine();
 
                 if (this.isNewEntity)
                 {
-                    if(aRInvoice.ARInvoiceStockId != null)
+                    if(entityPM.ARInvoiceStockId != null)
                     {
-                        stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
+                        stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(entityPM.ARInvoiceStockId, tenant);
                         if(stockLine != null)
                         {
                             stockLine.IsUsed = true;
-                            stockLine.ARInvoiceId = aRInvoice.Id;
+                            stockLine.ARInvoiceId = entityPM.Id;
                             stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                             stockLine.UpdatedByUserId = this.loggedContact.Id;
-                            stockLine.ShipmentNumber = aRInvoice.MainEntityReference;
+                            stockLine.ShipmentNumber = entityPM.MainEntityReference;
                             aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
-                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, aRInvoice.Tenant);
+                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
                             aRInvoiceStockService.Update(stock,false);
-                            this.CreateInvoiceStockEvent("NTFS", aRInvoice.Id, stockLine.Number + " added from " + stock.Name);
+                            this.CreateInvoiceStockEvent("NTFS", entityPM.Id, stockLine.Number + " added from " + stock.Name);
                         }
                     }
                 }
                 else
                 {
-                    if (aRInvoice.ARInvoiceStockId != this.invoice.ARInvoiceStockId)
+                    if (entityPM.ARInvoiceStockId != this.invoice.ARInvoiceStockId)
                     {
                         stockLine = new ARInvoiceStockLine();
-                        if (aRInvoice.ARInvoiceStockId == null)
+                        if (entityPM.ARInvoiceStockId == null)
                         {
-                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine( this.invoice.ARInvoiceStockId, aRInvoice.Tenant);
+                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine( this.invoice.ARInvoiceStockId, tenant);
                             stockLine.IsUsed = false;
                             stockLine.ARInvoiceId = null;
                             stockLine.ShipmentNumber = null;
@@ -553,21 +570,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             stockLine.UpdatedByUserId = this.loggedContact.Id;
                             aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
-                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, aRInvoice.Tenant);
-                            this.CreateInvoiceStockEvent("NRTS", aRInvoice.Id, stockLine.Number + " returned to " + stock.Name);
+                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
+                            this.CreateInvoiceStockEvent("NRTS", entityPM.Id, stockLine.Number + " returned to " + stock.Name);
+                            this.entityPM.IsInvoiceNumberFromStock = false; 
                         }
                         else
                         {
-                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(aRInvoice.ARInvoiceStockId, aRInvoice.Tenant);
+                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(entityPM.ARInvoiceStockId, tenant);
                             stockLine.IsUsed = true;
-                            stockLine.ARInvoiceId = aRInvoice.Id;
-                            stockLine.ShipmentNumber = aRInvoice.MainEntityReference;
+                            stockLine.ARInvoiceId = entityPM.Id;
+                            stockLine.ShipmentNumber = entityPM.MainEntityReference;
                             stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                             stockLine.UpdatedByUserId = this.loggedContact.Id;
                             aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
-                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, aRInvoice.Tenant);
-                            this.CreateInvoiceStockEvent("NTFS", aRInvoice.Id, stockLine.Number + " added from "+ stock.Name);
+                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
+                            this.CreateInvoiceStockEvent("NTFS", entityPM.Id, stockLine.Number + " added from "+ stock.Name);
                         }
                        
                         aRInvoiceStockService.Update(stock, false);
@@ -1195,7 +1213,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
 
-                if (!entityPM.IsInvoiceNumberManuallySet)
+                if (!entityPM.IsInvoiceNumberManuallySet && !entityPM.IsInvoiceNumberFromStock)
                 {
                     if (string.IsNullOrEmpty(entityPM.InvoiceNumber))
                     {
@@ -1318,21 +1336,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (!entityPM.IsExternalAPI)
             {
-                if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
+                if (!entityPM.IsInvoiceNumberManuallySet)
                 {
-                    if (entityPM.IsConstituentInvoice)
+                    if (!entityPM.IsInvoiceNumberFromStock)
                     {
-                        entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null);
-                    }
+                        if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
+                        {
+                            if (entityPM.IsConstituentInvoice)
+                            {
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null);
+                            }
 
-                    else if (entityPM.IsConsolidationInvoice)
-                    {
-                        entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null);
-                    }
+                            else if (entityPM.IsConsolidationInvoice)
+                            {
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null);
+                            }
 
-                    else
-                    {
-                        entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null);
+                            else
+                            {
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null);
+                            }
+                        }
                     }
                 }
             }

@@ -81,7 +81,6 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
 
         this.AutomationCondationAndList.forEach((item) => {
            
-                item.CurrentEntityPM.AutomationsId = this.addEditAutomationsComponent.CurrentEntityPM.Id;
                 item.CurrentEntityPM.UpdateDate = this.addEditAutomationsComponent.CurrentEntityPM.UpdateDate;
                 item.CurrentEntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
                 automationConditionList.push(item.CurrentEntityPM);
@@ -90,7 +89,6 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
 
         this.AutomationCondationOrList.forEach((item) => {
 
-            item.CurrentEntityPM.AutomationsId = this.addEditAutomationsComponent.CurrentEntityPM.Id;
             item.CurrentEntityPM.UpdateDate = this.addEditAutomationsComponent.CurrentEntityPM.UpdateDate;
             item.CurrentEntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
             automationConditionList.push(item.CurrentEntityPM);
@@ -115,7 +113,6 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
         automationConditionPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.OperatorCode = "Equals";
         automationConditionPM.ObjectFieldId = "";
-        automationConditionPM.AutomationsId = this.addEditAutomationsComponent.CurrentEntityPM.Id;
 
 
         if (conditionType == "And") {

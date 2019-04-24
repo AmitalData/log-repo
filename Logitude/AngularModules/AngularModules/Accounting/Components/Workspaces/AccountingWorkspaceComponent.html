@@ -1,15 +1,16 @@
-﻿
+
 <table>
     <!-- Pages Menu -->
     <tr style="height:21px;">
         <td>
             <ul class="PagesMenu">
                 <!--<li [class.SelectedPageMenu]="SelectedItem == 'JORN'" (click)="SelectedItem = 'JORN'">Journals</li>-->
-                <li float-start [class.SelectedPageMenu]="SelectedItem == 'GLAC'" (click)="SelectedItem = 'GLAC'">{{ 'Accounting.General.O.Main' | TextCodeTranslationPipe }}</li>
-                <li float-start [class.SelectedPageMenu]="SelectedItem == 'RCV'" (click)="SelectedItem = 'RCV'">{{ 'Accounting.General.O.Receivables' | TextCodeTranslationPipe }}</li>
-                <li float-start [class.SelectedPageMenu]="SelectedItem == 'PAY'" (click)="SelectedItem = 'PAY'">{{ 'Accounting.General.O.Payables' | TextCodeTranslationPipe }}</li>
-                <li float-start [class.SelectedPageMenu]="SelectedItem == 'BNKS'" (click)="SelectedItem = 'BNKS'">{{ 'Accounting.General.O.Banks' | TextCodeTranslationPipe }}</li>
-                <li float-start [class.SelectedPageMenu]="SelectedItem == 'MISC'" (click)="SelectedItem = 'MISC'">{{ 'Accounting.General.O.Misc' | TextCodeTranslationPipe }}</li>
+                <li *ngIf="IsMainTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'Main'" (click)="SelectedItem = 'Main'">{{ 'Accounting.General.O.Main' | TextCodeTranslationPipe }}</li>
+                <li *ngIf="IsReceivablesTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'RCV'" (click)="SelectedItem = 'RCV'">{{ 'Accounting.General.O.Receivables' | TextCodeTranslationPipe }}</li>
+                <li *ngIf="IsPayablesTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'PAY'" (click)="SelectedItem = 'PAY'">{{ 'Accounting.General.O.Payables' | TextCodeTranslationPipe }}</li>
+                <li *ngIf="IsBanksTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'BNKS'" (click)="SelectedItem = 'BNKS'">{{ 'Accounting.General.O.Banks' | TextCodeTranslationPipe }}</li>
+                <li *ngIf="IsGLAccountsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'GLAccounts'" (click)="SelectedItem = 'GLAccounts'">{{ 'Accounting.O.GLAccounts' | TextCodeTranslationPipe }}</li>
+                <li *ngIf="IsMiscTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'MISC'" (click)="SelectedItem = 'MISC'">{{ 'Accounting.General.O.Misc' | TextCodeTranslationPipe }}</li>
             </ul>
         </td>
     </tr>
@@ -23,8 +24,8 @@
     <!-- Pages -->
     <tr>
         <td class="CellStretch">
-            <div class="CellContent" [hidden]="SelectedItem != 'GLAC'">
-                <div LocationDirective Code="GLAC"></div>
+            <div class="CellContent" [hidden]="SelectedItem != 'Main'">
+                <div LocationDirective Code="Main"></div>
             </div>
             <!--<div class="CellContent" [hidden]="SelectedItem != 'JORN'">
                 <div LocationDirective Code="JORN"></div>
@@ -37,6 +38,9 @@
             </div>
             <div class="CellContent" [hidden]="SelectedItem != 'BNKS'">
                 <div LocationDirective Code="BNKS"></div>
+            </div>
+            <div class="CellContent" [hidden]="SelectedItem != 'GLAccounts'">
+                <div LocationDirective Code="GLAccounts"></div>
             </div>
             <div class="CellContent" [hidden]="SelectedItem != 'MISC'">
                 <div LocationDirective Code="MISC"></div>

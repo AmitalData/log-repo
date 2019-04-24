@@ -85,6 +85,12 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                     }
+
+                    if(args.EventTypeCode == "CWOP" || args.EventTypeCode == "CLOP" || args.EventTypeCode == "CCOP")
+                    {
+                        args.LogDateTime = args.EventDateTime;
+                    }
+
                     #endregion
 
                     #region Status Notes

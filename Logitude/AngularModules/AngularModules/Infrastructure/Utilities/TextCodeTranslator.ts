@@ -236,7 +236,7 @@ export class TextCodeTranslator {
             myResult = AppTool.Replace(value, "%n", "\n");
         }
 
-                //return "!" + translation;
+        //return "!" + myResult;
 
         return myResult;
     }

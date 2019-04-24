@@ -947,9 +947,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             objectTabelQuery = new ObjectTableQuery(objecttableRep);
 
             List<ObjectTablePM> objectTables = objectTabelQuery.GetObjectPMsByTenant(tenant).ToList();
-             
-        
+
+
             #region ObjectTables
+            ObjectTable objectTable = objectContext.ObjectTables.Where(f => f.Name == "General" && f.Tenant == 0).FirstOrDefault();
+
             ObjectTablePM journalActionTypeObjectTable = objectTables.Where(d => d.Name == "JournalActionType").FirstOrDefault();
             ObjectTablePM chartOfAccountObjectTable = objectTables.Where(d => d.Name == "ChartOfAccount").FirstOrDefault();
             ObjectTablePM journalObjectTable = objectTables.Where(d => d.Name == "Journal").FirstOrDefault();
@@ -1210,6 +1212,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             Feature AccountingIntegrityCheckFeature_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Features.Menu", Packagable = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AccountingIntegrityCheck.Features.Menu", NameTextCodeDefaultText = "Accounting Integrity Checks", FullLocalDefaultText = "", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             #region OpenFormatReport
             Feature OpenFormatReportFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TestingMode", Packagable = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "OpenFormatReport.Features.TestingMode", NameTextCodeDefaultText = "Testing Mode", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #endregion
+
+            #region FullAccountingTabs
+            Feature AccountingMainTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCMAIN", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Main", NameTextCodeDefaultText = "Main Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingReceivablesTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCReceivables", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Receivables", NameTextCodeDefaultText = "Receivables Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingPayablesTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCPayables", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Payables", NameTextCodeDefaultText = "Payables Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingBanksTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCBanks", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Banks", NameTextCodeDefaultText = "Banks Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingGLAccountsTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCGLAccounts", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.GLAccounts", NameTextCodeDefaultText = "GLAccounts Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingMiscTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCMisc", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Misc", NameTextCodeDefaultText = "Misc Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
             #endregion
             #endregion
 
@@ -1756,6 +1769,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.ReconciledAmount", DefaultText = "Reconciled Amount", LocalDefaultText = "סכום שהותאם", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.invoiceAmount2reconcileMSG", DefaultText = "The amount to reconcile in the invoice is higher than the invoice open amount", LocalDefaultText = "הסכום להתאמה גדול מהסכום הפתוח בחשבונית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.paymentAmount2reconcileMSG", DefaultText = "The amount to reconcile in the invoices is higher than the payment open amount", LocalDefaultText = "הסכום להתאמה גדול מהסכום הפתוח בקבלה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.PaymentAmount", DefaultText = "Payment amount", LocalDefaultText = "סכום קבלה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.ReconciledAmount", DefaultText = "Reconciled amount", LocalDefaultText = "סכום שהותאם", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Amount2Reconcile", DefaultText = "Amount to reconcile", LocalDefaultText = "סכום להתאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.DocumentTypeNotFound", DefaultText = "Document type X not found", LocalDefaultText = "סוג מסמך X לא נמצא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1763,6 +1780,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Rebuild", DefaultText = "Rebuild", LocalDefaultText = "בניה מחדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Building", DefaultText = "Building...", LocalDefaultText = "...בניין", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AuthoritiesReports", DefaultText = "Authorities Reports", LocalDefaultText = "דוחות לרשויות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.856Report", DefaultText = "856 Report", LocalDefaultText = "דוח 856", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenFormat", DefaultText = "Open Format", LocalDefaultText = "דוח מבנה אחיד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingPeriods", DefaultText = "Accounting Periods", LocalDefaultText = "תקופות חשבונאיות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingPeriodsDefinition", DefaultText = "Accounting Periods Definition", LocalDefaultText = "הגדרת תקופות חשבונאיות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Fix", DefaultText = "Fix", LocalDefaultText = "תקן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.GLAccounts", DefaultText = "GL Accounts", LocalDefaultText = "כרטיסים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ShipmentsAndMasters", DefaultText = "Shipments & Masters", LocalDefaultText = "תיקים וגו’בים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearTransfer", DefaultText = "Year Transfer", LocalDefaultText = "העברת שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             #region MainMenu
@@ -1945,7 +1973,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.OpenFiles", DefaultText = "Open Files", LocalDefaultText = "תקים פתוחים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ClosedFiles", DefaultText = "Closed Files", LocalDefaultText = "תיקים סגורים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllFiles", DefaultText = "All Files", LocalDefaultText = "כל התיקים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllJobs", DefaultText = "All Jobs", LocalDefaultText = "כל הג’ובים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllJobs", DefaultText = "All Masters", LocalDefaultText = "כל הג’ובים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
 
             //  Customers query
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllCustomers", DefaultText = "All Customers", LocalDefaultText = "כל הלקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
@@ -3506,12 +3534,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTBA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 10, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.BankAccounts", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BankAccount").FirstOrDefault().Id, FeatureId = BankAccountMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
 
             //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTBD", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 11, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.BankDeposits", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BankDeposit").FirstOrDefault().Id, FeatureId = BankDepositMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTRV", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 12, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.Revaluations", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Revaluation").FirstOrDefault().Id, FeatureId = RevaluationMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
+           // AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTRV", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 12, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.Revaluations", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Revaluation").FirstOrDefault().Id, FeatureId = RevaluationMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
 
             //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCSH", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 13, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.CashBooks", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "CashBook").FirstOrDefault().Id, FeatureId = CashBookMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTTX", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 14, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxWithholding", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxWithholdingAssessOffice").FirstOrDefault().Id, FeatureId = TaxWithholdingOfficesMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXRP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 15, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxReport").FirstOrDefault().Id, FeatureId = TaxReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXDR", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 16, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxDeductionReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxDeductionReport").FirstOrDefault().Id, FeatureId = TaxDeductionReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
+            //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXRP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 15, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxReport").FirstOrDefault().Id, FeatureId = TaxReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
+            //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXDR", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 16, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxDeductionReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxDeductionReport").FirstOrDefault().Id, FeatureId = TaxDeductionReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "AICH", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 17, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.IntegrityChecks", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AccountingIntegrityCheck").FirstOrDefault().Id, FeatureId = AccountingIntegrityCheckMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
 
             #endregion

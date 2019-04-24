@@ -47,8 +47,8 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 
 		private IQueryable<TariffLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TariffLine> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 				private IQueryable<TariffLine> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<TariffLine> iQueryable, int tenant)
         {
 			return iQueryable;

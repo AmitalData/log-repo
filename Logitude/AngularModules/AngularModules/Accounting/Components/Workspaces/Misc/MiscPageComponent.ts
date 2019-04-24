@@ -22,11 +22,13 @@ export class MiscPageComponent implements AfterViewInit {
     constructor() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("OpenFormatReport").subscribe((response: any) => {
-
-
+            this._entityResourceService.getEntityResourceByTableName("TaxReport").subscribe((response: any) => {
+                this._entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => {
          this.isScreenLoaded = true;
          this.CurrentSession.StopBusyIndicator();
-           });
+                });
+            });
+        });
 
 
 
@@ -65,16 +67,47 @@ export class MiscPageComponent implements AfterViewInit {
                     {
                         displayTitle = TextCodeTranslator.Translate("OpenFormatReport");
                         tableName = "OpenFormatReport";
-                        listArgs.Perspective = "OpenFormatReportMain";
+                     
                         break;
                     }
                     case "ALLTAXREPORTS":
                         {
-                            displayTitle = "Tax Reports";
-                            tableName = "TaxReport";
+                        displayTitle = TextCodeTranslator.Translate("TaxReport");
+                        tableName = "TaxReport";
+                      
                             break;
-                        }
+                    }
+                case "ALLTaxDeductionReports": {
 
+                    displayTitle = TextCodeTranslator.Translate("TaxDeductionReport");
+                    tableName = "TaxDeductionReport";
+                    break;
+
+                }
+
+                case "ACPD": {
+                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 750;
+                        logitudeWindow.Height = 500;
+                        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.AccountingPeriods");
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingPeriodsComponent');
+                    });
+                    break;
+                }
+
+           case "ACYT":{
+                        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 500;
+                        logitudeWindow.Height = 300;
+                        logitudeWindow.Title = "Year Transfer";
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/YearTransferComponent');
+                    });
+                   
+                       break;
+
+                       }
                 default: { break; }
             }
 
@@ -104,11 +137,45 @@ export class MiscPageComponent implements AfterViewInit {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 400;
-        logWindow.Height = 180;
+        logWindow.Height = 220;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewOpenFormatReportComponent');
+    }
+
+    RunNewTaxReport() {
+
+
+        var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewOpenFormatReport");
+        //var windowArgs: BookingWizardArgs = new BookingWizardArgs();
+        //windowArgs.IsNewEntity = true;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 400;
+        logWindow.Height = 200;
+        logWindow.Title = windowTitle;
+        //logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/NewEntity/NewTaxReportComponent');
+
+    }
+
+    RunNewTaxDeduction() {
+
+
+        var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewOpenFormatReport");
+        //var windowArgs: BookingWizardArgs = new BookingWizardArgs();
+        //windowArgs.IsNewEntity = true;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 400;
+        logWindow.Height = 200;
+        logWindow.Title = windowTitle;
+        //logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/NewEntity/NewTaxDeductionReportComponent');
+
     }
 
 

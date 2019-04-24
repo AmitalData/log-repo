@@ -1,5 +1,6 @@
 import { Component} from '@angular/core';
 import { ShipmentPM } from '../../EntityPMs/ShipmentPM';
+import { ShipmentPMService } from '../../Services/StandardPMs/ShipmentPMService';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
@@ -16,6 +17,7 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ShipmentTool } from '../../Tools';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     moduleId: module.id,
@@ -68,6 +70,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
         this.SetUIProperties();
         this.SetScreenEnabled();
         this.BuildDirectionsFilterList();
+        this.Clone();
 
         this.LoadAddress("S");
         this.LoadAddress("C");
@@ -1076,9 +1079,38 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
 
         return myResult;
     }
-    
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.EntityPM);
+        this.myCloner.AddField('DirectionId');
+        this.myCloner.AddField('ShipperId');
+        this.myCloner.AddField('ShipperName');
+        this.myCloner.AddField('ShipperAddressId');
+        this.myCloner.AddField('ShipperContactId');
+        this.myCloner.AddField('ShipperReference1');
+        this.myCloner.AddField('ShipperReference2');
+        this.myCloner.AddField('ConsigneeId');
+        this.myCloner.AddField('ConsigneeName');
+        this.myCloner.AddField('ConsigneeAddressId');
+        this.myCloner.AddField('ConsigneeContactId');
+        this.myCloner.AddField('ConsigneeReference1');
+        this.myCloner.AddField('ConsigneeReference2');
+        this.myCloner.AddField('CustomerId');
+        this.myCloner.AddField('CustomerName');
+        this.myCloner.AddField('ShipmentCustomerTypeCode');
+        this.myCloner.AddField('MainCarriageFromPortId');
+        this.myCloner.AddField('MainCarriageFromToId');
+
+        this.myCloner.AddEntity(this.EntityPM);
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
+    }
+
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.RejectChanges();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -1192,9 +1224,22 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
         var oldDirectionName: string = this.DirectionsList.filter(d => d.Code == this.oldShipmentDirection)[0].Name;
         var currentDirectionName: string = this.DirectionsList.filter(d => d.Code == this.DirectionId)[0].Name;
 
-        this.EntityPM.EventNote = "Converted from[ " + oldDirectionName + " ] to [ " + currentDirectionName + " ]";
+        this.EntityPM.EventNote = "Converted from [" + oldDirectionName + "] to [" + currentDirectionName + "]";
         this.EntityPM.ShipmentDirectionConverted = true;
-        
+
+        var service: ShipmentPMService = new ShipmentPMService();
+        service.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (myResponse.HasError) {
+                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+
+                else {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                }
+            }
+        });
     }
 }
 

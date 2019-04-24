@@ -57,6 +57,7 @@ export class FilterField extends BaseComponent {
                     }
                     else {
                         this.TextValue = preDefinedFilter.PredefinedValue;
+                        this.TextValue1 = preDefinedFilter.PredefinedValue2;
                     }
                 }
                 else {
@@ -84,6 +85,7 @@ export class FilterField extends BaseComponent {
                     }
                     else {
                         this.TextValue = preDefinedFilter.PredefinedValue;
+                        this.TextValue1 = preDefinedFilter.PredefinedValue2;
                     }
                 }
                 else {
@@ -431,9 +433,9 @@ export class FilterField extends BaseComponent {
             this.list.push(this.equalsOp);
             this.list.push(this.greaterThanOrEqualOp);
             this.list.push(this.lessThanOrEqualOp);
-            //if (ruleMode) {
-            //    list.push(notEqualsOp);
-            //}
+            if (field.DataTypeCode == "DateTime" || field.DataTypeCode == "Date") {
+                this.list.push(this.BetweenOp);
+            }
         }
 
 

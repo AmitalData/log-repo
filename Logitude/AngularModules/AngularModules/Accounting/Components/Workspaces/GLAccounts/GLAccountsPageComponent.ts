@@ -17,11 +17,11 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 
 @Component({
     moduleId: module.id,
-    templateUrl: './GLAccountPageComponent.html',
+    templateUrl: './GLAccountsPageComponent.html',
 
 })
 
-export class GLAccountPageComponent implements AfterViewInit {
+export class GLAccountsPageComponent implements AfterViewInit {
     @Output() ReloadUserQueries = new EventEmitter();
     public RecentGLAccountsCount: number = 0;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -145,7 +145,7 @@ export class GLAccountPageComponent implements AfterViewInit {
                 });
         }
     }
-    
+
     RunNewGLAccountWizard() {
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewAccount"); // "New Account";
         //var windowArgs: BookingWizardArgs = new BookingWizardArgs();
@@ -158,7 +158,7 @@ export class GLAccountPageComponent implements AfterViewInit {
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewGLAccountComponent');
-    } 
+    }
 
     ViewAccountingQuery(myQueryCode: string) {
         if (myQueryCode != null) {

@@ -1,7 +1,8 @@
+import { GLAccountsPageComponent } from './Components/Workspaces/GLAccounts/GLAccountsPageComponent';
 import { AccountingNoteComponent } from './Components/Others/AccountingNoteComponent';
 import { IntegrityCheckTabComponent } from './Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent';
 import {AccountingWorkspaceComponent} from './Components/Workspaces/AccountingWorkspaceComponent';
-import {GLAccountPageComponent} from './Components/Workspaces/Main/GLAccountPageComponent';
+import {MainPageComponent} from './Components/Workspaces/Main/MainPageComponent';
 import {JournalPageComponent} from './Components/Workspaces/Journal/JournalPageComponent';
 import {ReceivablePageComponent} from './Components/Workspaces/Receivable/ReceivablePageComponent';
 import {PayablePageComponent} from './Components/Workspaces/Payable/PayablePageComponent';
@@ -96,7 +97,8 @@ export const Components =
     [
         //Workspaces
         AccountingWorkspaceComponent,
-        GLAccountPageComponent,
+        MainPageComponent,
+        GLAccountsPageComponent,
         JournalPageComponent,
         ReceivablePageComponent,
         PayablePageComponent,
@@ -198,7 +200,8 @@ export class ModuleDeclarations {
 
             //Workspaces
             case "AccountingWorkspaceComponent": { myResult = AccountingWorkspaceComponent; break; }
-            case "GLAccountPageComponent": { myResult = GLAccountPageComponent; break; }
+            case "MainPageComponent": { myResult = MainPageComponent; break; }
+            case "GLAccountsPageComponent": { myResult = GLAccountsPageComponent; break; }
             case "JournalPageComponent": { myResult = JournalPageComponent; break; }
             case "ReceivablePageComponent": { myResult = ReceivablePageComponent; break; }
             case "PayablePageComponent": { myResult = PayablePageComponent; break; }
@@ -221,7 +224,7 @@ export class ModuleDeclarations {
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
-                
+
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
             case "NewCategory2Component": { myResult = NewCategory2Component; break; }

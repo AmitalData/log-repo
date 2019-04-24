@@ -1490,6 +1490,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.To = shipment.To;
             shipmentPM.Origin = shipment.Origin;
             shipmentPM.AgentComputed = shipment.AgentComputed;
+            shipmentPM.ComputedShipmentNumber = shipment.AgentComputed;
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
@@ -1947,6 +1948,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     APInvoiceRepository apInvoiceReps = new APInvoiceRepository(shipment.Tenant);
                     List<APInvoice> invoices = apInvoiceReps.GetInvoicesByShipmentId(shipmentPM.Id, shipmentPM.Tenant);
+
+                    if (shipmentPM.ShipmentLevelCode == "H" && shipmentPM.MasterShipmentDataId != null)
+                    {
+                        List<APInvoice> invoices_Childs = apInvoiceReps.GetInvoicesByShipmentId(shipmentPM.MasterShipmentDataId, shipmentPM.Tenant);
+                        foreach (APInvoice item in invoices_Childs)
+                        {
+                            if (!invoices.Where(d => d.Id == item.Id).Any())
+                            {
+                                invoices.Add(item);
+                            }
+                        }
+                    }
 
                     foreach (APInvoice invoice in invoices)
                     {
@@ -3113,6 +3126,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.DirectionId = shipment.DirectionId;
             shipmentPM.AgentId = shipment.AgentId;
             shipmentPM.AgentComputed = shipment.AgentComputed;
+            shipmentPM.ComputedShipmentNumber = shipment.AgentComputed;
             shipmentPM.BranchId = shipment.BranchId;
             shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
             shipmentPM.OperationalClosedByUserId = shipment.OperationalClosedByUserId;
@@ -3543,6 +3557,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         AgentContactId = s.AgentContactId,
                                                         AgentId = s.AgentId,
                                                         AgentComputed = s.AgentComputed,
+                                                        ComputedShipmentNumber=s.ComputedShipmentNumber,
                                                         AgentName = s.AgentCard != null ? s.AgentCard.EnglishName : null,
                                                         AgentNote = s.AgentCard != null ? s.AgentCard.Notes : null,
                                                         AgentReference1 = s.AgentReference1,
@@ -4013,6 +4028,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.DepartmentId = shipment.DepartmentId;
                     shipmentPM.AgentId = shipment.AgentId;
                     shipmentPM.AgentComputed = shipment.AgentComputed;
+                    shipmentPM.ComputedShipmentNumber = shipment.ComputedShipmentNumber;
                     shipmentPM.IsAccountingClosed = shipment.IsAccountingClosed;
                     shipmentPM.IsOperationalClosed = shipment.IsOperationalClosed;
                     shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
@@ -4145,6 +4161,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         AgentContactId = s.AgentContactId,
                                                         AgentId = s.AgentId,
                                                         AgentComputed = s.AgentComputed,
+                                                        ComputedShipmentNumber = s.ComputedShipmentNumber,
+
                                                         AgentName = s.AgentCard != null ? s.AgentCard.EnglishName : null,
                                                         AgentNote = s.AgentCard != null ? s.AgentCard.Notes : null,
                                                         AgentReference1 = s.AgentReference1,
@@ -10521,6 +10539,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ProfitInProfitCurrency = s.ProfitInProfitCurrency,
                                                          AgentId = s.AgentId,
                                                          AgentComputed = s.AgentComputed,
+                                                         ComputedShipmentNumber = s.ComputedShipmentNumber,
                                                          AgentName = s.AgentCard != null ? s.AgentCard.EnglishName : null,
                                                          AgentReference1 = s.AgentReference1,
                                                          AgentReference2 = s.AgentReference2,
@@ -11074,6 +11093,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierNumber = f.CarrierNumber,
                                AgentId = f.AgentId,
                                AgentComputed = f.AgentComputed,
+                              // ComputedShipmentNumber = f.ComputedShipmentNumber,
                                ARInvoiceIssued = f.ARInvoiceIssued,
                                CreditNoteIssued = f.CreditNoteIssued,
                                CustomFileNumber = f.CustomFileNumber,
@@ -11415,6 +11435,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CarrierNumber = f.CarrierNumber,
                     AgentId = f.AgentId,
                     AgentComputed = f.AgentComputed,
+                    //ComputedShipmentNumber = f.ComputedShipmentNumber,
+
                     ARInvoiceIssued = f.ARInvoiceIssued,
                     CreditNoteIssued = f.CreditNoteIssued,
                     CustomFileNumber = f.CustomFileNumber,

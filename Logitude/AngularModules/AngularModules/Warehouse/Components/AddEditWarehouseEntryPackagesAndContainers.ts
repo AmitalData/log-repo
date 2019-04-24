@@ -12,6 +12,10 @@ import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelVal
 import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
 import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
+import { PackageTypeListService } from '../../Common/Services/StandardLists/PackageTypeListService';
+
+
 
 @Component({
     moduleId: module.id,
@@ -102,6 +106,13 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
                     this.savedItem.Dimensions = this.warehouseEntryPackagePM.Dimensions;
                     this.savedItem.Instock = this.warehouseEntryPackagePM.Instock;
                     this.savedItem.Quantity = this.warehouseEntryPackagePM.Quantity;
+                    this.savedItem.Make = this.warehouseEntryPackagePM.Make;
+                    this.savedItem.Year = this.warehouseEntryPackagePM.Year;
+                    this.savedItem.ChassisNumber = this.warehouseEntryPackagePM.ChassisNumber;
+                    this.savedItem.RegistrationNumber = this.warehouseEntryPackagePM.RegistrationNumber;
+                    this.savedItem.CountryId = this.warehouseEntryPackagePM.CountryId;
+                    this.savedItem.Model = this.warehouseEntryPackagePM.Model;
+                    this.savedItem.Color = this.warehouseEntryPackagePM.Color;
                     this.savedItem.ContainerNumberWarning = this.warehouseEntryPackagePM.ContainerNumberWarning;
                 }
             }
@@ -129,6 +140,13 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
                 this.warehouseEntryPackagePM.Instock = this.savedItem.Instock;
                 this.warehouseEntryPackagePM.Quantity = this.savedItem.Quantity;
                 this.warehouseEntryPackagePM.ContainerNumberWarning = this.savedItem.ContainerNumberWarning;
+                this.warehouseEntryPackagePM.Make = this.savedItem.Make;
+                this.warehouseEntryPackagePM.Year = this.savedItem.Year;
+                this.warehouseEntryPackagePM.ChassisNumber = this.savedItem.ChassisNumber;
+                this.warehouseEntryPackagePM.RegistrationNumber = this.savedItem.RegistrationNumber;
+                this.warehouseEntryPackagePM.CountryId = this.savedItem.CountryId;
+                this.warehouseEntryPackagePM.Model = this.savedItem.Model;
+                this.warehouseEntryPackagePM.Color = this.savedItem.Color;
             }
 
             if (this.warehouseEntryPM && !this.IsParentDirty && this.warehouseEntryPM.IsDirty) {
@@ -231,22 +249,25 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     IsDependencyFilter2Value: boolean;
     IsContainer: boolean = false;
     WarehouseEntryPM: WarehouseEntryPM;
+    public IsVehicleDetails: boolean = false;
+
     constructor(entity: WarehouseEntryPackagePM, public fatherComponent: AddEditWarehouseEntryPackagesAndContainers = null) {
         super();
         this.FatherComponent = fatherComponent;
         this.EntityPM = entity;
-        this.WarehouseEntryPM = this.FatherComponent.warehouseEntryPM;       
+        this.WarehouseEntryPM = this.FatherComponent.warehouseEntryPM;
         this.VolumeUnitCode = this.WarehouseEntryPM.VolumeUnitCode;
         this.GrossWeightUnitCode = this.WarehouseEntryPM.GrossWeightUnitCode;
         this.ChargeableWeightUnitCode = this.WarehouseEntryPM.ChargeableWeightUnitCode;
         this.DimensionsUnitCode = this.WarehouseEntryPM.DimensionsUnitCode;
-
-        this.IsDependencyFilter2Value = this.IsContainer= this.EntityPM.IsContainer;   
-    
+        this.IsDependencyFilter2Value = this.IsContainer = this.EntityPM.IsContainer;
         this.SetLabel();
         this.SetUIProperties();
+        this.SetUIPropertiesOfCars(false);
+        this.IsVehicleDetails = false;
     }
-    
+
+
     SetLabel() {
         this.VolumeLabel = "Volume (" + this.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Weight (" + this.GrossWeightUnitCode + ")";
@@ -264,36 +285,49 @@ export class WarehouseEntryPackageItem extends BaseComponent {
 
         }
 
-            var isVolumeEnabled: boolean = false;
-            var isDimensionEnabled: boolean = false;
-            var isGrossWeightEnabled: boolean = false;
+        var isVolumeEnabled: boolean = false;
+        var isDimensionEnabled: boolean = false;
+        var isGrossWeightEnabled: boolean = false;
 
-                if (this.Quantity > 0) {
-                    isVolumeEnabled = true;
-                    isDimensionEnabled = true;
-                    isGrossWeightEnabled = true;
+        if (this.Quantity > 0) {
+            isVolumeEnabled = true;
+            isDimensionEnabled = true;
+            isGrossWeightEnabled = true;
 
-                    if (this.Height != null || this.Width != null || this.Length != null) {
-                        isVolumeEnabled = false;
-                    }
+            if (this.Height != null || this.Width != null || this.Length != null) {
+                isVolumeEnabled = false;
+            }
 
-                    else if (this.Volume != null) {
-                        isDimensionEnabled = false;
+            else if (this.Volume != null) {
+                isDimensionEnabled = false;
+            }
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.PackageTypeId)) {
+            var myService: PackageTypeListService = new PackageTypeListService();
+            myService.getSingle(this.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: PackageTypeList = myResponse.Result;
+                    if (list != null) {
+                        this.SetUIPropertiesOfCars(list.IsVehicle);
+                        this.IsVehicleDetails = list.IsVehicle;
                     }
                 }
+            });
+        }
 
-            this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled);
-            this.UIProperties.SetEnabled("Width", this.ObjectTableName, isDimensionEnabled);
-            this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
-            this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
-            this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
-            this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled);
+        this.UIProperties.SetEnabled("Width", this.ObjectTableName, isDimensionEnabled);
+        this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
+        this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
+        this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
+        this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
     }
 
     ComputeVolume() {
 
-        this.Volume= AppTool.GetVolumeFromDimentions(this.DimensionsUnitCode, this.VolumeUnitCode, this.Width, this.Height, this.Length, this.Quantity);
-        
+        this.Volume = AppTool.GetVolumeFromDimentions(this.DimensionsUnitCode, this.VolumeUnitCode, this.Width, this.Height, this.Length, this.Quantity);
+
 
     }
 
@@ -306,36 +340,36 @@ export class WarehouseEntryPackageItem extends BaseComponent {
 
     // Dimensions
     get Quantity() { return this.EntityPM.Quantity; }
-    set Quantity(newValue: number) {
-        if (this.EntityPM.Quantity != newValue) {
-            this.EntityPM.Quantity = AppTool.Round(newValue, 0);
+    set Quantity(value: number) {
+        if (this.EntityPM.Quantity != value) {
+            this.EntityPM.Quantity = AppTool.Round(value, 0);
             this.ComputeVolume();
             this.SetUIProperties();
         }
     }
 
     get Length() { return this.EntityPM.Length; }
-    set Length(newValue: number) {
-        if (this.EntityPM.Length != newValue) {
-            this.EntityPM.Length = AppTool.Round(newValue, 2);
+    set Length(value: number) {
+        if (this.EntityPM.Length != value) {
+            this.EntityPM.Length = AppTool.Round(value, 2);
             this.ComputeVolume();
             this.SetUIProperties();
         }
     }
 
     get Width() { return this.EntityPM.Width; }
-    set Width(newValue: number) {
-        if (this.EntityPM.Width != newValue) {
-            this.EntityPM.Width = AppTool.Round(newValue, 2);
+    set Width(value: number) {
+        if (this.EntityPM.Width != value) {
+            this.EntityPM.Width = AppTool.Round(value, 2);
             this.ComputeVolume();
             this.SetUIProperties();
         }
     }
 
     get Height() { return this.EntityPM.Height; }
-    set Height(newValue: number) {
-        if (this.EntityPM.Height != newValue) {
-            this.EntityPM.Height = AppTool.Round(newValue, 2);
+    set Height(value: number) {
+        if (this.EntityPM.Height != value) {
+            this.EntityPM.Height = AppTool.Round(value, 2);
             this.ComputeVolume();
             this.SetUIProperties();
         }
@@ -366,32 +400,32 @@ export class WarehouseEntryPackageItem extends BaseComponent {
                 }
 
                 myDimensions = myLength + "-" + myWidth + "-" + myHeight;
-            }
+            } 
 
         }
         return myDimensions;
     }
 
     get Volume() { return this.EntityPM.Volume; }
-    set Volume(newValue: number) {
-        if (this.EntityPM.Volume != newValue) {
-            this.EntityPM.Volume = AppTool.Round(newValue, 3);
+    set Volume(value: number) {
+        if (this.EntityPM.Volume != value) {
+            this.EntityPM.Volume = AppTool.Round(value, 3);
             this.ComputeVolumetricWeight();
             this.SetUIProperties();
         }
     }
 
     get VolumetricWeight() { return this.EntityPM.VolumetricWeight; }
-    set VolumetricWeight(newValue: number) {
-        if (this.EntityPM.VolumetricWeight != newValue) {
-            this.EntityPM.VolumetricWeight = AppTool.Round(newValue, 3);
-           // this.fatherComponent.ComputeTotals();
+    set VolumetricWeight(value: number) {
+        if (this.EntityPM.VolumetricWeight != value) {
+            this.EntityPM.VolumetricWeight = AppTool.Round(value, 3);
+            // this.fatherComponent.ComputeTotals();
         }
     }
 
     get Weight() { return this.EntityPM.Weight; }
-    set Weight(newValue: number) {
-        var myValue: number = AppTool.Round(newValue, 3);
+    set Weight(value: number) {
+        var myValue: number = AppTool.Round(value, 3);
 
         if (this.EntityPM.Weight != myValue) {
             this.EntityPM.Weight = myValue
@@ -411,10 +445,43 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     set PackageTypeId(value: string) {
         if (this.EntityPM.PackageTypeId != value) {
             this.EntityPM.PackageTypeId = value;
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.SetUIPropertiesOfCars(false);
+                this.IsVehicleDetails =false;
+            }
+            else {
+                var myService: PackageTypeListService = new PackageTypeListService();
+                myService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: PackageTypeList = myResponse.Result;
+                        if (list != null) {
+                            this.SetUIPropertiesOfCars(list.IsVehicle);
+                            this.IsVehicleDetails = list.IsVehicle;
+                            if (!list.IsVehicle) {
+                                this.Make = null;
+                                this.Model = null;
+                                this.Color = null;
+                                this.Year = null;
+                                this.CountryId = null;
+                                this.ChassisNumber = null;
+                                this.RegistrationNumber = null;
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 
-
+    private SetUIPropertiesOfCars(isEnabled: boolean) {
+        this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Year", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("ChassisNumber", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
+    }
 
     get Description() { return this.EntityPM.Description; }
     set Description(value: string) {
@@ -459,4 +526,54 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("Commodity") + " Search";
         logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBChooseCommodityComponent");        
     } 
+
+    get Make() { return this.EntityPM.Make; }
+    set Make(value: string) {
+        if (this.EntityPM.Make != value) {
+            this.EntityPM.Make = value;
+        }
+    }
+
+    get Model() { return this.EntityPM.Model; }
+    set Model(value: string) {
+        if (this.EntityPM.Model != value) {
+            this.EntityPM.Model = value;
+        }
+    }
+
+
+    get Year() { return this.EntityPM.Year; }
+    set Year(value: string) {
+        if (this.EntityPM.Year != value) {
+            this.EntityPM.Year = value;
+        }
+    }
+
+    get Color() { return this.EntityPM.Color; }
+    set Color(value: string) {
+        if (this.EntityPM.Color != value) {
+            this.EntityPM.Color = value;
+        }
+    }
+
+    get ChassisNumber() { return this.EntityPM.ChassisNumber; }
+    set ChassisNumber(value: string) {
+        if (this.EntityPM.ChassisNumber != value) {
+            this.EntityPM.ChassisNumber = value;
+        }
+    }
+
+    get RegistrationNumber() { return this.EntityPM.RegistrationNumber; }
+    set RegistrationNumber(value: string) {
+        if (this.EntityPM.RegistrationNumber != value) {
+            this.EntityPM.RegistrationNumber = value;
+        }
+    }
+
+    get CountryId() { return this.EntityPM.CountryId; }
+    set CountryId(value: string) {
+        if (this.EntityPM.CountryId != value) {
+            this.EntityPM.CountryId = value;
+        }
+    }
 }
