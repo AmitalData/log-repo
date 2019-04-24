@@ -2702,7 +2702,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
         if (this.customsCountry != value) {
             this.customsCountry = value;
-            this.CheckTariff();
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginCountryName = value.LocalName;
@@ -2716,6 +2715,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     itemCodeDetails.IsNew = true;
                 }
             }
+            this.CheckTariff();
         } else {
             this.OriginCountryName = null;
             this.OriginCountryCode = null;
@@ -2728,6 +2728,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     itemCodeDetails.IsNew = true;
                 }
             }
+            this.CheckTariff();
         }
     }
 
@@ -3601,11 +3602,11 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
     CheckTariff() {
-        if (this.TradeAgreementCode && this.OriginCountryCode) {
+        /*if (this.TradeAgreementCode && this.OriginCountryCode) {
             this.ShowTariffErrorInfo = (this.CustomsCountry.TarriffCode != this.TradeAgreementCode);
         } else {
             this.ShowTariffErrorInfo = false;
-        }
+        }*/
         if (this.OriginCountryCode && this.CustomsCountry.TarriffCode) {
             this.ShowValidatioIcon = (this.CustomsCountry.TarriffCode != this.TradeAgreementCode);
             this.TariffErrorText = "קוד הסכם " + this.TradeAgreementCode + "לא מתאים למדינה" + this.OriginCountryCode + "(הסכם " + this.CustomsCountry.TarriffCode + "("; 
@@ -3613,7 +3614,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.ShowValidatioIcon = false;
         }
     } 
-
 
 }
 

@@ -994,10 +994,13 @@
                                             </div>
 
                                         </div>
-                                        <div *ngIf="item.ShowValidatioIcon" style="position: relative; float: right;height: 18px;width: 20px;">
+                                        <div class="TextTrimming" *ngIf="item.ShowValidatioIcon" style="position: relative; float: right;height: 18px;width: 20px;">
 
                                             <!-- Validation check Icon <span data-toggle="tooltip" data-placement="bottom" title="{{}}">{{item.TariffErrorText}}</span> -->
-                                            <img class="exc-remark-button" tabindex="-1" src="./Images/exclamation-16.png" />
+                                            <img tabindex="-1" src="./Images/exclamation-16.png" />
+
+                                            <span data-toggle="tooltip" data-placement="bottom">{{item.TariffErrorText}}</span>
+                                            
 
                                         </div>
                                     
