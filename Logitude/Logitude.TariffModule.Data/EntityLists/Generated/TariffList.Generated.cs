@@ -58,6 +58,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string SellerName  { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public string TariffNumber  { get; set; }
    }
 
 }

@@ -4,7 +4,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.SignalRHubs;
+//using Logitude.Server.Tools.SignalRHubs;
 using Logitude.SystemLogs;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Client;
@@ -331,7 +331,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
 
                             UserRepository userRep = new UserRepository(Tenant);
                             User loggedUser = userRep.GetSingleUserByEmail(authToken.Email, Tenant);
-                            SignalRHubMessageSender.SendSignalRMessage("DocumentSigned", "User" + loggedUser.Id + Tenant, FileInfo.DocumentsFilingId);
+                            //SignalRHubMessageSender.SendSignalRMessage("DocumentSigned", "User" + loggedUser.Id + Tenant, FileInfo.DocumentsFilingId);
                         }
                         return Request.CreateResponse(HttpStatusCode.OK, response.Result);
                     }
