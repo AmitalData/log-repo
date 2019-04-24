@@ -20,7 +20,7 @@ namespace CommunicationWorkerRole
 {
     public class CustomerActualDataWorkerRole : WorkerEntryPoint
     {
-        public override void Run()
+        public void Run_Old()
         {
             while (IsRunning)
             {
@@ -71,7 +71,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        public void Run_New()
+        public override void Run()
         {
             while (IsRunning)
             {
@@ -88,6 +88,7 @@ namespace CommunicationWorkerRole
                         List<int> AllTenants = (from d in iContext.Tenants select d.Id).ToList();
                         if (AllTenants != null)
                         {
+                            string CustomerId = null;
                             DateTime? StartDateTime = null;
                             DateTime? EndDateTime = null;
 
@@ -97,11 +98,12 @@ namespace CommunicationWorkerRole
                                 {
                                     using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
                                     {
+                                        StartDateTime = DateTime.Now;
+
                                         bool isExists = CommonModelProcedureClass.IsExistsCustomerActualDataHistory(iTenant, StartDateTime);
                                         if (!isExists)
                                         {
-                                            StartDateTime = DateTime.Now;
-                                            CommonModelProcedureClass.ExecuteSingleCustomerActualData(null, iTenant);
+                                            CommonModelProcedureClass.ExecuteSingleCustomerActualData(CustomerId, iTenant);
                                             scope.Complete();
                                             EndDateTime = DateTime.Now;
                                         }

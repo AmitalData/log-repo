@@ -11,12 +11,10 @@ namespace Simplog.Data.Helpers
   [DataContract(Namespace = "")]
     public class AutomationCondition
     {
-        [DataMember]
-        public string Id { get; set; }
+   
         [DataMember]
         public int Tenant { get; set; }
-        [DataMember]
-        public string AutomationsId { get; set; }
+  
         [DataMember]
         public string ObjectFieldId { get; set; }
         [DataMember]        

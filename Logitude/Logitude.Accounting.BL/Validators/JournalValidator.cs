@@ -287,10 +287,16 @@ namespace Logitude.Accounting.BL.Validators
                 {
                     if (currJournalLinePM.ExchangeRate.GetValueOrDefault() != 0)
                     {
-                        var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
-                        //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
-                        mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
-                        errorsList.Add(mM_FAMltiExchangerateNELA);
+                        ///Task 51197: Cancel the validation -Which checks that a local amount multiplied by a currency exchange rate is equal to the amount in the foreign currency
+                        ///
+                        bool Task51197 = true;
+                        if (!Task51197)
+                        {
+                            var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
+                            //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
+                            mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
+                            errorsList.Add(mM_FAMltiExchangerateNELA);
+                        }
                     }
                 }
                 //{{"JournalId":"1-736052","Tenant":1,"Line":1,"ActionCode":"1-1","DebitControlAccountId":null,"DebitAccountId":null,"CreditControlAccountId":"1-5","CreditAccountId":"1-19152","DocumentDate":"2016-11-22T09:35:38.5272647+02:00","AccountingDate":"2017-01-23T00:00:00","DueDate":"2017-01-16T00:00:00","LocalAmount":0.0,"CurrencyId":"1-7","ForeignAmount":1.0,"ExchangeRate":0.0,"Reference1":null,"Reference2":null,"Reference3":null,"ActionName":"Credit","DebitControlAccountName":null,"CreditAccountName":null,"DebitAccountName":null,"CreditControlAccountName":null,"CreditControlAccountNumber":null,"DebitControlAccountNumber":null,"CreditAccountNumber":null,"DebitAccountNumber":null,"CurrencyName":null,"Notes":null,"CurrencyCode":null,"ActionTypeCode":"1","ExternalOpenAmount":null,"IsCreditAccountMulti":null,"IsDebitAccountMulti":null,"ActionTypeCodeEnum":1,"ChangeSetOp":1,"EncodeBase64NVARCHARFieldsBy":null}}
@@ -298,10 +304,17 @@ namespace Logitude.Accounting.BL.Validators
                 {
                     if (currJournalLinePM.ExchangeRate.GetValueOrDefault() != 0)
                     {
-                        var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
-                        //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
-                        mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
-                        errorsList.Add(mM_FAMltiExchangerateNELA);
+
+                        ///Task 51197: Cancel the validation -Which checks that a local amount multiplied by a currency exchange rate is equal to the amount in the foreign currency
+                        ///
+                        bool Task51197 = true;
+                        if (!Task51197)
+                        {
+                            var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
+                            //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
+                            mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
+                            errorsList.Add(mM_FAMltiExchangerateNELA);
+                        }
                     }
                 }
                 else
@@ -327,10 +340,17 @@ namespace Logitude.Accounting.BL.Validators
                             if (newrate != currJournalLinePM.ExchangeRate)
                             {
                                 //foreign amount (33.33) multiplied by the exchange rate (1.4) does not equal the local amount (46.67)
-                                var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
-                                //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
-                                mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
-                                errorsList.Add(mM_FAMltiExchangerateNELA);
+
+                                ///Task 51197: Cancel the validation -Which checks that a local amount multiplied by a currency exchange rate is equal to the amount in the foreign currency
+                                ///
+                                bool Task51197 = true;
+                                if (!Task51197)
+                                {
+                                    var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
+                                    //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
+                                    mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
+                                    errorsList.Add(mM_FAMltiExchangerateNELA);
+                                }
                             }
                         }
                     }

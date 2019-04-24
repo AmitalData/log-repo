@@ -4,7 +4,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { SignalRChannelService } from '../../Services/SignalRServices/SignalRChannelService';
+//import { SignalRChannelService } from '../../Services/SignalRServices/SignalRChannelService';
 declare var window: any;
 declare var startLinking;
 @Component({
@@ -21,7 +21,7 @@ declare var startLinking;
 
 export class StimulsoftDesigner {
 
-   signalRChannelService: SignalRChannelService;
+   //signalRChannelService: SignalRChannelService;
     public URI: string = "";
     private windowArgs: any;
     public TemplateId: string;
@@ -36,7 +36,7 @@ export class StimulsoftDesigner {
         };
         //this.URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx";
        
-      this.signalRChannelService = new SignalRChannelService();
+      //this.signalRChannelService = new SignalRChannelService();
 
          
     }
@@ -61,23 +61,23 @@ export class StimulsoftDesigner {
         this.URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx?token=" + SessionInfo.Token + "&tenant=" + SessionInfo.LoggedUserTenant + "&templateId=" + this.TemplateId + "&sessionId=" + sessionId + "&reportTemplateId=" + this.ReportTemplateId + "&processType=" + this.ProcessType;
 
 
-      var observable = this.signalRChannelService.subscribeChannel("User" + SessionInfo.LoggedUserId + SessionInfo.LoggedUserTenant + sessionId).subscribe(
-            (ev: any) => {
+      //var observable = this.signalRChannelService.subscribeChannel("User" + SessionInfo.LoggedUserId + SessionInfo.LoggedUserTenant + sessionId).subscribe(
+      //      (ev: any) => {
 
-                if (ev.EventName === "StimulSaved") {
-                    observable.unsubscribe();
-                    this.CurrentSession.CurrentWindow.Close(this.TemplateId);
-                } else if (ev.EventName === "StimulReportSaved") {
-                    observable.unsubscribe();
-                  this.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
-                  //this.signalRChannelService.unSubscribeChannel
-                }
+      //          if (ev.EventName === "StimulSaved") {
+      //              observable.unsubscribe();
+      //              this.CurrentSession.CurrentWindow.Close(this.TemplateId);
+      //          } else if (ev.EventName === "StimulReportSaved") {
+      //              observable.unsubscribe();
+      //            this.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
+      //            //this.signalRChannelService.unSubscribeChannel
+      //          }
 
-            },
-            (error: any) => {
-                console.warn("Attempt to join channel failed!", error);
-            }
-        )
+      //      },
+      //      (error: any) => {
+      //          console.warn("Attempt to join channel failed!", error);
+      //      }
+        //)
        // this.URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx?token=" + SessionInfo.Token;
 
         //var WindowHeight = window.innerHeight - 100;

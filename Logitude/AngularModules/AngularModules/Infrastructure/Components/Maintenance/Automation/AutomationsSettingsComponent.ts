@@ -197,7 +197,7 @@ export class AutomationsSettingsComponent implements OnInit {
         newEntity.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         newEntity.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         newEntity.Description = "";
-        newEntity.Version = 0,
+        newEntity.Version = 1,
         newEntity.Inactive = false;
         newEntity.ResultCode = "EMAIL";
         newEntity.DocumentTypeId = "";

@@ -356,9 +356,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  AccountingDate = a.AccountingDate,
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
                                                  Id = a.Id
+                                                 
                                              };
+            //foreach(JournalPM journal in journals)
+            //{
 
+            //    journal.JournalLines =  GetJournalLines(journal, tenant);
+            //}
             return journals.ToList();
         }
+
+      //public List<JournalLinePM>  GetJournalLines(JournalPM journal, int tenant)
+      //  {
+      //      List<JournalLinePM> journalLines = new List<JournalLinePM>();
+      //      JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
+      //     journalLines  = journalLineQueryService.GetJournalLinesByJournalId(journal.Id, tenant);
+
+      //      return journalLines;
+      //  }
     }
 }

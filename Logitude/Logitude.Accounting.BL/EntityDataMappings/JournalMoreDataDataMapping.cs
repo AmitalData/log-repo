@@ -24,6 +24,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPOCO.JournalId = entityPM.JournalId;
                 entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.IsLedgerCreated = entityPM.IsLedgerCreated;
+
 
             }
         }

@@ -3346,7 +3346,6 @@ User/Pass",
                 {
                     JournalId = line.Id,
                     Line = 1,
-                    TaxReportId = null,
                     Tenant = 1,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     GeneralData = "empty",
