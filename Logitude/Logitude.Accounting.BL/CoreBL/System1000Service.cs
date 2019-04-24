@@ -18,6 +18,10 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.StorageService;
+using Simplog.Server.Infrastructure.Azure;
+using Microsoft.Practices.Unity;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -56,18 +60,18 @@ namespace Logitude.Accounting.BL.CoreBL
             var res = new List<string>();
             foreach (List<CardGLAccountDataView> listOfAccountsMax1000 in listOf1000)
             {
-                string header = "A" + _FullAccountingSettingPM.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9);
+                string header = "A" + _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
                 flatFile.AppendLine(header);
                 int count = 0;
                 foreach (var obj in listOfAccountsMax1000)
                 {
-                    string line = "B" + obj.InternalNumber.PadLeft(15, '0').Substring(0, 15)
-                        + obj.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9)
-                        + obj.VatNumber.PadLeft(9, '0').Substring(0, 9);
+                    string line = "B" + obj.InternalNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15)
+                        + obj.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
+                        + obj.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
                     flatFile.AppendLine(line);
                     count++;
                 }
-                string footer = "C" + _FullAccountingSettingPM.DeductionFileNumber.PadLeft(9, '0').Substring(0, 9)
+                string footer = "Z" + _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
                     + count.ToString().PadLeft(4, '0');
                 flatFile.AppendLine(footer);
 
@@ -98,30 +102,51 @@ namespace Logitude.Accounting.BL.CoreBL
                 var context = CommonDataContext.GetContext(tenant);
                 var documentRep = new DocumentRepository(context);
                 var attList = new List<string>();
+                var fileNames = new List<string>();
+                int filecount = 1;
                 foreach (var flatFile in flatFiles)
                 {
-
+                    byte[] flatFileData = (new System.Text.UTF8Encoding()).GetBytes(flatFile);
 
                     Simplog.Data.CommonDataModel.EntityPOCOs.Document document = new Simplog.Data.CommonDataModel.EntityPOCOs.Document()
                     {
                         CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                         Extension = "txt",
-                        FileSize = Convert.ToInt32(flatFile.Length),
+                        FileSize = Convert.ToInt32(flatFileData.Length),
                         Tenant = Convert.ToInt32(tenant),
                         Id = IdCounter.GetNumber("Document", tenant).ToString(),
                         Folder = "docsout",
                         HasFile = true,
-                        FileName = "1000system_Part1_1"
+                        FileName = $"1000system_Part_{filecount}"
 
                     };
-
+                    fileNames.Add($"{document.FileName}.txt");
                     documentRep.Add(document);
+
+                    string filename = document.Id + "." + document.Extension;
+                    string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = document.Id,
+                        FolderName = document.Folder,
+                        Extension = document.Extension,
+                        Tenant = tenant,
+                        FileSize = flatFileData.Length,
+
+                    };
+                    storageservice.Write(flatFileData, fileInfo);
+
+
                     attList.Add(document.Id);
+                    filecount++;
                 }
                 context.SaveChanges();
 
 
-                string htmlPlainString = "Attach System 1000 List ...";
+                string htmlPlainString = "Attach System 1000 List ..." +
+                    Environment.NewLine +
+                    string.Join(Environment.NewLine, fileNames);
 
                 byte[] bytePlainTextdata = enc.GetBytes(htmlPlainString);
 
