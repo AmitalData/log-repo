@@ -1791,6 +1791,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ShipmentsAndMasters", DefaultText = "Shipments & Masters", LocalDefaultText = "תיקים וגו’בים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearTransfer", DefaultText = "Year Transfer", LocalDefaultText = "העברת שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TaxReport", DefaultText = "Tax Report", LocalDefaultText = "דוח מעמ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             #region MainMenu
