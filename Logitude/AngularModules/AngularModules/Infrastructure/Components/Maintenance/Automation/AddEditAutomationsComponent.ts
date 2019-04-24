@@ -136,10 +136,13 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     public FollowDateEscalationActionTimeIndicatorCode: string = "";
 
     FollowUpNote: string = "";
-
+    Code: string;
+    IsShowAutomationCodeField: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _automationResultEmailRecipientExtendedService: AutomationResultEmailRecipientExtendedService,   public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
         super();
+
+        if (SessionLocator.TenantPM.Id == 0) this.IsShowAutomationCodeField = true;
 
         this._documentTypeListService = new DocumentTypeListService();
     }
@@ -633,7 +636,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.IsActiveAutomation = this.CurrentEntityPM.Inactive;
             this.DelayTime = this.AutomatedBackupClass.Delaytime;
             this.IsAutomationResultEmailAllActiveUsers = this.AutomatedBackupClass.IsAutomationResultEmailAllActiveUsers;
-
+            this.Code = this.CurrentEntityPM.Code;
             this.FillObjectField();
             this.LoadAutomationHistory();
             this.LoadDocumentType();
@@ -921,6 +924,27 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     ParticipantsList: any[] = []; 
 
 
+    ExsitCode: string = "";
+    AutomationCodeValueChange(value) {
+        if (this.Code && this.ExsitCode != this.Code) {
+            this.ExsitCode = this.Code;
+            this._automationExtendedPMService.GetDoesAutomationCodeExist(this.Code).subscribe(res => {
+
+                    var pmResponse: ServiceResponse = res;
+                    if (!pmResponse.HasError) {
+                        var myResult = pmResponse.Result;
+                        if (myResult == true) {
+                            this.ValidationErrorsList = [];
+                            this.ValidationErrorsList.push("The code " + this.Code + " already exists");
+                        } else this.ValidationErrorsList = [];
+                    }
+                });
+
+        }
+
+    }
+
+
     SaveButtonClicked() {
         this.ParticipantsList = [];
         this.ValidationErrorsList = [];
@@ -940,6 +964,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.Name != this.CurrentEntityPM.Name || this.Description != this.CurrentEntityPM.Description || this.Inactive != this.IsActiveAutomation) this.IsChangeAutomation = true;
 
         this.CurrentEntityPM.Name = this.Name;
+        this.CurrentEntityPM.Code = this.Code;
         this.CurrentEntityPM.Description = this.Description;
         this.CurrentEntityPM.Inactive = this.Inactive;
 
@@ -1061,7 +1086,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         }
 
-
+        if (this.IsShowAutomationCodeField && AppTool.IsNullOrEmpty(this.Code)) {
+            this.ValidationErrorsList.push("Code field is required");
+        }
 
         if (this.ValidationErrorsList.length == 0) {
 

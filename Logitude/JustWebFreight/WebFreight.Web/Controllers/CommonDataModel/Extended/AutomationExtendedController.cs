@@ -37,10 +37,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                Authentication();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Automation", "READ", authToken.Tenant);
 
-              AutomationQuery automationQuery = new AutomationQuery(tenant);
-              List<AutomationPM> myResult = automationQuery.GetAutomationPMsByObjectTableId(objectTableId,tenant, true);
+                AutomationQuery automationQuery = new AutomationQuery(tenant);
+                List<AutomationPM> myResult = automationQuery.GetAutomationPMsByObjectTableId(objectTableId, authToken.Tenant, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -56,10 +59,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                Authentication();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Automation", "READ", authToken.Tenant);
 
-                AutomationQuery automationQuery = new AutomationQuery(tenant);
-                string automationxmal = automationQuery.GetAutomationXmalById(automationId, tenant);
+                AutomationQuery automationQuery = new AutomationQuery(authToken.Tenant);
+                string automationxmal = automationQuery.GetAutomationXmalById(automationId, authToken.Tenant);
                 AutomatedBackup automatedDataBackup = new AutomatedBackup();
                 if (!string.IsNullOrEmpty(automationxmal))
                 {
@@ -284,7 +290,25 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         }
 
 
-      
+        public HttpResponseMessage GetDoesAutomationCodeExist(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                AutomationRepository automationRepository = new AutomationRepository(authToken.Tenant);
+                bool a = (automationRepository.GetAutomations(authToken.Tenant).Where(d => d.Code == code && d.Tenant == authToken.Tenant)).Any();
+                return Request.CreateResponse(HttpStatusCode.OK, a);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
