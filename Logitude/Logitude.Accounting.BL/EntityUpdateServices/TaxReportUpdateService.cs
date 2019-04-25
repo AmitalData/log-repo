@@ -170,6 +170,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 taxReportPM.StatusCode = VatReportStatusValues.Error;
                 taxReportUpdateService.Update(taxReportPM, true);
             }
+            else if(!hasErrors && taxReportPM.StatusCode == VatReportStatusValues.Error)
+            {
+                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                taxReportPM.StatusCode = VatReportStatusValues.Draft;
+                taxReportUpdateService.Update(taxReportPM, true);
+            }
 
         }
 
