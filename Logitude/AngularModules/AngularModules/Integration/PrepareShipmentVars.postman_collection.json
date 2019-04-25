@@ -1805,7 +1805,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=LON&PageSize=22",
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=Notequals&Filter1Value=LON&PageSize=22",
 					"protocol": "https",
 					"host": [
 						"test",
@@ -1825,7 +1825,7 @@
 						},
 						{
 							"key": "Filter1Operator",
-							"value": "equals"
+							"value": "Notequals"
 						},
 						{
 							"key": "Filter1Value",
