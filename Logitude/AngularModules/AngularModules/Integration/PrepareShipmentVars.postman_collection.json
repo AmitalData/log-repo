@@ -58,7 +58,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"ahmadb@fnarsoft.com\",\"Password\":\"ahmed13!A15111\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1}\n"
+					"raw": "{\"Email\":\"ahmadb@fnarsoft.com\",\"Password\":\"aaaa\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1}\n"
 				},
 				"url": {
 					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1",
