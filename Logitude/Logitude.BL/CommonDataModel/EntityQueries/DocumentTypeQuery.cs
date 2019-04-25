@@ -1876,7 +1876,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
 
-
+        public List<DocumentTypePM> GetDocumentTypePMsListsByCodes(List<string>codeLists, int tenant)
+        {
+            List<DocumentTypePM> documentTypeLists = (from a in repository.context.DocumentTypes
+                                        where a.Tenant == tenant && codeLists.Contains(a.Code) 
+                                        select new DocumentTypePM()
+                                        {
+                                            Id = a.Id,
+                                            Tenant = a.Tenant,
+                                            Name = a.Name,
+                                            Code = a.Code,
+                                            DocumentTypeDefaultEditorTool = a.DocumentTypeDefaultEditorTool,
+                                            DocumentTypeDefaultReportTemplateId = a.DocumentTypeDefaultReportTemplateId,
+                                            DocumentTypeDefaultHTMLTemplateId = a.DocumentTypeDefaultHTMLTemplateId,
+                                        }).ToList();
+            return documentTypeLists;
+        }
 
     }
 }

@@ -1439,7 +1439,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 15);
                 }
 
-                myStringBuilder.Append(' ', 15);
+                myStringBuilder.Append(' ', 12);
 
                 GLAccountPM gLAccountPM = acccounts.Where(d => d.Id == item.GLAccountId).FirstOrDefault();
                 if (gLAccountPM != null)
@@ -2189,7 +2189,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 15);
                 }
 
-                myStringBuilder.Append(' ', 15);
+                myStringBuilder.Append(' ', 12);
 
                 GLAccountPM gLAccountPM = acccounts.Where(d => d.Id == item.GLAccountId).FirstOrDefault();
                 if (gLAccountPM != null)
@@ -2815,7 +2815,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 15);
                 }
 
-                myStringBuilder.Append(' ', 15);
+                myStringBuilder.Append(' ', 12);
 
                 GLAccountPM gLAccountPM = acccounts.Where(d => d.Id == item.GLAccountId).FirstOrDefault();
                 if (gLAccountPM != null)
@@ -3247,7 +3247,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 15);
                 }
 
-                myStringBuilder.Append('0', 15);
+                myStringBuilder.Append(' ', 12);
                 myStringBuilder.Append(a);
                 myStringBuilder.Append('0', 15);
 
