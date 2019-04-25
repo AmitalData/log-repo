@@ -6517,6 +6517,7 @@
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehiclesSelectionComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\DeleteVehicleComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js.map" />
+    <Content Include="Integration\PrepareShipmentVars.postman_collection.json" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
