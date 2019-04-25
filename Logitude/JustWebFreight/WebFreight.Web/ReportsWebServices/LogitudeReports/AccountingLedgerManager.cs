@@ -198,7 +198,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             IQueryable<APInvoice> iQueryable_APInvoice = aPInvoiceRepository.GetAccountingLedgerAPInvoices(tenant);
             IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetAccountingLedgerARPayments(tenant);
             IQueryable<APPayment> iQueryable_APPayment = aPPaymentRepository.GetAccountingLedgerAPPayments(tenant);
-            
+
+            IQueryable<ARInvoice> iQueryable_ARInvoice_All = iQueryable_ARInvoice;
+
             if (!string.IsNullOrEmpty(CustomerId))
             {
                 iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == CustomerId);
@@ -455,13 +457,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             #region Accounting Balance            
             List<AccountingLedger> tempList = new List<AccountingLedger>();
-            
+
             #region AR/ Invoice
+            
             foreach (ARInvoice arInvoice in iQueryable_ARInvoice)
             {
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
 
-                string creditedByARInvoiceTypeCode = arInvoice.CreditedByARInvoice == null ? null :ARInvoiceTypes.Where(d => d.Code == arInvoice.CreditedByARInvoice.ARInvoiceTypeCode).FirstOrDefault().Code;
+                string creditedByARInvoiceTypeCode = null;
+
+                if (!string.IsNullOrEmpty(arInvoice.CreditedByARInvoiceId))
+                {
+                    ARInvoice creditedByInvoice = iQueryable_ARInvoice_All.Where(d => d.Id == arInvoice.CreditedByARInvoiceId).FirstOrDefault();
+                    if (creditedByInvoice != null)
+                    {
+                        creditedByARInvoiceTypeCode = creditedByInvoice.ARInvoiceTypeCode;
+                    }
+                }
 
                 accountingLedgerRecord.ReferenceNumber = arInvoice.InvoiceNumber;
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == arInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
