@@ -648,7 +648,7 @@ namespace WebFreight.Web.Helpers
                     }
                     if (!string.IsNullOrEmpty(userEmails))
                     {
-                        if (contactEmails.ToLower() != "s@test.unifreight.co.il" && contactEmails.ToLower() != "support@ilcargo.com" && contactEmails.ToLower() != "support@icl.unifreight.co.il")
+                        if (userEmails.ToLower() != "s@test.unifreight.co.il" && userEmails.ToLower() != "support@ilcargo.com" && userEmails.ToLower() != "support@icl.unifreight.co.il")
                         {
                             myTicket.InternalUsers += ";" + userEmails;
                         }                  
