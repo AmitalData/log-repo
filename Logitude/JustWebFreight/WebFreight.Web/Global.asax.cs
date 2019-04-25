@@ -40,7 +40,7 @@ using Logitude.BL.Helpers;
 using Autofac;
 using System.Reflection;
 using Autofac.Integration.WebApi;
-using WebFreight.Web.Azure.TopicQueues;
+//using WebFreight.Web.Azure.TopicQueues;
 using Microsoft.AspNet.SignalR;
 using Stimulsoft.Base;
 using Simplog.Server.Infrastructure.LogitudeCacheManager;
@@ -430,9 +430,9 @@ namespace WebFreight.Web
                 myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(signalRTopic.Path, subscribtionName);
             }
 
-            SignalRHubMessageHandler signalRMessageHandler = new SignalRHubMessageHandler();
-            Thread signalRThread = new Thread(signalRMessageHandler.HandleTopicMessages);
-            signalRThread.Start();
+            //SignalRHubMessageHandler signalRMessageHandler = new SignalRHubMessageHandler();
+            //Thread signalRThread = new Thread(signalRMessageHandler.HandleTopicMessages);
+            //signalRThread.Start();
             //  string ssss = RoleEnvironment.CurrentRoleInstance.Id;
         }
 

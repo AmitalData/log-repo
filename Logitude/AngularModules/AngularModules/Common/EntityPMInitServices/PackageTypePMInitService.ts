@@ -1,4 +1,4 @@
-﻿/// <reference path="../entitypms/airlinepm.ts" />
+/// <reference path="../entitypms/airlinepm.ts" />
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
@@ -14,6 +14,6 @@ export class PackageTypePMInitService {
 
     public static ApplyUIPoperties(entityPM: PackageTypePM, isNew: boolean) { 
         entityPM.UIProperties.SetEnabled("IsRefrigerated", "PackageType", entityPM.IsContainer);
+        entityPM.UIProperties.SetEnabled("IsVehicle", "PackageType", !entityPM.IsContainer);
     }
-
 }

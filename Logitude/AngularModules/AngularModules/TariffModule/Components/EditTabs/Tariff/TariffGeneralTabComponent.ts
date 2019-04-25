@@ -359,6 +359,12 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
             if (!response.HasError) {
                 var tariffLines: ExcelTariffLines[] = response.Result;
                 if (tariffLines) {
+                    // delete old
+                    if (this.EntityPM.TariffLines != null && this.EntityPM.TariffLines.length > 0) {
+                        this.EntityPM.TariffLines.forEach(item => {
+                            this.EntityPM.RemoveTariffLine(item);
+                        });
+                    }
                     // draw lines
                     tariffLines.forEach(item => {
                         var tariff = new TariffLinePM(null);

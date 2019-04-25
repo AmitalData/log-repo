@@ -212,15 +212,15 @@ namespace WebFreight.Web.WebPages
                     if (entityName == "analyzeQueue")
                     {
                         AnalyzeQueueRepository analyzeQueueRep = new AnalyzeQueueRepository();
-						
+
                         AnalyzeQueue analyzeQueue = analyzeQueueRep.GetSingleAnalyzeQueue(filename, (int)tenant);
                         _DatainByte = analyzeQueue.MessageBody;
-						if (!string.IsNullOrEmpty(analyzeQueue.FileName))
-						{
-							documentExtension = Path.GetExtension(analyzeQueue.FileName).TrimStart('.');
-						}
-						if (string.IsNullOrEmpty(documentExtension))
-							documentExtension = "xml";
+                        if (!string.IsNullOrEmpty(analyzeQueue.FileName))
+                        {
+                            documentExtension = Path.GetExtension(analyzeQueue.FileName).TrimStart('.');
+                        }
+                        if (string.IsNullOrEmpty(documentExtension))
+                            documentExtension = "xml";
 
                     }
                     else
@@ -296,7 +296,7 @@ namespace WebFreight.Web.WebPages
                         string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + "." + documentExtension;
 
                         if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", "");
-                      
+
                         // _DatainByte = sender as byte[];
                         HttpContext.Current.Response.Clear();
                         HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
@@ -382,7 +382,7 @@ namespace WebFreight.Web.WebPages
                         }
                         else
                         {
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" +documentName + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + documentName + "\"");
                         }
 
                         if (!string.IsNullOrEmpty(documentOutCopyId))

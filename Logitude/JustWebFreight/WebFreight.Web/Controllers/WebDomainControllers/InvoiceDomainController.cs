@@ -457,10 +457,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCheckVendor_NumberDuplication(string vendorId, string invoiceNumber, string entityId)
+
+        public HttpResponseMessage PostAPInvoiceNumberDuplicationCheck(APInvoiceNumberDuplicationCheckArgs args)
         {
             try
             {
+                string vendorId = args.EntityId;
+                string entityId = args.EntityId;
+                string invoiceNumber = args.InvoiceNumber;
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
@@ -491,6 +496,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public HttpResponseMessage GetARPaymentCashBook(string paymentMethod, string currency, string branch)
         {
             try
@@ -1674,5 +1680,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
 
+    }
+    public class APInvoiceNumberDuplicationCheckArgs
+    {
+        public string VendorId { get; set; }
+        public string EntityId { get; set; }
+        public string InvoiceNumber { get; set; }
     }
 }

@@ -38,6 +38,8 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Resolvers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace CommunicationWorkerRole
 {
@@ -204,8 +206,19 @@ namespace CommunicationWorkerRole
 
         private void TestBatch()
         {
+            var myEmailsWorkerRole = new EmailsWorkerRole("EmailQueue","itzik");
+            var context = CommonDataContext.GetContext(989);
+            var communicationLogRep = new CommunicationLogRepository(context);
+            var cl = communicationLogRep.GetSingleCommunicationLog(id: "1-1075543", tenant: 989);
+
+            myEmailsWorkerRole.SendWaitingCommunicationLog(cl);
+            ///BatchAccountingLoadTestTask();
+        }
+
+        private static void BatchAccountingLoadTestTask()
+        {
             string s =
-                @"<?xml version=""1.0"" encoding=""utf-16""?><BatchAccountingLoadArg xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""><Tenant>1051</Tenant>";
+                            @"<?xml version=""1.0"" encoding=""utf-16""?><BatchAccountingLoadArg xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""><Tenant>1051</Tenant>";
             //s+="<ActionType>CreateCustomers</ActionType>";
             s += "<ActionType>CreateJournalEvery</ActionType>";
             s += @"<Amount>10</Amount>

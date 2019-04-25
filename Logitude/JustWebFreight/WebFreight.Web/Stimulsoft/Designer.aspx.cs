@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.SignalRHubs;
+//using Logitude.Server.Tools.SignalRHubs;
 using Logitude.SystemLogs;
 using Microsoft.AspNet.SignalR;
 using Simplog.Data.CommonDataModel;
@@ -180,7 +180,7 @@ namespace WebFreight.Web.Stimulsoft
 
                             this.LogitudeStiWebDesigner.Visible = false;
 
-                            SignalRHubMessageSender.SendSignalRMessage("StimulSaved", "User" + loggedUser.Id + tenant + sessionId, templateId);
+                            //SignalRHubMessageSender.SendSignalRMessage("StimulSaved", "User" + loggedUser.Id + tenant + sessionId, templateId);
                         }
                         #endregion
 
@@ -191,7 +191,7 @@ namespace WebFreight.Web.Stimulsoft
                             ReportHelper reportHelper = new ReportHelper();
                             reportHelper.StimulReportSaved(processType, reportTemplateId, fileData, loggedUser.Id, tenant);
                             this.LogitudeStiWebDesigner.Visible = false;
-                            SignalRHubMessageSender.SendSignalRMessage("StimulReportSaved", "User" + loggedUser.Id + tenant + sessionId, reportTemplateId);
+                            //SignalRHubMessageSender.SendSignalRMessage("StimulReportSaved", "User" + loggedUser.Id + tenant + sessionId, reportTemplateId);
                         }
 
                         #endregion

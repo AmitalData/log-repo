@@ -26,6 +26,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -149,6 +150,32 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //    entityPM.ChangeSetOp = ChangeSetOperation.Update;
             //    taxReportUpdateService.Update(entityPM, true);
             //}
+
+            UpdateReportStatus(entityPM);
+
+        }
+
+        private void UpdateReportStatus(TaxReportPM taxReportPM)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+            TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
+
+            List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(taxReportPM.Id, taxReportPM.Tenant).ToList();
+
+            bool hasErrors = lines.Any(d => d.StatusCode != "6"); // 6- Ready for transmit
+            if (hasErrors && taxReportPM.StatusCode != VatReportStatusValues.Error)
+            {
+                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                taxReportPM.StatusCode = VatReportStatusValues.Error;
+                taxReportUpdateService.Update(taxReportPM, true);
+            }
+            else if(!hasErrors && taxReportPM.StatusCode == VatReportStatusValues.Error)
+            {
+                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                taxReportPM.StatusCode = VatReportStatusValues.Draft;
+                taxReportUpdateService.Update(taxReportPM, true);
+            }
 
         }
 

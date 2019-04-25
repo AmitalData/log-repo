@@ -1,27 +1,23 @@
-﻿using System;
-using System.Linq;
-using Simplog.Data.Helpers;
-using Logitude.BL.Helpers;
-using Logitude.Server.Tools.Helpers;
-using System.Transactions;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Linq;
+using System.Transactions;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -201,6 +197,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     string msg = TranslateTextsClass.Translate("APPayment.M.ValueDateCantBeFutureDate", tenant, useLocal);
                     errors += msg + ";";
+                }
+
+                if(entityPM.BankAccountId == null 
+                    && (entityPM.PaymentMethodCode == "BT" || entityPM.PaymentMethodCode == "CH" || entityPM.PaymentMethodCode == "CC"))
+                {
+                    errors += (rmsg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.BankAccountId", tenant, useLocal))) + ";";
                 }
 
                 if (entityPM.TaxDeductionPercentage == null)

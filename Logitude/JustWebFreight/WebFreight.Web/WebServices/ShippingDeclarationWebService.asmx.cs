@@ -2656,6 +2656,24 @@ namespace WebFreight.Web.WebServices
                     packageline.PackageTare = package.Tare != null ? String.Format("{0:0,0.00}", package.Tare.Value) : null;
                     packageline.MarksAndNumbersOnly = package.MarksAndNumbers;
 
+                    #region Car Details
+                    packageline.Make = package.Make;
+                    packageline.Model = package.Model;
+                    packageline.Year = package.Year;
+                    packageline.Color = package.Color;
+                    packageline.ChassisNumber = package.ChassisNumber;
+                    packageline.RegistrationNumber = package.RegistrationNumber;
+
+                    if (!string.IsNullOrEmpty(package.CountryId))
+                    {
+                        Country country = countryRepository.GetSingleCountry(package.CountryId, tenant);
+                        if (country != null)
+                        {
+                            packageline.CountryName = country.EnglishName;
+                        }
+                    }
+                    #endregion
+
                     #region Harmonize
                     if (package.IsMultiHarmonize)
                     {
@@ -2841,6 +2859,24 @@ namespace WebFreight.Web.WebServices
                         insidePackage.Reference3 = insideItem.Reference3;
                         insidePackage.CommodityNumber = insideItem.CommodityNumber;
 
+                        #region Car Details
+                        insidePackage.Make = insideItem.Make;
+                        insidePackage.Model = insideItem.Model;
+                        insidePackage.Year = insideItem.Year;
+                        insidePackage.Color = insideItem.Color;
+                        insidePackage.ChassisNumber = insideItem.ChassisNumber;
+                        insidePackage.RegistrationNumber = insideItem.RegistrationNumber;
+
+                        if (!string.IsNullOrEmpty(insideItem.CountryId))
+                        {
+                            Country country = countryRepository.GetSingleCountry(insideItem.CountryId, tenant);
+                            if (country != null)
+                            {
+                                insidePackage.CountryName = country.EnglishName;
+                            }
+                        }
+                        #endregion
+
                         packageline.InsidePackagesLines.Add(insidePackage);
 
                         if (string.IsNullOrEmpty(packageline.InsidePackagesDescription))
@@ -3016,6 +3052,24 @@ namespace WebFreight.Web.WebServices
                                 newPackage.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;
                             }
 
+                            #region Car Details
+                            newPackage.Make = package.Make;
+                            newPackage.Model = package.Model;
+                            newPackage.Year = package.Year;
+                            newPackage.Color = package.Color;
+                            newPackage.ChassisNumber = package.ChassisNumber;
+                            newPackage.RegistrationNumber = package.RegistrationNumber;
+
+                            if (!string.IsNullOrEmpty(package.CountryId))
+                            {
+                                Country country = countryRepository.GetSingleCountry(package.CountryId, tenant);
+                                if (country != null)
+                                {
+                                    newPackage.CountryName = country.EnglishName;
+                                }
+                            }
+                            #endregion
+
                             #region Harmonize
                             if (package.IsMultiHarmonize)
                             {
@@ -3132,6 +3186,24 @@ namespace WebFreight.Web.WebServices
                             {
                                 newPackage.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;
                             }
+
+                            #region Car Details
+                            newPackage.Make = package.Make;
+                            newPackage.Model = package.Model;
+                            newPackage.Year = package.Year;
+                            newPackage.Color = package.Color;
+                            newPackage.ChassisNumber = package.ChassisNumber;
+                            newPackage.RegistrationNumber = package.RegistrationNumber;
+
+                            if (!string.IsNullOrEmpty(package.CountryId))
+                            {
+                                Country country = countryRepository.GetSingleCountry(package.CountryId, tenant);
+                                if (country != null)
+                                {
+                                    newPackage.CountryName = country.EnglishName;
+                                }
+                            }
+                            #endregion
 
                             #region Harmonize
                             if (package.IsMultiHarmonize)
@@ -3385,11 +3457,25 @@ namespace WebFreight.Web.WebServices
             line.PackageVolume = volume.ToString() + String.Format("{0:#0.00}", package.Volume.Value) + " " + (shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "");
             line.PackageVolumetricWeight = Volumetricweight.ToString() + " " + String.Format("{0:#0.00}", package.VolumetricWeight.Value) + " " + (shipment.ChargeableWeightUnitCode != null ? shipment.ChargeableWeightUnitCode : "");
 
-            //for (int j = 0; j < totalCount; j++)
-            //{
-            //    marks.Append('\n');
-            //}
+            #region Car Details
+            line.Make = package.Make;
+            line.Model = package.Model;
+            line.Year = package.Year;
+            line.Color = package.Color;
+            line.ChassisNumber = package.ChassisNumber;
+            line.RegistrationNumber = package.RegistrationNumber;
 
+            if (!string.IsNullOrEmpty(package.CountryId))
+            {
+                CountryRepository countryRepository = new CountryRepository(tenant);
+                Country country = countryRepository.GetSingleCountry(package.CountryId, tenant);
+                if (country != null)
+                {
+                    line.CountryName = country.EnglishName;
+                }
+            }
+            #endregion
+            
             if (package.MarksAndNumbers == null)
             {
                 for (int i = 0; i < totalCount; i++)

@@ -582,7 +582,7 @@
                                     </log-column>
 
                                     <!-- DueDate -->
-                                    <log-column [width]="'100'" [header]="'APInvoice.CH.DueDateListLable' | TextCodeTranslationPipe" [SortFieldName]="'DueDate'">
+                                    <log-column [width]="'100'" [header]="'Accounting.General.O.APPaymentDueDate' | TextCodeTranslationPipe" [SortFieldName]="'DueDate'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
                                             <div [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}" style="width: 100%;">
                                                 {{item.DueDate | DateTimeToDatePipe}}
