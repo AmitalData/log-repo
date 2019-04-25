@@ -539,7 +539,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
             this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
-
             this.ComputeGrossWeigh_Kg_Ton();
         }
     }
