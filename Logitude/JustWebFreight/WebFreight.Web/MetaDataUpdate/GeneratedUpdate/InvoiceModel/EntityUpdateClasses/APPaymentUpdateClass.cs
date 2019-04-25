@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/P Payment",
-			      				    Code =  "APIN",
+			      				    Code =  "APPY",
 			      				    Name =  "AP Payments",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -1757,10 +1757,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValueDate",
 					  						DefaultText =  "Value Date",
-					  						FullLocalDefaultText =  "תאריך ערך",
+					  						FullLocalDefaultText =  "תאריך פרעון",
 					  						ListFieldLable =  "ValueDateListLable",
 					  						ListLableDefaultText =  "Value Date",
-					  						ListLocalDefaultText =  "תאריך ערך",
+					  						ListLocalDefaultText =  "תאריך פרעון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2268,10 +2268,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RegisterDate",
 					  						DefaultText =  "Register Date",
-					  						FullLocalDefaultText =  "תאריך רישום",
+					  						FullLocalDefaultText =  "תאריך חשבונאי",
 					  						ListFieldLable =  "RegisterDateListLable",
 					  						ListLableDefaultText =  "Register Date",
-					  						ListLocalDefaultText =  "תאריך רישום",
+					  						ListLocalDefaultText =  "תאריך חשבונאי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3560,7 +3560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup APPaymentQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APIN", Name = "AP Payments" }, queryGroupRepository);
+	        QueryGroup APPaymentQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APPY", Name = "AP Payments" }, queryGroupRepository);
 						QueryGroup APPaymentQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a41a", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 

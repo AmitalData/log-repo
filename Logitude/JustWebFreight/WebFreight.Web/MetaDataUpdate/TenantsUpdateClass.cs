@@ -56,7 +56,7 @@ namespace WebFreight.Web.MetaDataUpdate
     {
         public static void UpdateDataForTenant(int tenant, string message)
         {
-            tenant = 1;
+            //tenant = 1;
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
