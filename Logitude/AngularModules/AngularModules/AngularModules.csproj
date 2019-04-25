@@ -6519,7 +6519,6 @@
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehiclesSelectionComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\DeleteVehicleComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js.map" />
-    <Content Include="Integration\PrepareShipmentVars.postman_collection.json" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
@@ -7128,6 +7127,7 @@
     <Folder Include="e2e\CRM\Quotes\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
+    <Folder Include="Integration\" />
     <Folder Include="Logitude\Components\Customization\" />
     <Folder Include="Logitude\Components\Export2Excel\" />
     <Folder Include="Logitude\Components\LanguageSettings\" />
