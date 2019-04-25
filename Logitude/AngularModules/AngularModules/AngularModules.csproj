@@ -7127,7 +7127,6 @@
     <Folder Include="e2e\CRM\Quotes\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
-    <Folder Include="Integration\" />
     <Folder Include="Logitude\Components\Customization\" />
     <Folder Include="Logitude\Components\Export2Excel\" />
     <Folder Include="Logitude\Components\LanguageSettings\" />
