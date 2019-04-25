@@ -379,41 +379,16 @@ namespace WebFreight.Web.Helpers
                 // To emails process
                 if (!string.IsNullOrEmpty(emailDetails.To))
                 {
-                    //if (helper == null)
-                    //{
-                    //    helper = new InboundEmailGeneralHelperMethods(null);
-                    //}
-
-                    ////List<string> temp = this.helper.GetListOfFilteredEmails(emailDetails.To);
-                    //List<string> toEmails = helper.GetListOfFilteredEmails(emailDetails.To);
-                    //toEmails = helper.GetSupportEmail(toEmails); // filtered data 
-
-                    //toEmails = toEmails.Select(a => a.Split('@')[1].Trim()).ToList();
-                    //List<string> query = toEmails.Where(a => a != null && !toEmails.Contains(supportEmail.Split('@')[1].Trim())).ToList();
-                    ////List<string> query = (from item in toEmails
-                    ////                      where item.Split('@')[1] != supportEmail.Split('@')[1] 
-                    ////                      select item).ToList();
-                    //if (query.Count() > 0)
-                    //{
-                    //    string emails = string.Join(";", query); 
-                    //    emailLine.CCs += emails;
-                    //}
-
                     if (helper == null)
                     {
                         helper = new InboundEmailGeneralHelperMethods(null);
                     }
 
-                    //List<string> temp = this.helper.GetListOfFilteredEmails(emailDetails.To);
                     List<string> toEmails = helper.GetListOfFilteredEmails(emailDetails.To);
                     toEmails = helper.GetSupportEmail(toEmails); // filtered data 
 
-                    //toEmails = toEmails.Select(a => a.Split('@')[1].Trim()).ToList();
                     string supportEmailDomain = supportEmail.Split('@')[1].Trim();
                     List<string> query = toEmails.Where(a => a != null && !a.Split('@')[1].Trim().Contains(supportEmailDomain)).ToList();
-                    //List<string> query = (from item in toEmails
-                    //                      where item.Split('@')[1] != supportEmail.Split('@')[1] 
-                    //                      select item).ToList();
                     if (query.Count() > 0)
                     {
                         string emails = string.Join(";", query);
@@ -462,11 +437,6 @@ namespace WebFreight.Web.Helpers
                 {
                     emailLine.InternalUsers = string.Join(";", queryInternal);
                 }
-
-
-                //line.Bcc = string.Join(";", queryCc);
-                //line.CCs = string.Join(";", queryCc);
-                //line.InternalUsers = string.Join(";", queryInternal);
             }
         }
 
@@ -497,14 +467,27 @@ namespace WebFreight.Web.Helpers
 
                 if (correspondenceLine != null)
                 {
-                    correspondenceLine.CCs = contactEmails;
-                    correspondenceLine.InternalUsers = userEmails;
+                    if (contactEmails.ToLower() != "s@test.unifreight.co.il" && contactEmails.ToLower() != "support@ilcargo.com" && contactEmails.ToLower() != "support@icl.unifreight.co.il")
+                    {
+                        correspondenceLine.CCs = contactEmails;
+                    }
+                    if (userEmails.ToLower() != "s@test.unifreight.co.il" && userEmails.ToLower() != "support@ilcargo.com" && userEmails.ToLower() != "support@icl.unifreight.co.il")
+                    {
+                        correspondenceLine.InternalUsers = userEmails;
+                    }
+
                 }
 
                 if (inboundEmailLine != null)
                 {
-                    inboundEmailLine.CCs = contactEmails;
-                    inboundEmailLine.InternalUsers = userEmails;
+                    if (contactEmails.ToLower() != "s@test.unifreight.co.il" && contactEmails.ToLower() != "support@ilcargo.com" && contactEmails.ToLower() != "support@icl.unifreight.co.il")
+                    {
+                        inboundEmailLine.CCs = contactEmails;
+                    }
+                    if (userEmails.ToLower() != "s@test.unifreight.co.il" && userEmails.ToLower() != "support@ilcargo.com" && userEmails.ToLower() != "support@icl.unifreight.co.il")
+                    {
+                        inboundEmailLine.InternalUsers = userEmails;
+                    }
                 }
             }
         }
@@ -579,28 +562,6 @@ namespace WebFreight.Web.Helpers
             }
 
             return strippedTextFinal;
-
-            // Filters 
-            //var regexes = new List<Regex>() { new Regex("From:\\s*", RegexOptions.IgnoreCase),
-            //                                  new Regex("From:\\s*" + Regex.Escape(address), RegexOptions.IgnoreCase),
-            //            new Regex("<" + Regex.Escape(address) + ">", RegexOptions.IgnoreCase),
-            //            new Regex(Regex.Escape(address) + "\\s+wrote:", RegexOptions.IgnoreCase),
-            //            new Regex("(\\s\\n)*On.*(\\r\\n)?wrote:(\\r\\n)*", RegexOptions.IgnoreCase | RegexOptions.Multiline),
-            //            new Regex("-+original\\s+message-+\\s*$", RegexOptions.IgnoreCase),
-            //            new Regex("from:\\s*$", RegexOptions.IgnoreCase),
-            //            new Regex("^>.*$", RegexOptions.IgnoreCase | RegexOptions.Multiline),
-            //            new Regex("-+ Forwarded\\s+message -+\\s*$", RegexOptions.IgnoreCase | RegexOptions.Multiline)
-            //};
-
-            //var index = strippedText.Length;
-
-            //foreach (var regex in regexes)
-            //{
-            //    var match = regex.Match(strippedText);
-
-            //    if (match.Success && match.Index < index)
-            //        index = match.Index;
-            //}
         }
 
         private void GetCCEmailsList(InboundEmailLine emailLine, TicketPM myTicket)
@@ -679,11 +640,18 @@ namespace WebFreight.Web.Helpers
                     // Add new ccs & internal users to Ticket 
                     if (!string.IsNullOrEmpty(contactEmails))
                     {
-                        myTicket.CCs += ";" + contactEmails;
+                        if(contactEmails.ToLower() != "s@test.unifreight.co.il" && contactEmails.ToLower() != "support@ilcargo.com" && contactEmails.ToLower() != "support@icl.unifreight.co.il")
+                        {
+                            myTicket.CCs += ";" + contactEmails;
+                        }
+                       
                     }
                     if (!string.IsNullOrEmpty(userEmails))
                     {
-                        myTicket.InternalUsers += ";" + userEmails;
+                        if (contactEmails.ToLower() != "s@test.unifreight.co.il" && contactEmails.ToLower() != "support@ilcargo.com" && contactEmails.ToLower() != "support@icl.unifreight.co.il")
+                        {
+                            myTicket.InternalUsers += ";" + userEmails;
+                        }                  
                     }
 
                     crmContext.SaveChanges();
@@ -900,15 +868,20 @@ namespace WebFreight.Web.Helpers
                 {
                     if (userRepository.DoesUserExist(memail, Tenant))
                     {
-                        myTicket.InternalUsers += memail + ";";
+                        if (memail.ToLower() != "s@test.unifreight.co.il" && memail.ToLower() != "support@ilcargo.com" && memail.ToLower() != "support@icl.unifreight.co.il")
+                        {
+                            myTicket.InternalUsers += memail + ";";
+                        }
                     }
                     else
                     {
-                        myTicket.CCs += memail + ";";
+                        if (memail.ToLower() != "s@test.unifreight.co.il" && memail.ToLower() != "support@ilcargo.com" && memail.ToLower() != "support@icl.unifreight.co.il")
+                        {
+                            myTicket.CCs += memail + ";";
+                        }
                     }
                 }
             }
-
 
             myHeader = new InboundEmail()
             {
