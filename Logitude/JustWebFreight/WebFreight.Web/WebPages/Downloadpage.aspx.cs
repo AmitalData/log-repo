@@ -26,8 +26,6 @@ using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel;
 using WebFreight.Web.Helpers;
-using ICSharpCode.SharpZipLib.Zip;
-using ICSharpCode.SharpZipLib.Core;
 
 namespace WebFreight.Web.WebPages
 {
@@ -214,15 +212,15 @@ namespace WebFreight.Web.WebPages
                     if (entityName == "analyzeQueue")
                     {
                         AnalyzeQueueRepository analyzeQueueRep = new AnalyzeQueueRepository();
-						
+
                         AnalyzeQueue analyzeQueue = analyzeQueueRep.GetSingleAnalyzeQueue(filename, (int)tenant);
                         _DatainByte = analyzeQueue.MessageBody;
-						if (!string.IsNullOrEmpty(analyzeQueue.FileName))
-						{
-							documentExtension = Path.GetExtension(analyzeQueue.FileName).TrimStart('.');
-						}
-						if (string.IsNullOrEmpty(documentExtension))
-							documentExtension = "xml";
+                        if (!string.IsNullOrEmpty(analyzeQueue.FileName))
+                        {
+                            documentExtension = Path.GetExtension(analyzeQueue.FileName).TrimStart('.');
+                        }
+                        if (string.IsNullOrEmpty(documentExtension))
+                            documentExtension = "xml";
 
                     }
                     else
@@ -298,7 +296,7 @@ namespace WebFreight.Web.WebPages
                         string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + "." + documentExtension;
 
                         if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", "");
-                      
+
                         // _DatainByte = sender as byte[];
                         HttpContext.Current.Response.Clear();
                         HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
@@ -306,7 +304,7 @@ namespace WebFreight.Web.WebPages
 
                         // Get content type
                         // FileExtension = filename.Split('.')[1];
-                        _DatainByte = CompressionFileData(documentName, _DatainByte, documentExtension);
+
                         var browser = HttpContext.Current.Request.Browser;
                         //Page.Title = "Abed";
                         string ShowType = "attachment";
@@ -384,7 +382,7 @@ namespace WebFreight.Web.WebPages
                         }
                         else
                         {
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + (CustomName + ".zip") + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + documentName + "\"");
                         }
 
                         if (!string.IsNullOrEmpty(documentOutCopyId))
@@ -458,60 +456,6 @@ ExceptionInErrorLog.ToString()
             }
 
         }
-
-        public byte[] CompressionFileData(string fileName, byte[] fileData, string ext)
-        {
-            MemoryStream outputMemStream = new MemoryStream();
-            ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
-
-            zipStream.SetLevel(3);
-
-
-            var newEntry = new ZipEntry(fileName + "." + ext);
-            newEntry.DateTime = DateTime.Now;
-
-            zipStream.PutNextEntry(newEntry);
-            //  zipStream.PutNextEntry(newEntry);
-
-
-            MemoryStream inStream = new MemoryStream(fileData);
-            long inStreamLength = inStream.Length;
-            if (inStreamLength < 200)
-            {
-                inStreamLength = 200;
-            }
-
-            StreamUtils.Copy(inStream, zipStream, new byte[inStreamLength]);
-            inStream.Close();
-            zipStream.CloseEntry();
-
-            //2
-
-            var newEntry1 = new ZipEntry("INI" + "." + ext);
-            zipStream.PutNextEntry(newEntry1);
-
-
-            MemoryStream inStream1 = new MemoryStream(fileData);
-            long inStreamLength1 = inStream1.Length;
-            if (inStreamLength1 < 200)
-            {
-                inStreamLength1 = 200;
-            }
-
-            StreamUtils.Copy(inStream1, zipStream, new byte[inStreamLength1]);
-            inStream1.Close();
-            zipStream.CloseEntry();
-
-
-            zipStream.IsStreamOwner = false;
-            zipStream.Close();
-            outputMemStream.Position = 0;
-
-            //System.IO.File.WriteAllBytes(@"C:\TestFolder\" + listKey + ".zip", outputMemStream.ToArray());
-            return outputMemStream.ToArray();
-
-        }
-
 
         private static bool IsUser(string email, int tenant)
         {
