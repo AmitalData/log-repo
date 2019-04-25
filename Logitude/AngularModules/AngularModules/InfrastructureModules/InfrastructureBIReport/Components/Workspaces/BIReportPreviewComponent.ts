@@ -167,9 +167,23 @@ export class BIReportPreviewComponent implements OnInit {
                             //sort: sortingDirction,
                         });
                     }
+                    else if (type == "integerColumn"){
+                        this.columnDefs.push({
+                            colId: columns[i].Code,
+                            headerName: columns[i].Code,
+                            field: columns[i].Code,
+                            sortable: true,
+                            filter: true,
+                            width: columns[i].Width,
+                            resizable: true,
+                            Index: columns[i].Index,
+                            type: type,
+                        });
+                    }
                     else if (type == "numericColumn") {
                         this.columnDefs.push({
                             colId: columns[i].Code,
+                            align: 'left',
                             headerName: columns[i].Code,
                             field: columns[i].Code,
                             sortable: true,
@@ -199,7 +213,7 @@ export class BIReportPreviewComponent implements OnInit {
                             Index: columns[i].Index,
                             type: type,
                             cellRenderer: params => {
-                                if (params && params.value) {
+                                if (params && params.value == "Yes") {
                                     return `<img src="./Images/CheckBoxIcon.png" class="CenterCenter" />`;
                                 }
                             },
@@ -254,6 +268,10 @@ export class BIReportPreviewComponent implements OnInit {
                     break;
                 }
             case "Integer":
+                {
+                    datatype = "integerColumn";
+                    break;
+                }
             case "UnsInteger":
             case "Double":
             case "Decimal":
@@ -557,7 +575,7 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.IsBIReportEditScreen = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
-        logWindow.Height = 780;
+        logWindow.Height = 500;
         logWindow.Title = "Query Builder";
         logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
         logWindow.ComponentLoaded.subscribe(s => {
