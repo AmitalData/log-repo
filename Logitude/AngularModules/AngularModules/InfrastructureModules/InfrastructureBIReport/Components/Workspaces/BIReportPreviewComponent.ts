@@ -183,7 +183,6 @@ export class BIReportPreviewComponent implements OnInit {
                     else if (type == "numericColumn") {
                         this.columnDefs.push({
                             colId: columns[i].Code,
-                            align: 'left',
                             headerName: columns[i].Code,
                             field: columns[i].Code,
                             sortable: true,
