@@ -473,7 +473,7 @@ namespace WebFreight.Web.Helpers
                     }
                     if (userEmails.ToLower() != "s@test.unifreight.co.il" && userEmails.ToLower() != "support@ilcargo.com" && userEmails.ToLower() != "support@icl.unifreight.co.il")
                     {
-                        correspondenceLine.InternalUsers = userEmails;
+                        correspondenceLine.InternalUsers = userEmails; 
                     }
 
                 }
