@@ -947,9 +947,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             objectTabelQuery = new ObjectTableQuery(objecttableRep);
 
             List<ObjectTablePM> objectTables = objectTabelQuery.GetObjectPMsByTenant(tenant).ToList();
-             
-        
+
+
             #region ObjectTables
+            ObjectTable objectTable = objectContext.ObjectTables.Where(f => f.Name == "General" && f.Tenant == 0).FirstOrDefault();
+
             ObjectTablePM journalActionTypeObjectTable = objectTables.Where(d => d.Name == "JournalActionType").FirstOrDefault();
             ObjectTablePM chartOfAccountObjectTable = objectTables.Where(d => d.Name == "ChartOfAccount").FirstOrDefault();
             ObjectTablePM journalObjectTable = objectTables.Where(d => d.Name == "Journal").FirstOrDefault();
@@ -1210,6 +1212,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             Feature AccountingIntegrityCheckFeature_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Features.Menu", Packagable = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AccountingIntegrityCheck.Features.Menu", NameTextCodeDefaultText = "Accounting Integrity Checks", FullLocalDefaultText = "", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             #region OpenFormatReport
             Feature OpenFormatReportFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TestingMode", Packagable = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "OpenFormatReport.Features.TestingMode", NameTextCodeDefaultText = "Testing Mode", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #endregion
+
+            #region FullAccountingTabs
+            Feature AccountingMainTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCMAIN", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Main", NameTextCodeDefaultText = "Main Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingReceivablesTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCReceivables", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Receivables", NameTextCodeDefaultText = "Receivables Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingPayablesTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCPayables", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Payables", NameTextCodeDefaultText = "Payables Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingBanksTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCBanks", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Banks", NameTextCodeDefaultText = "Banks Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingGLAccountsTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCGLAccounts", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.GLAccounts", NameTextCodeDefaultText = "GLAccounts Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingMiscTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCMisc", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Misc", NameTextCodeDefaultText = "Misc Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
             #endregion
             #endregion
 
@@ -1778,6 +1791,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ShipmentsAndMasters", DefaultText = "Shipments & Masters", LocalDefaultText = "תיקים וגו’בים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearTransfer", DefaultText = "Year Transfer", LocalDefaultText = "העברת שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TaxReport", DefaultText = "Tax Report", LocalDefaultText = "דוח מעמ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             #region MainMenu

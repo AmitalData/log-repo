@@ -207,5 +207,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+        public List<string> GetAutomationCodeLists(int tenant)
+        {
+            List<string> automationCodeLists = (from a in repository.context.Automations
+                                                where a.Tenant == tenant
+                                                select a.Code).ToList();
+            return automationCodeLists;
+        }
+
+
     }
 }

@@ -41,7 +41,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         TypeCode, 
 	         LastStartDate, 
 	         LastVersion, 
-	         ContractNumber,
+	         ContractNumber, 
+	         TariffNumber,
 	      }
 
 
@@ -70,7 +71,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LastVersion, 
 	         ContractNumber, 
 	         SetAsInActive, 
-	         SetAsReActive,
+	         SetAsReActive, 
+	         TariffNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -172,6 +174,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContractNumber))
             {
 				entityPOCO.ContractNumber = entityPM.ContractNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffNumber))
+            {
+				entityPOCO.TariffNumber = entityPM.TariffNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -280,6 +287,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ContractNumber = entityPOCO.ContractNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffNumber))
+            {
+					entityPM.TariffNumber = entityPOCO.TariffNumber;
+            }
+
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -379,6 +391,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContractNumber))
             {
                 oldEntityPM.ContractNumber = entityPM.ContractNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffNumber))
+            {
+                oldEntityPM.TariffNumber = entityPM.TariffNumber;
             }
 			
 		}

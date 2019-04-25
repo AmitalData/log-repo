@@ -115,7 +115,7 @@ export class MiscPageComponent implements AfterViewInit {
             listArgs.Filters = filters;
             listArgs.ObjectTableName = tableName;
             listArgs.DisplayTitle = displayTitle;
-            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
+            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Misc");
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
