@@ -41,6 +41,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             //entityPOCO.TypeCode = entityPM.TypeCode;
             //entityPOCO.CreateDate = entityPM.CreateDate;
             //entityPOCO.UpdateDate = entityPM.UpdateDate;
+            entityPM.SetAsInActive = false;
+            entityPM.SetAsReActive = false;
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);

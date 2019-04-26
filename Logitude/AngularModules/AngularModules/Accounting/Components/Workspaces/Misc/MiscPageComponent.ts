@@ -95,6 +95,19 @@ export class MiscPageComponent implements AfterViewInit {
                     });
                     break;
                 }
+
+           case "ACYT":{
+                        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 500;
+                        logitudeWindow.Height = 300;
+                        logitudeWindow.Title = "Year Transfer";
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/YearTransferComponent');
+                    });
+                   
+                       break;
+
+                       }
                 default: { break; }
             }
 
@@ -102,7 +115,7 @@ export class MiscPageComponent implements AfterViewInit {
             listArgs.Filters = filters;
             listArgs.ObjectTableName = tableName;
             listArgs.DisplayTitle = displayTitle;
-            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
+            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Misc");
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)

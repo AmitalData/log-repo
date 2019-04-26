@@ -31,7 +31,7 @@
 	
 	set @Key = (select Id from DIM_Vessels where Id = @Id)
 	
-	if(@Key is  null) begin     insert into #DIM_Vessels (Id, Code ,[English Name] ,[Local Name],[Notes],[IMO Code], [Source Tenant],[Parent Tenant]) values(@Id ,@Code, @EnglishName, @LocalName, @Notes, @IMOCode , @SourceTenant , @ParentTenant) end
+	if(@Key is  null) begin     insert into DIM_Vessels (Id, Code ,[English Name] ,[Local Name],[Notes],[IMO Code], [Source Tenant],[Parent Tenant]) values(@Id ,@Code, @EnglishName, @LocalName, @Notes, @IMOCode , @SourceTenant , @ParentTenant) end
 	else begin update   DIM_Vessels set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName ,[Notes] = @Notes ,[IMO Code] = @IMOCode , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant Where Id = @Id end
 
 

@@ -34,6 +34,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.Reference4 = itemPM.Reference4;
             itemPoco.CommodityNumber = itemPM.CommodityNumber;
             itemPoco.CommodityName = itemPM.CommodityName;
+            itemPoco.Make = itemPM.Make;
+            itemPoco.Year = itemPM.Year;
+            itemPoco.Color = itemPM.Color;
+            itemPoco.Model = itemPM.Model;
+            itemPoco.ChassisNumber = itemPM.ChassisNumber;
+            itemPoco.RegistrationNumber = itemPM.RegistrationNumber;
+            itemPoco.CountryId = itemPM.CountryId;
         }
     }
 }

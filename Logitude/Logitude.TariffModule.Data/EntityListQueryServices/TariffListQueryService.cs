@@ -21,35 +21,23 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
     {
 	    private IQueryable<TariffList> GetIqueryableList(IQueryable<Tariff> iQueryable)
         {
-		IQueryable<TariffList> query = (from a in iQueryable
+            IQueryable<TariffList> query = (from a in iQueryable
                                             select new TariffList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          CreateDate = a.CreateDate,
-					
-					                          CreatedByUserName = a.CreatedByUser!=null?a.CreatedByUser.Contact!=null?a.CreatedByUser.Contact.EnglishName:"":"",
-					
-					                          SearchFields = a.SearchFields,
-					
-					                          StartDate = a.StartDate,
-					
-					                          ExpirationDate = a.ExpirationDate,
-					
-					                          Name = a.Name,
-					
-					                          InActive = a.InActive,
-					
-					                          Description = a.Description,
-					
-					                          SellerName = a.Seller!=null?a.Seller.EnglishName:"",
-										
-					                          UpdateDate = a.UpdateDate,
-                                              UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : "" : "",
-
+                                            {
+                                                Id = a.Id,
+                                                Tenant = a.Tenant,
+                                                CreateDate = a.CreateDate,
+                                                CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : "" : "",
+                                                SearchFields = a.SearchFields,
+                                                StartDate = a.StartDate,
+                                                ExpirationDate = a.ExpirationDate,
+                                                Name = a.Name,
+                                                InActive = a.InActive,
+                                                Description = a.Description,
+                                                SellerName = a.Seller != null ? a.Seller.EnglishName : "",
+                                                UpdateDate = a.UpdateDate,
+                                                UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : "" : "",
+                                                TariffNumber = a.TariffNumber,
                                             });
             return query;
 		}

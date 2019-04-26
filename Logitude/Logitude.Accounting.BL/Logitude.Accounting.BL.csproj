@@ -169,6 +169,7 @@
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ReconcileExternalPageStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ReconcileMethodStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VatReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\GLAccountTotalDateTypeEnum.cs" />
     <Compile Include="CoreBL\AccountBalanceByDateCodeService.cs" />
     <Compile Include="CoreBL\AccountBalanceService.cs" />

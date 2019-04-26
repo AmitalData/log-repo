@@ -1,0 +1,106 @@
+
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:22px">
+                    <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+                                <td style="width:120px">
+                                    <ComboBox (SelectedItemChanged)="SelectedDateTypeItem = $event" [ItemsSource]="DateTypeFilterList" [SelectedItem]="SelectedDateTypeItem" [Binding]="'Title'"></ComboBox>
+                                </td>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+                                <td style="width:40px">From</td>
+                                <td style="width:130px">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td style="width:15px"></td>
+                                <td style="width:30px">To</td>
+                                <td style="width:130px">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+                                <td style="width:15px">
+                                    <div></div>
+                                </td>
+                                <td style="width:70px;min-width:70px;max-width:70px" class="Label">Customer</td>
+                                <td style="width:200px;">
+                                    <LogLov [ObjectFieldName]="'CustomerId'"
+                                            [SelectedValue]="CustomerId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [DependencyFilter1Value]="'AG,AL,CG,CS,SG,SL,TR,VD,WH'"
+                                            [DependencyFilter1IsList]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+                                <td style="width:80px;min-width:70px;max-width:70px" class="Label">Vehicle Type</td>
+                                <td style="width:180px;">
+                                    <LogLov [ObjectFieldName]="'PackageTypeId'"
+                                            [SelectedValue]="PackageTypeId"
+                                            [ObjectTableName]=""
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'PackageType'">
+                                    </LogLov>
+                                </td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:140px;min-width:120px">
+                                    <TransportsFilter (SelectedValueChanged)="SelectedTransportFilterCountries = $event"></TransportsFilter>
+                                </td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:180px;min-width:180px">
+
+                                    <DirectionsFilter (SelectedValueChanged)="SelectedDirectionFilterCountries = $event"></DirectionsFilter>
+
+
+                                </td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:90px;">
+                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+

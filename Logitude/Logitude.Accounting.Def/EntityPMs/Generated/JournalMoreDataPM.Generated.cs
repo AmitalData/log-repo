@@ -114,48 +114,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string taxReportId ;
+	  private bool isLedgerCreated ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string TaxReportId  
+       public bool IsLedgerCreated  
 	   {
 	    
 	     get
 		{
-		   return taxReportId;
+		   return isLedgerCreated;
 		 }
 		 set
 		 {
-		   if(taxReportId != value)
+		   if(isLedgerCreated != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportId",OldValue=taxReportId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsLedgerCreated",OldValue=isLedgerCreated,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   taxReportId=value;
-		   }
-			
-		 }
-	   }
-	  private string taxReportStatusCode ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TaxReportStatusCode  
-	   {
-	    
-	     get
-		{
-		   return taxReportStatusCode;
-		 }
-		 set
-		 {
-		   if(taxReportStatusCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportStatusCode",OldValue=taxReportStatusCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   taxReportStatusCode=value;
+		   isLedgerCreated=value;
 		   }
 			
 		 }

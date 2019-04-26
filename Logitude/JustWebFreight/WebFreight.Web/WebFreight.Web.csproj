@@ -940,6 +940,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountWithholdingTaxViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\IntegrityCheckStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\PaymentChequeLineViewsController.Generated.cs" />
@@ -2170,6 +2171,7 @@
     <Compile Include="DataProviders\ShipmentsStocksDataProvider.cs" />
     <Compile Include="DataProviders\TasksWithoutProjectsDataProvider.cs" />
     <Compile Include="DataProviders\UsersByTenantDataProvider.cs" />
+    <Compile Include="DataProviders\VehiclesDataProvider.Shared.cs" />
     <Compile Include="DataProviders\VDKDataProvider.Shared.cs" />
     <Compile Include="DataProviders\VendorChargesAnalysisDataProvider.cs" />
     <Compile Include="DataProviders\WorkHoursPerProjectDataProvider.cs" />
@@ -2190,6 +2192,7 @@
     <Compile Include="ExternalAPIs\QuoteDocumentController.cs" />
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARPaymentCancellationController.cs" />
     <Compile Include="ExternalAPIs\V1\ARPaymentController.cs" />
     <Compile Include="ExternalAPIs\V1\BlobInfoController.cs" />
     <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
@@ -2722,6 +2725,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPayableLineStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPayableStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPayableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPickUpDeliveryPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableLineStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableUpdateClass.cs" />
@@ -4970,6 +4974,7 @@
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\AccountingLedgerManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ArchivoExportadoManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\DetailedShipmentChargesManager.cs" />

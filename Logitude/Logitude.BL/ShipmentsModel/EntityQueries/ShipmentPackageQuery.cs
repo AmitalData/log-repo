@@ -175,6 +175,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        RoutingIds = a.RoutingIds,
                        VoyageTripNumber = a.VoyageTripNumber,
                        HasContainerException = a.HasContainerException,
+                       Make = a.Make, 
+                       Year = a.Year,
+                       Model=a.Model,
+                       Color = a.Color, 
+                       ChassisNumber = a.ChassisNumber, 
+                       RegistrationNumber = a.RegistrationNumber, 
+                       CountryId = a.CountryId, 
                    }).FirstOrDefault();
 
 
@@ -196,7 +203,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPackageHarmonizeQuery shipmentPackageHarmonizeQuery = new ShipmentPackageHarmonizeQuery(shipmentPackageHarmonizeRepository);
 
             List<ShipmentPackagePM> shipmentPackages
-                = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus")
+                = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus").Include("Country")
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
                    select new ShipmentPackagePM()
                    {
@@ -250,6 +257,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        TEU = a.PackageType == null ? 0 : a.PackageType.TEU,
                        ContainerSize = a.PackageType == null ? 0 : a.PackageType.ContainerSize,
                        PackageTypeVolume = a.PackageType == null ? 0 : a.PackageType.Volume,
+                       IsVehicle = a.PackageType == null ? false : a.PackageType.IsVehicle,
                        IsDeliveryFU = a.IsDeliveryFU,
                        DeliveryId = a.DeliveryId,
                        DeliveryETD = a.DeliveryETD,
@@ -297,6 +305,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        RoutingIds = a.RoutingIds,
                        VoyageTripNumber = a.VoyageTripNumber,
                        HasContainerException = a.HasContainerException,
+                       Make = a.Make,
+                       Year = a.Year,
+                       Model = a.Model,
+                       Color = a.Color,
+                       ChassisNumber = a.ChassisNumber,
+                       RegistrationNumber = a.RegistrationNumber,
+                       CountryId = a.CountryId,
+                       CountryName = a.Country != null ? a.Country.EnglishName : "", 
                    }).ToList();
 
             foreach (ShipmentPackagePM package in shipmentPackages)
@@ -414,6 +430,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 RoutingIds = a.RoutingIds,
                                 VoyageTripNumber = a.VoyageTripNumber,
                                 HasContainerException = a.HasContainerException,
+                                Make = a.Make,
+                                Year = a.Year,
+                                Model = a.Model,
+                                Color = a.Color,
+                                ChassisNumber = a.ChassisNumber,
+                                RegistrationNumber = a.RegistrationNumber,
+                                CountryId = a.CountryId,
                             }).ToList();
             }
 

@@ -37,9 +37,14 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.MeasurementId = entityPM.MeasurementId;
             poco.SearchFields = entityPM.Code + "," + entityPM.EnglishName + "," + entityPM.LocalName;
             poco.IsRefrigerated = entityPM.IsRefrigerated;
+            poco.IsVehicle = entityPM.IsVehicle;
 
+            if (poco.IsContainer)
+            {
+                poco.IsVehicle = false;
+            }
 
-            if (!poco.IsContainer)
+            else
             {
                 poco.IsRefrigerated = false;
             }

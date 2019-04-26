@@ -26,8 +26,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Line, 
 	         Tenant, 
 	         GeneralData, 
-	         TaxReportId, 
-	         TaxReportStatusCode,
+	         IsLedgerCreated,
 	      }
 
 
@@ -38,8 +37,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Line, 
 	         Tenant, 
 	         GeneralData, 
-	         TaxReportId, 
-	         TaxReportStatusCode,
+	         IsLedgerCreated,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -58,14 +56,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.GeneralData = entityPM.GeneralData;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLedgerCreated))
             {
-				entityPOCO.TaxReportId = entityPM.TaxReportId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportStatusCode))
-            {
-				entityPOCO.TaxReportStatusCode = entityPM.TaxReportStatusCode;
+				entityPOCO.IsLedgerCreated = entityPM.IsLedgerCreated;
 			}
 			}
 
@@ -92,14 +85,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.GeneralData = entityPOCO.GeneralData;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxReportId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsLedgerCreated))
             {
-					entityPM.TaxReportId = entityPOCO.TaxReportId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxReportStatusCode))
-            {
-					entityPM.TaxReportStatusCode = entityPOCO.TaxReportStatusCode;
+					entityPM.IsLedgerCreated = entityPOCO.IsLedgerCreated;
             }
 
 		}
@@ -118,14 +106,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.GeneralData = entityPM.GeneralData;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLedgerCreated))
             {
-                oldEntityPM.TaxReportId = entityPM.TaxReportId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportStatusCode))
-            {
-                oldEntityPM.TaxReportStatusCode = entityPM.TaxReportStatusCode;
+                oldEntityPM.IsLedgerCreated = entityPM.IsLedgerCreated;
             }
 			
 		}

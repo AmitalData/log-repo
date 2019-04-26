@@ -212,9 +212,15 @@ namespace WebFreight.Web.WebPages
                     if (entityName == "analyzeQueue")
                     {
                         AnalyzeQueueRepository analyzeQueueRep = new AnalyzeQueueRepository();
+
                         AnalyzeQueue analyzeQueue = analyzeQueueRep.GetSingleAnalyzeQueue(filename, (int)tenant);
                         _DatainByte = analyzeQueue.MessageBody;
-                        documentExtension = "xml";
+                        if (!string.IsNullOrEmpty(analyzeQueue.FileName))
+                        {
+                            documentExtension = Path.GetExtension(analyzeQueue.FileName).TrimStart('.');
+                        }
+                        if (string.IsNullOrEmpty(documentExtension))
+                            documentExtension = "xml";
 
                     }
                     else
@@ -372,11 +378,11 @@ namespace WebFreight.Web.WebPages
                         if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
                         {
 
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename*=UTF-8''" + HttpUtility.UrlPathEncode(documentName) + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename*=UTF-8''" + documentName + "\"");
                         }
                         else
                         {
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + documentName + "\"");
                         }
 
                         if (!string.IsNullOrEmpty(documentOutCopyId))

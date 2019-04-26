@@ -53,6 +53,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         From = a.From,
                                                         FromEmail = a.FromEmail,
                                                         Order = a.Order,
+                                                        Code = a.Code,
                                                     };
             return Automationes;
         }
@@ -82,7 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              From = a.From,
                              FromEmail = a.FromEmail,
                              Order = a.Order,
-
+                             Code = a.Code,
                          }).FirstOrDefault();
             return query;
         }
@@ -126,6 +127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     From = a.From,
                                                     FromEmail = a.FromEmail,
                                                     Order = a.Order,
+                                                    Code = a.Code,
                                                 };
             return result;
         }
@@ -167,6 +169,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       From = a.From,
                                       FromEmail = a.FromEmail,
                                       Order = a.Order,
+                                      Code = a.Code,
 
                                   }).ToList();
             }
@@ -197,9 +200,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       FromEmail = a.FromEmail,
                                       Order = a.Order,
                                       AutomationXML = a.AutomationXML,
+                                      Code = a.Code,
                                   }).ToList();
             }
             return automationlist;
+        }
+
+
+        public List<string> GetAutomationCodeLists(int tenant)
+        {
+            List<string> automationCodeLists = (from a in repository.context.Automations
+                                                where a.Tenant == tenant
+                                                select a.Code).ToList();
+            return automationCodeLists;
         }
 
 

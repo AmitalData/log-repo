@@ -65,15 +65,103 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new Automation();
             this.Poco.Id = this.entityPm.Id;
 
+
+
             AutomationMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
-            List<string> eventCodeLists = new List<string>();
-            eventCodeLists.Add("AUCR");
+            SaveAutomationResultEmailRecipientLists();
+
+            List<string> eventCodeLists = new List<string>(new string[] { "AUCR" });
             AddTraceEvent(eventCodeLists);
         }
 
+        private void SaveAutomationResultEmailRecipientLists()
+        {
+            if (this.entityPm.AutomationResultEmailRecipientLists != null && this.entityPm.AutomationResultEmailRecipientLists.Count() > 0)
+            {
+                AutomationResultEmailRecipientRepository entityRepository = new AutomationResultEmailRecipientRepository(this.entityPm.Tenant);
+                foreach (AutomationResultEmailRecipientPM item in this.entityPm.AutomationResultEmailRecipientLists)
+                {
+                    AutomationResultEmailRecipient Poco = new AutomationResultEmailRecipient();
+                    if (string.IsNullOrEmpty(item.Id))
+                    {
+                        item.Id = item.Id = IdCounter.GetNumber("AutomationResultEmailRecipient", item.Tenant).ToString();
+                        item.AutomationsId = this.entityPm.Id;
+                        item.Tenant = this.entityPm.Tenant;
+                        MapAutomationResultEmailRecipientEntity(item, Poco, true);
+                        entityRepository.Add(Poco);
+    
+                    }
+                    else
+                    {
+                        MapAutomationResultEmailRecipientEntity(item, Poco, true);
+                        entityRepository.Remove(Poco);
+
+                    }
+                }
+
+                entityRepository.SubmitChanges();
+                TableLastUpdateClass.UpdateTableHistory(this.entityPm.Tenant, "AutomationResultEmailRecipient");
+            }
+        }
+
+        private static void MapAutomationResultEmailRecipientEntity(AutomationResultEmailRecipientPM entityPM, AutomationResultEmailRecipient entityPOCO, bool isNewState)
+        {
+            if (isNewState)
+            {
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
+
+
+            entityPOCO.AutomationsId = entityPM.AutomationsId;
+            entityPOCO.RecipientType = entityPM.RecipientType;
+            entityPOCO.RecipientValue = entityPM.RecipientValue;
+
+        }
+
+        private void SaveAutomationHistory()
+        {
+
+            AutomationHistoryService automationHistoryService = new AutomationHistoryService(this.ObjectContext, entityPm.Tenant);
+            AutomationHistoryPM automationHistoryPM = new AutomationHistoryPM()
+            {
+                AutomationsId = entityPm.Id,
+                Version = entityPm.Version,
+                Tenant = entityPm.Tenant,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPm.Tenant),
+                AutomationXML = entityPm.AutomationXML,
+            };
+
+            automationHistoryService.Create(automationHistoryPM);
+        }
+
+        public void SaveAutomationLastUpdate(string objectTableId, int tenant)
+        {
+            AutomationLastUpdateRepository automationLastUpdateRepository = new AutomationLastUpdateRepository(tenant);
+            AutomationLastUpdate automationLastUpdate = automationLastUpdateRepository.GetSingleAutomationLastUpdate(objectTableId, tenant);
+
+            if (automationLastUpdate != null)
+            {
+                automationLastUpdate.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                automationLastUpdateRepository.Update(automationLastUpdate);
+            }
+            else
+            {
+                automationLastUpdate = new AutomationLastUpdate()
+                {
+                    Tenant = tenant,
+                    HasAutomation = true,
+                    ObjectTableId = objectTableId,
+                    LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                };
+
+                automationLastUpdateRepository.Add(automationLastUpdate);
+            }
+            automationLastUpdateRepository.SubmitChanges();
+        }
 
         private void AddTraceEvent(List<string> eventCodeList)
         {
@@ -100,7 +188,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void GetLoggedContact()
         {
 
-            if (HttpContext.Current != null)
+            if (HttpContext.Current != null && HttpContext.Current.User!=null && HttpContext.Current.User.Identity!=null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 string email = HttpContext.Current.User.Identity.Name;
                 this.loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
@@ -130,16 +218,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = entityRepository.GetSingleAutomation(entityPM.Id, entityPm.Tenant);
 
 
-            bool inactiveFieldChange = false;
-            List<string> eventCodeLists = new List<string>();
-            if (this.Poco.Inactive != this.entityPm.Inactive) inactiveFieldChange = true;
-            if (!string.IsNullOrEmpty(this.Poco.AutomationXML)) eventCodeLists.Add("AUUP");
 
+            bool inactiveFieldChange = false;
+  
+            if (this.Poco.Inactive != this.entityPm.Inactive) inactiveFieldChange = true;
+
+       
             AutomationMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            SaveAutomationResultEmailRecipientLists();
 
-       
+
+            List<string> eventCodeLists = new List<string>(new string[] { "AUUP" });
             if (inactiveFieldChange)
             {
                 if (entityPM.Inactive) eventCodeLists.Add("AUSI");

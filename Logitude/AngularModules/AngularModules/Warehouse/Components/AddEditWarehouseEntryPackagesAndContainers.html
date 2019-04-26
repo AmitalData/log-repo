@@ -232,15 +232,15 @@
 
 
                     <tr style="height:15px">
-                      
+
                         <td style="width:345px;">  <LogLabel [ObjectFieldName]="'Description'" [Text]="'Description Of Goods'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
 
-                  
+
                     </tr>
 
                     <tr style="vertical-align:top;height:100px;">
-                      
-                      
+
+
                         <td style="width:345px;height:100px">
                             <div style="height: 100%; width:320px;height:100px">
 
@@ -251,9 +251,131 @@
 
                     </tr>
 
-                 
 
-                    <tr><td ><div></div></td></tr>
+                    <tr style="height:10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr style="height:32px;">
+                                    <td colspan="2" style="color:#1B90CB;font-size:14px;">
+                                        Vehicle Details
+                                    </td>
+                                </tr>
+
+                                <!-- Make -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'Make'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 180px">
+                                        <LogTextBox [ObjectFieldName]="'Make'" [Text]="warehouseEntryPackageItem.Make" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Model -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Model'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Model'" [Text]="warehouseEntryPackageItem.Model" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Year  -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Year'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Year'" [Text]="warehouseEntryPackageItem.Year" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Color  -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Color'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Color'" [Text]="warehouseEntryPackageItem.Color" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Chassis Number  -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ChassisNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'ChassisNumber'" [Text]="warehouseEntryPackageItem.ChassisNumber" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Registration Number  -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'RegistrationNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'RegistrationNumber'" [Text]="warehouseEntryPackageItem.RegistrationNumber" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- CountryId -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'CountryId'"
+                                                [SelectedValue]="warehouseEntryPackageItem.CountryId"
+                                                [ObjectTableName]="'WarehouseEntryPackage'"
+                                                [DataContext]="warehouseEntryPackageItem"
+                                                [LookUpTableName]="'Country'">
+                                        </LogLov>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+
+                    <tr><td><div></div></td></tr>
 
                 </table>
 

@@ -108,7 +108,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         {
             accountingIntegrityService = new AccountingIntegrityService();
             accountingIntegrityService.FixDBIntegrity(tenant, AccountingIntegrityResult.MyAccountingIntegrityStep);
-            var itemWithException = AccountingIntegrityResult.MyAccountingIntegrityStep.Where(d => d.ExceptionMessage != null);
+            var itemWithException = AccountingIntegrityResult.MyAccountingIntegrityStep.Where(d => d.ExceptionMessage != null || d.BadRows >0 || d.ShouldFix ==true).FirstOrDefault();
             if (itemWithException != null)
             {
                 SetIntegrityCheckFaid(entityPM);
@@ -117,6 +117,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             {
                 SetIntegrityCheckFixCompleted(entityPM);
             }
+
+            entityPM.ResultXML =  LogitudeXmlSerializer.SerializeObjectToXmlString(AccountingIntegrityResult);
+
 
         }
 

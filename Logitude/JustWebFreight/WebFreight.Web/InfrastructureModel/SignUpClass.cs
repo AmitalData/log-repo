@@ -512,10 +512,11 @@ namespace WebFreight.Web.InfrastructureModel
 
                 AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
 
-                AddReport(tenant);
+                AddReportFromTenantZero(tenant);
 
                 AddTenantLoginPolicy(tenant);
 
+                AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
 
                 #endregion
                 scop.Complete();
@@ -715,6 +716,12 @@ namespace WebFreight.Web.InfrastructureModel
             }
 
             return password;
+        }
+
+        private static void AddAutomationFromTenantZero(int tenant, List<DocumentTypePM> tenantZeroDocumentTypes)
+        {
+            AutomationHelper automationHelper = new AutomationHelper();
+            automationHelper.CopyAutomationFromTenantZeroToMyTenant(tenant, tenantZeroDocumentTypes);
         }
 
         private static void ComputeInvoiceSectionFields(Tenant iTenant, Address iAddress, string iCountryCode, string iStateCode)
@@ -2266,10 +2273,12 @@ namespace WebFreight.Web.InfrastructureModel
         {
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes)
             {
-                if (!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers)
+                AutomationHelper automationHelper = new AutomationHelper();
+                List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
+
+                if ((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers )|| automationDocumentTypeIds.Contains(docType.Id))
                 {
                     ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == docType.ObjectTableId).FirstOrDefault();
-
 
                     List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
                     DocumentType newDocType = new DocumentType()
@@ -2351,7 +2360,10 @@ namespace WebFreight.Web.InfrastructureModel
             DocumentTypeTemplateQuery theDocumentTypeTemplateQuery = new DocumentTypeTemplateQuery(theDocumentTypeTemplateRepository);
             List<DocumentTypeTemplatePM> documentTypeTemplateList = theDocumentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(0).ToList();
 
-            documentTypeTemplateList = documentTypeTemplateList.Where(d => d.IsCopiedAtSignup && d.IsEnabledForCustomers).ToList();
+            AutomationHelper automationHelper = new AutomationHelper();
+            List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
+
+            documentTypeTemplateList = documentTypeTemplateList.Where(d => (d.IsCopiedAtSignup && d.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(d.Id)).ToList();
 
 
             #region Defult Template
@@ -2404,9 +2416,12 @@ namespace WebFreight.Web.InfrastructureModel
                         IsCopiedAtSignup = true,
                         CountryCode = a.CountryCode,
                         Language = a.Language,
-                        OriginalTemplateId = a.OriginalTemplateId,
+                        OriginalTemplateId = a.Id,
                         InternalRemarks = a.InternalRemarks,
                         Subject = a.Subject,
+                        From = a.From,
+                        CC = a.CC,
+                        ReplyTo =a.ReplyTo,
 
                     };
 
@@ -3169,7 +3184,7 @@ namespace WebFreight.Web.InfrastructureModel
             incotermsRepository.SubmitChanges();
         }
 
-        public static void AddReport(int theTenant)
+        public static void AddReportFromTenantZero(int theTenant)
         {
             ReportHelper reportHelper = new ReportHelper();
             reportHelper.UpdateReports(theTenant);

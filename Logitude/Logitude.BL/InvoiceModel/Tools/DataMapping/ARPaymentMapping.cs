@@ -68,7 +68,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             #endregion
 
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant);
-            entityPM.UpdatedByUserId = loggedContact.Id;
+            if (!entityPM.IsExternalEntity)
+            {
+                entityPM.UpdatedByUserId = loggedContact.Id;
+            }
+           
             entity.RegisterDate = entityPM.RegisterDate;
             entity.UpdateDate = entityPM.UpdateDate;
             entity.UpdatedByUserId = entityPM.UpdatedByUserId;

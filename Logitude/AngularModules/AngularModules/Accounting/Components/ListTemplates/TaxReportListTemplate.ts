@@ -1,16 +1,16 @@
 import { TaxReportLinePMService } from './../../Services/StandardPMs/TaxReportLinePMService';
 import { TaxReportLineList } from './../../EntityLists/TaxReportLineList';
 import { TaxReportPMService } from './../../Services/StandardPMs/TaxReportPMService';
-import {Component,ChangeDetectorRef} from '@angular/core';
-import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
-import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
-import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
+import { ServiceArgs } from '../../../Infrastructure/DataContracts/ServiceArgs';
+import { OnInit, Output, EventEmitter, ComponentRef, QueryList } from '@angular/core';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 //import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
-import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
@@ -32,6 +32,11 @@ export class TaxReportListTemplate {
     private _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     private _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
     private CurrentSession = SessionLocator.SelectedSession;
+
+    private currentEntityPM: any;
+
+    taxReportStatusCode: string;
+
     constructor(private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -39,13 +44,25 @@ export class TaxReportListTemplate {
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
         this.rowData = rowData;
-        this.fieldName = fieldName;
         this.AdditionalData = MyAdditionalData;
+
+        if (fieldName.includes(';')) {
+            var temp = fieldName.split(';');
+            if (temp.length == 2) {
+                this.fieldName = temp[0];
+                this.taxReportStatusCode = temp[1];
+            }
+        } else {
+            this.fieldName = fieldName;
+        }
 
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
             this.CD.detectChanges();
         }
+
+
+
     }
 
     Abs(number: number) {
@@ -80,7 +97,7 @@ export class TaxReportListTemplate {
 
 
 
-                    this._TaxReportLinePMService.get(report.Id,lineEntity.Line).subscribe(myResult => {
+                    this._TaxReportLinePMService.get(report.Id, lineEntity.Line).subscribe(myResult => {
 
                         var mm: ServiceResponse = myResult;
                         if (!mm.HasError) {

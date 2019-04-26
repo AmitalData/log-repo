@@ -1,12 +1,15 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -259,5 +262,299 @@ namespace WebFreight.Web.Helpers
             return log.Id;
         }
 
+        public void CopyAutomationFromTenantZeroToMyTenant(int tenant, List<DocumentTypePM> tenantZeroDocumentTypePms)
+        {
+            List<AutomationDocumentTypeClass> myAutomationDocumentTypeClassLists = new List<AutomationDocumentTypeClass>();
+            List<Automation> automationLists = GetAutomationsFromTenantZero(tenant);
+
+            if (automationLists != null)
+            {
+                List<AutomationDocumentTypeClass> automationDocumentTypeLists = BuildAutomationDocumentTypeList(tenant, tenantZeroDocumentTypePms, automationLists);
+                List<AutomationResultEmailRecipientPM> automationResultEmailRecipientPMList = GetAutomationResultEmailRecipientPMList(automationLists);
+                ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
+                AutomationService service = new AutomationService(MyContext, tenant);
+                int OnCreateAutomationOrder = GetLastAutomationOrder(tenant, "OnCreate");
+                int OnUpdateAutomationOrder = GetLastAutomationOrder(tenant, "OnUpdate");
+
+                foreach (Automation automation in automationLists)
+                {
+                    AutomationPM newAutomationPM = CreateNewAutomation(tenant, automation);
+                    newAutomationPM.AutomationResultEmailRecipientLists = automationResultEmailRecipientPMList.Where(d => d.AutomationsId == automation.Id).ToList();
+
+                    AutomationDocumentTypeClass automationDocumentType = automationDocumentTypeLists.Where(d => d.AutomationCode == automation.Code).FirstOrDefault();
+                    if (automationDocumentType != null)
+                    {
+                        newAutomationPM.DocumentTypeId = automationDocumentType.DocumentTypeId;
+                        newAutomationPM.TemplateId = automationDocumentType.DocumentTypeTemplateId;
+                    }
+
+                   if(automation.Type == "OnCreate")
+                    {
+                        OnCreateAutomationOrder += 1;
+                        automation.Order = OnCreateAutomationOrder;
+                    }
+                   else if (automation.Type == "OnUpdate")
+                    {
+                        OnUpdateAutomationOrder += 1;
+                        automation.Order = OnUpdateAutomationOrder;
+                    }
+
+                    service.Create(newAutomationPM);
+
+                }
+            }
+
+        }
+
+        private int GetLastAutomationOrder(int tenant , string type)
+        {
+            AutomationRepository automationRepository = new AutomationRepository(tenant);
+            int order = automationRepository.GetAutomations(tenant).Where(d => d.Type == type).Count();
+            return order;
+
+        }
+
+        private List<AutomationResultEmailRecipientPM> GetAutomationResultEmailRecipientPMList(List<Automation> automationLists)
+        {
+            List<string> automationIds = automationLists.GroupBy(d => d.Id).Select(d => d.First().Id).ToList();
+
+            AutomationResultEmailRecipientQuery automationResultEmailRecipientQuery = new AutomationResultEmailRecipientQuery(0);
+           return automationResultEmailRecipientQuery.GetAutomationResultEmailRecipientPMsByAutomationIds(automationIds,0);
+        }
+
+        private AutomationPM  CreateNewAutomation(int tenant, Automation automation)
+        {
+            return new AutomationPM()
+            {
+                Tenant = tenant,
+                Name = automation.Name,
+                Code = automation.Code,
+                Description = automation.Description,
+                From = automation.From,
+                FromEmail = automation.FromEmail,
+                Inactive = automation.Inactive,
+                Version = 1,
+                Type = automation.Type,
+                ResultCode = automation.ResultCode,
+                Order = automation.Order,
+                AutomationXML = automation.AutomationXML,
+                ObjectTableId = automation.ObjectTableId,
+            };
+        }
+
+        private List<AutomationDocumentTypeClass> BuildAutomationDocumentTypeList(int tenant, List<DocumentTypePM> tenantZeroDocumentTypePms, List<Automation> automationLists)
+        {
+            List<AutomationDocumentTypeClass> myAutomationDocumentTypeClassLists = new List<AutomationDocumentTypeClass>();
+
+            if (automationLists.Count > 0)
+            {
+                DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
+                DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
+                DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(tenant);
+
+                List<AutomationDocumentTypeClass> tenantZeroAutomationDocumentTypeClassLists = FillAutomationDocumentTypeList(automationLists, tenantZeroDocumentTypePms);
+                List<string> tenantZeroDocumentTypeIdsUsedInAutomation = tenantZeroAutomationDocumentTypeClassLists.GroupBy(d => d.DocumentTypeId).Select(d => d.First().DocumentTypeId).ToList();
+                List<string> tenantZeroDocumentTypeCodesUsedInAutomation = tenantZeroAutomationDocumentTypeClassLists.GroupBy(d => d.DocumentTypeCode).Select(d => d.First().DocumentTypeCode).ToList();
+                List<string> tenantZeroDocumentTypeTemplateIdsUsedInAutomation = tenantZeroAutomationDocumentTypeClassLists.GroupBy(d => d.DocumentTypeTemplateId).Select(d => d.First().DocumentTypeTemplateId).ToList();
+
+                List<DocumentTypePM> tenantZeroDocumentTypePmsUsedInAutomation = tenantZeroDocumentTypePms.Where(d => tenantZeroDocumentTypeIdsUsedInAutomation.Contains(d.Id)).ToList();
+                List<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplatePmsUsedInAutomation = documentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(0).Where(d => tenantZeroDocumentTypeTemplateIdsUsedInAutomation.Contains(d.Id)).ToList();
+                List<DocumentTypePM> myDocumentTypeListsUsedInAutomation = documentTypeQuery.GetDocumentTypePMsListsByCodes(tenantZeroDocumentTypeCodesUsedInAutomation, tenant).ToList();
+                var ids = myDocumentTypeListsUsedInAutomation.Select(d => d.Id).ToList();
+                List<DocumentTypeTemplatePM> myDocumentTypeTempaltesUsedInAutomation = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeIds(ids, tenant).ToList();
+
+                bool isChange = false;
+                foreach (AutomationDocumentTypeClass automationDocumentTypeClass in tenantZeroAutomationDocumentTypeClassLists)
+                {
+                    #region DocumentType
+                    DocumentType newDocType = null;
+                    DocumentTypePM myDocType = myDocumentTypeListsUsedInAutomation.Where(d => d.Code == automationDocumentTypeClass.DocumentTypeCode).FirstOrDefault();
+                    if (myDocType == null)
+                    {
+                        var docType = tenantZeroDocumentTypePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
+                        newDocType = CreateNewDocumentType(docType, documentTypeRepository, tenant);
+
+                        myDocType = new DocumentTypePM() { Code = newDocType.Code, Id = newDocType.Id, Tenant = newDocType.Tenant };
+                        myDocumentTypeListsUsedInAutomation.Add(myDocType);
+                        isChange = true;
+                    }
+                    #endregion
+
+                    #region DocumentTypeTemplate
+                    DocumentTypeTemplatePM myDocumentTypeTemplatePM = myDocumentTypeTempaltesUsedInAutomation.Where(d => d.OriginalTemplateId == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
+                    if (myDocumentTypeTemplatePM == null)
+                    {
+                        isChange = true;
+                        var tenantZeroDocumentTypeTemplate = tenantZeroDocumentTypeTemplatePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
+                        DocumentTypeTemplate newtemplate = CreateNewDocumentTypeTemplate(documentTypeTemplateRepository, myDocType, tenantZeroDocumentTypeTemplate);
+                        documentTypeTemplateRepository.Add(newtemplate);
+                        myDocumentTypeTemplatePM = new DocumentTypeTemplatePM() { Id = newtemplate.Id, DocumentTypeId = newtemplate.DocumentTypeId, OriginalTemplateId = newtemplate.OriginalTemplateId,Tenant = newtemplate.Tenant };
+                        myDocumentTypeTempaltesUsedInAutomation.Add(myDocumentTypeTemplatePM);
+
+                        if (newDocType!=null && string.IsNullOrEmpty(newDocType.DocumentTypeDefaultEditorTool) )
+                        {
+                            newDocType.DocumentTypeDefaultEditorTool = newtemplate.Id;
+                        }
+                    }
+                    #endregion
+
+                    AutomationDocumentTypeClass automationDocumentType = CreateNewAutomationDocumentTypeClass(automationDocumentTypeClass, myDocType, myDocumentTypeTemplatePM);
+                    myAutomationDocumentTypeClassLists.Add(automationDocumentType);
+
+                }
+
+                if (isChange)
+                {
+                    documentTypeRepository.SubmitChanges();
+                    documentTypeTemplateRepository.SubmitChanges();
+
+                }
+
+
+                TableLastUpdateClass.UpdateTableHistory(tenant, "DocumentType");
+                TableLastUpdateClass.UpdateTableHistory(tenant, "DocumentTypeTemplate");
+            }
+
+            return myAutomationDocumentTypeClassLists;
+        }
+
+        private static AutomationDocumentTypeClass CreateNewAutomationDocumentTypeClass( AutomationDocumentTypeClass automationDocumentTypeClass, DocumentTypePM myDocType, DocumentTypeTemplatePM myDocumentTypeTemplatePM)
+        {
+
+            AutomationDocumentTypeClass automationDocumentType = new AutomationDocumentTypeClass();
+            automationDocumentType.AutomationCode = automationDocumentTypeClass.AutomationCode;
+            automationDocumentType.DocumentTypeId = myDocType != null ? myDocType.Id : null;
+            automationDocumentType.DocumentTypeCode = myDocType != null ? myDocType.Code : null;
+            automationDocumentType.DocumentTypeTemplateId = myDocumentTypeTemplatePM != null ? myDocumentTypeTemplatePM.Id : null;
+            automationDocumentType.Tenant = myDocType.Tenant;
+            return automationDocumentType;
+        }
+
+        private static DocumentTypeTemplate CreateNewDocumentTypeTemplate( DocumentTypeTemplateRepository documentTypeTemplateRepository, DocumentTypePM newDocType, DocumentTypeTemplatePM tenantZeroDocumentTypeTemplate)
+        {
+
+            DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
+            {
+                Id = IdCounter.GetNumber("DocumentTypeTemplate", newDocType.Tenant).ToString(),
+                Tenant = newDocType.Tenant,
+                TemplateBody = tenantZeroDocumentTypeTemplate.TemplateBody,
+                TemplateType = tenantZeroDocumentTypeTemplate.TemplateType,
+                HorizontalShift = tenantZeroDocumentTypeTemplate.HorizontalShift,
+                InActive = tenantZeroDocumentTypeTemplate.InActive,
+                Description = tenantZeroDocumentTypeTemplate.Description,
+                DocumentTypeId = newDocType.Id,
+                EditorTool = tenantZeroDocumentTypeTemplate.EditorTool,
+                CountryCode = tenantZeroDocumentTypeTemplate.CountryCode,
+                Subject = tenantZeroDocumentTypeTemplate.CountryCode,
+                Language = tenantZeroDocumentTypeTemplate.Language,
+                OriginalTemplateId = tenantZeroDocumentTypeTemplate.Id,
+                VerticalShift = tenantZeroDocumentTypeTemplate.VerticalShift,
+                InternalRemarks = tenantZeroDocumentTypeTemplate.InternalRemarks,
+                IsEnabledForCustomers = true,
+                TemplateBodyHtml = tenantZeroDocumentTypeTemplate.TemplateBodyHtml,
+                TemplateFooterHtml = tenantZeroDocumentTypeTemplate.TemplateFooterHtml,
+                TemplateHeaderHtml = tenantZeroDocumentTypeTemplate.TemplateHeaderHtml,
+                TemplateFooterHeight = tenantZeroDocumentTypeTemplate.TemplateFooterHeight,
+                TemplateHeaderHeight = tenantZeroDocumentTypeTemplate.TemplateHeaderHeight,
+                CC = tenantZeroDocumentTypeTemplate.CC,
+                From = tenantZeroDocumentTypeTemplate.From,
+                ReplyTo = tenantZeroDocumentTypeTemplate.ReplyTo,
+            };
+
+            documentTypeTemplateRepository.Add(newtemplate);
+
+            return newtemplate;
+        }
+
+        private static DocumentType CreateNewDocumentType( DocumentTypePM docType , DocumentTypeRepository documentTypeRepository , int tenant)
+        {
+            DocumentType newDocType =  new DocumentType()
+            {
+                Id = IdCounter.GetNumber("DocumentType", tenant).ToString(),
+                Code = docType.Code.Trim(),
+                Name = docType.Name,
+                IsOcean = docType.IsOcean,
+                IsAir = docType.IsAir,
+                IsInland = docType.IsInland,
+                IsDocIn = docType.IsDocIn,
+                IsDocOut = docType.IsDocOut,
+                FollowUpTypeId = docType.FollowUpTypeId,
+                Tenant = tenant,
+                ObjectTableId = docType.ObjectTableId,
+                SearchFields = docType.SearchFields,
+                IsMaster = docType.IsMaster,
+                IsDirect = docType.IsDirect,
+                IsHouse = docType.IsHouse,
+                TemplateFormatCode = docType.TemplateFormatCode,
+                IsCustomerView = docType.IsCustomerView,
+                IsAgentView = docType.IsAgentView,
+                DocumentTypeCategoryCode = docType.DocumentTypeCategoryCode,
+                CountryCode = docType.CountryCode,
+                Subject = docType.Subject,
+                IsEnabledForCustomers = true,
+                Notes = docType.Notes,
+                DocumentTypeDefaultHTMLTemplateId = docType.DocumentTypeDefaultHTMLTemplateId,
+                DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
+                IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
+                PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
+            };
+
+            documentTypeRepository.Add(newDocType);
+
+            return newDocType;
+        }
+
+        private List<AutomationDocumentTypeClass> FillAutomationDocumentTypeList(List<Automation> automationLists , List<DocumentTypePM> tenantZeroDocumentTypePms)
+        {
+            List<AutomationDocumentTypeClass> tenantZeroAutomationDocumentTypeClassLists = (from a in automationLists
+                    select new AutomationDocumentTypeClass()
+                    {
+                        AutomationCode = a.Code,
+                        DocumentTypeId = a.DocumentTypeId,
+                        DocumentTypeTemplateId = a.TemplateId,
+                        Tenant = a.Tenant,
+                    }).ToList();
+
+
+            foreach (AutomationDocumentTypeClass automationDocumentTypeClass in tenantZeroAutomationDocumentTypeClassLists)
+            {
+                automationDocumentTypeClass.DocumentTypeCode = tenantZeroDocumentTypePms.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeId).Select(d => d.Code).FirstOrDefault();
+            }
+
+            return tenantZeroAutomationDocumentTypeClassLists;
+
+        }
+
+        private List<Automation>  GetAutomationsFromTenantZero(int tenant)
+        {
+            AutomationRepository automationRepository = new AutomationRepository(tenant);
+            AutomationQuery automationQuery = new AutomationQuery(tenant);
+            List<string> myAutomationListsCodes = automationQuery.GetAutomationCodeLists(tenant);
+            List<Automation> automations = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).ToList();
+            return automations;
+        }
+
+
+        public List<string> GetAutomationDocumentTypeIds(int tenant)
+        {
+            AutomationRepository automationRepository = new AutomationRepository(tenant);
+            AutomationQuery automationQuery = new AutomationQuery(tenant);
+            List<string> myAutomationListsCodes = automationQuery.GetAutomationCodeLists(tenant);
+            List<string> automationdocumentTypeIds = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).Select(d => d.DocumentTypeId).ToList();
+            return automationdocumentTypeIds;
+        }
+
+
+
+    }
+
+    public class AutomationDocumentTypeClass
+    {
+        public string DocumentTypeId { get; set; }
+        public string DocumentTypeTemplateId { get; set; }
+        public string DocumentTypeCode { get; set; }
+        public string AutomationCode { get; set; }
+        public int Tenant { get; set; }
     }
 }

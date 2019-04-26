@@ -18,7 +18,7 @@ namespace WarehouseData
         public bool HasDimensionTable { get; set; }
         public string FieldsDBName { get; set; }
         public bool DispayInScreen { get; set; }
-        public bool IsUpdated { get; set; }
+        public bool IsUpdated { get; set; } 
         public int UpdatedCount { get; set; }
         public bool IsCloseTable { get; set; }
         public string BuildScriptName { get; set; }
