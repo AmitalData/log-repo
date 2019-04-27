@@ -215,6 +215,8 @@ export class QuoteUtilities {
         entityPM.ValueOfGoods = copiedEntityPM.ValueOfGoods;
         entityPM.ValueOfGoodsCurrencyId = copiedEntityPM.ValueOfGoodsCurrencyId;
         entityPM.IsChargesByVAT = copiedEntityPM.IsChargesByVAT;
+        entityPM.GrossWeightEdited = copiedEntityPM.GrossWeightEdited;
+        entityPM.ChargeableWeightEdited = copiedEntityPM.ChargeableWeightEdited;
 
         //entityPM.ShipperId = copiedEntityPM.ShipperId;
         //entityPM.ShipperContactId = copiedEntityPM.ShipperContactId;

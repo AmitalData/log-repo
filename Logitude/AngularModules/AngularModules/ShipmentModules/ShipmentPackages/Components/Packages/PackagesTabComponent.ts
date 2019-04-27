@@ -634,8 +634,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.ComputeTotals();
     }
     ResetTotalEditedValues() {
-        //this.GrossWeightEdited = false;
-        //this.ChargeableWeightEdited = false;
+        this.GrossWeightEdited = false;
+        this.ChargeableWeightEdited = false;
     }
     ComputeTotals() {
 
@@ -1923,8 +1923,10 @@ export class ShipmentPackageItem extends BaseComponent {
 
             }
 
-            this.fatherComponent.ResetTotalEditedValues();
-            this.fatherComponent.ComputeTotals();
+            if (this.fatherComponent.ItemsSource.Collection.indexOf(this) > -1) {
+                this.fatherComponent.ResetTotalEditedValues();
+                this.fatherComponent.ComputeTotals();
+            }
         }
     }
 
@@ -1936,8 +1938,11 @@ export class ShipmentPackageItem extends BaseComponent {
                     this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                     this.SetUIProperties();
-                    this.fatherComponent.ResetTotalEditedValues();
-                    this.fatherComponent.ComputeTotals();
+
+                    if (this.fatherComponent.ItemsSource.Collection.indexOf(this) > -1) {
+                        this.fatherComponent.ResetTotalEditedValues();
+                        this.fatherComponent.ComputeTotals();
+                    }
                 }
             }
         }

@@ -946,44 +946,46 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     GrossWeightLostFocus(input: any) {
+        if (this.EntityPM.QuotePackages.length > 0) {
+            var valueComputed: number = 0;
+            var valueInserted: number = 0;
 
-        var valueComputed: number = 0;
-        var valueInserted: number = 0;
+            this.EntityPM.QuotePackages.forEach((item) => {
+                if (!AppTool.IsNullOrEmpty(item.GrossWeight)) {
+                    valueComputed += item.GrossWeight;
+                }
+            });
 
-        this.EntityPM.QuotePackages.forEach((item) => {
-            if (!AppTool.IsNullOrEmpty(item.GrossWeight)) {
-                valueComputed += item.GrossWeight;
+            if (!AppTool.IsNullOrEmpty(input)) {
+                input = AppTool.Replace(input, ",", "");
+                valueInserted = Number(input);
             }
-        });
 
-        if (!AppTool.IsNullOrEmpty(input)) {
-            input = AppTool.Replace(input, ",", "");
-            valueInserted = Number(input);
+            valueComputed = valueComputed == 0 ? null : valueComputed;
+            valueInserted = valueInserted == 0 ? null : valueInserted;
+            this.GrossWeightEdited = !(valueComputed == valueInserted);
+            this.GrossWeight = valueInserted;
+            this.ComputeTotals();
         }
-
-        valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
-        this.GrossWeightEdited = !(valueComputed == valueInserted);
-        this.GrossWeight = valueInserted;
-        this.ComputeTotals();
     }
     ChargeableWeightLostFocus(input: any) {
+        if (this.EntityPM.QuotePackages.length > 0) {
+            var valueComputed: number = 0;
+            var valueInserted: number = 0;
 
-        var valueComputed: number = 0;
-        var valueInserted: number = 0;
+            valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
-        valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            if (!AppTool.IsNullOrEmpty(input)) {
+                input = AppTool.Replace(input, ",", "");
+                valueInserted = Number(input);
+            }
 
-        if (!AppTool.IsNullOrEmpty(input)) {
-            input = AppTool.Replace(input, ",", "");
-            valueInserted = Number(input);
+            valueComputed = valueComputed == 0 ? null : valueComputed;
+            valueInserted = valueInserted == 0 ? null : valueInserted;
+            this.ChargeableWeightEdited = !(valueComputed == valueInserted);
+            this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            this.ComputeTotals();
         }
-
-        valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
-        this.ChargeableWeightEdited = !(valueComputed == valueInserted);
-        this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
-        this.ComputeTotals();
     }
     ResetGrossWeightEdited() {
         this.GrossWeightEdited = false;
@@ -1258,8 +1260,12 @@ export class QuotePackageItem extends BaseComponent {
         if (this.EntityPM.GrossWeight != myValue) {
             this.EntityPM.GrossWeight = myValue;
 
-            this.fatherComponent.ComputeTotals();
             this.SetUIProperties();
+
+            if (this.fatherComponent.ItemsSource.Collection.indexOf(this) > -1) {
+                this.fatherComponent.ResetTotalEditedValues();
+                this.fatherComponent.ComputeTotals();
+            }
         }
     }
 
@@ -1270,7 +1276,11 @@ export class QuotePackageItem extends BaseComponent {
                 this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.QuotePM.ChargeableWeightUnitCode, this.QuotePM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.QuotePM.Ratio);
 
                 this.SetUIProperties();
-                this.fatherComponent.ComputeTotals();
+
+                if (this.fatherComponent.ItemsSource.Collection.indexOf(this) > -1) {
+                    this.fatherComponent.ResetTotalEditedValues();
+                    this.fatherComponent.ComputeTotals();
+                }
             }
         }
     }
