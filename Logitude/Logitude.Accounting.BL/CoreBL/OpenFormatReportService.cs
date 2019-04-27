@@ -2198,19 +2198,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.CustomerVendorCode != null)
                     {
                         if (item.CustomerVendorCode.Length > 15) { item.CustomerVendorCode = item.CustomerVendorCode.Substring(0, 15); }
-                        myStringBuilder.Append(a + item.CustomerVendorCode.PadLeft(15, '0'));
+                        myStringBuilder.Append(a + item.CustomerVendorCode.PadLeft(15, ' '));
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append(' ', 15);
                     }
 
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append(' ', 15);
                 }
 
                 myStringBuilder.Append(' ', 10);
