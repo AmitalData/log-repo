@@ -100,7 +100,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.FirstApproveDate = entityPM.FirstApproveDate;
             entity.IsFullAccounting = entityPM.IsFullAccounting;
             entity.IsExternalEntity = entityPM.IsExternalEntity;
-
             if (entityPM.IsExternalEntity) {
                 entity.ChequeOrPaymentRef = entityPM.ChequeOrPaymentRef;
                 entity.CreateDate = entityPM.CreateDate;
@@ -111,6 +110,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Bank = entityPM.Bank;
                 entity.BankBranch = entityPM.BankBranch;
                 entity.Account = entityPM.Account;
+                entity.CashbookId = entityPM.CashbookId;
+
             }
 
 

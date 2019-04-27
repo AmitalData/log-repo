@@ -489,6 +489,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     cashBookMethodType = "2";
                 }
                 cashBook = cashBookQuery.GetByPaymentAndCurrencyAndBranch(entityPM.PaymentCurrencyId, cashBookMethodType , entityPM.BranchId, tenant);
+                if(cashBook != null)
+                {
+
+                    entityPM.CashbookId = cashBook.Id;
+                }
             }
         }
 
