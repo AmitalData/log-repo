@@ -1346,7 +1346,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a);
                         myStringBuilder.Append("+");
                         myStringBuilder.Append(AmountAFDiscount.PadLeft(14, '0'));
-
+                        
                       
                     }
                     else
@@ -1360,7 +1360,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append('0', 15);
                 }
+                if(item.DocumentReference == "1291")
+                {
 
+                }
 
                 List<ARInvoiceTotalVATPM> aRInvoiceTotalVATs = totalVats.Where(d => d.ARInvoiceId == item.ARInvoiceId).ToList();
                 if (aRInvoiceTotalVATs.Count > 0)
@@ -1382,8 +1385,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else if (item.VatAmount > 0)
                         {
-                          
-                           
+
+                            myStringBuilder.Append("+");
                             myStringBuilder.Append( vatAmount.PadLeft(14, '0'));
                         }
                         else
@@ -2244,7 +2247,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
-                {
+               {
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 9);
                 }
