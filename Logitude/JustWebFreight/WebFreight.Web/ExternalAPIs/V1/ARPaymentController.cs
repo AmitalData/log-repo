@@ -86,8 +86,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entity.Tenant);
                         ARPaymentQueryService mappingService = new ARPaymentQueryService(entity.Tenant);
+                        
                         ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, entity.Tenant);
-                       
+                        entityPM.UpdatedByUserId = entity.CreatedByUser.Id;
                         entityPM.Tenant = entity.Tenant;
                         entityPM.SetApproved = true;
                         entityPM.IsExternalEntity = true;
