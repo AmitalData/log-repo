@@ -2002,7 +2002,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
             {
-                if (entityPM.PackageType1Id != null)
+                if (entityPM.PackageType1Id != null || entityPM.PackageType1Quantity != null)
                 {
                     QuotePackagePM quotePackage1 = new QuotePackagePM();
                     quotePackage1.QuoteId = entityId;
@@ -2011,7 +2011,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     entityPM.QuotePackages.Add(quotePackage1);
                 }
 
-                if (entityPM.PackageType2Id != null)
+                if (entityPM.PackageType2Id != null || entityPM.PackageType2Quantity != null)
                 {
                     QuotePackagePM quotePackage2 = new QuotePackagePM();
                     quotePackage2.QuoteId = entityId;
@@ -2020,7 +2020,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     entityPM.QuotePackages.Add(quotePackage2);
                 }
 
-                if (entityPM.PackageType3Id != null)
+                if (entityPM.PackageType3Id != null || entityPM.PackageType3Quantity != null)
                 {
                     QuotePackagePM quotePackage3 = new QuotePackagePM();
                     quotePackage3.QuoteId = entityId;
@@ -2029,7 +2029,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     entityPM.QuotePackages.Add(quotePackage3);
                 }
 
-                if (entityPM.PackageType4Id != null)
+                if (entityPM.PackageType4Id != null || entityPM.PackageType4Quantity != null)
                 {
                     QuotePackagePM quotePackage4 = new QuotePackagePM();
                     quotePackage4.QuoteId = entityId;
@@ -2038,7 +2038,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     entityPM.QuotePackages.Add(quotePackage4);
                 }
 
-                if (entityPM.PackageType5Id != null)
+                if (entityPM.PackageType5Id != null || entityPM.PackageType5Quantity != null)
                 {
                     QuotePackagePM quotePackage5 = new QuotePackagePM();
                     quotePackage5.QuoteId = entityId;
