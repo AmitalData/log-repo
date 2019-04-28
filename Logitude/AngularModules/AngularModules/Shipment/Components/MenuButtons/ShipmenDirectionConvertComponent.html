@@ -117,11 +117,11 @@
                             <table>
                                 <tr class="FormFieldRow">
                                     <td style="width:115px;">
-                                        <LogLabel [ObjectFieldName]="'ShipperId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="FromPartnerIdProperty" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
                                     </td>
                                     <td style="width:220px;">
-                                        <LogLov [ObjectFieldName]="'ShipperId'"
-                                                [SelectedValue]="ShipperId"
+                                        <LogLov [ObjectFieldName]="FromPartnerIdProperty"
+                                                [SelectedValue]="FromPartnerId"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Card'"
@@ -147,24 +147,24 @@
                                     </td>
                                 </tr>
 
-                                <tr *ngIf="ShipperId">
+                                <tr *ngIf="FromPartnerId">
                                     <td colspan="5">
                                         <table>
                                             <tr class="FormFieldRow">
                                                 <td style="width:115px;">
-                                                    <LogLabel [ObjectFieldName]="'ShipperAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'FromAddressIdProperty'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td colspan="2">
                                                     <table>
                                                         <tr>
                                                             <td style="width:202px;">
-                                                                <LogLov [ObjectFieldName]="'ShipperAddressId'"
-                                                                        [SelectedValue]="ShipperAddressId"
+                                                                <LogLov [ObjectFieldName]="FromAddressIdProperty"
+                                                                        [SelectedValue]="FromAddressId"
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Address'"
-                                                                        [DependencyFilter1Value]="ShipperId"
+                                                                        [DependencyFilter1Value]="FromPartnerId"
                                                                         [HideLastColumn]="true"
                                                                         [HideMaintenanceIcon]="true">
                                                                 </LogLov>
@@ -258,11 +258,11 @@
                             <table>
                                 <tr class="FormFieldRow">
                                     <td style="width:115px;">
-                                        <LogLabel [ObjectFieldName]="'ConsigneeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="ToPartnerIdProperty" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
                                     </td>
                                     <td style="width:220px;">
-                                        <LogLov [ObjectFieldName]="'ConsigneeId'"
-                                                [SelectedValue]="ConsigneeId"
+                                        <LogLov [ObjectFieldName]="ToPartnerIdProperty"
+                                                [SelectedValue]="ToPartnerId"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Card'"
@@ -288,24 +288,24 @@
                                     </td>
                                 </tr>
 
-                                <tr *ngIf="ConsigneeId">
+                                <tr *ngIf="ToPartnerId">
                                     <td colspan="5">
                                         <table>
                                             <tr class="FormFieldRow">
                                                 <td style="width:115px;">
-                                                    <LogLabel [ObjectFieldName]="'ConsigneeAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="ToAddressIdProperty" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td colspan="2">
                                                     <table>
                                                         <tr>
                                                             <td style="width:202px;">
-                                                                <LogLov [ObjectFieldName]="'ConsigneeAddressId'"
-                                                                        [SelectedValue]="ConsigneeAddressId"
+                                                                <LogLov [ObjectFieldName]="ToAddressIdProperty"
+                                                                        [SelectedValue]="ToAddressId"
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Address'"
-                                                                        [DependencyFilter1Value]="ConsigneeId"
+                                                                        [DependencyFilter1Value]="ToPartnerId"
                                                                         [HideLastColumn]="true"
                                                                         [HideMaintenanceIcon]="true">
                                                                 </LogLov>

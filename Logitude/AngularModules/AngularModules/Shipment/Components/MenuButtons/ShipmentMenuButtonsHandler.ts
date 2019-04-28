@@ -274,6 +274,15 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentDirection") {
                         if (buttonEnabled) {
+                            if (this.EntityPM.IsCancelled) {
+                                button.IsDisabled = true;
+                            }
+
+                            else {
+                                button.IsHidden = false;
+                                button.IsDisabled = false;
+                            }
+
                             button.IsHidden = false;
                         }
                         else {
