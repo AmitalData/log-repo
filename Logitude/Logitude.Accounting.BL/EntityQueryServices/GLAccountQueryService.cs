@@ -825,8 +825,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
                         LTBFilter.GLAccountId = gLAccount.Id;
-                        LTBFilter.From = new DateTime((int)2019, 3,28);
-                        LTBFilter.To = new DateTime((int)2019, 4, 29);
+                        DateTime today = DateTime.Today;
+                        LTBFilter.From = today.AddMonths(-1) ;
+                        
+                        LTBFilter.To = today; 
                         LTBFilter.IncludeRelatedCurrenciesAccount = false;
                         LTBFilter.IncludeChildAccounts = false;
                         LTBFilter.DateTypeCode = "1";
@@ -840,9 +842,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         byVendorList.EndYearBalance = Math.Round((ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal : 0).Value, 0);
 
                         
-                        if (byVendorList.EndYearBalance != 0)
+                        if (byVendorList.EndYearBalance >= 0)
                         {
-
+                            byVendorList.EndYearBalance = 0;
                         }
 
                     }
