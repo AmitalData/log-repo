@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.changedList = new List<ARPaymentInvoicePM>();
-            this.loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
+            this.loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(AuthenticationUtil.ResolveUserId(tenant), tenant, true);
             this.GetAccountingSystem();
         }
 
