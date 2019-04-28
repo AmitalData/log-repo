@@ -693,30 +693,30 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  }).ToList();
             DateTime fromdate = new DateTime((int)reportYear,1, 1);
             DateTime todate= new DateTime((int)reportYear,12, 31 );
-            var trailReportParam = new TrailReportParam()
-            {
-                Tenant = tenant,
+            //var trailReportParam = new TrailReportParam()
+            //{
+            //    Tenant = tenant,
                
-                ToDate = (DateTime)todate,
-                FromDate = (DateTime)fromdate,
-                CurrenciesDetailed = false,
-                DetailedControlVendors = true,
-                DetailedControlClients = false,
-                Category1 = null,
-                Category5 = null,
-                Suppress_DoNotShowCardWithoutActivity = false,
-                IsRevenueExpenseReport = false,
-                MyTrailReportLevel = ReportLevel.GLAccount,
+            //    ToDate = (DateTime)todate,
+            //    FromDate = (DateTime)fromdate,
+            //    CurrenciesDetailed = false,
+            //    DetailedControlVendors = true,
+            //    DetailedControlClients = false,
+            //    Category1 = null,
+            //    Category5 = null,
+            //    Suppress_DoNotShowCardWithoutActivity = false,
+            //    IsRevenueExpenseReport = false,
+            //    MyTrailReportLevel = ReportLevel.GLAccount,
 
-            };
+            //};
 
 
-            var typeservice = TrailReportFactory.CreateNew(trailReportParam);
-            List<TrailReportM> res1 = typeservice.Execute();
-            typeservice.Dispose();
+            //var typeservice = TrailReportFactory.CreateNew(trailReportParam);
+            //List<TrailReportM> res1 = typeservice.Execute();
+            //typeservice.Dispose();
 
-            IEnumerable<IGrouping<string, TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
-            var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
+            //IEnumerable<IGrouping<string, TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
+            //var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
 
             //foreach (DBVendorsList item in DBVendorsList)
             //{
@@ -806,37 +806,46 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         byVendorList.DeductionFileNumber = gLAccount.DeductionFileNumber;
                         byVendorList.DeductionType = gLAccount.DeductionTypeId;
                         byVendorList.EnglishName = gLAccount.EnglishName;
-                        IGrouping<string, TrailReportM> trailReportM = null;
-                        if (result.ContainsKey(gLAccount.Id))
+                        //IGrouping<string, TrailReportM> trailReportM = null;
+                        //if (result.ContainsKey(gLAccount.Id))
+                        //{
+                        //    trailReportM = result[gLAccount.Id];
+                        //}
+                        //if (trailReportM != null)
+                        //{
+                        //    byVendorList.EndYearBalance = trailReportM.Select(d => d.LocalOpenBalance).Sum();
+                        //}
+                        LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
+
+
+                        LTBFilter.PageSize = 30;
+                        LTBFilter.PageStartAtRecordIndex = 0;
+                        LTBFilter.Tenant = tenant;
+
+
+
+                        LTBFilter.GLAccountId = gLAccount.Id;
+                        LTBFilter.From = new DateTime((int)2019, 3,28);
+                        LTBFilter.To = new DateTime((int)2019, 4, 29);
+                        LTBFilter.IncludeRelatedCurrenciesAccount = false;
+                        LTBFilter.IncludeChildAccounts = false;
+                        LTBFilter.DateTypeCode = "1";
+                        var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(context, LTBFilter);
+                        ledgerTransactionBalanceService.Run();
+                        LTBFilter.CallBack = new LedgerTransactionBalanceFilterCallBack()
                         {
-                            trailReportM = result[gLAccount.Id];
-                        }
-                        if (trailReportM != null)
+                          EndBalanceLocal = ledgerTransactionBalanceService.Response.EndBalanceLocal,
+
+                        };
+                        byVendorList.EndYearBalance = Math.Round((ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal : 0).Value, 0);
+
+                        
+                        if (byVendorList.EndYearBalance != 0)
                         {
-                            byVendorList.EndYearBalance = trailReportM.Select(d => d.LocalOpenBalance).Sum();
-                        }
-                            //LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
-
-
-                            //LTBFilter.PageSize = 10;
-                            //LTBFilter.PageStartAtRecordIndex = 0;
-                            //LTBFilter.Tenant = tenant;
-
-
-
-                            //LTBFilter.GLAccountId = gLAccount.Id;
-                            //LTBFilter.From = new DateTime((int)reportYear, 1, 1);
-                            //LTBFilter.To = new DateTime((int)reportYear, 12, 31);
-                            //LTBFilter.IncludeRelatedCurrenciesAccount = false;
-                            //LTBFilter.IncludeChildAccounts = false;
-
-                            //var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(context, LTBFilter);
-                            //ledgerTransactionBalanceService.Run();
-
-                            //byVendorList.EndYearBalance = Math.Round( (ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal :0).Value,0 );
-
 
                         }
+
+                    }
 
 
                     if (byVendorList.EndYearBalance == null)
@@ -903,7 +912,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             taxDeduction.TotalDeductionInLocalCurrency = Math.Round(DBVendorsList.Sum(d => d.TaxDeductionLocalAmount).Value,0);
             taxDeduction.TotalAmountInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.AmountInLocalCurrency).Value,0);
             taxDeduction.TotalTaxDeductionInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.TaxDeductionLocalAmount).Value,0);
-            taxDeduction.TotalEndBalance = Math.Round(res1.Sum(d => d.LocalOpenBalance).Value, 0);//  DBVendorsList.Sum(d => d.EndYearBalance).Value,0);
+            taxDeduction.TotalEndBalance = Math.Round(DBVendorsList.Sum(d => d.EndYearBalance).Value, 0);//  DBVendorsList.Sum(d => d.EndYearBalance).Value,0);
 
             //if (result.ContainsKey(item.GLAccountId))
             //{

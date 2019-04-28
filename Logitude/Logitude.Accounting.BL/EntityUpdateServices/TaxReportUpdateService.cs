@@ -140,7 +140,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
 
-             //   TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
+               //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
 
             }
             //if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
