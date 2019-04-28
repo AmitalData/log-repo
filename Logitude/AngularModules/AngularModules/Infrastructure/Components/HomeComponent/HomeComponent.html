@@ -338,8 +338,7 @@
                     </div>
 
                     <div *ngIf="ShowNewReleaseToolTip" style="height: 25px; width: 400px; position:absolute; left:0; right:0; top: 8px; margin: auto;">
-                        <!--*ngIf="LayoutDirection != 'rtl'"-->
-                        <div *ngIf="false" class="GreenInfo" style="margin: 5px; width:350px;">
+                        <div *ngIf="LayoutDirection != 'rtl'" class="GreenInfo" style="margin: 5px; width:350px;">
                             <table>
                                 <tr>
                                     <td class="Value" style="font-size:12px;">
@@ -361,8 +360,7 @@
                             </table>
                         </div>
 
-                        <!--*ngIf="LayoutDirection == 'rtl'" -->
-                        <div class="GreenInfo" style="margin: 5px;">
+                        <div *ngIf="LayoutDirection == 'rtl'" class="GreenInfo" style="margin: 5px;">
                             <table>
                                 <tr>
                                     <td style="width: 18px; padding-left:4px;">
