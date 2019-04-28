@@ -85,6 +85,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     public set Text(newValue: any) {
         if (this.text != newValue) {
+           
             this.text = newValue;
             if (!this.keydown) {
                 if (!this.uiProperty) {
@@ -123,6 +124,14 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.TextValue == newValue) {
             return;
         }
+        if (this.firstDigit == "." && this.IsPasted && newValue != null && newValue != undefined && this.textValue!=null) {
+            var firstString = this.textValue.replace(',', "")
+            var secondString = newValue.replace('.', "")
+
+            if (firstString == secondString) {
+                return;
+            }
+        }
 
         if ((this.textValue == "" || this.textValue == null || this.textValue == undefined) && newValue) {
             this.HasValue.emit(true);
@@ -140,9 +149,23 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                         break;
                     }
                 default: {
-                    if (newValue && newValue.indexOf(',') > -1) {
-                        newValue = newValue.replace(',', '');
+                    if (this.firstDigit == "'") {
+                        if ((newValue && newValue.indexOf("'") > -1)) {
+                            newValue = newValue.replace("'", '');
+                        }
                     }
+                            
+                    else if (this.firstDigit == ".") {
+                        if ((newValue && newValue.indexOf(".") > -1) && (newValue && newValue.indexOf(",") > -1)) {
+                            newValue = newValue.replace(/\./g, '')
+                        }
+                            }
+                            else {
+                                if ((newValue && newValue.indexOf(',') > -1)) {
+                                    newValue = newValue.replace(',', '');
+                                }
+                            }                        
+                    
                 }
 
             }
@@ -1168,6 +1191,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 }
                             }
                             var val: number;
+                            var hasJoined = false;
                             if (this.IsAccumulative && (this.TextValue + "").indexOf('+') > -1) {
                                 var accString: string[] = this.TextValue.split('+');
                                 var accumulativeAmount: number = 0;
@@ -1188,15 +1212,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                     val = Number(this.TextValue);
                                 }
                                 if (this.AddCommasToNumbers) {
+                                    hasJoined = true;
                                     if (((this.TextValue + "").indexOf(',') > -1)) {
                                         if (this.firstDigit != ".") {
                                             var txtval = this.TextValue.replace(/,/g, "");
                                             val = Number(txtval);
                                         }
                                         else {
-                                            var txtval = this.TextValue.replace('.', "");
-                                            txtval = txtval.replace(',',".")
-                                            val = Number(txtval);
+                                          //  var txtval = this.TextValue.replace(/\./g, '');
+                                            //    txtval = txtval.replace(/,/g, ".");
+                                           //     val = Number(txtval);
+                                            
 
                                         }
                                     }
@@ -1204,6 +1230,23 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
                             }
 
+                            if ((this.AddCommasToNumbers && isNaN(Number(val)))) {
+                                if (((this.TextValue + "").indexOf(',') > -1) && this.firstDigit != ".") {
+                                    var txtval = this.TextValue.replace(/,/g, "");
+                                    val = Number(txtval);
+                                }
+
+                                else if (this.firstDigit == ".") {
+                                    var txtval = this.TextValue.replace(/\./g, '');
+                                    txtval = txtval.replace(/,/g, ".");
+                                    val = Number(txtval);
+                                }
+
+                                if (this.firstDigit == "." && val == null) {
+                                    var txtval = this.TextValue.replace(/,/g, ".");
+                                    val = Number(txtval);
+                                }
+                            }
 
                             if (isNaN(val) || !isSignOk) {
                                 this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
@@ -1232,7 +1275,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                     this.TextValueChanges(this.TextValue);
                                 }
                                 var isDot: boolean = false;
-                                if (this.firstDigit == "." && !ReadedText) {
+                                if (this.firstDigit == "." ) {
                                     this.TextValue = this.TextValue.replace(this.firstDigit, ",")
                                     isDot = true;
                                 }
@@ -1321,6 +1364,23 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                             //    }
                             //}
 
+                            if (this.AddCommasToNumbers && isNaN(Number(val))) {
+                                if (((this.TextValue + "").indexOf(',') > -1) && this.firstDigit != ".") {
+                                    var txtval = this.TextValue.replace(/,/g, "");
+                                    val = Number(txtval);
+                                }
+
+                                else if (this.firstDigit == ".") {
+                                    var txtval = this.TextValue.replace(/\./g, '');
+                                    txtval = txtval.replace(/,/g, ".");
+                                    val = Number(txtval);
+                                }
+
+                                if (this.firstDigit == "." && val == null) {
+                                    var txtval = this.TextValue.replace(/,/g, ".");
+                                    val = Number(txtval);
+                                }
+                            }
 
                             if (isNaN(val) || !isSignOk) {
                                 this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
@@ -1338,6 +1398,24 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                             break;
                         }
                     case "integertext": {
+                        if (this.AddCommasToNumbers && isNaN(Number(val))) {
+                            if (((this.TextValue + "").indexOf(',') > -1) && this.firstDigit != ".") {
+                                var txtval = this.TextValue.replace(/,/g, "");
+                                val = Number(txtval);
+                            }
+
+                            else if ( this.firstDigit == ".") {
+                                var txtval = this.TextValue.replace(/\./g, '');
+                                txtval = txtval.replace(/,/g, ".");
+                                val = Number(txtval);
+                            }
+
+                            if (this.firstDigit == "." && val == null) {
+                                var txtval = this.TextValue.replace(/,/g, ".");
+                                val = Number(txtval);
+                            }
+                        }
+
                         if (isNaN(Number(this.TextValue))) {
                             this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         }
@@ -1483,9 +1561,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
 
                     this.DataContext[this.ObjectFieldName] = customFieldClass;
+
                 }
+
                 else {
+
                     this.DataContext[this.ObjectFieldName] = (this.TextValue);
+
                 }
             }
             this.ValidateField();
@@ -1608,18 +1690,52 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                 default: {
                     var val: number;
+                    var RequireValidate = false;
+                    if (this.textValue != null) {
+                        if ((this.TextValue + "").indexOf(',') == -1) {
+                            val = Number(this.TextValue);
+                        }
+                        if (this.AddCommasToNumbers && isNaN(Number(val))) {
+                            if (((this.TextValue + "").indexOf(',') > -1) && this.firstDigit == ",") {
+                                var txtval = this.TextValue.replace(/,/g, "");
+                                val = Number(txtval);
+                            }
 
-                    if ((this.TextValue + "").indexOf(',') == -1) {
-                        val = Number(this.TextValue);
+                            else if (this.firstDigit == "'") {
+                                var txtval = this.TextValue.replace(/'/g, "");
+                                val = Number(txtval);
+                            }
+
+                            else if (this.firstDigit == "." && (this.TextValue + "").indexOf(',') > -1) {
+                                var txtval = this.TextValue.replace(/\./g, '');
+                                txtval = txtval.replace(/,/g, ".");
+                                val = Number(txtval);
+                            }
+
+                            if (this.firstDigit == "." && val == null) {
+                                var txtval = this.TextValue.replace(/,/g, ".");
+                                val = Number(txtval);
+                            }
+                        }
                     }
-                    if (this.AddCommasToNumbers) {
-                        if ((this.TextValue + "").indexOf(',') > -1) {
-                            var txtval = this.TextValue.replace(/,/g, "");
-                            val = Number(txtval);
+                    if (!isNaN(Number(val)) && this.textValue != null) {
+                        if (this.ObjectField && this.ObjectField.IsCustom) {
+                            var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                            if (customFieldClass != null && customFieldClass != undefined) {
+                                customFieldClass.Value = customFieldClass.SetFieldDataType(this.ObjectField, val);// this.TextValue;
+                            }
+                            else {
+                                console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
+                            }
+
+                            this.DataContext[this.ObjectFieldName] = customFieldClass;
+                        }
+                        else {
+                            this.DataContext[this.ObjectFieldName] = val;
                         }
                     }
 
-                    if (isNaN(Number(val))) {
+                    if (isNaN(Number(val)) && this.textValue != null) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         suppressValidation = true;
                     }
