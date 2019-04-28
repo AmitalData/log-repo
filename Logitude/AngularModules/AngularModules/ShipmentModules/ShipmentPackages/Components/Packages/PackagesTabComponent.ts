@@ -95,6 +95,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
                     this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    this.DirectionId = this.EntityPM.DirectionId;
 
                     this.OnResourcesReady();
                     //this.SetUIProperties();
