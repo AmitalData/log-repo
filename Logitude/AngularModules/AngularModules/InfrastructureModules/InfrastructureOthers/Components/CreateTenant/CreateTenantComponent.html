@@ -1,0 +1,117 @@
+﻿
+<style>
+    .FormFieldRow {
+        height: 32px;
+    }
+</style>
+
+<table>
+
+    <!--Main Area-->
+
+
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+
+    <tr style="height:100%;vertical-align:top;">
+        <td>
+            <table>
+        
+                <tr class="FormFieldRow" style="vertical-align:top">
+       
+                    <td style="width:100px;">  <LogLabel [Text]="'Email'" [DataContext]="DataContext"></LogLabel></td>
+                    <td style="width:230px"><LogTextBox style="width:230px"   [ObjectFieldName]="'Email'" [DataContext]="DataContext"></LogTextBox></td>
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow" style="vertical-align:top">
+
+                    <td style="width:100px;">  <LogLabel [Text]="'Contact Name'" [DataContext]="DataContext"></LogLabel></td>
+                    <td style="width:230px"><LogTextBox style="width:230px" [ObjectFieldName]="'ContactName'" [DataContext]="DataContext"></LogTextBox></td>
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow" style="vertical-align:top">
+
+                    <td style="width:100px;">  <LogLabel [Text]="'Company'" [DataContext]="DataContext"></LogLabel></td>
+                    <td style="width:230px"><LogTextBox style="width:230px" [ObjectFieldName]="'CompanyName'" [DataContext]="DataContext"></LogTextBox></td>
+                    <td><div></div></td>
+                </tr>
+
+
+                <tr class="FormFieldRow" style="vertical-align:top">
+
+                    <td style="width:100px;">  <LogLabel [Text]="'Phone'" [DataContext]="DataContext"></LogLabel></td>
+                    <td style="width:230px"><LogTextBox style="width:230px" [ObjectFieldName]="'Phone'" [DataContext]="DataContext"></LogTextBox></td>
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow" style="vertical-align:top">
+                    <td style="width:100px;">  <LogLabel [Text]="'Package'" [DataContext]="DataContext"></LogLabel></td>
+                    <td style="width:230px">
+                        <div style="width:230px;height:22px">
+
+                            <LogLov style="width:230px" [ObjectFieldName]="'PackageCode'" [SelectedValuePath]="'Code'" [DataContext]="DataContext" [DependencyFilter1Value]="'PK'" [LookUpTableName]="'Package'"></LogLov>
+
+                        </div>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+
+
+
+                <tr class="FormFieldRow" style="vertical-align:top">
+
+                    <td style="width:100px;">  <LogLabel [Text]="'Country'" [DataContext]="DataContext"></LogLabel></td>
+                    <td style="width:230px">
+                        <LogLov  style="width:230px" [ObjectFieldName]="'CountryId'"
+                                [SelectedValue]="CountryId"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Country'"
+                                (SelectedItemChanged)="Country = $event">
+                        </LogLov></td>
+                    <td><div></div></td>
+                </tr>
+
+
+
+
+
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+           
+        </td>
+    </tr>
+
+    <!--Close And Cancel Area-->
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table> 
