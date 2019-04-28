@@ -337,14 +337,11 @@
                         </a>
                     </div>
 
-                    <div *ngIf="ShowNewReleaseToolTip" style="height: 25px; width: 420px; position:absolute; left:0; right:0; top: 8px; margin: auto;">
-                        <div class="GreenInfo" style="margin: 5px;">
+                    <div *ngIf="ShowNewReleaseToolTip" style="height: 25px; width: 400px; position:absolute; left:0; right:0; top: 8px; margin: auto;">
+                        <!--*ngIf="LayoutDirection != 'rtl'"-->
+                        <div *ngIf="false" class="GreenInfo" style="margin: 5px; width:350px;">
                             <table>
                                 <tr>
-                                    <td style="width:40px;">
-                                        <img class="CenterCenter" height="25" src="./Images/Balloons.png" />
-                                    </td>
-
                                     <td class="Value" style="font-size:12px;">
                                         {{'General.O.ShowNewRelease' | TextCodeTranslationPipe}}
                                     </td>
@@ -359,6 +356,33 @@
                                         <span class="hyperlink" (click)="HideReleaseMessageClicked()">
                                             <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
                                         </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!--*ngIf="LayoutDirection == 'rtl'" -->
+                        <div class="GreenInfo" style="margin: 5px;">
+                            <table>
+                                <tr>
+                                    <td style="width: 18px; padding-left:4px;">
+                                        <span class="hyperlink" (click)="HideReleaseMessageClicked()">
+                                            <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
+                                        </span>
+                                    </td>
+
+                                    <td style="font-size:12px;">
+                                        <div>
+                                            <span class="hyperlink" (click)="ViewReleaseNotes()">{{'General.B.PressHere' | TextCodeTranslationPipe}}</span>
+                                        </div>
+                                    </td>
+
+                                    <td class="Value" style="font-size:12px; float:right;">
+                                        {{'General.O.ShowNewRelease' | TextCodeTranslationPipe}}
+                                    </td>
+
+                                    <td style="width:40px;">
+                                        <img class="CenterCenter" height="25" src="./Images/Balloons.png" />
                                     </td>
                                 </tr>
                             </table>
