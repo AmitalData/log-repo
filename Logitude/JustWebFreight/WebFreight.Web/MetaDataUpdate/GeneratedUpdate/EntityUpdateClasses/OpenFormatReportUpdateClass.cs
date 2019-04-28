@@ -1179,8 +1179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature OpenFormatReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPDL", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Download", NameTextCodeDefaultText = "Download", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature OpenFormatReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INIDL", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.DownloadINIfile", NameTextCodeDefaultText = "Download INI file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature OpenFormatReportFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PDFD", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.DownloadPDFFile", NameTextCodeDefaultText = "Download PDF File", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature OpenFormatReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PDFD", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.DownloadPDFFile", NameTextCodeDefaultText = "Download PDF File", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -1228,23 +1227,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   
 			   MenuButton OpenFormatReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "INIDL",
-						Index = 0, 
-						IsActive = true,
-						LabelTextCodeCode = "OpenFormatReport.B.DownloadINIfile",
-						LabelTextCodeDefaultText = "Download INI file",
-						Tenant = 0,
-						MenuButtonGroupId = OpenFormatReportMenuButtonGroup.Id,
-						ParentMenuButtonId = OpenFormatReportMenuButton0.Id,
-						ObjectTableId = OpenFormatReportObjectTable.Id,
-						MenuButtonType = "menuitem",
-						FeatureId=  OpenFormatReportFeature_MB01.Id,
-						Style = null,
-						LocalDefaultText = null,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
-			   MenuButton OpenFormatReportMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
 						EventCode = "PDFD",
 						Index = 0, 
 						IsActive = true,
@@ -1255,7 +1237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						ParentMenuButtonId = OpenFormatReportMenuButton0.Id,
 						ObjectTableId = OpenFormatReportObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  OpenFormatReportFeature_MB02.Id,
+						FeatureId=  OpenFormatReportFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = "PDF הורד קובץ ",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
