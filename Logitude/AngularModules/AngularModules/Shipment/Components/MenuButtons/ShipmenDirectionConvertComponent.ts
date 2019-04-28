@@ -47,12 +47,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
         super();
 
         this.SessionIndex = SessionLocator.Index;
-
-        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
-            this.CardDependencyProperty1 = "CS,AG";
-            this.CardDependencyProperty1IsList = true;
-        }
-
+        
         this.myCardListService = new CardListService();
         this.myAddressListService = new AddressListService();
         this.myPortListService = new PortListService();
@@ -69,6 +64,18 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
 
         this.IsOldInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
         this.IsCurrentInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
+
+        if (this.EntityPM.ShipmentLevelCode == "C") {
+            this.CardDependencyProperty1 = "AG";
+            this.CardDependencyProperty1IsList = false;
+        }
+
+        else {
+            if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+                this.CardDependencyProperty1 = "CS,AG";
+                this.CardDependencyProperty1IsList = true;
+            }
+        }
 
         this.SetLabels();
         this.SetUIProperties();
@@ -1482,8 +1489,10 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             }
         }
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.CustomerId) || AppTool.IsNullOrEmpty(this.EntityPM.ShipmentCustomerTypeCode)) {
-            errors.push(message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.CustomerId")));
+        if (this.EntityPM.ShipmentLevelCode != "C") {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.CustomerId) || AppTool.IsNullOrEmpty(this.EntityPM.ShipmentCustomerTypeCode)) {
+                errors.push(message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.CustomerId")));
+            }
         }
 
         this.ValidationErrorsList = errors;

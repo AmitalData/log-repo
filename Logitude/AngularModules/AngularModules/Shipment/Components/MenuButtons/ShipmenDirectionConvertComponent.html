@@ -382,11 +382,11 @@
                                 </tr>
                             </table>
 
-                            <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                            <div *ngIf="EntityPM.ShipmentLevelCode != 'C'" style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                         </div>
 
                         <!-- Customer -->
-                        <div>
+                        <div *ngIf="EntityPM.ShipmentLevelCode != 'C'">
                             <div class="SectionTitle" style="height:40px; line-height:40px;">
                                 <table>
                                     <tr>
