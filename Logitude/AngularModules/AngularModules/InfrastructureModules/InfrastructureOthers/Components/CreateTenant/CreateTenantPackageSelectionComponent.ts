@@ -117,7 +117,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
 
 }
 
-class SignUpInfoClass {
+export class SignUpInfoClass {
     public Email: string;
     public Company: string; 
     public Phone: string;

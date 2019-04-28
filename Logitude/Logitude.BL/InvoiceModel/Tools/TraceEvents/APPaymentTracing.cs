@@ -13,7 +13,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
         {
             string myEntityName = "APPayment";
 
-            ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+            ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
 
             if (isNewState)
             {
