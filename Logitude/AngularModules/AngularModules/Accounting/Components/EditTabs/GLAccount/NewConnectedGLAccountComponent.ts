@@ -114,7 +114,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
         }
           this.ValidationErrorsList = errors;
           if (this.ValidationErrorsList.length == 0) {
-
+              this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
               this.GLAccountPMService.get(this.entityPM.ControlAccountId).subscribe((response: ServiceResponse) => {
                   if (response) {
                       if (!response.HasError) {
@@ -157,9 +157,11 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                                   if (response) {
                                                       if (!response.HasError) 
                                                       {
+                                                            this.CurrentSession.StopBusyIndicator();
                                                           this.CurrentSession.CloseCurrentWindowEmit("ok");
                                                       }
                                                       else {
+                                                            this.CurrentSession.StopBusyIndicator();
                                                           this.ValidationErrorsList = response.ErrorsArray;
                                                       }
                                                   }
@@ -168,6 +170,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                            //  this.CurrentSession.CloseCurrentWindow();
                                           }
                                           else {
+                                                 this.CurrentSession.StopBusyIndicator();
                                               this.ValidationErrorsList = response.ErrorsArray;
                                           }
                                       }
@@ -182,7 +185,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                           }
 
                           else {
-                              
+                                 this.CurrentSession.StopBusyIndicator();
                               errors.push(TextCodeTranslator.Translate("GLAccounts.O.ControlAccountNotFound"));
                               this.ValidationErrorsList = errors;
                           }
