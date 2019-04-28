@@ -35,6 +35,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     private _TaxReportLineStatusListService: TaxReportLineStatusListService = new TaxReportLineStatusListService();
+    public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
 
     ReportLines: ObservableCollection;
     OriginalReportLines: ObservableCollection;
@@ -42,7 +43,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ShowErrorMsg: boolean = false;
     errorsCount: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private entityArgs: EntityArgs) {
+    constructor(private entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
 
 
@@ -100,11 +101,12 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                             this.isReady = true;
 
 
-                            this.GetStatuses();
+                            // this.GetStatuses();
                             // this.FillGrids();
 
-                            this.BuildColumns();
-                            this.ReloadData();
+                            // this.BuildColumns();
+                            this.ReloadScreen();
+                            // this.ReloadData();
                         });
                     });
                 });
@@ -114,7 +116,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     ReloadScreen(){
+        this.BuildColumns();
         this.GetStatuses();
+        this.CD.detectChanges();
         // this.FillGrids();
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
@@ -493,7 +497,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true,
             IsCustomTemplate: true,
         });
-
+        this.TaxReportColumnsReady.emit(this.columns);
         //this.CustomColumnsReady.emit(this.columns);
     }
 
