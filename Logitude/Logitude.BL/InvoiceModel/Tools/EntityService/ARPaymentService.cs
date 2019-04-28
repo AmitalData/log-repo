@@ -75,7 +75,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.changedList = new List<ARPaymentInvoicePM>();
-            this.loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(AuthenticationUtil.ResolveUserId(tenant), tenant, true);
+
+            loggedContact = GetLoggedContactPM(tenant);
+
             this.GetAccountingSystem();
         }
 
@@ -1440,7 +1442,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
                                     foreach (var item in aRPaymentCheques)
                                     {
-                                        //item.ChangeSetOp = ChangeSetOperation.Update;
+                                        item.ChangeSetOp = ChangeSetOperation.Update;
                                         item.StatusCode = "5";
                                         paymentUpdate.Update(item);
                                         CreateVoidedARPaymentEvent("Returned To Customer - Cheque Number: " + item.ChequeNumber);
