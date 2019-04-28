@@ -569,6 +569,7 @@
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman1] UpdateARInvoicesIsPrinted.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman2] UpdateShipmentARInvoices.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 15 [Khalid] delete Wrong QueryCode.sql" />
+    <Content Include="Main Branch\2019\04 - 2019\Day 21 [Rabaia]Trace Event Indexes.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 21 [Khalid] Fill ComputedShipmentFieldBackwards.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 15 [Khalid] Set Default Value for BluesnapIntraContract.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 07 [Rabaia] DeleteTaskSchedulerHistories SP.sql" />
