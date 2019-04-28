@@ -183,14 +183,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             var errors = "";
             var tenant = entityPM.Tenant;
-            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+            bool useLocal = true;
+            ContactPM user = GetLoggedContact(tenant);
+            useLocal = user == null ? true : (!user.DontShowLocal);
+
+            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, useLocal);
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
-                bool useLocal = true;
-                var user = GetLoggedContact(tenant);
-                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+
 
 
                 if (entityPM.PaymentMethodCode == "BT" && entityPM.ValueDate != null && entityPM.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant))

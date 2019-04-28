@@ -163,18 +163,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(taxReportPM.Id, taxReportPM.Tenant).ToList();
 
-            bool hasErrors = lines.Any(d => d.StatusCode != "6"); // 6- Ready for transmit
-            if (hasErrors && taxReportPM.StatusCode != VatReportStatusValues.Error)
+            if (taxReportPM.StatusCode != VatReportStatusValues.Cancelled)
             {
-                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                taxReportPM.StatusCode = VatReportStatusValues.Error;
-                taxReportUpdateService.Update(taxReportPM, true);
-            }
-            else if(!hasErrors && taxReportPM.StatusCode == VatReportStatusValues.Error)
-            {
-                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                taxReportPM.StatusCode = VatReportStatusValues.Draft;
-                taxReportUpdateService.Update(taxReportPM, true);
+                bool hasErrors = lines.Any(d => d.StatusCode != "6"); // 6- Ready for transmit
+                if (hasErrors && taxReportPM.StatusCode != VatReportStatusValues.Error)
+                {
+                    taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                    taxReportPM.StatusCode = VatReportStatusValues.Error;
+                    taxReportUpdateService.Update(taxReportPM, true);
+                }
+                else if (!hasErrors && taxReportPM.StatusCode == VatReportStatusValues.Error)
+                {
+                    taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                    taxReportPM.StatusCode = VatReportStatusValues.Draft;
+                    taxReportUpdateService.Update(taxReportPM, true);
+                }
             }
 
         }
