@@ -341,6 +341,10 @@
     <Compile Include="Migrations\201904240914504_AddIsBlockingLoginFlag.Designer.cs">
       <DependentUpon>201904240914504_AddIsBlockingLoginFlag.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904241107384_AddIsBlockingLogin.cs" />
+    <Compile Include="Migrations\201904241107384_AddIsBlockingLogin.Designer.cs">
+      <DependentUpon>201904241107384_AddIsBlockingLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -452,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904240914504_AddIsBlockingLoginFlag.resx">
       <DependentUpon>201904240914504_AddIsBlockingLoginFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904241107384_AddIsBlockingLogin.resx">
+      <DependentUpon>201904241107384_AddIsBlockingLogin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
