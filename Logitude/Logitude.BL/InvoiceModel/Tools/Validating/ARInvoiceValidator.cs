@@ -60,7 +60,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 bool isInvoiceNumberExists = entityRepository.IsInvoiceNumberExists(entityPM.Id, entityPM.InvoiceNumber, entityPM.Tenant);
                 if (isInvoiceNumberExists)
                 {
-                    string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceNumberAlreadyAdded", entityPM.Tenant);
+                    string msg = TranslateTextsClass.Translate("Accounting.General.B.InvoiceNumber", entityPM.Tenant) + " " + entityPM.InvoiceNumber + " " + TranslateTextsClass.Translate("Accounting.General.B.AlreadyExist", entityPM.Tenant);
                     throw new ApplicationException(msg);
                 }
             }
