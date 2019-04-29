@@ -514,7 +514,6 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
-
         if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";
@@ -1088,6 +1087,20 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent');
                     break;
                 }
+
+                case "CRTE": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = "Create Tenant";
+                    logitudeWindow.Height = 500;
+                    logitudeWindow.Width = 750;
+                    logitudeWindow.ShowCloseButton = false;
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantComponent');
+                    break;
+                }
+
+
+
+
                 case "MASC": {
                     this._entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
 
@@ -1421,7 +1434,7 @@ class MaintenanceMenuItem {
             var r = "";
         }
 
-        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG" || this.Code == "MASC") {
+        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG" || this.Code == "MASC" || this.Code == "CRTE") {
             myResult = TextCodeTranslator.TranslateTable(this.item.TextCode);
         }
 
