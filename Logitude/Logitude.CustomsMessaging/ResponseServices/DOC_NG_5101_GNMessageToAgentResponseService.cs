@@ -28,6 +28,8 @@ using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.Def.Messaging.Customs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -189,12 +191,50 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     notificationDescription = "ממתין לבטחון, יסמ ולבקרת מסמכים " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     notificationStatusCode = "VCT";
                     break;
+                
                 default:
                     notificationDefinitionCode = "5101N";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "הודעה לסוכן בגין " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     notificationStatusCode = "VAN";
                     break;
+            }
+
+            if (customResponse.MessageToAgent.msgCode == 29 || customResponse.MessageToAgent.msgCode == 30 || customResponse.MessageToAgent.msgCode == 31)
+            {
+                try
+                {
+                    int tenant = requestParams.Tenant;
+                    string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                    string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(id))
+                    {
+                        ContactRepository contactrep = new ContactRepository(tenant);
+                        var contact = contactrep.GetSingleContact(id, tenant);
+                        email = contact.Email;
+
+                    }
+                    InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "SpecialReplyToCustoms", tenant, email);
+
+                    switch (customResponse.MessageToAgent.msgCode)
+                    {
+                        case 29:
+                            notificationDefinitionCode = "5101S";
+                            assigneToNotificationTypeCode = "I";
+                            notificationDescription = "נוצרה בקשת אחסנה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            break;
+                        default:
+                            notificationDefinitionCode = "5101N";
+                            assigneToNotificationTypeCode = "I";
+                            notificationDescription = "הודעה לסוכן בגין " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            notificationStatusCode = "VAN";
+                            break;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Check for SpecialReplyToCustoms Feature Failed, Notification will not be built, Message: " + ex.Message);
+                }
             }
 
             this.MyRequestSheetParam = new RequestSheetParam();
