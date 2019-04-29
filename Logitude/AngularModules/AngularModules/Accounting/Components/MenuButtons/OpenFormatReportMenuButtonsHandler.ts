@@ -65,17 +65,17 @@ export class OpenFormatReportMenuButtonsHandler {
 
                                 break;
                             }
-                        case "INIDL":
-                            {
-                                if (this.EntityPM.StatusTypeCode != "3") {
-                                    button.IsDisabled = true;
-                                }
-                                else {
-                                    button.IsDisabled = false;
-                                }
+                        //case "INIDL":
+                        //    {
+                        //        if (this.EntityPM.StatusTypeCode != "3") {
+                        //            button.IsDisabled = true;
+                        //        }
+                        //        else {
+                        //            button.IsDisabled = false;
+                        //        }
 
-                                break;
-                            }
+                        //        break;
+                        //    }
 
                         case "PDFD":
                             {
