@@ -909,7 +909,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.UIProperties.SetEnabled("Bank", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("BankBranch", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("Account", this.ObjectTableName, false);
-                this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, true);
+                this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, !this.BankAccountId);
             }else{
                 this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, false);
             }
@@ -1168,6 +1168,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         }
                     }
                 });
+
+                this.SetUIProperties_FullAccounting()
             }
         }
     }
