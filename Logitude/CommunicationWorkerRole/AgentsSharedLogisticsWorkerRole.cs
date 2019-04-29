@@ -191,11 +191,11 @@ namespace CommunicationWorkerRole
                                                     AgentSharedManifestService service = new AgentSharedManifestService(agentContext, manifestSL.DestinationAgentTenant);
                                                     AgentSharedManifestPM agentSharedPM = new AgentSharedManifestPM()
                                                     {
-                                               
+
                                                         CreateDate = TenantServerConfigration.GetCurrentDateTime(manifestSL.DestinationAgentTenant),
                                                         Tenant = manifestSL.DestinationAgentTenant,
                                                         UpdateDate = TenantServerConfigration.GetCurrentDateTime(manifestSL.DestinationAgentTenant),
-                                                        UpdatedByUserId = systemContact.Id,
+                                                        UpdatedByUserId = systemContact!=null ? systemContact.Id:null,
                                                         AgentReference = manifestSL.ShipmentNumber,
                                                         Master = manifestSL.TransportModeId == "A" ? manifestSL.LongMaster : manifestSL.MasterNumber,
                                                         ManifestXML = manifestXML,
@@ -203,13 +203,13 @@ namespace CommunicationWorkerRole
                                                         StatusCode = "WAIT",
                                                         TransportModeId = manifestSL.TransportModeId,
                                                         DirectionId = manifestSL.DirectionId,
-                                                        FromPortId = fromPort.Id,
-                                                        ToPortId = toPort.Id,
+                                                        FromPortId = fromPort!=null ? fromPort.Id :null,
+                                                        ToPortId = toPort!=null ? toPort.Id:null,
                                                         GrossWeight = manifestSL.GrossWeight,
                                                         ChargeableWeight = manifestSL.ChargeableWeight,
                                                         TEU = manifestSL.TEU,
                                                         PackagesQuantity = manifestSL.PackagesQuantity,
-                                                        AgentId = destinationAgent.Id,
+                                                        AgentId = destinationAgent != null ? destinationAgent.Id : null,
                                                         ShipmentLevelCode = manifestSL.ShipmentLevelCode,
                                                     };
 
