@@ -31,7 +31,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
-        this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
+        this.WeightValueFilterItems.addAdditionalFilter("PaymentMethodCode", "CC,CA,NC,PO,PP", null, null, "InListExact", true, false, false, "string", false, true);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
         this.CarrierDependencyProperty1 = "TR";
         this.Listen();
