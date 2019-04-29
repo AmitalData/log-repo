@@ -37,6 +37,7 @@ using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Accounting.Data.Repositories;
+using Simplog.Data.ShipmentsModel;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -1930,7 +1931,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             APInvoiceTransferStatus t_status = aPInvoiceTransferStatusRepository.GetSingleAPInvoiceTransferStatus(invoice.TransferStatusCode);
             entityPM.TransferStatusName = t_status.Name;
 
-
             if (isNewEntity)
             {
                 APInvoiceEntityQuery apInvoiceEntityQuery = new APInvoiceEntityQuery(invoiceEntityRepository);
@@ -1948,6 +1948,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     entityPM.JournalNumber = journal.JournalNumber;
                 }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.MainEntityId))
+            {
+                IShipmentsContext iShipmentsContext = ShipmentsContext.GetContext(tenant);
+                entityPM.ShipmentConcurrencyGUID = (from d in iShipmentsContext.Shipments where d.Id == entityPM.MainEntityId select d.ConcurrencyGUID).FirstOrDefault();
+                entityPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
             }
         }
 
