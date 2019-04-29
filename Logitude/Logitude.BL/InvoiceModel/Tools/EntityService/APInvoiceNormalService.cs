@@ -1806,9 +1806,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         if (payment.OpenAmount == 0)
                         {
+                            payment.IsClosed = true;
+
                             if (payment.StatusCode == "AD")
                             {
-                                payment.IsClosed = true;
                                 payment.StatusCode = "CL";
                             }
 
@@ -1816,9 +1817,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         else
                         {
+                            payment.IsClosed = false;
+
                             if (payment.StatusCode != "DR")
                             {
-                                payment.IsClosed = false;
                                 payment.StatusCode = "AD";
                             }
                         }
