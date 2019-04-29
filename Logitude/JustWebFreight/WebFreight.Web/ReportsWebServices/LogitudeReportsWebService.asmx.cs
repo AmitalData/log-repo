@@ -2170,6 +2170,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_EntityStatus = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EntityStatus").FirstOrDefault();
             QueryFilterItem filterItem_SupplierId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SupplierId").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeOperationalyClose = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeOperationalClose").FirstOrDefault();
 
             //ToDate
             DateTime? toDate = null;
@@ -2271,6 +2272,17 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+
+            bool IncludeOperationallyClosed = false;
+
+            if (filterItem_IncludeOperationalyClose != null)
+            {
+                if (filterItem_IncludeOperationalyClose.FieldValue != null)
+                {
+                    IncludeOperationallyClosed = (bool)filterItem_IncludeOperationalyClose.FieldValue;
+                }
+            }
+
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
@@ -2290,16 +2302,35 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem item = new QueryFilterItem();
             item.DisplayInList = true;
             item.FieldDataType = "Date";
-            item.FieldName = "Field2";
+            item.FieldName = "Field4";
+
             item.FieldValue = FromDate;
-            item.FieldValue2 = toDate;
+            item.FieldValue2 = toDate;            
             item.IsCustomField = true;
-            if (toDate == null)
+            if (toDate == null && FromDate != null)
             {
                 item.Operator = "GreaterThanOrEqual";
             }
+
+            else if (FromDate == null && toDate != null)
+            {
+                item.FieldValue = toDate;
+                item.FieldValue2 = null;
+                item.Operator = "LessThanOrEqual";
+            }
+
+            else if (FromDate == null && toDate == null)
+            {
+                item.Operator = "IsNotNull";
+            }
+
             else
+            {
                 item.Operator = "Between";
+
+            }
+
+
             queryOperations2.QueryFilterItems.Add(item);
 
             shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations2, shipments);
@@ -2309,6 +2340,13 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 shipments = shipments.Where(d => d.BranchId == branchId);
             }
+
+
+            if (!IncludeOperationallyClosed)
+            {
+                shipments = shipments.Where(d => d.IsOperationalClosed == false);
+            }
+
 
 
             if (!string.IsNullOrEmpty(CustomerId))
