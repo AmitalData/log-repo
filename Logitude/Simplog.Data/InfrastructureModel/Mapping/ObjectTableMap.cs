@@ -104,6 +104,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.SplitComponentPath).HasColumnName("SplitComponentPath").HasMaxLength(250);
             this.Property(t => t.DisableSearchBox).HasColumnName("DisableSearchBox");
             this.Property(t => t.AllowedInQueues).HasColumnName("AllowedInQueues");
+            this.Property(t => t.IsTabsHidden).HasColumnName("IsTabsHidden");
+
             // Relationships
             this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);
             this.HasOptional(t => t.MainTip).WithMany().HasForeignKey(d => d.MainTipCode);

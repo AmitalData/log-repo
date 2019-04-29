@@ -56,6 +56,7 @@
       <ScreenField Column="3" Row="0" ObjectFieldName="&quot;TariffNumber&quot;" ScreenName="TariffHeaderScreen" />
     </ScreenFields>
   </Screen>
+  <Tab TabName="&quot;Details&quot;" TabLocalName="&quot;Details&quot;" ObjectTableName="&quot;Tariff&quot;" Code="&quot;TRDT&quot;" ControlPath="&quot;./TariffModule/Components/EditTabs/Tariff/TariffDetailsTabComponent&quot;" TextCode="&quot;Tariff.TH.Details&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./TariffModule/Components/EditTabs/Tariff/TariffDetailsTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
   <Tab TabName="&quot;General&quot;" TabLocalName="&quot;General&quot;" ObjectTableName="&quot;Tariff&quot;" Code="&quot;TFGT&quot;" ControlPath="&quot;./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent&quot;" TextCode="&quot;Tariff.TH.General&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
   <Tab TabName="&quot;Events&quot;" TabLocalName="&quot;Events&quot;" ObjectTableName="&quot;Tariff&quot;" Code="&quot;EVTM&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TextCode="&quot;Tariff.TH.Events&quot;" IsPackagable="true" IndexOrder="0" IsSpellChecked="false" HasGeneralFeature="false" />
   <EventTypes>

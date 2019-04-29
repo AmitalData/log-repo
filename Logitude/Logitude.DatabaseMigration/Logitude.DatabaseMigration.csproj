@@ -949,6 +949,10 @@
     <Compile Include="Migrations\201904282045262_DeleteDownloadINIFileMenuButtonMigration.Designer.cs">
       <DependentUpon>201904282045262_DeleteDownloadINIFileMenuButtonMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904291629073_AddIsTabsHiddenField.cs" />
+    <Compile Include="Migrations\201904291629073_AddIsTabsHiddenField.Designer.cs">
+      <DependentUpon>201904291629073_AddIsTabsHiddenField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1602,6 +1606,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904282045262_DeleteDownloadINIFileMenuButtonMigration.resx">
       <DependentUpon>201904282045262_DeleteDownloadINIFileMenuButtonMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291629073_AddIsTabsHiddenField.resx">
+      <DependentUpon>201904291629073_AddIsTabsHiddenField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
