@@ -31,6 +31,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Data.Entity.Core;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -43,7 +44,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 ValidateConcurrencyGUID(entityPM, entityPOCO);
             }
 
-            string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
+            ContactPM loggedUser = GetLoggedContactPM(entityPM.Tenant);
+            bool useLocal = (bool)loggedUser?.DontShowLocal;
+
+            string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant, useLocal);
 
             ValidateRequiredFields(entityPM, msgRequired);
             ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
@@ -60,26 +64,26 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 bool isInvoiceNumberExists = entityRepository.IsInvoiceNumberExists(entityPM.Id, entityPM.InvoiceNumber, entityPM.Tenant);
                 if (isInvoiceNumberExists)
                 {
-                    string msg = TranslateTextsClass.Translate("Accounting.General.B.InvoiceNumber", entityPM.Tenant) + " " + entityPM.InvoiceNumber + " " + TranslateTextsClass.Translate("Accounting.General.B.AlreadyExist", entityPM.Tenant);
+                    string msg = TranslateTextsClass.Translate("Accounting.General.B.InvoiceNumber", entityPM.Tenant, useLocal) + " " + entityPM.InvoiceNumber + " " + TranslateTextsClass.Translate("Accounting.General.B.AlreadyExist", entityPM.Tenant, useLocal);
                     throw new ApplicationException(msg);
                 }
             }
 
             if (entityPM.IsInvoiceNumberManuallySet && entityPM.InvoiceNumber == null)
             {
-                string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldSetInvoiceNumber", entityPM.Tenant);
+                string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldSetInvoiceNumber", entityPM.Tenant, useLocal);
                 throw new ApplicationException(msg);
             }
 
             if (entityPM.IsInvoiceNumberFromStock && entityPM.InvoiceNumber == null)
             {
-                string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldSetInvoiceNumber", entityPM.Tenant);
+                string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldSetInvoiceNumber", entityPM.Tenant, useLocal);
                 throw new ApplicationException(msg);
             }
 
             if (entityPM.InvoiceDate > TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant))
             {
-                string msg = TranslateTextsClass.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate", entityPM.Tenant);
+                string msg = TranslateTextsClass.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate", entityPM.Tenant, useLocal);
                 throw new ApplicationException(msg);
             }
 
@@ -91,7 +95,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (string.IsNullOrEmpty(entityPM.VatNumber))
                         {
-                            string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.VatNumber", entityPM.Tenant);
+                            string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.VatNumber", entityPM.Tenant, useLocal);
                             throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
                         }
                     }
@@ -103,7 +107,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (entityPM.StatusCode == null || entityPM.StatusCode == "DR")
                         {
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.ManualInvoiceNumberNotAllowed", entityPM.Tenant);
+                            string msg = TranslateTextsClass.Translate("ARInvoice.M.ManualInvoiceNumberNotAllowed", entityPM.Tenant, useLocal);
                             throw new ApplicationException(msg);
                         }
                     }
@@ -134,7 +138,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     if (entityPM.ConstituentInvoices.Count == 0)
                     {
-                        string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant);
+                        string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant, useLocal);
                         throw new ApplicationException(msg);
                     }
 
@@ -179,7 +183,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 if (activeLines.Count == 0)
                 {
-                    string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant);
+                    string msg = TranslateTextsClass.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant, useLocal);
                     throw new ApplicationException(msg);
                 }
 
@@ -189,7 +193,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (item.VatTypeId == null)
                         {
-                            string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatTypeId", entityPM.Tenant);
+                            string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatTypeId", entityPM.Tenant, useLocal);
                             throw new ApplicationException(msgRequired.Replace("%FieldName", field));
                         }
 
@@ -202,7 +206,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                 {
                                     if (!vattType.IsMultiPercentage)
                                     {
-                                        string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatPercentage", entityPM.Tenant);
+                                        string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatPercentage", entityPM.Tenant, useLocal);
                                         throw new ApplicationException(msgRequired.Replace("%FieldName", field));
                                     }
                                 }
@@ -219,7 +223,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         {
                             Currency curr = CurrencyRepository.GetSingleCurrency(ob, entityPM.Tenant, true);
 
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates", entityPM.Tenant);
+                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates", entityPM.Tenant, useLocal);
                             msg = msg.Replace("%Currency", curr.Code);
                             throw new ApplicationException(msg);
                         }
@@ -1031,6 +1035,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
             return loggedContact;
+        }
+        public static ContactPM GetLoggedContactPM(int tenant)
+        {
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
         private static void ValidateOnVoid(ARInvoicePM entityPM)
         {
