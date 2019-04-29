@@ -4935,40 +4935,6 @@ namespace WebFreight.Web.MetaDataUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
 
-            #region BluesnapContract
-            BluesnapContractObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
-            {
-                ObjectTableName = "BluesnapContract",
-                DBTableName = "BluesnapContracts",
-                ObjectTableSingular = "Bluesnap Contract",
-                ObjectTablePlural = "Bluesnap Contracts",
-                IsNewWizard = false,
-                LookUp1 = "Name",
-                KeyPropertyPath = "Code",
-                AutoCompleteSearchWindow = false,
-                IsClosed = false,
-                CacheOnClient = true,
-                EditableFromAutoCompleteWindow = false,
-                HasCounter = false,
-                EnableAddFromLOV = true,
-                IsRestrictable = false,
-                IsMain = true,
-                IsAutoComplete = true,
-                EnableEditFromLOV = true,
-                SortingByObjectField = "Name",
-                InActive = false,
-                IsSaveButtonVisible = true,
-                IsComposition = false,
-                EnableSecurity = true,
-                AllowCustomFields = false,
-                HasDynamicHeader = false,
-                ObjectTableTypeCode = "MD",
-                MaxNumberOfCustomFields = 0,
-                DefaultText = "Bluesnap Contract",
-                ClientModuleName = "Infrastructure",
-            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
-            #endregion
-
             #region AWBMessagesCCSType
             AWBMessagesCCSTypeObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
