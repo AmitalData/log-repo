@@ -21,12 +21,20 @@ namespace Logitude.Customs.BL.Messaging.Maman
             try
             {
 
-                List<string> listStorageDefault = GetlistStorageDefault(drityEntityPM);
-
-                if (!drityEntityPM.IsCourierDeclaration || drityEntityPM.Consignments == null && drityEntityPM.ChangeSetOp == ChangeSetOperation.Delete)
+                if (!drityEntityPM.IsCourierDeclaration)
                 {
                     return;
                 }
+                if (drityEntityPM.Consignments == null)
+                {
+                    return;
+                }
+                if (drityEntityPM.ChangeSetOp == ChangeSetOperation.Delete)
+                {
+                    return;
+                }
+                List<string> listStorageDefault = GetlistStorageDefault(drityEntityPM);
+                
                 if (listStorageDefault.Count == 0)
                 {
                     return;
