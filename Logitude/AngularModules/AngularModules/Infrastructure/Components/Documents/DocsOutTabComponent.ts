@@ -1138,7 +1138,10 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/PrintDocumentComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CheckHasDocuments();
-            //  this.InitializeDocsOutControl();
+            if (this.CurrentSession.CurrentEditComponent) {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+            
         });
 
 
