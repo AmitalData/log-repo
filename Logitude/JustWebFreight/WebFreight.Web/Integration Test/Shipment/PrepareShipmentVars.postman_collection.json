@@ -1,0 +1,4783 @@
+{
+	"info": {
+		"_postman_id": "28ba22a2-dde8-4ffc-a738-1b2d17516c03",
+		"name": "PrepareShipmentVars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AuthSuccessfull",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
+						"exec": [
+							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"   ",
+							"    var idvalue1 = (pm.response.json().Token);",
+							"    var idvalue2 = (pm.response.json().Tenant);",
+							"    var idvalue3 = (pm.response.json().UserId);",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    var id3exist = idvalue3 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.expect(id3exist);",
+							"    pm.globals.set(\"Token\",idvalue1);",
+							"    pm.globals.set(\"Tenant\",idvalue2);",
+							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
+							"    ",
+							"    ",
+							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"ahmadb@fnarsoft.com\",\"Password\":\"ahmed13!A15\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1}\n"
+				},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLoggedUserId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetLoggedUserId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    ",
+							"    var idvalue1 = (pm.response.json().Result.filter(a => a.Email == 'ahmadb@fnarsoft.com')[0].DepartmentId);",
+							"    var idvalue2 = (pm.response.json().Result.filter(a => a.Email == 'ahmadb@fnarsoft.com')[0].BranchId);",
+							"    ",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    ",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    ",
+							"    pm.environment.set(\"DepartmentId\",idvalue1);",
+							"    pm.environment.set(\"BranchId\",idvalue2);",
+							"  ",
+							" if (id1exist)  {",
+							"    postman.setNextRequest(\"GetIncotermIdCIF\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/userviews/getbyfilters?Filter1Name=Email&Filter1Operator=equals&Filter1Value=ahmadb@fnarsoft.com&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"userviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Email"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "ahmadb@fnarsoft.com"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetIncotermIdCIF",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetIncotermIdCIF\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'CIF')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"IncotermIdCIF\",idvalue);",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetMeasurementIdGRWT\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/incotermviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=CIF&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"incotermviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "CIF"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMeasurementIdGRWT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetMeasurementIdGRWT\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'GRWT')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"MeasurementIdGRWT\",idvalue);",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetChargeTypeIdAFT\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/measurementviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=GRWT&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"measurementviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "GRWT"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChargeTypeIdAFT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetChargeTypeIdAFT\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue1 = (pm.response.json().Result.filter(a => a.Code == 'AFT')[0].Id);",
+							"    var idvalue2 = (pm.response.json().Result.filter(a => a.Code == 'AFT')[0].IATACodeId);",
+							"    var idvalue3 = (pm.response.json().Result.filter(a => a.Code == 'AFT')[0].VatTypeId);",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    var id3exist = idvalue3 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.expect(id3exist);",
+							"    pm.environment.set(\"ChargeTypeIdAFT\",idvalue1);",
+							"    pm.environment.set(\"ChargeTypeIATACodeId\",idvalue2);",
+							"    pm.environment.set(\"ChargeTypeVatTypeId\",idvalue3);",
+							"  ",
+							" if (id1exist & id2exist & id3exist)  {",
+							"    postman.setNextRequest(\"GetPortIdLHR\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/chargestypeviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AFT&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"chargestypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "AFT"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdLHR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdLHR\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     ",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdLHR\",idvalue);",
+							"     //console.log(jsonData.Result[0].Code);",
+							"   ",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdJFK\"); ",
+							"    ",
+							"}});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=LHR&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "LHR"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdLHRFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdLHRFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'Heathrow Apt/London')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdLHR\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdLHRToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=LHR&PageSize=13",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "LHR"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdLHRToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdLHRToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdLHR\",idvalue);",
+							"",
+							"   ",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdJFK\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"InActive\": false,\n  \"Notes\": null,\n  \"CountryId\": null,\n  \"IsAir\": false,\n  \"IsOcean\": true,\n  \"IsInland\": true,\n  \"AddedManually\": false,\n  \"StateId\": null,\n  \"CountryEC\": false,\n  \"InUse\": false,\n  \"RecentlyAdded\": null,\n  \"StateName\": null\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/CommonDomain/GetPortCopyToCurrentTenant?entityId={{PortIdLHR}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"CommonDomain",
+						"GetPortCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{PortIdLHR}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdJFK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdJFK\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     ",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdJFK\",idvalue);",
+							"     //console.log(jsonData.Result[0].Code);",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdSOU\"); ",
+							"    ",
+							"}});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=JFK&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "JFK"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdJFKFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdJFKFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'Beauvais')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdJFK\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdJFKToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=JFK&PageSize=13",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "JFK"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdJFKToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdJFKToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdJFK\",idvalue);",
+							"",
+							"   ",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdSOU\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"InActive\": false,\n  \"Notes\": null,\n  \"CountryId\": null,\n  \"IsAir\": false,\n  \"IsOcean\": true,\n  \"IsInland\": true,\n  \"AddedManually\": false,\n  \"StateId\": null,\n  \"CountryEC\": false,\n  \"InUse\": false,\n  \"RecentlyAdded\": null,\n  \"StateName\": null\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/CommonDomain/GetPortCopyToCurrentTenant?entityId={{PortIdJFK}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"CommonDomain",
+						"GetPortCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{PortIdJFK}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdSOU",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdSOU\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     ",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdSOU\",idvalue);",
+							"     //console.log(jsonData.Result[0].Code);",
+							"   ",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdNYC\"); ",
+							"    ",
+							"}});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=SOU&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "SOU"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdSOUFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdSOUFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'Southampton')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdSOU\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"CopyPortIdSOUToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=SOU&PageSize=13",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "SOU"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CopyPortIdSOUToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CopyPortIdSOUToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdSOU\",idvalue);",
+							"",
+							"   ",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdNYC\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"InActive\": false,\n  \"Notes\": null,\n  \"CountryId\": null,\n  \"IsAir\": false,\n  \"IsOcean\": true,\n  \"IsInland\": true,\n  \"AddedManually\": false,\n  \"StateId\": null,\n  \"CountryEC\": false,\n  \"InUse\": false,\n  \"RecentlyAdded\": null,\n  \"StateName\": null\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/CommonDomain/GetPortCopyToCurrentTenant?entityId={{PortIdSOU}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"CommonDomain",
+						"GetPortCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{PortIdSOU}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdNYC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdNYC\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     ",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdNYC\",idvalue);",
+							"     //console.log(jsonData.Result[0].Code);",
+							"   ",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdLON\"); ",
+							"    ",
+							"}});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=NYC&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "NYC"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdNYCFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdNYCFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'New York')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdNYC\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"CopyPortIdNYCToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=NYC&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "NYC"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CopyPortIdNYCToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CopyPortIdNYCToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdNYC\",idvalue);",
+							"",
+							"   ",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdLON\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"InActive\": false,\n  \"Notes\": null,\n  \"CountryId\": null,\n  \"IsAir\": false,\n  \"IsOcean\": true,\n  \"IsInland\": true,\n  \"AddedManually\": false,\n  \"StateId\": null,\n  \"CountryEC\": false,\n  \"InUse\": false,\n  \"RecentlyAdded\": null,\n  \"StateName\": null\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/CommonDomain/GetPortCopyToCurrentTenant?entityId={{PortIdNYC}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"CommonDomain",
+						"GetPortCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{PortIdNYC}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdLON",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdLON\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     ",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdLON\",idvalue);",
+							"     //console.log(jsonData.Result[0].Code);",
+							"   ",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdMAN\"); ",
+							"    ",
+							"}});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=LON&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "LON"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdLONFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdLONFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'London')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdLON\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"CopyPortIdLONToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=LON&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "LON"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CopyPortIdLONToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CopyPortIdLONToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdLON\",idvalue);",
+							"",
+							"   ",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdMAN\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"InActive\": false,\n  \"Notes\": null,\n  \"CountryId\": null,\n  \"IsAir\": false,\n  \"IsOcean\": true,\n  \"IsInland\": true,\n  \"AddedManually\": false,\n  \"StateId\": null,\n  \"CountryEC\": false,\n  \"InUse\": false,\n  \"RecentlyAdded\": null,\n  \"StateName\": null\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/CommonDomain/GetPortCopyToCurrentTenant?entityId={{PortIdLON}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"CommonDomain",
+						"GetPortCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{PortIdLON}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdMAN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdMAN\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     ",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdMAN\",idvalue);",
+							"     //console.log(jsonData.Result[0].Code);",
+							"   ",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetAgentIdTest\"); ",
+							"    ",
+							"}});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=MAN&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "MAN"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdMANFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdMANFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'Manchester')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdMAN\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"CopyPortIdMANToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=MAN&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PortViews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "MAN"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CopyPortIdMANToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CopyPortIdMANToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdMAN\",idvalue);",
+							"",
+							"   ",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetAgentIdTest\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"InActive\": false,\n  \"Notes\": null,\n  \"CountryId\": null,\n  \"IsAir\": false,\n  \"IsOcean\": true,\n  \"IsInland\": true,\n  \"AddedManually\": false,\n  \"StateId\": null,\n  \"CountryEC\": false,\n  \"InUse\": false,\n  \"RecentlyAdded\": null,\n  \"StateName\": null\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/CommonDomain/GetPortCopyToCurrentTenant?entityId={{PortIdMAN}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"CommonDomain",
+						"GetPortCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{PortIdMAN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAgentIdTest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetAgentIdTest\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.VatNumber == 'TestAgentUnique')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"AgentIdTest\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetShipperIdTestShipperExport1\"); ",
+							"    ",
+							"}});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ac35ef5e-7bdd-42b5-bdef-2711cd74b5cd",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/agentviews/getbyfilters?Filter1Name=VatNumber&Filter1Operator=equals&Filter1Value=TestAgentUnique&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"agentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "VatNumber"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TestAgentUnique"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateAgentTest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CreateAgentTest\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue = (pm.response.json().Agent.Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"AgentIdTest\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetShipperIdTestShipperExport1\"); ",
+							"    ",
+							"}});",
+							"     "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ac35ef5e-7bdd-42b5-bdef-2711cd74b5cd",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"AG\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"London\",\n    \"StateId\": null,\n    \"ZipCode\": \"+207\",\n    \"FaxNumber\": \"002071231571\",\n    \"PhoneNumber\": \"0598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"King Edward St\",\n    \"Address2\": \"EC1A 7AJ\",\n    \"Name\": \"Test Agent\",\n    \"CountryId\": \"{{CountryIdGB}}\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United Kingdom\",\n    \"CountryEnglishName\": \"United Kingdom\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": null,\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@logitudeworld.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+207598137715\",\n    \"ContactMobile\": \"+207598137715\",\n    \"ContactFax\": \"00207231571\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@logitudeworld.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"CardId\": \"1-143595\",\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": false,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CompanyName\": \"Ahmad Comp.,Ihab 2,new consignee r2,new potentilal,Test Agent\",\n    \"CreateDate\": null\n  },\n  \"Agent\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"IsHybrid\": false,\n    \"BankName\": null,\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"EnglishName\": \"Test Agent\",\n    \"Website\": null,\n    \"VatNumber\": \"TestAgentUnique\",\n    \"LocalName\": \"Test Agent\",\n    \"InActive\": false,\n    \"PaymentTermId\": null,\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"Notes\": null,\n    \"CreatedByUserId\": \"{{LoggedUserId}}\",\n    \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n    \"InvoiceCurrencyId\": null,\n    \"VatTypeId\": null,\n    \"TenantAddressId\": null,\n    \"FieldsChanged\": false,\n    \"CardPMId\": null,\n    \"ComputedLocalName\": null,\n    \"PartnerTypeId\": \"AG\",\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"LastLoginDate\": null,\n    \"IsExternal\": false,\n    \"PrimaryContactId\": null,\n    \"IsFirstContactToAdd\": false,\n    \"EnableConsolidationInvoices\": false,\n    \"CityName\": \"London\",\n    \"CountryId\": \"{{CountryIdGB}}\",\n    \"CountryName\": \"United Kingdom\",\n    \"CASSCode\": null,\n    \"IATACode\": null,\n    \"RegulatedAgentCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"AgentSharedLogisticsKey\": null,\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CardExternalCodeByCurrencies\": [],\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"IsCreditLimitEnabled\": false,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null\n  },\n  \"Customer\": null,\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+				},
+				"url": "https://test.logitudeworld.com/test/api/PartnersDomain"
+			},
+			"response": []
+		},
+		{
+			"name": "GetShipperIdTestShipperExport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetShipperIdTestShipperExport1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.VatNumber == 'TestShipper1Unique')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShipperIdTestShipperExport1\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetShipperIdTestShipperImport1\"); ",
+							"    ",
+							"}});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/customerviews/getbyfilters?Filter1Name=VatNumber&Filter1Operator=equals&Filter1Value=TestShipper1Unique&PageSize=10",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"customerviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "VatNumber"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TestShipper1Unique"
+						},
+						{
+							"key": "PageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateShipperIdTestShipperExport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CreateShipperIdTestShipperExport1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"  ",
+							"    var idvalue = (pm.response.json().Customer.Id);",
+							"    var idvalue2 = (pm.response.json().Address.Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShipperIdTestShipperExport1\",idvalue);",
+							"    pm.environment.set(\"ShipperAddressIdTestShipperExport1\",idvalue2);",
+							"  ",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetShipperIdTestShipperImport1\"); ",
+							"   ",
+							"    ",
+							"}});",
+							"     ",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"London\",\n    \"StateId\": null,\n    \"ZipCode\": \"+207\",\n    \"FaxNumber\": \"24564110\",\n    \"PhoneNumber\": \"0598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"14 Tottenham Court Road\",\n    \"Address2\": \"A400\",\n    \"Name\": \"TestShipperExport1Address\",\n    \"CountryId\": \"1-396\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United Kingdom\",\n    \"CountryEnglishName\": \"United Kingdom\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"2154787\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@fnarsoft.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+207598137715\",\n    \"ContactMobile\": \"+207598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@fnarsoft.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"SearchFields\": \"Ahmad,Ahmad,ahmadb@fnarsoft.com,236437347,754745747,325236,Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CardId\": \"1-143765\",\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CompanyName\": \"Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestShipperExport1\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TestShipperExport1\",\n    \"LocalName\": \"TestShipperExport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestShipper1Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"London\",\n    \"CountryId\": \"1-396\",\n    \"CountryName\": \"United Kingdom\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": false,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+				},
+				"url": "https://test.logitudeworld.com/test/api/PartnersDomain"
+			},
+			"response": []
+		},
+		{
+			"name": "GetShipperIdTestShipperImport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetShipperIdTestShipperImport1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.VatNumber == 'TestShipper2Unique')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShipperIdTestShipperImport1\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetConsigneeIdTestConsigneeExport1\"); ",
+							"    ",
+							"}});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/customerviews/getbyfilters?Filter1Name=VatNumber&Filter1Operator=equals&Filter1Value=TestShipper2Unique&PageSize=10",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"customerviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "VatNumber"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TestShipper2Unique"
+						},
+						{
+							"key": "PageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateGetShipperIdTestShipperImport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CreateGetShipperIdTestShipperImport1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"  ",
+							"    var idvalue = (pm.response.json().Customer.Id);",
+							"    var idvalue2 = (pm.response.json().Address.Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShipperIdTestShipperImport1\",idvalue);",
+							"    pm.environment.set(\"ShipperAddressIdTestShipperImport1\",idvalue2);",
+							"  ",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetConsigneeIdTestConsigneeExport1\"); ",
+							"   ",
+							"    ",
+							"}});",
+							"     ",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"New York\",\n    \"StateId\": \"1-89\",\n    \"ZipCode\": \"+001\",\n    \"FaxNumber\": \"2325881\",\n    \"PhoneNumber\": \"+1598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"18 West 48th Street\",\n    \"Address2\": \"#5B, New York\",\n    \"Name\": \"TestShipperImport1Address\",\n    \"CountryId\": \"1-397\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United States of America\",\n    \"CountryEnglishName\": \"United States of America\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"2154787\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@logitudeworld.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+001598137715\",\n    \"ContactMobile\": \"+001598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@logitudeworld.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"+00122315488\",\n    \"Mobile\": \"+001598137715\",\n    \"Fax\": \"325236153\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestShipperImport1\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TestShipperImport1\",\n    \"LocalName\": \"TestShipperImport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestShipper2Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"SearchFields\": \"new,asdasdasd,asdasdasd,2154787,Ramallah,Palestinian Territory,ahmadb@fnarsoft.com,Ahmad\",\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"Ramallah\",\n    \"CountryId\": \"1-326\",\n    \"CountryCode\": \"PS\",\n    \"CountryName\": \"Palestinian Territory\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": false,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+				},
+				"url": "https://test.logitudeworld.com/test/api/PartnersDomain"
+			},
+			"response": []
+		},
+		{
+			"name": "GetConsigneeIdTestConsigneeExport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetConsigneeIdTestConsigneeExport1\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.VatNumber == 'TestConsignee1Unique')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ConsigneeIdTestConsigneeExport1\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetConsigneeIdTestConsigneeImport1\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/customerviews/getbyfilters?Filter1Name=VatNumber&Filter1Operator=equals&Filter1Value=TestConsignee1Unique&PageSize=10",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"customerviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "VatNumber"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TestConsignee1Unique"
+						},
+						{
+							"key": "PageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateConsigneeIdTestConsigneeExport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CreateConsigneeIdTestConsigneeExport1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Customer.Id);",
+							"    var idvalue2 = (pm.response.json().Address.Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ConsigneeIdTestConsigneeExport1\",idvalue);",
+							"    pm.environment.set(\"ConsigneeAddressIdTestConsigneeExport1\",idvalue2);",
+							"    ",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetConsigneeIdTestConsigneeImport1\"); ",
+							"    ",
+							"}});",
+							"     ",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n  \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"New York\",\n    \"StateId\": \"1-89\",\n    \"ZipCode\": \"+001\",\n    \"FaxNumber\": \"2325881\",\n    \"PhoneNumber\": \"+1598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"18 West 48th Street\",\n    \"Address2\": \"#5B, New York\",\n    \"Name\": \"TestConsigneeExport1Address\",\n    \"CountryId\": \"1-397\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United States of America\",\n    \"CountryEnglishName\": \"United States of America\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"TestConsignee1Unique\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@logitudeworld.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+001598137715\",\n    \"ContactMobile\": \"+001598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@logitudeworld.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestConsignee\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TestConsigneeExport1\",\n    \"LocalName\": \"TestConsigneeExport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestConsignee1Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"New York\",\n    \"CountryId\": \"1-397\",\n    \"CountryName\": \"United States of America\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": false,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+				},
+				"url": "https://test.logitudeworld.com/test/api/PartnersDomain"
+			},
+			"response": []
+		},
+		{
+			"name": "GetConsigneeIdTestConsigneeImport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetConsigneeIdTestConsigneeImport1\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.VatNumber == 'TestConsignee2Unique')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ConsigneeIdTestConsigneeImport1\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetAirlineIdAA\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/customerviews/getbyfilters?Filter1Name=VatNumber&Filter1Operator=equals&Filter1Value=TestConsignee2Unique&PageSize=10",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"customerviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "VatNumber"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TestConsignee2Unique"
+						},
+						{
+							"key": "PageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateConsigneeIdTestConsigneeImport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CreateConsigneeIdTestConsigneeImport1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Customer.Id);",
+							"    var idvalue2 = (pm.response.json().Address.Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ConsigneeIdTestConsigneeImport1\",idvalue);",
+							"    pm.environment.set(\"ConsigneeAddressIdTestConsigneeImport1\",idvalue2);",
+							"    ",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetAirlineIdAA\"); ",
+							"    ",
+							"}});",
+							"     ",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"London\",\n    \"StateId\": null,\n    \"ZipCode\": \"+207\",\n    \"FaxNumber\": \"24564110\",\n    \"PhoneNumber\": \"0598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"14 Tottenham Court Road\",\n    \"Address2\": \"A400\",\n    \"Name\": \"TestConsigneeImport1Address\",\n    \"CountryId\": \"1-396\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United Kingdom\",\n    \"CountryEnglishName\": \"United Kingdom\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"TestConsignee2Unique\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@fnarsoft.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+207598137715\",\n    \"ContactMobile\": \"+207598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@logitudeworld.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestConsignee\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TestConsigneeImport1\",\n    \"LocalName\": \"TestConsigneeImport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestConsignee2Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"London\",\n    \"CountryId\": \"1-396\",\n    \"CountryName\": \"United Kingdom\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": false,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+				},
+				"url": "https://test.logitudeworld.com/test/api/PartnersDomain"
+			},
+			"response": []
+		},
+		{
+			"name": "GetAirlineIdAA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetAirlineIdAA\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'AA')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"AirlineIdAA\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetAirlineIdBA\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/airlineviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AA&PageSize=19",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"airlineviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "AA"
+						},
+						{
+							"key": "PageSize",
+							"value": "19"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAirlineIdAAFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetAirlineIdAAFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'AA')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"AirlineIdAA\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"CopyAirlineIdAAToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/carrierviews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AA&PageSize=13",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"carrierviews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "AA"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CopyAirlineIdAAToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetAirlineIdAAFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"AirlineIdAA\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetAirlineIdBA\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PartnersDomain/GetCarrierCopyToCurrentTenant?entityId={{AirlineIdAA}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PartnersDomain",
+						"GetCarrierCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{AirlineIdAA}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAirlineIdBA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetAirlineIdBA\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'BA')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"AirlineIdBA\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetShippingLineIdMSCU\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/airlineviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=BA&PageSize=19",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"airlineviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "BA"
+						},
+						{
+							"key": "PageSize",
+							"value": "19"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAirlineIdBAFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetAirlineIdBAFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'BA')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"AirlineIdBA\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"CopyAirlineIdBAToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/carrierviews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=BA&PageSize=13",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"carrierviews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "BA"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CopyAirlineIdBAToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetAirlineIdBAFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"AirlineIdBA\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetShippingLineIdMSCU\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PartnersDomain/GetCarrierCopyToCurrentTenant?entityId={{AirlineIdBA}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PartnersDomain",
+						"GetCarrierCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{AirlineIdBA}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetShippingLineIdMSCU",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetShippingLineIdMSCU\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'MSCU')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShippingLineIdMSCU\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetShippingLineIdMAEU\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/shippinglineviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=MSCU&PageSize=19",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"shippinglineviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "MSCU"
+						},
+						{
+							"key": "PageSize",
+							"value": "19"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetShippingLineIdMSCUFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetShippingLineIdMSCUFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'MSCU')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShippingLineIdMSCU\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"CopyShippingLineIdMSCUToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/carrierviews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=MSCU&PageSize=13",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"carrierviews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "MSCU"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CopyShippingLineIdMSCUToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CopyShippingLineIdMSCUToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShippingLineIdMSCU\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetShippingLineIdMAEU\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PartnersDomain/GetCarrierCopyToCurrentTenant?entityId={{ShippingLineIdMSCU}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PartnersDomain",
+						"GetCarrierCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{ShippingLineIdMSCU}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetShippingLineIdMAEU",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetShippingLineIdMAEU\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'MAEU')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShippingLineIdMAEU\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetCountryIdGB\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/shippinglineviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=MAEU&PageSize=19",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"shippinglineviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "MAEU"
+						},
+						{
+							"key": "PageSize",
+							"value": "19"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetShippingLineIdMAEUFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetShippingLineIdMAEUFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'MAEU')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShippingLineIdMAEU\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"CopyShippingLineIdMAEUToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/carrierviews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=MAEU&PageSize=13",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"carrierviews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "MAEU"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CopyShippingLineIdMAEUToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CopyShippingLineIdMAEUToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"ShippingLineIdMAEU\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetCountryIdGB\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/PartnersDomain/GetCarrierCopyToCurrentTenant?entityId={{ShippingLineIdMAEU}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"PartnersDomain",
+						"GetCarrierCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{ShippingLineIdMAEU}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCountryIdGB",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetCountryIdGB\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'GB')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"CountryIdGB\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetCountryIdUS\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=GB&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"countryviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "GB"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCountryIdUS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetCountryIdUS\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'US')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"CountryIdUS\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetTruckerIdTLON\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=US&PageSize=22",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"countryviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "US"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTruckerIdTLON",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetTruckerIdTLON\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'TLON')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"TruckerIdTLON\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetTruckerIdTNYC\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/truckerviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=TLON&PageSize=19",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"truckerviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TLON"
+						},
+						{
+							"key": "PageSize",
+							"value": "19"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateTruckerIdTLON",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CreateTruckerIdTLON\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Trucker.Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"TruckerIdTLON\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetTruckerIdTNYC\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AddressId\": null,\n  \"ContactId\": null,\n  \"PartnerId\": null,\n  \"PartnerTypeId\": \"TR\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"PropertyChanged\": {\n      \"_isScalar\": false,\n      \"observers\": [],\n      \"closed\": false,\n      \"isStopped\": false,\n      \"hasError\": false,\n      \"thrownError\": null,\n      \"__isAsync\": false\n    },\n    \"UIProperties\": {\n      \"UIPropertyList\": []\n    },\n    \"IsDirty\": false,\n    \"tenant\": \"{{Tenant}}\",\n    \"addressTypeId\": \"M\",\n    \"description\": \"Main Address\",\n    \"isCreatedWithPartner\": true,\n    \"cardCode\": \"TLON\",\n    \"name\": \"James\",\n    \"city\": \"London\",\n    \"countryId\": \"{{CountryIdGB}}\",\n    \"address1\": \"14 Tottenham Court Road\",\n    \"address2\": \"A400\",\n    \"zipCode\": \"+207\",\n    \"contactEmail\": \"ahmadb@logitudeworld.com\",\n    \"contactName\": \"Ahmad b\",\n    \"contactBusinessPhone\": \"+207598137715\",\n    \"phoneNumber\": \"+20754743723\",\n    \"faxNumber\": \"+207162366\"\n  },\n  \"Contact\": {\n    \"PropertyChanged\": {\n      \"_isScalar\": false,\n      \"observers\": [],\n      \"closed\": false,\n      \"isStopped\": false,\n      \"hasError\": false,\n      \"thrownError\": null,\n      \"__isAsync\": false\n    },\n    \"UIProperties\": {\n      \"UIPropertyList\": []\n    },\n    \"IsDirty\": false,\n    \"cardId\": \"newCard\",\n    \"tenant\": \"{{Tenant}}\",\n    \"isCreatedWithPartner\": true,\n    \"englishName\": \"Ahmad b\",\n    \"localName\": \"Ahmad b\",\n    \"email\": \"ahmadb@logitudeworld.com\",\n    \"businessPhone\": \"0598137715\",\n    \"inActive\": false\n  },\n  \"Agent\": null,\n  \"Customer\": null,\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": {\n    \"PropertyChanged\": {\n      \"_isScalar\": false,\n      \"observers\": [],\n      \"closed\": false,\n      \"isStopped\": false,\n      \"hasError\": false,\n      \"thrownError\": null,\n      \"__isAsync\": false\n    },\n    \"UIProperties\": {\n      \"UIPropertyList\": []\n    },\n    \"IsDirty\": false,\n    \"tenant\": \"{{Tenant}}\",\n    \"carrierTypeId\": \"TR\",\n    \"addedManually\": true,\n    \"transportModeId\": \"I\",\n    \"code\": \"TLON\",\n    \"englishName\": \"Trucker1London\",\n    \"localName\": \"Trucker1London\",\n    \"existedContactId\": \"1-22727\",\n    \"addresses\": [],\n    \"contacts\": [],\n    \"cardExternalCodeByCurrencies\": [],\n    \"OldEntityPM\": null\n  },\n  \"Tenant\": \"{{Tenant}}\"\n}"
+				},
+				"url": "https://test.logitudeworld.com/test/api/PartnersDomain"
+			},
+			"response": []
+		},
+		{
+			"name": "GetTruckerIdTNYC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetTruckerIdTNYC\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'TNYC')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"TruckerIdTNYC\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetLoggedTenantDB\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/truckerviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=TNYC&PageSize=19",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"truckerviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TNYC"
+						},
+						{
+							"key": "PageSize",
+							"value": "19"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateTruckerIdTNYC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"CreateTruckerIdTNYC\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue = (pm.response.json().Trucker.Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"TruckerIdTNYC\",idvalue);",
+							"    ",
+							"        if (idexist)  {",
+							"    postman.setNextRequest(\"GetLoggedTenantDB\"); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"AddressId\": null,\n  \"ContactId\": null,\n  \"PartnerId\": null,\n  \"PartnerTypeId\": \"TR\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"PropertyChanged\": {\n      \"_isScalar\": false,\n      \"observers\": [],\n      \"closed\": false,\n      \"isStopped\": false,\n      \"hasError\": false,\n      \"thrownError\": null,\n      \"__isAsync\": false\n    },\n    \"UIProperties\": {\n      \"UIPropertyList\": []\n    },\n    \"IsDirty\": false,\n    \"tenant\": \"{{Tenant}}\",\n    \"addressTypeId\": \"M\",\n    \"description\": \"Main Address\",\n    \"isCreatedWithPartner\": true,\n    \"cardCode\": \"TLON\",\n    \"name\": \"Michael\",\n    \"city\": \"New York City\",\n    \"StateId\": \"1-89\",\n    \"countryId\": \"{{CountryIdUS}}\",\n    \"address1\": \"18 West 48th Street\",\n    \"address2\": \"#5B, New York\",\n    \"zipCode\": \"+001\",\n    \"contactEmail\": \"ahmadb@logitudeworld.com\",\n    \"contactName\": \"Ahmad b\",\n    \"contactBusinessPhone\": \"+207598137715\",\n    \"phoneNumber\": \"+00154743723\",\n    \"faxNumber\": \"+001162366\"\n  },\n  \"Contact\": {\n    \"PropertyChanged\": {\n      \"_isScalar\": false,\n      \"observers\": [],\n      \"closed\": false,\n      \"isStopped\": false,\n      \"hasError\": false,\n      \"thrownError\": null,\n      \"__isAsync\": false\n    },\n    \"UIProperties\": {\n      \"UIPropertyList\": []\n    },\n    \"IsDirty\": false,\n    \"cardId\": \"newCard\",\n    \"tenant\": \"{{Tenant}}\",\n    \"isCreatedWithPartner\": true,\n    \"englishName\": \"Ahmad b\",\n    \"localName\": \"Ahmad b\",\n    \"email\": \"ahmadb@logitudeworld.com\",\n    \"businessPhone\": \"0598137715\",\n    \"inActive\": false\n  },\n  \"Agent\": null,\n  \"Customer\": null,\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": {\n    \"PropertyChanged\": {\n      \"_isScalar\": false,\n      \"observers\": [],\n      \"closed\": false,\n      \"isStopped\": false,\n      \"hasError\": false,\n      \"thrownError\": null,\n      \"__isAsync\": false\n    },\n    \"UIProperties\": {\n      \"UIPropertyList\": []\n    },\n    \"IsDirty\": false,\n    \"tenant\": \"{{Tenant}}\",\n    \"carrierTypeId\": \"TR\",\n    \"addedManually\": true,\n    \"transportModeId\": \"I\",\n    \"code\": \"TNYC\",\n    \"englishName\": \"Trucker1NewYork\",\n    \"localName\": \"Trucker1NewYork\",\n    \"existedContactId\": \"1-22727\",\n    \"addresses\": [],\n    \"contacts\": [],\n    \"cardExternalCodeByCurrencies\": [],\n    \"OldEntityPM\": null\n  },\n  \"Tenant\": \"{{Tenant}}\"\n}"
+				},
+				"url": "https://test.logitudeworld.com/test/api/PartnersDomain"
+			},
+			"response": []
+		},
+		{
+			"name": "GetLoggedTenantDB",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetLoggedTenantDB\", function () {",
+							"   pm.response.to.have.status(200);",
+							" ",
+							" ",
+							"    var idvalue1 = (pm.response.json().CurrencyId);",
+							"    var idvalue2 = (pm.response.json().ProfitCurrencyId);",
+							"    var idvalue3 = (pm.response.json().FreightCurrencyId);",
+							"    var idvalue4 = (pm.response.json().OtherChargesCurrencyId);",
+							"    var idvalue5 = (pm.response.json().VolumeUnitCode);",
+							"    var idvalue6 = (pm.response.json().DimensionsUnitCode);",
+							"    var idvalue7 = (pm.response.json().GrossWeightUnitCode);",
+							"    var idvalue8 = (pm.response.json().ChargeableWeightUnitCode);",
+							"    var idvalue9 = (pm.response.json().AgentId);",
+							"    var idvalue10 = (pm.response.json().AddressId);",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    var id3exist = idvalue3 !== null;",
+							"    var id4exist = idvalue4 !== null;",
+							"    var id5exist = idvalue5 !== null;",
+							"    var id6exist = idvalue6 !== null;",
+							"    var id7exist = idvalue7 !== null;",
+							"    var id8exist = idvalue8 !== null;",
+							"    var id9exist = idvalue9 !== null;",
+							"    var id10exist = idvalue10 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.expect(id3exist);",
+							"    pm.expect(id4exist);",
+							"    pm.expect(id5exist);",
+							"    pm.expect(id6exist);",
+							"    pm.expect(id7exist);",
+							"    pm.expect(id8exist);",
+							"    pm.expect(id9exist);",
+							"    pm.expect(id10exist);",
+							"    pm.environment.set(\"CurrencyId\",idvalue1);",
+							"    pm.environment.set(\"ProfitCurrencyId\",idvalue2);",
+							"    pm.environment.set(\"FreightCurrencyId\",idvalue3);",
+							"    pm.environment.set(\"OtherChargesCurrencyId\",idvalue4);",
+							"    pm.environment.set(\"VolumeUnitCode\",idvalue5);",
+							"    pm.environment.set(\"DimensionsUnitCode\",idvalue6);",
+							"    pm.environment.set(\"GrossWeightUnitCode\",idvalue7);",
+							"    pm.environment.set(\"ChargeableWeightUnitCode\",idvalue8);",
+							"    pm.environment.set(\"TenantAgentId\",idvalue9);",
+							"    pm.environment.set(\"TenantAddressId\",idvalue10);",
+							"    ",
+							"    ",
+							"    ",
+							"    ",
+							"    ",
+							"    ",
+							"    ",
+							"    ",
+							"        if (id1exist & id2exist & id3exist & id4exist & id5exist & id6exist & id7exist & id8exist & id9exist & id10exist)  {",
+							"             postman.setNextRequest(null); ",
+							"    ",
+							"    ",
+							"}});",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://test.logitudeworld.com/test/api/CommonDomain/GetLoggedTenantDB"
+			},
+			"response": []
+		}
+	]
+}
