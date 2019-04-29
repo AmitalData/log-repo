@@ -49,7 +49,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     response.Error = "Sorry! this user is not the last signed user!";
                     //throw new Exception("Sorry! this user is not the last signed user!");
                 }
-                bool isUpgrading;
+
+                bool isBlocking;
                 using (
                     TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                 {
@@ -58,8 +59,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     //if (connection.Contains("Main"))
                     //{ }
 
-                    isUpgrading = (from a in globalcontext.GlobalDBs
-                                   select a).FirstOrDefault().IsUpgrading;
+                    isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
                     GlobalContactRepository repository = new GlobalContactRepository(globalcontext);
                     GlobalContact contact = repository.GetGlobalContactByEmailAndTenant(authEmail, tenant);
                     if (contact != null && contact.InActive)
@@ -86,7 +86,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     isIpAuthenticated = false;
                 }
 
-                if (isUpgrading)
+                if (isBlocking)
                 {
                     if (!isIpAuthenticated)
                     {
@@ -145,8 +145,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             try
             {
                 IGlobalContext globalcontext = GlobalContext.GetContext();
-                bool isUpgrading = (from a in globalcontext.GlobalDBs
-                                    select a).FirstOrDefault().IsUpgrading;
+                bool isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
 
                 bool isIpAuthenticated = true;
 
@@ -165,12 +164,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 
                 if (isIpAuthenticated)
                 {
-                    isUpgrading = false;
+                    isBlocking = false;
                 }
               
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, isUpgrading);
+                return Request.CreateResponse(HttpStatusCode.OK, isBlocking);
             }
             catch (Exception ex)
             {

@@ -137,6 +137,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ProjectNumber = shipment.ProjectNumber;
                 myDataProvider.ARInvoices = shipment.ARInvoices;
                 myDataProvider.IsDangerous = shipment.IsDangerous;
+                myDataProvider.SpecialServicesTypeName = shipment.SpecialServicesTypeName;
 
                 if (shipment.DocumentsClosingDate != null)
                 {
@@ -3119,7 +3120,7 @@ namespace WebFreight.Web.WebServices
                         newItem.Weight = deliv.ShipmentPickUpDeliveryPackages.Sum(s => s.Weight);
                         myServicHelper.GetDeliveryToAddress(deliv, newItem, addressRepository, tenant);
 
-                        #region 
+                        #region Empty Container
                         newItem.EmptyContainerReturnRef = deliv.EmptyDeliveryDepotReference;
 
                         if (!string.IsNullOrEmpty(deliv.EmptyDeliveryContainerPartnerId))
@@ -3167,6 +3168,25 @@ namespace WebFreight.Web.WebServices
                                 newItem.EmptyContainerReturn = myEmptyContainer;
                                 newItem.EmptyContainerReturnName = myEmptyContainerName;
                                 newItem.EmptyContainerReturnAddress = myEmptyContainerAddress;
+                            }
+                        }
+                        #endregion
+
+                        #region Trucker Contact
+                        if (deliv.CarrierId != null)
+                        {
+                            Card iCard = (from d in commonContext.Cards where d.Id == deliv.CarrierId select d).FirstOrDefault();
+                            if (iCard != null)
+                            {
+                                if (!string.IsNullOrEmpty(iCard.PrimaryContactId))
+                                {
+                                    Contact iContact = contactRepository.GetSingleContact(iCard.PrimaryContactId, tenant);
+                                    if (iContact != null)
+                                    {
+                                        newItem.TruckerContactName = iContact.EnglishName;
+                                    }
+
+                                }
                             }
                         }
                         #endregion

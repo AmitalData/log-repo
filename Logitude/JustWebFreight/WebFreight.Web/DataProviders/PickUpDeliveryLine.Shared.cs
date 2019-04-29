@@ -28,5 +28,6 @@ namespace WebFreight.Web.DataProviders
         public string EmptyContainerReturnName { get; set; }
         public string EmptyContainerReturnAddress { get; set; }
         public List<PackageLine> PickUpDeliveryPackages { get; set; }
+        public string TruckerContactName { get; set; }
     }
 }
