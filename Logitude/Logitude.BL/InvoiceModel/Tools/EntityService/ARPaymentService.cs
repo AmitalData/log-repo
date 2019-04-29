@@ -291,8 +291,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //update amounts
             if (theEntityPm.IsFullAccounting == true)
                 UpdateFullAccountPaymentAmount(theEntityPm, gla.ReconcileMethodCode == "0");
-            else
-                UpdatePaymentOpenAmount();
 
 
             // PaymentCheque And CashBook
@@ -305,6 +303,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
+
+            if (!theEntityPm.IsFullAccounting)
+                UpdatePaymentOpenAmount();
 
 
             ARPaymentHelper service = new ARPaymentHelper();
