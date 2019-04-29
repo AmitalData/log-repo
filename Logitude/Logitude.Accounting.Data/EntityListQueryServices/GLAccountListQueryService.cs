@@ -174,18 +174,23 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             GLAccountRepository repository = new GLAccountRepository(tenant);
             IQueryable<CardGLAccountDataView> entities = entities = repository.GetCardGLAccountDataViews(accountTypeCode, tenant);
 
-
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
             foreach (EntityLastActivity lastActivity in lastActivities)
             {
-                CardGLAccountDataView a = (from d in entities
+                CardGLAccountDataView a = 
+                            (from d in entities
                            where d.Id == lastActivity.EntityId
                            select d).FirstOrDefault();
 
+
+
                 if (a != null)
                 {
+                    //get glamore data
+                    GLAccountMoreData glAccountMoreData = GetAccountMoreData(a.Id, a.Tenant);
+
                     CardGLAccountListDataView list = new CardGLAccountListDataView()
                     {
                         //glaccount
@@ -225,8 +230,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         LastActivityTypeName = lastActivity.ActivityType.Name,
                         LastActivityByUserName = lastActivity.User.Contact.LocalName,
                         ChartOfAccountsName = a.ChartOfAccountsEnglishName != null ? a.ChartOfAccountsEnglishName : null, //ChartOfAccountsLocalName
-                  //      LocalBalanceInDue = a.LocalBalanceInDue,
-                  //      NextDueDate = a.NextDueDate,
+
                         DeductionFileNumber = a.DeductionFileNumber,
 
                         // Card
@@ -251,7 +255,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         CollectorEnglishName = a.CollectorEnglishName,
                         CollectorLocalName = a.CollectorLocalName,
 
-                        
+                        // GLACCOUNT MORE DATA
+                        BalanceInLocalCurrency = glAccountMoreData.BalanceInLocalCurrency,
+                        LocalBalanceInDue = glAccountMoreData.LocalBalanceInDue,
+                        NextDueDate = glAccountMoreData.NextDueDate,
+
+
                     };
 
 
@@ -259,7 +268,18 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 }
             }
 
+
+
+
             return entityList;
+        }
+        public GLAccountMoreData GetAccountMoreData(string accountId, int tenant)
+        {
+            GLAccountMoreData _md = (from a in context.GLAccountMoreDatas
+                                                   where a.Tenant == tenant && a.AccountId == accountId
+                                                   select a).FirstOrDefault();
+
+            return _md;
         }
 
         public List<GLAccountList> GetByAccountType(string accountTypeCode, string searchFields, int tenant)

@@ -466,17 +466,17 @@
                                             (ValueChanged)="OpenAmountTextChanged($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                             </li>
 
+                            <!-- Reset Filters Button -->
+                            <li *ngIf="isFiltersSelected" float-start style="padding: 0 15px;padding-top: 2px;">
+                                <IconButton [Name]="'delete'" (click)="ResetFilters()"></IconButton>
+                            </li>
+
                             <li float-start style="width: 40px;height: 100%;"></li>
 
                             <!-- Search -->
                             <li float-start style="padding-left: 20px;padding-top: 4px;">{{'Accounting.General.B.Search' | TextCodeTranslationPipe}}:</li>
                             <li float-start style="padding: 0 5px;padding-top: 2px;width: 170px;position: relative;">
                                 <SearchTextBox [ObjectTableName]="'LedgerTransaction'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
-                            </li>
-
-                            <!-- Reset Filters Button -->
-                            <li *ngIf="isFiltersSelected" float-start style="padding: 0 15px;padding-top: 2px;">
-                                <IconButton [Name]="'delete'" (click)="ResetFilters()"></IconButton>
                             </li>
 
                             <!-- Refresh Button -->

@@ -5749,7 +5749,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "Send To QBO",
+						LocalDefaultText = "נוספים",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ARPaymentMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()

@@ -1346,7 +1346,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a);
                         myStringBuilder.Append("+");
                         myStringBuilder.Append(AmountAFDiscount.PadLeft(14, '0'));
-
+                        
                       
                     }
                     else
@@ -1360,7 +1360,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a);
                     myStringBuilder.Append('0', 15);
                 }
+                if(item.DocumentReference == "1291")
+                {
 
+                }
 
                 List<ARInvoiceTotalVATPM> aRInvoiceTotalVATs = totalVats.Where(d => d.ARInvoiceId == item.ARInvoiceId).ToList();
                 if (aRInvoiceTotalVATs.Count > 0)
@@ -1382,8 +1385,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else if (item.VatAmount > 0)
                         {
-                          
-                           
+
+                            myStringBuilder.Append("+");
                             myStringBuilder.Append( vatAmount.PadLeft(14, '0'));
                         }
                         else
@@ -1420,7 +1423,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
                     }
 
-                    if (item.DocumentAmountAndVATAmount < 0)
+                  else  if (item.DocumentAmountAndVATAmount < 0)
                     {
                         myStringBuilder.Append(a);
                         myStringBuilder.Append("-");
@@ -2198,19 +2201,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.CustomerVendorCode != null)
                     {
                         if (item.CustomerVendorCode.Length > 15) { item.CustomerVendorCode = item.CustomerVendorCode.Substring(0, 15); }
-                        myStringBuilder.Append(a + item.CustomerVendorCode.PadLeft(15, '0'));
+                        myStringBuilder.Append(a + item.CustomerVendorCode.PadLeft(15, ' '));
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append(' ', 15);
                     }
 
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append(' ', 15);
                 }
 
                 myStringBuilder.Append(' ', 10);
@@ -2244,7 +2247,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
-                {
+               {
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 9);
                 }

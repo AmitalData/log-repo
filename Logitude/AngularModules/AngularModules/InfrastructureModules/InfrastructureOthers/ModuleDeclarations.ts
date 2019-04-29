@@ -18,6 +18,8 @@ import {MoveTypeGeneralTabComponent} from './Components/MoveType/MoveTypeGeneral
 import { NewMoveTypeComponent } from './Components/MoveType/NewMoveTypeComponent';
 import { WebhookKeysComponent } from './Components/WebhookKeys/WebhookKeysComponent';
 import { WebhookTesterComponent } from './Components/WebhookKeys/WebhookTesterComponent';
+import {CreateTenantComponent} from './Components/CreateTenant/CreateTenantComponent';
+
 
 export const Components =
     [
@@ -41,6 +43,7 @@ export const Components =
         NewMoveTypeComponent,
         WebhookKeysComponent,
         WebhookTesterComponent,
+        CreateTenantComponent,
     ];
 
 export class ModuleDeclarations {
@@ -69,7 +72,7 @@ export class ModuleDeclarations {
             case "NewMoveTypeComponent": { myResult = NewMoveTypeComponent; break; }
             case "WebhookKeysComponent": { myResult = WebhookKeysComponent; break; }
             case "WebhookTesterComponent": { myResult = WebhookTesterComponent; break; }
-
+            case "CreateTenantComponent": { myResult = CreateTenantComponent; break; }
 
         }
 
