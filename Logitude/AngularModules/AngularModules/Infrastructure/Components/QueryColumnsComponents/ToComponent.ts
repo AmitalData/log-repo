@@ -1,3 +1,4 @@
+/// <reference path="../../../controls/pipes/idgeneratorpipe.ts" />
 declare var window: any;
 import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
@@ -10,7 +11,7 @@ import {PartnersDomainService} from '../../../Common/Services/PartnersDomainServ
 import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters'; 
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-
+import {IdGeneratorPipe} from '../../../Controls/Pipes/IdGeneratorPipe';
 @Component({
     moduleId: module.id,
 
@@ -26,19 +27,20 @@ export class ToComponent implements OnInit {
     public TenantPM: TenantPM;
     public entityId: string;
     IsChecked: boolean = false;
- 
+    IdGeneratorPipe: IdGeneratorPipe;
     Key: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef,  private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
+        this.IdGeneratorPipe = new IdGeneratorPipe();
 
     }
 
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName;
-        this.Key = Guid.newGuid() + fieldName;
-
+        this.Key = this.IdGeneratorPipe.transform("SendMessage"+fieldName+"CheckBox");
+   
         if (this.rowData.Email) {
 
             if (fieldName == "To" && window.ToEmailLists) {
