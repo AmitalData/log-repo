@@ -2170,6 +2170,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_EntityStatus = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EntityStatus").FirstOrDefault();
             QueryFilterItem filterItem_SupplierId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SupplierId").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeOperationalyClose = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeOperationalClose").FirstOrDefault();
 
             //ToDate
             DateTime? toDate = null;
@@ -2271,44 +2272,86 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+
+            bool IncludeOperationallyClosed = false;
+
+            if (filterItem_IncludeOperationalyClose != null)
+            {
+                if (filterItem_IncludeOperationalyClose.FieldValue != null)
+                {
+                    IncludeOperationallyClosed = (bool)filterItem_IncludeOperationalyClose.FieldValue;
+                }
+            }
+
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
-
             shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
-            GenericFilter genericFilter = new GenericFilter();
-            QueryOperations queryOperations2 = new QueryOperations()
+
+            if (toDate != null || FromDate != null)
             {
-                ObjectTableName = "Shipment",
-                PageIndex = 1,
-                PageSize = 10,
-                QuerySection = "Shipments",
-                SortByColumnName = null,
-                SortDirectin = null,
-                QueryFilterItems = new List<QueryFilterItem>(),
-            };
-            QueryFilterItem item = new QueryFilterItem();
-            item.DisplayInList = true;
-            item.FieldDataType = "Date";
-            item.FieldName = "Field2";
-            item.FieldValue = FromDate;
-            item.FieldValue2 = toDate;
-            item.IsCustomField = true;
-            if (toDate == null)
-            {
-                item.Operator = "GreaterThanOrEqual";
+                #region
+                GenericFilter genericFilter = new GenericFilter();
+                
+                QueryOperations shipmentsQueryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "Shipment",
+                    PageIndex = 1,
+                    PageSize = 10,
+                    QuerySection = "Shipments",
+                    SortByColumnName = null,
+                    SortDirectin = null,
+                    QueryFilterItems = new List<QueryFilterItem>(),
+                };
+
+                QueryFilterItem item = new QueryFilterItem();
+                item.DisplayInList = true;
+                item.FieldDataType = "Date";
+                item.FieldName = "Field2";
+
+                item.FieldValue = FromDate;
+                item.FieldValue2 = toDate;
+                item.IsCustomField = true;
+                if (toDate == null && FromDate != null)
+                {
+                    item.Operator = "GreaterThanOrEqual";
+                }
+
+                else if (FromDate == null && toDate != null)
+                {
+                    item.FieldValue = toDate;
+                    item.FieldValue2 = null;
+                    item.Operator = "LessThanOrEqual";
+                }
+
+                //else if (FromDate == null && toDate == null)
+                //{
+                //    item.Operator = "IsNotNull";
+                //}
+
+                else
+                {
+                    item.Operator = "Between";
+
+                }
+
+                queryOperations.QueryFilterItems.Add(item);
+
+                shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations, shipments);
+                #endregion
             }
-            else
-                item.Operator = "Between";
-            queryOperations2.QueryFilterItems.Add(item);
-
-            shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations2, shipments);
-
 
             if (!string.IsNullOrEmpty(branchId))
             {
                 shipments = shipments.Where(d => d.BranchId == branchId);
             }
+
+
+            if (!IncludeOperationallyClosed)
+            {
+                shipments = shipments.Where(d => d.IsOperationalClosed == false);
+            }
+
 
 
             if (!string.IsNullOrEmpty(CustomerId))
