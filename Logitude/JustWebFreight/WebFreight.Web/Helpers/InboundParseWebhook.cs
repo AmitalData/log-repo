@@ -467,11 +467,11 @@ namespace WebFreight.Web.Helpers
 
                 if (correspondenceLine != null)
                 {
-                    if (contactEmails.ToLower() != "s@test.unifreight.co.il" && contactEmails.ToLower() != "support@ilcargo.com" && contactEmails.ToLower() != "support@icl.unifreight.co.il")
+                    if (!string.IsNullOrEmpty(contactEmails) && !contactEmails.ToLower().Contains("s@test.unifreight.co.il") && !contactEmails.ToLower().Contains("support@ilcargo.com") && !contactEmails.ToLower().Contains("support@icl.unifreight.co.il"))
                     {
                         correspondenceLine.CCs = contactEmails;
                     }
-                    if (userEmails.ToLower() != "s@test.unifreight.co.il" && userEmails.ToLower() != "support@ilcargo.com" && userEmails.ToLower() != "support@icl.unifreight.co.il")
+                    if (!string.IsNullOrEmpty(userEmails) && !userEmails.ToLower().Contains("s@test.unifreight.co.il") && !userEmails.ToLower().Contains("support@ilcargo.com") && !userEmails.ToLower().Contains("support@icl.unifreight.co.il"))
                     {
                         correspondenceLine.InternalUsers = userEmails; 
                     }
@@ -480,11 +480,11 @@ namespace WebFreight.Web.Helpers
 
                 if (inboundEmailLine != null)
                 {
-                    if (contactEmails.ToLower() != "s@test.unifreight.co.il" && contactEmails.ToLower() != "support@ilcargo.com" && contactEmails.ToLower() != "support@icl.unifreight.co.il")
+                    if (!string.IsNullOrEmpty(contactEmails) && !contactEmails.ToLower().Contains("s@test.unifreight.co.il") && !contactEmails.ToLower().Contains("support@ilcargo.com") && !contactEmails.ToLower().Contains("support@icl.unifreight.co.il"))
                     {
                         inboundEmailLine.CCs = contactEmails;
                     }
-                    if (userEmails.ToLower() != "s@test.unifreight.co.il" && userEmails.ToLower() != "support@ilcargo.com" && userEmails.ToLower() != "support@icl.unifreight.co.il")
+                    if (!string.IsNullOrEmpty(userEmails) && !userEmails.ToLower().Contains("s@test.unifreight.co.il") && !userEmails.ToLower().Contains("support@ilcargo.com") && !userEmails.ToLower().Contains("support@icl.unifreight.co.il"))
                     {
                         inboundEmailLine.InternalUsers = userEmails;
                     }
@@ -640,18 +640,17 @@ namespace WebFreight.Web.Helpers
                     // Add new ccs & internal users to Ticket 
                     if (!string.IsNullOrEmpty(contactEmails))
                     {
-                        if(contactEmails.ToLower() != "s@test.unifreight.co.il" && contactEmails.ToLower() != "support@ilcargo.com" && contactEmails.ToLower() != "support@icl.unifreight.co.il")
+                        if (!contactEmails.ToLower().Contains("s@test.unifreight.co.il") && !contactEmails.ToLower().Contains("support@ilcargo.com") && !contactEmails.ToLower().Contains("support@icl.unifreight.co.il"))
                         {
                             myTicket.CCs += ";" + contactEmails;
                         }
-                       
                     }
                     if (!string.IsNullOrEmpty(userEmails))
                     {
-                        if (userEmails.ToLower() != "s@test.unifreight.co.il" && userEmails.ToLower() != "support@ilcargo.com" && userEmails.ToLower() != "support@icl.unifreight.co.il")
+                        if (!userEmails.ToLower().Contains("s@test.unifreight.co.il") && !userEmails.ToLower().Contains("support@ilcargo.com") && !userEmails.ToLower().Contains("support@icl.unifreight.co.il"))
                         {
                             myTicket.InternalUsers += ";" + userEmails;
-                        }                  
+                        }
                     }
 
                     crmContext.SaveChanges();
@@ -868,14 +867,14 @@ namespace WebFreight.Web.Helpers
                 {
                     if (userRepository.DoesUserExist(memail, Tenant))
                     {
-                        if (memail.ToLower() != "s@test.unifreight.co.il" && memail.ToLower() != "support@ilcargo.com" && memail.ToLower() != "support@icl.unifreight.co.il")
+                        if (!memail.ToLower().Contains("s@test.unifreight.co.il") && !memail.ToLower().Contains("support@ilcargo.com") && !memail.ToLower().Contains("support@icl.unifreight.co.il"))
                         {
                             myTicket.InternalUsers += memail + ";";
                         }
                     }
                     else
                     {
-                        if (memail.ToLower() != "s@test.unifreight.co.il" && memail.ToLower() != "support@ilcargo.com" && memail.ToLower() != "support@icl.unifreight.co.il")
+                        if (!memail.ToLower().Contains("s@test.unifreight.co.il") && !memail.ToLower().Contains("support@ilcargo.com") && !memail.ToLower().Contains("support@icl.unifreight.co.il"))
                         {
                             myTicket.CCs += memail + ";";
                         }
