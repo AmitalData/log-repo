@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebFreight.Web.Helpers;
+//using WebFreight.Web.Helpers;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-                HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                //HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
                 EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
                 //string htmlstring = "<html>Attach flowing ...</html>";
 
@@ -142,11 +142,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 string entityReference = null;
                 string from = "no-reply@LogitudeWorld.com";
                 string replyTo = "";
-                string res = htmlEditorHelper.SendHtmlDocument(
-                    bytePlainTextdata/*htmlData*/, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,
-                    entityReference, from, replyTo);
+                //string res = htmlEditorHelper.SendHtmlDocument(
+                //    bytePlainTextdata/*htmlData*/, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,
+                //    entityReference, from, replyTo); // Islam: circular reference issue with the web project
                 scope.Complete();
-                return res;
+                return null;
             }
         }
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
