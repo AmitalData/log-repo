@@ -43,6 +43,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     private myAddressListService: AddressListService;
     private myPortListService: PortListService;
     public SessionIndex: number;
+    public IsPortsVisible: boolean = false;
     constructor() {
         super();
 
@@ -190,6 +191,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     SetUIProperties_Ports() {
         var isFromRequired: boolean = false;
         var isToRequired: boolean = false;
+        var isPortsVisible: boolean = false;
 
         if (this.IsOldInlandDomestic) {
             if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
@@ -200,6 +202,12 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                 isToRequired = true;
             }
         }
+
+        if (this.IsOldInlandDomestic || (this.DirectionId == "D" && this.DirectionId != this.oldShipmentDirection && this.EntityPM.TransportModeId != "I")) {
+            isPortsVisible = true;
+        }
+
+        this.IsPortsVisible = isPortsVisible;
 
         this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, isFromRequired);
         this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, isToRequired);
@@ -214,12 +222,12 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
         this.DirectionsList.push(new DirectionFilterItem("D", "Domestic"));
         this.DirectionsList.push(new DirectionFilterItem("R", "Drop"));
     }
-
+    
     get DirectionId() { return this.EntityPM.DirectionId; }
     set DirectionId(newValue: string) {
         if (this.EntityPM.DirectionId != newValue) {
             this.EntityPM.DirectionId = newValue;
-            
+
             this.OnDirectionChanged();
         }
     }
@@ -789,6 +797,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     }
 
     //Ports
+    public FromPortList: PortList = null;
     get MainCarriageFromPortId() { return this.EntityPM.MainCarriageFromPortId; }
     set MainCarriageFromPortId(value: string) {
         if (this.EntityPM.MainCarriageFromPortId != value) {
@@ -797,6 +806,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             this.SetUIProperties_Ports();
 
             if (AppTool.IsNullOrEmpty(value)) {
+                this.FromPortList = null
                 RoutingHelper.MainCarriageFromPortChanged(this.EntityPM, null);
             }
 
@@ -804,6 +814,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                 this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: PortList = myResponse.Result;
+                        this.FromPortList = myResponse.Result
 
                         if (list) {
                             RoutingHelper.MainCarriageFromPortChanged(this.EntityPM, list);
@@ -813,6 +824,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                             this.myPortListService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
+                                    this.FromPortList = myResponse2.Result
                                     RoutingHelper.MainCarriageFromPortChanged(this.EntityPM, list);
                                 }
                             });
@@ -822,7 +834,8 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             }
         }
     }
-    
+
+    public ToPortList: PortList = null;
     get MainCarriageToPortId() { return this.EntityPM.MainCarriageToPortId; }
     set MainCarriageToPortId(value: string) {
         if (this.EntityPM.MainCarriageToPortId != value) {
@@ -831,6 +844,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             this.SetUIProperties_Ports();
 
             if (AppTool.IsNullOrEmpty(value)) {
+                this.ToPortList = null;
                 RoutingHelper.FinalDestinationPortChanged(this.EntityPM, null);
             }
 
@@ -838,6 +852,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                 this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: PortList = myResponse.Result;
+                        this.ToPortList = myResponse.Result;
 
                         if (list) {
                             RoutingHelper.FinalDestinationPortChanged(this.EntityPM, list);
@@ -847,6 +862,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                             this.myPortListService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
+                                    this.ToPortList = myResponse2.Result;
                                     RoutingHelper.FinalDestinationPortChanged(this.EntityPM, list);
                                 }
                             });
@@ -1318,7 +1334,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                     this.EntityPM.ToCountryId = this.ConsigneeAddressList.CountryId;
                     this.EntityPM.ToCountryIsEC = this.ConsigneeAddressList.CountryEC;
                 }
-                
+
                 this.EntityPM.MainCarriageFromPartnerId = this.ShipperId;
                 this.EntityPM.MainCarriageFromAddressId = this.ShipperAddressId;
                 this.EntityPM.MainCarriageToPartnerId = this.ConsigneeId;
@@ -1327,8 +1343,8 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                 this.EntityPM.IncludeDelivery = false;
                 this.MainCarriageFromPortId = null;
                 this.MainCarriageToPortId = null;
-                this.EntityPM.MainCarriageFinalDestinationPortId = null;                
-            
+                this.EntityPM.MainCarriageFinalDestinationPortId = null;
+
                 var confirmWindow: ConfirmWindow = new ConfirmWindow();
                 confirmWindow.Title = "Convert Shipment Direction";
                 confirmWindow.Width = 400;
@@ -1343,6 +1359,16 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             }
 
             else {
+                if (this.FromPortList != null) {
+                    this.EntityPM.FromCountryId = this.FromPortList.CountryId;
+                    this.EntityPM.FromCountryIsEC = this.FromPortList.CountryEC;
+                }
+
+                if (this.ToPortList != null) {
+                    this.EntityPM.ToCountryId = this.ToPortList.CountryId;
+                    this.EntityPM.ToCountryIsEC = this.ToPortList.CountryEC;
+                }
+
                 this.CompleteConversion();
             }
         }

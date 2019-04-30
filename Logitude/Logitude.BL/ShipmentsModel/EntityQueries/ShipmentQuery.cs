@@ -662,6 +662,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.FromPortCountry = fromPort.CountryName;
                         shipmentPM.FromPortName = fromPort.EnglishName;
                         shipmentPM.FromCountryCode = fromPort.CountryCode;
+                        shipmentPM.FromCountryId = fromPort.CountryId;
+                        shipmentPM.FromCountryIsEC = fromPort.CountryEC;
                     }
 
                     PortPM toPort = portQuery.GetSinglePM(shipment.ToPortId, shipment.Tenant);
@@ -677,6 +679,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.ToPortCountry = toPort.CountryName;
                         shipmentPM.ToPortName = toPort.EnglishName;
                         shipmentPM.ToCountryCode = toPort.CountryCode;
+                        shipmentPM.ToCountryId = toPort.CountryId;
+                        shipmentPM.ToCountryIsEC = toPort.CountryEC;
 
                         shipmentPM.MainCarriageFinalDestinationPortCode = toPort.Code;
                         shipmentPM.MainCarriageFinalDestinationPortName = toPort.EnglishName;
