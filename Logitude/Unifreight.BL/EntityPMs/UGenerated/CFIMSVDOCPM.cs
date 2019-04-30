@@ -31,5 +31,13 @@ namespace Unifreight.BL.EntityPMs
 
         public short? HASCHANGED { get; set; }
 
+        public string QUETYPE { get; set; }
+
+        public string GSTRING1 { get; set; }
+
+        public string GSTRING2 { get; set; }
+
+        public string GSTRING3 { get; set; }
+
     }
 }
