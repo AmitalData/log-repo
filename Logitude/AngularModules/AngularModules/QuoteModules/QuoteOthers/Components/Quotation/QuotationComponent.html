@@ -97,271 +97,155 @@
         /* Internet Explorer */
         filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
     }
+
+
+
+    @keyframes shake {
+        0% {
+            transform: translate(1px, 1px) rotate(0deg);
+        }
+
+        10% {
+            transform: translate(-1px, -2px) rotate(-1deg);
+        }
+
+        20% {
+            transform: translate(-3px, 0px) rotate(1deg);
+        }
+
+        30% {
+            transform: translate(3px, 2px) rotate(0deg);
+        }
+
+        40% {
+            transform: translate(1px, -1px) rotate(1deg);
+        }
+
+        50% {
+            transform: translate(-1px, 2px) rotate(-1deg);
+        }
+
+        60% {
+            transform: translate(-3px, 1px) rotate(0deg);
+        }
+
+        70% {
+            transform: translate(3px, 1px) rotate(-1deg);
+        }
+
+        80% {
+            transform: translate(-1px, -1px) rotate(1deg);
+        }
+
+        90% {
+            transform: translate(1px, 2px) rotate(0deg);
+        }
+
+        100% {
+            transform: translate(1px, -2px) rotate(-1deg);
+        }
+    }
+
+    .RefreshButton {
+        border: 1px solid #009161;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(0, 145, 97, 0.6) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(0, 145, 97, 0.6) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+    }
+
+    .RefreshButtonShake {
+        border: 1px solid #EDC093;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%) !important;
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) )) !important;
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
+        cursor: pointer;
+        animation: shake 0.5s;
+    }
 </style>
 
 
-        <ScrollViewer *ngIf="IsReady">
-            <table>
-                <tr>
-
-                    <td *ngIf="SelectedMode === 'Generate' && !HasNoTmplates">
-                        <table>
-                            <tr style="height:100%">
-                                <td>
-                                    <table>
-                                        <tr style="height:100%;width:100%">
-
-                                            <td style="height:100%;width:auto;vertical-align:top;text-align:left;">
-                                                <table>
-                                                    <tr style="height:50px;vertical-align:top;">
-                                                        <td>
-                                                            <button [attr.title]="AttrTitleShowTemplateList" class="Button2" (click)="ShowHideTemplateList()" style="height:50px;width:24px;margin-right:4px;text-align:center;vertical-align:central;">
-                                                                <img *ngIf="!IsShowTemplateList" style="height:17px;margin-left:-1px;margin-top:5px;width:15px" src="./Images/SimplogIcons/ArrowRight.png" />
-                                                                <img *ngIf="IsShowTemplateList" style="height:17px;margin-left:-1px;width:15px;margin-top:5px" src="./Images/SimplogIcons/ArrowLeft.png" />
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="height:220px">
-                                                        <td>
-                                                            <div class="VerticalText" style="width:20px;font-size:14px;color:gray">{{TemplateListTitle}}</div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr><td></td></tr>
-                                                </table>
 
 
-                                            </td>
+<ScrollViewer *ngIf="IsReady">
+    <table>
+        <tr>
 
-                                            <td style="height:100%;width:1px"><div style="width:1px;"></div></td>
+            <td *ngIf="SelectedMode === 'Generate' && !HasNoTmplates">
+                <table>
+                    <tr style="height:100%">
+                        <td>
+                            <table>
+                                <tr style="height:100%;width:100%">
 
-
-                                            <td *ngIf="IsShowTemplateList" style="position: relative;vertical-align:top">
-
-                                                <table style="width:300px;height:100%">
-                                                    <tr>
-                                                        <td>
-                                                            <div style="background-color:#EDEDED;height:30px;border-top:1px solid #E4E3E1; border-top-left-radius:6px;color:black;vertical-align:central">
-
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                        <td style="width:50px;"><button style="width:50px" class="Button" (click)="OnEditQuotationTemplate()" [disabled]="!IsEditEnabled || IsDisableEditQuoteTemplateButton">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </button></td>
-                                                                        <td></td>
-                                                                        <td style="float:right;margin-top:5px" *ngIf="IsShowFromLibraryLink">
-                                                                            <a [class.HyperlinkDisabled]="!IsEditEnabled" (click)="AddQuoteTemplateFromLibraryClcik()" style="font-size:12px;color:#0094ff;width:150px;">{{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}</a>
-                                                                        </td>
-                                                                        <td style="width:30px;"><div style="width:20px"></div></td>
-                                                                    </tr>
-                                                                </table>
-
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="height:100%">
-                                                        <td>
-                                                            <div class="MediaFill">
-                                                                <ScrollViewer>
-                                                                    <ul [class.FiltersMenuDisabled]="!IsEditEnabled" style="margin:5px;">
-
-                                                                        <li (click)="SelectedQuoteTemplateList = item" [class.RowSelected]="item === SelectedQuoteTemplateList" class="SessionItem"
-                                                                            [class.SelectedSessionItem]="item === SelectedQuoteTemplateList"
-                                                                            *ngFor="let item of QuotationTemplates">
-                                                                            <table>
-                                                                                <tr>
-
-                                                                                    <td style="width:10px;"><div style="width:10px"></div></td>
-
-                                                                                    <td style="vertical-align:central;width:200px">
-                                                                                        <div class="TextTrimming" style="font-size: 12px;vertical-align:central;width:200px; color: #292E30;">
-                                                                                            {{item.Name}}
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                            </table>
-
-                                                                        </li>
-
-                                                                    </ul>
-                                                                </ScrollViewer>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
-                                            </td>
-
-
-
-                                        </tr>
-
-                                    </table>
-                                </td>
-
-                                <td style="width:100%;margin-right:5px">
-                                    <div style="text-align:center;height:100%">
-
-
-                                        <iframe [attr.id]="PreviewPdfId" *ngIf="IsShowPreviewPDF" [src]="IFrameURI | SafePipe" style="width:100%;height:99%">{{'QuoteTemplate.M.Loading' | TextCodeTranslationPipe}}</iframe>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-      
-
-                    <td *ngIf="HasNoTmplates">
-                        <p style="font-size:24px;font-style:italic;color:gray;height:30px;width:200px;text-align:center" class="CenterCenter">{{'QuoteTemplate.M.NoActiveTemplatesFoundMessage' | TextCodeTranslationPipe}} </p>
-                    </td>
-
-                    <td *ngIf="SelectedMode === 'Upload' && !HasNoTmplates" colspan="2">
-                        <div style="height:100%;width:100%">
-                            <div style="height:60px;width:200px;text-align:center; vertical-align:middle;" class="CenterCenter">
-                                <div style="height:30px;width:120px">
-                                    <button style="width:120px;text-align:center; vertical-align:middle;" class="Button" (click)="OnUploadQuote()" [disabled]="!IsEditEnabled">{{'Quote.Quotation.B.UploadQuote' | TextCodeTranslationPipe}} </button>
-
-                                </div>
-                                <div tyle="height30px;width:200px" *ngIf="IsFileUploadedManually">
-                                    <p style="width:200px;height:35px;text-align:center; vertical-align:middle;color:green;margin-left:-50px">{{'Quote.Quotation.M.FileUploadedManuallyMessage' | TextCodeTranslationPipe}} </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <input [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
-                    </td>
-
-                    <td style="width:5px;"></td>
-                    <td *ngIf="SelectedMode != 'Upload'  && !HasNoTmplates"><div></div></td>
-                    <td style="width:300px;">
-                        <table>
-                            <tr>
-                                <td>
-                                    <ul [class.FiltersMenuDisabled]="HasNoTmplates" class="FiltersMenu">
-                                        <li (click)="SelectedModeClicked('Generate')" style="width:50%;" [class.SelectedFilter]="SelectedMode === 'Generate'">
-                                            
-                                            {{'Quote.Quotation.B.Generate' | TextCodeTranslationPipe}}
-                                        </li>
-                                        <li (click)="SelectedModeClicked('Upload')" style="width:50%;" [class.SelectedFilter]="SelectedMode === 'Upload'">
-                                            
-                                            {{'Quote.Quotation.B.Upload' | TextCodeTranslationPipe}}
-                                        </li>
-
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr style="height:5px">
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <button style="width:100%;text-align:center" class="Button" (click)="OnPrint()" [disabled]="!IsPrintButtonEnabled">{{'Quote.Quotation.B.Print' | TextCodeTranslationPipe}} </button>
-                                </td>
-                            </tr>
-                            <tr style="height:5px">
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td style="width:100%;height:22px">
-
-
-                                    <div [class.ToggleButtonDisabled]="!IsSendButtonEnabled" tabindex="0" class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
-                                        <label>{{'Quote.Quotation.B.Send' | TextCodeTranslationPipe}} </label>
-                                        <img src="./Images/ToggleIcon.png" />
-                                        <div class="ToggleButtonMenu" style="width: 100%;">
-                                            <button (click)="OnSendToCustomer('Send to Customer')">{{'Quote.Quotation.B.SendtoCustomer' | TextCodeTranslationPipe}} </button>
-                                            <button (click)="OnSendToCustomer('Send Internally')">{{'Quote.Quotation.B.SendInternally' | TextCodeTranslationPipe}} </button>
-                                        </div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                            <tr style="height:5px">
-                                <td></td>
-                            </tr>
-                            <tr style="height:275px;min-height:150px">
-                                <td style="vertical-align:top;height:100%">
-                                    <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
-                                        <table style="border :none;">
-
-
-                                            <tr style="height:25px">
+                                    <td style="height:100%;width:auto;vertical-align:top;text-align:left;">
+                                        <table>
+                                            <tr style="height:50px;vertical-align:top;">
                                                 <td>
+                                                    <button [attr.title]="AttrTitleShowTemplateList" class="Button2" (click)="ShowHideTemplateList()" style="height:50px;width:24px;margin-right:4px;text-align:center;vertical-align:central;">
+                                                        <img *ngIf="!IsShowTemplateList" style="height:17px;margin-left:-1px;margin-top:5px;width:15px" src="./Images/SimplogIcons/ArrowRight.png" />
+                                                        <img *ngIf="IsShowTemplateList" style="height:17px;margin-left:-1px;width:15px;margin-top:5px" src="./Images/SimplogIcons/ArrowLeft.png" />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:220px">
+                                                <td>
+                                                    <div class="VerticalText" style="width:20px;font-size:14px;color:gray">{{TemplateListTitle}}</div>
+                                                </td>
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
 
-                                                    <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                                    </td>
+
+                                    <td style="height:100%;width:1px"><div style="width:1px;"></div></td>
+
+
+                                    <td *ngIf="IsShowTemplateList" style="position: relative;vertical-align:top">
+
+                                        <table style="width:300px;height:100%">
+                                            <tr>
+                                                <td>
+                                                    <div style="background-color:#EDEDED;height:30px;border-top:1px solid #E4E3E1; border-top-left-radius:6px;color:black;vertical-align:central">
 
                                                         <table>
                                                             <tr>
                                                                 <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteTemplate.S.Sections' | TextCodeTranslationPipe}}  </div></td>
+                                                                <td style="width:50px;"><button style="width:50px" class="Button" (click)="OnEditQuotationTemplate()" [disabled]="!IsEditEnabled || IsDisableEditQuoteTemplateButton">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </button></td>
                                                                 <td></td>
-                                                                <td style="width:20px">
-                                             
+                                                                <td style="float:right;margin-top:5px" *ngIf="IsShowFromLibraryLink">
+                                                                    <a [class.HyperlinkDisabled]="!IsEditEnabled" (click)="AddQuoteTemplateFromLibraryClcik()" style="font-size:12px;color:#0094ff;width:150px;">{{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}</a>
                                                                 </td>
-                                                                <td style="width:10px;"><div style="width:10px"></div></td>
+                                                                <td style="width:30px;"><div style="width:20px"></div></td>
                                                             </tr>
                                                         </table>
 
                                                     </div>
-
                                                 </td>
-
-
-
                                             </tr>
-
-
-                                            <tr style="height:250px" class="SectionBody">
+                                            <tr style="height:100%">
                                                 <td>
                                                     <div class="MediaFill">
                                                         <ScrollViewer>
-                                                            <ul>
-                                                         
-                                                                <li class="SessionItem"
-                                                                    *ngFor="let item of QuoteTemplateSectionLists">
+                                                            <ul [class.FiltersMenuDisabled]="!IsEditEnabled" style="margin:5px;">
+
+                                                                <li (click)="SelectedQuoteTemplateList = item" [class.RowSelected]="item === SelectedQuoteTemplateList" class="SessionItem"
+                                                                    [class.SelectedSessionItem]="item === SelectedQuoteTemplateList"
+                                                                    *ngFor="let item of QuotationTemplates">
                                                                     <table>
                                                                         <tr>
 
                                                                             <td style="width:10px;"><div style="width:10px"></div></td>
 
-                                                                            <td style="width:30px">
-                                                                                <CheckBox [IsChecked]="!item.IsExcluded"
-                                                                                          (Checked)="item.IsExcluded = !$event" [IsEnabled]="IsEditEnabled"></CheckBox>
-
-                                                                            </td>
-
-                                                              
-
-                                                                            <td style="vertical-align:central;width:130px">
-                                                                                <div class="TextTrimming" style="font-size: 12px;vertical-align:central;width:130px; color: #292E30;">
-                                                                                    {{item.DisplayName}}
+                                                                            <td style="vertical-align:central;width:200px">
+                                                                                <div class="TextTrimming" style="font-size: 12px;vertical-align:central;width:200px; color: #292E30;">
+                                                                                    {{item.Name}}
                                                                                 </div>
                                                                             </td>
-
-
-                                                                            <td class="CellStretched" style="width:100px;position:relative">
-                                                                  
-                                                                                <div *ngIf="item.IsSection" style="vertical-align:central;margin-top:2px">
-                                                                                    <button style="display:inline;width:80px;margin-top:2px" class="QuoteTemplateSettingButton" (click)="OnEditSectionButtonClicked(item)" [disabled]="!IsEditEnabled">
-                                                                                        <table>
-                                                                                            <tr>
-                                                                                                <td style="width:20px;"><img src="./Images/Buttons/EditBlack.png" /></td>
-                                                                                                <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </td>
-                                                                                                <td></td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                     
-
-
-                                                                                    </button>
-
-                                                                                </div>
-
-
-                                                                            </td>
-
-
-
-
                                                                         </tr>
 
                                                                     </table>
@@ -373,143 +257,338 @@
                                                     </div>
                                                 </td>
                                             </tr>
-
-
                                         </table>
 
-
-
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr style="height:5px">
-                                <td></td>
-                            </tr>
-
-                            <tr style="height:275px;min-height:70px">
-                                <td style="vertical-align:top;">
-                                    <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
-                                        <table style="border :none;">
-
-
-                                            <tr style="height:25px">
-                                                <td>
-
-                                                    <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
-
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                <td style="width:50px;"><div style="width:50px;">{{'Quote.Quotation.S.Versions' | TextCodeTranslationPipe}} </div></td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-
-                                                    </div>
-
-                                                </td>
+                                    </td>
 
 
 
-                                            </tr>
+                                </tr>
 
-                                            <tr style="height:250px" class="SectionBody">
-                                                <td>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="MediaFill">
-                                                                    <ScrollViewer>
-                                                                        <ul>
+                            </table>
+                        </td>
 
-                                                                            <li class="SessionItem" *ngFor="let item of ReportVersions" style="height:50px;">
-                                                                                <table style="margin-top:0px">
+                        <td style="width:100%;margin-right:5px">
+                            <div style="text-align:center;height:100%">
+
+                                <div *ngIf="IsShowPreviewPDF && IFrameURI && IsEditEnabled" style="position:absolute;top:14px;width:100%">
+                                    <table>
+                                        <tr>
+                                            <td style="width:50%"></td>
+                                            <td style="width:1px">
+                                                <button [class.RefreshButtonShake]="IsQuoteTemplateSectionInCludedChange == true" [class.RefreshButton]="IsQuoteTemplateSectionInCludedChange == false" (click)="PreviewQuoteTemplatePdfReport()" style="text-align:center;margin-left:10px;width:75px;font-size:13px">Refresh</button>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!--<div style="position:absolute;top:14px;width:50%"><button [class.RefreshButtonShake]="IsQuoteTemplateSectionInCludedChange == true" [class.RefreshButton]="IsQuoteTemplateSectionInCludedChange == false" (click)="PreviewQuoteTemplatePdfReport()" style="text-align:center;width:60px;float:right;margin-left: 55px;">Refresh</button></div>-->
+
+                                <iframe [attr.id]="PreviewPdfId" *ngIf="IsShowPreviewPDF" [src]="IFrameURI | SafePipe" style="width:100%;height:99%">{{'QuoteTemplate.M.Loading' | TextCodeTranslationPipe}}</iframe>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+
+            <td *ngIf="HasNoTmplates">
+                <p style="font-size:24px;font-style:italic;color:gray;height:30px;width:200px;text-align:center" class="CenterCenter">{{'QuoteTemplate.M.NoActiveTemplatesFoundMessage' | TextCodeTranslationPipe}} </p>
+            </td>
+
+            <td *ngIf="SelectedMode === 'Upload' && !HasNoTmplates" colspan="2">
+                <div style="height:100%;width:100%">
+                    <div style="height:60px;width:200px;text-align:center; vertical-align:middle;" class="CenterCenter">
+                        <div style="height:30px;width:120px">
+                            <button style="width:120px;text-align:center; vertical-align:middle;" class="Button" (click)="OnUploadQuote()" [disabled]="!IsEditEnabled">{{'Quote.Quotation.B.UploadQuote' | TextCodeTranslationPipe}} </button>
+
+                        </div>
+                        <div tyle="height30px;width:200px" *ngIf="IsFileUploadedManually">
+                            <p style="width:200px;height:35px;text-align:center; vertical-align:middle;color:green;margin-left:-50px">{{'Quote.Quotation.M.FileUploadedManuallyMessage' | TextCodeTranslationPipe}} </p>
+                        </div>
+                    </div>
+                </div>
+
+                <input [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+            </td>
+
+            <td style="width:5px;"></td>
+            <td *ngIf="SelectedMode != 'Upload'  && !HasNoTmplates"><div></div></td>
+            <td style="width:300px;">
+                <table>
+                    <tr>
+                        <td>
+                            <ul [class.FiltersMenuDisabled]="HasNoTmplates" class="FiltersMenu">
+                                <li (click)="SelectedModeClicked('Generate')" style="width:50%;" [class.SelectedFilter]="SelectedMode === 'Generate'">
+
+                                    {{'Quote.Quotation.B.Generate' | TextCodeTranslationPipe}}
+                                </li>
+                                <li (click)="SelectedModeClicked('Upload')" style="width:50%;" [class.SelectedFilter]="SelectedMode === 'Upload'">
+
+                                    {{'Quote.Quotation.B.Upload' | TextCodeTranslationPipe}}
+                                </li>
+
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr style="height:5px">
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button style="width:100%;text-align:center" class="Button" (click)="OnPrint()" [disabled]="!IsPrintButtonEnabled">{{'Quote.Quotation.B.Print' | TextCodeTranslationPipe}} </button>
+                        </td>
+                    </tr>
+                    <tr style="height:5px">
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="width:100%;height:22px">
+
+
+                            <div [class.ToggleButtonDisabled]="!IsSendButtonEnabled" tabindex="0" class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
+                                <label>{{'Quote.Quotation.B.Send' | TextCodeTranslationPipe}} </label>
+                                <img src="./Images/ToggleIcon.png" />
+                                <div class="ToggleButtonMenu" style="width: 100%;">
+                                    <button (click)="OnSendToCustomer('Send to Customer')">{{'Quote.Quotation.B.SendtoCustomer' | TextCodeTranslationPipe}} </button>
+                                    <button (click)="OnSendToCustomer('Send Internally')">{{'Quote.Quotation.B.SendInternally' | TextCodeTranslationPipe}} </button>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr style="height:5px">
+                        <td></td>
+                    </tr>
+                    <tr style="height:275px;min-height:150px">
+                        <td style="vertical-align:top;height:100%">
+                            <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                <table style="border :none;">
+
+
+                                    <tr style="height:25px">
+                                        <td>
+
+                                            <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:5px;"><div style="width:5px"></div></td>
+                                                        <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteTemplate.S.Sections' | TextCodeTranslationPipe}}  </div></td>
+                                                        <td></td>
+                                                        <td style="width:20px"></td>
+                                                        <td style="width:10px;"><div style="width:10px"></div></td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+
+                                        </td>
+
+
+
+                                    </tr>
+
+
+                                    <tr style="height:250px" class="SectionBody">
+                                        <td>
+                                            <div class="MediaFill">
+                                                <ScrollViewer>
+                                                    <ul>
+
+                                                        <li class="SessionItem"
+                                                            *ngFor="let item of QuoteTemplateSectionLists">
+                                                            <table>
+                                                                <tr>
+
+                                                                    <td style="width:10px;"><div style="width:10px"></div></td>
+
+                                                                    <td style="width:30px">
+                                                                        <CheckBox [IsChecked]="!item.IsExcluded"
+                                                                                  (Checked)="item.IsExcluded = !$event" [IsEnabled]="IsEditEnabled"></CheckBox>
+
+                                                                    </td>
+
+
+
+                                                                    <td style="vertical-align:central;width:130px">
+                                                                        <div class="TextTrimming" style="font-size: 12px;vertical-align:central;width:130px; color: #292E30;">
+                                                                            {{item.DisplayName}}
+                                                                        </div>
+                                                                    </td>
+
+
+                                                                    <td class="CellStretched" style="width:100px;position:relative">
+
+                                                                        <div *ngIf="item.IsSection" style="vertical-align:central;margin-top:2px">
+                                                                            <button style="display:inline;width:80px;margin-top:2px" class="QuoteTemplateSettingButton" (click)="OnEditSectionButtonClicked(item)" [disabled]="!IsEditEnabled">
+                                                                                <table>
                                                                                     <tr>
-
-                                                                                        <td style="width:10px;"><div style="width:10px"></div></td>
-
-                                                                                        <td style="vertical-align:central;width:50px">
-                                                                                            <div>{{item.VersionNumber}}</div>
-                                                                                        </td>
-
-                                                                                        <td style="vertical-align:central;width:65px">
-                                                                                            <div style="font-size: 11px;vertical-align:central; color: #282E30;">
-                                                                                                {{item.DisplayVersionTypeName}}
-                                                                                            </div>
-                                                                                        </td>
-
-                                                                                        <td style="vertical-align:central;width:150px">
-                                                                                            <div style="font-size: 11px;vertical-align:central; color: #282E30;width:150px">
-                                                                                                {{item.CreateDate| DateTimePipe:'DTL12'}}
-                                                                                            </div>
-                                                                                        </td>
-
-                                                                                        <td style="vertical-align:central;width:37px"></td>
+                                                                                        <td style="width:20px;"><img src="./Images/Buttons/EditBlack.png" /></td>
+                                                                                        <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </td>
+                                                                                        <td></td>
                                                                                     </tr>
-
-
-                                                                                    <tr style="height:3px;"><td colspan="5"></td></tr>
-                                                                                    <tr>
-
-                                                                                        <td style="width:10px;"><div style="width:10px"></div></td>
-
-
-
-                                                                                        <td style="vertical-align:central;width:50px">
-                                                                                            <div class="TextTrimming" style="font-size: 11px;vertical-align:central;width:50px; color: #282E30;">
-                                                                                                {{item.UpdateByUserName}}
-                                                                                            </div>
-                                                                                        </td>
-
-
-                                                                                        <td style="vertical-align:central;width:65px">
-                                                                                            <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsSent" src="./Images/GreenTick.png" />
-                                                                                        </td>
-
-                                                                                        <td style="vertical-align:central;width:150px">
-                                                                                            <div style="font-size: 11px;vertical-align:central; color: #282E30;width:150px">
-                                                                                                {{item.SendDate| DateTimePipe:'DTL12'}}
-                                                                                            </div>
-                                                                                        </td>
-
-                                                                                        <td style="vertical-align:central;width:37px"><a href="javascript:;" (click)="OpenDocumentVersion(item)">{{'Quote.Quotation.B.View' | TextCodeTranslationPipe}} </a></td>
-                                                                                    </tr>
-
-                                                                                    <tr style="height:1px;"><td colspan="5"><div class="RowSeparator"></div></td></tr>
                                                                                 </table>
 
 
-                                                                            </li>
 
-                                                                        </ul>
-                                                                    </ScrollViewer>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                     
-                                                    </table>
-                                                </td>
-                                            </tr>
+                                                                            </button>
+
+                                                                        </div>
 
 
-                                        </table>
+                                                                    </td>
 
 
 
-                                    </div>
-                                </td>
-                            </tr>
 
-                            <tr style="height:10px">
-                                <td></td>
-                            </tr>
-                        </table>
+                                                                </tr>
 
-                    </td>
+                                                            </table>
+
+                                                        </li>
+
+                                                    </ul>
+                                                </ScrollViewer>
+                                            </div>
+                                        </td>
+                                    </tr>
 
 
-                </tr>
-            </table>
-        </ScrollViewer>
-   
+                                </table>
+
+
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:5px">
+                        <td></td>
+                    </tr>
+
+                    <tr style="height:275px;min-height:70px">
+                        <td style="vertical-align:top;">
+                            <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                <table style="border :none;">
+
+
+                                    <tr style="height:25px">
+                                        <td>
+
+                                            <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:5px;"><div style="width:5px"></div></td>
+                                                        <td style="width:50px;"><div style="width:50px;">{{'Quote.Quotation.S.Versions' | TextCodeTranslationPipe}} </div></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+
+                                        </td>
+
+
+
+                                    </tr>
+
+                                    <tr style="height:250px" class="SectionBody">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="MediaFill">
+                                                            <ScrollViewer>
+                                                                <ul>
+
+                                                                    <li class="SessionItem" *ngFor="let item of ReportVersions" style="height:50px;">
+                                                                        <table style="margin-top:0px">
+                                                                            <tr>
+
+                                                                                <td style="width:10px;"><div style="width:10px"></div></td>
+
+                                                                                <td style="vertical-align:central;width:50px">
+                                                                                    <div>{{item.VersionNumber}}</div>
+                                                                                </td>
+
+                                                                                <td style="vertical-align:central;width:65px">
+                                                                                    <div style="font-size: 11px;vertical-align:central; color: #282E30;">
+                                                                                        {{item.DisplayVersionTypeName}}
+                                                                                    </div>
+                                                                                </td>
+
+                                                                                <td style="vertical-align:central;width:150px">
+                                                                                    <div style="font-size: 11px;vertical-align:central; color: #282E30;width:150px">
+                                                                                        {{item.CreateDate| DateTimePipe:'DTL12'}}
+                                                                                    </div>
+                                                                                </td>
+
+                                                                                <td style="vertical-align:central;width:37px"></td>
+                                                                            </tr>
+
+
+                                                                            <tr style="height:3px;"><td colspan="5"></td></tr>
+                                                                            <tr>
+
+                                                                                <td style="width:10px;"><div style="width:10px"></div></td>
+
+
+
+                                                                                <td style="vertical-align:central;width:50px">
+                                                                                    <div class="TextTrimming" style="font-size: 11px;vertical-align:central;width:50px; color: #282E30;">
+                                                                                        {{item.UpdateByUserName}}
+                                                                                    </div>
+                                                                                </td>
+
+
+                                                                                <td style="vertical-align:central;width:65px">
+                                                                                    <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsSent" src="./Images/GreenTick.png" />
+                                                                                </td>
+
+                                                                                <td style="vertical-align:central;width:150px">
+                                                                                    <div style="font-size: 11px;vertical-align:central; color: #282E30;width:150px">
+                                                                                        {{item.SendDate| DateTimePipe:'DTL12'}}
+                                                                                    </div>
+                                                                                </td>
+
+                                                                                <td style="vertical-align:central;width:37px"><a href="javascript:;" (click)="OpenDocumentVersion(item)">{{'Quote.Quotation.B.View' | TextCodeTranslationPipe}} </a></td>
+                                                                            </tr>
+
+                                                                            <tr style="height:1px;"><td colspan="5"><div class="RowSeparator"></div></td></tr>
+                                                                        </table>
+
+
+                                                                    </li>
+
+                                                                </ul>
+                                                            </ScrollViewer>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+
+
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:10px">
+                        <td></td>
+                    </tr>
+                </table>
+
+            </td>
+
+
+        </tr>
+    </table>
+</ScrollViewer>

@@ -88,7 +88,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage GetQuoteTemplateLists(string queryName, bool isCustomerCare, int tenant)
+        public HttpResponseMessage GetQuoteTemplateLists(string queryName)
         {
             try
             {
@@ -97,21 +97,17 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
 
-                QuoteTemplateRepository quoteTemplateRepository;
-                quoteTemplateRepository = new QuoteTemplateRepository(tenant);
-                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(quoteTemplateRepository);
-                IQueryable<QuoteTemplate> quoteTemplates = null;
+                int tenant = authToken.Tenant;
 
-                if (queryName == "FromTenant")
+                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(0);
+                IQueryable<QuoteTemplateList> quoteTemplates = quoteTemplateQuery.GetQuoteTemplateLists();
+                if (queryName == "FromAllTenant" && SecurityUtility.CheckIsUserCustomerCare(authToken.Email))
                 {
-                    if (isCustomerCare) quoteTemplates = quoteTemplateRepository.GetAllQuoteTemplates();
-                    else quoteTemplates = quoteTemplateRepository.GetQuoteTemplates(tenant);
+                    if (tenant != 0) quoteTemplates = quoteTemplates.Where(d => d.Tenant == tenant || d.Tenant == 0);
                 }
-                else quoteTemplates = quoteTemplateRepository.GetQuoteTemplates(tenant);
+                else quoteTemplates = quoteTemplates.Where(d => d.Tenant == tenant);
 
-
-                IQueryable<QuoteTemplateList> query2 = quoteTemplateQuery.GetIQueryableEntityList(quoteTemplates);
-                return Request.CreateResponse(HttpStatusCode.OK, query2);
+                return Request.CreateResponse(HttpStatusCode.OK, quoteTemplates);
             }
             catch (Exception ex)
             {

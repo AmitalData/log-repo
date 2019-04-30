@@ -19,6 +19,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         {
             entityPM.Id = IdCounter.GetNumber("OpportunityClosingReason", entityPM.Tenant);
             entityPM.AddedManually = true;
+            entityPM.IsClosedLost = true;
         }
 
         protected override void Trace(OpportunityClosingReasonPM entityPM, OpportunityClosingReason entityPOCO, string changesXml)
