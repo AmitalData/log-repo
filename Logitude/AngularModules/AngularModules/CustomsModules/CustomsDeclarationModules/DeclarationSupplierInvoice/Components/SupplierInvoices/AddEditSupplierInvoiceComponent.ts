@@ -82,6 +82,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     IsInvoiceAnswer: boolean;
     AccumulatedFilter: string;
     IsSelectedRowTextBoxVisibile: boolean = false;
+    public tariffErrorItems: number = 0;
     //public ItemCode_LocalCache: ItemCodeComponent[];
     public GITITEMExtendedPMService: GITITEMExtendedPMService = new GITITEMExtendedPMService();
 
@@ -1512,6 +1513,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             }
 
         }
+
+        if (this.tariffErrorItems > 0) { errors.push("ישנן שורות עם קוד הסכם שגוי")}
 
         if (errors.length == 0) {
 

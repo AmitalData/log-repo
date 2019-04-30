@@ -3600,21 +3600,29 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     TariffErrorButtonClicked() {
         this.ShowTariffErrorTooltip = !this.ShowTariffErrorTooltip;
     }
-
+    
     CheckTariff() {
         /*if (this.TradeAgreementCode && this.OriginCountryCode) {
             this.ShowTariffErrorInfo = (this.CustomsCountry.TarriffCode != this.TradeAgreementCode);
         } else {
             this.ShowTariffErrorInfo = false;
         }*/
-        if (this.OriginCountryCode && this.CustomsCountry.TarriffCode) {
-            this.ShowValidatioIcon = (this.CustomsCountry.TarriffCode != this.TradeAgreementCode);
-            this.TariffErrorText = "קוד הסכם " + this.TradeAgreementCode + "לא מתאים למדינה" + this.OriginCountryCode + "(הסכם " + this.CustomsCountry.TarriffCode + "("; 
-        } else {
-            this.ShowValidatioIcon = false;
-        }
-    } 
+        if (this.OriginCountryName && this.CustomsCountry.TarriffCode && this.CustomsCountry.TarriffCode != this.TradeAgreementCode) {
+            if (this.ShowValidatioIcon != true) {
+                this.ShowValidatioIcon = true;
+                this.Parent.Parent.tariffErrorItems += 1;
+            }
+            var agreementCode = !AppTool.IsNullOrEmpty(this.TradeAgreementCode) ? this.TradeAgreementCode : "לא מוזן";
+            this.TariffErrorText = "קוד הסכם " + agreementCode + ", לא מתאים למדינה " + this.OriginCountryName + " (" + " הסכם " + this.CustomsCountry.TarriffCode + " )";
 
+        }
+        else {
+            if (this.ShowValidatioIcon == true) {
+                this.ShowValidatioIcon = false;
+                this.Parent.Parent.tariffErrorItems -= 1;
+            }
+        }
+    }
 }
 
 export class SupplierInvoiceFreightAmountLine extends BaseComponent {
