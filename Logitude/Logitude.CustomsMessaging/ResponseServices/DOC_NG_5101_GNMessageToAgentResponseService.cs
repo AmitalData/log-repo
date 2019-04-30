@@ -219,15 +219,46 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     switch (customResponse.MessageToAgent.msgCode)
                     {
                         case 29:
-                            notificationDefinitionCode = "5101S";
+                            notificationDefinitionCode = "5101R";
                             assigneToNotificationTypeCode = "I";
-                            notificationDescription = "נוצרה בקשת אחסנה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            {
+                                notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                                notificationDescription = "התכתבות בגין מסמך נדרש הצהרה מספר " + notificationDeclaration; 
+                            }
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                            {
+                                notificationDescription = "התכתבות בגין מסמך נדרש בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            }
+                            break;
+                        case 30:
+                            notificationDefinitionCode = "5101A";
+                            assigneToNotificationTypeCode = "I";
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            {
+                                notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                                notificationDescription = "התכתבות בגין דחיית פיצול מטען הצהרה מספר " + notificationDeclaration;
+                            }
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                            {
+                                notificationDescription = "התכתבות בגין דחיית פיצול מטען בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            }
+                            break;
+                        case 31:
+                            notificationDefinitionCode = "5101M";
+                            assigneToNotificationTypeCode = "I";
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            {
+                                notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                                notificationDescription = "התכתבות בגין כופר חוקיות הצהרה מספר " + notificationDeclaration;
+                            }
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                            {
+                                notificationDescription = "התכתבות בגין כופר חוקיות בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            }
                             break;
                         default:
-                            notificationDefinitionCode = "5101N";
-                            assigneToNotificationTypeCode = "I";
-                            notificationDescription = "הודעה לסוכן בגין " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
-                            notificationStatusCode = "VAN";
+                            
                             break;
                     }
                 }
@@ -242,7 +273,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!string.IsNullOrWhiteSpace(customResponse.MessageToAgent.msgString))
             {
-                notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString;
+                notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString.Replace("00:00:00", "");
             }
 
             if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015)
