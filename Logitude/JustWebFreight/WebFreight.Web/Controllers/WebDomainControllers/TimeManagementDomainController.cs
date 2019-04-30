@@ -919,6 +919,63 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetVacations()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
+
+                string loggedUserId = null;
+                UserRepository userRepository = new UserRepository(tenant);
+                User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, authToken.Email, tenant, true);
+                if (loggedUser != null)
+                {
+                    loggedUserId = loggedUser.Id;
+                }
+
+                List<string> ProjectsNumber = new List<string>();
+                ProjectsNumber.Add("1014");
+                ProjectsNumber.Add("1014-1");
+                ProjectsNumber.Add("1014-2");
+                ProjectsNumber.Add("1014-3");
+                ProjectsNumber.Add("1125");
+                ProjectsNumber.Add("1015");
+                ProjectsNumber.Add("1015-1");
+                ProjectsNumber.Add("1015-2");
+
+                ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
+                var dataGroups = (from tMEmployeeTime in myContext.TMEmployeeTimes
+                                  join tMProject in myContext.TMProjects on tMEmployeeTime.ProjectId equals tMProject.Id
+                                  where tMEmployeeTime.EmployeeUserId == loggedUserId
+                                  && ProjectsNumber.Contains(tMProject.ProjectNumber)
+                                  group tMEmployeeTime by new { tMProject.ProjectNumber, tMEmployeeTime.ProjectId } into g
+                                  select new
+                                  {
+                                      ProjectNumber = g.Key.ProjectNumber,
+                                      TimeInMinutes = g.Sum(s => s.TimeInMinutes),
+                                  }).ToList();
+
+                TMVacationsSummary iResult = new TMVacationsSummary();
+                iResult.Holidays = dataGroups.Where(d => d.ProjectNumber == "1125").Count();
+                iResult.Vacations = dataGroups.Where(d => d.ProjectNumber == "1014" || d.ProjectNumber == "1014-1").Count();
+                iResult.HalfVacations = dataGroups.Where(d => d.ProjectNumber == "1014-2").Count();
+                iResult.UnpaidVacations = dataGroups.Where(d => d.ProjectNumber == "1014-3").Count();
+                iResult.SicknessVacations = dataGroups.Where(d => d.ProjectNumber == "1015" || d.ProjectNumber == "1015-2").Count();
+                iResult.SickLeaves = dataGroups.Where(d => d.ProjectNumber == "1015-1").Sum(s => s.TimeInMinutes);
+
+                return Request.CreateResponse(HttpStatusCode.OK, iResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     public class TimeManagementAPIHelper
@@ -975,12 +1032,31 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int MyProjectsCount { get; set; }
         public int AllProjectsCount { get; set; }
     }
-
     public class TMProjectDataArgs
     {
         public string EmployeeUserId { get; set; }
         public int Tenant { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
+    }
+    public class TMVacationsSummary
+    {
+        public double Holidays { get; set; }
+        public double Vacations { get; set; }
+        public double HalfVacations { get; set; }
+        public double UnpaidVacations { get; set; }
+        public double SicknessVacations { get; set; }
+        public double SickLeaves { get; set; }
+
+        //-- Sickness Vacations	    1015
+        //-- Sick Leave			    1015-1
+        //-- Medical Vacation		1015-2
+
+        //-- Holidays				1125
+
+        //-- Vacations			    1014	
+        //-- Annual Vacation		1014-1
+        //-- Half Vacation		    1014-2
+        //-- Unpaid Vacation		1014-3
     }
 }
