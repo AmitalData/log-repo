@@ -197,4 +197,16 @@ export class ExcelTariffLines {
     Step6Price: number;
     Step7Price: number;
     Step8Price: number;
+
+    FromPortText: string;
+    ToPortText: string;
+    MinPriceText: string;
+    Step1PriceText: string;
+    Step2PriceText: string;
+    Step3PriceText: string;
+    Step4PriceText: string;
+    Step5PriceText: string;
+    Step6PriceText: string;
+    Step7PriceText: string;
+    Step8PriceText: string;
 }

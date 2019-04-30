@@ -1463,7 +1463,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             if (this.ParentDataTypeCode == "DateTime" || this.ParentDataTypeCode == "Date") {
                 var timerToken = setTimeout(() => {
                     this.ShowSampleDateCommand.emit(this);
-                }, 1000);
+                }, 0);
             }
             this.MyParentClass.ClearData();
             //if ((newValue == true || newValue == false) && this.textValue) {

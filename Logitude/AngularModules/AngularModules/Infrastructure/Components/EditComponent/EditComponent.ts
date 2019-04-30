@@ -51,6 +51,8 @@ export class EditComponent implements OnDestroy {
     public HasHelper: boolean = false;
     public HasShortTitle: boolean = false;
     public HasMenuButtons: boolean = false;
+    public IsTabsHidden: boolean = false;
+
     public IsEntityLoaded: boolean = false;
     public ComponentBackground: string = "white";
     public BackButtonLabel: string;
@@ -95,6 +97,7 @@ export class EditComponent implements OnDestroy {
         this.HasHelper = this.ObjectTable.HasHelper;
         this.HasShortTitle = this.ObjectTable.HasShortTitle;
         this.HasMenuButtons = this.ObjectTable.HasMenuButtons;
+        this.IsTabsHidden = this.ObjectTable.IsTabsHidden;
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
 
@@ -532,7 +535,28 @@ export class EditComponent implements OnDestroy {
     //public ObjectTableTabs: any[] = [];
     public TabsItemsSource: TabItem[] = [];
     private LoadedTabsList: LoadedTabItem[] = [];
+    private SingleDetailsTab: any = null;
     private BuildEditTabs() {
+
+        if (this.IsTabsHidden) {
+            this.BuildSingleEditTab();
+        }
+
+        else {
+            this.BuildTabsItemsSource();
+        }
+    }
+    private BuildSingleEditTab() {
+        var singleTab = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId && d.IndexOrder === 0)[0];
+        if (singleTab) {
+            if (FeatureLocator.IsFeatureGranted(singleTab.FeatureId)) {
+                if (!AppTool.IsNullOrEmpty(singleTab.HtmlComponentUrl)) {
+                    this.SingleDetailsTab = singleTab;
+                }
+            }
+        }
+    }
+    private BuildTabsItemsSource() {
         var allTabs: any[] = [];
         var myTabsSorted: any[] = [];
         this.TabsItemsSource = [];
@@ -781,18 +805,30 @@ export class EditComponent implements OnDestroy {
     }
 
     SetSelectedTab() {
-        if (this.TabsItemsSource != null) {
-            var selected: any = null;
-
-            if (this.PreSelectedTabCode != null) {
-                selected = this.TabsItemsSource.filter(d => d.Code == this.PreSelectedTabCode)[0];
+        if (this.IsTabsHidden) {
+            if (this.SingleDetailsTab) {
+                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditTabComponent", this.TabControlBodyViewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.CurrentlySelected = true;
+                        cmpRef.instance.Run(this.SingleDetailsTab.Code, this.SingleDetailsTab.HtmlComponentUrl);
+                    });
             }
+        }
 
-            if (selected == null) {
-                selected = this.TabsItemsSource[0];
+        else {
+            if (this.TabsItemsSource != null) {
+                var selected: any = null;
+
+                if (this.PreSelectedTabCode != null) {
+                    selected = this.TabsItemsSource.filter(d => d.Code == this.PreSelectedTabCode)[0];
+                }
+
+                if (selected == null) {
+                    selected = this.TabsItemsSource[0];
+                }
+
+                this.SelectionChanged(selected);
             }
-
-            this.SelectionChanged(selected);
         }
     }
 

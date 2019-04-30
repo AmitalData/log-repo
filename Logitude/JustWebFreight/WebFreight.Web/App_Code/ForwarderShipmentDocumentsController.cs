@@ -80,7 +80,7 @@ namespace WebFreight.Web.App_Code
                         NumberOfRetries = 1,
                         ObjectTableId = Objecttable.Id,
                         ExpirationDate = DateTime.Now.AddDays(90),
-                        //Refrence = Shipment.ShipmentNumber,
+                        Refrence = EntityPM.Code,
                         Status = "I",
                         Tenant = EntityPM.Tenant
                     };

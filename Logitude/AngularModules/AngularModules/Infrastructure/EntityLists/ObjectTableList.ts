@@ -56,5 +56,6 @@ export class ObjectTableList {
 		AllowedInQueues: boolean;
 		LovDisplayMemberPath: string;
 		LovDisplayMemberPathLocal: string;
+		IsTabsHidden: boolean;
 	
 }

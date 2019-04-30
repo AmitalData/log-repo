@@ -1529,10 +1529,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
                                 if ((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id))
                                 {
-
-
-
-
                                     DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
                                     {
                                         Id = IdCounter.GetNumber("DocumentTypeTemplate", tenant).ToString(),

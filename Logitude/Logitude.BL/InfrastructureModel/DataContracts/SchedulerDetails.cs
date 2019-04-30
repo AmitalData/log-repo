@@ -10,7 +10,10 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
     [DataContract(Namespace = "")]
     public class SchedulerDetails
     {
-        [DataMember]
+		[DataMember]
+		public int Tenant { get; set; }
+
+		[DataMember]
         public FTPSchedulerDetails FTPDetails { get; set; }
 
     }
