@@ -430,9 +430,9 @@ namespace WebFreight.Web
                 myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(signalRTopic.Path, subscribtionName);
             }
 
-            SignalRHubMessageHandler signalRMessageHandler = new SignalRHubMessageHandler();
-            Thread signalRThread = new Thread(signalRMessageHandler.HandleTopicMessages);
-            signalRThread.Start();
+            //SignalRHubMessageHandler signalRMessageHandler = new SignalRHubMessageHandler();
+            //Thread signalRThread = new Thread(signalRMessageHandler.HandleTopicMessages);
+            //signalRThread.Start();
             //  string ssss = RoleEnvironment.CurrentRoleInstance.Id;
         }
 
