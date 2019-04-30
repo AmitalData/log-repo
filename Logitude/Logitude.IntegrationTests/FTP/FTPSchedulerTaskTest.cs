@@ -12,33 +12,19 @@ namespace Logitude.IntegrationTests.FTP
     public class FTPSchedulerTaskTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void DownloadFTPFiles_Prefix_Test()
         {
-            //	< SchedulerDetails xmlns: i = "http://www.w3.org/2001/XMLSchema-instance" >
-            //< FTPDetails >
-            //< Extension />
-            //< Folder > DocumentsBackup </ Folder >
-            //< From > Islam </ From >
-            //< Host > 192.168.1.26 </ Host >
-            //< Password > !I123456 </ Password >
-            //< Prefix />
-            //< Subject > test </ Subject >
-            //< Suffix />
-            //< UserName > islam </ UserName >
-            //</ FTPDetails >
-            //</ SchedulerDetails >
 
             SchedulerDetails schedulerDetails = new SchedulerDetails()
             {
                 Tenant = 1,
                 FTPDetails = new FTPSchedulerDetails()
                 {
-                    Extension = "pdf",
                     Folder = "DocumentsBackup",
                     From = "My FTP Server",
                     Host = "192.168.1.26",
                     Password = "!I123456",
-                    Prefix = "is",
+                    Prefix = "test",
                     Subject = "test",
                     Suffix = "",
                     UserName = "Islam",
@@ -54,6 +40,77 @@ namespace Logitude.IntegrationTests.FTP
             //    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
             //    analyzeQueueReposiory.GetAnalyzeQueues(schedulerDetails.Tenant).wh
             //}
+        }
+
+        [TestMethod]
+        public void DownloadFTPFiles_Extension_Pdf()
+        {
+
+
+            SchedulerDetails schedulerDetails = new SchedulerDetails()
+            {
+                Tenant = 1,
+                FTPDetails = new FTPSchedulerDetails()
+                {
+                    Extension = "pdf",
+                    Folder = "DocumentsBackup",
+                    From = "My FTP Server",
+                    Host = "192.168.1.26",
+                    Password = "!I123456",
+                    Subject = "test",
+                    Suffix = "",
+                    UserName = "Islam",
+                }
+            };
+            FTPSchedulerTaskService fTPSchedulerTaskService = new FTPSchedulerTaskService();
+            List<string> fileNames = fTPSchedulerTaskService.GetFilteredDirectoryFileNamesByFTPDetails(schedulerDetails);
+
+            fTPSchedulerTaskService.ReadFTPFilesBySchedulerDetailsToAnalyzeQueue(schedulerDetails);
+
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            //    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+            //    analyzeQueueReposiory.GetAnalyzeQueues(schedulerDetails.Tenant).wh
+            //}
+        }
+
+
+        [TestMethod]
+        public void DownloadFTPFiles_Extension_Xml_Prefix_SAT_Suffix_online()
+        {
+
+
+            SchedulerDetails schedulerDetails = new SchedulerDetails()
+            {
+                Tenant = 1,
+                FTPDetails = new FTPSchedulerDetails()
+                {
+                    Extension = "xml",
+                    Folder = "DocumentsBackup",
+                    From = "My FTP Server",
+                    Host = "192.168.1.26",
+                    Password = "!I123456",
+                    Subject = "test",
+                    Prefix = "sat",
+                    Suffix = "online",
+                    UserName = "Islam",
+                }
+            };
+            FTPSchedulerTaskService fTPSchedulerTaskService = new FTPSchedulerTaskService();
+            List<string> fileNames = fTPSchedulerTaskService.GetFilteredDirectoryFileNamesByFTPDetails(schedulerDetails);
+
+            fTPSchedulerTaskService.ReadFTPFilesBySchedulerDetailsToAnalyzeQueue(schedulerDetails);
+
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            //    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+            //    analyzeQueueReposiory.GetAnalyzeQueues(schedulerDetails.Tenant).wh
+            //}
+        }
+
+        [TestMethod]
+        public void DownloadFTPFiles_Failure_Test()
+        {
         }
     }
 }
