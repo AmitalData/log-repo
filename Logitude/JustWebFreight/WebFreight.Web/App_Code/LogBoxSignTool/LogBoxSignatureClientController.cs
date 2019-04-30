@@ -1,13 +1,8 @@
-﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.SignalRHubs;
 using Logitude.SystemLogs;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Client;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -16,10 +11,8 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.LogitudeCacheManager;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
@@ -331,7 +324,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
 
                             UserRepository userRep = new UserRepository(Tenant);
                             User loggedUser = userRep.GetSingleUserByEmail(authToken.Email, Tenant);
-                            SignalRHubMessageSender.SendSignalRMessage("DocumentSigned", "User" + loggedUser.Id + Tenant, FileInfo.DocumentsFilingId);
+                           //SignalRHubMessageSender.SendSignalRMessage("DocumentSigned", "User" + loggedUser.Id + Tenant, FileInfo.DocumentsFilingId);
                         }
                         return Request.CreateResponse(HttpStatusCode.OK, response.Result);
                     }

@@ -102,7 +102,15 @@ export class ShipmentHelperComponent implements OnDestroy {
                 this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
                         this.ShowHideShippingInstructionsButton();
+                        this.BuildComponent();
+
+                        if (this.EntityPM.DirectionId == "E" && this.EntityPM.TransportModeId == "A") {
+                            if (FeatureLocator.IsPackage_DVMT()) {
+                                this.IsAnalyzeChampXMLButtonVisible = true;
+                            }
+                        }
                     }
                 });
             }
