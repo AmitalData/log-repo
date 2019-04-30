@@ -103,7 +103,7 @@
                         <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                     </div>
 
-                    <div [ngStyle]="{opacity: ScreenOpacity}">
+                    <div>
                         <!-- Shipper -->
                         <div>
                             <div class="SectionTitle">
@@ -117,11 +117,11 @@
                             <table>
                                 <tr class="FormFieldRow">
                                     <td style="width:115px;">
-                                        <LogLabel [ObjectFieldName]="FromPartnerIdProperty" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'ShipperId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
                                     </td>
                                     <td style="width:220px;">
-                                        <LogLov [ObjectFieldName]="FromPartnerIdProperty"
-                                                [SelectedValue]="FromPartnerId"
+                                        <LogLov [ObjectFieldName]="'ShipperId'"
+                                                [SelectedValue]="ShipperId"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Card'"
@@ -147,24 +147,24 @@
                                     </td>
                                 </tr>
 
-                                <tr *ngIf="FromPartnerId">
+                                <tr *ngIf="ShipperId">
                                     <td colspan="5">
                                         <table>
                                             <tr class="FormFieldRow">
                                                 <td style="width:115px;">
-                                                    <LogLabel [ObjectFieldName]="'FromAddressIdProperty'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'ShipperAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td colspan="2">
                                                     <table>
                                                         <tr>
                                                             <td style="width:202px;">
-                                                                <LogLov [ObjectFieldName]="FromAddressIdProperty"
-                                                                        [SelectedValue]="FromAddressId"
+                                                                <LogLov [ObjectFieldName]="'ShipperAddressId'"
+                                                                        [SelectedValue]="ShipperAddressId"
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Address'"
-                                                                        [DependencyFilter1Value]="FromPartnerId"
+                                                                        [DependencyFilter1Value]="ShipperId"
                                                                         [HideLastColumn]="true"
                                                                         [HideMaintenanceIcon]="true">
                                                                 </LogLov>
@@ -258,11 +258,11 @@
                             <table>
                                 <tr class="FormFieldRow">
                                     <td style="width:115px;">
-                                        <LogLabel [ObjectFieldName]="ToPartnerIdProperty" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'ConsigneeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
                                     </td>
                                     <td style="width:220px;">
-                                        <LogLov [ObjectFieldName]="ToPartnerIdProperty"
-                                                [SelectedValue]="ToPartnerId"
+                                        <LogLov [ObjectFieldName]="'ConsigneeId'"
+                                                [SelectedValue]="ConsigneeId"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Card'"
@@ -288,24 +288,24 @@
                                     </td>
                                 </tr>
 
-                                <tr *ngIf="ToPartnerId">
+                                <tr *ngIf="ConsigneeId">
                                     <td colspan="5">
                                         <table>
                                             <tr class="FormFieldRow">
                                                 <td style="width:115px;">
-                                                    <LogLabel [ObjectFieldName]="ToAddressIdProperty" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'ConsigneeAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td colspan="2">
                                                     <table>
                                                         <tr>
                                                             <td style="width:202px;">
-                                                                <LogLov [ObjectFieldName]="ToAddressIdProperty"
-                                                                        [SelectedValue]="ToAddressId"
+                                                                <LogLov [ObjectFieldName]="'ConsigneeAddressId'"
+                                                                        [SelectedValue]="ConsigneeAddressId"
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Address'"
-                                                                        [DependencyFilter1Value]="ToPartnerId"
+                                                                        [DependencyFilter1Value]="ConsigneeId"
                                                                         [HideLastColumn]="true"
                                                                         [HideMaintenanceIcon]="true">
                                                                 </LogLov>
@@ -382,7 +382,7 @@
                                 </tr>
                             </table>
 
-                            <div *ngIf="EntityPM.ShipmentLevelCode != 'C'" style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                            <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                         </div>
 
                         <!-- Customer -->

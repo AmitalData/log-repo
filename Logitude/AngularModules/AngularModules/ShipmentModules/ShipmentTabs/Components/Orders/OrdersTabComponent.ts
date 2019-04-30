@@ -194,11 +194,14 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     public IsAMSClosingDateVisible: boolean = false;
     public IsWarehouseFields_PickupsVisible: boolean = false;
     public IsWarehouseFields_DeliveriesVisible: boolean = false;
-    SetUIProperties() {
-
+    SetUIProperties() {  
         var isEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         var isCarrierEnabled = false;
         var isConfirmationEnabled = false;
+
+        var isAMSClosingDateVisible: boolean = false;
+        var isWarehouseFields_PickupsVisible: boolean = false;
+        var isWarehouseFields_DeliveriesVisible: boolean = false;
 
         if (isEditingEnabled) {
             if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C") {
@@ -229,7 +232,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
                     }
 
                     else {
-                        this.IsWarehouseFields_PickupsVisible = true;
+                        isWarehouseFields_PickupsVisible = true;
                     }
                 }
             }
@@ -238,14 +241,14 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         if (this.EntityPM.DirectionId == "I") {
             if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
                 if (this.EntityPM.TransportModeId == "O" || this.EntityPM.TransportModeId == "I") {
-                    this.IsWarehouseFields_DeliveriesVisible = true;
+                    isWarehouseFields_DeliveriesVisible = true;
                 }
             }
         }
 
         if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
             if (this.TransportModeId == "O" || this.TransportModeId == "I") {
-                this.IsAMSClosingDateVisible = true;
+                isAMSClosingDateVisible = true;
             }
         }
 
@@ -273,7 +276,11 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.UIProperties.SetEnabled("WarehouseLegLastFreeDate", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("AMSClosingDate", this.ObjectTableName, isEditingEnabled);
 
-        this.IsEditingEnabled = isEditingEnabled;       
+        this.IsEditingEnabled = isEditingEnabled;
+        this.IsAMSClosingDateVisible = isAMSClosingDateVisible;
+        this.IsWarehouseFields_PickupsVisible = isWarehouseFields_PickupsVisible;
+        this.IsWarehouseFields_DeliveriesVisible = isWarehouseFields_DeliveriesVisible;
+
         this.SetUIProperties_Totals();
         this.SetUIProperties_DimFactor();
         this.SetUIProperties_DimensionsUnitCode();
