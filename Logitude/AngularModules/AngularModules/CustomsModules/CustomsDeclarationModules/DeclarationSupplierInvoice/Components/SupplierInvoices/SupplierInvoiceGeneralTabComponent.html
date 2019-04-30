@@ -975,8 +975,8 @@
 
                                                         <!-- close button -->
                                                         <!--<div (click)="item.CloseButtonClicked()" style="float: left;" class="CloseButtonWrapper" [title]="'General.B.Close' | TextCodeTranslationPipe">
-                                                            <div class="CloseButton"></div>
-                                                        </div>-->
+                                        <div class="CloseButton"></div>
+                                    </div>-->
 
                                                     </div>
 
@@ -987,19 +987,33 @@
 
                                             </div>
 
+                                            <div *ngIf="item.ShowClassefierRemarkInfo" [id]="item.ClassefierRemarkToolTipWrapper" style="position: relative; float: right;height: 18px;width: 20px;">
+
+                                                <!-- Info Icon -->
+                                                <img (click)="item.ExcButtonClicked()" class="exc-remark-button" tabindex="-1" src="./Images/exclamation-16.png" />
+                                            </div>
+
+                                        </div>
+                                        <div class="TextTrimming" *ngIf="item.ShowValidatioIcon" style="position: relative; float: right;height: 18px;width: 20px;">
+
+                                            <!-- Validation check Icon <span data-toggle="tooltip" data-placement="bottom" title="{{}}">{{item.TariffErrorText}}</span> -->
+                                            <img tabindex="-1" src="./Images/exclamation-16.png" title="item.TariffErrorText" />
+
+                                            <!--<span data-toggle="tooltip" data-placement="bottom">{{item.TariffErrorText}}</span>-->
 
 
                                         </div>
-
-                                    </log-cell-template>
-                                </log-column>
-
-
-
+                                    
+                        
+                            </log-cell-template>
+                        </log-column>
 
 
 
-                            </logitude-edit-grid>
+
+
+
+                        </logitude-edit-grid>
                         </div>
                     </td>
 
