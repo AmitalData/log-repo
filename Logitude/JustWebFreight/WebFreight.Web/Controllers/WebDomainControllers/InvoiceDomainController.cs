@@ -462,7 +462,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                string vendorId = args.EntityId;
+                string vendorId = args.VendorId;
                 string entityId = args.EntityId;
                 string invoiceNumber = args.InvoiceNumber;
 
