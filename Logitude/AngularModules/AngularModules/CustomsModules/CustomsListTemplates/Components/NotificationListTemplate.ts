@@ -71,7 +71,7 @@ export class NotificationListTemplate {
             this.IconeVisibility = false;
         }
 
-        if (this.rowData.NotificationDefinitionCode == "5101N") {
+        if (this.rowData.NotificationDefinitionCode == "5101N" || this.rowData.NotificationDefinitionCode == "5101R" || this.rowData.NotificationDefinitionCode == "5101A" || this.rowData.NotificationDefinitionCode == "5101M") {
             this.BlueIconVisibility = true;
             this.IconeVisibility = false;
 
