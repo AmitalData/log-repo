@@ -183,5 +183,64 @@ namespace WarehouseDataService.Helper
             return result;
         }
 
+
+
+        public DateTime? GetWarehouseRunDate(DateTime todayDate)
+        {
+
+
+            DateTime? warehouseDate = null;
+
+            DayOfWeekClass dayToday = ApplicationInfo.Days.Where(d => d.DayOfWeek == todayDate.DayOfWeek).FirstOrDefault();
+            DayOfWeekClass warehouseday = ApplicationInfo.WarehouseBuildDays.Where(d => d.NumberOfDay == dayToday.NumberOfDay).FirstOrDefault();
+
+            if (warehouseday != null)
+            {
+                warehouseDate = DateTime.Parse((todayDate.Date.ToShortDateString() + " " + ApplicationInfo.WarehouseBuildHours.ToString()));
+                if (warehouseDate < todayDate)
+                {
+                    warehouseDate = null;
+                    warehouseday = null;
+                }
+            }
+
+            if (warehouseday == null)
+            {
+                warehouseday = ApplicationInfo.WarehouseBuildDays.Where(d => d.NumberOfDay > dayToday.NumberOfDay).OrderBy(a => a.NumberOfDay).FirstOrDefault();
+                if (warehouseday != null)
+                {
+                    int dayBetwwenDate = warehouseday.NumberOfDay - dayToday.NumberOfDay;
+                    warehouseDate = DateTime.Parse((todayDate.AddDays(dayBetwwenDate).Date.ToShortDateString() + " " + ApplicationInfo.WarehouseBuildHours.ToString()));
+                }
+            }
+
+            if (warehouseday == null)
+            {
+                warehouseday = ApplicationInfo.WarehouseBuildDays.Where(d => d.NumberOfDay < dayToday.NumberOfDay).OrderBy(a => a.NumberOfDay).FirstOrDefault();
+                if (warehouseday != null)
+                {
+                    int dayBetwwenDate = (7 - dayToday.NumberOfDay) + warehouseday.NumberOfDay;
+                    warehouseDate = DateTime.Parse((todayDate.AddDays(dayBetwwenDate).Date.ToShortDateString() + " " + ApplicationInfo.WarehouseBuildHours.ToString()));
+                }
+            }
+
+            return warehouseDate;
+        }
+
+
+
+        public void FillDaysList()
+        {
+            ApplicationInfo.Days = new List<DayOfWeekClass>();
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Sunday, 0));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Monday, 1));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Thursday, 2));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Wednesday, 3));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Tuesday, 4));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Friday, 5));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Saturday, 6));
+        }
+
+
     }
 }

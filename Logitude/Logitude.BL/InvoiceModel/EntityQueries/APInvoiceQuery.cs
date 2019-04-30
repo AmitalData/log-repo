@@ -360,12 +360,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 allInvoiceLinesPM = apInvoiceLineQuery.GetInvoiceLinesByInvoiceId(id, tenant);
                 entityPM.InvoiceLines = allInvoiceLinesPM;
 
-                //if (!string.IsNullOrEmpty(entityPM.MainEntityId))
-                //{
-                //    IShipmentsContext iShipmentsContext = ShipmentsContext.GetContext(tenant);
-                //    entityPM.ShipmentConcurrencyGUID = (from d in iShipmentsContext.Shipments where d.Id == entityPM.MainEntityId select d.ConcurrencyGUID).FirstOrDefault();
-                //    entityPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
-                //}
+                if (!string.IsNullOrEmpty(entityPM.MainEntityId))
+                {
+                    IShipmentsContext iShipmentsContext = ShipmentsContext.GetContext(tenant);
+                    entityPM.ShipmentConcurrencyGUID = (from d in iShipmentsContext.Shipments where d.Id == entityPM.MainEntityId select d.ConcurrencyGUID).FirstOrDefault();
+                    entityPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
+                }
             }
 
             foreach (APInvoiceEntityPM item in entityPM.InvoiceEntities)

@@ -769,6 +769,7 @@ namespace CommunicationWorkerRole
                                     {
                                         LogPM.Subject = "Delete Document From Importer Tenant ";
                                         LogPM.Tenant = tenant;
+                                        LogPM.Refrence = DocumentFilingPM.Code;
                                         if (IsNewLog)
                                         {
                                             apiLogsService = new APILogsService(webFreightContext, tenant);

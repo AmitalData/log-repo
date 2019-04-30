@@ -1,0 +1,54 @@
+{
+	"id": "f2ee566a-f000-440e-8f76-e88868fa22e1",
+	"values": [
+		{
+			"key": "Id",
+			"value": "1-1630543",
+			"enabled": true
+		},
+		{
+			"key": "ShipmentNumber",
+			"value": "AE0211080536",
+			"enabled": true
+		},
+		{
+			"key": "DirectShipmentId",
+			"value": "1-1627817",
+			"enabled": true
+		},
+		{
+			"key": "Token",
+			"value": "8FlWOMa+vL/zOxx55jV3QTXcZiPqRgRFxMk=",
+			"enabled": true
+		},
+		{
+			"key": "Email",
+			"value": "ahmadb@fnarsoft.com",
+			"enabled": true
+		},
+		{
+			"key": "Password",
+			"value": null,
+			"enabled": true
+		},
+		{
+			"key": "Tenant",
+			"value": 1,
+			"enabled": true
+		},
+		{
+			"key": "LoggedUserId",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "Token1",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"name": "My Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2019-04-25T14:14:14.899Z",
+	"_postman_exported_using": "Postman/7.0.9"
+}

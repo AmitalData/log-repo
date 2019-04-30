@@ -56,7 +56,7 @@ namespace WebFreight.Web.MetaDataUpdate
     {
         public static void UpdateDataForTenant(int tenant, string message)
         {
-            //tenant = 1;
+            
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
@@ -1529,10 +1529,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
                                 if ((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id))
                                 {
-
-
-
-
                                     DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
                                     {
                                         Id = IdCounter.GetNumber("DocumentTypeTemplate", tenant).ToString(),

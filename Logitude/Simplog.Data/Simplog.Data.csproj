@@ -1411,9 +1411,6 @@
     <Compile Include="ShipmentsModel\ShipmentsContext.cs" />
     <None Include="ShipmentsModel\ShipmentsContext.Views.cs" />
     <Content Include="CommonDataModel\ProductTypeModificationViewScript.sql" />
-    <Content Include="CommonDataModel\UpdateAllTenantsCustomersActualData.sql" />
-    <Content Include="CommonDataModel\UpdateCustomerActualData.sql" />
-    <Content Include="CommonDataModel\UpdateTenantCustomersActualData.sql" />
     <Content Include="DbSchema\DeleteContactsUnseenEntitiesByContactId.sql" />
     <Content Include="DbSchema\Oracle\clob2vc.Sql" />
     <Content Include="DbSchema\Oracle\CodeCounter.sql" />
@@ -1571,7 +1568,6 @@
     <Content Include="DbSchema\TableCounter.sql" />
     <Content Include="DbSchema\UpdateCustomers.sql" />
     <Content Include="QuoteModel\QuotesAutomaticallyClosingDailyJob.sql" />
-    <Content Include="ShipmentsModel\MessagingStockDataView.sql" />
     <Content Include="ShipmentsModel\PickUpDeliverySql.sql" />
     <Content Include="ShipmentsModel\ShipmentCountryDashboardViewScript.sql" />
     <Content Include="ShipmentsModel\ShipmentDirectionTransmodeViewScript.sql" />

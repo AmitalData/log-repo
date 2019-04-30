@@ -1423,7 +1423,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
                     }
 
-                    if (item.DocumentAmountAndVATAmount < 0)
+                  else  if (item.DocumentAmountAndVATAmount < 0)
                     {
                         myStringBuilder.Append(a);
                         myStringBuilder.Append("-");

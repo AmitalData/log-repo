@@ -101,10 +101,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-
-
-
-
         public IQueryable<AutomationList> GetIQueryableEntityList(IQueryable<Automation> iQueryable)
         {
             IQueryable<AutomationList> result = from a in iQueryable
@@ -206,7 +202,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return automationlist;
         }
 
-
         public List<string> GetAutomationCodeLists(int tenant)
         {
             List<string> automationCodeLists = (from a in repository.context.Automations
@@ -214,7 +209,5 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 select a.Code).ToList();
             return automationCodeLists;
         }
-
-
     }
 }
