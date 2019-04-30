@@ -56,6 +56,7 @@ namespace WebFreight.Web.MetaDataUpdate
     {
         public static void UpdateDataForTenant(int tenant, string message)
         {
+            
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
@@ -715,6 +716,9 @@ namespace WebFreight.Web.MetaDataUpdate
                     UpdateEmailAlertSettings(tenant, tenantZeroEmailAlertSettings, currentEmailAlertSettings, emailAlertSettingRepository);
                     ReportHelper reportHelper = new ReportHelper();
                     reportHelper.UpdateReports(tenant);
+
+                    AutomationHelper automationHelper = new AutomationHelper();
+                    automationHelper.CopyAutomationFromTenantZeroToMyTenant(tenant, tenantZeroDocumentTypes.Values.ToList());
 
                     if (!LogitudeSettings.IsCostomsDeploy)
                     // what do u think ?? ok i suppose
@@ -1429,8 +1433,9 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes.Values)
             {
-               
-                if (!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers)
+                AutomationHelper automationHelper = new AutomationHelper();
+                List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
+                if ((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id))
                 {
                     DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
 
@@ -1522,12 +1527,8 @@ namespace WebFreight.Web.MetaDataUpdate
                                                   select doc).Any();
 
 
-                                if (a.IsEnabledForCustomers && a.IsCopiedAtSignup)
+                                if ((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id))
                                 {
-
-
-
-
                                     DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
                                     {
                                         Id = IdCounter.GetNumber("DocumentTypeTemplate", tenant).ToString(),
@@ -1542,10 +1543,20 @@ namespace WebFreight.Web.MetaDataUpdate
                                         CountryCode = a.CountryCode,
                                         Subject = a.CountryCode,
                                         Language = a.Language,
-                                        OriginalTemplateId = a.OriginalTemplateId,
+                                        OriginalTemplateId = a.Id,
                                         VerticalShift = a.VerticalShift,
                                         InternalRemarks = a.InternalRemarks,
                                         IsEnabledForCustomers = true,
+                                        TemplateBodyHtml = a.TemplateBodyHtml,
+                                        TemplateFooterHtml = a.TemplateFooterHtml,
+                                        TemplateHeaderHtml = a.TemplateHeaderHtml,
+                                       TemplateFooterHeight = a.TemplateFooterHeight,
+                                       TemplateHeaderHeight = a.TemplateHeaderHeight,
+                                       CC  = a.CC,
+                                       From = a.From,
+                                       ReplyTo = a.ReplyTo,
+                                       
+                                       
 
                                     };
                                     if (isDefault)
@@ -1585,6 +1596,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
             }
         }
+
+       
 
         private static void UpdateTenantVersion(int tenant, TenantRepository tenantRepository)
         {

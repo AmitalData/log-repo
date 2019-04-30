@@ -35,7 +35,7 @@ namespace WarehouseDataService
 
                 WarehouseServiceHelper warehouseServiceHelper = new WarehouseServiceHelper();
 
-  
+
 
                 string sourceConnection = warehouseServiceHelper.BuildConnectionString(ConfigurationSettings.AppSettings["SourceConnection"]);
                 ApplicationInfo.SourceConnection = warehouseServiceHelper.GetMainDBConnectionString(sourceConnection);
@@ -64,18 +64,19 @@ namespace WarehouseDataService
                 }
 
                 ApplicationInfo.BliudingServiceWorking = true;
-                WarehouseDataHelper warehouseDataHelper = new WarehouseDataHelper();
-                warehouseDataHelper.FillDaysList();
+                warehouseServiceHelper.FillDaysList();
+
 
 
                 ApplicationInfo.WarehouseBuildDays = ApplicationInfo.Days.Where(d => buildDays.Contains(d.NumberOfDay)).ToList();
                 ApplicationInfo.WarehouseBuildHours = !string.IsNullOrEmpty(warehouseBuildHoures) ? warehouseBuildHoures.ToString() : null;
 
-                Thread buildWarehouseDatThread = new Thread(() => warehouseDataHelper.BuildWarehouseData());
+                WarehouseService warehouseService = new WarehouseService();
+                Thread buildWarehouseDatThread = new Thread(() => warehouseService.BuildWarehouseData());
                 buildWarehouseDatThread.IsBackground = true;
                 buildWarehouseDatThread.Start();
 
-                Thread updateWarehouseDataThread = new Thread(() => warehouseDataHelper.UpdateWarehouseData());
+                Thread updateWarehouseDataThread = new Thread(() => warehouseService.UpdateWarehouseData());
                 updateWarehouseDataThread.IsBackground = true;
                 updateWarehouseDataThread.Start();
 

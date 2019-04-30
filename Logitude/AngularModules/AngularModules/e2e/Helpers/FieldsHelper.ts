@@ -21,7 +21,13 @@ export class FieldsHelper {
     });
 
   }
+  ItemsVisibility(Id: string) {
+    var EC = protractor.ExpectedConditions;
+    browser.wait(EC.visibilityOf(element(by.id(Id))), 5000).then(a => function () {
 
+    });
+
+  }
   // WaitBusyIndicator(){
   //   var EC = protractor.ExpectedConditions;
   //     browser.wait(EC.invisibilityOf(element(by.css(".BusyIndicatorControl"))), 100000).then(a=>{
@@ -82,7 +88,7 @@ export class FieldsHelper {
       var button = element(by.buttonText(Text)).click();
     });
   }
-  
+
   public ButtonClick(BtnId: string) {
     var EC = protractor.ExpectedConditions;
     browser.wait(EC.elementToBeClickable(element(by.id(BtnId))), 100000000).then(a => {

@@ -29,7 +29,7 @@ import {AccountingPaymentMethodList} from '../../../../Invoice/EntityLists/Accou
 import {AccountingPaymentMethodListService} from '../../../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
 import {GLAccountWithholdingTaxExtendedPMService, GLAccountingWithholdingItem} from  '../../../../Accounting/Services/Others/GLAccountWithholdingTaxExtendedService';
 import {BankAccountPMService} from '../../../../Accounting/Services/StandardPMs/BankAccountPMService';
-import {BankAccountPM} from  '../../../../Accounting/EntityPMs/BankAccountPM'; 
+import {BankAccountPM} from  '../../../../Accounting/EntityPMs/BankAccountPM';
 
 @Component({
     moduleId: module.id,
@@ -76,12 +76,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
-       
+
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
 
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;  
+    private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
 
@@ -107,13 +107,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     ngOnInit() {
         this.LoadPaymentMethods();
         this.LoadCurrencies();
-    }   
+    }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    private IsTaxUpdated = false; 
+    private IsTaxUpdated = false;
     private LoadTaxPercentage() {
         if (this.IsFullAccounting) {
             this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe(myResult => {
@@ -153,13 +153,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.BankAccountPMService = new BankAccountPMService();
     }
 
-    //RefreshFields 
+    //RefreshFields
     private RefreshFields() {
         this.ComputeRelativeRateDate();
         this.GetRateIsEnabled();
     }
     public RateIsEnabled: boolean = false;
-    GetRateIsEnabled() {        
+    GetRateIsEnabled() {
         this.SetUIProperties_ExchangeRate();
     }
 
@@ -284,7 +284,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
     }
 
-    // BuildScreenData 
+    // BuildScreenData
     private BuildScreenData() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.LoadCurrencyRates();
@@ -606,7 +606,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
-    public GLAccountId: string; 
+    public GLAccountId: string;
     GetCardProperties() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
             this.FillDataFromCardList(null);
@@ -637,11 +637,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
 
             this.EntityPM.VendorName = list.EnglishName;
-            this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;            
+            this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
             this.LoadAddress();
         }
     }
-    private LoadAddress() {        
+    private LoadAddress() {
         this.PartnersDomainService.GetBillingOrMainAddressListByCardId(this.EntityPM.VendorId).subscribe((resp: any) => {
             if (resp != null) {
                 var address = resp;
@@ -670,7 +670,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
     }
 
-    // Currency Properties 
+    // Currency Properties
     get PaymentCurrencyId() {
         if (this.EntityPM == null) {
             return null;
@@ -731,7 +731,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
-    
+
     get ExchangeRateDate() {
         if (this.EntityPM == null) {
             return null;
@@ -838,6 +838,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM != null) {
             if (this.EntityPM.PaymentMethodCode != value) {
                 this.EntityPM.PaymentMethodCode = value;
+
+                this.SetUIProperties_FullAccounting(); // for BankAccountId
             }
         }
     }
@@ -855,7 +857,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
-    
+
     //Payment Line Properties
     public PaymentMethodAddedManually: boolean = false;
     private RefreshPaymentMethodFields() {
@@ -899,6 +901,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             else {
                 this.BankAccountIdVisibility = false;
             }
+
             if (this.PaymentMethodCode == "CH" || this.PaymentMethodCode == "BT" || this.PaymentMethodCode == "CC") {
                 this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
@@ -906,6 +909,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.UIProperties.SetEnabled("Bank", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("BankBranch", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("Account", this.ObjectTableName, false);
+                this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, !this.BankAccountId);
+            }else{
+                this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, false);
             }
         }
     }
@@ -1140,7 +1146,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM.PrintNotes != value) {
             this.EntityPM.PrintNotes = value;
         }
-    }   
+    }
 
     get BankAccountId() {
         if (this.EntityPM == null) {
@@ -1158,10 +1164,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                             var bank: BankAccountPM = res.Result;
                             this.BankBranch = bank.BranchNumber;
                             this.Account = bank.AccountNumber;
-                            this.Bank = bank.BankCode;      
+                            this.Bank = bank.BankCode;
                         }
                     }
                 });
+
+                this.SetUIProperties_FullAccounting()
             }
         }
     }
@@ -1204,7 +1212,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.Summary_Amount = Amount;
         this.Summary_AmountPaid = AmountPaid;
         this.Summary_AmountPaidColor = AmountPaidColor;
-    }  
+    }
 
     public ViewEntity(args: APPaymentInvoiceArgs) {
         if (args) {
@@ -1314,7 +1322,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         this.InitProperties();
         this.InitAllAmounts();
         this.InitExchangeRate();
-        this.SetUIProperties(); 
+        this.SetUIProperties();
     }
 
     public Id: string = null;
@@ -1408,7 +1416,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         this.CheckBoxEnabled = true;
 
 
-        
+
 
 
         this.SetUIProperties_CurrencyMatched();
@@ -1428,7 +1436,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         if (this.isConnected) {
             this.isControlEnabled = true;
             this.CheckBoxVisibility = true;
-            this.NotMatchedVisibility = false;            
+            this.NotMatchedVisibility = false;
         }
 
         else {

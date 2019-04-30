@@ -26,5 +26,9 @@ export class GeneralFunctions {
         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.LogitudeQuickSearchItem', 0);
     }
+    OpenViews(viewId: string, viewSearchFeildId: string, searchBy: string) {
+        this.Helper.WaitByIdAndClick(viewId);
+        this.Helper.WaitByIdAndFill(viewSearchFeildId, searchBy);
+    }
 
 } 

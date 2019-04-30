@@ -201,6 +201,7 @@
     <Content Include="2019.R1\04 - 2019\Day 09 [Maheera] Update Description of TMEmployee Table.sql" />
     <Content Include="2019.R1\04 - 2019\Day 8 [Khalid] Delete TextCodes and Features APInvoice ErrorInTransferInvoices.sql" />
     <Content Include="2019.R1\04 - 2019\Day 7 [Abed]DROPCONSTRAINTFK_dbo.APILogsData_dbo.APILogs_Id.sql" />
+    <Content Include="2019.R2\04 - 2016\Day 28 [Samar] AddNewHelpResources.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
@@ -209,6 +210,10 @@
     <Content Include="2018.R2\06 - 2018\Day 19 [Islam] Phone call Activity email alert code.sql" />
     <Content Include="2018.R2\06 - 2018\Day 12 [Ayman] ApplyMoveTypeComputingPartner.sql" />
     <Content Include="2018.R2\06 - 2018\Day 25 [Samar] Add new event type set as potential.sql" />
+    <Content Include="DataViews And Procedures\DataViews\MessagingStockDataView.sql" />
+    <Content Include="DataViews And Procedures\Stored Procedures\UpdateAllTenantsCustomersActualData.sql" />
+    <Content Include="DataViews And Procedures\Stored Procedures\UpdateCustomerActualData.sql" />
+    <Content Include="DataViews And Procedures\Stored Procedures\UpdateTenantCustomersActualData.sql" />
     <Content Include="Main Branch\2018\02 - 2018\Day 04 [Khalid] Computing Partner Code Adjustment.sql" />
     <Content Include="2018.R1\Day 10 [Khalid] Allow APPayment Transfer QBO.sql" />
     <Content Include="2018.R1\Day 2 [Rabaia] Add Shipper Name shipments search field.sql" />
@@ -569,6 +574,7 @@
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman1] UpdateARInvoicesIsPrinted.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman2] UpdateShipmentARInvoices.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 15 [Khalid] delete Wrong QueryCode.sql" />
+    <Content Include="Main Branch\2019\04 - 2019\Day 21 [Rabaia]Trace Event Indexes.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 21 [Khalid] Fill ComputedShipmentFieldBackwards.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 15 [Khalid] Set Default Value for BluesnapIntraContract.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 07 [Rabaia] DeleteTaskSchedulerHistories SP.sql" />

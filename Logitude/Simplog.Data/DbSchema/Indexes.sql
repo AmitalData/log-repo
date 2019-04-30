@@ -664,3 +664,10 @@ ON [dbo].[DocumentsFilings] ([Tenant],[ForwarderDocumentId])
 CREATE NONCLUSTERED INDEX [Shipments_SecurityKey_Tenant_IsCancelled]
 ON [dbo].[Shipments] ([SecurityKey],[Tenant],[IsCancelled])
 
+
+CREATE NONCLUSTERED INDEX [IX_ObjectTableId_EntityId_Tenant] ON [dbo].[TraceEvents]
+(
+	[ObjectTableId] ASC,
+	[Tenant] ASC,
+	[EntityId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF) ON [PRIMARY]

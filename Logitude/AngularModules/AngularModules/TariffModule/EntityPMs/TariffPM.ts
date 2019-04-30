@@ -174,6 +174,11 @@ export class TariffPM {
     public set SetAsReActive(newValue: boolean) { if (this.setAsReActive != newValue) { this.setAsReActive = newValue; this.MarkAsDirty("SetAsReActive"); } }
        
 	 
+    private tariffNumber: string;
+    public get TariffNumber() { return this.tariffNumber; }
+    public set TariffNumber(newValue: string) { if (this.tariffNumber != newValue) { this.tariffNumber = newValue; this.MarkAsDirty("TariffNumber"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

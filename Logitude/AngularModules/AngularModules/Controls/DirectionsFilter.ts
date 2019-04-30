@@ -106,10 +106,10 @@ export class DirectionsFilter {
     itemMouseOver(itemValue: string) {
         if (this.SelectedValue != itemValue) {
             var img_E = document.getElementById(this.FilterId_E);
-            if (this.itmImportDomistic)
+            if (!this.itmImportDomistic)
             var img_I = document.getElementById(this.FilterId_I);
             var img_R = document.getElementById(this.FilterId_R);
-            if (this.itmImportDomistic)
+            if (!this.itmImportDomistic)
             var img_D = document.getElementById(this.FilterId_D);
             if (this.itmImportShipments)
             var img_C = document.getElementById(this.FilterId_C);

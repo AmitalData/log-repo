@@ -420,12 +420,9 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
             });
         }
 
-        //if (!this.IsFromFullWarehouseEntryComponent) {
-        //    this.ComputeAndFullTotalPackage();
-        //}
+  
 
-
-        this.ComputeAndFullTotalPackage();
+        this.ComputeAndFullTotalPackage(true);
     }
   
 
@@ -496,7 +493,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     }
 
 
-    ComputeAndFullTotalPackage() {
+    ComputeAndFullTotalPackage(firstTime: boolean = false) {
 
         var totalPieces: number = 0;
         var totalVolume: number = 0;
@@ -512,11 +509,14 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
             });
         }
 
+
         this.warehouseEntryPM.WarehouseEntryPackages = this.WarehouseEntryPackagesLists;
         this.warehouseEntryPM.TotalPieces = totalPieces;
         this.warehouseEntryPM.TotalVolume = totalVolume;
-        this.warehouseEntryPM.TotalGrossWeight = totalGrossWeight;
-        this.warehouseEntryPM.TotalVolumetricWeight = totalVolumetricWeight;       
+        this.warehouseEntryPM.TotalGrossWeight =  totalGrossWeight;
+        this.warehouseEntryPM.TotalVolumetricWeight = totalVolumetricWeight;
+        if (firstTime && this.warehouseEntryPM.IsDirty) this.warehouseEntryPM.IsDirty = false;
+       
     }
 
 

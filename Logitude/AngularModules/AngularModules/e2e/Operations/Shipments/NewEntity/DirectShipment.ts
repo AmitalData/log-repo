@@ -11,19 +11,23 @@ export class DirectShipment {
   }
 
 
-  public CreateDirectShipment(ReferenceNumber: string, LogitudeShipType: string, Direction: string, TransportMode: string, ShipmentType: string) {
+  public CreateDirectShipment(ReferenceNumber: string, Direction: string, TransportMode: string, ShipmentType: string) {
 
     var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
     this.Helper.WaitByIdAndClick('NEWDIRECT');
-    this.ShipmentModes.SelectDicrctionTransportMode(LogitudeShipType, Direction, TransportMode, ShipmentType);
-
-
+    this.ShipmentModes.SelectDicrctionTransportMode( Direction, TransportMode, ShipmentType);
 
     this.FillDirectShipmentFields(ReferenceNumber);
 
     this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
   }
+public WaitSearchBoxResult(){
 
+this.Helper.WaitByIdAndClick('NEWSHIP');
+this.Helper.ItemsVisibility('NEWDIRECT');
+this.Helper.WaitByIdAndClick('NEWSHIP');
+
+}
   public CreateAndCloseNewShipment(){
     var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
     this.Helper.WaitByIdAndClick('NEWDIRECT');

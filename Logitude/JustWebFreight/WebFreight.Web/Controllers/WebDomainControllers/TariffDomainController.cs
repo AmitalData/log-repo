@@ -235,14 +235,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         rowData[i] = row.Cells[i].Value2.ToString();
                     }
                     var fromPort = this.GetPortDetails(rowData[0], authToken.Tenant);
-                    tariffLine.FromPortId = fromPort.Id;
-                    tariffLine.FromPortCode = fromPort.Code;
-                    tariffLine.FromPortName = fromPort.EnglishName;
+                    if (fromPort != null)
+                    {
+                        tariffLine.FromPortId = fromPort.Id;
+                        tariffLine.FromPortCode = fromPort.Code;
+                        tariffLine.FromPortName = fromPort.EnglishName;
+                    }
+                   
 
                     var toPort = this.GetPortDetails(rowData[1], authToken.Tenant);
-                    tariffLine.ToPortId = toPort.Id;
-                    tariffLine.ToPortCode = toPort.Code;
-                    tariffLine.ToPortName = toPort.EnglishName;
+                    if (toPort != null)
+                    {
+                        tariffLine.ToPortId = toPort.Id;
+                        tariffLine.ToPortCode = toPort.Code;
+                        tariffLine.ToPortName = toPort.EnglishName;
+                    }
 
                     tariffLine.MinPrice = Convert.ToInt32(rowData[2]);
                     tariffLine.Step1Price =  Convert.ToInt32(rowData[3]);

@@ -62,6 +62,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.LastVersion).HasColumnName("LastVersion");
 
             this.Property(t => t.ContractNumber).HasColumnName("ContractNumber");
+
+            this.Property(t => t.TariffNumber).HasColumnName("TariffNumber").HasMaxLength(20).IsUnicode(false);
         }
     }
 }

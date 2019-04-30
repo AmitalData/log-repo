@@ -26,6 +26,9 @@ using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel;
 using WebFreight.Web.Helpers;
+using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.Core;
+using System.Net;
 
 namespace WebFreight.Web.WebPages
 {
@@ -33,6 +36,9 @@ namespace WebFreight.Web.WebPages
     {
         public byte[] _DatainByte;
 
+        public byte[] BMKDatainByte;
+        public byte[] INIDatainByte;
+        string email;
         public bool CheckAvailablityTenantsForEmail(string email, int tenant)
         {
             UserRepository userRep = new UserRepository(0);
@@ -86,7 +92,7 @@ namespace WebFreight.Web.WebPages
 
                 SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
                 bool isValid = securityDocumentResult.IsValid;
-                string email = securityDocumentResult.Email;
+                email = securityDocumentResult.Email;
                 string exceptionMessage = securityDocumentResult.ExceptionResult;
                 tenant = securityDocumentResult.Tenant;
 
@@ -115,24 +121,35 @@ namespace WebFreight.Web.WebPages
                 if (isValid)
                 {
                     #region securityKey
+
                     if (!string.IsNullOrEmpty(securityKey))
                     {
-                        Uploader up = new Uploader();
 
-                        var securityArray = securityKey.Split('~');
-                        if (securityArray != null)
+                        if (securityKey.Contains(','))
                         {
-                            if (securityArray.Length > 0) securityId = securityArray[0];
-                            if (securityArray.Length > 1) filename = documentOutCopyId = securityArray[1];
+                            GetOpenFormatReportDocument(securityKey);
+                            isValid = Valid;
+                        }
 
-                            Document document = up.GetFileExtensionBySecurityIdAndCopyId(securityId, filename, (int)tenant);
-                            if (document != null)
+                        else
+                        {
+                            Uploader up = new Uploader();
+
+                            var securityArray = securityKey.Split('~');
+                            if (securityArray != null)
                             {
-                                documentExtension = document.Extension;
-                                CustomName = document.CalculatedFileName;
-                                filename = document.Id;
+                                if (securityArray.Length > 0) securityId = securityArray[0];
+                                if (securityArray.Length > 1) filename = documentOutCopyId = securityArray[1];
+
+                                Document document = up.GetFileExtensionBySecurityIdAndCopyId(securityId, filename, (int)tenant);
+                                if (document != null)
+                                {
+                                    documentExtension = document.Extension;
+                                    CustomName = document.CalculatedFileName;
+                                    filename = document.Id;
+                                }
+                                else isValid = false;
                             }
-                            else isValid = false;
                         }
                     }
                     #endregion
@@ -212,15 +229,15 @@ namespace WebFreight.Web.WebPages
                     if (entityName == "analyzeQueue")
                     {
                         AnalyzeQueueRepository analyzeQueueRep = new AnalyzeQueueRepository();
-						
+
                         AnalyzeQueue analyzeQueue = analyzeQueueRep.GetSingleAnalyzeQueue(filename, (int)tenant);
                         _DatainByte = analyzeQueue.MessageBody;
-						if (!string.IsNullOrEmpty(analyzeQueue.FileName))
-						{
-							documentExtension = Path.GetExtension(analyzeQueue.FileName).TrimStart('.');
-						}
-						if (string.IsNullOrEmpty(documentExtension))
-							documentExtension = "xml";
+                        if (!string.IsNullOrEmpty(analyzeQueue.FileName))
+                        {
+                            documentExtension = Path.GetExtension(analyzeQueue.FileName).TrimStart('.');
+                        }
+                        if (string.IsNullOrEmpty(documentExtension))
+                            documentExtension = "xml";
 
                     }
                     else
@@ -262,8 +279,22 @@ namespace WebFreight.Web.WebPages
                             }
                             else
                             {
+                                if (securityKey.Contains(','))
+                                {
+                                    if (!string.IsNullOrEmpty(BMKdocumentExtension) && !string.IsNullOrEmpty(BMKFileName))
+                                    {
+                                        BMKDatainByte = up.DownloadFile(BMKFileName, BMKdocumentExtension, "", (int)tenant, isTenantZero);
+                                    }
+                                    else isValid = false;
 
-                                if (!string.IsNullOrEmpty(documentExtension) && !string.IsNullOrEmpty(filename))
+                                    if (!string.IsNullOrEmpty(INIdocumentExtension) && !string.IsNullOrEmpty(INIFileName))
+                                    {
+                                        INIDatainByte = up.DownloadFile(INIFileName, INIdocumentExtension, "", (int)tenant, isTenantZero);
+                                    }
+                                    else isValid = false;
+                                }
+
+                               else if (!string.IsNullOrEmpty(documentExtension) && !string.IsNullOrEmpty(filename))
                                 {
                                     _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
                                 }
@@ -278,7 +309,11 @@ namespace WebFreight.Web.WebPages
 
                 if (isValid)
                 {
-                    if (_DatainByte != null)
+                    if (securityKey.Contains(','))
+                    {
+                        GetOpenFormatDocuments();
+                    }
+                  else  if (_DatainByte != null)
                     {
                         if (xml2html && documentExtension == "xml")
                         {
@@ -296,15 +331,22 @@ namespace WebFreight.Web.WebPages
                         string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + "." + documentExtension;
 
                         if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", "");
-                      
+
                         // _DatainByte = sender as byte[];
                         HttpContext.Current.Response.Clear();
                         HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
                         //HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + DocumentName);
 
-                        // Get content type
-                        // FileExtension = filename.Split('.')[1];
 
+                        //Dictionary<string, byte[]> files = new Dictionary<string, byte[]>();
+                        //files.Add(documentName.Split('.')[0] + "." + "zip", CompressionFile(documentName, _DatainByte));
+
+
+                        //files.Add("test2.txt", _DatainByte);
+                        //_DatainByte = CompressionFileData(files);
+
+
+                      //  documentExtension = "zip";
                         var browser = HttpContext.Current.Request.Browser;
                         //Page.Title = "Abed";
                         string ShowType = "attachment";
@@ -382,7 +424,7 @@ namespace WebFreight.Web.WebPages
                         }
                         else
                         {
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" +documentName + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + documentName  + "\"");
                         }
 
                         if (!string.IsNullOrEmpty(documentOutCopyId))
@@ -456,6 +498,272 @@ ExceptionInErrorLog.ToString()
             }
 
         }
+        public string BMKSecurityId;
+        public string BMKFileName;
+        public string BMKdocumentOutCopyId;
+        public string BMKdocumentExtension;
+        public string BMKCustomName;
+
+        public string INISecurityId;
+        public string INIFileName;
+        public string INIdocumentOutCopyId;
+        public string INIdocumentExtension;
+        public string INICustomName;
+        public bool Valid = true;
+        public void GetOpenFormatReportDocument(string securityKey)
+        {
+            string[] keys = securityKey.Split(',');
+
+         
+
+
+                Uploader up = new Uploader();
+
+                var securityArray = keys[0].Split('~');
+                if (securityArray != null)
+                {
+                    if (securityArray.Length > 0) BMKSecurityId = securityArray[0];
+                    if (securityArray.Length > 1) BMKFileName = BMKdocumentOutCopyId = securityArray[1];
+
+                Document document = up.GetFileExtensionBySecurityIdAndCopyId(BMKSecurityId, BMKFileName, (int)tenant);
+                if (document != null)
+                {
+                    BMKdocumentExtension = document.Extension;
+                    BMKCustomName = document.CalculatedFileName;
+                    BMKFileName = document.Id;
+                }
+                else Valid = false;
+                }
+
+
+            up = new Uploader();
+
+            var INIsecurityArray = keys[1].Split('~');
+            if (INIsecurityArray != null)
+            {
+                if (securityArray.Length > 0) INISecurityId = INIsecurityArray[0];
+                if (securityArray.Length > 1) INIFileName =INIdocumentOutCopyId = securityArray[1];
+
+                Document document = up.GetFileExtensionBySecurityIdAndCopyId(INISecurityId,INIFileName, (int)tenant);
+                if (document != null)
+                {
+                    INIdocumentExtension = document.Extension;
+                    INICustomName = document.CalculatedFileName;
+                    INIFileName = document.Id;
+                }
+               else Valid = false;
+            }
+        }
+
+       public void GetOpenFormatDocuments()
+        {
+           if (BMKDatainByte != null && INIDatainByte != null)
+            {
+                
+                string BMKdocumentName = (!string.IsNullOrEmpty(BMKCustomName) ? BMKCustomName : BMKFileName) + "." + BMKdocumentExtension;
+                string INIdocumentName = (!string.IsNullOrEmpty(INICustomName) ?INICustomName : INIFileName) + "." + INIdocumentExtension;
+
+                if (!string.IsNullOrEmpty(BMKdocumentName)) BMKdocumentName = BMKdocumentName.Replace(" ", "");
+                if (!string.IsNullOrEmpty(INIdocumentName)) INIdocumentName = INIdocumentName.Replace(" ", "");
+
+                // _DatainByte = sender as byte[];
+                HttpContext.Current.Response.Clear();
+                //HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
+                //HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + DocumentName);
+
+
+                Dictionary<string, byte[]> files = new Dictionary<string, byte[]>();
+                files.Add(BMKdocumentName.Split('.')[0] + "." + "zip", CompressionFile(BMKdocumentName, BMKDatainByte));
+
+
+                files.Add(INIdocumentName, INIDatainByte);
+                _DatainByte = CompressionFileData(files);
+                HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
+
+
+                //BMKdocumentExtension = "zip";
+                var browser = HttpContext.Current.Request.Browser;
+                //Page.Title = "Abed";
+                string ShowType = "attachment";
+                HttpContext.Current.Response.ContentType = "application/zip";
+                TenantQuery tenantQuery = new TenantQuery((int)tenant);
+                TenantPM tenantPM = tenantQuery.GetSinglePM((int)tenant);
+                DateTime date = DateTime.Now;
+                string year = date.Year.ToString().Substring(2, 2);
+                string dateFormat = String.Format("{0:MMddhhmm}", date);
+                string path= @"E:\OPENFRMT\" + tenantPM.VatNumber + "." + year+@"\"+dateFormat;
+                string virtualPath=@"\OPENFRMT\" + tenantPM.VatNumber + "." + year+@"\"+dateFormat;
+                //bool folderExists = Directory.Exists(path);
+                //if(!folderExists )
+                //System.IO.Directory.CreateDirectory(path);
+
+                //System.IO.File.WriteAllBytes(path + @"\" + "Files.zip", _DatainByte);
+
+
+                if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
+                {
+
+                    HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename*=UTF-8''" + BMKdocumentName + "\"");
+                }
+                else
+                {
+                    HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "attachment; filename=\"" + HttpUtility.UrlEncode(BMKCustomName  + ".zip") + "\"");
+                    
+                }
+
+                if (!string.IsNullOrEmpty(BMKdocumentOutCopyId))
+                {
+                    UserRepository userRep = new UserRepository((int)tenant);
+                    User printedBy = null;
+                    printedBy = userRep.GetSingleUserByEmail(email, (int)tenant, false);
+
+                    DocumentOutCopyRepository myRep = new DocumentOutCopyRepository((int)tenant);
+                    DocumentOutCopy documentoutCopy = myRep.GetSingleDocumentOutCopyByTenant(BMKdocumentOutCopyId, (int)tenant);
+                    documentoutCopy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime((int)tenant);
+                    documentoutCopy.LastPrintedByUserId = printedBy != null ? printedBy.Id : "";
+                    myRep.Update(documentoutCopy);
+                    myRep.SubmitChanges();
+                }
+
+                HttpContext.Current.Response.BinaryWrite(_DatainByte);
+                HttpContext.Current.Response.End();
+                if (HttpContext.Current.Response.IsClientConnected)
+                {
+                    HttpContext.Current.Response.Flush();
+                    HttpContext.Current.Response.Close();
+                    
+                    HttpContext.Current.ApplicationInstance.CompleteRequest();
+
+                }
+
+            }
+
+            else
+            {
+                Response.Output.Write("Document file is empty.");
+                // throw new ApplicationException("Document file is empty.");
+            }
+        }
+        public byte[] CompressionFileData(Dictionary<string, byte[]> files)
+        {
+            MemoryStream outputMemStream = new MemoryStream();
+            ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
+            zipStream.SetLevel(3);
+
+            byte[] bytes = null;
+            foreach (string key in files.Keys)
+            {
+                
+                var newEntry = new ZipEntry(key);
+                newEntry.DateTime = DateTime.Now;
+
+                zipStream.PutNextEntry(newEntry);
+
+                bytes = files[key];
+
+                MemoryStream inStream = new MemoryStream(bytes);
+                long inStreamLength = inStream.Length;
+                if (inStreamLength < 200)
+                {
+                    inStreamLength = 200;
+                }
+
+                StreamUtils.Copy(inStream, zipStream, new byte[inStreamLength]);
+                inStream.Close();
+                zipStream.CloseEntry();
+
+            }
+
+
+            zipStream.IsStreamOwner = false;
+            zipStream.Close();
+            outputMemStream.Position = 0;
+          //  System.IO.File.WriteAllBytes(@"C:\TestFolder\" + ".zip", outputMemStream.ToArray());
+
+            return outputMemStream.ToArray();
+
+
+            //var newEntry = new ZipEntry(fileName + "." + ext);
+            //newEntry.DateTime = DateTime.Now;
+            //zipStream.PutNextEntry(newEntry);
+
+
+            //MemoryStream inStream = new MemoryStream(fileData);
+            //long inStreamLength = inStream.Length;
+            //if (inStreamLength < 200)
+            //{
+            //    inStreamLength = 200;
+            //}
+
+
+
+            //StreamUtils.Copy(inStream, zipStream, new byte[inStreamLength]);
+            //inStream.Close();
+            //zipStream.CloseEntry();
+
+            ////2
+
+            //var newEntry1 = new ZipEntry("INI" + "." + ext);
+            //zipStream.PutNextEntry(newEntry1);
+
+
+            //MemoryStream inStream1 = new MemoryStream(fileData);
+            //long inStreamLength1 = inStream1.Length;
+            //if (inStreamLength1 < 200)
+            //{
+            //    inStreamLength1 = 200;
+            //}
+
+            //StreamUtils.Copy(inStream1, zipStream, new byte[inStreamLength1]);
+            //inStream1.Close();
+            //zipStream.CloseEntry();
+
+
+            //zipStream.IsStreamOwner = false;
+            //zipStream.Close();
+            //outputMemStream.Position = 0;
+
+           // System.IO.File.WriteAllBytes(@"C:\TestFolder\" + listKey + ".zip", outputMemStream.ToArray());
+            //return outputMemStream.ToArray();
+
+        }
+
+        public byte[] CompressionFile(string fileName, byte[] fileData)
+        {
+            MemoryStream outputMemStream = new MemoryStream();
+            ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
+
+            zipStream.SetLevel(3);
+
+
+            var newEntry = new ZipEntry(fileName + "." + fileName.Split('.')[1]);
+            newEntry.DateTime = DateTime.Now;
+            zipStream.PutNextEntry(newEntry);
+
+
+            MemoryStream inStream = new MemoryStream(fileData);
+            long inStreamLength = inStream.Length;
+            if (inStreamLength < 200)
+            {
+                inStreamLength = 200;
+            }
+
+            StreamUtils.Copy(inStream, zipStream, new byte[inStreamLength]);
+            inStream.Close();
+            zipStream.CloseEntry();
+
+            zipStream.IsStreamOwner = false;
+            zipStream.Close();
+            outputMemStream.Position = 0;
+
+           // System.IO.File.WriteAllBytes(@"C:\TestFolder\"  + ".zip", outputMemStream.ToArray());
+            return outputMemStream.ToArray();
+
+        }
+
+
+
+
 
         private static bool IsUser(string email, int tenant)
         {

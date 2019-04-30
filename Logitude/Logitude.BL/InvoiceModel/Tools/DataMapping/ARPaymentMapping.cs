@@ -7,14 +7,16 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Security;
 using System.Linq;
 using System.Collections.Generic;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
     public class ARPaymentMapping
     {
+
         public static void MapEntity(ARPaymentPM entityPM, ARPayment entity, bool isNewState)
         {
-            ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+            ContactPM loggedContact = GetLoggedContactPM(entityPM.Tenant);
 
             #region Not Approved yet
             if (string.IsNullOrEmpty(entity.StatusCode) || entity.StatusCode == "DR" || entity.StatusCode == "AC")
@@ -100,7 +102,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.FirstApproveDate = entityPM.FirstApproveDate;
             entity.IsFullAccounting = entityPM.IsFullAccounting;
             entity.IsExternalEntity = entityPM.IsExternalEntity;
-
             if (entityPM.IsExternalEntity) {
                 entity.ChequeOrPaymentRef = entityPM.ChequeOrPaymentRef;
                 entity.CreateDate = entityPM.CreateDate;
@@ -111,6 +112,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Bank = entityPM.Bank;
                 entity.BankBranch = entityPM.BankBranch;
                 entity.Account = entityPM.Account;
+                entity.CashbookId = entityPM.CashbookId;
+
             }
 
 
@@ -148,7 +151,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetReSendQBO = false;
 
         }
-
+        public static ContactPM GetLoggedContactPM(int tenant)
+        {
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
         public static void MapEntityInvoicePyament(ARPaymentInvoicePM entityPM, ARInvoicePayment entity, bool isNewState)
         {
             if (isNewState)
