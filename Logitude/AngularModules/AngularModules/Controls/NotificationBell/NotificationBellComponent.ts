@@ -186,6 +186,9 @@ export class NotificationBellComponent {
                                     }
 
                                 case "5101N":
+                                case "5101R":
+                                case "5101A":
+                                case "5101M":
                                     {
                                         currentScreenCode = "DCNT";
                                         break;
@@ -518,7 +521,7 @@ export class NotificationBellLine {
             this.IconeVisibility = false;
         }
 
-        if (this.entity.NotificationDefinitionCode == "5101N") {
+        if (this.entity.NotificationDefinitionCode == "5101N" || this.entity.NotificationDefinitionCode == "5101R" || this.entity.NotificationDefinitionCode == "5101A" || this.entity.NotificationDefinitionCode == "5101M") {
             this.BlueIconeVisibility = true;
             this.IconeVisibility = false;
 
