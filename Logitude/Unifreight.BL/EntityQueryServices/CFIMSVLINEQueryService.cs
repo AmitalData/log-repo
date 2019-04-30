@@ -23,15 +23,15 @@ namespace Unifreight.BL.EntityQueryServices
             mapping = new CFIMSVLINEDataMapping();
         }
 
-        public CFIMSVLINEPM GetSingle(long FILENO, string COMID, int PAGENUM, int LINENUM, bool getFromCache)
+        public CFIMSVLINEPM GetSingle(long FILENO, string COMID, int PAGENUM, int LINENUM, string QUETYPE, bool getFromCache)
         {
-            var keys = new CFIMSVLINEKeys() { FILENO = FILENO, COMID = COMID, PAGENUM = PAGENUM, LINENUM = LINENUM };
+            var keys = new CFIMSVLINEKeys() { FILENO = FILENO, COMID = COMID, PAGENUM = PAGENUM, LINENUM = LINENUM, QUETYPE = QUETYPE };
             return base.GetSingle(keys, false, getFromCache);
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CFIMSVLINE entityPOCO)
         {
-            return new CFIMSVLINEKeys() { FILENO = entityPOCO.FILENO, COMID = entityPOCO.COMID, PAGENUM = entityPOCO.PAGENUM, LINENUM = entityPOCO.LINENUM };
+            return new CFIMSVLINEKeys() { FILENO = entityPOCO.FILENO, COMID = entityPOCO.COMID, PAGENUM = entityPOCO.PAGENUM, LINENUM = entityPOCO.LINENUM, QUETYPE = entityPOCO.QUETYPE };
         }
     }
 }
