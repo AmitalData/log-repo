@@ -115,7 +115,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
 
             var allNotifications = (this.repository as NotificationRepository).GetAll(tenant)
-                .Where(rec => rec.ObjectTableId == ObjectTableId && rec.EntityId == EntityId && rec.NotificationDefinitionCode == "5101N" && !string.IsNullOrEmpty(rec.Reference2Number))
+                .Where(rec => rec.ObjectTableId == ObjectTableId && rec.EntityId == EntityId && (rec.NotificationDefinitionCode == "5101N" || rec.NotificationDefinitionCode == "5101M" || rec.NotificationDefinitionCode == "5101R" || rec.NotificationDefinitionCode == "5101A") && !string.IsNullOrEmpty(rec.Reference2Number))
                 .ToList();
                 var result = allNotifications.ToList().Select(rec => this.GetSingle(rec.Id, true, false)).ToList();
                 return result;
