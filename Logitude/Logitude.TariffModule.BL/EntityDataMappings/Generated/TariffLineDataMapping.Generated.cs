@@ -39,7 +39,18 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Step7Price, 
 	         Step8Price, 
 	         OriginPortId, 
-	         DestinationPortId,
+	         DestinationPortId, 
+	         OriginPortText, 
+	         DestinationPortText, 
+	         MinPriceText, 
+	         Step1PriceText, 
+	         Step2PriceText, 
+	         Step3PriceText, 
+	         Step4PriceText, 
+	         Step5PriceText, 
+	         Step6PriceText, 
+	         Step7PriceText, 
+	         Step8PriceText,
 	      }
 
 
@@ -67,7 +78,18 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         OriginPortName, 
 	         OriginPortCode, 
 	         DestinationPortName, 
-	         DestinationPortCode,
+	         DestinationPortCode, 
+	         OriginPortText, 
+	         DestinationPortText, 
+	         MinPriceText, 
+	         Step1PriceText, 
+	         Step2PriceText, 
+	         Step3PriceText, 
+	         Step4PriceText, 
+	         Step5PriceText, 
+	         Step6PriceText, 
+	         Step7PriceText, 
+	         Step8PriceText,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -159,6 +181,61 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationPortId))
             {
 				entityPOCO.DestinationPortId = entityPM.DestinationPortId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginPortText))
+            {
+				entityPOCO.OriginPortText = entityPM.OriginPortText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationPortText))
+            {
+				entityPOCO.DestinationPortText = entityPM.DestinationPortText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinPriceText))
+            {
+				entityPOCO.MinPriceText = entityPM.MinPriceText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step1PriceText))
+            {
+				entityPOCO.Step1PriceText = entityPM.Step1PriceText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step2PriceText))
+            {
+				entityPOCO.Step2PriceText = entityPM.Step2PriceText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step3PriceText))
+            {
+				entityPOCO.Step3PriceText = entityPM.Step3PriceText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step4PriceText))
+            {
+				entityPOCO.Step4PriceText = entityPM.Step4PriceText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step5PriceText))
+            {
+				entityPOCO.Step5PriceText = entityPM.Step5PriceText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step6PriceText))
+            {
+				entityPOCO.Step6PriceText = entityPM.Step6PriceText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step7PriceText))
+            {
+				entityPOCO.Step7PriceText = entityPM.Step7PriceText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step8PriceText))
+            {
+				entityPOCO.Step8PriceText = entityPM.Step8PriceText;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -257,6 +334,61 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.DestinationPortId = entityPOCO.DestinationPortId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OriginPortText))
+            {
+					entityPM.OriginPortText = entityPOCO.OriginPortText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DestinationPortText))
+            {
+					entityPM.DestinationPortText = entityPOCO.DestinationPortText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MinPriceText))
+            {
+					entityPM.MinPriceText = entityPOCO.MinPriceText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step1PriceText))
+            {
+					entityPM.Step1PriceText = entityPOCO.Step1PriceText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step2PriceText))
+            {
+					entityPM.Step2PriceText = entityPOCO.Step2PriceText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step3PriceText))
+            {
+					entityPM.Step3PriceText = entityPOCO.Step3PriceText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step4PriceText))
+            {
+					entityPM.Step4PriceText = entityPOCO.Step4PriceText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step5PriceText))
+            {
+					entityPM.Step5PriceText = entityPOCO.Step5PriceText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step6PriceText))
+            {
+					entityPM.Step6PriceText = entityPOCO.Step6PriceText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step7PriceText))
+            {
+					entityPM.Step7PriceText = entityPOCO.Step7PriceText;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step8PriceText))
+            {
+					entityPM.Step8PriceText = entityPOCO.Step8PriceText;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -346,6 +478,61 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationPortId))
             {
                 oldEntityPM.DestinationPortId = entityPM.DestinationPortId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginPortText))
+            {
+                oldEntityPM.OriginPortText = entityPM.OriginPortText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationPortText))
+            {
+                oldEntityPM.DestinationPortText = entityPM.DestinationPortText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinPriceText))
+            {
+                oldEntityPM.MinPriceText = entityPM.MinPriceText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step1PriceText))
+            {
+                oldEntityPM.Step1PriceText = entityPM.Step1PriceText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step2PriceText))
+            {
+                oldEntityPM.Step2PriceText = entityPM.Step2PriceText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step3PriceText))
+            {
+                oldEntityPM.Step3PriceText = entityPM.Step3PriceText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step4PriceText))
+            {
+                oldEntityPM.Step4PriceText = entityPM.Step4PriceText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step5PriceText))
+            {
+                oldEntityPM.Step5PriceText = entityPM.Step5PriceText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step6PriceText))
+            {
+                oldEntityPM.Step6PriceText = entityPM.Step6PriceText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step7PriceText))
+            {
+                oldEntityPM.Step7PriceText = entityPM.Step7PriceText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step8PriceText))
+            {
+                oldEntityPM.Step8PriceText = entityPM.Step8PriceText;
             }
 			
 		}
