@@ -1110,7 +1110,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     var result: boolean = myResponse.Result;
 
                     if (result) {
-                        errors.push("Cannot change shipment type when shipment is connected to cross docs entries / releases");
+                        errors.push("Cannot change shipment type when shipment is connected to Cross Docks Entries / Releases");
                     }
 
                     this.ShowNotesWindow(errors, type);
@@ -1238,7 +1238,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     var result: boolean = myResponse.Result;
 
                     if (result) {
-                        errors.push("Shipment has connected Cross Docs Entries/Releases, can't change direction");
+                        errors.push("Shipment has connected Cross DocKs Entries/Releases, can't change direction");
                     }
 
                     this.ShowConvertShipmentDirectionWindow(errors);
