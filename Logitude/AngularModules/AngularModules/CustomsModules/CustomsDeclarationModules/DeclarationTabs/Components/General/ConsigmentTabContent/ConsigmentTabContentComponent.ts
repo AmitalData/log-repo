@@ -580,7 +580,7 @@ export class ConsigmentTabContentComponent
     }
 
     CargoQueryRequestMethod() {
-        if (this.IsDisplayOnly) {
+        if (this.IsDisplayOnly && this.EntityPM.CargoTypeCode != "20") {
             return;
         }
 

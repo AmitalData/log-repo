@@ -67,7 +67,8 @@
                                             </td>
 
                                             <td style="width: 40px;">
-                                                <div *ngIf="!IsDisplayOnly" style="width: 20px;">
+                                                <div style="width: 20px;">
+                                                    <!--*ngIf="!IsDisplayOnly" -->
                                                     <IconButton *ngIf="CargoTypeCode == 20" style="float:left;" [IsSmall]="true" [Name]="'search'"
                                                                 [IsIconOnly]="true"
                                                                 (click)="CargoQueryRequestMethod()"></IconButton>
