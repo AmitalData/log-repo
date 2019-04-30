@@ -26,6 +26,7 @@ import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/Re
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
+import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 
 @Component({
@@ -1437,10 +1438,13 @@ implements OnDestroy
         this.IsDisplayOnly = false;
         this._CourierMasterValidator.SetEntityPM(this.entityPM);
         this._CourierMasterValidator.CheckStorageSiteCodeRequestInProgress().subscribe((response: any) => {
-            var displayOnlyCheckResult = response.Result;
+            var displayOnlyCheckResult: CustomsRequestsSheetPM[] = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                this.IsDisplayOnly = true;
-                this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                }
             }
         });
     }
