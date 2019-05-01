@@ -2482,16 +2482,19 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                     selectedRow.closedManullay = false;
 
                     //this.SelectedRow.ShowTariffErrorTooltip = false; // hide Tariff tooltip on prev selected row
+                    
                 }
             }
-            if (!selectedRow.closedManullay)
+            if (!selectedRow.closedManullay) {
                 selectedRow.ShowClassifierRemarkTooltip = true;
-
-            this.SelectedRow = selectedRow;
+                selectedRow.CheckTariff();
+                this.SelectedRow = selectedRow;
+            }
 
         } else {
             if (this.SelectedRow) {
                 this.SelectedRow.ShowClassifierRemarkTooltip = false;
+                
                 this.SelectedRow.closedManullay = false;
             }
             this.SelectedRow = null;
@@ -2519,6 +2522,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public ShowClassifierRemarkTooltip: boolean = false;
     public ShowTariffErrorInfo: boolean = false;
     public ShowTariffErrorTooltip: boolean = false;
+    public ShowValidatioIcon: boolean = false;
+    
 
     public closedManullay: boolean = false;
 
@@ -2541,15 +2546,15 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         //this.TariffErrorText = "מדינה לא תואמת לקוד התעריף"; //"Tarrif doesnt match country” 
 
         ////get currenct customs country
-        //if (this.OriginCountryCode) {
-        //    this._CustomsCountryListService.getSingle(this.OriginCountryCode).subscribe((res) => {
-        //        var entity = res.Result;
-        //        if (entity) {
-        //            this.CustomsCountry = entity;
-        //            this.OriginCountryName = this.CustomsCountry.LocalName;
-        //        }
-        //    });
-        //}
+        if (this.OriginCountryCode) {
+            this._CustomsCountryListService.getSingle(this.OriginCountryCode).subscribe((res) => {
+                var entity = res.Result;
+                if (entity) {
+                    this.CustomsCountry = entity;
+                    this.OriginCountryName = this.CustomsCountry.LocalName;
+                }
+            });
+        }
 
         if (this.entityPM.ClasifiedRemarks) {
             this.ShowClassefierRemarkInfo = true;
@@ -2694,7 +2699,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
         if (this.customsCountry != value) {
             this.customsCountry = value;
-            //this.CheckTariff();
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginCountryName = value.LocalName;
@@ -2708,6 +2712,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     itemCodeDetails.IsNew = true;
                 }
             }
+            this.CheckTariff();
         } else {
             this.OriginCountryName = null;
             this.OriginCountryCode = null;
@@ -2720,6 +2725,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     itemCodeDetails.IsNew = true;
                 }
             }
+            this.CheckTariff();
         }
     }
 
@@ -2767,7 +2773,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get TradeAgreementCode() { return this.entityPM.TradeAgreementCode; }
     public set TradeAgreementCode(newValue: string) {
         this.entityPM.TradeAgreementCode = newValue;
-        //this.CheckTariff();
+        this.CheckTariff();
     }
 
     public get TradeAgreementName() { return this.entityPM.TradeAgreementName; }
@@ -3591,16 +3597,29 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     TariffErrorButtonClicked() {
         this.ShowTariffErrorTooltip = !this.ShowTariffErrorTooltip;
     }
-
+    
     CheckTariff() {
-        if (this.TradeAgreementCode && this.OriginCountryCode) {
+        /*if (this.TradeAgreementCode && this.OriginCountryCode) {
             this.ShowTariffErrorInfo = (this.CustomsCountry.TarriffCode != this.TradeAgreementCode);
         } else {
             this.ShowTariffErrorInfo = false;
+        }*/
+        if (this.OriginCountryName && this.CustomsCountry.TarriffCode && this.CustomsCountry.TarriffCode != this.TradeAgreementCode) {
+            if (this.ShowValidatioIcon != true) {
+                this.ShowValidatioIcon = true;
+                this.Parent.Parent.tariffErrorItems += 1;
+            }
+            var agreementCode = !AppTool.IsNullOrEmpty(this.TradeAgreementCode) ? this.TradeAgreementCode : "לא מוזן";
+            this.TariffErrorText = "קוד הסכם " + agreementCode + ", לא מתאים למדינה " + this.OriginCountryName + " (" + " הסכם " + this.CustomsCountry.TarriffCode + " )";
+
+        }
+        else {
+            if (this.ShowValidatioIcon == true) {
+                this.ShowValidatioIcon = false;
+                this.Parent.Parent.tariffErrorItems -= 1;
+            }
         }
     }
-
-
 }
 
 export class SupplierInvoiceFreightAmountLine extends BaseComponent {
