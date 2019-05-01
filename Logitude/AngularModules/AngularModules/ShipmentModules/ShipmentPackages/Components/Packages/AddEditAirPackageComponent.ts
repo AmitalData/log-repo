@@ -92,6 +92,7 @@ export class AddEditAirPackageComponent {
                 //this.DataContext.fatherComponent.SetGenerateData();
                 //this.DataContext.fatherComponent.ComputeTotals();
             }
+
             this.DataContext.fatherComponent.SetGenerateData();
             this.DataContext.fatherComponent.ResetTotalEditedValues();
             this.DataContext.fatherComponent.ComputeTotals();
