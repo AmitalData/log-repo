@@ -208,7 +208,7 @@ namespace Logitude.Customs.Def.ClosedTable
 
             all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
             {
-                Code = "5101M",
+                Code = "5101E",
                 EnglishName = "Correspondence to legality ransom",
                 LocalName = "התכתבות כופר חוקיות",
                 AssigneeNotificationTypeCode = "I",
