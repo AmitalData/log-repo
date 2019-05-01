@@ -31,6 +31,16 @@ namespace Logitude.Customs.Data.Repsitories
                     orderby a.RequestCreateDate descending
                     select a).First();
         }
+        public CustomsRequestsSheet GetLastCRSByCustomfileStatusInterfaceFirstOrDefault(string customFileNumber, string requestStatusCode, string interfaceTypeCode, int tenant)
+        {
+
+            return (from a in context.CustomsRequestsSheets
+                    where a.CustomFileNo == customFileNumber && a.Tenant == tenant
+                    where a.RequestStatusCode == requestStatusCode
+                    where a.InterfaceTypeCode == interfaceTypeCode
+                    orderby a.RequestCreateDate descending
+                    select a).FirstOrDefault();
+        }
 
         public List<CustomsRequestsSheet> GetCustomsRequestsSheetByCustomFileNumber(string customFileNumber, int tenant)
         {
