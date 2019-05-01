@@ -58,7 +58,6 @@ namespace WebFreight.Web.Helpers
         InboundEmailLine emailLine;
         IWebFreightContext webContext;
         bool IsFirstTicket = false;
-
         bool IsContactUser { get; set; }
         string AnalyzeQueueId = null;
         string supportEmail = "";
@@ -393,7 +392,27 @@ namespace WebFreight.Web.Helpers
                     if (query.Count() > 0)
                     {
                         string emails = string.Join(";", query);
-                        emailLine.CCs += emails;
+
+                        foreach (string item in query)
+                        {
+                            if (!string.IsNullOrEmpty(item))
+                            {
+                                string iEmail = helper.GetCorrectEmailFormat(item);
+
+                                if (!string.IsNullOrEmpty(iEmail))
+                                {
+                                    iEmail = iEmail.ToLower();
+
+                                    if (!this.IsSupportEmail(iEmail))
+                                    {
+                                        emailLine.CCs = this.AppendEmails(emailLine.CCs, iEmail);
+                                    }
+                                }
+                            }
+                        }
+
+                        // Ayman: no need to check if is user ? so always add this to the CCS
+                        //emailLine.CCs += emails;
                     }
                 }
 
