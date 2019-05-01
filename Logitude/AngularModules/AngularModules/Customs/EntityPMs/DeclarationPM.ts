@@ -929,6 +929,11 @@ export class DeclarationPM {
     public set DepositionStatusCode(newValue: string) { if (this.depositionStatusCode != newValue) { this.depositionStatusCode = newValue; this.MarkAsDirty("DepositionStatusCode"); } }
        
 	 
+    private courierMasterId: string;
+    public get CourierMasterId() { return this.courierMasterId; }
+    public set CourierMasterId(newValue: string) { if (this.courierMasterId != newValue) { this.courierMasterId = newValue; this.MarkAsDirty("CourierMasterId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

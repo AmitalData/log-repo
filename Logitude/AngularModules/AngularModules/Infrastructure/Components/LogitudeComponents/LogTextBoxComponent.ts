@@ -64,6 +64,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() NoValidation: boolean = false;
     @Input() Placeholder: string = "";
     @Input() AlignTextToRight: boolean = false;
+    @Input() AlignTextToLeft: boolean = false;
+    
     public DontAllowAutoSelect: boolean = false;
     @Input() AddCommasToNumbers: boolean = true;
     @Input() Max: number;
@@ -1479,7 +1481,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
 
 
-                    if (isNaN(Number(val))) {
+                    if (this.TextValue && isNaN(Number(val))) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         suppressValidation = true;
                     }

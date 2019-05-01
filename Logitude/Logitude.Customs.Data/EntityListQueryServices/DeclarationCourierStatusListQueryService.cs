@@ -137,18 +137,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
         }
 
-        private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
+        private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
         {
             //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
             var courierMasterIdF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault();
-            if (courierMasterIdF != null)
+            if(courierMasterIdF != null)
             {
                 string courierMasterId = (string)courierMasterIdF.FieldValue;
                 _RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
             }
             return iQueryable;
         }
-    }
+	}
 
 
 }

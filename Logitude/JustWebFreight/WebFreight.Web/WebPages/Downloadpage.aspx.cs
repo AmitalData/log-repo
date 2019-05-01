@@ -26,6 +26,7 @@ using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel;
 using WebFreight.Web.Helpers;
+using System.Diagnostics;
 
 namespace WebFreight.Web.WebPages
 {
@@ -67,7 +68,17 @@ namespace WebFreight.Web.WebPages
             return available;
         }
 
-
+        StringBuilder _Logger = new StringBuilder();
+        Stopwatch _StopwatchLogger = Stopwatch.StartNew();
+        void LogIt(string mess)
+        {
+            if (!LogitudeSettings.IsCostomsDeploy)
+            {
+                return;
+            }
+            _Logger.Append(_StopwatchLogger.ElapsedMilliseconds).Append(":").AppendLine(mess);
+            _StopwatchLogger.Restart();
+        }
         int? tenant = null;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -259,7 +270,9 @@ namespace WebFreight.Web.WebPages
 
                                 if (!string.IsNullOrEmpty(documentExtension))
                                 {
+                                    this.LogIt($"email:{email} DownloadFile(filename:{filename}, documentExtension, , (int)tenant, isTenantZero)");
                                     _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
+                                    this.LogIt($"_DatainByte {_DatainByte.Length}= up.DownloadFile");
                                 }
                                 else isValid = false;
 
@@ -407,7 +420,22 @@ namespace WebFreight.Web.WebPages
 
                         if (HttpContext.Current.Response.IsClientConnected)
                         {
-                            HttpContext.Current.Response.Flush();
+                            LogIt("Flush");
+                            try
+                            {
+                                HttpContext.Current.Response.Flush();
+                            }
+                            catch (Exception exFlush)
+                            {
+                                if (LogitudeSettings.IsCostomsDeploy)
+                                {
+                                    LogitudeSettings.HandleLogMe(_Logger.ToString() + Environment.NewLine + exFlush.ToString(), false, "exFlush", new DateTime(2019, 8, 1));
+                                }
+                                throw;
+
+
+                            }
+                            
                             HttpContext.Current.Response.Close();
                             HttpContext.Current.ApplicationInstance.CompleteRequest();
 
@@ -430,6 +458,7 @@ namespace WebFreight.Web.WebPages
                 }
 
             }
+           
             catch (ExceptionInErrorLog ExceptionInErrorLog)
             {
                 Response.Clear();
@@ -440,6 +469,7 @@ namespace WebFreight.Web.WebPages
 ExceptionInErrorLog.ToString()
     );
             }
+            
             catch (Exception errorInfo)
             {
                 string ErrorMessage = errorInfo.Message;

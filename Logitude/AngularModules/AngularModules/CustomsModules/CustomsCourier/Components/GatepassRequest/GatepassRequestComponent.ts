@@ -211,6 +211,8 @@ export class GatepassRequestComponent extends BaseComponent {
                 this.UpdateCodeList = [];
                 this.UpdateCode = "";
                 this.GatepassRequestStatusName = "ממתין לאישור ביטול העברה";
+                this.UIProperties.SetEnabled("UpdateCode", this.ObjectTableName, false);
+                this.SetScreenFieldsEditability(true);
                 break;
         }
     }

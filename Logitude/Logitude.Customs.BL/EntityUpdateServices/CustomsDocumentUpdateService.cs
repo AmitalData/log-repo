@@ -405,6 +405,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public const string AvoidSendToCustoms = "Logitude.Customs.BL.EntityUpdateServices.CustomsDocumentUpdateService.AvoidSendToCustoms";
 
         //protected override void AfterUpdating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
+
+        public bool IgnoreSendFailure = false;
         void TrySendMessageToQueue(CustomsDocumentPM entityPM, bool forceDueLoadTest = false)
         {
             var send = false;
@@ -635,9 +637,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception e)
             {
-
-                e.ChangeExceptionMessage(@"שליחת מסמך למכס נכשל" + Environment.NewLine);
-                throw e;
+                if(!IgnoreSendFailure)
+                {
+                    e.ChangeExceptionMessage(@"שליחת מסמך למכס נכשל" + Environment.NewLine);
+                    throw e;
+                }
             }
             return send;
 

@@ -198,6 +198,30 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "I",
             });
 
+            all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
+            {
+                Code = "5101A",
+                EnglishName = "Correspondence to Cargo Split Rejected",
+                LocalName = "התכתבות דחיית פיצול מטען",
+                AssigneeNotificationTypeCode = "I",
+            });
+
+            all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
+            {
+                Code = "5101E",
+                EnglishName = "Correspondence to legality ransom",
+                LocalName = "התכתבות כופר חוקיות",
+                AssigneeNotificationTypeCode = "I",
+            });
+
+            all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
+            {
+                Code = "5101R",
+                EnglishName = "Correspondence to request for document",
+                LocalName = "התכתבות לדרישת מסמך",
+                AssigneeNotificationTypeCode = "I",
+            });
+
             //all.Add(new NotificationDefinitionDetails() // Mirit 22.04.15 - Task 12713 //delete Task 20106
             //{
             //    Code = "5101I",

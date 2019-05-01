@@ -52,6 +52,7 @@ import { CustomsSettingListService } from '../../../../../Customs/Services/Stand
 import { CustomsCountryListService } from '../../../../../Customs/Services/StandardLists/CustomsCountryListService';
 
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
     moduleId: module.id,
@@ -1060,10 +1061,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     public set IsValueForCustomsOnly(newValue: boolean) { this.EntityPM.IsValueForCustomsOnly = newValue; }
 
     //#endregion
-
-    RefreshChangeInSupplierInvoice() {
-        this.ChangeInSupplierInvoice = "1";
-    }
 
     OnInvoiceNumberLostFocus(invoiceNumberTextBox: any) {
 
@@ -2099,7 +2096,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
             var amountInNIS: number;
             var rate: CustomsExchangeRatePM;
             if (item.CurrencyTypeCode == "ILS") {
-                amountInNIS = AppTool.ToNumber(item.Amount);
+                amountInNIS = AppTool.ToNumber(item.Amount);              
                 totalFreightInNIS = +totalFreightInNIS + +amountInNIS;
                 //if (totalFreightInNIS != null) {
                 //    totalFreightInNIS = Math.round(totalFreightInNIS);

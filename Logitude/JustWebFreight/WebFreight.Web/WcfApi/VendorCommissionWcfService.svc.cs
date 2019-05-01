@@ -71,7 +71,7 @@ namespace WebFreight.Web.WcfApi
                     else
                     {
                         ModificationAndDiscountTypePM modificationAndDiscountTypePM = modificationAndDiscountTypeQueryService.GetSingle(entityPM.ModificationsTypeCode, false, true);
-                        if(modificationAndDiscountTypePM != null)
+                        if (modificationAndDiscountTypePM != null)
                         {
                             modificationsTypeCode = modificationAndDiscountTypePM.Code;
                         }
@@ -79,32 +79,32 @@ namespace WebFreight.Web.WcfApi
 
                     if (vendor != null && customer != null && modificationsTypeCode != null)
                     {
-                    VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id, modificationsTypeCode, false, false);
+                        VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id, modificationsTypeCode, false, false);
 
-                    if (vendorCommission == null)
-                    {
-                        vendorCommission = new VendorCommissionPM()
+                        if (vendorCommission == null)
                         {
-                            VendorId = vendor.Id,
-                            CustomerId = customer.Id,
-                            Tenant = entityPM.Tenant,
-                            CommisionPercentage = entityPM.CommisionPercentage,
-                            ModificationsTypeCode = entityPM.ModificationsTypeCode,
-                            ChangeSetOp = ChangeSetOperation.Insert
-                        };
+                            vendorCommission = new VendorCommissionPM()
+                            {
+                                VendorId = vendor.Id,
+                                CustomerId = customer.Id,
+                                Tenant = entityPM.Tenant,
+                                CommisionPercentage = entityPM.CommisionPercentage,
+                                ModificationsTypeCode = entityPM.ModificationsTypeCode,
+                                ChangeSetOp = ChangeSetOperation.Insert
+                            };
 
 
-                        service.Update(vendorCommission, true);
-                    }
-                    else
-                    {
-                        vendorCommission.CommisionPercentage = entityPM.CommisionPercentage;
-                        vendorCommission.ChangeSetOp = ChangeSetOperation.Update;
-                        service.Update(vendorCommission, true);
-                    }
+                            service.Update(vendorCommission, true);
+                        }
+                        else
+                        {
+                            vendorCommission.CommisionPercentage = entityPM.CommisionPercentage;
+                            vendorCommission.ChangeSetOp = ChangeSetOperation.Update;
+                            service.Update(vendorCommission, true);
+                        }
 
 
-                    response.Result = vendorCommission.VendorId;
+                        response.Result = vendorCommission.VendorId;
 
                     }
                     else
@@ -244,7 +244,7 @@ namespace WebFreight.Web.WcfApi
                         {
                             response.ErrorMessage = " vendor commission  is not found";
                         }
-                      
+
 
                     }
                     else
@@ -307,7 +307,7 @@ namespace WebFreight.Web.WcfApi
             }
         }
 
-     
-     
+
+
     }
 }

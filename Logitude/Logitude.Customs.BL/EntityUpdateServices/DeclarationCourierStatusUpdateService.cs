@@ -36,6 +36,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO)
         {
+            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
+            declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
+
+
             UpdateUnifreight(entityPM);
 
             base.OnUpdating(entityPM, entityPOCO);
@@ -49,7 +53,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void AfterUpdating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
-
+            LogMessagingUtil.Instance.AppendLine("DeclarationCourierStatusPM.DocumentStatusCode: " + entityPM.DocumentStatusCode);
         }
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)

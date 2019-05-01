@@ -408,6 +408,7 @@ export class CourierWorksheetListTemplate {
                             logWindow.Height = 350;
                             logWindow.Title = "פעולות מיוחדות מול מסוף";
                             logWindow.WindowArgs = {
+                                TerminalSuspentionNumber: this._CourierWorksheet['TerminalSuspentionNumber'],
                                 MamanSpecialActionList: list
                             };
                             logWindow.ShowCloseButton = true;

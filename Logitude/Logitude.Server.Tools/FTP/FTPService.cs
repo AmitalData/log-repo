@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -74,6 +75,7 @@ namespace Logitude.Server.Tools.FTP
 			}
 			catch (WebException ex)
 			{
+                Debug.WriteLine(ex.ToString());
 				FTPServiceExceptionThrower.Throw(ex, user, host, remoteFile, "download");
 			}
 			catch (Exception ex)

@@ -37,6 +37,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         private ICustomContext _context;
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
+        private string mode;
 
         private AmitalContext amitalContext;
 
@@ -371,7 +372,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "17")
                     {
-                        this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
+                        
+                        if (mode != "UpdateNotEmpty")
+                        {
+                            this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
+                        }
                         this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWBDATE;
 
                         if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.DealId) || !string.IsNullOrWhiteSpace(_AmitalCustomsFile.ManifestNumber))
@@ -429,15 +438,33 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     else if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "1")
                     {
                         this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
-                        this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
-                        this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                        
+                        if (mode != "UpdateNotEmpty")
+                        {
+                            this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                            this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.MAWB)) this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                        }
+                        
                     }
                     else
                     {
                         if (this._MyDeclarationPM.TransportModeId == "A")
                         {
-                            this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
-                            this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                            if (mode != "UpdateNotEmpty")
+                            {
+                                this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                                this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                            }
+                            else
+                            {
+                                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.MAWB)) this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
+                                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
+                            }
                         }
                         else
                         {
@@ -452,7 +479,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         loadingPortCode = TranslateloadPort(_AmitalCustomsFile.LoadingPortCode);
                     }
-                    this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                    if (mode != "UpdateNotEmpty")
+                    {
+                        this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrWhiteSpace(loadingPortCode)) this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+                    }
 
                     //this._MyDeclarationPM.Consignments[0].OriginCountryCode = TranslateCountry(_AmitalCustomsFile.OriginCountryCode);
                     // moran 2.4.14 - add handle in case of empty value -->
@@ -473,7 +507,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     else
                     {
-                        this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
+                        if (mode != "UpdateNotEmpty") this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
                     }
                     // moran 2.4.14 - add handle in case of empty value <--
                     this._MyDeclarationPM.Consignments[0].CargoDescription = _AmitalCustomsFile.CargoDescription;
@@ -1135,7 +1169,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 MyCommunicationsParams.Tenant = ResolvedTenant();
 
-
+                if(MoreParams == "CommDecService")
+                {
+                    mode = "UpdateNotEmpty";
+                }
 
                 MyGenericResponseObj.Stage = "Upsert";
                 Upsert();

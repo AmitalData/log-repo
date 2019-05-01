@@ -59,9 +59,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     "CustomerAddress",
                     "DestLineDesc",
                     "DestLineCode",
-                    "DistributorHP",
-                    "DistributorName",
-                    "DeclarationId",
+                    ///במסר שטר מטען בלדר תאורטי שדה מס' הצהרה יהפוך להיות O במקום M יש להוריד את הבדיקה של השדה משדות החובה- אפיון  "DeclarationId",
                     "BaldarHp",
                     "OpenBaldarAwbDate"
                             }
@@ -193,7 +191,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //Task 46455:
                 DestLineCode = "9999999999",
                 DeclarationId = myDeclarationPM.DeclarationNumber,
-                CustomIkuv = myDeclarationPM.CourierSuspentionCode,//task 49300
+                CustomIkuv = myDeclarationPM.CourierCustomStatusCode=="1"?"3": myDeclarationPM.CourierSuspentionCode,//task 49300
                 //CustomIkuv = myDeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
                 DistributorHP = distributorHP,

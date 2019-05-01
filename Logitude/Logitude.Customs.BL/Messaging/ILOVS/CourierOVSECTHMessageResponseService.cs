@@ -54,11 +54,13 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             {
                 case "1"://45997
                     {
+                        //declarationPM.MamanStatusCode = "1";
                         declarationCourierStatusQueryServicePM.StorageSiteStatusCode = "1";
                     }
                     break;
                 default:
-                    declarationCourierStatusQueryServicePM.StorageSiteStatusCode = "2";//45997
+                    //declarationPM.MamanStatusCode = "2";//45997
+                    declarationCourierStatusQueryServicePM.StorageSiteStatusCode = "2";
                     break;
             }
 
