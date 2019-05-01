@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new VendorCommissionDataMapping();
         }
 		 
-		public  VendorCommissionPM GetSingle(string vendorid, string customerid,bool getComposition, bool getFromCache)
+		public  VendorCommissionPM GetSingle(string vendorid, string customerid, string modificationstypecode,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new VendorCommissionKeys(){ VendorId = vendorid, CustomerId = customerid };
+             EntityKeys = new VendorCommissionKeys(){ VendorId = vendorid, CustomerId = customerid, ModificationsTypeCode = modificationstypecode };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(VendorCommission entityPOCO)
         {
-            VendorCommissionKeys entityKeys = new VendorCommissionKeys() { VendorId = entityPOCO.VendorId, CustomerId = entityPOCO.CustomerId,  };
+            VendorCommissionKeys entityKeys = new VendorCommissionKeys() { VendorId = entityPOCO.VendorId, CustomerId = entityPOCO.CustomerId, ModificationsTypeCode = entityPOCO.ModificationsTypeCode,  };
             return entityKeys;
         }
      

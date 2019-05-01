@@ -3559,52 +3559,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string mamanStatusCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MamanStatusCode  
-	   {
-	    
-	     get
-		{
-		   return mamanStatusCode;
-		 }
-		 set
-		 {
-		   if(mamanStatusCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanStatusCode",OldValue=mamanStatusCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   mamanStatusCode=value;
-		   }
-			
-		 }
-	   }
-	  private string mamanErrorXml ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MamanErrorXml  
-	   {
-	    
-	     get
-		{
-		   return mamanErrorXml;
-		 }
-		 set
-		 {
-		   if(mamanErrorXml != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanErrorXml",OldValue=mamanErrorXml,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   mamanErrorXml=value;
-		   }
-			
-		 }
-	   }
 	  private string itemsProcessTypesList ;
 	  	  
        
@@ -3647,29 +3601,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsClose",OldValue=isClose,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   isClose=value;
-		   }
-			
-		 }
-	   }
-	  private string mamanStatusName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MamanStatusName  
-	   {
-	    
-	     get
-		{
-		   return mamanStatusName;
-		 }
-		 set
-		 {
-		   if(mamanStatusName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanStatusName",OldValue=mamanStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   mamanStatusName=value;
 		   }
 			
 		 }

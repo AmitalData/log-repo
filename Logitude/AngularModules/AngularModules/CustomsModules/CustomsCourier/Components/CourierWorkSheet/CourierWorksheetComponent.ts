@@ -26,6 +26,7 @@ import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/Re
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
+import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 
 @Component({
@@ -768,7 +769,7 @@ implements OnDestroy
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '80px' },
+            Styles: { width: '75px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -776,10 +777,10 @@ implements OnDestroy
         });
 
         this.columns.push({
-            FieldName: 'MamanStatusCode',
+            FieldName: 'StorageSiteStatusCode',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.MamanStatusCode"),
-            Styles: { width: '55px' },
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatusCode"),
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -818,10 +819,21 @@ implements OnDestroy
         });
 
         this.columns.push({
+            FieldName: 'LastMileStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.LastMileStatusCode"),
+            Styles: { width: '50px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        });
+
+        this.columns.push({
             FieldName: 'IsClosedForFollowUp',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '70px' },
+            Styles: { width: '65px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -899,7 +911,7 @@ implements OnDestroy
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
         switch (this._SelectedTabFilter.Code) {
-            case "ACC":
+            //case "ACC":
             case "ALL": {
                 break;
             }
@@ -996,7 +1008,7 @@ implements OnDestroy
 
         switch (this._SelectedACCValue) {
             case "W": {
-                filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("StorageSiteStatusCode", "2", null, null, "Equals", false, false, false, "string");
                 break;
             }
             case "WS": {
@@ -1328,6 +1340,14 @@ implements OnDestroy
 
     GatepassRequestMethod() {
 
+        if (this.IsDisplayOnly) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("קיים מסר זהה בתהליך");
+            return;
+        }
+
         if (AppTool.IsNullOrEmpty(this.entityPM.MAWB)) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -1392,6 +1412,14 @@ implements OnDestroy
 
     ChangeStorageSiteMethod() {
 
+        if (this.IsDisplayOnly) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("קיים מסר זהה בתהליך"); 
+            return;
+        }
+
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.CourierMasterPM = this.entityPM;
@@ -1414,8 +1442,11 @@ implements OnDestroy
         this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                this.IsDisplayOnly = true;
-                this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                }
             }
         });
     }

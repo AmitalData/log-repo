@@ -484,6 +484,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             this.CancelDeclarationClosureMethod();
                             break;
                         }
+                    case "Declaration Customs Requests":
+                        {
+                            this.DeclarationCustomsRequestsMethod();
+                            break;
+                        }
+                    case "Declaration Customs Requests":
+                        {
+                            this.DeclarationCustomsRequestsMethod();
+                            break;
+                        }
                 }
             }
     }
@@ -1219,6 +1229,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     });
             }
         });
+    }
+
+    DeclarationCustomsRequestsMethod() {
+
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1500;
+        logWindow.Height = 1000;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = "בקשות מכס";
+        logWindow.Show('./CustomsModules/CustomsRequests/Components/CustomsRequestsComponent');
+        SessionLocator.CurrentSession.StopBusyIndicator();
     }
 }
 

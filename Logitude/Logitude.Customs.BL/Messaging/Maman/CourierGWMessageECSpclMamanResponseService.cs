@@ -60,13 +60,16 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //בעת שליחת המסר תבוצע שליפה של טבלת DeclarationMamanSpecialAction לפי מפתח הצהרה + קוד פעולה מיוחדת, והנתונים יישלחו לפי קוד פעולה שהמשתמש בחר + נתונים מ DB של הצהרה + DeclarationMamanSpecialAction
             var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(settings.Tenant);
             var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(settings.DeclarationId, responeECSpclMamanData.SpSpclCode, false, false);
-
+            if (pmDeclarationMamanSpecialAction == null)
+            {
+                throw new Exception("AnalyzeQResponse():pmDeclarationMamanSpecialAction == null");
+            }
 #endif
 
 
             var myDeclarationQueryService = new DeclarationQueryService(context);
             var myCourierMasterQueryService = new CourierMasterQueryService(context);
-            var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, false, false);
+            var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, true, false);
             declarationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
 
@@ -119,7 +122,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 toCancel = true;
                 unifreightEventMode = UnifreightEventMode.del;
             }
-            using (var scope = TransactionFactory.GetNewTransaction())
+            ///using (var scope = TransactionFactory.GetNewTransaction())
             {
 #if waitTillMiritWillCreateDBAndScreen
 
@@ -164,7 +167,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 }
                 myDeclarationMamanSpecialAction.Update(pmDeclarationMamanSpecialAction, true);
 
-                scope.Complete();
+                //scope.Complete();
             }
         }
 

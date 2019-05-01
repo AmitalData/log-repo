@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        TypeName = a.ModificationAndDiscountType != null ? (a.ModificationAndDiscountType.LocalName != null ? a.ModificationAndDiscountType.LocalName : a.ModificationAndDiscountType.EnglishName) : null,
                                                        ModificationCounterKey = a.ModificationCounterKey,
 
-                                                    });
+                                                                 });
             return query;
 		}
 

@@ -54,7 +54,16 @@
             background-color: #B3E2FF;
             /*border-top:0.1px solid #00BCD4;*/
     }
-
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
     .DetailsButton{
         width: 120px;
         height: 28px;
@@ -116,22 +125,23 @@
                                     <table>
                                         <tr>
                                             <!--<td style="width: 1px;">
-                                                <BackButton style="width:30px" [Text]="BackButtonLabel" (click)="Close()"></BackButton>
-                                            </td>-->
+                        <BackButton style="width:30px" [Text]="BackButtonLabel" (click)="Close()"></BackButton>
+                    </td>-->
 
                                             <td> <div></div></td>
 
                                             <!--<td style="width: 20px;">
-                                                <div>
-                                                    <img (click)="Close()" class="CenterCenter" src="./Images/WindowIcons/WindowClose.png" style="top: -1px; left: 0px; cursor: pointer;">
-                                                </div>
-                                            </td>-->
+                        <div>
+                            <img (click)="Close()" class="CenterCenter" src="./Images/WindowIcons/WindowClose.png" style="top: -1px; left: 0px; cursor: pointer;">
+                        </div>
+                    </td>-->
 
                                         </tr>
 
                                     </table>
                                 </td>
                             </tr>
+
                             <!-- Title -->
                             <tr class="TabTitleRow" style="height:30px;">
                                 <td>
@@ -161,10 +171,10 @@
                                                     <div class="ToggleButtonMenu" style="width:115px; left: 0px; right: initial ;top:22px;text-align:center">
                                                         <button style="text-align:right" (click)="OpenCourierMaster('General')">{{'Customs.Declaration.TH.General' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="OpenCourierMaster('ConnectedDeclarations')">{{'General.O.ConnectedDeclarations' |TextCodeTranslationPipe }}</button>
-                                                        <button style="text-align:right" (click)="DeclarationsStatusRequestMethod()">{{'Customs.Declaration.O.DeclarationStatusRequest' | TextCodeTranslationPipe }}</button>
-                                                        <button style="text-align:right" (click)="GatepassRequestMethod()">{{'גייטפס העברות' }}</button>
-                                                        <button *ngIf="IsMamanEnabled" style="text-align:right" (click)="SendFTPMamanRequestMethod()">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
-                                                        <button style="text-align:right" (click)="ChangeStorageSiteMethod()">{{'שינוי אתר אחסון' }}</button>
+                                                        <button style="text-align:right" (click)="DeclarationsStatusRequestMethod()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationStatusRequest' | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" (click)="GatepassRequestMethod()" [disabled]="IsDisplayOnly">{{'גייטפס העברות' }}</button>
+                                                        <button *ngIf="IsMamanEnabled" style="text-align:right" (click)="SendFTPMamanRequestMethod()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" (click)="ChangeStorageSiteMethod()" [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
                                                     </div>
 
                                                 </div>
@@ -174,8 +184,17 @@
                                 </td>
                             </tr>
 
+                            <!--Disble Alert-->
                             <tr style="height:30px;">
-                                <td></td>
+                                <td colspan="6">
+                                    <div *ngIf="IsDisplayOnly" style="width: 100%;text-align:center">
+                                        <div class="DisbleBox">
+                                            {{DisplayOnlyMessage}}
+                                            <span style="padding: 0px 16px;">-</span>
+                                            <span class="hyperlink" (click)="RefreshButtonClicked()" style="font-size:12px;">רענן</span>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             <!--filter row-->
                             <tr style="height:30px;">
@@ -184,8 +203,7 @@
                                         <tr>
                                             <!--style="width:120px;cursor: pointer;font-size:15px"-->
                                             <!--Task 40816 [style.opacity]="0.7" (was [style.opacity]="item==_SelectedTabFilter ? 1 : 0.7") -->
-                                            <td 
-                                                class="CWSTabHeader"
+                                            <td class="CWSTabHeader"
                                                 [style.opacity]="0.7"
                                                 (click)="TabFilterClick(item)"
                                                 *ngFor="let item of _TabFilterList; ">
@@ -200,15 +218,16 @@
                                                                 <span style="font-size:13px;font-weight:bold; text-align:right" dir="ltr" *ngIf="item.Code == 'HOLD'"> ({{item.Total}}) {{item.Header}} </span>
                                                             </div>
                                                         </td>
-                                                        
+
                                                     </tr>
                                                     <tr style="height:2px"><td colspan="2"></td></tr>
-                                                    <tr style="height:5px"> <td colspan="2">
-                                                        <!--<div [style.border-bottom]="item==_SelectedTabFilter ? '5px solid #00BCD4' : '4px solid gray'"></div>-->
+                                                    <tr style="height:5px">
+                                                        <td colspan="2">
+                                                            <!--<div [style.border-bottom]="item==_SelectedTabFilter ? '5px solid #00BCD4' : '4px solid gray'"></div>-->
                                                             <div style="opacity: 0.7">
                                                                 <table>
                                                                     <tr>
-                                                                        <!--#008ee6 == > #00BCD4--> 
+                                                                        <!--#008ee6 == > #00BCD4-->
                                                                         <!--<td style="width:15px;"  [style.opacity]="item==_SelectedTabFilter ? '0.7' : '1'" ><div style="border-bottom:4px solid gray"></div></td> task 40816-->
                                                                         <td><div [style.border-bottom]="item==_SelectedTabFilter ? '4px solid #008ee6' : '4px solid gray'"></div></td>
                                                                         <!--<td style="width:15px;" [style.opacity]="item==_SelectedTabFilter ? '0.7' : '1'"><div style="border-bottom:4px solid gray"></div></td> task 40816-->
@@ -226,19 +245,19 @@
                                                         <td></td>
                                                     </tr>
                                                     <tr style="height:2px"><td colspan="2"></td></tr>
-                                                    <tr style="height:5px"> 
-                                                    <td colspan="2">
-                                                        <!--<div style="border-bottom:4px solid gray;"></div>-->    
-                                                        <div style="opacity: 0.7">
-                                                            <table>
-                                                                <tr>
-                                                                    <!--#008ee6 == > #00BCD4-->
-                                                                    <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
-                                                                    <td><div style="border-bottom:4px solid gray"></div></td>
-                                                                    <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
+                                                    <tr style="height:5px">
+                                                        <td colspan="2">
+                                                            <!--<div style="border-bottom:4px solid gray;"></div>-->
+                                                            <div style="opacity: 0.7">
+                                                                <table>
+                                                                    <tr>
+                                                                        <!--#008ee6 == > #00BCD4-->
+                                                                        <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
+                                                                        <td><div style="border-bottom:4px solid gray"></div></td>
+                                                                        <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -303,7 +322,7 @@
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                           [ButtonText]=_ReadyMNFToBatchSendButtonText
-                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
@@ -320,7 +339,7 @@
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                           [ButtonText]=SelectedMNFToBatchSendButtonText
-                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
@@ -341,7 +360,7 @@
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
                                                                                           [ButtonText]=_ReadyDECToBatchSendButtonText
-                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="115">
 
                                                                                 <div class="class-MENUSplitButton-content">
                                                                                     <div>
@@ -373,27 +392,39 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td style="width:1px"></td>
-                                                                        <td><button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button></td>
+                                                                        <td style="width:200px">
+                                                                            <!--<button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button>-->
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLTerminal('M')"
+                                                                                          [IsDisabled]="!(IsILOVLEnabled || IsMamanEnabled)"
+                                                                                          [ButtonText]="'שדר מסר ש.מ.ב למסוף'"
+                                                                                          [AsRegularButton]="'true'"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                        </td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
                                                                 <!--SVG-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='SVG' ">
                                                                     <tr>
-                                                                        <td style="width:100px"><button class="Button" (click)="SendALLSVG()">עבור לסיווג {{' (' +this._SVGTotal + ')' }}</button></td>
+                                                                        <td style="width:100px"><button class="Button" (click)="SendALLSVG()" [disabled]="IsDisplayOnly">עבור לסיווג {{' (' +this._SVGTotal + ')' }}</button></td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
                                                                 <!--MNF-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='MNF' ">
                                                                     <tr>
-                                                                        <td style="width:250px;">
+                                                                        <td style="width:300px;">
                                                                             <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
-                                                                                <li (click)="MNFFilterClicked('W')" style="width: 120px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'W'">
+                                                                                <li (click)="MNFFilterClicked('W')" style="width: 140px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'W'">
                                                                                     {{'Customs.CourierMaster.MNF.HandleWrong' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._MNF_W_Total + ')' }} </span>
                                                                                 </li>
-                                                                                <li (click)="MNFFilterClicked('C')" style="width: 120px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'C'">
+                                                                                <li (click)="MNFFilterClicked('C')" style="width: 140px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'C'">
                                                                                     {{'Customs.CourierMaster.MNF.CompleteMissing' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._MNF_C_Total + ')' }} </span>
                                                                                 </li>
@@ -405,13 +436,13 @@
                                                                 <!--DEC-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='DEC' ">
                                                                     <tr>
-                                                                        <td style="width: 250px;">
+                                                                        <td style="width: 300px;">
                                                                             <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
-                                                                                <li (click)="DECFilterClicked('W')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECValue === 'W'">
+                                                                                <li (click)="DECFilterClicked('W')" style="width:140px; height: 25px;" [class.SelectedFilter]="_SelectedDECValue === 'W'">
                                                                                     {{'Customs.CourierMaster.MNF.HandleWrong' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._DEC_W_Total + ')' }} </span>
                                                                                 </li>
-                                                                                <li (click)="DECFilterClicked('C')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECValue === 'C'">
+                                                                                <li (click)="DECFilterClicked('C')" style="width:140px; height: 25px;" [class.SelectedFilter]="_SelectedDECValue === 'C'">
                                                                                     {{'Customs.CourierMaster.MNF.CompleteMissing' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._DEC_C_Total + ')' }} </span>
                                                                                 </li>
@@ -445,8 +476,8 @@
                                                                 <!--PAY-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='PAY' ">
                                                                     <tr>
-                                                                        <td *ngIf="_SelectedItems == null || (_SelectedItems != null && _SelectedItems.Collection.length == 0)" style="width:100px; text-align:right" dir="ltr"><button class="Button" (click)="SendReadyLOWPAYToBatch()"> {{ ' (' +this._PAYReadyNotFastindividual + ') ' + 'תשלום תהליך מהיר'}}</button></td>
-                                                                        <td *ngIf="_SelectedItems != null && _SelectedItems.Collection.length > 0" style="width:100px; "><button class="Button" (click)="SendReadyLOWPAYToBatch()"> {{ 'תשלום תהליך מהיר מסומנים'}}</button></td>
+                                                                        <td *ngIf="_SelectedItems == null || (_SelectedItems != null && _SelectedItems.Collection.length == 0)" style="width:100px; text-align:right" dir="ltr"><button class="Button" (click)="SendReadyLOWPAYToBatch()" [disabled]="IsDisplayOnly"> {{ ' (' +this._PAYReadyNotFastindividual + ') ' + 'תשלום תהליך מהיר'}}</button></td>
+                                                                        <td *ngIf="_SelectedItems != null && _SelectedItems.Collection.length > 0" style="width:100px; "><button class="Button" (click)="SendReadyLOWPAYToBatch()" [disabled]="IsDisplayOnly"> {{ 'תשלום תהליך מהיר מסומנים'}}</button></td>
                                                                         <td style="width:5px"></td>
                                                                         <td style="width:100px"></td>
                                                                         <td></td>
@@ -457,12 +488,12 @@
                                                                     <tr>
                                                                         <td style="width: 250px;">
                                                                             <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
-                                                                                <li (click)="ACCFilterClicked('WS')" style="width:90px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'WS'">
+                                                                                <li (click)="ACCFilterClicked('WS')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'WS'">
                                                                                     <!--{{'מיוחדות שגויים'}}-->
                                                                                     {{'Customs.CourierMaster.ACC.WrongSpecial' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._ACC_WS_Total + ')' }} </span>
                                                                                 </li>
-                                                                                <li (click)="ACCFilterClicked('W')" style="width:90px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'W'">
+                                                                                <li (click)="ACCFilterClicked('W')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'W'">
                                                                                     <!--{{'ש.מ.ב שגויים'}}-->
                                                                                     {{'Customs.CourierMaster.ACC.Wrong' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._ACC_W_Total + ')' }} </span>
@@ -684,25 +715,25 @@
                                                                        [rowHeight]="40"
                                                                        [rows]="RowsItems"
                                                                        [PassAdditionalDataToTemplates]="true"
-                                                                       [MyScrollTop]="MyScrollTop"
-                                                                        >
+                                                                       [MyScrollTop]="MyScrollTop">
                                                             <!--[RowHoverColor]="'#C8C8FA'"
-                                                               (CheckBoxChecked)="onCheckBoxChecked($event)"
-                                                                --><!--40970-->
-                                                            </logitude-grid>
+                                    (CheckBoxChecked)="onCheckBoxChecked($event)"
+                                     -->
+                                                            <!--40970-->
+                                                        </logitude-grid>
                                                         <!--
-                                                            
-                                                            [MyScrollTop]="MyScrollTop" 
-                                                                       [MySelectedRowIndex]="MySelectedRowIndex"  
 
-                                                            [QueryChangeEvent]="onQueryChangeEvent"
-                                                            [EnableRowToolTip]="true"
-                                                            [ToolTipWidth]="250"
-                                                            [ToolTipHeight]="100"
-                                                            [ToolTipBinding]="'Description'"
-                                                            
-                                                            [CustomBackFromEdit]="CustomBackFromEditevent"
-                                                        -->
+                                    [MyScrollTop]="MyScrollTop"
+                                               [MySelectedRowIndex]="MySelectedRowIndex"
+
+                                    [QueryChangeEvent]="onQueryChangeEvent"
+                                    [EnableRowToolTip]="true"
+                                    [ToolTipWidth]="250"
+                                    [ToolTipHeight]="100"
+                                    [ToolTipBinding]="'Description'"
+
+                                    [CustomBackFromEdit]="CustomBackFromEditevent"
+                                -->
                                                     </div>
                                                 </td>
                                             </tr>

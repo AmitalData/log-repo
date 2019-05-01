@@ -1,0 +1,8 @@
+<!ELEMENT LOGICOURIERSTATUS (LogitudeCourierStatus*)>
+<!ELEMENT LogitudeCourierStatus (DeclarationId?, CustomFileNo?, LastMileStatus?, LastMileStatusDate?, LastMileStatusRemarks?, Param?)>
+<!ELEMENT DeclarationId (#PCDATA)>
+<!ELEMENT CustomFileNo (#PCDATA)>
+<!ELEMENT LastMileStatus (#PCDATA)>
+<!ELEMENT LastMileStatusDate (#PCDATA)>
+<!ELEMENT LastMileStatusRemarks (#PCDATA)>
+<!ELEMENT Param (#PCDATA)>

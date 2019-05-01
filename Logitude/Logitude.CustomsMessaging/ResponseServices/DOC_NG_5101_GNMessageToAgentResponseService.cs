@@ -111,7 +111,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             string customsVendorCode = message[0];
                             customsVendorId = CheckIfCustomsVendorCodeExist(customsVendorCode, requestParams.Tenant);
                         }
-                        if (!string.IsNullOrWhiteSpace(customsVendorId))
+                        if(!string.IsNullOrWhiteSpace(customsVendorId))
                         {
                             SendImporterDeclarationRequest(requestParams, importerVAT, customsVendorId);
                         }
@@ -507,7 +507,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = " + code + " CustomFileNo= " + dirtyDeclarationPM.CustomFileNo + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
 
             }
             catch (System.Exception)
@@ -595,6 +595,56 @@ namespace Logitude.CustomsMessaging.ResponseServices
             CustomsVendorQueryService query = new CustomsVendorQueryService(customContext);
             string vendorId = query.GetIdByVendorNumber(vendorNumber, tenant);
             if (!string.IsNullOrWhiteSpace(vendorId))
+            {
+                return vendorId;
+            }
+
+            return null;
+        }
+
+        void SendImporterDeclarationRequest(GenericRequestParams requestParams, string importerNumber, string vendorCode)
+        {
+            DateTime today = DateTime.Today;
+            string loggingUserId = AuthenticationUtil.ResolveUserId(requestParams.Tenant);
+            var newImporterDeclarationRequestParams = new ImporterDeclarationRequestParams()
+            {
+                LoggingEnabled = true,
+                LoggingUserId = loggingUserId,
+                Tenant = requestParams.Tenant,
+                RequestName = "Importer Declaration Request",
+                ResponseName = "Importer Declaration Request",
+                IsByExpireDate = false,
+                IsByType = true,
+                ImporterNumber = importerNumber,
+                Code = vendorCode,
+                DeclarationConect = "2",
+                FromDate = today.AddDays(-1),
+                ToDate = today.AddDays(365),
+                RequestVIA = SendRequestVIA.WebServiceBatch
+            };
+
+            var service = new VE_8326_ImporterDeclarationMessagingService();
+            var responseData = service.Send(newImporterDeclarationRequestParams);
+            if (!responseData.Succeeded)
+            {
+                LogMessagingUtil.Instance.AppendLine("Request Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
+                return;
+            }
+            LogMessagingUtil.Instance.AppendLine("Request Succeeded " + responseData.CustomsRequestsSheetId);
+        }
+
+        string CheckIfCustomsVendorCodeExist(string vendorNumber, int tenant)
+        {
+
+            if (string.IsNullOrWhiteSpace(vendorNumber))
+            {
+                return null;
+            }
+
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            CustomsVendorQueryService query = new CustomsVendorQueryService(customContext);
+            string vendorId = query.GetIdByVendorNumber(vendorNumber, tenant);
+            if(!string.IsNullOrWhiteSpace(vendorId))
             {
                 return vendorId;
             }

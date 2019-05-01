@@ -53,7 +53,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             if (customsResponse.GatepassFeedbackMessage != null)
             {
-                if (customsResponse.GatepassFeedbackMessage.FirstOrDefault().gatepassNumber < 500000000)
+                if(customsResponse.GatepassFeedbackMessage.FirstOrDefault().gatepassNumber < 500000000)
                 {
                     return false;
                 }

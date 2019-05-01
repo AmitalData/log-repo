@@ -82,6 +82,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.VendorComissionPercentage).HasColumnName("VendorComissionPercentage").HasPrecision(7, 4);
 
             this.Property(t => t.InvoiceAmountInUSD).HasColumnName("InvoiceAmountInUSD").HasPrecision(16, 2);
+
+            this.Property(t => t.ChangeInSupplierInvoice).HasColumnName("ChangeInSupplierInvoice").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

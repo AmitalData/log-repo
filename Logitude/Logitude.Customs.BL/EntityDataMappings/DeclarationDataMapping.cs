@@ -91,7 +91,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.ManifestCargoStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionReasonName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AcceptanceStatusName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.MamanStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionName);
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);
@@ -375,15 +374,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
-            if (entityPOCO.MamanStatusCode != null)
-            {
-                MamanStatusQueryService mamanStatusQueryService = new MamanStatusQueryService(entityPOCO.Tenant);
-                MamanStatusPM mamanStatus = mamanStatusQueryService.GetSingle(entityPOCO.MamanStatusCode, false, true);
-                if (mamanStatus != null)
-                {
-                    entityPM.MamanStatusName = mamanStatus.LocalName;
-                }
-            }
 
 
         }

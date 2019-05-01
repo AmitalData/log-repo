@@ -306,7 +306,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(entityPM.Tenant);
                 CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(entityPM.AirlineId, false, true);
-                    if (customsAirline != null)
+                if (customsAirline != null)
                 {
                     entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
                     entityPM.AirlineName = customsAirline.LocalName;

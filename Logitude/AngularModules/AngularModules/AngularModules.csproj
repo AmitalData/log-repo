@@ -128,6 +128,7 @@
     <Content Include="Common\Components\AccountingTab\Advanced\ChargesExternalByProductsComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\CustomerActivation\ReadyForActivationComponent.html" />
     <Content Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.html" />
+    <Content Include="Controls\All\GreenButtonComponent.html" />
     <Content Include="Controls\All\SplitButtonComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.html" />
@@ -390,6 +391,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
+    <TypeScriptCompile Include="Controls\All\GreenButtonComponent.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.ts" />

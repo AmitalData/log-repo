@@ -369,9 +369,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 ICustomContext context = MainContext as CustomContext;
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
+                if(entityPM.CustomsDocumentPointers != null && entityPM.CustomsDocumentPointers.Count() > 0) LogMessagingUtil.Instance.AppendLine("ticket pointer connected entity: " + entityPM.CustomsDocumentPointers.FirstOrDefault().ParentEntityId);
                 CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(context);
                 if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
                 {
+                    LogMessagingUtil.Instance.AppendLine("found connected entity: " + connectedDeclarationPM.Id);
                     string status = null;
                     List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(connectedDeclarationPM.Id, "", "", "", entityPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == "380").ToList();
                     if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
@@ -406,6 +408,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 var customsDocumentPM = myQueryService.GetSingle(entityPM.DocumentsFilingId, false, true);
                                 if (customsDocumentPM != null)
                                 {
+                                    LogMessagingUtil.Instance.AppendLine("customsDocumentPM DocumentStatusCode: " + customsDocumentPM.DocumentStatusCode);
                                     if (customsDocumentPM.DocumentStatusCode == "1")
                                     {
                                         status = "V";
@@ -440,6 +443,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                         currentDeclarationCourierStatusPM.DocumentStatusCode = status;
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
                     }
                 }
             }

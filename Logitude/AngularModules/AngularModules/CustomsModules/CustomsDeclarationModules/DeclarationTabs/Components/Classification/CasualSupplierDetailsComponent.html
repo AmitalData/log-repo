@@ -23,8 +23,9 @@
                       [DataContext]="DataContext" [Text]="'שם ספק'"></LogLabel>
         </td>
         <td class="EditMe">
-            <LogTextBox [ObjectFieldName]="'CasualSupplierName'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierName"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+            <LogTextBox style="direction: ltr;"
+                        [ObjectFieldName]="'CasualSupplierName'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierName"
+                        [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
         </td>
         <td></td>
     </tr>
@@ -35,7 +36,9 @@
         </td>
         <td class="EditMe">
             <LogTextBox [ObjectFieldName]="'CasualSupplierAddress'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierAddress"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                        [HideColumns]="true" [DataContext]="DataContext"
+                        style="direction: ltr;"
+                        ></LogTextBox>
         </td>
         <td></td>
     </tr>
