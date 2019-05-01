@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class StateUpdateClass
@@ -79,13 +83,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "State",
+			      				    IsNew =  false,
 			      				    DBTableName =  "States",
+			      				    OldDBTableName =  "States",
 			      				    ObjectTableSingular =  "State",
 			      				    ObjectTablePlural =  "States",
+			      				    DescriptionDefaultText =  "Logitude supplies the states for you. You can modify the names and add local names.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Code",
@@ -114,11 +122,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    Code =  "STAT",
 			      				    Name =  "States",
 			      				    GenerateDomainService =  false,
-			      				    HasMenuButtons =  false,
-			      				    CustomFieldsCount =  0,
-			      				    SearchFields =  "State,States,,Id,",
 			      				    ClientModuleName =  "Common",
-			      				    DescriptionDefaultText =  "Logitude supplies the states for you. You can modify the names and add local names.",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    SearchFields =  "State,States,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -130,12 +142,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
+					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  10,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -155,8 +170,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Code",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFiltersIndex =  1,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -174,15 +196,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "Code",
-					  						DisplayInSearchWindowFilters =  true,
-					  						DisplayInSearchWindowFiltersIndex =  1,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "Code",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -191,12 +206,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
+					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -216,13 +234,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "EnglishName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Name",
+					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "Name",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "Name",
@@ -235,15 +260,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "EnglishName",
-					  						DisplayInSearchWindowFilters =  true,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "Name",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -252,12 +270,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
+					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -277,8 +298,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "LocalName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -296,15 +324,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "LocalName",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "LocalName",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -313,12 +334,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
+					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -338,8 +362,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ComputedLocalName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -355,15 +386,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "ComputedLocalName",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "ComputedLocalName",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -372,13 +396,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryId",
+					  						OldFieldName =  "CountryId",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -398,8 +425,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "CountryId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -415,15 +449,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "CountryId",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "CountryId",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -432,12 +459,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
+					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -457,8 +487,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "InActive",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -476,15 +513,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "InActive",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "InActive",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -493,12 +523,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AddedManually",
+					  						OldFieldName =  "AddedManually",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -518,8 +551,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "AddedManually",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -537,15 +577,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "AddedManually",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "AddedManually",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -554,12 +587,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryEnglishName",
+					  						OldFieldName =  "CountryEnglishName",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  120,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -579,8 +615,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "CountryEnglishName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -598,16 +641,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						LookUpTableName =  "Country",
-					  						Code =  "CountryEnglishName",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "CountryEnglishName",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -616,12 +651,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
+					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -642,8 +680,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Notes",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -661,15 +706,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "Notes",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "Notes",
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -678,12 +716,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -701,9 +742,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "State",
 					  						ValidForQuerySection2 =  "StateFollowUp",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "SearchFields",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -721,14 +769,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "SearchFields",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -740,6 +781,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup StateQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "STAT", Name = "States" }, queryGroupRepository);
+						QueryGroup StateQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6b0e", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable StateObjectTable = objectContext.ObjectTables.Where(d => d.Name == "State" && d.Tenant == 0).FirstOrDefault();
@@ -776,7 +818,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		       
 	      
 
-	         Screen StateGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "State.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = StateObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen StateGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "State.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = StateObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
             ScreenField StateStateGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = StateObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = StateGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -844,10 +886,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPST",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "State Updated",
                 EnglishName =  "State Updated",
+                LocalName =  "State Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -863,10 +905,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CRST",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
