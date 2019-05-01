@@ -1012,7 +1012,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "5101N":
                                 case "5101R":
                                 case "5101A":
-                                case "5101M":
+                                case "5101E":
                                     {
                                         currentScreenCode = "DCNT";
                                         break;
@@ -1182,7 +1182,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "5101N":
                                 case "5101R":
                                 case "5101A":
-                                case "5101M":
+                                case "5101E":
                                     {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
