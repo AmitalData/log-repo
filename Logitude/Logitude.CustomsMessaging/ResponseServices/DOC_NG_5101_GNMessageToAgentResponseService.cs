@@ -245,7 +245,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                             break;
                         case 31:
-                            notificationDefinitionCode = "5101M";
+                            notificationDefinitionCode = "5101E";
                             assigneToNotificationTypeCode = "I";
                             if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
                             {
