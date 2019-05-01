@@ -1422,15 +1422,15 @@
                                     var errorMessage = "";
 
                                         if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
-                                        if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.InValidMailOrPassword)  errorMessage = "Login failed! invalid user name or password." + "<br/>";
+                                        else if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                                        else if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
+                                        else errorMessage = "Login failed! invalid user name or password." + "<br/>";
 
-                                    if (!errorMessage) errorMessage = "Please re-enter the characters you see in the image above";
-                              
-                                
+                                        if (userdata.InValidCaptcha && userdata.CaptchaImage) errorMessage = "Please re-enter the characters you see in the image above";
 
-                                   
+
+
+
                                     document.getElementById("errorsList").innerHTML = errorMessage;
                                     // $("#errorsList").text(errorMessage);
                                     $("#errorsList").show();

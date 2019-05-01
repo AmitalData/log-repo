@@ -491,7 +491,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             string myRoutingField = null;
             AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);
 
-            if (entityPoco.DirectionId == "D" && entityPoco.TransportModeId == "I")
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
                 if (entityMasterData.MainCarriageFromAddressId != null)
                 {

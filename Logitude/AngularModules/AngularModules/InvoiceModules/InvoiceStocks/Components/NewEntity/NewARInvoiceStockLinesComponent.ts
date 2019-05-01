@@ -357,7 +357,10 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
                         this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            if (this.CurrentSession.CurrentEditComponent != null) {
+                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            }
+
                             this.CurrentSession.CloseCurrentWindow();
                         }
 

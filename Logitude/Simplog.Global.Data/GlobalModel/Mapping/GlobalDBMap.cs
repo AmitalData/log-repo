@@ -8,34 +8,12 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
     {
         public GlobalDBMap()
         {
-            // Primary Key
             this.HasKey(t => t.Id);
+            this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(true);
+            this.Property(t => t.DBConnection).IsRequired().HasMaxLength(512).IsUnicode(true);
+            this.Property(t => t.SharedDWConnection).IsRequired().HasMaxLength(512).IsUnicode(true);
+            this.Property(t => t.SecondaryAzureDBConnection).IsRequired().HasMaxLength(512).IsUnicode(true);
 
-            // Properties
-            this.Property(t => t.Id)
-                .IsRequired()
-                .HasMaxLength(15)
-                .IsUnicode(true);
-
-            this.Property(t => t.DBConnection)
-                .IsRequired()
-                .HasMaxLength(512)
-                .IsUnicode(true);
-
-            this.Property(t => t.SharedDWConnection)
-                .IsRequired()
-                .HasMaxLength(512)
-                .IsUnicode(true);
-
-            this.Property(t => t.SecondaryAzureDBConnection)
-                .IsRequired()
-                .HasMaxLength(512)
-                .IsUnicode(true);
-
-
-
-
-            // Table & Column Mappings
             this.ToTable("GlobalDBs");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.DBConnection).HasColumnName("DBConnection");
@@ -43,7 +21,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsActive).HasColumnName("IsActive");
             this.Property(t => t.SharedDWConnection).HasColumnName("SharedDWConnection");
             this.Property(t => t.SecondaryAzureDBConnection).HasColumnName("SecondaryAzureDBConnection");
-            
+            this.Property(t => t.IsBlocking).HasColumnName("IsBlocking");
         }
     }
 }

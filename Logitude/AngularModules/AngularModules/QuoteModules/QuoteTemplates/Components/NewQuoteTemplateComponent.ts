@@ -121,7 +121,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     LoadQuoteTemplateList() {
         this.QuoteTemplateLists = [];
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType, SessionLocator.LoggedUserPM.IsCustomerCare, SessionLocator.Tenant).subscribe(res => {
+        this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType).subscribe(res => {
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

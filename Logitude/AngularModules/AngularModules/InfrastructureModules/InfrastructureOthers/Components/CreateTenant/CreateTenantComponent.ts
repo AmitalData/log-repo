@@ -116,6 +116,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
 
     ValidationFields() {
 
+
         if (AppTool.IsNullOrEmpty(this.Email)) {
             this.ValidationErrorsList.push("Email field is required");
         } else if (!this.CheckIsValidEmail(this.Email)) {
@@ -124,32 +125,27 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
 
         if (AppTool.IsNullOrEmpty(this.ContactName)) {
             this.ValidationErrorsList.push("Name field is required");
+        } else if (this.ContactName.length > 60) {
+            this.ValidationErrorsList.push("Contact Name field max length is 60");
         }
+
+        if (AppTool.IsNullOrEmpty(this.CompanyName)) {
+            this.ValidationErrorsList.push("Company field is required");
+        } else if (this.CompanyName.length > 60) {
+            this.ValidationErrorsList.push("Company field max length is 60");
+        }
+
 
         if (AppTool.IsNullOrEmpty(this.Phone)) {
             this.ValidationErrorsList.push("Phone field is required");
         }
 
-        if (AppTool.IsNullOrEmpty(this.CompanyName)) {
-            this.ValidationErrorsList.push("Company field is required");
-        }
-
         if (AppTool.IsNullOrEmpty(this.PackageCode)) {
-            this.ValidationErrorsList.push("Package field is required");
+            this.ValidationErrorsList.push("Package Code field is required");
         }
 
 
-        if (this.ValidationErrorsList.length == 0) {
-
-            if (this.ContactName.length > 60) {
-                this.ValidationErrorsList.push("Name field max length is 60");
-            }
-
-            if (this.CompanyName.length > 60) {
-                this.ValidationErrorsList.push("Company field max length is 60");
-            }
-
-        }
+     
 
     }
 
