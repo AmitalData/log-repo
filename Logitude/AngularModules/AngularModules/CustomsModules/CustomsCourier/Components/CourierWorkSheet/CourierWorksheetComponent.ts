@@ -60,7 +60,7 @@ implements OnDestroy
     public set SelectedRow(value: any) {
         this._SelectedRow = value;
     }
-    CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
+    _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _DeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
     _EntityListService: EntityListService = new EntityListService();
@@ -96,6 +96,9 @@ implements OnDestroy
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() CustomBackFromEditevent = new EventEmitter();
+
+    public IsDisplayOnly: boolean = false;
+    public DisplayOnlyMessage: string = "";
 
     //constructor(public entityArgs: EntityArgs) {
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService,public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
@@ -480,6 +483,7 @@ implements OnDestroy
         this.RefreshStatistic();
         this.RefreshMasterRequiredFields();
         this.RefreshList();
+        this.DisplayOnlyCheck();
 
     }
 
@@ -1399,6 +1403,20 @@ implements OnDestroy
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             this.RefreshButtonClicked();
+        });
+    }
+
+    DisplayOnlyCheck() {
+        this.IsDisplayOnly = false;
+
+        //Check if changing StorageSiteCode
+        this._CourierMasterValidator.SetEntityPM(this.entityPM);
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                this.IsDisplayOnly = true;
+                this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+            }
         });
     }
 
