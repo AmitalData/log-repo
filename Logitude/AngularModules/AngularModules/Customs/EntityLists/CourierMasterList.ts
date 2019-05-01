@@ -43,6 +43,7 @@ export class CourierMasterList {
 	WeightValueName: string;
 	StorageSiteCode: string;
 	StorageSiteName: string;
+	TruckerId: string;
 	
 }
  

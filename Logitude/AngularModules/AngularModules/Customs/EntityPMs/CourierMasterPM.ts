@@ -214,6 +214,11 @@ export class CourierMasterPM {
     public set StorageSiteName(newValue: string) { if (this.storageSiteName != newValue) { this.storageSiteName = newValue; this.MarkAsDirty("StorageSiteName"); } }
        
 	 
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		
