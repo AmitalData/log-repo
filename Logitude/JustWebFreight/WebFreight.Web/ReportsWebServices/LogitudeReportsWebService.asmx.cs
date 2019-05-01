@@ -1046,14 +1046,13 @@ namespace WebFreight.Web.ReportsWebServices
                 item.Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue);
                 item.Notes = d.InternalNotes;
                 item.BillToVendorId = d.BillToId;
+                item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
+                item.InvoiceAmount = d.AmountInLocalCurrency;
+                item.AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency;
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
 
                 list_ARInvoices.Add(item);
             }
-
-
-
-
 
             List<StatementDataProvider.StatementRecord> list_APInvoices =
                 (from d in iQueryable_APInvoice
@@ -1073,6 +1072,9 @@ namespace WebFreight.Web.ReportsWebServices
                      Notes = d.InternalNotes,
                      YourRefrence = d.InvoiceNumber,
                      BillToVendorId = d.VendorId,
+                     InvoiceStatus = d.Status == null ? null : d.Status.Name,
+                     InvoiceAmount = d.AmountInLocalCurrency,
+                     AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> list_ARPayments =
@@ -5812,6 +5814,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.ShippingLineId = myShipmentDataView.MainCarriageCarrierId;
                     record.VesselName = myShipmentDataView.MainCarriageVesselName;
                     record.ShippingLineName = myShipmentDataView.MainCarriageCarrierName;
+                    record.ReleasingAgentName = myShipmentDataView.ReleasingAgentName;
                 }
 
                 record.ContainerNumber = itemContainer.ContainerNumber;
