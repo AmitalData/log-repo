@@ -123,15 +123,15 @@
         <img *ngIf="IsPaymentStatusOrange" src="./Images/Icons/OrangeV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'MamanStatusCode'">
-        <img *ngIf="_CourierWorksheet['MamanStatusCode'] == 1" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-        <img *ngIf="_CourierWorksheet['MamanStatusCode'] == 2" src="./Images/Icons/RedX.png" [attr.title]="_CourierWorksheet['MamanErrorXml']" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-        <span *ngIf="_CourierWorksheet['MamanStatusCode'] == 1 && _CourierWorksheet['AcceptanceStatusCode'] == 1">{{'Customs.CourierMaster.Available.Available' | TextCodeTranslationPipe }}</span>
-        <span *ngIf="_CourierWorksheet['MamanStatusCode'] == 1 && _CourierWorksheet['AcceptanceStatusCode'] == 2">{{'Customs.CourierMaster.Available.NotAvailable' | TextCodeTranslationPipe }}</span>
+    <div class="TextTrimming" *ngIf="fieldName == 'StorageSiteStatusCode'">
+        <img *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == 1" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <img *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == 2" src="./Images/Icons/RedX.png" [attr.title]="_CourierWorksheet['StorageSiteErrorText']" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == 1 && _CourierWorksheet['AcceptanceStatusCode'] == 1">{{'Customs.CourierMaster.Available.Available' | TextCodeTranslationPipe }}</span>
+        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == 1 && _CourierWorksheet['AcceptanceStatusCode'] == 2">{{'Customs.CourierMaster.Available.NotAvailable' | TextCodeTranslationPipe }}</span>
     </div>
 
-    
-    <div class="TextTrimming" *ngIf="fieldName == 'SpecialActionStatus'" style="cursor:default;height:35px;width:120px;" (click)="ButtonClick($event)" >
+
+    <div class="TextTrimming" *ngIf="fieldName == 'SpecialActionStatus'" style="cursor:default;height:35px;width:120px;" (click)="ButtonClick($event)">
         <img *ngIf="_CourierWorksheet['SpecialActionStatus'] == 'V'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " (click)="SpecialActionStatusXClicked($event)" />
         <img *ngIf="_CourierWorksheet['SpecialActionStatus'] == 'X'" src="./Images/Icons/RedX.png" (click)="SpecialActionStatusXClicked($event)" [attr.title]="_CourierWorksheet['SpecialActionsErrorXml']"
              style="height:20px;width:15px;vertical-align:central;padding-bottom:5px;cursor:pointer;" />
@@ -240,16 +240,16 @@
 
                             <li>
                                 <span *ngIf="!(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )" (click)="currSplitButtonComponent.DropdownDisplayClose();SendManifest($event);">מצהר</span>
-                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )"  class="DimLI" >מצהר</span>
+                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )" class="DimLI">מצהר</span>
                             </li>
 
                             <li>
                                 <span *ngIf="!(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendDec($event);">הצהרה</span>
-                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  "  class="DimLI" >הצהרה</span>
+                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " class="DimLI">הצהרה</span>
                             </li>
                             <li>
                                 <span *ngIf="!(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendPay($event);">תשלום</span>
-                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  "  class="DimLI" >תשלום</span>
+                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " class="DimLI">תשלום</span>
                             </li>
 
                             <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true">
@@ -278,5 +278,9 @@
     <div class="TextTrimming" style="text-align:right" title="{{SuspentionReasonTip}}" *ngIf="fieldName == 'CourierCustomStatusName' && SuspentionReasonText!=''">
         <span style="color:red" *ngIf="_CourierWorksheet['CourierCustomStatusCode']=='2'">{{SuspentionReasonText}}</span><!--Task 44091-->
         <span style="color:green" *ngIf="_CourierWorksheet['CourierCustomStatusCode']=='1'">{{SuspentionReasonText}}</span><!--Task 44091-->
+    </div>
+    
+    <div class="TextTrimming" *ngIf="fieldName == 'LastMileStatusCode' " style="text-align:right;">
+        <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['LastMileStatusDate']}}">{{_CourierWorksheet.LastMileStatusCode}}</span>
     </div>
 </div>

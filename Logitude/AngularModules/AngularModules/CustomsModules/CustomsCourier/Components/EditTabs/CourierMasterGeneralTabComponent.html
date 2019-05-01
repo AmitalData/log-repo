@@ -1,6 +1,19 @@
+<style>
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
+
 <table style="height:350px; width:750px">
 
-    <tr style="height:50px; width:700px" class="TabTitleRow">
+    <!--<tr style="height:50px; width:700px" class="TabTitleRow">
         <td>
             <table>
                 <tr>
@@ -17,7 +30,7 @@
                 <div class="DisbleBox">
                     {{DisplayOnlyMessage}}
                     <span style="padding: 0px 16px;">-</span>
-                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">øòðï</span>
+                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">×¨×¢× ×Ÿ</span>
                 </div>
             </div>
         </td>
@@ -71,7 +84,7 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:100px">
-                        <CheckBox (Checked)="IsOpen = $event" [IsChecked]="IsOpen"></CheckBox>
+                        <CheckBox (Checked)="IsOpen = $event" [IsChecked]="IsOpen" [IsEnabled]="!IsDisplayOnly"></CheckBox>
                     </td>
                 </tr>
             </table>

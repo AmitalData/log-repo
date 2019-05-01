@@ -28,6 +28,8 @@ using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.Def.Messaging.Customs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -109,7 +111,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             string customsVendorCode = message[0];
                             customsVendorId = CheckIfCustomsVendorCodeExist(customsVendorCode, requestParams.Tenant);
                         }
-                        if (!string.IsNullOrWhiteSpace(customsVendorId))
+                        if(!string.IsNullOrWhiteSpace(customsVendorId))
                         {
                             SendImporterDeclarationRequest(requestParams, importerVAT, customsVendorId);
                         }
@@ -189,6 +191,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     notificationDescription = "ממתין לבטחון, יסמ ולבקרת מסמכים " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     notificationStatusCode = "VCT";
                     break;
+                
                 default:
                     notificationDefinitionCode = "5101N";
                     assigneToNotificationTypeCode = "I";
@@ -197,12 +200,80 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     break;
             }
 
+            if (customResponse.MessageToAgent.msgCode == 29 || customResponse.MessageToAgent.msgCode == 30 || customResponse.MessageToAgent.msgCode == 31)
+            {
+                try
+                {
+                    int tenant = requestParams.Tenant;
+                    string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                    string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(id))
+                    {
+                        ContactRepository contactrep = new ContactRepository(tenant);
+                        var contact = contactrep.GetSingleContact(id, tenant);
+                        email = contact.Email;
+
+                    }
+                    InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "SpecialReplyToCustoms", tenant, email);
+
+                    switch (customResponse.MessageToAgent.msgCode)
+                    {
+                        case 29:
+                            notificationDefinitionCode = "5101R";
+                            assigneToNotificationTypeCode = "I";
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            {
+                                notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                                notificationDescription = "התכתבות בגין מסמך נדרש הצהרה מספר " + notificationDeclaration; 
+                            }
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                            {
+                                notificationDescription = "התכתבות בגין מסמך נדרש בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            }
+                            break;
+                        case 30:
+                            notificationDefinitionCode = "5101A";
+                            assigneToNotificationTypeCode = "I";
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            {
+                                notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                                notificationDescription = "התכתבות בגין דחיית פיצול מטען הצהרה מספר " + notificationDeclaration;
+                            }
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                            {
+                                notificationDescription = "התכתבות בגין דחיית פיצול מטען בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            }
+                            break;
+                        case 31:
+                            notificationDefinitionCode = "5101E";
+                            assigneToNotificationTypeCode = "I";
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            {
+                                notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                                notificationDescription = "התכתבות בגין כופר חוקיות הצהרה מספר " + notificationDeclaration;
+                            }
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                            {
+                                notificationDescription = "התכתבות בגין כופר חוקיות בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            }
+                            break;
+                        default:
+                            
+                            break;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Check for SpecialReplyToCustoms Feature Failed, Notification will not be built, Message: " + ex.Message);
+                }
+            }
+
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = notificationDescription;
 
             if (!string.IsNullOrWhiteSpace(customResponse.MessageToAgent.msgString))
             {
-                notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString;
+                notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString.Replace("00:00:00", "");
             }
 
             if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015)
@@ -436,7 +507,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = " + code + " CustomFileNo= " + dirtyDeclarationPM.CustomFileNo + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
 
             }
             catch (System.Exception)
@@ -523,7 +594,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             ICustomContext customContext = CustomContext.GetContext(tenant);
             CustomsVendorQueryService query = new CustomsVendorQueryService(customContext);
             string vendorId = query.GetIdByVendorNumber(vendorNumber, tenant);
-            if (!string.IsNullOrWhiteSpace(vendorId))
+            if(!string.IsNullOrWhiteSpace(vendorId))
             {
                 return vendorId;
             }

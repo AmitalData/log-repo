@@ -281,7 +281,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                         Debug.WriteLine($"continue>BadFileNamesCache({fileName})");
                         continue;
                     }
-                    var fileWithFolder = ftpDetail.Folder + "/" + fileName;
+                    var fileWithFolder = ftpDetail.Folder + "/" + Path.GetFileName(fileName);//in linux i get folder\fileName  in win only file name !!
                     Debug.WriteLine($"ftpService.Download({fileWithFolder})");
 					string p_message = "";
 					byte[] fileData = ftpService.Download(fileWithFolder,out p_message);
@@ -289,12 +289,16 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
 
                     Debug.WriteLine($"SaveMessageToAnalyzeQueue");
-                    var analyzeQueueUtil = new AnalyzeQueueUtil();
 
+                    int tenant = customsPartnerFtpPM.Tenant;
                     try
                     {
-                        analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, customsPartnerFtpPM.Tenant, "", defInterfaceDetails, null);
-
+                        Debug.WriteLine($"fileData.Length == {fileData.Length}");
+                        if (fileData.Length > 0)
+                        {
+                            
+                            SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
+                        }
                         Debug.WriteLine($"ftpService.Delete({fileName})");
                         ftpService.Delete(fileWithFolder);
 
@@ -315,10 +319,24 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
             }
         }
 
+        public static void SaveAnalyzeQueue(InterfaceDetails defInterfaceDetails, string fileName, byte[] fileData, int tenant)
+        {
+            var analyzeQueueUtil = new AnalyzeQueueUtil();
+            analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, tenant, "", defInterfaceDetails, null);
+        }
+
         private void ClearBadFileNamesCache()
         {
             _LastClearCacheBadFileNames = DateTime.Now;
             _BadFileNamesCache.Clear();
+        }
+
+        public static void SaveAnalyzeQueueFromCode(int tenant, string interfaceCode, string fileName, byte[] fileData)
+        {
+            var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+            var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
+                    .Where(r => r.Code == interfaceCode).First();
+            SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
         }
     }
 

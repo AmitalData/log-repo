@@ -134,8 +134,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 CourierHawbNumber = myDeclarationPM.CourierHAWB ?? "",
                 CourierHawbDate = GetOpenBaldarAwbDate(myDeclarationPM),
                 MawbPrefix = myCourierMasterPM.AirlinePrefix ?? "",//יש לשלוח את Airline PRFIX)- 114
-                Mawb = CInt(myCourierMasterPM.MAWB),
-                
+                Mawb = myCourierMasterPM.MAWB,//Mawb = CInt(myCourierMasterPM.MAWB),
+
                 Hawb = myCourierMasterPM.HAWB ?? "",
                 
                 FlightNumber = CInt(myCourierMasterPM.FlightNumber),
@@ -227,7 +227,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
         public string MawbPrefix { get; set; }
 
 
-        public int Mawb { get; set; }
+        public string Mawb { get; set; }
         
 
         public string Hawb { get; set; }

@@ -99,6 +99,7 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.downloadFTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -205,7 +206,8 @@
             // 
             this.downLoadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.downloadDcaMessageSheetWRToolStripMenuItem,
-            this.downloadFileToolStripMenuItem});
+            this.downloadFileToolStripMenuItem,
+            this.downloadFTPToolStripMenuItem});
             this.downLoadToolStripMenuItem.Name = "downLoadToolStripMenuItem";
             this.downLoadToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
             this.downLoadToolStripMenuItem.Text = "DownLoad";
@@ -706,6 +708,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
+            // downloadFTPToolStripMenuItem
+            // 
+            this.downloadFTPToolStripMenuItem.Name = "downloadFTPToolStripMenuItem";
+            this.downloadFTPToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.downloadFTPToolStripMenuItem.Text = "DownloadFTP";
+            this.downloadFTPToolStripMenuItem.Click += new System.EventHandler(this.downloadFTPToolStripMenuItem_Click);
+            // 
             // TesterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -804,5 +813,6 @@
         private System.Windows.Forms.ToolStripMenuItem mamanBaldarSTBToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox _tstbMamanBaldarSTB;
         private System.Windows.Forms.ToolStripMenuItem buildMamanBaldarSTBToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadFTPToolStripMenuItem;
     }
 }
