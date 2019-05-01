@@ -1122,21 +1122,21 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #endregion
 
             #region DeclarationCustomsRequests
-            MenuButton DeclarationCustomsRequestsButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-            {
-                EventCode = "Declaration Customs Requests",
-                Index = 12,
-                IsActive = true,
-                LabelTextCodeCode = "Customs.Declaration.B.DeclarationCustomsRequests",
-                LabelTextCodeDefaultText = "Declaration Customs Requests",
-                LocalDefaultText = "בקשות מכס",
-                ObjectTableId = declarationTableId,
-                Tenant = tenant,
-                MenuButtonGroupId = declarationMenuButtonGroup.Id,
-                ParentMenuButtonId = actionButton.Id,
-                FeatureId = declarationFeature_DeclarationCustomsRequests.Id,
-                MenuButtonType = "menuitem",
-            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            //MenuButton DeclarationCustomsRequestsButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            //{
+            //    EventCode = "Declaration Customs Requests",
+            //    Index = 12,
+            //    IsActive = true,
+            //    LabelTextCodeCode = "Customs.Declaration.B.DeclarationCustomsRequests",
+            //    LabelTextCodeDefaultText = "Declaration Customs Requests",
+            //    LocalDefaultText = "בקשות מכס",
+            //    ObjectTableId = declarationTableId,
+            //    Tenant = tenant,
+            //    MenuButtonGroupId = declarationMenuButtonGroup.Id,
+            //    ParentMenuButtonId = actionButton.Id,
+            //    FeatureId = declarationFeature_DeclarationCustomsRequests.Id,
+            //    MenuButtonType = "menuitem",
+            //}, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
 
             #endregion
 
