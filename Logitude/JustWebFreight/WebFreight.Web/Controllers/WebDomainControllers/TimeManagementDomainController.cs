@@ -972,6 +972,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 iResult.SickLeavesMinutes = dataGroups.Where(d => d.ProjectNumber == "1015-1").Sum(s => s.TimeInMinutes);
                 iResult.SickLeaves = GetTimeFormatFromMinutes(iResult.SickLeavesMinutes);
 
+                if (string.IsNullOrEmpty(iResult.SickLeaves))
+                {
+                    iResult.SickLeaves = "0";
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, iResult);
             }
 
@@ -1036,7 +1041,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             foreach(TMVacationsDetails item in myResult)
                             {
-                                item.SickLeaves= GetTimeFormatFromMinutes(item.TimeInMinutes);
+                                item.SickLeaves = GetTimeFormatFromMinutes(item.TimeInMinutes);
+
+                                if (string.IsNullOrEmpty(item.SickLeaves))
+                                {
+                                    item.SickLeaves = "0";
+                                }
                             }
                         }
                     }

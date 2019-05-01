@@ -71,11 +71,17 @@ export class VacationsComponent extends BaseComponent {
     public HalfVacations: number = 0;
     public UnpaidVacations: number = 0;
     public SicknessVacations: number = 0;
-    public SickLeaves: number = 0;
+    public SickLeaves: string = "0";
     GetVacationsSummary() {
-        this.mySerive.GetVacationsSummary(this.SelectedYear).subscribe((myResponse: ServiceResponse) => {
 
-            //this.ItemSource.Clear();
+        this.Holidays = 0;
+        this.Vacations = 0;
+        this.HalfVacations = 0;
+        this.UnpaidVacations = 0;
+        this.SicknessVacations = 0;
+        this.SickLeaves = "0";
+
+        this.mySerive.GetVacationsSummary(this.SelectedYear).subscribe((myResponse: ServiceResponse) => {
 
             if (myResponse.HasError) {
                 //this.ShowMessage(myResponse.ErrorsArray[0]);
@@ -93,6 +99,9 @@ export class VacationsComponent extends BaseComponent {
     }
 
     GetVacationsDetails() {
+
+        this.ItemsSource = [];
+
         this.mySerive.GetVacationsDetails(this.SelectedYear, this.SelectedType).subscribe((myResponse: ServiceResponse) => {
 
             this.ItemsSource = [];
