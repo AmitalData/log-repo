@@ -15,6 +15,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace WebFreight.Web.Helpers.TicketAnalyzer
@@ -124,7 +125,7 @@ namespace WebFreight.Web.Helpers.TicketAnalyzer
         private bool HasInbounEmailAnalyzeQueueId()
         {
             InboundEmailRepository repository = new InboundEmailRepository(Tenant);
-            bool check = repository.GetInboundEmailByAnalyzeQueueId(myAnalyzeQueue.Id,myAnalyzeQueue.Tenant);
+            bool check = repository.GetInboundEmailByAnalyzeQueueId(myAnalyzeQueue.Id, myAnalyzeQueue.Tenant);
             return check;
         }
 
@@ -147,29 +148,32 @@ namespace WebFreight.Web.Helpers.TicketAnalyzer
                 if (myAnalyzeQueue.Retries >= 5)
                 {
                     myAnalyzeQueue.Status = "F";
-
                 }
             }
 
-            if (myAnalyzeQueue.ConnectedToTenant)
+            if (myAnalyzeQueue.Status == "F")
             {
-                CommunicationLog commLog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, Tenant);
-                if (commLog != null)
+                if (myAnalyzeQueue.ConnectedToTenant && myAnalyzeQueue.CommunicationLogId != null)
                 {
-                    commLog.CommunicationStatusTypeCode = "F";
-                    commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
-                    commLog.LastStatusDateUTC = DateTime.UtcNow;
-                    commLog.ExceptionMessage = myAnalyzeQueue.ErrorMessage;
-
-                    if (myAnalyzeQueue.StackTrace != null)
+                    CommunicationLog commLog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, Tenant);
+                    if (commLog != null)
                     {
-                        commLog.ExceptionMessage = commLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + myAnalyzeQueue.StackTrace;
-                    }
+                        commLog.CommunicationStatusTypeCode = "F";
+                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                        commLog.LastStatusDateUTC = DateTime.UtcNow;
+                        commLog.ExceptionMessage = myAnalyzeQueue.ErrorMessage;
 
-                    myCommunicationLogRepository.Update(commLog);
-                    myCommunicationLogRepository.SubmitChanges();
+                        if (myAnalyzeQueue.StackTrace != null)
+                        {
+                            commLog.ExceptionMessage = commLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + myAnalyzeQueue.StackTrace;
+                        }
+
+                        myCommunicationLogRepository.Update(commLog);
+                        myCommunicationLogRepository.SubmitChanges();
+                    }
                 }
             }
+
             myAnalyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(myAnalyzeQueue.Tenant);
             analyzeQueueRepository.Update(myAnalyzeQueue);
             analyzeQueueRepository.SubmitChanges();
