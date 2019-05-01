@@ -1490,7 +1490,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.To = shipment.To;
             shipmentPM.Origin = shipment.Origin;
             shipmentPM.AgentComputed = shipment.AgentComputed;
-            shipmentPM.ComputedShipmentNumber = shipment.AgentComputed;
+            shipmentPM.ComputedShipmentNumber = shipment.ComputedShipmentNumber;
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {

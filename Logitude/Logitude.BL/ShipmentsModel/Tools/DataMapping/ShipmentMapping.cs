@@ -50,7 +50,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.DirectionId = entityPM.DirectionId;
                 entityPoco.ShipmentNumber = entityPM.ShipmentNumber;
 
-                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "H")
+                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
                 {
                     entityPM.ComputedShipmentNumber = entityPM.ShipmentNumber;
                 }
