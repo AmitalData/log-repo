@@ -375,8 +375,10 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = false;
+
+        //Check if changing StorageSiteCode
         this._CourierMasterValidator.SetEntityPM(this.entityPM);
-        this._CourierMasterValidator.CheckStorageSiteCodeRequestInProgress().subscribe((response: any) => {
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
                 this.IsDisplayOnly = true;

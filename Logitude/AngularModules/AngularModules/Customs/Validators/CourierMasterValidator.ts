@@ -73,15 +73,15 @@ export class CourierMasterValidator {
         });
     }
 
-    //Check if changing StorageSiteCode
-    public CheckStorageSiteCodeRequestInProgress() {
+    public CheckRequestInProgressForCourierMaster(tenant: number, interfaceTypeCode: string, courierMasterId: string, displayOnlyMode: boolean = true) {
+
+        var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.CourierMaster")[0];
         var apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
         var http: Http = ServiceHelper.Http;
-        var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.CourierMaster")[0];
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         return Observable.defer(() => {
-            return http.get(apiUrl + '/GetRequestInProgress/?' + 'tenant=' + this._CourierMasterPM.Tenant + '&interfaceTypeCode=' + "UCBCMSS" + '&objectTableId1=' + objecttable.Id + '&entityId1=' + this._CourierMasterPM.Id + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "" + '&displayOnlyMode= true', { headers: authHeader })
+            return http.get(apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + objecttable.Id + '&entityId1=' + courierMasterId + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "" + '&displayOnlyMode=' + displayOnlyMode, { headers: authHeader })
                 .map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     var requestSheets = response.json();
@@ -90,6 +90,7 @@ export class CourierMasterValidator {
                 }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
 
     CourierMasterViewDisplayOnlyChecks() {
         //this.CheckStorageSiteCodeRequestInProgress();

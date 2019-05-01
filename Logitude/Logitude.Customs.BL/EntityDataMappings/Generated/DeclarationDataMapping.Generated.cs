@@ -280,7 +280,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AcceptanceStatusName, 
 	         CourierSuspentionCode, 
 	         CourierSuspentionName, 
-	         DepositionStatusCode,
+	         DepositionStatusCode, 
+	         CourierMasterId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

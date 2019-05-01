@@ -208,8 +208,10 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = false;
+
+        //Check if changing StorageSiteCode
         this.CourierMasterValidator.SetEntityPM(this.EntityPM);
-        this.CourierMasterValidator.CheckStorageSiteCodeRequestInProgress().subscribe((response: any) => {
+        this.CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.EntityPM.Tenant, "UCBCMSS", this.EntityPM.Id).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
                 this.IsDisplayOnly = true;

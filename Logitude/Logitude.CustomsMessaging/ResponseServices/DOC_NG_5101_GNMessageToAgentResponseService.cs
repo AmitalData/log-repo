@@ -92,7 +92,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case 11:
                     /*notificationDefinitionCode = "5101I";
                     assigneToNotificationTypeCode = "I"; */
-                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 1163) //Deposition
+                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 1053 || customResponse.MessageToAgent.RelatedEntity.entityType == 1054) //Deposition
                     {
                         string importerVAT = null;
                         string customsVendorId = null;
