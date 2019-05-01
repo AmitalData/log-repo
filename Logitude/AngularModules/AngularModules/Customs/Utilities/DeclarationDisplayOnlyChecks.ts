@@ -1,4 +1,4 @@
-﻿
+
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {DeclarationPM} from '../EntityPMs/DeclarationPM';
 import {DeclarationValidator} from '../Validators/DeclarationValidator'
@@ -11,7 +11,7 @@ import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../Infrast
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {DeclarationWebService} from '../Services/WebServices/DeclarationWebService';
 import { AppTool, ArrayTool, DateTool} from '../../Infrastructure/Tools';
-
+import { CourierMasterValidator } from '../../Customs/Validators/CourierMasterValidator';
 
 export class DeclarationDisplayOnlyChecks {
 
@@ -25,7 +25,7 @@ export class DeclarationDisplayOnlyChecks {
         this.http = ServiceHelper.Http;
     }
     private timerToken: any;
-
+    private _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
 
     public DeclarationViewDisplayOnlyChecks(entityPM: DeclarationPM) {
         var editComponentNeedsRefresh: boolean = null;
@@ -89,6 +89,25 @@ export class DeclarationDisplayOnlyChecks {
                 return Observable.of(serviceResponse);
             });
             
+        }
+
+
+        //Check if changing StorageSiteCode
+        if (this.entityPM.IsCourierDeclaration) {
+            this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.CourierMasterId).subscribe((response: any) => {
+                var displayOnlyCheckResult = response.Result;
+                if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                    var errorMessage: string = "קיימת בקשה לשינוי אתר איחסון ברקע ";
+
+                    SessionLocator.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                    SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
+                    editComponentNeedsRefresh = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh;
+                    SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
+                    serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                    return serviceResponse;
+
+                }
+            });
         }
 
         // Request sheets in progress check
@@ -187,6 +206,7 @@ export class DeclarationDisplayOnlyChecks {
 
         );
         //}
+
     }
 
 

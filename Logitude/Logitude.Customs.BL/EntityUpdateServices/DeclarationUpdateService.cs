@@ -488,8 +488,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             }
         }
+        public bool CourierStorageSiteChanged { get; set; }
 
-        
 
         private void ResetMetadataVER(DeclarationPM entityPM)
         {

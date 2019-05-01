@@ -272,6 +272,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierSuspentionName  { get; set; }
        [DataMember]
        public string DepositionStatusCode  { get; set; }
+       [DataMember]
+       public string CourierMasterId  { get; set; }
    }
 
 }
