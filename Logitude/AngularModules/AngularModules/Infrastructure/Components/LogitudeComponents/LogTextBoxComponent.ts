@@ -124,7 +124,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.TextValue == newValue) {
             return;
         }
-        if (this.firstDigit == "." && this.IsPasted && newValue != null && newValue != undefined && this.textValue!=null) {
+        if (this.firstDigit == "."  && newValue != null && newValue != undefined && this.textValue!=null) {
             var firstString = this.textValue.replace(',', "")
             var secondString = newValue.replace('.', "")
 
@@ -1162,7 +1162,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                         {
                             var ReadedText = false;
                             if (this.firstDigit == ".") {
-                                if (this.TextValue.includes(',') && this.TextValue.includes('.')) {
+                                if ((this.TextValue.includes(',') && this.TextValue.includes('.')) || this.DisableZeroPadding) {
                                     ReadedText = true;
                                 }
                             }
@@ -1191,7 +1191,6 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 }
                             }
                             var val: number;
-                            var hasJoined = false;
                             if (this.IsAccumulative && (this.TextValue + "").indexOf('+') > -1) {
                                 var accString: string[] = this.TextValue.split('+');
                                 var accumulativeAmount: number = 0;
@@ -1208,25 +1207,24 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
                             }
                             else {
-                                if ((this.TextValue + "").indexOf(',') == -1) {
-                                    val = Number(this.TextValue);
-                                }
-                                if (this.AddCommasToNumbers) {
-                                    hasJoined = true;
+
+
                                     if (((this.TextValue + "").indexOf(',') > -1)) {
-                                        if (this.firstDigit != ".") {
+                                        if (this.firstDigit == ",") {
                                             var txtval = this.TextValue.replace(/,/g, "");
                                             val = Number(txtval);
                                         }
                                         else {
-                                          //  var txtval = this.TextValue.replace(/\./g, '');
-                                            //    txtval = txtval.replace(/,/g, ".");
-                                           //     val = Number(txtval);
-                                            
+                                              var txtval = this.TextValue.replace(/\./g, '');
+                                                txtval = txtval.replace(/,/g, ".");
+                                                 val = Number(txtval);
+
 
                                         }
                                     }
-                                }
+                                
+
+
 
                             }
 
@@ -1273,7 +1271,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
                                 if (this.DataContext[this.ObjectFieldName] != txtNum) {
                                     this.TextValueChanges(this.TextValue);
-                                }
+                                }``
                                 var isDot: boolean = false;
                                 if (this.firstDigit == "." ) {
                                     this.TextValue = this.TextValue.replace(this.firstDigit, ",")
@@ -1339,7 +1337,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 }
 
 
-                                textWithCommas.includes(this.secondDigit) ? this.TextValue = textWithCommas : this.TextValue = this.TextValue;
+                                textWithCommas.includes(this.secondDigit)  || this.DisableZeroPadding ? this.TextValue = textWithCommas : this.TextValue = this.TextValue;
                             }
 
                             break;
