@@ -148,25 +148,26 @@ namespace WebFreight.Web.Helpers.TicketAnalyzer
                 {
                     myAnalyzeQueue.Status = "F";
 
-                    if (myAnalyzeQueue.ConnectedToTenant)
+                }
+            }
+
+            if (myAnalyzeQueue.ConnectedToTenant)
+            {
+                CommunicationLog commLog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, Tenant);
+                if (commLog != null)
+                {
+                    commLog.CommunicationStatusTypeCode = "F";
+                    commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                    commLog.LastStatusDateUTC = DateTime.UtcNow;
+                    commLog.ExceptionMessage = myAnalyzeQueue.ErrorMessage;
+
+                    if (myAnalyzeQueue.StackTrace != null)
                     {
-                        CommunicationLog commLog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, Tenant);
-                        if (commLog != null)
-                        {
-                            commLog.CommunicationStatusTypeCode = "F";
-                            commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
-                            commLog.LastStatusDateUTC = DateTime.UtcNow;
-                            commLog.ExceptionMessage = myAnalyzeQueue.ErrorMessage;
-
-                            if (myAnalyzeQueue.StackTrace != null)
-                            {
-                                commLog.ExceptionMessage = commLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + myAnalyzeQueue.StackTrace;
-                            }
-
-                            myCommunicationLogRepository.Update(commLog);
-                            myCommunicationLogRepository.SubmitChanges();
-                        }
+                        commLog.ExceptionMessage = commLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + myAnalyzeQueue.StackTrace;
                     }
+
+                    myCommunicationLogRepository.Update(commLog);
+                    myCommunicationLogRepository.SubmitChanges();
                 }
             }
             myAnalyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(myAnalyzeQueue.Tenant);

@@ -356,6 +356,8 @@ namespace WebFreight.Web.Helpers
             {
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("Inbound Parse Webhook error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
+                throw errorInfo;
+                throw errorInfo;
             }
         }
 
@@ -387,7 +389,7 @@ namespace WebFreight.Web.Helpers
                     List<string> toEmails = helper.GetListOfFilteredEmails(emailDetails.To);
                     toEmails = helper.GetSupportEmail(toEmails); // filtered data 
 
-                    string supportEmailDomain = supportEmail.Split('@')[1].Trim();
+                    string supportEmailDomain =  supportEmail.Split('@')[1].Trim();
                     List<string> query = toEmails.Where(a => a != null && !a.Split('@')[1].Trim().Contains(supportEmailDomain)).ToList();
                     if (query.Count() > 0)
                     {
@@ -454,39 +456,42 @@ namespace WebFreight.Web.Helpers
                 foreach (string item in myList)
                 {
                     myEmail = helper.GetCorrectEmailFormat(item);
-                    if (userRepository.DoesUserExist(myEmail, Tenant))
+                    if (!string.IsNullOrEmpty(myEmail))
                     {
-                        userEmails += myEmail + ";";
-                    }
+                        if (userRepository.DoesUserExist(myEmail, Tenant))
+                        {
+                            userEmails = myEmail + ";";
+                        }
 
-                    else
-                    {
-                        contactEmails += myEmail + ";";
-                    }
-                }
+                        else
+                        {
+                            contactEmails = myEmail + ";";
+                        }
 
-                if (correspondenceLine != null)
-                {
-                    if (!string.IsNullOrEmpty(contactEmails) && !contactEmails.ToLower().Contains("s@test.unifreight.co.il") && !contactEmails.ToLower().Contains("support@ilcargo.com") && !contactEmails.ToLower().Contains("support@icl.unifreight.co.il"))
-                    {
-                        correspondenceLine.CCs = contactEmails;
-                    }
-                    if (!string.IsNullOrEmpty(userEmails) && !userEmails.ToLower().Contains("s@test.unifreight.co.il") && !userEmails.ToLower().Contains("support@ilcargo.com") && !userEmails.ToLower().Contains("support@icl.unifreight.co.il"))
-                    {
-                        correspondenceLine.InternalUsers = userEmails; 
-                    }
+                        if (correspondenceLine != null)
+                        {
+                            if (!string.IsNullOrEmpty(contactEmails) && !contactEmails.ToLower().Contains("s@test.unifreight.co.il") && !contactEmails.ToLower().Contains("support@ilcargo.com") && !contactEmails.ToLower().Contains("support@icl.unifreight.co.il"))
+                            {
+                                correspondenceLine.CCs += contactEmails;
+                            }
+                            if (!string.IsNullOrEmpty(userEmails) && !userEmails.ToLower().Contains("s@test.unifreight.co.il") && !userEmails.ToLower().Contains("support@ilcargo.com") && !userEmails.ToLower().Contains("support@icl.unifreight.co.il"))
+                            {
+                                correspondenceLine.InternalUsers += userEmails;
+                            }
 
-                }
+                        }
 
-                if (inboundEmailLine != null)
-                {
-                    if (!string.IsNullOrEmpty(contactEmails) && !contactEmails.ToLower().Contains("s@test.unifreight.co.il") && !contactEmails.ToLower().Contains("support@ilcargo.com") && !contactEmails.ToLower().Contains("support@icl.unifreight.co.il"))
-                    {
-                        inboundEmailLine.CCs = contactEmails;
-                    }
-                    if (!string.IsNullOrEmpty(userEmails) && !userEmails.ToLower().Contains("s@test.unifreight.co.il") && !userEmails.ToLower().Contains("support@ilcargo.com") && !userEmails.ToLower().Contains("support@icl.unifreight.co.il"))
-                    {
-                        inboundEmailLine.InternalUsers = userEmails;
+                        if (inboundEmailLine != null)
+                        {
+                            if (!string.IsNullOrEmpty(contactEmails) && !contactEmails.ToLower().Contains("s@test.unifreight.co.il") && !contactEmails.ToLower().Contains("support@ilcargo.com") && !contactEmails.ToLower().Contains("support@icl.unifreight.co.il"))
+                            {
+                                inboundEmailLine.CCs += contactEmails;
+                            }
+                            if (!string.IsNullOrEmpty(userEmails) && !userEmails.ToLower().Contains("s@test.unifreight.co.il") && !userEmails.ToLower().Contains("support@ilcargo.com") && !userEmails.ToLower().Contains("support@icl.unifreight.co.il"))
+                            {
+                                inboundEmailLine.InternalUsers += userEmails;
+                            }
+                        }
                     }
                 }
             }
